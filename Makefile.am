@@ -13,6 +13,7 @@ noinst_PROGRAMS = \
 
 libkernaux_a_SOURCES = \
 	src/arch/i386.S \
+	src/multiboot2.c \
 	src/pfa.c
 
 tests_hang_SOURCES = $(libkernaux_a_SOURCES) tests/hang.c

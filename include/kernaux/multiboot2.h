@@ -5,9 +5,34 @@
 extern "C" {
 #endif
 
-/*********************
- * Common structures *
- *********************/
+/****************
+ * Common types *
+ ****************/
+
+enum KernAux_Multiboot2_TagType {
+    KERNAUX_MULTIBOOT2_TAGTYPE_NONE = 0,
+    KERNAUX_MULTIBOOT2_TAGTYPE_BOOT_CMD_LINE = 1,
+    KERNAUX_MULTIBOOT2_TAGTYPE_BOOT_LOADER_NAME = 2,
+    KERNAUX_MULTIBOOT2_TAGTYPE_MODULE = 3,
+    KERNAUX_MULTIBOOT2_TAGTYPE_BASIC_MEMORY_INFO = 4,
+    KERNAUX_MULTIBOOT2_TAGTYPE_BIOS_BOOT_DEVICE = 5,
+    KERNAUX_MULTIBOOT2_TAGTYPE_MEMORY_MAP = 6,
+    KERNAUX_MULTIBOOT2_TAGTYPE_VBE_INFO = 7,
+    KERNAUX_MULTIBOOT2_TAGTYPE_FRAMEBUFFER_INFO = 8,
+    KERNAUX_MULTIBOOT2_TAGTYPE_ELF_SYMBOLS = 9,
+    KERNAUX_MULTIBOOT2_TAGTYPE_APM_TABLE = 10,
+    KERNAUX_MULTIBOOT2_TAGTYPE_EFI_32BIT_SYSTEM_TABLE_PTR = 11,
+    KERNAUX_MULTIBOOT2_TAGTYPE_EFI_64BIT_SYSTEM_TABLE_PTR = 12,
+    KERNAUX_MULTIBOOT2_TAGTYPE_SMBIOS_TABLES = 13,
+    KERNAUX_MULTIBOOT2_TAGTYPE_ACPI_OLD_RSDP = 14,
+    KERNAUX_MULTIBOOT2_TAGTYPE_ACPI_NEW_RSDP = 15,
+    KERNAUX_MULTIBOOT2_TAGTYPE_NETWORKING_INFO = 16,
+    KERNAUX_MULTIBOOT2_TAGTYPE_EFI_MEMORY_MAP = 17,
+    KERNAUX_MULTIBOOT2_TAGTYPE_EFI_BOOT_SERVICES_NOT_TERMINATED = 18,
+    KERNAUX_MULTIBOOT2_TAGTYPE_EFI_32BIT_IMAGE_HANDLE_PTR = 19,
+    KERNAUX_MULTIBOOT2_TAGTYPE_EFI_64BIT_IMAGE_HANDLE_PTR = 20,
+    KERNAUX_MULTIBOOT2_TAGTYPE_IMAGE_LOAD_BASE_PHYS_ADDR = 21,
+};
 
 struct KernAux_Multiboot2 {
     unsigned int total_size : 32;
@@ -16,14 +41,21 @@ struct KernAux_Multiboot2 {
 __attribute__((packed));
 
 struct KernAux_Multiboot2_TagBase {
-    unsigned int type : 32;
-    unsigned int size : 32;
+    enum KernAux_Multiboot2_TagType type : 32;
+    unsigned int size                    : 32;
 }
 __attribute__((packed));
 
 /******************
  * Tag structures *
  ******************/
+
+struct KernAux_Multiboot2_Tag_None {
+    // type = 0
+    // size = 8
+    struct KernAux_Multiboot2_TagBase base;
+}
+__attribute__((packed));
 
 struct KernAux_Multiboot2_Tag_BootCmdLine {
     // type = 1
@@ -150,7 +182,7 @@ struct KernAux_Multiboot2_Tag_APMTable {
 }
 __attribute__((packed));
 
-struct KernAux_Multiboot2_Tag_EFI32bitSystemTablePointer {
+struct KernAux_Multiboot2_Tag_EFI32bitSystemTablePtr {
     // type = 11
     // size = 12
     struct KernAux_Multiboot2_TagBase base;
@@ -159,7 +191,7 @@ struct KernAux_Multiboot2_Tag_EFI32bitSystemTablePointer {
 }
 __attribute__((packed));
 
-struct KernAux_Multiboot2_Tag_EFI64bitSystemTablePointer {
+struct KernAux_Multiboot2_Tag_EFI64bitSystemTablePtr {
     // type = 12
     // size = 16
     struct KernAux_Multiboot2_TagBase base;
@@ -227,7 +259,7 @@ struct KernAux_Multiboot2_Tag_EFIBootServicesNotTerminated {
 }
 __attribute__((packed));
 
-struct KernAux_Multiboot2_Tag_EFI32bitImageHandlePointer {
+struct KernAux_Multiboot2_Tag_EFI32bitImageHandlePtr {
     // type = 19
     // size = 12
     struct KernAux_Multiboot2_TagBase base;
@@ -236,7 +268,7 @@ struct KernAux_Multiboot2_Tag_EFI32bitImageHandlePointer {
 }
 __attribute__((packed));
 
-struct KernAux_Multiboot2_Tag_EFI64bitImageHandlePointer {
+struct KernAux_Multiboot2_Tag_EFI64bitImageHandlePtr {
     // type = 20
     // size = 16
     struct KernAux_Multiboot2_TagBase base;
@@ -265,6 +297,125 @@ struct KernAux_Multiboot2_Tag_MemoryMap_EntryBase {
     unsigned int reserved1       : 32;
 }
 __attribute__((packed));
+
+/****************************
+ * Tag validation functions *
+ ****************************/
+
+unsigned char KernAux_Multiboot2_TagBase_is_valid(
+    const struct KernAux_Multiboot2_TagBase *tag_base
+)
+__attribute__((nonnull));
+
+unsigned char KernAux_Multiboot2_Tag_None_is_valid(
+    const struct KernAux_Multiboot2_Tag_None *tag
+)
+__attribute__((nonnull));
+
+unsigned char KernAux_Multiboot2_Tag_BootCmdLine_is_valid(
+    const struct KernAux_Multiboot2_Tag_BootCmdLine *tag
+)
+__attribute__((nonnull));
+
+unsigned char KernAux_Multiboot2_Tag_BootLoaderName_is_valid(
+    const struct KernAux_Multiboot2_Tag_BootLoaderName *tag
+)
+__attribute__((nonnull));
+
+unsigned char KernAux_Multiboot2_Tag_Module_is_valid(
+    const struct KernAux_Multiboot2_Tag_Module *tag
+)
+__attribute__((nonnull));
+
+unsigned char KernAux_Multiboot2_Tag_BasicMemoryInfo_is_valid(
+    const struct KernAux_Multiboot2_Tag_BasicMemoryInfo *tag
+)
+__attribute__((nonnull));
+
+unsigned char KernAux_Multiboot2_Tag_BIOSBootDevice_is_valid(
+    const struct KernAux_Multiboot2_Tag_BIOSBootDevice *tag
+)
+__attribute__((nonnull));
+
+unsigned char KernAux_Multiboot2_Tag_MemoryMap_is_valid(
+    const struct KernAux_Multiboot2_Tag_MemoryMap *tag
+)
+__attribute__((nonnull));
+
+unsigned char KernAux_Multiboot2_Tag_VBEInfo_is_valid(
+    const struct KernAux_Multiboot2_Tag_VBEInfo *tag
+)
+__attribute__((nonnull));
+
+unsigned char KernAux_Multiboot2_Tag_FramebufferInfo_is_valid(
+    const struct KernAux_Multiboot2_Tag_FramebufferInfo *tag
+)
+__attribute__((nonnull));
+
+unsigned char KernAux_Multiboot2_Tag_ELFSymbols_is_valid(
+    const struct KernAux_Multiboot2_Tag_ELFSymbols *tag
+)
+__attribute__((nonnull));
+
+unsigned char KernAux_Multiboot2_Tag_APMTable_is_valid(
+    const struct KernAux_Multiboot2_Tag_APMTable *tag
+)
+__attribute__((nonnull));
+
+unsigned char KernAux_Multiboot2_Tag_EFI32bitSystemTablePtr_is_valid(
+    const struct KernAux_Multiboot2_Tag_EFI32bitSystemTablePtr *tag
+)
+__attribute__((nonnull));
+
+unsigned char KernAux_Multiboot2_Tag_EFI64bitSystemTablePtr_is_valid(
+    const struct KernAux_Multiboot2_Tag_EFI64bitSystemTablePtr *tag
+)
+__attribute__((nonnull));
+
+unsigned char KernAux_Multiboot2_Tag_SMBIOSTables_is_valid(
+    const struct KernAux_Multiboot2_Tag_SMBIOSTables *tag
+)
+__attribute__((nonnull));
+
+unsigned char KernAux_Multiboot2_Tag_ACPIOldRSDP_is_valid(
+    const struct KernAux_Multiboot2_Tag_ACPIOldRSDP *tag
+)
+__attribute__((nonnull));
+
+unsigned char KernAux_Multiboot2_Tag_ACPINewRSDP_is_valid(
+    const struct KernAux_Multiboot2_Tag_ACPINewRSDP *tag
+)
+__attribute__((nonnull));
+
+unsigned char KernAux_Multiboot2_Tag_NetworkingInfo_is_valid(
+    const struct KernAux_Multiboot2_Tag_NetworkingInfo *tag
+)
+__attribute__((nonnull));
+
+unsigned char KernAux_Multiboot2_Tag_EFIMemoryMap_is_valid(
+    const struct KernAux_Multiboot2_Tag_EFIMemoryMap *tag
+)
+__attribute__((nonnull));
+
+unsigned char KernAux_Multiboot2_Tag_EFIBootServicesNotTerminated_is_valid(
+    const struct KernAux_Multiboot2_Tag_EFIBootServicesNotTerminated *tag
+)
+__attribute__((nonnull));
+
+unsigned char KernAux_Multiboot2_Tag_EFI32bitImageHandlePtr_is_valid(
+    const struct KernAux_Multiboot2_Tag_EFI32bitImageHandlePtr *tag
+)
+__attribute__((nonnull));
+
+unsigned char KernAux_Multiboot2_Tag_EFI64bitImageHandlePtr_is_valid(
+    const struct KernAux_Multiboot2_Tag_EFI64bitImageHandlePtr *tag
+)
+__attribute__((nonnull));
+
+unsigned char KernAux_Multiboot2_Tag_ImageLoadBasePhysAddr_is_valid(
+    const struct KernAux_Multiboot2_Tag_ImageLoadBasePhysAddr *tag
+)
+__attribute__((nonnull));
 
 #ifdef __cplusplus
 }
