@@ -1,5 +1,7 @@
 *.a
 *.o
+.deps/
+.dirstamp
 
 /Makefile
 /Makefile.in
@@ -17,5 +19,3 @@
 /include/Makefile.in
 /install-sh
 /missing
-/src/.deps/
-/src/.dirstamp
