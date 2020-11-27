@@ -23,3 +23,5 @@
 /test-suite.log
 /tests/test*.log
 /tests/test*.trs
+
+/tests/test_multiboot2_validation

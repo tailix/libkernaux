@@ -274,6 +274,40 @@ static const struct {
     .cmdline = "Hello, World!\0",
 };
 
+/***********************
+ * Tag_BasicMemoryInfo *
+ ***********************/
+
+static const struct KernAux_Multiboot2_Tag_BasicMemoryInfo
+tag_basic_memory_info_valid = {
+    .base = {
+        .type = KERNAUX_MULTIBOOT2_TAGTYPE_BASIC_MEMORY_INFO,
+        .size = 16,
+    },
+    .mem_lower = 123,
+    .mem_upper = 123,
+};
+
+static const struct KernAux_Multiboot2_Tag_BasicMemoryInfo
+tag_basic_memory_info_invalid_type = {
+    .base = {
+        .type = KERNAUX_MULTIBOOT2_TAGTYPE_NONE,
+        .size = 16,
+    },
+    .mem_lower = 123,
+    .mem_upper = 123,
+};
+
+static const struct KernAux_Multiboot2_Tag_BasicMemoryInfo
+tag_basic_memory_info_invalid_size = {
+    .base = {
+        .type = KERNAUX_MULTIBOOT2_TAGTYPE_BASIC_MEMORY_INFO,
+        .size = 17,
+    },
+    .mem_lower = 123,
+    .mem_upper = 123,
+};
+
 /********
  * main *
  ********/
@@ -358,6 +392,20 @@ int main()
 
     assert(!KernAux_Multiboot2_Tag_Module_is_valid(
         &tag_module_with_reversed_start_end_invalid.tag
+    ));
+
+    // Tag_BasicMemoryInfo
+
+    assert(KernAux_Multiboot2_Tag_BasicMemoryInfo_is_valid(
+        &tag_basic_memory_info_valid
+    ));
+
+    assert(!KernAux_Multiboot2_Tag_BasicMemoryInfo_is_valid(
+        &tag_basic_memory_info_invalid_type
+    ));
+
+    assert(!KernAux_Multiboot2_Tag_BasicMemoryInfo_is_valid(
+        &tag_basic_memory_info_invalid_size
     ));
 
     return 0;
