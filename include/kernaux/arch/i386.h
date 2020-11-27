@@ -5,6 +5,8 @@
 extern "C" {
 #endif
 
+void kernaux_arch_i386_hang() __attribute__((noreturn));
+
 unsigned long kernaux_arch_i386_read_cr0();
 unsigned long kernaux_arch_i386_read_cr4();
 
