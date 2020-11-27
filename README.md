@@ -16,7 +16,7 @@ Configure with cross-compiler in `$PATH` to make without it in `$PATH`:
   AR="$(which i686-elf-ar)" \
   CC="$(which i686-elf-gcc)" \
   RANLIB="$(which i686-elf-ranlib)" \
-  CFLAGS='-std=gnu99 -ffreestanding -nostdinc -nostdlib -fno-builtin -fno-stack-protector -Wall -Wextra'
+  CFLAGS='-ffreestanding -nostdinc -nostdlib -fno-builtin -fno-stack-protector -Wall -Wextra'
 ```
 
 Check if compilation targets i386: `objdump -d src/arch/i386.o`.
