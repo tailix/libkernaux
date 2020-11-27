@@ -77,11 +77,10 @@ struct KernAux_Multiboot2_Tag_BIOSBootDevice {
 __attribute__((packed));
 
 struct KernAux_Multiboot2_Tag_MemoryMap {
-    // type = 5
+    // type = 6
     // size = ?
     struct KernAux_Multiboot2_TagBase base;
 
-    unsigned int size          : 32;
     unsigned int entry_size    : 32;
     unsigned int entry_version : 32;
 
@@ -136,7 +135,7 @@ __attribute__((packed));
 
 struct KernAux_Multiboot2_Tag_APMTable {
     // type = 10
-    // size = 20
+    // size = 28
     struct KernAux_Multiboot2_TagBase base;
 
     unsigned short version     : 16;
