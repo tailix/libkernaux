@@ -153,6 +153,111 @@ static const struct {
     .cmdline = "Hello, World!\0",
 };
 
+static const struct {
+    struct KernAux_Multiboot2_Tag_Module tag;
+    char cmdline[1];
+} tag_module_with_empty_name_valid = {
+    .tag = {
+        .base = {
+            .type = KERNAUX_MULTIBOOT2_TAGTYPE_MODULE,
+            .size = 17,
+        },
+        .mod_start = 123,
+        .mod_end = 456,
+    },
+    .cmdline = "\0",
+};
+
+static const struct {
+    struct KernAux_Multiboot2_Tag_Module tag;
+    char cmdline[14];
+} tag_module_with_some_name_valid = {
+    .tag = {
+        .base = {
+            .type = KERNAUX_MULTIBOOT2_TAGTYPE_MODULE,
+            .size = 30,
+        },
+        .mod_start = 123,
+        .mod_end = 456,
+    },
+    .cmdline = "Hello, World!\0",
+};
+
+static const struct {
+    struct KernAux_Multiboot2_Tag_Module tag;
+    char cmdline[1];
+} tag_module_invalid_type = {
+    .tag = {
+        .base = {
+            .type = KERNAUX_MULTIBOOT2_TAGTYPE_NONE,
+            .size = 17,
+        },
+        .mod_start = 123,
+        .mod_end = 456,
+    },
+    .cmdline = "\0",
+};
+
+static const struct {
+    struct KernAux_Multiboot2_Tag_Module tag;
+    char cmdline[1];
+} tag_module_with_empty_name_invalid_size = {
+    .tag = {
+        .base = {
+            .type = KERNAUX_MULTIBOOT2_TAGTYPE_MODULE,
+            .size = 18,
+        },
+        .mod_start = 123,
+        .mod_end = 456,
+    },
+    .cmdline = "\0",
+};
+
+static const struct {
+    struct KernAux_Multiboot2_Tag_Module tag;
+    char cmdline[14];
+} tag_module_with_some_name_invalid_size = {
+    .tag = {
+        .base = {
+            .type = KERNAUX_MULTIBOOT2_TAGTYPE_MODULE,
+            .size = 31,
+        },
+        .mod_start = 123,
+        .mod_end = 456,
+    },
+    .cmdline = "Hello, World!\0",
+};
+
+static const struct {
+    struct KernAux_Multiboot2_Tag_Module tag;
+    char cmdline[14];
+} tag_module_with_equal_start_end_invalid = {
+    .tag = {
+        .base = {
+            .type = KERNAUX_MULTIBOOT2_TAGTYPE_MODULE,
+            .size = 31,
+        },
+        .mod_start = 123,
+        .mod_end = 123,
+    },
+    .cmdline = "Hello, World!\0",
+};
+
+static const struct {
+    struct KernAux_Multiboot2_Tag_Module tag;
+    char cmdline[14];
+} tag_module_with_reversed_start_end_invalid = {
+    .tag = {
+        .base = {
+            .type = KERNAUX_MULTIBOOT2_TAGTYPE_MODULE,
+            .size = 31,
+        },
+        .mod_start = 456,
+        .mod_end = 123,
+    },
+    .cmdline = "Hello, World!\0",
+};
+
 int main()
 {
     assert(KernAux_Multiboot2_Tag_None_is_valid(&tag_none_valid));
@@ -197,6 +302,34 @@ int main()
 
     assert(!KernAux_Multiboot2_Tag_BootLoaderName_is_valid(
         &tag_boot_loader_name_with_some_name_invalid_size.tag
+    ));
+
+    assert(KernAux_Multiboot2_Tag_Module_is_valid(
+        &tag_module_with_empty_name_valid.tag
+    ));
+
+    assert(KernAux_Multiboot2_Tag_Module_is_valid(
+        &tag_module_with_some_name_valid.tag
+    ));
+
+    assert(!KernAux_Multiboot2_Tag_Module_is_valid(
+        &tag_module_invalid_type.tag
+    ));
+
+    assert(!KernAux_Multiboot2_Tag_Module_is_valid(
+        &tag_module_with_empty_name_invalid_size.tag
+    ));
+
+    assert(!KernAux_Multiboot2_Tag_Module_is_valid(
+        &tag_module_with_some_name_invalid_size.tag
+    ));
+
+    assert(!KernAux_Multiboot2_Tag_Module_is_valid(
+        &tag_module_with_equal_start_end_invalid.tag
+    ));
+
+    assert(!KernAux_Multiboot2_Tag_Module_is_valid(
+        &tag_module_with_reversed_start_end_invalid.tag
     ));
 
     return 0;
