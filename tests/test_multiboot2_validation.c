@@ -421,6 +421,52 @@ static const struct {
     },
 };
 
+/***************
+ * Tag_VBEInfo *
+ ***************/
+
+static const struct KernAux_Multiboot2_Tag_VBEInfo
+tag_vbe_info_valid = {
+    .base = {
+        .type = KERNAUX_MULTIBOOT2_TAGTYPE_VBE_INFO,
+        .size = 784,
+    },
+    .vbe_mode = 123,
+    .vbe_interface_seg = 456,
+    .vbe_interface_off = 789,
+    .vbe_interface_len = 123,
+    .vbe_control_info = {0, 0, 0},
+    .vbe_mode_info = {0, 0, 0},
+};
+
+static const struct KernAux_Multiboot2_Tag_VBEInfo
+tag_vbe_info_invalid_type = {
+    .base = {
+        .type = KERNAUX_MULTIBOOT2_TAGTYPE_NONE,
+        .size = 784,
+    },
+    .vbe_mode = 123,
+    .vbe_interface_seg = 456,
+    .vbe_interface_off = 789,
+    .vbe_interface_len = 123,
+    .vbe_control_info = {0, 0, 0},
+    .vbe_mode_info = {0, 0, 0},
+};
+
+static const struct KernAux_Multiboot2_Tag_VBEInfo
+tag_vbe_info_invalid_size = {
+    .base = {
+        .type = KERNAUX_MULTIBOOT2_TAGTYPE_VBE_INFO,
+        .size = 784 + 1,
+    },
+    .vbe_mode = 123,
+    .vbe_interface_seg = 456,
+    .vbe_interface_off = 789,
+    .vbe_interface_len = 123,
+    .vbe_control_info = {0, 0, 0},
+    .vbe_mode_info = {0, 0, 0},
+};
+
 /********
  * main *
  ********/
@@ -555,6 +601,20 @@ int main()
 
     assert(!KernAux_Multiboot2_Tag_MemoryMap_is_valid(
         &tag_memory_map_with_some_large_data_items_invalid_size.tag
+    ));
+
+    // Tag_VBEInfo
+
+    assert(KernAux_Multiboot2_Tag_VBEInfo_is_valid(
+        &tag_vbe_info_valid
+    ));
+
+    assert(!KernAux_Multiboot2_Tag_VBEInfo_is_valid(
+        &tag_vbe_info_invalid_type
+    ));
+
+    assert(!KernAux_Multiboot2_Tag_VBEInfo_is_valid(
+        &tag_vbe_info_invalid_size
     ));
 
     return 0;
