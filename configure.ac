@@ -1,5 +1,9 @@
-AC_INIT([libkernaux],[0.0],[kotovalexarian@gmail.com])
 AC_PREREQ([2.68])
+AC_INIT([libkernaux],
+  [0.0.0],
+  [https://github.com/kernelmq/libkernaux/issues],
+  [libkernaux],
+  [https://github.com/kernelmq/libkernaux])
 
 AC_CONFIG_SRCDIR([src/pfa.c])
 
@@ -12,9 +16,8 @@ AC_CONFIG_FILES([
 
 AC_LANG([C])
 
+AM_PROG_AR
 AC_PROG_CC
 AC_PROG_RANLIB
-
-AM_PROG_AR
 
 AC_OUTPUT
