@@ -13,6 +13,8 @@
 /configure
 /configure.scan
 /depcomp
+/include/Makefile
+/include/Makefile.in
 /install-sh
 /missing
 /src/.deps/
