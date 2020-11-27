@@ -14,6 +14,8 @@ AC_CONFIG_FILES([
   include/Makefile
 ])
 
+PKG_CHECK_MODULES([CHECK], [check])
+
 AC_LANG([C])
 
 AM_PROG_AR

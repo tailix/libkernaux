@@ -19,3 +19,10 @@
 /include/Makefile.in
 /install-sh
 /missing
+/test-driver
+/test-suite.log
+/tests/test*.log
+/tests/test*.trs
+
+/tests/hang
+/tests/test_hang_segfault
