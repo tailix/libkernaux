@@ -23,6 +23,3 @@
 /test-suite.log
 /tests/test*.log
 /tests/test*.trs
-
-/tests/hang
-/tests/test_hang_segfault
