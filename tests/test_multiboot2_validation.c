@@ -88,6 +88,71 @@ static const struct {
     .cmdline = "Hello, World!\0",
 };
 
+static const struct {
+    struct KernAux_Multiboot2_Tag_BootLoaderName tag;
+    char cmdline[1];
+} tag_boot_loader_name_with_empty_name_valid = {
+    .tag = {
+        .base = {
+            .type = KERNAUX_MULTIBOOT2_TAGTYPE_BOOT_LOADER_NAME,
+            .size = 9,
+        },
+    },
+    .cmdline = "\0",
+};
+
+static const struct {
+    struct KernAux_Multiboot2_Tag_BootLoaderName tag;
+    char cmdline[14];
+} tag_boot_loader_name_with_some_name_valid = {
+    .tag = {
+        .base = {
+            .type = KERNAUX_MULTIBOOT2_TAGTYPE_BOOT_LOADER_NAME,
+            .size = 22,
+        },
+    },
+    .cmdline = "Hello, World!\0",
+};
+
+static const struct {
+    struct KernAux_Multiboot2_Tag_BootLoaderName tag;
+    char cmdline[1];
+} tag_boot_loader_name_invalid_type = {
+    .tag = {
+        .base = {
+            .type = KERNAUX_MULTIBOOT2_TAGTYPE_NONE,
+            .size = 9,
+        },
+    },
+    .cmdline = "\0",
+};
+
+static const struct {
+    struct KernAux_Multiboot2_Tag_BootLoaderName tag;
+    char cmdline[1];
+} tag_boot_loader_name_with_empty_name_invalid_size = {
+    .tag = {
+        .base = {
+            .type = KERNAUX_MULTIBOOT2_TAGTYPE_BOOT_LOADER_NAME,
+            .size = 10,
+        },
+    },
+    .cmdline = "\0",
+};
+
+static const struct {
+    struct KernAux_Multiboot2_Tag_BootLoaderName tag;
+    char cmdline[14];
+} tag_boot_loader_name_with_some_name_invalid_size = {
+    .tag = {
+        .base = {
+            .type = KERNAUX_MULTIBOOT2_TAGTYPE_BOOT_LOADER_NAME,
+            .size = 23,
+        },
+    },
+    .cmdline = "Hello, World!\0",
+};
+
 int main()
 {
     assert(KernAux_Multiboot2_Tag_None_is_valid(&tag_none_valid));
@@ -112,6 +177,26 @@ int main()
 
     assert(!KernAux_Multiboot2_Tag_BootCmdLine_is_valid(
         &tag_boot_cmd_line_with_some_cmdline_invalid_size.tag
+    ));
+
+    assert(KernAux_Multiboot2_Tag_BootLoaderName_is_valid(
+        &tag_boot_loader_name_with_empty_name_valid.tag
+    ));
+
+    assert(KernAux_Multiboot2_Tag_BootLoaderName_is_valid(
+        &tag_boot_loader_name_with_some_name_valid.tag
+    ));
+
+    assert(!KernAux_Multiboot2_Tag_BootLoaderName_is_valid(
+        &tag_boot_loader_name_invalid_type.tag
+    ));
+
+    assert(!KernAux_Multiboot2_Tag_BootLoaderName_is_valid(
+        &tag_boot_loader_name_with_empty_name_invalid_size.tag
+    ));
+
+    assert(!KernAux_Multiboot2_Tag_BootLoaderName_is_valid(
+        &tag_boot_loader_name_with_some_name_invalid_size.tag
     ));
 
     return 0;
