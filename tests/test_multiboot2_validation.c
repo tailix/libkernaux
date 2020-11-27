@@ -308,6 +308,43 @@ tag_basic_memory_info_invalid_size = {
     .mem_upper = 123,
 };
 
+/**********************
+ * Tag_BIOSBootDevice *
+ **********************/
+
+static const struct KernAux_Multiboot2_Tag_BIOSBootDevice
+tag_bios_boot_device_valid = {
+    .base = {
+        .type = KERNAUX_MULTIBOOT2_TAGTYPE_BIOS_BOOT_DEVICE,
+        .size = 20,
+    },
+    .bios_dev = 123,
+    .partition = 456,
+    .sub_partition = 789,
+};
+
+static const struct KernAux_Multiboot2_Tag_BIOSBootDevice
+tag_bios_boot_device_invalid_type = {
+    .base = {
+        .type = KERNAUX_MULTIBOOT2_TAGTYPE_NONE,
+        .size = 20,
+    },
+    .bios_dev = 123,
+    .partition = 456,
+    .sub_partition = 789,
+};
+
+static const struct KernAux_Multiboot2_Tag_BIOSBootDevice
+tag_bios_boot_device_invalid_size = {
+    .base = {
+        .type = KERNAUX_MULTIBOOT2_TAGTYPE_BIOS_BOOT_DEVICE,
+        .size = 21,
+    },
+    .bios_dev = 123,
+    .partition = 456,
+    .sub_partition = 789,
+};
+
 /********
  * main *
  ********/
@@ -406,6 +443,20 @@ int main()
 
     assert(!KernAux_Multiboot2_Tag_BasicMemoryInfo_is_valid(
         &tag_basic_memory_info_invalid_size
+    ));
+
+    // Tag_BIOSBootDevice
+
+    assert(KernAux_Multiboot2_Tag_BIOSBootDevice_is_valid(
+        &tag_bios_boot_device_valid
+    ));
+
+    assert(!KernAux_Multiboot2_Tag_BIOSBootDevice_is_valid(
+        &tag_bios_boot_device_invalid_type
+    ));
+
+    assert(!KernAux_Multiboot2_Tag_BIOSBootDevice_is_valid(
+        &tag_bios_boot_device_invalid_size
     ));
 
     return 0;
