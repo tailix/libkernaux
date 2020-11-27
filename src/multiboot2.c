@@ -73,8 +73,8 @@ unsigned char KernAux_Multiboot2_TagBase_is_valid(
             (struct KernAux_Multiboot2_Tag_NetworkingInfo*)tag_base
         );
     case KERNAUX_MULTIBOOT2_TAGTYPE_EFI_MEMORY_MAP:
-        return KernAux_Multiboot2_Tag_MemoryMap_is_valid(
-            (struct KernAux_Multiboot2_Tag_MemoryMap*)tag_base
+        return KernAux_Multiboot2_Tag_EFIMemoryMap_is_valid(
+            (struct KernAux_Multiboot2_Tag_EFIMemoryMap*)tag_base
         );
     case KERNAUX_MULTIBOOT2_TAGTYPE_EFI_BOOT_SERVICES_NOT_TERMINATED:
         return KernAux_Multiboot2_Tag_EFIBootServicesNotTerminated_is_valid(
