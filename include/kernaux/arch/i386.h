@@ -1,5 +1,5 @@
-#ifndef LIBKERNAUX_INCLUDED_PFA
-#define LIBKERNAUX_INCLUDED_PFA 1
+#ifndef KERNAUX_INCLUDED_ARCH_I386
+#define KERNAUX_INCLUDED_ARCH_I386 1
 
 #ifdef __cplusplus
 extern "C" {
