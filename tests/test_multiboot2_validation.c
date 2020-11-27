@@ -345,6 +345,82 @@ tag_bios_boot_device_invalid_size = {
     .sub_partition = 789,
 };
 
+/*****************
+ * Tag_MemoryMap *
+ *****************/
+
+static const struct KernAux_Multiboot2_Tag_MemoryMap
+tag_memory_map_with_empty_data_valid = {
+    .base = {
+        .type = KERNAUX_MULTIBOOT2_TAGTYPE_MEMORY_MAP,
+        .size = 16,
+    },
+    .entry_size = 4,
+    .entry_version = 0,
+};
+
+static const struct {
+    struct KernAux_Multiboot2_Tag_MemoryMap tag;
+    unsigned char data[4 * 2];
+} tag_memory_map_with_some_small_data_items_valid = {
+    .tag = {
+        .base = {
+            .type = KERNAUX_MULTIBOOT2_TAGTYPE_MEMORY_MAP,
+            .size = 20,
+        },
+        .entry_size = 4,
+        .entry_version = 123,
+    },
+};
+
+static const struct {
+    struct KernAux_Multiboot2_Tag_MemoryMap tag;
+    unsigned char data[50 * 2];
+} tag_memory_map_with_some_large_data_items_valid = {
+    .tag = {
+        .base = {
+            .type = KERNAUX_MULTIBOOT2_TAGTYPE_MEMORY_MAP,
+            .size = 116,
+        },
+        .entry_size = 50,
+        .entry_version = 456,
+    },
+};
+
+static const struct KernAux_Multiboot2_Tag_MemoryMap
+tag_memory_map_invalid_type = {
+    .base = {
+        .type = KERNAUX_MULTIBOOT2_TAGTYPE_NONE,
+        .size = 16,
+    },
+    .entry_size = 4,
+    .entry_version = 0,
+};
+
+static const struct KernAux_Multiboot2_Tag_MemoryMap
+tag_memory_map_with_empty_data_invalid_size = {
+    .base = {
+        .type = KERNAUX_MULTIBOOT2_TAGTYPE_MEMORY_MAP,
+        .size = 17,
+    },
+    .entry_size = 4,
+    .entry_version = 0,
+};
+
+static const struct {
+    struct KernAux_Multiboot2_Tag_MemoryMap tag;
+    unsigned char data[50 * 2 + 1];
+} tag_memory_map_with_some_large_data_items_invalid_size = {
+    .tag = {
+        .base = {
+            .type = KERNAUX_MULTIBOOT2_TAGTYPE_MEMORY_MAP,
+            .size = 116 + 1,
+        },
+        .entry_size = 50,
+        .entry_version = 456,
+    },
+};
+
 /********
  * main *
  ********/
@@ -457,6 +533,28 @@ int main()
 
     assert(!KernAux_Multiboot2_Tag_BIOSBootDevice_is_valid(
         &tag_bios_boot_device_invalid_size
+    ));
+
+    // Tag_MemoryMap
+
+    assert(KernAux_Multiboot2_Tag_MemoryMap_is_valid(
+        &tag_memory_map_with_empty_data_valid
+    ));
+
+    assert(KernAux_Multiboot2_Tag_MemoryMap_is_valid(
+        &tag_memory_map_with_some_small_data_items_valid.tag
+    ));
+
+    assert(KernAux_Multiboot2_Tag_MemoryMap_is_valid(
+        &tag_memory_map_with_some_large_data_items_valid.tag
+    ));
+
+    assert(!KernAux_Multiboot2_Tag_MemoryMap_is_valid(
+        &tag_memory_map_invalid_type
+    ));
+
+    assert(!KernAux_Multiboot2_Tag_MemoryMap_is_valid(
+        &tag_memory_map_with_some_large_data_items_invalid_size.tag
     ));
 
     return 0;
