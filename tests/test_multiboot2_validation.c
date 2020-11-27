@@ -102,7 +102,7 @@ static const struct {
 
 static const struct {
     struct KernAux_Multiboot2_Tag_BootLoaderName tag;
-    char cmdline[1];
+    char name[1];
 } tag_boot_loader_name_with_empty_name_valid = {
     .tag = {
         .base = {
@@ -110,12 +110,12 @@ static const struct {
             .size = 9,
         },
     },
-    .cmdline = "\0",
+    .name = "\0",
 };
 
 static const struct {
     struct KernAux_Multiboot2_Tag_BootLoaderName tag;
-    char cmdline[14];
+    char name[14];
 } tag_boot_loader_name_with_some_name_valid = {
     .tag = {
         .base = {
@@ -123,12 +123,12 @@ static const struct {
             .size = 22,
         },
     },
-    .cmdline = "Hello, World!\0",
+    .name = "Hello, World!\0",
 };
 
 static const struct {
     struct KernAux_Multiboot2_Tag_BootLoaderName tag;
-    char cmdline[1];
+    char name[1];
 } tag_boot_loader_name_invalid_type = {
     .tag = {
         .base = {
@@ -136,12 +136,12 @@ static const struct {
             .size = 9,
         },
     },
-    .cmdline = "\0",
+    .name = "\0",
 };
 
 static const struct {
     struct KernAux_Multiboot2_Tag_BootLoaderName tag;
-    char cmdline[1];
+    char name[1];
 } tag_boot_loader_name_with_empty_name_invalid_size = {
     .tag = {
         .base = {
@@ -149,12 +149,12 @@ static const struct {
             .size = 10,
         },
     },
-    .cmdline = "\0",
+    .name = "\0",
 };
 
 static const struct {
     struct KernAux_Multiboot2_Tag_BootLoaderName tag;
-    char cmdline[14];
+    char name[14];
 } tag_boot_loader_name_with_some_name_invalid_size = {
     .tag = {
         .base = {
@@ -162,7 +162,7 @@ static const struct {
             .size = 23,
         },
     },
-    .cmdline = "Hello, World!\0",
+    .name = "Hello, World!\0",
 };
 
 /**************
