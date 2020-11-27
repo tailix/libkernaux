@@ -19,6 +19,9 @@ Configure with cross-compiler in `$PATH` to make without it in `$PATH`:
   CFLAGS='-ffreestanding -nostdinc -nostdlib -fno-builtin -fno-stack-protector -Wall -Wextra'
 ```
 
+To install into specific directory use full path:
+`DESTDIR="$(pwd)/dest" make install` instead of `DESTDIR=dest make install`.
+
 Check if compilation targets i386: `objdump -d src/arch/i386.o`.
 
 It should output something like this:
