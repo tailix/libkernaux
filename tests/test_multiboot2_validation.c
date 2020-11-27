@@ -2,6 +2,10 @@
 
 #include <assert.h>
 
+/************
+ * Tag_None *
+ ************/
+
 static const struct KernAux_Multiboot2_Tag_None tag_none_valid = {
     .base = {
         .type = KERNAUX_MULTIBOOT2_TAGTYPE_NONE,
@@ -22,6 +26,10 @@ static const struct KernAux_Multiboot2_Tag_None tag_none_invalid_size = {
         .size = 9,
     },
 };
+
+/*******************
+ * Tag_BootCmdLine *
+ *******************/
 
 static const struct {
     struct KernAux_Multiboot2_Tag_BootCmdLine tag;
@@ -88,6 +96,10 @@ static const struct {
     .cmdline = "Hello, World!\0",
 };
 
+/**********************
+ * Tag_BootLoaderName *
+ **********************/
+
 static const struct {
     struct KernAux_Multiboot2_Tag_BootLoaderName tag;
     char cmdline[1];
@@ -152,6 +164,10 @@ static const struct {
     },
     .cmdline = "Hello, World!\0",
 };
+
+/**************
+ * Tag_Module *
+ **************/
 
 static const struct {
     struct KernAux_Multiboot2_Tag_Module tag;
@@ -258,11 +274,19 @@ static const struct {
     .cmdline = "Hello, World!\0",
 };
 
+/********
+ * main *
+ ********/
+
 int main()
 {
+    // Tag_None
+
     assert(KernAux_Multiboot2_Tag_None_is_valid(&tag_none_valid));
     assert(!KernAux_Multiboot2_Tag_None_is_valid(&tag_none_invalid_type));
     assert(!KernAux_Multiboot2_Tag_None_is_valid(&tag_none_invalid_size));
+
+    // Tag_BootCmdLine
 
     assert(KernAux_Multiboot2_Tag_BootCmdLine_is_valid(
         &tag_boot_cmd_line_with_empty_cmdline_valid.tag
@@ -284,6 +308,8 @@ int main()
         &tag_boot_cmd_line_with_some_cmdline_invalid_size.tag
     ));
 
+    // Tag_BootLoaderName
+
     assert(KernAux_Multiboot2_Tag_BootLoaderName_is_valid(
         &tag_boot_loader_name_with_empty_name_valid.tag
     ));
@@ -303,6 +329,8 @@ int main()
     assert(!KernAux_Multiboot2_Tag_BootLoaderName_is_valid(
         &tag_boot_loader_name_with_some_name_invalid_size.tag
     ));
+
+    // Tag_Module
 
     assert(KernAux_Multiboot2_Tag_Module_is_valid(
         &tag_module_with_empty_name_valid.tag
