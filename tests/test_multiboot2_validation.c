@@ -473,6 +473,111 @@ tag_vbe_info_invalid_size = {
 
 int main()
 {
+    // TagBase
+
+    assert(KernAux_Multiboot2_TagBase_is_valid(&tag_none_valid.base));
+    assert(!KernAux_Multiboot2_TagBase_is_valid(&tag_none_invalid_size.base));
+
+    assert(KernAux_Multiboot2_TagBase_is_valid(
+        &tag_boot_cmd_line_with_empty_cmdline_valid.tag.base
+    ));
+
+    assert(KernAux_Multiboot2_TagBase_is_valid(
+        &tag_boot_cmd_line_with_some_cmdline_valid.tag.base
+    ));
+
+    assert(!KernAux_Multiboot2_TagBase_is_valid(
+        &tag_boot_cmd_line_with_empty_cmdline_invalid_size.tag.base
+    ));
+
+    assert(!KernAux_Multiboot2_TagBase_is_valid(
+        &tag_boot_cmd_line_with_some_cmdline_invalid_size.tag.base
+    ));
+
+    assert(KernAux_Multiboot2_TagBase_is_valid(
+        &tag_boot_loader_name_with_empty_name_valid.tag.base
+    ));
+
+    assert(KernAux_Multiboot2_TagBase_is_valid(
+        &tag_boot_loader_name_with_some_name_valid.tag.base
+    ));
+
+    assert(!KernAux_Multiboot2_TagBase_is_valid(
+        &tag_boot_loader_name_with_empty_name_invalid_size.tag.base
+    ));
+
+    assert(!KernAux_Multiboot2_TagBase_is_valid(
+        &tag_boot_loader_name_with_some_name_invalid_size.tag.base
+    ));
+
+    assert(KernAux_Multiboot2_TagBase_is_valid(
+        &tag_module_with_empty_name_valid.tag.base
+    ));
+
+    assert(KernAux_Multiboot2_TagBase_is_valid(
+        &tag_module_with_some_name_valid.tag.base
+    ));
+
+    assert(!KernAux_Multiboot2_TagBase_is_valid(
+        &tag_module_with_empty_name_invalid_size.tag.base
+    ));
+
+    assert(!KernAux_Multiboot2_TagBase_is_valid(
+        &tag_module_with_some_name_invalid_size.tag.base
+    ));
+
+    assert(!KernAux_Multiboot2_TagBase_is_valid(
+        &tag_module_with_equal_start_end_invalid.tag.base
+    ));
+
+    assert(!KernAux_Multiboot2_TagBase_is_valid(
+        &tag_module_with_reversed_start_end_invalid.tag.base
+    ));
+
+    assert(KernAux_Multiboot2_TagBase_is_valid(
+        &tag_basic_memory_info_valid.base
+    ));
+
+    assert(!KernAux_Multiboot2_TagBase_is_valid(
+        &tag_basic_memory_info_invalid_size.base
+    ));
+
+    assert(KernAux_Multiboot2_TagBase_is_valid(
+        &tag_bios_boot_device_valid.base
+    ));
+
+    assert(!KernAux_Multiboot2_TagBase_is_valid(
+        &tag_bios_boot_device_invalid_size.base
+    ));
+
+    assert(KernAux_Multiboot2_TagBase_is_valid(
+        &tag_memory_map_with_empty_data_valid.base
+    ));
+
+    assert(KernAux_Multiboot2_TagBase_is_valid(
+        &tag_memory_map_with_some_small_data_items_valid.tag.base
+    ));
+
+    assert(KernAux_Multiboot2_TagBase_is_valid(
+        &tag_memory_map_with_some_large_data_items_valid.tag.base
+    ));
+
+    assert(!KernAux_Multiboot2_TagBase_is_valid(
+        &tag_memory_map_with_empty_data_invalid_size.base
+    ));
+
+    assert(!KernAux_Multiboot2_TagBase_is_valid(
+        &tag_memory_map_with_some_large_data_items_invalid_size.tag.base
+    ));
+
+    assert(KernAux_Multiboot2_TagBase_is_valid(
+        &tag_vbe_info_valid.base
+    ));
+
+    assert(!KernAux_Multiboot2_TagBase_is_valid(
+        &tag_vbe_info_invalid_size.base
+    ));
+
     // Tag_None
 
     assert(KernAux_Multiboot2_Tag_None_is_valid(&tag_none_valid));
