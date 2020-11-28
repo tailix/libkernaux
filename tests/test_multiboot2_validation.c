@@ -355,34 +355,34 @@ tag_memory_map_with_empty_data_valid = {
         .type = KERNAUX_MULTIBOOT2_TAGTYPE_MEMORY_MAP,
         .size = 16,
     },
-    .entry_size = 4,
+    .entry_size = 8,
     .entry_version = 0,
 };
 
 static const struct {
     struct KernAux_Multiboot2_Tag_MemoryMap tag;
-    unsigned char data[4 * 2];
+    unsigned char data[8 * 2];
 } tag_memory_map_with_some_small_data_items_valid = {
     .tag = {
         .base = {
             .type = KERNAUX_MULTIBOOT2_TAGTYPE_MEMORY_MAP,
-            .size = 20,
+            .size = 16 + 8 * 2,
         },
-        .entry_size = 4,
+        .entry_size = 8,
         .entry_version = 123,
     },
 };
 
 static const struct {
     struct KernAux_Multiboot2_Tag_MemoryMap tag;
-    unsigned char data[50 * 2];
+    unsigned char data[64 * 2];
 } tag_memory_map_with_some_large_data_items_valid = {
     .tag = {
         .base = {
             .type = KERNAUX_MULTIBOOT2_TAGTYPE_MEMORY_MAP,
-            .size = 116,
+            .size = 16 + 64 * 2,
         },
-        .entry_size = 50,
+        .entry_size = 64,
         .entry_version = 456,
     },
 };
@@ -393,7 +393,7 @@ tag_memory_map_invalid_type = {
         .type = KERNAUX_MULTIBOOT2_TAGTYPE_NONE,
         .size = 16,
     },
-    .entry_size = 4,
+    .entry_size = 8,
     .entry_version = 0,
 };
 
@@ -401,22 +401,22 @@ static const struct KernAux_Multiboot2_Tag_MemoryMap
 tag_memory_map_with_empty_data_invalid_size = {
     .base = {
         .type = KERNAUX_MULTIBOOT2_TAGTYPE_MEMORY_MAP,
-        .size = 17,
+        .size = 16 + 1,
     },
-    .entry_size = 4,
+    .entry_size = 8,
     .entry_version = 0,
 };
 
 static const struct {
     struct KernAux_Multiboot2_Tag_MemoryMap tag;
-    unsigned char data[50 * 2 + 1];
+    unsigned char data[64 * 2 + 1];
 } tag_memory_map_with_some_large_data_items_invalid_size = {
     .tag = {
         .base = {
             .type = KERNAUX_MULTIBOOT2_TAGTYPE_MEMORY_MAP,
-            .size = 116 + 1,
+            .size = 16 + 64 * 2 + 1,
         },
-        .entry_size = 50,
+        .entry_size = 64,
         .entry_version = 456,
     },
 };
