@@ -182,6 +182,18 @@ void KernAux_Multiboot2_TagBase_print(
         break;
     case KERNAUX_MULTIBOOT2_TAGTYPE_APM_TABLE:
         {
+            const struct KernAux_Multiboot2_Tag_APMTable *const tag_apm =
+                (struct KernAux_Multiboot2_Tag_APMTable*)tag_base;
+
+            print("  version: %hu\n",     tag_apm->version);
+            print("  cseg: %hu\n",        tag_apm->cseg);
+            print("  offset: %u\n",       tag_apm->offset);
+            print("  cseg 16: %hu\n",     tag_apm->cseg_16);
+            print("  dseg: %hu\n",        tag_apm->dseg);
+            print("  flags: %hu\n",       tag_apm->flags);
+            print("  cseg len: %hu\n",    tag_apm->cseg_len);
+            print("  cseg 16 len: %hu\n", tag_apm->cseg_16_len);
+            print("  dseg len: %hu\n",    tag_apm->dseg_len);
         }
         break;
     case KERNAUX_MULTIBOOT2_TAGTYPE_EFI_32BIT_SYSTEM_TABLE_PTR:
