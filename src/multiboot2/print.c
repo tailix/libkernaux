@@ -153,10 +153,26 @@ void KernAux_Multiboot2_TagBase_print(
         break;
     case KERNAUX_MULTIBOOT2_TAGTYPE_VBE_INFO:
         {
+            const struct KernAux_Multiboot2_Tag_VBEInfo *const tag_vbe =
+                (struct KernAux_Multiboot2_Tag_VBEInfo*)tag_base;
+
+            print("  VBE mode: %hu\n",          tag_vbe->vbe_mode);
+            print("  VBE interface seg: %hu\n", tag_vbe->vbe_interface_seg);
+            print("  VBE interface off: %hu\n", tag_vbe->vbe_interface_off);
+            print("  VBE interface len: %hu\n", tag_vbe->vbe_interface_len);
         }
         break;
     case KERNAUX_MULTIBOOT2_TAGTYPE_FRAMEBUFFER_INFO:
         {
+            const struct KernAux_Multiboot2_Tag_FramebufferInfo *const tag_fb =
+                (struct KernAux_Multiboot2_Tag_FramebufferInfo*)tag_base;
+
+            print("  framebuffer addr: %llu\n", tag_fb->framebuffer_addr);
+            print("  framebuffer pitch: %u\n",  tag_fb->framebuffer_pitch);
+            print("  framebuffer width: %u\n",  tag_fb->framebuffer_width);
+            print("  framebuffer height: %u\n", tag_fb->framebuffer_height);
+            print("  framebuffer bpp: %u\n",    tag_fb->framebuffer_bpp);
+            print("  framebuffer type: %u\n",   tag_fb->framebuffer_type);
         }
         break;
     case KERNAUX_MULTIBOOT2_TAGTYPE_ELF_SYMBOLS:
