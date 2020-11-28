@@ -24,8 +24,7 @@ unsigned char KernAux_Multiboot2_is_valid(
         }
 
         tag_base = (struct KernAux_Multiboot2_TagBase*)(
-            (void*)tag_base +
-            tag_base->size
+            (void*)tag_base + ((tag_base->size + 7) & ~7)
         );
     }
 

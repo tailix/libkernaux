@@ -80,8 +80,7 @@ void KernAux_Multiboot2_print(
         KernAux_Multiboot2_TagBase_print(tag_base, print);
 
         tag_base = (struct KernAux_Multiboot2_TagBase*)(
-            (void*)tag_base +
-            tag_base->size
+            (void*)tag_base + ((tag_base->size + 7) & ~7)
         );
     }
 }

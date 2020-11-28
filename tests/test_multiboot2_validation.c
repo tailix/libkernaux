@@ -516,10 +516,11 @@ static const struct {
     struct KernAux_Multiboot2 multiboot2;
     struct KernAux_Multiboot2_Tag_BasicMemoryInfo tag_basic_memory_info;
     struct KernAux_Multiboot2_Tag_BIOSBootDevice tag_bios_boot_device;
+    unsigned char _align1[4];
     struct KernAux_Multiboot2_Tag_None tag_none;
 } multiboot2_with_more_additional_tags_valid = {
     .multiboot2 = {
-        .total_size = 8 + 16 + 20 + 8,
+        .total_size = 8 + 16 + (20 + 4) + 8,
         .reserved1 = 0,
     },
     .tag_basic_memory_info = {
@@ -591,10 +592,11 @@ static const struct {
     struct KernAux_Multiboot2_Tag_BasicMemoryInfo tag_basic_memory_info;
     struct KernAux_Multiboot2_Tag_None tag_none1;
     struct KernAux_Multiboot2_Tag_BIOSBootDevice tag_bios_boot_device;
+    unsigned char _align1[4];
     struct KernAux_Multiboot2_Tag_None tag_none2;
 } multiboot2_with_early_none_tag_invalid = {
     .multiboot2 = {
-        .total_size = 8 + 16 + 8 + 20 + 8,
+        .total_size = 8 + 16 + 8 + (20 + 4) + 8,
         .reserved1 = 0,
     },
     .tag_basic_memory_info = {
@@ -632,10 +634,11 @@ static const struct {
     struct KernAux_Multiboot2 multiboot2;
     struct KernAux_Multiboot2_Tag_BasicMemoryInfo tag_basic_memory_info;
     struct KernAux_Multiboot2_Tag_BIOSBootDevice tag_bios_boot_device;
+    unsigned char _align1[4];
     struct KernAux_Multiboot2_Tag_None tag_none;
 } multiboot2_with_more_additional_tags_invalid_size_too_big = {
     .multiboot2 = {
-        .total_size = 8 + 16 + 20 + 8 + 1,
+        .total_size = 8 + 16 + (20 + 4) + 8 + 1,
         .reserved1 = 0,
     },
     .tag_basic_memory_info = {
@@ -667,10 +670,11 @@ static const struct {
     struct KernAux_Multiboot2 multiboot2;
     struct KernAux_Multiboot2_Tag_BasicMemoryInfo tag_basic_memory_info;
     struct KernAux_Multiboot2_Tag_BIOSBootDevice tag_bios_boot_device;
+    unsigned char _align1[4];
     struct KernAux_Multiboot2_Tag_None tag_none;
 } multiboot2_with_more_additional_tags_invalid_size_too_small = {
     .multiboot2 = {
-        .total_size = 8 + 16 + 20 + 8 - 1,
+        .total_size = 8 + 16 + (20 + 4) + 8 - 1,
         .reserved1 = 0,
     },
     .tag_basic_memory_info = {
