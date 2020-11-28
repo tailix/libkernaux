@@ -149,6 +149,7 @@ void KernAux_Multiboot2_TagBase_print(
         break;
     case KERNAUX_MULTIBOOT2_TAGTYPE_MEMORY_MAP:
         {
+            // TODO: print
         }
         break;
     case KERNAUX_MULTIBOOT2_TAGTYPE_VBE_INFO:
@@ -178,6 +179,7 @@ void KernAux_Multiboot2_TagBase_print(
         break;
     case KERNAUX_MULTIBOOT2_TAGTYPE_ELF_SYMBOLS:
         {
+            // TODO: print
         }
         break;
     case KERNAUX_MULTIBOOT2_TAGTYPE_APM_TABLE:
@@ -198,40 +200,49 @@ void KernAux_Multiboot2_TagBase_print(
         break;
     case KERNAUX_MULTIBOOT2_TAGTYPE_EFI_32BIT_SYSTEM_TABLE_PTR:
         {
+            // TODO: print
         }
         break;
     case KERNAUX_MULTIBOOT2_TAGTYPE_EFI_64BIT_SYSTEM_TABLE_PTR:
         {
+            // TODO: print
         }
         break;
     case KERNAUX_MULTIBOOT2_TAGTYPE_SMBIOS_TABLES:
         {
+            // TODO: print
         }
         break;
     case KERNAUX_MULTIBOOT2_TAGTYPE_ACPI_OLD_RSDP:
         {
+            // TODO: print
         }
         break;
     case KERNAUX_MULTIBOOT2_TAGTYPE_ACPI_NEW_RSDP:
         {
+            // TODO: print
         }
         break;
     case KERNAUX_MULTIBOOT2_TAGTYPE_NETWORKING_INFO:
         {
+            // TODO: print
         }
         break;
     case KERNAUX_MULTIBOOT2_TAGTYPE_EFI_MEMORY_MAP:
         {
+            // TODO: print
         }
         break;
     case KERNAUX_MULTIBOOT2_TAGTYPE_EFI_BOOT_SERVICES_NOT_TERMINATED:
         break;
     case KERNAUX_MULTIBOOT2_TAGTYPE_EFI_32BIT_IMAGE_HANDLE_PTR:
         {
+            // TODO: print
         }
         break;
     case KERNAUX_MULTIBOOT2_TAGTYPE_EFI_64BIT_IMAGE_HANDLE_PTR:
         {
+            // TODO: print
         }
         break;
     case KERNAUX_MULTIBOOT2_TAGTYPE_IMAGE_LOAD_BASE_PHYS_ADDR:
