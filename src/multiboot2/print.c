@@ -104,6 +104,8 @@ void KernAux_Multiboot2_TagBase_print(
     print("  size: %u\n", tag_base->size);
 
     switch (tag_base->type) {
+    case KERNAUX_MULTIBOOT2_TAGTYPE_NONE:
+        break;
     case KERNAUX_MULTIBOOT2_TAGTYPE_BOOT_CMD_LINE:
         print(
             "  cmdline: %s\n",
@@ -143,6 +145,66 @@ void KernAux_Multiboot2_TagBase_print(
             print("  bios dev: %u\n", tag_bbd->bios_dev);
             print("  partition: %u\n", tag_bbd->partition);
             print("  sub_partition: %u\n", tag_bbd->sub_partition);
+        }
+        break;
+    case KERNAUX_MULTIBOOT2_TAGTYPE_MEMORY_MAP:
+        {
+        }
+        break;
+    case KERNAUX_MULTIBOOT2_TAGTYPE_VBE_INFO:
+        {
+        }
+        break;
+    case KERNAUX_MULTIBOOT2_TAGTYPE_FRAMEBUFFER_INFO:
+        {
+        }
+        break;
+    case KERNAUX_MULTIBOOT2_TAGTYPE_ELF_SYMBOLS:
+        {
+        }
+        break;
+    case KERNAUX_MULTIBOOT2_TAGTYPE_APM_TABLE:
+        {
+        }
+        break;
+    case KERNAUX_MULTIBOOT2_TAGTYPE_EFI_32BIT_SYSTEM_TABLE_PTR:
+        {
+        }
+        break;
+    case KERNAUX_MULTIBOOT2_TAGTYPE_EFI_64BIT_SYSTEM_TABLE_PTR:
+        {
+        }
+        break;
+    case KERNAUX_MULTIBOOT2_TAGTYPE_SMBIOS_TABLES:
+        {
+        }
+        break;
+    case KERNAUX_MULTIBOOT2_TAGTYPE_ACPI_OLD_RSDP:
+        {
+        }
+        break;
+    case KERNAUX_MULTIBOOT2_TAGTYPE_ACPI_NEW_RSDP:
+        {
+        }
+        break;
+    case KERNAUX_MULTIBOOT2_TAGTYPE_NETWORKING_INFO:
+        {
+        }
+        break;
+    case KERNAUX_MULTIBOOT2_TAGTYPE_EFI_MEMORY_MAP:
+        {
+        }
+        break;
+    case KERNAUX_MULTIBOOT2_TAGTYPE_EFI_BOOT_SERVICES_NOT_TERMINATED:
+        {
+        }
+        break;
+    case KERNAUX_MULTIBOOT2_TAGTYPE_EFI_32BIT_IMAGE_HANDLE_PTR:
+        {
+        }
+        break;
+    case KERNAUX_MULTIBOOT2_TAGTYPE_EFI_64BIT_IMAGE_HANDLE_PTR:
+        {
         }
         break;
     case KERNAUX_MULTIBOOT2_TAGTYPE_IMAGE_LOAD_BASE_PHYS_ADDR:

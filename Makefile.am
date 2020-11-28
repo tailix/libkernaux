@@ -1,6 +1,6 @@
 SUBDIRS = include
 
-AM_CFLAGS = -std=c99 -I$(top_srcdir)/include
+AM_CFLAGS = -std=c99 -Wall -Wextra -I$(top_srcdir)/include
 
 lib_LIBRARIES = libkernaux.a
 
