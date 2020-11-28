@@ -5,6 +5,15 @@ Auxiliary library for kernel development.
 
 
 
+Table of contents
+-----------------
+
+* [Overview](#libkernaux)
+* [Table of contents](#table-of-contents)
+* [Tips](#tips)
+
+
+
 Tips
 ----
 
