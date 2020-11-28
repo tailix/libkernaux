@@ -304,9 +304,25 @@ struct KernAux_Multiboot2_Tag_MemoryMap_EntryBase {
 }
 __attribute__((packed));
 
-/****************************
- * Tag validation functions *
- ****************************/
+/*******************
+ * Print functions *
+ *******************/
+
+void KernAux_Multiboot2_print(
+    const struct KernAux_Multiboot2 *multiboot2,
+    void (*print)(const char *format, ...)
+)
+__attribute__((nonnull));
+
+void KernAux_Multiboot2_TagBase_print(
+    const struct KernAux_Multiboot2_TagBase *tag_base,
+    void (*print)(const char *format, ...)
+)
+__attribute__((nonnull));
+
+/************************
+ * Validation functions *
+ ************************/
 
 unsigned char KernAux_Multiboot2_is_valid(
     const struct KernAux_Multiboot2 *multiboot2
