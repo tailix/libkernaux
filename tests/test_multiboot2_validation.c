@@ -467,12 +467,277 @@ tag_vbe_info_invalid_size = {
     .vbe_mode_info = {0, 0, 0},
 };
 
+/**************
+ * Multiboot2 *
+ **************/
+
+static const struct {
+    struct KernAux_Multiboot2 multiboot2;
+    struct KernAux_Multiboot2_Tag_None tag_none;
+} multiboot2_empty_valid = {
+    .multiboot2 = {
+        .total_size = 8 + 8,
+        .reserved1 = 0,
+    },
+    .tag_none = {
+        .base = {
+            .type = KERNAUX_MULTIBOOT2_TAGTYPE_NONE,
+            .size = 8,
+        },
+    },
+};
+
+static const struct {
+    struct KernAux_Multiboot2 multiboot2;
+    struct KernAux_Multiboot2_Tag_BasicMemoryInfo tag_basic_memory_info;
+    struct KernAux_Multiboot2_Tag_None tag_none;
+} multiboot2_with_some_additional_tag_valid = {
+    .multiboot2 = {
+        .total_size = 8 + 16 + 8,
+        .reserved1 = 0,
+    },
+    .tag_basic_memory_info = {
+        .base = {
+            .type = KERNAUX_MULTIBOOT2_TAGTYPE_BASIC_MEMORY_INFO,
+            .size = 16,
+        },
+        .mem_lower = 123,
+        .mem_upper = 123,
+    },
+    .tag_none = {
+        .base = {
+            .type = KERNAUX_MULTIBOOT2_TAGTYPE_NONE,
+            .size = 8,
+        },
+    },
+};
+
+static const struct {
+    struct KernAux_Multiboot2 multiboot2;
+    struct KernAux_Multiboot2_Tag_BasicMemoryInfo tag_basic_memory_info;
+    struct KernAux_Multiboot2_Tag_BIOSBootDevice tag_bios_boot_device;
+    struct KernAux_Multiboot2_Tag_None tag_none;
+} multiboot2_with_more_additional_tags_valid = {
+    .multiboot2 = {
+        .total_size = 8 + 16 + 20 + 8,
+        .reserved1 = 0,
+    },
+    .tag_basic_memory_info = {
+        .base = {
+            .type = KERNAUX_MULTIBOOT2_TAGTYPE_BASIC_MEMORY_INFO,
+            .size = 16,
+        },
+        .mem_lower = 123,
+        .mem_upper = 123,
+    },
+    .tag_bios_boot_device = {
+        .base = {
+            .type = KERNAUX_MULTIBOOT2_TAGTYPE_BIOS_BOOT_DEVICE,
+            .size = 20,
+        },
+        .bios_dev = 123,
+        .partition = 456,
+        .sub_partition = 789,
+    },
+    .tag_none = {
+        .base = {
+            .type = KERNAUX_MULTIBOOT2_TAGTYPE_NONE,
+            .size = 8,
+        },
+    },
+};
+
+static const struct {
+    struct KernAux_Multiboot2 multiboot2;
+    struct KernAux_Multiboot2_Tag_None tag_none;
+} multiboot2_empty_invalid_size = {
+    .multiboot2 = {
+        .total_size = 8,
+        .reserved1 = 0,
+    },
+    .tag_none = {
+        .base = {
+            .type = KERNAUX_MULTIBOOT2_TAGTYPE_NONE,
+            .size = 8,
+        },
+    },
+};
+
+static const struct KernAux_Multiboot2 multiboot2_without_none_tag_invalid = {
+    .total_size = 8,
+    .reserved1 = 0,
+};
+
+static const struct {
+    struct KernAux_Multiboot2 multiboot2;
+    struct KernAux_Multiboot2_Tag_BasicMemoryInfo tag_basic_memory_info;
+} multiboot2_with_invalid_last_tag_invalid = {
+    .multiboot2 = {
+        .total_size = 8 + 16,
+        .reserved1 = 0,
+    },
+    .tag_basic_memory_info = {
+        .base = {
+            .type = KERNAUX_MULTIBOOT2_TAGTYPE_BASIC_MEMORY_INFO,
+            .size = 16,
+        },
+        .mem_lower = 123,
+        .mem_upper = 123,
+    },
+};
+
+static const struct {
+    struct KernAux_Multiboot2 multiboot2;
+    struct KernAux_Multiboot2_Tag_BasicMemoryInfo tag_basic_memory_info;
+    struct KernAux_Multiboot2_Tag_None tag_none1;
+    struct KernAux_Multiboot2_Tag_BIOSBootDevice tag_bios_boot_device;
+    struct KernAux_Multiboot2_Tag_None tag_none2;
+} multiboot2_with_early_none_tag_invalid = {
+    .multiboot2 = {
+        .total_size = 8 + 16 + 8 + 20 + 8,
+        .reserved1 = 0,
+    },
+    .tag_basic_memory_info = {
+        .base = {
+            .type = KERNAUX_MULTIBOOT2_TAGTYPE_BASIC_MEMORY_INFO,
+            .size = 16,
+        },
+        .mem_lower = 123,
+        .mem_upper = 123,
+    },
+    .tag_none1 = {
+        .base = {
+            .type = KERNAUX_MULTIBOOT2_TAGTYPE_NONE,
+            .size = 8,
+        },
+    },
+    .tag_bios_boot_device = {
+        .base = {
+            .type = KERNAUX_MULTIBOOT2_TAGTYPE_BIOS_BOOT_DEVICE,
+            .size = 20,
+        },
+        .bios_dev = 123,
+        .partition = 456,
+        .sub_partition = 789,
+    },
+    .tag_none2 = {
+        .base = {
+            .type = KERNAUX_MULTIBOOT2_TAGTYPE_NONE,
+            .size = 8,
+        },
+    },
+};
+
+static const struct {
+    struct KernAux_Multiboot2 multiboot2;
+    struct KernAux_Multiboot2_Tag_BasicMemoryInfo tag_basic_memory_info;
+    struct KernAux_Multiboot2_Tag_BIOSBootDevice tag_bios_boot_device;
+    struct KernAux_Multiboot2_Tag_None tag_none;
+} multiboot2_with_more_additional_tags_invalid_size_too_big = {
+    .multiboot2 = {
+        .total_size = 8 + 16 + 20 + 8 + 1,
+        .reserved1 = 0,
+    },
+    .tag_basic_memory_info = {
+        .base = {
+            .type = KERNAUX_MULTIBOOT2_TAGTYPE_BASIC_MEMORY_INFO,
+            .size = 16,
+        },
+        .mem_lower = 123,
+        .mem_upper = 123,
+    },
+    .tag_bios_boot_device = {
+        .base = {
+            .type = KERNAUX_MULTIBOOT2_TAGTYPE_BIOS_BOOT_DEVICE,
+            .size = 20,
+        },
+        .bios_dev = 123,
+        .partition = 456,
+        .sub_partition = 789,
+    },
+    .tag_none = {
+        .base = {
+            .type = KERNAUX_MULTIBOOT2_TAGTYPE_NONE,
+            .size = 8,
+        },
+    },
+};
+
+static const struct {
+    struct KernAux_Multiboot2 multiboot2;
+    struct KernAux_Multiboot2_Tag_BasicMemoryInfo tag_basic_memory_info;
+    struct KernAux_Multiboot2_Tag_BIOSBootDevice tag_bios_boot_device;
+    struct KernAux_Multiboot2_Tag_None tag_none;
+} multiboot2_with_more_additional_tags_invalid_size_too_small = {
+    .multiboot2 = {
+        .total_size = 8 + 16 + 20 + 8 - 1,
+        .reserved1 = 0,
+    },
+    .tag_basic_memory_info = {
+        .base = {
+            .type = KERNAUX_MULTIBOOT2_TAGTYPE_BASIC_MEMORY_INFO,
+            .size = 16,
+        },
+        .mem_lower = 123,
+        .mem_upper = 123,
+    },
+    .tag_bios_boot_device = {
+        .base = {
+            .type = KERNAUX_MULTIBOOT2_TAGTYPE_BIOS_BOOT_DEVICE,
+            .size = 20,
+        },
+        .bios_dev = 123,
+        .partition = 456,
+        .sub_partition = 789,
+    },
+    .tag_none = {
+        .base = {
+            .type = KERNAUX_MULTIBOOT2_TAGTYPE_NONE,
+            .size = 8,
+        },
+    },
+};
+
 /********
  * main *
  ********/
 
 int main()
 {
+    // Multiboot2
+
+    assert(KernAux_Multiboot2_is_valid(&multiboot2_empty_valid.multiboot2));
+
+    assert(KernAux_Multiboot2_is_valid(
+        &multiboot2_with_some_additional_tag_valid.multiboot2)
+    );
+
+    assert(KernAux_Multiboot2_is_valid(
+        &multiboot2_with_more_additional_tags_valid.multiboot2)
+    );
+
+    assert(!KernAux_Multiboot2_is_valid(
+        &multiboot2_empty_invalid_size.multiboot2
+    ));
+
+    assert(!KernAux_Multiboot2_is_valid(&multiboot2_without_none_tag_invalid));
+
+    assert(!KernAux_Multiboot2_is_valid(
+        &multiboot2_with_invalid_last_tag_invalid.multiboot2
+    ));
+
+    assert(!KernAux_Multiboot2_is_valid(
+        &multiboot2_with_early_none_tag_invalid.multiboot2
+    ));
+
+    assert(!KernAux_Multiboot2_is_valid(
+        &multiboot2_with_more_additional_tags_invalid_size_too_big.multiboot2)
+    );
+
+    assert(!KernAux_Multiboot2_is_valid(
+        &multiboot2_with_more_additional_tags_invalid_size_too_small.multiboot2)
+    );
+
     // TagBase
 
     assert(KernAux_Multiboot2_TagBase_is_valid(&tag_none_valid.base));

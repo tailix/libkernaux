@@ -1,5 +1,47 @@
 #include <kernaux/multiboot2.h>
 
+unsigned char KernAux_Multiboot2_is_valid(
+    const struct KernAux_Multiboot2 *const multiboot2
+) {
+    if (multiboot2->total_size <= 8) {
+        return 0;
+    }
+
+    const struct KernAux_Multiboot2_TagBase *tag_base =
+        (struct KernAux_Multiboot2_TagBase*)multiboot2->data;
+
+    const struct KernAux_Multiboot2_TagBase *none_tag_base = (void*)0;
+
+    while ((void*)tag_base < (void*)multiboot2 + multiboot2->total_size) {
+        if (!KernAux_Multiboot2_TagBase_is_valid(tag_base)) {
+            return 0;
+        }
+
+        if (tag_base->type == KERNAUX_MULTIBOOT2_TAGTYPE_NONE &&
+            none_tag_base == 0
+        ) {
+            none_tag_base = tag_base;
+        }
+
+        tag_base = (struct KernAux_Multiboot2_TagBase*)(
+            (void*)tag_base +
+            tag_base->size
+        );
+    }
+
+    if ((void*)tag_base != (void*)multiboot2 + multiboot2->total_size) {
+        return 0;
+    }
+
+    if (none_tag_base !=
+        (void*)tag_base - sizeof(struct KernAux_Multiboot2_Tag_None)
+    ) {
+        return 0;
+    }
+
+    return 1;
+}
+
 unsigned char KernAux_Multiboot2_TagBase_is_valid(
     const struct KernAux_Multiboot2_TagBase *const tag_base
 ) {

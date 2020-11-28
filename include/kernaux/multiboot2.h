@@ -37,12 +37,16 @@ enum KernAux_Multiboot2_TagType {
 struct KernAux_Multiboot2 {
     unsigned int total_size : 32;
     unsigned int reserved1  : 32;
+
+    unsigned char data[];
 }
 __attribute__((packed));
 
 struct KernAux_Multiboot2_TagBase {
     enum KernAux_Multiboot2_TagType type : 32;
     unsigned int size                    : 32;
+
+    unsigned char data[];
 }
 __attribute__((packed));
 
@@ -301,6 +305,11 @@ __attribute__((packed));
 /****************************
  * Tag validation functions *
  ****************************/
+
+unsigned char KernAux_Multiboot2_is_valid(
+    const struct KernAux_Multiboot2 *multiboot2
+)
+__attribute__((nonnull));
 
 unsigned char KernAux_Multiboot2_TagBase_is_valid(
     const struct KernAux_Multiboot2_TagBase *tag_base
