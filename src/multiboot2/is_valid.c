@@ -256,8 +256,9 @@ unsigned char KernAux_Multiboot2_Tag_ELFSymbols_is_valid(
 ) {
     return (
         tag->base.type == KERNAUX_MULTIBOOT2_TAGTYPE_ELF_SYMBOLS &&
-        tag->base.size >= 16 &&
-        (tag->base.size - 16) % tag->ent_size == 0
+        tag->base.size >= 16 // &&
+        // FIXME: division by zero in real-world data?
+        // (tag->base.size - 16) % tag->ent_size == 0
     );
 }
 
