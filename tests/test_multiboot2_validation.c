@@ -422,6 +422,16 @@ static const struct {
 };
 
 static const struct KernAux_Multiboot2_Tag_MemoryMap
+tag_memory_map_with_empty_data_invalid_entry_size_zero = {
+    .base = {
+        .type = KERNAUX_MULTIBOOT2_TAGTYPE_MEMORY_MAP,
+        .size = 16,
+    },
+    .entry_size = 0,
+    .entry_version = 0,
+};
+
+static const struct KernAux_Multiboot2_Tag_MemoryMap
 tag_memory_map_with_empty_data_invalid_entry_size_not_mul8 = {
     .base = {
         .type = KERNAUX_MULTIBOOT2_TAGTYPE_MEMORY_MAP,
@@ -939,6 +949,10 @@ int main()
     ));
 
     assert(!KernAux_Multiboot2_TagBase_is_valid(
+        &tag_memory_map_with_empty_data_invalid_entry_size_zero.base
+    ));
+
+    assert(!KernAux_Multiboot2_TagBase_is_valid(
         &tag_memory_map_with_empty_data_invalid_entry_size_not_mul8.base
     ));
 
@@ -1088,6 +1102,10 @@ int main()
 
     assert(!KernAux_Multiboot2_Tag_MemoryMap_is_valid(
         &tag_memory_map_with_some_large_data_items_invalid_size.tag
+    ));
+
+    assert(!KernAux_Multiboot2_Tag_MemoryMap_is_valid(
+        &tag_memory_map_with_empty_data_invalid_entry_size_zero
     ));
 
     assert(!KernAux_Multiboot2_Tag_MemoryMap_is_valid(

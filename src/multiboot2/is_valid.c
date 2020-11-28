@@ -229,6 +229,7 @@ unsigned char KernAux_Multiboot2_Tag_MemoryMap_is_valid(
     return (
         tag->base.type == KERNAUX_MULTIBOOT2_TAGTYPE_MEMORY_MAP &&
         tag->base.size >= 16 &&
+        tag->entry_size > 0 &&
         tag->entry_size % 8 == 0 &&
         (tag->base.size - 16) % tag->entry_size == 0
     );
