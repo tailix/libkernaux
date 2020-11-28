@@ -24,4 +24,6 @@
 /tests/test*.log
 /tests/test*.trs
 
+/tests/multiboot2_print
+/tests/test_multiboot2_print
 /tests/test_multiboot2_validation
