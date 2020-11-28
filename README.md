@@ -31,9 +31,8 @@ Configure with cross-compiler in `$PATH` to make without it in `$PATH`:
 To install into specific directory use full path:
 `DESTDIR="$(pwd)/dest" make install` instead of `DESTDIR=dest make install`.
 
-Check if compilation targets i386: `objdump -d src/arch/i386.o`.
-
-It should output something like this:
+Check if compilation targets i386: `objdump -d src/arch/i386.o`. It should
+output something like this:
 
 ```
 src/arch/i386.o:     file format elf32-i386
