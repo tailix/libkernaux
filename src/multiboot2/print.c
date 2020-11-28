@@ -225,8 +225,6 @@ void KernAux_Multiboot2_TagBase_print(
         }
         break;
     case KERNAUX_MULTIBOOT2_TAGTYPE_EFI_BOOT_SERVICES_NOT_TERMINATED:
-        {
-        }
         break;
     case KERNAUX_MULTIBOOT2_TAGTYPE_EFI_32BIT_IMAGE_HANDLE_PTR:
         {
