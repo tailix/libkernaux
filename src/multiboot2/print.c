@@ -173,6 +173,7 @@ void KernAux_Multiboot2_TagBase_print(
             print("  framebuffer height: %u\n", tag_fb->framebuffer_height);
             print("  framebuffer bpp: %u\n",    tag_fb->framebuffer_bpp);
             print("  framebuffer type: %u\n",   tag_fb->framebuffer_type);
+            print("  reserved1: %u\n",          tag_fb->reserved1);
         }
         break;
     case KERNAUX_MULTIBOOT2_TAGTYPE_ELF_SYMBOLS:

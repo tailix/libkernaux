@@ -60,6 +60,7 @@ static const char output[] =
     "  framebuffer height: 25\n"
     "  framebuffer bpp: 16\n"
     "  framebuffer type: 2\n"
+    "  reserved1: 0\n"
     "Multiboot 2 tag\n"
     "  type: 14 (ACPI old RSDP)\n"
     "  size: 28\n"
