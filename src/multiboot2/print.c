@@ -4,6 +4,12 @@ static const char *KernAux_Multiboot2_TagType_to_str(
     enum KernAux_Multiboot2_TagType tag_type
 );
 
+static void KernAux_Multiboot2_Tag_MemoryMap_print(
+    const struct KernAux_Multiboot2_Tag_MemoryMap *tag,
+    void (*print)(const char *format, ...)
+)
+__attribute__((nonnull));
+
 const char *KernAux_Multiboot2_TagType_to_str(
     enum KernAux_Multiboot2_TagType tag_type
 ) {
@@ -148,9 +154,10 @@ void KernAux_Multiboot2_TagBase_print(
         }
         break;
     case KERNAUX_MULTIBOOT2_TAGTYPE_MEMORY_MAP:
-        {
-            // TODO: print
-        }
+        KernAux_Multiboot2_Tag_MemoryMap_print(
+            (struct KernAux_Multiboot2_Tag_MemoryMap*)tag_base,
+            print
+        );
         break;
     case KERNAUX_MULTIBOOT2_TAGTYPE_VBE_INFO:
         {
@@ -252,5 +259,35 @@ void KernAux_Multiboot2_TagBase_print(
                 load_base_addr
         );
         break;
+    }
+}
+
+void KernAux_Multiboot2_Tag_MemoryMap_print(
+    const struct KernAux_Multiboot2_Tag_MemoryMap *const tag,
+    void (*print)(const char *format, ...)
+) {
+    if (!KernAux_Multiboot2_Tag_MemoryMap_is_valid(tag)) {
+        print("  invalid!\n");
+        return;
+    }
+
+    print("  entry size: %u\n",    tag->entry_size);
+    print("  entry version: %u\n", tag->entry_version);
+
+    print("  entries:\n");
+
+    const struct KernAux_Multiboot2_Tag_MemoryMap_EntryBase *const entries =
+        (struct KernAux_Multiboot2_Tag_MemoryMap_EntryBase*)tag->data;
+
+    for (
+        unsigned int index = 0;
+        index < (tag->base.size - sizeof(*tag)) / tag->entry_size;
+        ++index
+    ) {
+        print("    entry %u\n", index);
+        print("      base addr: %llu\n", entries[index].base_addr);
+        print("      length: %llu\n",    entries[index].length);
+        print("      type: %u\n",        entries[index].type);
+        print("      reserved1: %u\n",   entries[index].reserved1);
     }
 }
