@@ -146,5 +146,12 @@ void KernAux_Multiboot2_TagBase_print(
             print("  sub_partition: %u\n", tag_bbd->sub_partition);
         }
         break;
+    case KERNAUX_MULTIBOOT2_TAGTYPE_IMAGE_LOAD_BASE_PHYS_ADDR:
+        print(
+            "  load base addr: %u\n",
+            ((struct KernAux_Multiboot2_Tag_ImageLoadBasePhysAddr*)tag_base)->
+                load_base_addr
+        );
+        break;
     }
 }
