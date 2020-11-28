@@ -11,7 +11,7 @@ noinst_PROGRAMS = $(TESTS)
 
 libkernaux_a_SOURCES = \
 	src/arch/i386.S \
-	src/multiboot2.c \
+	src/multiboot2/is_valid.c \
 	src/pfa.c
 
 tests_test_multiboot2_validation_SOURCES = \
