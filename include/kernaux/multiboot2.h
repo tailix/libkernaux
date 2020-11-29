@@ -308,6 +308,12 @@ __attribute__((packed));
  * Helper functions *
  ********************/
 
+const struct KernAux_Multiboot2_TagBase *KernAux_Multiboot2_first_tag_with_type(
+    const struct KernAux_Multiboot2 *multiboot2,
+    enum KernAux_Multiboot2_TagType tag_type
+)
+__attribute__((nonnull));
+
 const char *KernAux_Multiboot2_boot_cmd_line(
     const struct KernAux_Multiboot2 *multiboot2
 )

@@ -1,7 +1,8 @@
 #include <kernaux/multiboot2.h>
 
-const char *KernAux_Multiboot2_boot_cmd_line(
-    const struct KernAux_Multiboot2 *const multiboot2
+const struct KernAux_Multiboot2_TagBase *KernAux_Multiboot2_first_tag_with_type(
+    const struct KernAux_Multiboot2 *const multiboot2,
+    const enum KernAux_Multiboot2_TagType tag_type
 ) {
     const struct KernAux_Multiboot2_TagBase *tag_base =
         (struct KernAux_Multiboot2_TagBase*)multiboot2->data;
@@ -11,11 +12,8 @@ const char *KernAux_Multiboot2_boot_cmd_line(
             return 0;
         }
 
-        if (tag_base->type == KERNAUX_MULTIBOOT2_TAGTYPE_BOOT_CMD_LINE) {
-            const struct KernAux_Multiboot2_Tag_BootCmdLine *const tag =
-                (struct KernAux_Multiboot2_Tag_BootCmdLine*)tag_base;
-
-            return tag->cmdline;
+        if (tag_base->type == tag_type) {
+            return tag_base;
         }
 
         tag_base = (struct KernAux_Multiboot2_TagBase*)(
@@ -24,4 +22,21 @@ const char *KernAux_Multiboot2_boot_cmd_line(
     }
 
     return 0;
+}
+
+const char *KernAux_Multiboot2_boot_cmd_line(
+    const struct KernAux_Multiboot2 *const multiboot2
+) {
+    const struct KernAux_Multiboot2_Tag_BootCmdLine *const tag =
+        (struct KernAux_Multiboot2_Tag_BootCmdLine*)
+        KernAux_Multiboot2_first_tag_with_type(
+            multiboot2,
+            KERNAUX_MULTIBOOT2_TAGTYPE_BOOT_CMD_LINE
+        );
+
+    if (!tag) {
+        return 0;
+    }
+
+    return tag->cmdline;
 }
