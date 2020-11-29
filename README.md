@@ -33,6 +33,13 @@ Configure with cross-compiler in `$PATH` to make without it in `$PATH`:
 To install into specific directory use full path:
 `DESTDIR="$(pwd)/dest" make install` instead of `DESTDIR=dest make install`.
 
+When configured with cross-compiler, library can't be build and installed with
+just `make && sudo make install`. Instead use the folloding commands:
+
+* `make libkernaux.a`
+* `sudo make install-libLIBRARIES`
+* `sudo make install-data`
+
 Check if compilation targets i386: `objdump -d src/arch/i386.o`. It should
 output something like this:
 
