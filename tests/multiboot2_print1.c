@@ -1,5 +1,6 @@
 #include <kernaux/multiboot2.h>
 
+#include <assert.h>
 #include <stdio.h>
 
 static const unsigned char multiboot2_example[864] = {
@@ -61,6 +62,10 @@ static const unsigned char multiboot2_example[864] = {
 
 int main()
 {
+    assert(KernAux_Multiboot2_is_valid(
+        (struct KernAux_Multiboot2*)multiboot2_example
+    ));
+
     KernAux_Multiboot2_print(
         (struct KernAux_Multiboot2*)multiboot2_example,
         (void (*)(const char *format, ...))printf

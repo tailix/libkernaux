@@ -3,7 +3,7 @@
 #define __USE_POSIX2
 #include <stdio.h>
 
-static const char output[] =
+static const char output1[] =
     "Multiboot 2 info\n"
     "  size: 864\n"
     "  reserved1: 0\n"
@@ -112,10 +112,10 @@ static const char output[] =
 
 int main()
 {
-    FILE *const fd = popen("tests/multiboot2_print", "r");
+    FILE *const fd = popen("tests/multiboot2_print1", "r");
     assert(fd != NULL);
 
-    for (const char *ch = output; *ch; ++ch) {
+    for (const char *ch = output1; *ch; ++ch) {
         assert(fgetc(fd) == *ch);
     }
 

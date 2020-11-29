@@ -10,7 +10,8 @@ TESTS = \
 
 noinst_PROGRAMS = \
 	$(TESTS) \
-	tests/multiboot2_print
+	tests/multiboot2_print1 \
+	tests/multiboot2_print2
 
 libkernaux_a_SOURCES = \
 	src/arch/i386.S \
@@ -18,9 +19,13 @@ libkernaux_a_SOURCES = \
 	src/multiboot2/print.c \
 	src/pfa.c
 
-tests_multiboot2_print_SOURCES = \
+tests_multiboot2_print1_SOURCES = \
 	$(libkernaux_a_SOURCES) \
-	tests/multiboot2_print.c
+	tests/multiboot2_print1.c
+
+tests_multiboot2_print2_SOURCES = \
+	$(libkernaux_a_SOURCES) \
+	tests/multiboot2_print2.c
 
 tests_test_multiboot2_print_SOURCES = \
 	$(libkernaux_a_SOURCES) \
