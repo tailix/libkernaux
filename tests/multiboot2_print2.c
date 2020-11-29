@@ -97,6 +97,27 @@ static const struct {
         unsigned char data[8];
     } tag_networking_info;
 
+    struct {
+        struct KernAux_Multiboot2_Tag_EFIMemoryMap tag;
+        unsigned char data[8];
+    } tag_efi_memory_map;
+
+    struct KernAux_Multiboot2_Tag_EFIBootServicesNotTerminated
+    tag_efi_boot_services_not_terminated;
+
+    struct KernAux_Multiboot2_Tag_EFI32bitImageHandlePtr
+    tag_efi_32bit_image_handle_ptr;
+
+    unsigned char _align10[4];
+
+    struct KernAux_Multiboot2_Tag_EFI64bitImageHandlePtr
+    tag_efi_64bit_image_handle_ptr;
+
+    struct KernAux_Multiboot2_Tag_ImageLoadBasePhysAddr
+    tag_image_load_base_phys_addr;
+
+    unsigned char _align11[4];
+
     struct KernAux_Multiboot2_Tag_None tag_none;
 } multiboot2_example = {
     .multiboot2 = {
@@ -314,6 +335,45 @@ static const struct {
             },
         },
         .data = {0, 0, 0, 0, 0, 0, 0, 0},
+    },
+    .tag_efi_memory_map = {
+        .tag = {
+            .base = {
+                .type = KERNAUX_MULTIBOOT2_TAGTYPE_EFI_MEMORY_MAP,
+                .size = sizeof(multiboot2_example.tag_efi_memory_map),
+            },
+            .descriptor_size = 123,
+            .descriptor_version = 1,
+        },
+        .data = {0, 0, 0, 0, 0, 0, 0, 0},
+    },
+    .tag_efi_boot_services_not_terminated = {
+        .base = {
+            .type = KERNAUX_MULTIBOOT2_TAGTYPE_EFI_BOOT_SERVICES_NOT_TERMINATED,
+            .size =
+                sizeof(multiboot2_example.tag_efi_boot_services_not_terminated),
+        },
+    },
+    .tag_efi_32bit_image_handle_ptr = {
+        .base = {
+            .type = KERNAUX_MULTIBOOT2_TAGTYPE_EFI_32BIT_IMAGE_HANDLE_PTR,
+            .size = sizeof(multiboot2_example.tag_efi_32bit_image_handle_ptr),
+        },
+        .pointer = 0,
+    },
+    .tag_efi_64bit_image_handle_ptr = {
+        .base = {
+            .type = KERNAUX_MULTIBOOT2_TAGTYPE_EFI_64BIT_IMAGE_HANDLE_PTR,
+            .size = sizeof(multiboot2_example.tag_efi_64bit_image_handle_ptr),
+        },
+        .pointer = 0,
+    },
+    .tag_image_load_base_phys_addr = {
+        .base = {
+            .type = KERNAUX_MULTIBOOT2_TAGTYPE_IMAGE_LOAD_BASE_PHYS_ADDR,
+            .size = sizeof(multiboot2_example.tag_image_load_base_phys_addr),
+        },
+        .load_base_addr = 123,
     },
     .tag_none = {
         .base = {
