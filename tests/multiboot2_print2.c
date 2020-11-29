@@ -1,5 +1,3 @@
-// TODO: finish example data and test printing
-
 #include <kernaux/multiboot2.h>
 
 #include <assert.h>

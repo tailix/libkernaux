@@ -114,17 +114,179 @@ static const char output1[] =
     "  type: 0 (none)\n"
     "  size: 8\n";
 
+static const char output2[] =
+    "Multiboot 2 info\n"
+    "  size: 1816\n"
+    "  reserved1: 0\n"
+    "Multiboot 2 tag\n"
+    "  type: 1 (boot cmd line)\n"
+    "  size: 23\n"
+    "  cmdline: Hello, Kernel!\n"
+    "Multiboot 2 tag\n"
+    "  type: 2 (boot loader name)\n"
+    "  size: 30\n"
+    "  name: GRUB 2.02-2ubuntu8.20\n"
+    "Multiboot 2 tag\n"
+    "  type: 3 (module)\n"
+    "  size: 33\n"
+    "  start: 123\n"
+    "  end: 456\n"
+    "  cmdline: Hello, Module 1!\n"
+    "Multiboot 2 tag\n"
+    "  type: 3 (module)\n"
+    "  size: 33\n"
+    "  start: 123\n"
+    "  end: 456\n"
+    "  cmdline: Hello, Module 2!\n"
+    "Multiboot 2 tag\n"
+    "  type: 4 (basic memory info)\n"
+    "  size: 16\n"
+    "  mem lower: 123\n"
+    "  mem upper: 456\n"
+    "Multiboot 2 tag\n"
+    "  type: 5 (BIOS boot device)\n"
+    "  size: 20\n"
+    "  bios dev: 0\n"
+    "  partition: 1\n"
+    "  sub_partition: 2\n"
+    "Multiboot 2 tag\n"
+    "  type: 6 (memory map)\n"
+    "  size: 160\n"
+    "  entry size: 24\n"
+    "  entry version: 0\n"
+    "  entries:\n"
+    "    entry 0\n"
+    "      base addr: 0\n"
+    "      length: 654336\n"
+    "      type: 1\n"
+    "      reserved1: 0\n"
+    "    entry 1\n"
+    "      base addr: 654336\n"
+    "      length: 1024\n"
+    "      type: 2\n"
+    "      reserved1: 0\n"
+    "    entry 2\n"
+    "      base addr: 983040\n"
+    "      length: 65536\n"
+    "      type: 2\n"
+    "      reserved1: 0\n"
+    "    entry 3\n"
+    "      base addr: 1048576\n"
+    "      length: 133038080\n"
+    "      type: 1\n"
+    "      reserved1: 0\n"
+    "    entry 4\n"
+    "      base addr: 134086656\n"
+    "      length: 131072\n"
+    "      type: 2\n"
+    "      reserved1: 0\n"
+    "    entry 5\n"
+    "      base addr: 4294705152\n"
+    "      length: 262144\n"
+    "      type: 2\n"
+    "      reserved1: 0\n"
+    "Multiboot 2 tag\n"
+    "  type: 7 (VBE info)\n"
+    "  size: 784\n"
+    "  VBE mode: 0\n"
+    "  VBE interface seg: 123\n"
+    "  VBE interface off: 456\n"
+    "  VBE interface len: 789\n"
+    "Multiboot 2 tag\n"
+    "  type: 8 (framebuffer info)\n"
+    "  size: 39\n"
+    "  framebuffer addr: 123\n"
+    "  framebuffer pitch: 456\n"
+    "  framebuffer width: 123\n"
+    "  framebuffer height: 456\n"
+    "  framebuffer bpp: 8\n"
+    "  framebuffer type: 1\n"
+    "  reserved1: 0\n"
+    "Multiboot 2 tag\n"
+    "  type: 9 (ELF symbols)\n"
+    "  size: 420\n"
+    "  num: 10\n"
+    "  entsize: 0\n"
+    "  shndx: 40\n"
+    "  reserved1: 0\n"
+    "Multiboot 2 tag\n"
+    "  type: 10 (APM table)\n"
+    "  size: 28\n"
+    "  version: 0\n"
+    "  cseg: 123\n"
+    "  offset: 456\n"
+    "  cseg 16: 789\n"
+    "  dseg: 123\n"
+    "  flags: 1\n"
+    "  cseg len: 456\n"
+    "  cseg 16 len: 789\n"
+    "  dseg len: 123\n"
+    "Multiboot 2 tag\n"
+    "  type: 11 (EFI 32bit system table ptr)\n"
+    "  size: 12\n"
+    "Multiboot 2 tag\n"
+    "  type: 12 (EFI 64bit system table ptr)\n"
+    "  size: 16\n"
+    "Multiboot 2 tag\n"
+    "  type: 13 (SMBIOS tables)\n"
+    "  size: 24\n"
+    "  major: 1\n"
+    "  minor: 2\n"
+    "  reserved1: {0, 0, 0, 0, 0, 0}\n"
+    "Multiboot 2 tag\n"
+    "  type: 14 (ACPI old RSDP)\n"
+    "  size: 16\n"
+    "Multiboot 2 tag\n"
+    "  type: 15 (ACPI new RSDP)\n"
+    "  size: 16\n"
+    "Multiboot 2 tag\n"
+    "  type: 16 (networking info)\n"
+    "  size: 16\n"
+    "Multiboot 2 tag\n"
+    "  type: 17 (EFI memory map)\n"
+    "  size: 24\n"
+    "Multiboot 2 tag\n"
+    "  type: 18 (EFI boot services not terminated)\n"
+    "  size: 8\n"
+    "Multiboot 2 tag\n"
+    "  type: 19 (EFI 32bit image handle ptr)\n"
+    "  size: 12\n"
+    "Multiboot 2 tag\n"
+    "  type: 20 (EFI 64bit image handle ptr)\n"
+    "  size: 16\n"
+    "Multiboot 2 tag\n"
+    "  type: 21 (image load base phys addr)\n"
+    "  size: 12\n"
+    "  load base addr: 123\n"
+    "Multiboot 2 tag\n"
+    "  type: 0 (none)\n"
+    "  size: 8\n";
+
 int main()
 {
-    FILE *const fd = popen("tests/multiboot2_print1", "r");
-    assert(fd != NULL);
+    {
+        FILE *const fd = popen("tests/multiboot2_print1", "r");
+        assert(fd != NULL);
 
-    for (const char *ch = output1; *ch; ++ch) {
-        assert(fgetc(fd) == *ch);
+        for (const char *ch = output1; *ch; ++ch) {
+            assert(fgetc(fd) == *ch);
+        }
+
+        const int status = pclose(fd);
+        assert(status == 0);
     }
 
-    const int status = pclose(fd);
-    assert(status == 0);
+    {
+        FILE *const fd = popen("tests/multiboot2_print2", "r");
+        assert(fd != NULL);
+
+        for (const char *ch = output2; *ch; ++ch) {
+            assert(fgetc(fd) == *ch);
+        }
+
+        const int status = pclose(fd);
+        assert(status == 0);
+    }
 
     return 0;
 }

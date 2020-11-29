@@ -227,9 +227,18 @@ void KernAux_Multiboot2_TagBase_print(
             const struct KernAux_Multiboot2_Tag_SMBIOSTables *const tag_smbios =
                 (struct KernAux_Multiboot2_Tag_SMBIOSTables*)tag_base;
 
-            print("  major: %u\n",     tag_smbios->major);
-            print("  minor: %u\n",     tag_smbios->minor);
-            print("  reserved1: %u\n", tag_smbios->reserved1);
+            print("  major: %u\n", tag_smbios->major);
+            print("  minor: %u\n", tag_smbios->minor);
+
+            print(
+                "  reserved1: {%u, %u, %u, %u, %u, %u}\n",
+                tag_smbios->reserved1[0],
+                tag_smbios->reserved1[1],
+                tag_smbios->reserved1[2],
+                tag_smbios->reserved1[3],
+                tag_smbios->reserved1[4],
+                tag_smbios->reserved1[5]
+            );
         }
         break;
     case KERNAUX_MULTIBOOT2_TAGTYPE_ACPI_OLD_RSDP:
