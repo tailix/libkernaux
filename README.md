@@ -11,6 +11,7 @@ Table of contents
 * [Overview](#libkernaux)
 * [Table of contents](#table-of-contents)
 * [Tips](#tips)
+* [Discussion](#discussion)
 
 
 
@@ -77,3 +78,10 @@ Disassembly of section .text:
   20:   0f 22 e0              mov    %eax,%cr4
   23:   c3                    ret
 ```
+
+
+
+Discussion
+----------
+
+* [Topic on OSDev.org forum](https://forum.osdev.org/viewtopic.php?f=1&t=37958)
