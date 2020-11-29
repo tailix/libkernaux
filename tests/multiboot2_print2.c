@@ -77,6 +77,21 @@ static const struct {
 
     struct KernAux_Multiboot2_Tag_EFI64bitSystemTablePtr tag_efi_64bit_system_table_ptr;
 
+    struct {
+        struct KernAux_Multiboot2_Tag_SMBIOSTables tag;
+        unsigned char data[8];
+    } tag_smbios_tables;
+
+    struct {
+        struct KernAux_Multiboot2_Tag_ACPIOldRSDP tag;
+        unsigned char data[8];
+    } tag_acpi_old_rsdp;
+
+    struct {
+        struct KernAux_Multiboot2_Tag_ACPINewRSDP tag;
+        unsigned char data[8];
+    } tag_acpi_new_rsdp;
+
     struct KernAux_Multiboot2_Tag_None tag_none;
 } multiboot2_example = {
     .multiboot2 = {
@@ -255,6 +270,36 @@ static const struct {
             .size = sizeof(multiboot2_example.tag_efi_64bit_system_table_ptr),
         },
         .pointer = 0,
+    },
+    .tag_smbios_tables = {
+        .tag = {
+            .base = {
+                .type = KERNAUX_MULTIBOOT2_TAGTYPE_SMBIOS_TABLES,
+                .size = sizeof(multiboot2_example.tag_smbios_tables),
+            },
+            .major = 1,
+            .minor = 2,
+            .reserved1 = {0, 0, 0, 0, 0, 0},
+        },
+        .data = {0, 0, 0, 0, 0, 0, 0, 0},
+    },
+    .tag_acpi_old_rsdp = {
+        .tag = {
+            .base = {
+                .type = KERNAUX_MULTIBOOT2_TAGTYPE_ACPI_OLD_RSDP,
+                .size = sizeof(multiboot2_example.tag_acpi_old_rsdp),
+            },
+        },
+        .data = {0, 0, 0, 0, 0, 0, 0, 0},
+    },
+    .tag_acpi_new_rsdp = {
+        .tag = {
+            .base = {
+                .type = KERNAUX_MULTIBOOT2_TAGTYPE_ACPI_NEW_RSDP,
+                .size = sizeof(multiboot2_example.tag_acpi_new_rsdp),
+            },
+        },
+        .data = {0, 0, 0, 0, 0, 0, 0, 0},
     },
     .tag_none = {
         .base = {
