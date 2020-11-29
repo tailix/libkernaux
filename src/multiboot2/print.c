@@ -308,5 +308,10 @@ void KernAux_Multiboot2_Tag_ELFSymbols_print(
         return;
     }
 
+    print("  num: %hu\n",       tag->num);
+    print("  entsize: %hu\n",   tag->ent_size);
+    print("  shndx: %hu\n",     tag->shndx);
+    print("  reserved1: %hu\n", tag->reserved1);
+
     // TODO: implement this
 }
