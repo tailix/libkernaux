@@ -17,6 +17,8 @@ Table of contents
 Tips
 ----
 
+Create configuration script with `./autogen.sh`.
+
 Configure with cross-compiler in `$PATH` to make without it in `$PATH`:
 
 ```
