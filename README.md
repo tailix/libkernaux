@@ -35,7 +35,7 @@ To install into specific directory use full path:
 `DESTDIR="$(pwd)/dest" make install` instead of `DESTDIR=dest make install`.
 
 When configured with cross-compiler, library can't be build and installed with
-just `make && sudo make install`. Instead use the folloding commands:
+just `make && sudo make install`. Instead use the following commands:
 
 * `make libkernaux.a`
 * `sudo make install-libLIBRARIES`
