@@ -77,10 +77,6 @@ void KernAux_Multiboot2_print(
     print("  size: %u\n", multiboot2->total_size);
     print("  reserved1: %u\n", multiboot2->reserved1);
 
-    if (multiboot2->total_size <= 8) {
-        return;
-    }
-
     const struct KernAux_Multiboot2_TagBase *tag_base =
         (struct KernAux_Multiboot2_TagBase*)multiboot2->data;
 

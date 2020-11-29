@@ -26,5 +26,6 @@
 
 /tests/multiboot2_print1
 /tests/multiboot2_print2
+/tests/test_multiboot2_helpers
 /tests/test_multiboot2_print
 /tests/test_multiboot2_validation

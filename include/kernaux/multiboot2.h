@@ -304,6 +304,15 @@ struct KernAux_Multiboot2_Tag_MemoryMap_EntryBase {
 }
 __attribute__((packed));
 
+/********************
+ * Helper functions *
+ ********************/
+
+const char *KernAux_Multiboot2_boot_cmd_line(
+    const struct KernAux_Multiboot2 *multiboot2
+)
+__attribute__((nonnull));
+
 /*******************
  * Print functions *
  *******************/
