@@ -92,6 +92,11 @@ static const struct {
         unsigned char data[8];
     } tag_acpi_new_rsdp;
 
+    struct {
+        struct KernAux_Multiboot2_Tag_NetworkingInfo tag;
+        unsigned char data[8];
+    } tag_networking_info;
+
     struct KernAux_Multiboot2_Tag_None tag_none;
 } multiboot2_example = {
     .multiboot2 = {
@@ -297,6 +302,15 @@ static const struct {
             .base = {
                 .type = KERNAUX_MULTIBOOT2_TAGTYPE_ACPI_NEW_RSDP,
                 .size = sizeof(multiboot2_example.tag_acpi_new_rsdp),
+            },
+        },
+        .data = {0, 0, 0, 0, 0, 0, 0, 0},
+    },
+    .tag_networking_info = {
+        .tag = {
+            .base = {
+                .type = KERNAUX_MULTIBOOT2_TAGTYPE_NETWORKING_INFO,
+                .size = sizeof(multiboot2_example.tag_networking_info),
             },
         },
         .data = {0, 0, 0, 0, 0, 0, 0, 0},
