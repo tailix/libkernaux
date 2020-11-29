@@ -335,6 +335,47 @@ int main()
         ) == &multiboot2_example2.tag_image_load_base_phys_addr.base
     );
 
+    // KernAux_Multiboot2_tag_with_type_after
+
+    assert(
+        KernAux_Multiboot2_tag_with_type_after(
+            &multiboot2_example2.multiboot2,
+            KERNAUX_MULTIBOOT2_TAGTYPE_MODULE,
+            KernAux_Multiboot2_first_tag_with_type(
+                &multiboot2_example2.multiboot2,
+                KERNAUX_MULTIBOOT2_TAGTYPE_MODULE
+            ) - 1
+        ) == (struct KernAux_Multiboot2_TagBase*)
+            &multiboot2_example2.tag_module1
+    );
+
+    assert(
+        KernAux_Multiboot2_tag_with_type_after(
+            &multiboot2_example2.multiboot2,
+            KERNAUX_MULTIBOOT2_TAGTYPE_MODULE,
+            KernAux_Multiboot2_first_tag_with_type(
+                &multiboot2_example2.multiboot2,
+                KERNAUX_MULTIBOOT2_TAGTYPE_MODULE
+            )
+        ) == (struct KernAux_Multiboot2_TagBase*)
+            &multiboot2_example2.tag_module2
+    );
+
+    assert(
+        KernAux_Multiboot2_tag_with_type_after(
+            &multiboot2_example2.multiboot2,
+            KERNAUX_MULTIBOOT2_TAGTYPE_MODULE,
+            KernAux_Multiboot2_tag_with_type_after(
+                &multiboot2_example2.multiboot2,
+                KERNAUX_MULTIBOOT2_TAGTYPE_MODULE,
+                KernAux_Multiboot2_first_tag_with_type(
+                    &multiboot2_example2.multiboot2,
+                    KERNAUX_MULTIBOOT2_TAGTYPE_MODULE
+                )
+            )
+        ) == 0
+    );
+
     // KernAux_Multiboot2_boot_cmd_line
 
     assert(

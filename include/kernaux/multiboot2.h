@@ -314,6 +314,13 @@ const struct KernAux_Multiboot2_TagBase *KernAux_Multiboot2_first_tag_with_type(
 )
 __attribute__((nonnull));
 
+const struct KernAux_Multiboot2_TagBase *KernAux_Multiboot2_tag_with_type_after(
+    const struct KernAux_Multiboot2 *multiboot2,
+    enum KernAux_Multiboot2_TagType tag_type,
+    const struct KernAux_Multiboot2_TagBase *after_tag
+)
+__attribute__((nonnull));
+
 const char *KernAux_Multiboot2_boot_cmd_line(
     const struct KernAux_Multiboot2 *multiboot2
 )
