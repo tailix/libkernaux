@@ -10,6 +10,12 @@ static void KernAux_Multiboot2_Tag_MemoryMap_print(
 )
 __attribute__((nonnull));
 
+static void KernAux_Multiboot2_Tag_ELFSymbols_print(
+    const struct KernAux_Multiboot2_Tag_ELFSymbols *tag,
+    void (*print)(const char *format, ...)
+)
+__attribute__((nonnull));
+
 const char *KernAux_Multiboot2_TagType_to_str(
     enum KernAux_Multiboot2_TagType tag_type
 ) {
@@ -185,9 +191,10 @@ void KernAux_Multiboot2_TagBase_print(
         }
         break;
     case KERNAUX_MULTIBOOT2_TAGTYPE_ELF_SYMBOLS:
-        {
-            // TODO: print
-        }
+        KernAux_Multiboot2_Tag_ELFSymbols_print(
+            (struct KernAux_Multiboot2_Tag_ELFSymbols*)tag_base,
+            print
+        );
         break;
     case KERNAUX_MULTIBOOT2_TAGTYPE_APM_TABLE:
         {
@@ -290,4 +297,16 @@ void KernAux_Multiboot2_Tag_MemoryMap_print(
         print("      type: %u\n",        entries[index].type);
         print("      reserved1: %u\n",   entries[index].reserved1);
     }
+}
+
+void KernAux_Multiboot2_Tag_ELFSymbols_print(
+    const struct KernAux_Multiboot2_Tag_ELFSymbols *const tag,
+    void (*print)(const char *format, ...)
+) {
+    if (!KernAux_Multiboot2_Tag_ELFSymbols_is_valid(tag)) {
+        print("  invalid!\n");
+        return;
+    }
+
+    // TODO: implement this
 }
