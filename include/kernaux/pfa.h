@@ -22,6 +22,7 @@ struct KernAux_PFA_Zone {
     unsigned long long size;
 
     unsigned char pages[KERNAUX_PFA_ZONE_PAGE_LIST_SIZE];
+    unsigned int pages_count;
 };
 
 struct KernAux_PFA {
