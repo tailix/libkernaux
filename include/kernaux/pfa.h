@@ -6,8 +6,7 @@
 #define KERNAUX_PFA_ZONES_COUNT_MAX 10
 #define KERNAUX_PFA_ZONE_NAME_SIZE_MAX 256
 #define KERNAUX_PFA_ZONE_NAME_SLEN_MAX (KERNAUX_PFA_ZONE_NAME_SIZE_MAX - 1)
-#define KERNAUX_PFA_PAGE_SIZE_MIN (4 * 1024)
-#define KERNAUX_PFA_PAGE_SIZE_MAX (((unsigned long long)4) * 1024 * 1024 * 1024)
+#define KERNAUX_PFA_PAGE_SIZE (4 * 1024)
 #define KERNAUX_PFA_ZONE_PAGES_COUNT_MAX (1024 * 1024)
 #define KERNAUX_PFA_ZONE_PAGE_LIST_SIZE (KERNAUX_PFA_ZONE_PAGES_COUNT_MAX / 8)
 
@@ -28,15 +27,12 @@ struct KernAux_PFA_Zone {
 struct KernAux_PFA {
     kernaux_bool initialized;
 
-    unsigned long long page_size;
-
     struct KernAux_PFA_Zone zones[KERNAUX_PFA_ZONES_COUNT_MAX];
     unsigned int zones_count;
 };
 
 kernaux_bool KernAux_PFA_initialize_start(
-    struct KernAux_PFA *pfa,
-    unsigned long long page_size
+    struct KernAux_PFA *pfa
 )
 __attribute__((nonnull));
 
