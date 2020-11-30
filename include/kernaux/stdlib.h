@@ -12,6 +12,24 @@ extern "C" {
 
 typedef unsigned char kernaux_bool;
 
+void kernaux_memset(
+    void *buffer,
+    unsigned char value,
+    unsigned long size
+)
+__attribute__((nonnull));
+
+unsigned int kernaux_strlen(const char *s) __attribute__((nonnull));
+
+char *kernaux_strncpy(
+    char *dest,
+    const char *src,
+    unsigned long slen
+)
+__attribute__((nonnull));
+
+void kernaux_itoa(char *buf, int base, int d) __attribute__((nonnull));
+
 #ifdef __cplusplus
 }
 #endif

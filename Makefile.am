@@ -7,7 +7,8 @@ lib_LIBRARIES = libkernaux.a
 TESTS = \
 	tests/test_multiboot2_helpers \
 	tests/test_multiboot2_print \
-	tests/test_multiboot2_validation
+	tests/test_multiboot2_validation \
+	tests/test_stdlib
 
 noinst_PROGRAMS = \
 	$(TESTS) \
@@ -41,3 +42,7 @@ tests_test_multiboot2_print_SOURCES = \
 tests_test_multiboot2_validation_SOURCES = \
 	$(libkernaux_a_SOURCES) \
 	tests/test_multiboot2_validation.c
+
+tests_test_stdlib_SOURCES = \
+	$(libkernaux_a_SOURCES) \
+	tests/test_stdlib.c

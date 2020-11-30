@@ -29,3 +29,4 @@
 /tests/test_multiboot2_helpers
 /tests/test_multiboot2_print
 /tests/test_multiboot2_validation
+/tests/test_stdlib
