@@ -22,7 +22,7 @@ API
 * [Architecture-specific helpers](/include/kernaux/arch/)
 * [stdlib replacement](/include/kernaux/stdlib.h) (with prefix):
   * `NULL`
-  * `bool`, `false`, `true`
+  * `bool`, `FALSE`, `TRUE`
   * `memset`
   * `strlen`
   * `strncpy`
