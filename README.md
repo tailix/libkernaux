@@ -1,6 +1,8 @@
 libkernaux
 ==========
 
+[![Build Status](https://travis-ci.org/kernelmq/libkernaux.svg?branch=master)](https://travis-ci.org/kernelmq/libkernaux)
+
 Auxiliary library for kernel development.
 
 
