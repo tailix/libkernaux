@@ -9,7 +9,7 @@ AC_CONFIG_SRCDIR([src/pfa.c])
 
 AC_CANONICAL_HOST
 
-AM_CONDITIONAL(ARCH_I386, test "${host_cpu}" = "i386")
+AM_CONDITIONAL(ARCH_X86, test "${host_cpu}" = "x86")
 
 AM_INIT_AUTOMAKE([1.9 subdir-objects -Wall -Werror])
 

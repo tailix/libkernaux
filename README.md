@@ -44,10 +44,10 @@ Configure with cross-compiler in `$PATH` to make without it in `$PATH`:
 
 ```
 ./configure \
-  --host=i386-elf \
-  AR="$(which i386-elf-ar)" \
-  CC="$(which i386-elf-gcc)" \
-  RANLIB="$(which i386-elf-ranlib)" \
+  --host=x86-elf \
+  AR="$(which x86-elf-ar)" \
+  CC="$(which x86-elf-gcc)" \
+  RANLIB="$(which x86-elf-ranlib)" \
   CFLAGS='-ffreestanding -nostdinc -nostdlib -fno-builtin -fno-stack-protector'
 ```
 
@@ -61,39 +61,39 @@ just `make && sudo make install`. Instead use the following commands:
 * `sudo make install-exec`
 * `sudo make install-data`
 
-Check if compilation targets i386: `objdump -d src/arch/i386.o`. It should
+Check if compilation targets x86: `objdump -d src/arch/x86.o`. It should
 output something like this:
 
 ```
-src/arch/i386.o:     file format elf32-i386
+src/arch/x86.o:     file format elf32-i386
 
 
 Disassembly of section .text:
 
-00000000 <kernaux_arch_i386_hang>:
+00000000 <kernaux_arch_x86_hang>:
    0:   fa                    cli
    1:   f4                    hlt
-   2:   eb fc                 jmp    0 <kernaux_arch_i386_hang>
+   2:   eb fc                 jmp    0 <kernaux_arch_x86_hang>
 
-00000004 <kernaux_arch_i386_read_cr0>:
+00000004 <kernaux_arch_x86_read_cr0>:
    4:   0f 20 c0              mov    %cr0,%eax
    7:   c3                    ret
 
-00000008 <kernaux_arch_i386_read_cr4>:
+00000008 <kernaux_arch_x86_read_cr4>:
    8:   0f 20 e0              mov    %cr4,%eax
    b:   c3                    ret
 
-0000000c <kernaux_arch_i386_write_cr0>:
+0000000c <kernaux_arch_x86_write_cr0>:
    c:   8b 44 24 04           mov    0x4(%esp),%eax
   10:   0f 22 c0              mov    %eax,%cr0
   13:   c3                    ret
 
-00000014 <kernaux_arch_i386_write_cr3>:
+00000014 <kernaux_arch_x86_write_cr3>:
   14:   8b 44 24 04           mov    0x4(%esp),%eax
   18:   0f 22 d8              mov    %eax,%cr3
   1b:   c3                    ret
 
-0000001c <kernaux_arch_i386_write_cr4>:
+0000001c <kernaux_arch_x86_write_cr4>:
   1c:   8b 44 24 04           mov    0x4(%esp),%eax
   20:   0f 22 e0              mov    %eax,%cr4
   23:   c3                    ret

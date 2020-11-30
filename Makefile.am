@@ -22,8 +22,8 @@ libkernaux_a_SOURCES = \
 	src/pfa.c \
 	src/stdlib.c
 
-if ARCH_I386
-libkernaux_a_SOURCES += src/arch/i386.S
+if ARCH_X86
+libkernaux_a_SOURCES += src/arch/x86.S
 endif
 
 tests_multiboot2_print1_SOURCES = \
