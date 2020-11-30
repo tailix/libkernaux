@@ -16,6 +16,7 @@ noinst_PROGRAMS = \
 	tests/multiboot2_print2
 
 libkernaux_a_SOURCES = \
+	src/console.c \
 	src/multiboot2/helpers.c \
 	src/multiboot2/is_valid.c \
 	src/multiboot2/print.c \

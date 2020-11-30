@@ -22,7 +22,7 @@ API
 ---
 
 * [Multiboot 2 (GRUB 2) information parser](/include/kernaux/multiboot2.h)
-* Serial console *(planned)*
+* [Serial console](/include/kernaux/console.h)
 * [Page Frame Allocator](/include/kernaux/pfa.h) *(work in progress)*
 * ELF utils *(planned)*
 * [Architecture-specific helpers](/include/kernaux/arch/)
