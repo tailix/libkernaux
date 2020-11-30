@@ -35,5 +35,15 @@ int main()
         assert(pfa.pages[index] == KERNAUX_FALSE);
     }
 
+    unsigned int page_addr = KernAux_PFA_alloc_page(&pfa);
+
+    assert(page_addr != 0);
+    assert(page_addr % KERNAUX_PFA_PAGE_SIZE == 0);
+    assert(!pfa.pages[page_addr / KERNAUX_PFA_PAGE_SIZE]);
+
+    KernAux_PFA_free_page(&pfa, page_addr);
+
+    assert(pfa.pages[page_addr / KERNAUX_PFA_PAGE_SIZE]);
+
     return 0;
 }
