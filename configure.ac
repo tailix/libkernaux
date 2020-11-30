@@ -7,6 +7,10 @@ AC_INIT([libkernaux],
 
 AC_CONFIG_SRCDIR([src/pfa.c])
 
+AC_CANONICAL_SYSTEM
+
+AM_CONDITIONAL(ARCH_I386, test "${target_cpu}" = "i386")
+
 AM_INIT_AUTOMAKE([1.9 subdir-objects -Wall -Werror])
 
 AC_CONFIG_FILES([
