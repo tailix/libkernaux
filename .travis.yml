@@ -1,5 +1,7 @@
 language: c
 
+before_script: sudo apt install check
+
 script:
   - ./autogen.sh
   - ./configure
