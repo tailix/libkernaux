@@ -19,6 +19,8 @@ Table of contents
 API
 ---
 
+* [Multiboot 2 (GRUB 2) information parser](/include/kernaux/multiboot2.h)
+* [Page Frame Allocator](/include/kernaux/pfa.h) *(work in progress)*
 * [Architecture-specific helpers](/include/kernaux/arch/)
 * [stdlib replacement](/include/kernaux/stdlib.h) (with prefix):
   * `NULL`
@@ -27,8 +29,6 @@ API
   * `strlen`
   * `strncpy`
   * `itoa` *(incomplete)*
-* [Multiboot 2 (GRUB 2) information parser](/include/kernaux/multiboot2.h)
-* [Page Frame Allocator](/include/kernaux/pfa.h) *(work in progress)*
 
 
 
