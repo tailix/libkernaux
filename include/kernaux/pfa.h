@@ -1,6 +1,8 @@
 #ifndef KERNAUX_INCLUDED_PFA
 #define KERNAUX_INCLUDED_PFA 1
 
+#include <kernaux/stdlib.h>
+
 #define KERNAUX_PFA_ZONES_COUNT_MAX 10
 #define KERNAUX_PFA_ZONE_NAME_SIZE_MAX 256
 #define KERNAUX_PFA_ZONE_NAME_SLEN_MAX (KERNAUX_PFA_ZONE_NAME_SIZE_MAX - 1)
@@ -24,7 +26,7 @@ struct KernAux_PFA_Zone {
 };
 
 struct KernAux_PFA {
-    unsigned char initialized;
+    kernaux_bool initialized;
 
     unsigned long long page_size;
 
@@ -32,13 +34,13 @@ struct KernAux_PFA {
     unsigned int zones_count;
 };
 
-unsigned char KernAux_PFA_initialize_start(
+kernaux_bool KernAux_PFA_initialize_start(
     struct KernAux_PFA *pfa,
     unsigned long long page_size
 )
 __attribute__((nonnull));
 
-unsigned char KernAux_PFA_initialize_add_zone(
+kernaux_bool KernAux_PFA_initialize_add_zone(
     struct KernAux_PFA *pfa,
     const char *name,
     unsigned long long start,
@@ -46,7 +48,7 @@ unsigned char KernAux_PFA_initialize_add_zone(
 )
 __attribute__((nonnull));
 
-unsigned char KernAux_PFA_initialize_finish(
+kernaux_bool KernAux_PFA_initialize_finish(
     struct KernAux_PFA *pfa
 )
 __attribute__((nonnull));
