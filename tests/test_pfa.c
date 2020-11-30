@@ -45,5 +45,13 @@ int main()
 
     assert(pfa.pages[page_addr / KERNAUX_PFA_PAGE_SIZE]);
 
+    for (unsigned int index = 0; index < KERNAUX_PFA_PAGES_COUNT_MAX; ++index) {
+        if (pfa.pages[index]) {
+            assert(KernAux_PFA_alloc_page(&pfa) != 0);
+        }
+    }
+
+    assert(KernAux_PFA_alloc_page(&pfa) == 0);
+
     return 0;
 }
