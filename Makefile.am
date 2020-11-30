@@ -8,6 +8,7 @@ TESTS = \
 	tests/test_multiboot2_helpers \
 	tests/test_multiboot2_print \
 	tests/test_multiboot2_validation \
+	tests/test_pfa \
 	tests/test_stdlib
 
 noinst_PROGRAMS = \
@@ -46,6 +47,10 @@ tests_test_multiboot2_print_SOURCES = \
 tests_test_multiboot2_validation_SOURCES = \
 	$(libkernaux_a_SOURCES) \
 	tests/test_multiboot2_validation.c
+
+tests_test_pfa_SOURCES = \
+	$(libkernaux_a_SOURCES) \
+	tests/test_pfa.c
 
 tests_test_stdlib_SOURCES = \
 	$(libkernaux_a_SOURCES) \
