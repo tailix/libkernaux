@@ -20,7 +20,9 @@ API
 ---
 
 * [Architecture-specific helpers](/include/kernaux/arch/)
-* [stdlib replacement](/include/kernaux/stdlib.h)
+* [stdlib replacement](/include/kernaux/stdlib.h) (with prefix):
+  * `NULL`
+  * `bool`, `false`, `true`
   * `memset`
   * `strlen`
   * `strncpy`
