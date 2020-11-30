@@ -28,7 +28,7 @@ char *kernaux_strncpy(
 )
 __attribute__((nonnull));
 
-void kernaux_itoa(char *buf, int base, int d) __attribute__((nonnull));
+void kernaux_itoa(int d, char *buf, int base) __attribute__((nonnull));
 
 #ifdef __cplusplus
 }

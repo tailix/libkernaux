@@ -68,7 +68,7 @@ int main()
     {
         char buffer[10];
 
-        kernaux_itoa(buffer, 10, 495);
+        kernaux_itoa(495, buffer, 10);
 
         assert(buffer[0] == '4');
         assert(buffer[1] == '9');

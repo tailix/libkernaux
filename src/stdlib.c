@@ -37,7 +37,7 @@ char *kernaux_strncpy(
     return dest;
 }
 
-void kernaux_itoa(char *buf, const int base, const int d)
+void kernaux_itoa(const int d, char *buf, const int base)
 {
     char *p = buf;
     char *p1, *p2;
