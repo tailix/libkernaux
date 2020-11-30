@@ -16,12 +16,15 @@ noinst_PROGRAMS = \
 	tests/multiboot2_print2
 
 libkernaux_a_SOURCES = \
-	src/arch/i386.S \
 	src/multiboot2/helpers.c \
 	src/multiboot2/is_valid.c \
 	src/multiboot2/print.c \
 	src/pfa.c \
 	src/stdlib.c
+
+if ARCH_I386
+libkernaux_a_SOURCES += src/arch/i386.S
+endif
 
 tests_multiboot2_print1_SOURCES = \
 	$(libkernaux_a_SOURCES) \
