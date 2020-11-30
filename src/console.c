@@ -1,3 +1,5 @@
+#include "config.h"
+
 #ifdef ARCH_X86
 #include <kernaux/arch/x86.h>
 #endif

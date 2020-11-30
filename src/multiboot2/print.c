@@ -1,3 +1,5 @@
+#include "../config.h"
+
 #include <kernaux/multiboot2.h>
 
 static const char *KernAux_Multiboot2_TagType_to_str(

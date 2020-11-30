@@ -1,3 +1,5 @@
+#include "config.h"
+
 #include <kernaux/stdlib.h>
 
 void kernaux_memset(

@@ -1,3 +1,5 @@
+#include "../config.h"
+
 #include <kernaux/multiboot2.h>
 
 const struct KernAux_Multiboot2_TagBase *KernAux_Multiboot2_first_tag_with_type(

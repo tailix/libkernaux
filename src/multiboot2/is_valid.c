@@ -1,3 +1,5 @@
+#include "../config.h"
+
 #include <kernaux/multiboot2.h>
 
 kernaux_bool KernAux_Multiboot2_is_valid(

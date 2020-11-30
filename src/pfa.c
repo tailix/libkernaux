@@ -1,3 +1,5 @@
+#include "config.h"
+
 #include <kernaux/pfa.h>
 
 kernaux_bool KernAux_PFA_initialize_start(
