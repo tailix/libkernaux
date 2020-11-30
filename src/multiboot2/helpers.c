@@ -9,7 +9,7 @@ const struct KernAux_Multiboot2_TagBase *KernAux_Multiboot2_first_tag_with_type(
 
     while ((void*)tag_base < (void*)multiboot2 + multiboot2->total_size) {
         if (!KernAux_Multiboot2_TagBase_is_valid(tag_base)) {
-            return 0;
+            return KERNAUX_NULL;
         }
 
         if (tag_base->type == tag_type) {
@@ -21,7 +21,7 @@ const struct KernAux_Multiboot2_TagBase *KernAux_Multiboot2_first_tag_with_type(
         );
     }
 
-    return 0;
+    return KERNAUX_NULL;
 }
 
 const struct KernAux_Multiboot2_TagBase *KernAux_Multiboot2_tag_with_type_after(
@@ -34,7 +34,7 @@ const struct KernAux_Multiboot2_TagBase *KernAux_Multiboot2_tag_with_type_after(
 
     while ((void*)tag_base < (void*)multiboot2 + multiboot2->total_size) {
         if (!KernAux_Multiboot2_TagBase_is_valid(tag_base)) {
-            return 0;
+            return KERNAUX_NULL;
         }
 
         if (tag_base->type == tag_type && tag_base > after_tag) {
@@ -46,7 +46,7 @@ const struct KernAux_Multiboot2_TagBase *KernAux_Multiboot2_tag_with_type_after(
         );
     }
 
-    return 0;
+    return KERNAUX_NULL;
 }
 
 const char *KernAux_Multiboot2_boot_cmd_line(
@@ -60,7 +60,7 @@ const char *KernAux_Multiboot2_boot_cmd_line(
         );
 
     if (!tag) {
-        return 0;
+        return KERNAUX_NULL;
     }
 
     return tag->cmdline;

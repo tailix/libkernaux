@@ -65,7 +65,7 @@ const char *KernAux_Multiboot2_TagType_to_str(
     case KERNAUX_MULTIBOOT2_TAGTYPE_IMAGE_LOAD_BASE_PHYS_ADDR:
         return "image load base phys addr";
     default:
-        return 0;
+        return KERNAUX_NULL;
     }
 }
 
