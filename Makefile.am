@@ -19,7 +19,8 @@ libkernaux_a_SOURCES = \
 	src/multiboot2/helpers.c \
 	src/multiboot2/is_valid.c \
 	src/multiboot2/print.c \
-	src/pfa.c
+	src/pfa.c \
+	src/stdlib.c
 
 tests_multiboot2_print1_SOURCES = \
 	$(libkernaux_a_SOURCES) \
