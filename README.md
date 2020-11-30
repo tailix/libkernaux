@@ -3,6 +3,22 @@ libkernaux
 
 Auxiliary library for kernel development.
 
+
+
+Table of contents
+-----------------
+
+* [Overview](#libkernaux)
+* [Table of contents](#table-of-contents)
+* [API](#api)
+* [Tips](#tips)
+* [Discussion](#discussion)
+
+
+
+API
+---
+
 * [Architecture-specific helpers](/include/kernaux/arch/)
 * [stdlib replacement](/include/kernaux/stdlib.h)
   * `memset`
@@ -11,16 +27,6 @@ Auxiliary library for kernel development.
   * `itoa` (incomplete)
 * [Multiboot 2 (GRUB 2) information parser](/include/kernaux/multiboot2.h)
 * [Page Frame Allocator](/include/kernaux/pfa.h) (work in progress)
-
-
-
-Table of contents
------------------
-
-* [Overview](#libkernaux)
-* [Table of contents](#table-of-contents)
-* [Tips](#tips)
-* [Discussion](#discussion)
 
 
 
