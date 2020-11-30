@@ -106,3 +106,4 @@ Discussion
 ----------
 
 * [Topic on OSDev.org forum](https://forum.osdev.org/viewtopic.php?f=1&t=37958)
+* [Thread on r/osdev](https://www.reddit.com/r/osdev/comments/k3ueeu/libkernaux_auxiliary_library_for_kernel/)
