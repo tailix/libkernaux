@@ -57,7 +57,7 @@ When configured with cross-compiler, library can't be build and installed with
 just `make && sudo make install`. Instead use the following commands:
 
 * `make libkernaux.a`
-* `sudo make install-libLIBRARIES`
+* `sudo make install-exec`
 * `sudo make install-data`
 
 Check if compilation targets i386: `objdump -d src/arch/i386.o`. It should
