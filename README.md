@@ -43,10 +43,10 @@ Configure with cross-compiler in `$PATH` to make without it in `$PATH`:
 
 ```
 ./configure \
-  --host=i686-elf \
-  AR="$(which i686-elf-ar)" \
-  CC="$(which i686-elf-gcc)" \
-  RANLIB="$(which i686-elf-ranlib)" \
+  --host=i386-elf \
+  AR="$(which i386-elf-ar)" \
+  CC="$(which i386-elf-gcc)" \
+  RANLIB="$(which i386-elf-ranlib)" \
   CFLAGS='-ffreestanding -nostdinc -nostdlib -fno-builtin -fno-stack-protector'
 ```
 
