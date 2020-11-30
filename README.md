@@ -26,9 +26,9 @@ API
   * `memset`
   * `strlen`
   * `strncpy`
-  * `itoa` (incomplete)
+  * `itoa` *(incomplete)*
 * [Multiboot 2 (GRUB 2) information parser](/include/kernaux/multiboot2.h)
-* [Page Frame Allocator](/include/kernaux/pfa.h) (work in progress)
+* [Page Frame Allocator](/include/kernaux/pfa.h) *(work in progress)*
 
 
 
