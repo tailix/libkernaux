@@ -1,6 +1,8 @@
 language: c
 
-before_script: sudo apt install check
+before_script:
+  - sudo apt update
+  - sudo apt install check
 
 script:
   - ./autogen.sh
