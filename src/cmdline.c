@@ -44,7 +44,15 @@ kernaux_bool kernaux_cmdline_parse(
         if ((cur == ' ' || cur == '\0') && prev != ' ') {
             const unsigned size = index - start + 1;
 
-            // TODO: check size
+            if (*argc >= argv_count_max) {
+                kernaux_strncpy(error_msg, "too many args", 13);
+                goto fail;
+            }
+
+            if (size > arg_size_max) {
+                kernaux_strncpy(error_msg, "arg too long", 12);
+                goto fail;
+            }
 
             argv[(*argc)++] = buffer;
             kernaux_strncpy(buffer, &cmdline[start], size - 1);
@@ -61,4 +69,15 @@ kernaux_bool kernaux_cmdline_parse(
     }
 
     return KERNAUX_TRUE;
+
+fail:
+    *argc = 0;
+
+    for (unsigned int index = 0; index < argv_count_max; ++index) {
+        argv[index] = KERNAUX_NULL;
+    }
+
+    kernaux_memset(buffer, '\0', argv_count_max * arg_size_max);
+
+    return KERNAUX_FALSE;
 }
