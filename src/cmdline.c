@@ -31,5 +31,34 @@ kernaux_bool kernaux_cmdline_parse(
 
     kernaux_memset(buffer, '\0', argv_count_max * arg_size_max);
 
+    if (cmdline[0] == '\0') {
+        return KERNAUX_TRUE;
+    }
+
+    unsigned int start = 0;
+
+    for (unsigned int index = 1; ; ++index) {
+        const char prev = cmdline[index - 1];
+        const char cur  = cmdline[index];
+
+        if ((cur == ' ' || cur == '\0') && prev != ' ') {
+            const unsigned size = index - start + 1;
+
+            // TODO: check size
+
+            argv[(*argc)++] = buffer;
+            kernaux_strncpy(buffer, &cmdline[start], size - 1);
+            buffer += size;
+        }
+
+        if (prev == ' ' && cur != ' ' && cur != '\0') {
+            start = index;
+        }
+
+        if (cur == '\0') {
+            break;
+        }
+    }
+
     return KERNAUX_TRUE;
 }
