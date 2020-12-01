@@ -92,5 +92,174 @@ int main()
         assert(argv[index] == KERNAUX_NULL);
     }
 
+    //==========================================================================
+
+    assert(kernaux_cmdline_parse(
+        " foo bar",
+        error_msg,
+        &argc,
+        argv,
+        buffer,
+        ARGV_COUNT_MAX,
+        ARG_SIZE_MAX
+    ));
+
+    assert(strcmp(error_msg, "") == 0);
+    assert(argc == 2);
+    assert(strcmp(argv[0], "foo") == 0);
+    assert(strcmp(argv[1], "bar") == 0);
+
+    for (unsigned int index = argc; index < ARGV_COUNT_MAX; ++index) {
+        assert(argv[index] == KERNAUX_NULL);
+    }
+
+    //==========================================================================
+
+    assert(kernaux_cmdline_parse(
+        "foo bar ",
+        error_msg,
+        &argc,
+        argv,
+        buffer,
+        ARGV_COUNT_MAX,
+        ARG_SIZE_MAX
+    ));
+
+    assert(strcmp(error_msg, "") == 0);
+    assert(argc == 2);
+    assert(strcmp(argv[0], "foo") == 0);
+    assert(strcmp(argv[1], "bar") == 0);
+
+    for (unsigned int index = argc; index < ARGV_COUNT_MAX; ++index) {
+        assert(argv[index] == KERNAUX_NULL);
+    }
+
+    //==========================================================================
+
+    assert(kernaux_cmdline_parse(
+        " foo bar ",
+        error_msg,
+        &argc,
+        argv,
+        buffer,
+        ARGV_COUNT_MAX,
+        ARG_SIZE_MAX
+    ));
+
+    assert(strcmp(error_msg, "") == 0);
+    assert(argc == 2);
+    assert(strcmp(argv[0], "foo") == 0);
+    assert(strcmp(argv[1], "bar") == 0);
+
+    for (unsigned int index = argc; index < ARGV_COUNT_MAX; ++index) {
+        assert(argv[index] == KERNAUX_NULL);
+    }
+
+    //==========================================================================
+
+    assert(kernaux_cmdline_parse(
+        "foo  bar",
+        error_msg,
+        &argc,
+        argv,
+        buffer,
+        ARGV_COUNT_MAX,
+        ARG_SIZE_MAX
+    ));
+
+    assert(strcmp(error_msg, "") == 0);
+    assert(argc == 2);
+    assert(strcmp(argv[0], "foo") == 0);
+    assert(strcmp(argv[1], "bar") == 0);
+
+    for (unsigned int index = argc; index < ARGV_COUNT_MAX; ++index) {
+        assert(argv[index] == KERNAUX_NULL);
+    }
+
+    //==========================================================================
+
+    assert(kernaux_cmdline_parse(
+        "  foo  bar",
+        error_msg,
+        &argc,
+        argv,
+        buffer,
+        ARGV_COUNT_MAX,
+        ARG_SIZE_MAX
+    ));
+
+    assert(strcmp(error_msg, "") == 0);
+    assert(argc == 2);
+    assert(strcmp(argv[0], "foo") == 0);
+    assert(strcmp(argv[1], "bar") == 0);
+
+    for (unsigned int index = argc; index < ARGV_COUNT_MAX; ++index) {
+        assert(argv[index] == KERNAUX_NULL);
+    }
+
+    //==========================================================================
+
+    assert(kernaux_cmdline_parse(
+        "foo  bar  ",
+        error_msg,
+        &argc,
+        argv,
+        buffer,
+        ARGV_COUNT_MAX,
+        ARG_SIZE_MAX
+    ));
+
+    assert(strcmp(error_msg, "") == 0);
+    assert(argc == 2);
+    assert(strcmp(argv[0], "foo") == 0);
+    assert(strcmp(argv[1], "bar") == 0);
+
+    for (unsigned int index = argc; index < ARGV_COUNT_MAX; ++index) {
+        assert(argv[index] == KERNAUX_NULL);
+    }
+
+    //==========================================================================
+
+    assert(kernaux_cmdline_parse(
+        "  foo  bar  ",
+        error_msg,
+        &argc,
+        argv,
+        buffer,
+        ARGV_COUNT_MAX,
+        ARG_SIZE_MAX
+    ));
+
+    assert(strcmp(error_msg, "") == 0);
+    assert(argc == 2);
+    assert(strcmp(argv[0], "foo") == 0);
+    assert(strcmp(argv[1], "bar") == 0);
+
+    for (unsigned int index = argc; index < ARGV_COUNT_MAX; ++index) {
+        assert(argv[index] == KERNAUX_NULL);
+    }
+
+    //==========================================================================
+
+    assert(kernaux_cmdline_parse(
+        "foo bar car",
+        error_msg,
+        &argc,
+        argv,
+        buffer,
+        ARGV_COUNT_MAX,
+        ARG_SIZE_MAX
+    ));
+
+    assert(strcmp(error_msg, "") == 0);
+    assert(argc == 3);
+    assert(strcmp(argv[0], "foo") == 0);
+    assert(strcmp(argv[1], "bar") == 0);
+    assert(strcmp(argv[2], "car") == 0);
+
+    for (unsigned int index = argc; index < ARGV_COUNT_MAX; ++index) {
+        assert(argv[index] == KERNAUX_NULL);
+    }
+
     return 0;
 }
