@@ -41,8 +41,10 @@ int main()
     test("  foo  bar  ", 0, 0, true, "", 2, argv_foo_bar);
     test("foo bar car", 0, 0, true, "", 3, argv_foo_bar_car);
 
+    test("foo bar car", 3, 4, true, "", 3, argv_foo_bar_car);
+
     test("foo bar car", 2, 0, false, "too many args", 0, argv0);
-    test("foo bar car", 0, 2, false, "arg too long", 0, argv0);
+    test("foo bar car", 0, 3, false, "arg too long", 0, argv0);
 
     return 0;
 }
