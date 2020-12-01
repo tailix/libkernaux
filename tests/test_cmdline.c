@@ -29,8 +29,8 @@ int main()
 {
     test(
         "",
-        ARGV_COUNT_MAX,
-        ARG_SIZE_MAX,
+        0,
+        0,
 
         KERNAUX_TRUE,
         "",
@@ -40,8 +40,8 @@ int main()
 
     test(
         "   ",
-        ARGV_COUNT_MAX,
-        ARG_SIZE_MAX,
+        0,
+        0,
 
         KERNAUX_TRUE,
         "",
@@ -51,8 +51,8 @@ int main()
 
     test(
         "foo",
-        ARGV_COUNT_MAX,
-        ARG_SIZE_MAX,
+        0,
+        0,
 
         KERNAUX_TRUE,
         "",
@@ -62,8 +62,8 @@ int main()
 
     test(
         "foo bar",
-        ARGV_COUNT_MAX,
-        ARG_SIZE_MAX,
+        0,
+        0,
 
         KERNAUX_TRUE,
         "",
@@ -73,8 +73,8 @@ int main()
 
     test(
         " foo bar",
-        ARGV_COUNT_MAX,
-        ARG_SIZE_MAX,
+        0,
+        0,
 
         KERNAUX_TRUE,
         "",
@@ -84,8 +84,8 @@ int main()
 
     test(
         "foo bar ",
-        ARGV_COUNT_MAX,
-        ARG_SIZE_MAX,
+        0,
+        0,
 
         KERNAUX_TRUE,
         "",
@@ -95,8 +95,8 @@ int main()
 
     test(
         " foo bar ",
-        ARGV_COUNT_MAX,
-        ARG_SIZE_MAX,
+        0,
+        0,
 
         KERNAUX_TRUE,
         "",
@@ -106,8 +106,8 @@ int main()
 
     test(
         "foo  bar",
-        ARGV_COUNT_MAX,
-        ARG_SIZE_MAX,
+        0,
+        0,
 
         KERNAUX_TRUE,
         "",
@@ -117,8 +117,8 @@ int main()
 
     test(
         "  foo  bar",
-        ARGV_COUNT_MAX,
-        ARG_SIZE_MAX,
+        0,
+        0,
 
         KERNAUX_TRUE,
         "",
@@ -128,8 +128,8 @@ int main()
 
     test(
         "foo  bar  ",
-        ARGV_COUNT_MAX,
-        ARG_SIZE_MAX,
+        0,
+        0,
 
         KERNAUX_TRUE,
         "",
@@ -139,8 +139,8 @@ int main()
 
     test(
         "  foo  bar  ",
-        ARGV_COUNT_MAX,
-        ARG_SIZE_MAX,
+        0,
+        0,
 
         KERNAUX_TRUE,
         "",
@@ -150,8 +150,8 @@ int main()
 
     test(
         "foo bar car",
-        ARGV_COUNT_MAX,
-        ARG_SIZE_MAX,
+        0,
+        0,
 
         KERNAUX_TRUE,
         "",
@@ -164,14 +164,22 @@ int main()
 
 void test(
     const char *const cmdline,
-    const unsigned int argv_count_max,
-    const unsigned int arg_size_max,
+    unsigned int argv_count_max,
+    unsigned int arg_size_max,
 
     const kernaux_bool expected_result,
     const char *const expected_error_msg,
     unsigned int expected_argc,
     const char *const *const expected_argv
 ) {
+    if (argv_count_max == 0) {
+        argv_count_max = ARGV_COUNT_MAX;
+    }
+
+    if (arg_size_max == 0) {
+        arg_size_max = ARG_SIZE_MAX;
+    }
+
     char error_msg[KERNAUX_CMDLINE_ERROR_MSG_SIZE_MAX];
     unsigned int argc = 1234;
     char *argv[argv_count_max];
