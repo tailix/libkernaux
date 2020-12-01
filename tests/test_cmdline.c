@@ -1,6 +1,7 @@
 #include <kernaux/cmdline.h>
 
 #include <assert.h>
+#include <stdbool.h>
 #include <string.h>
 
 static const unsigned int ARGV_COUNT_MAX = 100;
@@ -11,7 +12,7 @@ static void test(
     unsigned int argv_count_max,
     unsigned int arg_size_max,
 
-    kernaux_bool expected_result,
+    bool expected_result,
     const char *expected_error_msg,
     unsigned int expected_argc,
     const char *const *const expected_argv
@@ -27,18 +28,18 @@ static const char *const argv_foo_bar_car[] = {"foo", "bar", "car"};
 
 int main()
 {
-    test("", 0, 0, KERNAUX_TRUE, "", 0, argv0);
-    test("   ", 0, 0, KERNAUX_TRUE, "", 0, argv0);
-    test("foo", 0, 0, KERNAUX_TRUE, "", 1, argv_foo);
-    test("foo bar", 0, 0, KERNAUX_TRUE, "", 2, argv_foo_bar);
-    test(" foo bar", 0, 0, KERNAUX_TRUE, "", 2, argv_foo_bar);
-    test("foo bar ", 0, 0, KERNAUX_TRUE, "", 2, argv_foo_bar);
-    test(" foo bar ", 0, 0, KERNAUX_TRUE, "", 2, argv_foo_bar);
-    test("foo  bar", 0, 0, KERNAUX_TRUE, "", 2, argv_foo_bar);
-    test("  foo  bar", 0, 0, KERNAUX_TRUE, "", 2, argv_foo_bar);
-    test("foo  bar  ", 0, 0, KERNAUX_TRUE, "", 2, argv_foo_bar);
-    test("  foo  bar  ", 0, 0, KERNAUX_TRUE, "", 2, argv_foo_bar);
-    test("foo bar car", 0, 0, KERNAUX_TRUE, "", 3, argv_foo_bar_car);
+    test("", 0, 0, true, "", 0, argv0);
+    test("   ", 0, 0, true, "", 0, argv0);
+    test("foo", 0, 0, true, "", 1, argv_foo);
+    test("foo bar", 0, 0, true, "", 2, argv_foo_bar);
+    test(" foo bar", 0, 0, true, "", 2, argv_foo_bar);
+    test("foo bar ", 0, 0, true, "", 2, argv_foo_bar);
+    test(" foo bar ", 0, 0, true, "", 2, argv_foo_bar);
+    test("foo  bar", 0, 0, true, "", 2, argv_foo_bar);
+    test("  foo  bar", 0, 0, true, "", 2, argv_foo_bar);
+    test("foo  bar  ", 0, 0, true, "", 2, argv_foo_bar);
+    test("  foo  bar  ", 0, 0, true, "", 2, argv_foo_bar);
+    test("foo bar car", 0, 0, true, "", 3, argv_foo_bar_car);
 
     return 0;
 }
@@ -48,7 +49,7 @@ void test(
     unsigned int argv_count_max,
     unsigned int arg_size_max,
 
-    const kernaux_bool expected_result,
+    const bool expected_result,
     const char *const expected_error_msg,
     unsigned int expected_argc,
     const char *const *const expected_argv
