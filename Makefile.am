@@ -5,6 +5,7 @@ AM_CFLAGS = -std=c99 -Wall -Wextra -I$(top_srcdir)/include
 lib_LIBRARIES = libkernaux.a
 
 TESTS = \
+	tests/test_cmdline \
 	tests/test_multiboot2_helpers \
 	tests/test_multiboot2_print \
 	tests/test_multiboot2_validation \
@@ -17,6 +18,7 @@ noinst_PROGRAMS = \
 	tests/multiboot2_print2
 
 libkernaux_a_SOURCES = \
+	src/cmdline.c \
 	src/console.c \
 	src/multiboot2/helpers.c \
 	src/multiboot2/is_valid.c \
@@ -35,6 +37,10 @@ tests_multiboot2_print1_SOURCES = \
 tests_multiboot2_print2_SOURCES = \
 	$(libkernaux_a_SOURCES) \
 	tests/multiboot2_print2.c
+
+tests_test_cmdline_SOURCES = \
+	$(libkernaux_a_SOURCES) \
+	tests/test_cmdline.c
 
 tests_test_multiboot2_helpers_SOURCES = \
 	$(libkernaux_a_SOURCES) \
