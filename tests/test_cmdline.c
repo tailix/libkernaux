@@ -28,27 +28,16 @@ static const char *const argv_foo_bar_car[] = {"foo", "bar", "car"};
 int main()
 {
     test("", 0, 0, KERNAUX_TRUE, "", 0, argv0);
-
     test("   ", 0, 0, KERNAUX_TRUE, "", 0, argv0);
-
     test("foo", 0, 0, KERNAUX_TRUE, "", 1, argv_foo);
-
     test("foo bar", 0, 0, KERNAUX_TRUE, "", 2, argv_foo_bar);
-
     test(" foo bar", 0, 0, KERNAUX_TRUE, "", 2, argv_foo_bar);
-
     test("foo bar ", 0, 0, KERNAUX_TRUE, "", 2, argv_foo_bar);
-
     test(" foo bar ", 0, 0, KERNAUX_TRUE, "", 2, argv_foo_bar);
-
     test("foo  bar", 0, 0, KERNAUX_TRUE, "", 2, argv_foo_bar);
-
     test("  foo  bar", 0, 0, KERNAUX_TRUE, "", 2, argv_foo_bar);
-
     test("foo  bar  ", 0, 0, KERNAUX_TRUE, "", 2, argv_foo_bar);
-
     test("  foo  bar  ", 0, 0, KERNAUX_TRUE, "", 2, argv_foo_bar);
-
     test("foo bar car", 0, 0, KERNAUX_TRUE, "", 3, argv_foo_bar_car);
 
     return 0;
