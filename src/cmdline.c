@@ -2,6 +2,13 @@
 
 #include <kernaux/cmdline.h>
 
+enum State {
+    INITIAL,
+    FINAL,
+    WHITESPACE,
+    TOKEN,
+};
+
 kernaux_bool kernaux_cmdline_parse(
     const char *const cmdline,
     char *error_msg,
@@ -35,13 +42,61 @@ kernaux_bool kernaux_cmdline_parse(
         return KERNAUX_TRUE;
     }
 
+    enum State state = INITIAL;
+
     unsigned int start = 0;
 
-    for (unsigned int index = 1; ; ++index) {
-        const char prev = cmdline[index - 1];
-        const char cur  = cmdline[index];
+    for (unsigned int index = 0; ; ++index) {
+        const char cur = cmdline[index];
 
-        if ((cur == ' ' || cur == '\0') && prev != ' ') {
+        switch (state) {
+        case FINAL:
+            break; // Case break; loop break after switch.
+        case INITIAL:
+            if (cur == '\0') {
+                state = FINAL;
+            }
+            else if (cur == ' ') {
+                state = WHITESPACE;
+            }
+            else {
+                state = TOKEN;
+                start = index;
+            }
+            break;
+        case WHITESPACE:
+            if (cur == '\0') {
+                state = FINAL;
+            }
+            else if (cur == ' ') {
+            }
+            else {
+                state = TOKEN;
+                start = index;
+            }
+            break;
+        case TOKEN:
+            if (cur == '\0') {
+                state = FINAL;
+                goto create_token;
+            }
+            else if (cur == ' ') {
+                state = WHITESPACE;
+                goto create_token;
+            }
+            else {
+            }
+            break;
+        }
+
+        if (state == FINAL) {
+            break;
+        }
+
+        continue;
+
+create_token:
+        {
             const unsigned size = index - start + 1;
 
             if (*argc >= argv_count_max) {
@@ -59,11 +114,7 @@ kernaux_bool kernaux_cmdline_parse(
             buffer += size;
         }
 
-        if (prev == ' ' && cur != ' ' && cur != '\0') {
-            start = index;
-        }
-
-        if (cur == '\0') {
+        if (state == FINAL) {
             break;
         }
     }
