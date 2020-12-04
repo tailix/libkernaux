@@ -24,6 +24,13 @@ void KernAux_PFA_mark_available(
 )
 __attribute__((nonnull));
 
+void KernAux_PFA_mark_unavailable(
+    struct KernAux_PFA *pfa,
+    unsigned int start,
+    unsigned int end
+)
+__attribute__((nonnull));
+
 unsigned int KernAux_PFA_alloc_page(struct KernAux_PFA *pfa)
 __attribute__((nonnull));
 

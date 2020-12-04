@@ -14,6 +14,7 @@ int main()
 
     KernAux_PFA_mark_available(&pfa, 0, 654335);
     KernAux_PFA_mark_available(&pfa, 1048576, 134086655);
+    KernAux_PFA_mark_unavailable(&pfa, 4194304, 6291455); // [4 MB, 6 MB)
 
     for (unsigned int index = 0; index < 159; ++index) {
         assert(pfa.pages[index] == KERNAUX_TRUE);
@@ -23,7 +24,15 @@ int main()
         assert(pfa.pages[index] == KERNAUX_FALSE);
     }
 
-    for (unsigned int index = 256; index < 32736; ++index) {
+    for (unsigned int index = 256; index < 1024; ++index) { // [1 MB, 4 MB)
+        assert(pfa.pages[index] == KERNAUX_TRUE);
+    }
+
+    for (unsigned int index = 1024; index < 1536; ++index) { // [4 MB, 6 MB)
+        assert(pfa.pages[index] == KERNAUX_FALSE);
+    }
+
+    for (unsigned int index = 1536; index < 32736; ++index) { // [6 MB, ~127 MB)
         assert(pfa.pages[index] == KERNAUX_TRUE);
     }
 

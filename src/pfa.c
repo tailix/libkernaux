@@ -3,6 +3,14 @@
 #include <kernaux/pfa.h>
 #include <kernaux/stdlib.h>
 
+static void KernAux_PFA_mark(
+    struct KernAux_PFA *pfa,
+    kernaux_bool status,
+    unsigned int start,
+    unsigned int end
+)
+__attribute__((nonnull));
+
 void KernAux_PFA_initialize(struct KernAux_PFA *const pfa)
 {
     kernaux_memset(pfa->pages, KERNAUX_FALSE, sizeof(pfa->pages));
@@ -10,6 +18,23 @@ void KernAux_PFA_initialize(struct KernAux_PFA *const pfa)
 
 void KernAux_PFA_mark_available(
     struct KernAux_PFA *const pfa,
+    unsigned int start,
+    unsigned int end
+) {
+    KernAux_PFA_mark(pfa, KERNAUX_TRUE, start, end);
+}
+
+void KernAux_PFA_mark_unavailable(
+    struct KernAux_PFA *const pfa,
+    unsigned int start,
+    unsigned int end
+) {
+    KernAux_PFA_mark(pfa, KERNAUX_FALSE, start, end);
+}
+
+void KernAux_PFA_mark(
+    struct KernAux_PFA *const pfa,
+    const kernaux_bool status,
     unsigned int start,
     unsigned int end
 ) {
@@ -32,7 +57,7 @@ void KernAux_PFA_mark_available(
     const unsigned int end_index   = end   / KERNAUX_PFA_PAGE_SIZE;
 
     for (unsigned int index = start_index; index <= end_index; ++index) {
-        pfa->pages[index] = KERNAUX_TRUE;
+        pfa->pages[index] = status;
     }
 }
 
