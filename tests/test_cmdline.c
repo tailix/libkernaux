@@ -134,6 +134,12 @@ int main()
     test("\\ \\ \\  \\ \\ \\  \\ \\ \\ ",          2, 3, false, "arg too long",  0, argv0);
     test("\\\\\\\\\\\\ \\\\\\\\\\\\ \\\\\\\\\\\\", 2, 3, false, "arg too long",  0, argv0);
 
+    test("\\",     0, 0, false, "EOL after backslash", 0, argv0);
+    test(" \\",    0, 0, false, "EOL after backslash", 0, argv0);
+    test("\\ \\",  0, 0, false, "EOL after backslash", 0, argv0);
+    test("\\\\\\", 0, 0, false, "EOL after backslash", 0, argv0);
+    test("foo\\",  0, 0, false, "EOL after backslash", 0, argv0);
+
     return 0;
 }
 
