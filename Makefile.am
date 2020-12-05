@@ -14,6 +14,7 @@ TESTS = \
 
 noinst_PROGRAMS = \
 	$(TESTS) \
+	examples/cmdline \
 	tests/multiboot2_print1 \
 	tests/multiboot2_print2
 
@@ -29,6 +30,10 @@ libkernaux_a_SOURCES = \
 if ARCH_X86
 libkernaux_a_SOURCES += src/arch/x86.S
 endif
+
+examples_cmdline_SOURCES = \
+	$(libkernaux_a_SOURCES) \
+	examples/cmdline.c
 
 tests_multiboot2_print1_SOURCES = \
 	$(libkernaux_a_SOURCES) \

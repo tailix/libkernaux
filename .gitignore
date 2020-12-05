@@ -30,6 +30,7 @@
 /tests/test*.log
 /tests/test*.trs
 
+/examples/cmdline
 /tests/multiboot2_print1
 /tests/multiboot2_print2
 /tests/test_cmdline
