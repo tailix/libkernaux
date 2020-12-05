@@ -44,7 +44,7 @@ kernaux_bool kernaux_cmdline_parse(
 
     enum State state = INITIAL;
 
-    unsigned int start = 0;
+    unsigned int buffer_size = 0;
 
     for (unsigned int index = 0; ; ++index) {
         const char cur = cmdline[index];
@@ -60,8 +60,20 @@ kernaux_bool kernaux_cmdline_parse(
                 state = WHITESPACE;
             }
             else {
+                if (*argc >= argv_count_max) {
+                    kernaux_strncpy(error_msg, "too many args", 13);
+                    goto fail;
+                }
+
+                if (buffer_size >= arg_size_max) {
+                    kernaux_strncpy(error_msg, "arg too long", 12);
+                    goto fail;
+                }
+
                 state = TOKEN;
-                start = index;
+                argv[(*argc)++] = buffer;
+                *(buffer++) = cur;
+                ++buffer_size;
             }
             break;
         case WHITESPACE:
@@ -71,47 +83,53 @@ kernaux_bool kernaux_cmdline_parse(
             else if (cur == ' ') {
             }
             else {
+                if (*argc >= argv_count_max) {
+                    kernaux_strncpy(error_msg, "too many args", 13);
+                    goto fail;
+                }
+
+                if (buffer_size >= arg_size_max) {
+                    kernaux_strncpy(error_msg, "arg too long", 12);
+                    goto fail;
+                }
+
                 state = TOKEN;
-                start = index;
+                argv[(*argc)++] = buffer;
+                *(buffer++) = cur;
+                ++buffer_size;
             }
             break;
         case TOKEN:
             if (cur == '\0') {
+                if (buffer_size >= arg_size_max) {
+                    kernaux_strncpy(error_msg, "arg too long", 12);
+                    goto fail;
+                }
+
                 state = FINAL;
-                goto create_token;
+                *(buffer++) = '\0';
+                buffer_size = 0;
             }
             else if (cur == ' ') {
+                if (buffer_size >= arg_size_max) {
+                    kernaux_strncpy(error_msg, "arg too long", 12);
+                    goto fail;
+                }
+
                 state = WHITESPACE;
-                goto create_token;
+                *(buffer++) = '\0';
+                buffer_size = 0;
             }
             else {
+                if (buffer_size >= arg_size_max) {
+                    kernaux_strncpy(error_msg, "arg too long", 12);
+                    goto fail;
+                }
+
+                *(buffer++) = cur;
+                ++buffer_size;
             }
             break;
-        }
-
-        if (state == FINAL) {
-            break;
-        }
-
-        continue;
-
-create_token:
-        {
-            const unsigned size = index - start + 1;
-
-            if (*argc >= argv_count_max) {
-                kernaux_strncpy(error_msg, "too many args", 13);
-                goto fail;
-            }
-
-            if (size > arg_size_max) {
-                kernaux_strncpy(error_msg, "arg too long", 12);
-                goto fail;
-            }
-
-            argv[(*argc)++] = buffer;
-            kernaux_strncpy(buffer, &cmdline[start], size - 1);
-            buffer += size;
         }
 
         if (state == FINAL) {
