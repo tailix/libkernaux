@@ -76,18 +76,18 @@ static const char *const argv_foo_backslashbarbackslash[] = {"foo", "\\bar\\"};
 
 int main()
 {
-    test("", 0, 0, true, "", 0, argv0);
-    test("   ", 0, 0, true, "", 0, argv0);
-    test("foo", 0, 0, true, "", 1, argv_foo);
-    test("foo bar", 0, 0, true, "", 2, argv_foo_bar);
-    test(" foo bar", 0, 0, true, "", 2, argv_foo_bar);
-    test("foo bar ", 0, 0, true, "", 2, argv_foo_bar);
-    test(" foo bar ", 0, 0, true, "", 2, argv_foo_bar);
-    test("foo  bar", 0, 0, true, "", 2, argv_foo_bar);
-    test("  foo  bar", 0, 0, true, "", 2, argv_foo_bar);
-    test("foo  bar  ", 0, 0, true, "", 2, argv_foo_bar);
+    test("",             0, 0, true, "", 0, argv0);
+    test("   ",          0, 0, true, "", 0, argv0);
+    test("foo",          0, 0, true, "", 1, argv_foo);
+    test("foo bar",      0, 0, true, "", 2, argv_foo_bar);
+    test(" foo bar",     0, 0, true, "", 2, argv_foo_bar);
+    test("foo bar ",     0, 0, true, "", 2, argv_foo_bar);
+    test(" foo bar ",    0, 0, true, "", 2, argv_foo_bar);
+    test("foo  bar",     0, 0, true, "", 2, argv_foo_bar);
+    test("  foo  bar",   0, 0, true, "", 2, argv_foo_bar);
+    test("foo  bar  ",   0, 0, true, "", 2, argv_foo_bar);
     test("  foo  bar  ", 0, 0, true, "", 2, argv_foo_bar);
-    test("foo bar car", 0, 0, true, "", 3, argv_foo_bar_car);
+    test("foo bar car",  0, 0, true, "", 3, argv_foo_bar_car);
 
     test("foo bar car", 3, 0, true, "", 3, argv_foo_bar_car);
     test("foo bar car", 0, 4, true, "", 3, argv_foo_bar_car);
