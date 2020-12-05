@@ -7,6 +7,7 @@ enum State {
     FINAL,
     WHITESPACE,
     TOKEN,
+    BACKSLASHED,
 };
 
 kernaux_bool kernaux_cmdline_parse(
@@ -52,6 +53,7 @@ kernaux_bool kernaux_cmdline_parse(
         switch (state) {
         case FINAL:
             break; // Case break; loop break after switch.
+
         case INITIAL:
             if (cur == '\0') {
                 state = FINAL;
@@ -59,6 +61,15 @@ kernaux_bool kernaux_cmdline_parse(
             else if (cur == ' ') {
                 state = WHITESPACE;
             }
+            else if (cur == '\\') {
+                if (*argc >= argv_count_max) {
+                    kernaux_strncpy(error_msg, "too many args", 13);
+                    goto fail;
+                }
+
+                state = BACKSLASHED;
+                argv[(*argc)++] = buffer;
+            }
             else {
                 if (*argc >= argv_count_max) {
                     kernaux_strncpy(error_msg, "too many args", 13);
@@ -76,12 +87,22 @@ kernaux_bool kernaux_cmdline_parse(
                 ++buffer_size;
             }
             break;
+
         case WHITESPACE:
             if (cur == '\0') {
                 state = FINAL;
             }
             else if (cur == ' ') {
             }
+            else if (cur == '\\') {
+                if (*argc >= argv_count_max) {
+                    kernaux_strncpy(error_msg, "too many args", 13);
+                    goto fail;
+                }
+
+                state = BACKSLASHED;
+                argv[(*argc)++] = buffer;
+            }
             else {
                 if (*argc >= argv_count_max) {
                     kernaux_strncpy(error_msg, "too many args", 13);
@@ -99,6 +120,7 @@ kernaux_bool kernaux_cmdline_parse(
                 ++buffer_size;
             }
             break;
+
         case TOKEN:
             if (cur == '\0') {
                 if (buffer_size >= arg_size_max) {
@@ -120,12 +142,32 @@ kernaux_bool kernaux_cmdline_parse(
                 *(buffer++) = '\0';
                 buffer_size = 0;
             }
+            else if (cur == '\\') {
+                state = BACKSLASHED;
+            }
             else {
                 if (buffer_size >= arg_size_max) {
                     kernaux_strncpy(error_msg, "arg too long", 12);
                     goto fail;
                 }
 
+                *(buffer++) = cur;
+                ++buffer_size;
+            }
+            break;
+
+        case BACKSLASHED:
+            if (cur == '\0') {
+                kernaux_strncpy(error_msg, "EOL after backslash", 19);
+                goto fail;
+            }
+            else {
+                if (buffer_size >= arg_size_max) {
+                    kernaux_strncpy(error_msg, "arg too long", 12);
+                    goto fail;
+                }
+
+                state = TOKEN;
                 *(buffer++) = cur;
                 ++buffer_size;
             }
