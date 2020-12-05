@@ -17,6 +17,8 @@
 /configure
 /configure.scan
 /depcomp
+/examples/*.log
+/examples/*.trs
 /include/Makefile
 /include/Makefile.in
 /install-sh

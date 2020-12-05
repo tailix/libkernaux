@@ -5,6 +5,7 @@ AM_CFLAGS = -std=c99 -Wall -Wextra -I$(top_srcdir)/include
 lib_LIBRARIES = libkernaux.a
 
 TESTS = \
+	examples/cmdline \
 	tests/test_cmdline \
 	tests/test_multiboot2_helpers \
 	tests/test_multiboot2_print \
@@ -14,7 +15,6 @@ TESTS = \
 
 noinst_PROGRAMS = \
 	$(TESTS) \
-	examples/cmdline \
 	tests/multiboot2_print1 \
 	tests/multiboot2_print2
 
