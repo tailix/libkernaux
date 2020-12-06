@@ -8,13 +8,13 @@ static const char *KernAux_Multiboot2_TagType_to_str(
 
 static void KernAux_Multiboot2_Tag_MemoryMap_print(
     const struct KernAux_Multiboot2_Tag_MemoryMap *tag,
-    void (*printf)(const char *format, ...)
+    void (*printf)(const char *format, ...) __attribute__((format(printf, 1, 2)))
 )
 __attribute__((nonnull));
 
 static void KernAux_Multiboot2_Tag_ELFSymbols_print(
     const struct KernAux_Multiboot2_Tag_ELFSymbols *tag,
-    void (*printf)(const char *format, ...)
+    void (*printf)(const char *format, ...) __attribute__((format(printf, 1, 2)))
 )
 __attribute__((nonnull));
 
@@ -73,7 +73,7 @@ const char *KernAux_Multiboot2_TagType_to_str(
 
 void KernAux_Multiboot2_print(
     const struct KernAux_Multiboot2 *const multiboot2,
-    void (*const printf)(const char *format, ...)
+    void (*const printf)(const char *format, ...) __attribute__((format(printf, 1, 2)))
 ) {
     printf("Multiboot 2 info\n");
     printf("  size: %u\n", multiboot2->total_size);
@@ -97,7 +97,7 @@ void KernAux_Multiboot2_print(
 
 void KernAux_Multiboot2_TagBase_print(
     const struct KernAux_Multiboot2_TagBase *const tag_base,
-    void (*const printf)(const char *format, ...)
+    void (*const printf)(const char *format, ...) __attribute__((format(printf, 1, 2)))
 ) {
     if (!KernAux_Multiboot2_TagBase_is_valid(tag_base)) {
         return;
@@ -283,7 +283,7 @@ void KernAux_Multiboot2_TagBase_print(
 
 void KernAux_Multiboot2_Tag_MemoryMap_print(
     const struct KernAux_Multiboot2_Tag_MemoryMap *const tag,
-    void (*printf)(const char *format, ...)
+    void (*printf)(const char *format, ...) __attribute__((format(printf, 1, 2)))
 ) {
     if (!KernAux_Multiboot2_Tag_MemoryMap_is_valid(tag)) {
         printf("  invalid!\n");
@@ -313,7 +313,7 @@ void KernAux_Multiboot2_Tag_MemoryMap_print(
 
 void KernAux_Multiboot2_Tag_ELFSymbols_print(
     const struct KernAux_Multiboot2_Tag_ELFSymbols *const tag,
-    void (*printf)(const char *format, ...)
+    void (*printf)(const char *format, ...) __attribute__((format(printf, 1, 2)))
 ) {
     if (!KernAux_Multiboot2_Tag_ELFSymbols_is_valid(tag)) {
         printf("  invalid!\n");
