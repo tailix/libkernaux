@@ -6,6 +6,6 @@ compiler:
 
 script:
   - ./autogen.sh
-  - ./configure CFLAGS='-Werror -Wno-gnu-variable-sized-type-not-at-end'
+  - ./configure CFLAGS='-Werror'
   - make
   - make check

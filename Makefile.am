@@ -1,6 +1,11 @@
 SUBDIRS = include
 
-AM_CFLAGS = -std=c99 -Wall -Wextra -I$(top_srcdir)/include
+AM_CFLAGS = \
+	-std=c99 \
+	-Wall \
+	-Wextra \
+	-Wno-gnu-variable-sized-type-not-at-end \
+	-I$(top_srcdir)/include
 
 lib_LIBRARIES = libkernaux.a
 
