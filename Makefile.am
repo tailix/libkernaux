@@ -10,6 +10,7 @@ AM_CFLAGS = \
 lib_LIBRARIES = libkernaux.a
 
 TESTS = \
+	examples/printf \
 	tests/test_printf \
 	tests/test_stdlib
 
@@ -56,6 +57,10 @@ endif
 examples_cmdline_SOURCES = \
 	$(libkernaux_a_SOURCES) \
 	examples/cmdline.c
+
+examples_printf_SOURCES = \
+	$(libkernaux_a_SOURCES) \
+	examples/printf.c
 
 tests_multiboot2_print1_SOURCES = \
 	$(libkernaux_a_SOURCES) \
