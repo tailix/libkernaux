@@ -51,6 +51,23 @@ Configure with cross-compiler in `$PATH` to make without it in `$PATH`:
   CFLAGS='-ffreestanding -nostdlib -fno-builtin -fno-stack-protector'
 ```
 
+When configuring with cross-compiler you can see the following messages. It's
+a bug in **autoconf**, just ignore it.
+
+```
+checking for _Bool... no
+checking stddef.h usability... no
+checking stddef.h presence... yes
+configure: WARNING: stddef.h: present but cannot be compiled
+configure: WARNING: stddef.h:     check for missing prerequisite headers?
+configure: WARNING: stddef.h: see the Autoconf documentation
+configure: WARNING: stddef.h:     section "Present But Cannot Be Compiled"
+configure: WARNING: stddef.h: proceeding with the compiler's result
+configure: WARNING:     ## ------------------------------------------------------------ ##
+configure: WARNING:     ## Report this to https://github.com/kernelmq/libkernaux/issues ##
+configure: WARNING:     ## ------------------------------------------------------------ ##
+```
+
 To install into specific directory use full path:
 `DESTDIR="$(pwd)/dest" make install` instead of `DESTDIR=dest make install`.
 
