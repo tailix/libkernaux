@@ -52,7 +52,8 @@ Configure with cross-compiler in `$PATH` to make without it in `$PATH`:
 ```
 
 When configuring with cross-compiler you can see the following messages. It's
-a bug in **autoconf**, just ignore it.
+[a bug](https://savannah.gnu.org/support/index.php?110393) in **autoconf**, just
+ignore it.
 
 ```
 checking for _Bool... no
