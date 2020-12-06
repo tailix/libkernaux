@@ -199,6 +199,10 @@ void kernaux_printf_va(
                 putchar(*arg_ptr);
             }
         }
+        else if (formatter.type == TYPE_c) {
+            const char arg = va_arg(va, int);
+            putchar(arg);
+        }
     }
 
     putchar('\0');
