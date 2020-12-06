@@ -8,13 +8,13 @@ static const char *KernAux_Multiboot2_TagType_to_str(
 
 static void KernAux_Multiboot2_Tag_MemoryMap_print(
     const struct KernAux_Multiboot2_Tag_MemoryMap *tag,
-    void (*print)(const char *format, ...)
+    void (*printf)(const char *format, ...)
 )
 __attribute__((nonnull));
 
 static void KernAux_Multiboot2_Tag_ELFSymbols_print(
     const struct KernAux_Multiboot2_Tag_ELFSymbols *tag,
-    void (*print)(const char *format, ...)
+    void (*printf)(const char *format, ...)
 )
 __attribute__((nonnull));
 
@@ -73,11 +73,11 @@ const char *KernAux_Multiboot2_TagType_to_str(
 
 void KernAux_Multiboot2_print(
     const struct KernAux_Multiboot2 *const multiboot2,
-    void (*const print)(const char *format, ...)
+    void (*const printf)(const char *format, ...)
 ) {
-    print("Multiboot 2 info\n");
-    print("  size: %u\n", multiboot2->total_size);
-    print("  reserved1: %u\n", multiboot2->reserved1);
+    printf("Multiboot 2 info\n");
+    printf("  size: %u\n", multiboot2->total_size);
+    printf("  reserved1: %u\n", multiboot2->reserved1);
 
     const struct KernAux_Multiboot2_TagBase *tag_base =
         (struct KernAux_Multiboot2_TagBase*)multiboot2->data;
@@ -87,7 +87,7 @@ void KernAux_Multiboot2_print(
             return;
         }
 
-        KernAux_Multiboot2_TagBase_print(tag_base, print);
+        KernAux_Multiboot2_TagBase_print(tag_base, printf);
 
         tag_base = (struct KernAux_Multiboot2_TagBase*)(
             (void*)tag_base + ((tag_base->size + 7) & ~7)
@@ -97,33 +97,33 @@ void KernAux_Multiboot2_print(
 
 void KernAux_Multiboot2_TagBase_print(
     const struct KernAux_Multiboot2_TagBase *const tag_base,
-    void (*const print)(const char *format, ...)
+    void (*const printf)(const char *format, ...)
 ) {
     if (!KernAux_Multiboot2_TagBase_is_valid(tag_base)) {
         return;
     }
 
-    print("Multiboot 2 tag\n");
+    printf("Multiboot 2 tag\n");
 
-    print(
+    printf(
         "  type: %u (%s)\n",
         tag_base->type,
         KernAux_Multiboot2_TagType_to_str(tag_base->type)
     );
 
-    print("  size: %u\n", tag_base->size);
+    printf("  size: %u\n", tag_base->size);
 
     switch (tag_base->type) {
     case KERNAUX_MULTIBOOT2_TAGTYPE_NONE:
         break;
     case KERNAUX_MULTIBOOT2_TAGTYPE_BOOT_CMD_LINE:
-        print(
+        printf(
             "  cmdline: %s\n",
             ((struct KernAux_Multiboot2_Tag_BootCmdLine*)tag_base)->cmdline
         );
         break;
     case KERNAUX_MULTIBOOT2_TAGTYPE_BOOT_LOADER_NAME:
-        print(
+        printf(
             "  name: %s\n",
             ((struct KernAux_Multiboot2_Tag_BootLoaderName*)tag_base)->name
         );
@@ -133,9 +133,9 @@ void KernAux_Multiboot2_TagBase_print(
             const struct KernAux_Multiboot2_Tag_Module *const tag_module =
                 (struct KernAux_Multiboot2_Tag_Module*)tag_base;
 
-            print("  start: %u\n",   tag_module->mod_start);
-            print("  end: %u\n",     tag_module->mod_end);
-            print("  cmdline: %s\n", tag_module->cmdline);
+            printf("  start: %u\n",   tag_module->mod_start);
+            printf("  end: %u\n",     tag_module->mod_end);
+            printf("  cmdline: %s\n", tag_module->cmdline);
         }
         break;
     case KERNAUX_MULTIBOOT2_TAGTYPE_BASIC_MEMORY_INFO:
@@ -143,8 +143,8 @@ void KernAux_Multiboot2_TagBase_print(
             const struct KernAux_Multiboot2_Tag_BasicMemoryInfo *const tag_bmi =
                 (struct KernAux_Multiboot2_Tag_BasicMemoryInfo*)tag_base;
 
-            print("  mem lower: %u\n", tag_bmi->mem_lower);
-            print("  mem upper: %u\n", tag_bmi->mem_upper);
+            printf("  mem lower: %u\n", tag_bmi->mem_lower);
+            printf("  mem upper: %u\n", tag_bmi->mem_upper);
         }
         break;
     case KERNAUX_MULTIBOOT2_TAGTYPE_BIOS_BOOT_DEVICE:
@@ -152,15 +152,15 @@ void KernAux_Multiboot2_TagBase_print(
             const struct KernAux_Multiboot2_Tag_BIOSBootDevice *const tag_bbd =
                 (struct KernAux_Multiboot2_Tag_BIOSBootDevice*)tag_base;
 
-            print("  bios dev: %u\n", tag_bbd->bios_dev);
-            print("  partition: %u\n", tag_bbd->partition);
-            print("  sub_partition: %u\n", tag_bbd->sub_partition);
+            printf("  bios dev: %u\n", tag_bbd->bios_dev);
+            printf("  partition: %u\n", tag_bbd->partition);
+            printf("  sub_partition: %u\n", tag_bbd->sub_partition);
         }
         break;
     case KERNAUX_MULTIBOOT2_TAGTYPE_MEMORY_MAP:
         KernAux_Multiboot2_Tag_MemoryMap_print(
             (struct KernAux_Multiboot2_Tag_MemoryMap*)tag_base,
-            print
+            printf
         );
         break;
     case KERNAUX_MULTIBOOT2_TAGTYPE_VBE_INFO:
@@ -168,10 +168,10 @@ void KernAux_Multiboot2_TagBase_print(
             const struct KernAux_Multiboot2_Tag_VBEInfo *const tag_vbe =
                 (struct KernAux_Multiboot2_Tag_VBEInfo*)tag_base;
 
-            print("  VBE mode: %hu\n",          tag_vbe->vbe_mode);
-            print("  VBE interface seg: %hu\n", tag_vbe->vbe_interface_seg);
-            print("  VBE interface off: %hu\n", tag_vbe->vbe_interface_off);
-            print("  VBE interface len: %hu\n", tag_vbe->vbe_interface_len);
+            printf("  VBE mode: %hu\n",          tag_vbe->vbe_mode);
+            printf("  VBE interface seg: %hu\n", tag_vbe->vbe_interface_seg);
+            printf("  VBE interface off: %hu\n", tag_vbe->vbe_interface_off);
+            printf("  VBE interface len: %hu\n", tag_vbe->vbe_interface_len);
         }
         break;
     case KERNAUX_MULTIBOOT2_TAGTYPE_FRAMEBUFFER_INFO:
@@ -179,19 +179,19 @@ void KernAux_Multiboot2_TagBase_print(
             const struct KernAux_Multiboot2_Tag_FramebufferInfo *const tag_fb =
                 (struct KernAux_Multiboot2_Tag_FramebufferInfo*)tag_base;
 
-            print("  framebuffer addr: %llu\n", tag_fb->framebuffer_addr);
-            print("  framebuffer pitch: %u\n",  tag_fb->framebuffer_pitch);
-            print("  framebuffer width: %u\n",  tag_fb->framebuffer_width);
-            print("  framebuffer height: %u\n", tag_fb->framebuffer_height);
-            print("  framebuffer bpp: %u\n",    tag_fb->framebuffer_bpp);
-            print("  framebuffer type: %u\n",   tag_fb->framebuffer_type);
-            print("  reserved1: %u\n",          tag_fb->reserved1);
+            printf("  framebuffer addr: %llu\n", tag_fb->framebuffer_addr);
+            printf("  framebuffer pitch: %u\n",  tag_fb->framebuffer_pitch);
+            printf("  framebuffer width: %u\n",  tag_fb->framebuffer_width);
+            printf("  framebuffer height: %u\n", tag_fb->framebuffer_height);
+            printf("  framebuffer bpp: %u\n",    tag_fb->framebuffer_bpp);
+            printf("  framebuffer type: %u\n",   tag_fb->framebuffer_type);
+            printf("  reserved1: %u\n",          tag_fb->reserved1);
         }
         break;
     case KERNAUX_MULTIBOOT2_TAGTYPE_ELF_SYMBOLS:
         KernAux_Multiboot2_Tag_ELFSymbols_print(
             (struct KernAux_Multiboot2_Tag_ELFSymbols*)tag_base,
-            print
+            printf
         );
         break;
     case KERNAUX_MULTIBOOT2_TAGTYPE_APM_TABLE:
@@ -199,15 +199,15 @@ void KernAux_Multiboot2_TagBase_print(
             const struct KernAux_Multiboot2_Tag_APMTable *const tag_apm =
                 (struct KernAux_Multiboot2_Tag_APMTable*)tag_base;
 
-            print("  version: %hu\n",     tag_apm->version);
-            print("  cseg: %hu\n",        tag_apm->cseg);
-            print("  offset: %u\n",       tag_apm->offset);
-            print("  cseg 16: %hu\n",     tag_apm->cseg_16);
-            print("  dseg: %hu\n",        tag_apm->dseg);
-            print("  flags: %hu\n",       tag_apm->flags);
-            print("  cseg len: %hu\n",    tag_apm->cseg_len);
-            print("  cseg 16 len: %hu\n", tag_apm->cseg_16_len);
-            print("  dseg len: %hu\n",    tag_apm->dseg_len);
+            printf("  version: %hu\n",     tag_apm->version);
+            printf("  cseg: %hu\n",        tag_apm->cseg);
+            printf("  offset: %u\n",       tag_apm->offset);
+            printf("  cseg 16: %hu\n",     tag_apm->cseg_16);
+            printf("  dseg: %hu\n",        tag_apm->dseg);
+            printf("  flags: %hu\n",       tag_apm->flags);
+            printf("  cseg len: %hu\n",    tag_apm->cseg_len);
+            printf("  cseg 16 len: %hu\n", tag_apm->cseg_16_len);
+            printf("  dseg len: %hu\n",    tag_apm->dseg_len);
         }
         break;
     case KERNAUX_MULTIBOOT2_TAGTYPE_EFI_32BIT_SYSTEM_TABLE_PTR:
@@ -225,10 +225,10 @@ void KernAux_Multiboot2_TagBase_print(
             const struct KernAux_Multiboot2_Tag_SMBIOSTables *const tag_smbios =
                 (struct KernAux_Multiboot2_Tag_SMBIOSTables*)tag_base;
 
-            print("  major: %u\n", tag_smbios->major);
-            print("  minor: %u\n", tag_smbios->minor);
+            printf("  major: %u\n", tag_smbios->major);
+            printf("  minor: %u\n", tag_smbios->minor);
 
-            print(
+            printf(
                 "  reserved1: {%u, %u, %u, %u, %u, %u}\n",
                 tag_smbios->reserved1[0],
                 tag_smbios->reserved1[1],
@@ -272,7 +272,7 @@ void KernAux_Multiboot2_TagBase_print(
         }
         break;
     case KERNAUX_MULTIBOOT2_TAGTYPE_IMAGE_LOAD_BASE_PHYS_ADDR:
-        print(
+        printf(
             "  load base addr: %u\n",
             ((struct KernAux_Multiboot2_Tag_ImageLoadBasePhysAddr*)tag_base)->
                 load_base_addr
@@ -283,17 +283,17 @@ void KernAux_Multiboot2_TagBase_print(
 
 void KernAux_Multiboot2_Tag_MemoryMap_print(
     const struct KernAux_Multiboot2_Tag_MemoryMap *const tag,
-    void (*print)(const char *format, ...)
+    void (*printf)(const char *format, ...)
 ) {
     if (!KernAux_Multiboot2_Tag_MemoryMap_is_valid(tag)) {
-        print("  invalid!\n");
+        printf("  invalid!\n");
         return;
     }
 
-    print("  entry size: %u\n",    tag->entry_size);
-    print("  entry version: %u\n", tag->entry_version);
+    printf("  entry size: %u\n",    tag->entry_size);
+    printf("  entry version: %u\n", tag->entry_version);
 
-    print("  entries:\n");
+    printf("  entries:\n");
 
     const struct KernAux_Multiboot2_Tag_MemoryMap_EntryBase *const entries =
         (struct KernAux_Multiboot2_Tag_MemoryMap_EntryBase*)tag->data;
@@ -303,27 +303,27 @@ void KernAux_Multiboot2_Tag_MemoryMap_print(
         index < (tag->base.size - sizeof(*tag)) / tag->entry_size;
         ++index
     ) {
-        print("    entry %u\n", index);
-        print("      base addr: %llu\n", entries[index].base_addr);
-        print("      length: %llu\n",    entries[index].length);
-        print("      type: %u\n",        entries[index].type);
-        print("      reserved1: %u\n",   entries[index].reserved1);
+        printf("    entry %u\n", index);
+        printf("      base addr: %llu\n", entries[index].base_addr);
+        printf("      length: %llu\n",    entries[index].length);
+        printf("      type: %u\n",        entries[index].type);
+        printf("      reserved1: %u\n",   entries[index].reserved1);
     }
 }
 
 void KernAux_Multiboot2_Tag_ELFSymbols_print(
     const struct KernAux_Multiboot2_Tag_ELFSymbols *const tag,
-    void (*print)(const char *format, ...)
+    void (*printf)(const char *format, ...)
 ) {
     if (!KernAux_Multiboot2_Tag_ELFSymbols_is_valid(tag)) {
-        print("  invalid!\n");
+        printf("  invalid!\n");
         return;
     }
 
-    print("  num: %hu\n",       tag->num);
-    print("  entsize: %hu\n",   tag->ent_size);
-    print("  shndx: %hu\n",     tag->shndx);
-    print("  reserved1: %hu\n", tag->reserved1);
+    printf("  num: %hu\n",       tag->num);
+    printf("  entsize: %hu\n",   tag->ent_size);
+    printf("  shndx: %hu\n",     tag->shndx);
+    printf("  reserved1: %hu\n", tag->reserved1);
 
     // TODO: implement this
 }
