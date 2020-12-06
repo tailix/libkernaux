@@ -1,6 +1,9 @@
 #include "config.h"
 
 #include <kernaux/cmdline.h>
+#include <kernaux/stdlib.h>
+
+#include <stddef.h>
 
 enum State {
     INITIAL,
@@ -10,7 +13,7 @@ enum State {
     BACKSLASHED,
 };
 
-kernaux_bool kernaux_cmdline_parse(
+bool kernaux_cmdline_parse(
     const char *const cmdline,
     char *error_msg,
     unsigned int *const argc,
@@ -20,27 +23,27 @@ kernaux_bool kernaux_cmdline_parse(
     const unsigned int arg_size_max
 ) {
     if (
-        cmdline == KERNAUX_NULL ||
-        error_msg == KERNAUX_NULL ||
-        argc == KERNAUX_NULL ||
-        argv == KERNAUX_NULL ||
+        cmdline == NULL ||
+        error_msg == NULL ||
+        argc == NULL ||
+        argv == NULL ||
         argv_count_max == 0 ||
         arg_size_max == 0
     ) {
-        return KERNAUX_FALSE;
+        return false;
     }
 
     kernaux_memset(error_msg, '\0', KERNAUX_CMDLINE_ERROR_MSG_SIZE_MAX);
     *argc = 0;
 
     for (unsigned int index = 0; index < argv_count_max; ++index) {
-        argv[index] = KERNAUX_NULL;
+        argv[index] = NULL;
     }
 
     kernaux_memset(buffer, '\0', argv_count_max * arg_size_max);
 
     if (cmdline[0] == '\0') {
-        return KERNAUX_TRUE;
+        return true;
     }
 
     enum State state = INITIAL;
@@ -179,16 +182,16 @@ kernaux_bool kernaux_cmdline_parse(
         }
     }
 
-    return KERNAUX_TRUE;
+    return true;
 
 fail:
     *argc = 0;
 
     for (unsigned int index = 0; index < argv_count_max; ++index) {
-        argv[index] = KERNAUX_NULL;
+        argv[index] = NULL;
     }
 
     kernaux_memset(buffer, '\0', argv_count_max * arg_size_max);
 
-    return KERNAUX_FALSE;
+    return false;
 }

@@ -1,7 +1,7 @@
 #ifndef KERNAUX_INCLUDED_CMDLINE
 #define KERNAUX_INCLUDED_CMDLINE 1
 
-#include <kernaux/stdlib.h>
+#include <stdbool.h>
 
 #define KERNAUX_CMDLINE_ERROR_MSG_SIZE_MAX 256
 #define KERNAUX_CMDLINE_ERROR_MSG_SLEN_MAX \
@@ -11,7 +11,7 @@
 extern "C" {
 #endif
 
-kernaux_bool kernaux_cmdline_parse(
+bool kernaux_cmdline_parse(
     const char *cmdline,
     char *error_msg,
     unsigned int *argc,

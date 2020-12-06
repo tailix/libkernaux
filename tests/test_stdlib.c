@@ -1,17 +1,9 @@
 #include <kernaux/stdlib.h>
 
 #include <assert.h>
-#include <stdbool.h>
-#include <stddef.h>
 
 int main()
 {
-    assert(sizeof(kernaux_bool) == sizeof(bool));
-
-    assert(KERNAUX_NULL == NULL);
-    assert(KERNAUX_FALSE == false);
-    assert(KERNAUX_TRUE == true);
-
     // kernaux_memset
 
     {

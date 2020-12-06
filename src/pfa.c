@@ -5,7 +5,7 @@
 
 static void KernAux_PFA_mark(
     struct KernAux_PFA *pfa,
-    kernaux_bool status,
+    bool status,
     unsigned int start,
     unsigned int end
 )
@@ -13,7 +13,7 @@ __attribute__((nonnull));
 
 void KernAux_PFA_initialize(struct KernAux_PFA *const pfa)
 {
-    kernaux_memset(pfa->pages, KERNAUX_FALSE, sizeof(pfa->pages));
+    kernaux_memset(pfa->pages, false, sizeof(pfa->pages));
 }
 
 void KernAux_PFA_mark_available(
@@ -21,7 +21,7 @@ void KernAux_PFA_mark_available(
     unsigned int start,
     unsigned int end
 ) {
-    KernAux_PFA_mark(pfa, KERNAUX_TRUE, start, end);
+    KernAux_PFA_mark(pfa, true, start, end);
 }
 
 void KernAux_PFA_mark_unavailable(
@@ -29,12 +29,12 @@ void KernAux_PFA_mark_unavailable(
     unsigned int start,
     unsigned int end
 ) {
-    KernAux_PFA_mark(pfa, KERNAUX_FALSE, start, end);
+    KernAux_PFA_mark(pfa, false, start, end);
 }
 
 void KernAux_PFA_mark(
     struct KernAux_PFA *const pfa,
-    const kernaux_bool status,
+    const bool status,
     unsigned int start,
     unsigned int end
 ) {
@@ -68,7 +68,7 @@ unsigned int KernAux_PFA_alloc_page(struct KernAux_PFA *pfa)
     //
     for (unsigned int index = 1; index < KERNAUX_PFA_PAGES_COUNT_MAX; ++index) {
         if (pfa->pages[index]) {
-            pfa->pages[index] = KERNAUX_FALSE;
+            pfa->pages[index] = false;
             return index * KERNAUX_PFA_PAGE_SIZE;
         }
     }
@@ -82,5 +82,5 @@ void KernAux_PFA_free_page(struct KernAux_PFA *pfa, unsigned int page_addr)
         return;
     }
 
-    pfa->pages[page_addr / KERNAUX_PFA_PAGE_SIZE] = KERNAUX_TRUE;
+    pfa->pages[page_addr / KERNAUX_PFA_PAGE_SIZE] = true;
 }

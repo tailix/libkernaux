@@ -2,6 +2,8 @@
 
 #include <kernaux/multiboot2.h>
 
+#include <stddef.h>
+
 const struct KernAux_Multiboot2_TagBase *KernAux_Multiboot2_first_tag_with_type(
     const struct KernAux_Multiboot2 *const multiboot2,
     const enum KernAux_Multiboot2_TagType tag_type
@@ -11,7 +13,7 @@ const struct KernAux_Multiboot2_TagBase *KernAux_Multiboot2_first_tag_with_type(
 
     while ((void*)tag_base < (void*)multiboot2 + multiboot2->total_size) {
         if (!KernAux_Multiboot2_TagBase_is_valid(tag_base)) {
-            return KERNAUX_NULL;
+            return NULL;
         }
 
         if (tag_base->type == tag_type) {
@@ -23,7 +25,7 @@ const struct KernAux_Multiboot2_TagBase *KernAux_Multiboot2_first_tag_with_type(
         );
     }
 
-    return KERNAUX_NULL;
+    return NULL;
 }
 
 const struct KernAux_Multiboot2_TagBase *KernAux_Multiboot2_tag_with_type_after(
@@ -36,7 +38,7 @@ const struct KernAux_Multiboot2_TagBase *KernAux_Multiboot2_tag_with_type_after(
 
     while ((void*)tag_base < (void*)multiboot2 + multiboot2->total_size) {
         if (!KernAux_Multiboot2_TagBase_is_valid(tag_base)) {
-            return KERNAUX_NULL;
+            return NULL;
         }
 
         if (tag_base->type == tag_type && tag_base > after_tag) {
@@ -48,7 +50,7 @@ const struct KernAux_Multiboot2_TagBase *KernAux_Multiboot2_tag_with_type_after(
         );
     }
 
-    return KERNAUX_NULL;
+    return NULL;
 }
 
 const char *KernAux_Multiboot2_boot_cmd_line(
@@ -62,7 +64,7 @@ const char *KernAux_Multiboot2_boot_cmd_line(
         );
 
     if (!tag) {
-        return KERNAUX_NULL;
+        return NULL;
     }
 
     return tag->cmdline;

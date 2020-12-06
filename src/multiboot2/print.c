@@ -2,6 +2,8 @@
 
 #include <kernaux/multiboot2.h>
 
+#include <stddef.h>
+
 static const char *KernAux_Multiboot2_TagType_to_str(
     enum KernAux_Multiboot2_TagType tag_type
 );
@@ -67,7 +69,7 @@ const char *KernAux_Multiboot2_TagType_to_str(
     case KERNAUX_MULTIBOOT2_TAGTYPE_IMAGE_LOAD_BASE_PHYS_ADDR:
         return "image load base phys addr";
     default:
-        return KERNAUX_NULL;
+        return NULL;
     }
 }
 

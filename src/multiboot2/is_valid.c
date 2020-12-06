@@ -2,25 +2,27 @@
 
 #include <kernaux/multiboot2.h>
 
-kernaux_bool KernAux_Multiboot2_is_valid(
+#include <stddef.h>
+
+bool KernAux_Multiboot2_is_valid(
     const struct KernAux_Multiboot2 *const multiboot2
 ) {
     if (multiboot2->total_size <= 8) {
-        return KERNAUX_FALSE;
+        return false;
     }
 
     const struct KernAux_Multiboot2_TagBase *tag_base =
         (struct KernAux_Multiboot2_TagBase*)multiboot2->data;
 
-    const struct KernAux_Multiboot2_TagBase *none_tag_base = KERNAUX_NULL;
+    const struct KernAux_Multiboot2_TagBase *none_tag_base = NULL;
 
     while ((void*)tag_base < (void*)multiboot2 + multiboot2->total_size) {
         if (!KernAux_Multiboot2_TagBase_is_valid(tag_base)) {
-            return KERNAUX_FALSE;
+            return false;
         }
 
         if (tag_base->type == KERNAUX_MULTIBOOT2_TAGTYPE_NONE &&
-            none_tag_base == KERNAUX_NULL
+            none_tag_base == NULL
         ) {
             none_tag_base = tag_base;
         }
@@ -31,19 +33,19 @@ kernaux_bool KernAux_Multiboot2_is_valid(
     }
 
     if ((void*)tag_base != (void*)multiboot2 + multiboot2->total_size) {
-        return KERNAUX_FALSE;
+        return false;
     }
 
     if (none_tag_base !=
         (void*)tag_base - sizeof(struct KernAux_Multiboot2_Tag_None)
     ) {
-        return KERNAUX_FALSE;
+        return false;
     }
 
-    return KERNAUX_TRUE;
+    return true;
 }
 
-kernaux_bool KernAux_Multiboot2_TagBase_is_valid(
+bool KernAux_Multiboot2_TagBase_is_valid(
     const struct KernAux_Multiboot2_TagBase *const tag_base
 ) {
     switch (tag_base->type) {
@@ -136,11 +138,11 @@ kernaux_bool KernAux_Multiboot2_TagBase_is_valid(
             (struct KernAux_Multiboot2_Tag_ImageLoadBasePhysAddr*)tag_base
         );
     default:
-        return KERNAUX_FALSE;
+        return false;
     }
 }
 
-kernaux_bool KernAux_Multiboot2_Tag_None_is_valid(
+bool KernAux_Multiboot2_Tag_None_is_valid(
     const struct KernAux_Multiboot2_Tag_None *const tag
 ) {
     return (
@@ -149,7 +151,7 @@ kernaux_bool KernAux_Multiboot2_Tag_None_is_valid(
     );
 }
 
-kernaux_bool KernAux_Multiboot2_Tag_BootCmdLine_is_valid(
+bool KernAux_Multiboot2_Tag_BootCmdLine_is_valid(
     const struct KernAux_Multiboot2_Tag_BootCmdLine *const tag
 ) {
     unsigned int index = 1;
@@ -168,7 +170,7 @@ kernaux_bool KernAux_Multiboot2_Tag_BootCmdLine_is_valid(
     );
 }
 
-kernaux_bool KernAux_Multiboot2_Tag_BootLoaderName_is_valid(
+bool KernAux_Multiboot2_Tag_BootLoaderName_is_valid(
     const struct KernAux_Multiboot2_Tag_BootLoaderName *const tag
 ) {
     unsigned int index = 1;
@@ -187,7 +189,7 @@ kernaux_bool KernAux_Multiboot2_Tag_BootLoaderName_is_valid(
     );
 }
 
-kernaux_bool KernAux_Multiboot2_Tag_Module_is_valid(
+bool KernAux_Multiboot2_Tag_Module_is_valid(
     const struct KernAux_Multiboot2_Tag_Module *const tag
 ) {
     unsigned int index = 1;
@@ -207,7 +209,7 @@ kernaux_bool KernAux_Multiboot2_Tag_Module_is_valid(
     );
 }
 
-kernaux_bool KernAux_Multiboot2_Tag_BasicMemoryInfo_is_valid(
+bool KernAux_Multiboot2_Tag_BasicMemoryInfo_is_valid(
     const struct KernAux_Multiboot2_Tag_BasicMemoryInfo *const tag
 ) {
     return (
@@ -216,7 +218,7 @@ kernaux_bool KernAux_Multiboot2_Tag_BasicMemoryInfo_is_valid(
     );
 }
 
-kernaux_bool KernAux_Multiboot2_Tag_BIOSBootDevice_is_valid(
+bool KernAux_Multiboot2_Tag_BIOSBootDevice_is_valid(
     const struct KernAux_Multiboot2_Tag_BIOSBootDevice *const tag
 ) {
     return (
@@ -225,7 +227,7 @@ kernaux_bool KernAux_Multiboot2_Tag_BIOSBootDevice_is_valid(
     );
 }
 
-kernaux_bool KernAux_Multiboot2_Tag_MemoryMap_is_valid(
+bool KernAux_Multiboot2_Tag_MemoryMap_is_valid(
     const struct KernAux_Multiboot2_Tag_MemoryMap *const tag
 ) {
     return (
@@ -237,7 +239,7 @@ kernaux_bool KernAux_Multiboot2_Tag_MemoryMap_is_valid(
     );
 }
 
-kernaux_bool KernAux_Multiboot2_Tag_VBEInfo_is_valid(
+bool KernAux_Multiboot2_Tag_VBEInfo_is_valid(
     const struct KernAux_Multiboot2_Tag_VBEInfo *const tag
 ) {
     return (
@@ -246,7 +248,7 @@ kernaux_bool KernAux_Multiboot2_Tag_VBEInfo_is_valid(
     );
 }
 
-kernaux_bool KernAux_Multiboot2_Tag_FramebufferInfo_is_valid(
+bool KernAux_Multiboot2_Tag_FramebufferInfo_is_valid(
     const struct KernAux_Multiboot2_Tag_FramebufferInfo *const tag
 ) {
     return (
@@ -255,7 +257,7 @@ kernaux_bool KernAux_Multiboot2_Tag_FramebufferInfo_is_valid(
     );
 }
 
-kernaux_bool KernAux_Multiboot2_Tag_ELFSymbols_is_valid(
+bool KernAux_Multiboot2_Tag_ELFSymbols_is_valid(
     const struct KernAux_Multiboot2_Tag_ELFSymbols *const tag
 ) {
     return (
@@ -266,7 +268,7 @@ kernaux_bool KernAux_Multiboot2_Tag_ELFSymbols_is_valid(
     );
 }
 
-kernaux_bool KernAux_Multiboot2_Tag_APMTable_is_valid(
+bool KernAux_Multiboot2_Tag_APMTable_is_valid(
     const struct KernAux_Multiboot2_Tag_APMTable *const tag
 ) {
     return (
@@ -275,7 +277,7 @@ kernaux_bool KernAux_Multiboot2_Tag_APMTable_is_valid(
     );
 }
 
-kernaux_bool KernAux_Multiboot2_Tag_EFI32bitSystemTablePtr_is_valid(
+bool KernAux_Multiboot2_Tag_EFI32bitSystemTablePtr_is_valid(
     const struct KernAux_Multiboot2_Tag_EFI32bitSystemTablePtr *const tag
 ) {
     return (
@@ -285,7 +287,7 @@ kernaux_bool KernAux_Multiboot2_Tag_EFI32bitSystemTablePtr_is_valid(
     );
 }
 
-kernaux_bool KernAux_Multiboot2_Tag_EFI64bitSystemTablePtr_is_valid(
+bool KernAux_Multiboot2_Tag_EFI64bitSystemTablePtr_is_valid(
     const struct KernAux_Multiboot2_Tag_EFI64bitSystemTablePtr *const tag
 ) {
     return (
@@ -295,7 +297,7 @@ kernaux_bool KernAux_Multiboot2_Tag_EFI64bitSystemTablePtr_is_valid(
     );
 }
 
-kernaux_bool KernAux_Multiboot2_Tag_SMBIOSTables_is_valid(
+bool KernAux_Multiboot2_Tag_SMBIOSTables_is_valid(
     const struct KernAux_Multiboot2_Tag_SMBIOSTables *const tag
 ) {
     return (
@@ -304,7 +306,7 @@ kernaux_bool KernAux_Multiboot2_Tag_SMBIOSTables_is_valid(
     );
 }
 
-kernaux_bool KernAux_Multiboot2_Tag_ACPIOldRSDP_is_valid(
+bool KernAux_Multiboot2_Tag_ACPIOldRSDP_is_valid(
     const struct KernAux_Multiboot2_Tag_ACPIOldRSDP *const tag
 ) {
     return (
@@ -313,7 +315,7 @@ kernaux_bool KernAux_Multiboot2_Tag_ACPIOldRSDP_is_valid(
     );
 }
 
-kernaux_bool KernAux_Multiboot2_Tag_ACPINewRSDP_is_valid(
+bool KernAux_Multiboot2_Tag_ACPINewRSDP_is_valid(
     const struct KernAux_Multiboot2_Tag_ACPINewRSDP *const tag
 ) {
     return (
@@ -322,7 +324,7 @@ kernaux_bool KernAux_Multiboot2_Tag_ACPINewRSDP_is_valid(
     );
 }
 
-kernaux_bool KernAux_Multiboot2_Tag_NetworkingInfo_is_valid(
+bool KernAux_Multiboot2_Tag_NetworkingInfo_is_valid(
     const struct KernAux_Multiboot2_Tag_NetworkingInfo *const tag
 ) {
     return (
@@ -331,7 +333,7 @@ kernaux_bool KernAux_Multiboot2_Tag_NetworkingInfo_is_valid(
     );
 }
 
-kernaux_bool KernAux_Multiboot2_Tag_EFIMemoryMap_is_valid(
+bool KernAux_Multiboot2_Tag_EFIMemoryMap_is_valid(
     const struct KernAux_Multiboot2_Tag_EFIMemoryMap *const tag
 ) {
     return (
@@ -340,7 +342,7 @@ kernaux_bool KernAux_Multiboot2_Tag_EFIMemoryMap_is_valid(
     );
 }
 
-kernaux_bool KernAux_Multiboot2_Tag_EFIBootServicesNotTerminated_is_valid(
+bool KernAux_Multiboot2_Tag_EFIBootServicesNotTerminated_is_valid(
     const struct KernAux_Multiboot2_Tag_EFIBootServicesNotTerminated *const tag
 ) {
     return (
@@ -350,7 +352,7 @@ kernaux_bool KernAux_Multiboot2_Tag_EFIBootServicesNotTerminated_is_valid(
     );
 }
 
-kernaux_bool KernAux_Multiboot2_Tag_EFI32bitImageHandlePtr_is_valid(
+bool KernAux_Multiboot2_Tag_EFI32bitImageHandlePtr_is_valid(
     const struct KernAux_Multiboot2_Tag_EFI32bitImageHandlePtr *const tag
 ) {
     return (
@@ -360,7 +362,7 @@ kernaux_bool KernAux_Multiboot2_Tag_EFI32bitImageHandlePtr_is_valid(
     );
 }
 
-kernaux_bool KernAux_Multiboot2_Tag_EFI64bitImageHandlePtr_is_valid(
+bool KernAux_Multiboot2_Tag_EFI64bitImageHandlePtr_is_valid(
     const struct KernAux_Multiboot2_Tag_EFI64bitImageHandlePtr *const tag
 ) {
     return (
@@ -370,7 +372,7 @@ kernaux_bool KernAux_Multiboot2_Tag_EFI64bitImageHandlePtr_is_valid(
     );
 }
 
-kernaux_bool KernAux_Multiboot2_Tag_ImageLoadBasePhysAddr_is_valid(
+bool KernAux_Multiboot2_Tag_ImageLoadBasePhysAddr_is_valid(
     const struct KernAux_Multiboot2_Tag_ImageLoadBasePhysAddr *const tag
 ) {
     return (

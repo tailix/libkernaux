@@ -2,6 +2,7 @@
 
 #include <assert.h>
 #include <stdbool.h>
+#include <stddef.h>
 #include <string.h>
 
 static const unsigned int ARGV_COUNT_MAX = 100;
@@ -186,6 +187,6 @@ void test(
     }
 
     for (unsigned int index = argc; index < argv_count_max; ++index) {
-        assert(argv[index] == KERNAUX_NULL);
+        assert(argv[index] == NULL);
     }
 }

@@ -28,8 +28,6 @@ API
 * ELF utils *(planned)*
 * [Architecture-specific helpers](/include/kernaux/arch/)
 * [stdlib replacement](/include/kernaux/stdlib.h) (with prefix):
-  * `NULL`
-  * `bool`, `FALSE`, `TRUE`
   * `memset`
   * `strlen`
   * `strncpy`
@@ -50,7 +48,7 @@ Configure with cross-compiler in `$PATH` to make without it in `$PATH`:
   AR="$(which x86-elf-ar)" \
   CC="$(which x86-elf-gcc)" \
   RANLIB="$(which x86-elf-ranlib)" \
-  CFLAGS='-ffreestanding -nostdinc -nostdlib -fno-builtin -fno-stack-protector'
+  CFLAGS='-ffreestanding -nostdlib -fno-builtin -fno-stack-protector'
 ```
 
 To install into specific directory use full path:
