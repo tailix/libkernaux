@@ -19,8 +19,8 @@ int main()
 {
     memset(buffer, '\0', sizeof(buffer));
     buffer_index = 0;
-    kernaux_printf(my_putchar, "Hello, World!");
-    assert(strcmp(buffer, "Hello, World!") == 0);
+    kernaux_printf(my_putchar, "Hello, %s!", "Alex");
+    assert(strcmp(buffer, "Hello, Alex!") == 0);
 
     return 0;
 }
