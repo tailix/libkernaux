@@ -66,6 +66,7 @@ configure: WARNING: stddef.h: proceeding with the compiler's result
 configure: WARNING:     ## ------------------------------------------------------------ ##
 configure: WARNING:     ## Report this to https://github.com/kernelmq/libkernaux/issues ##
 configure: WARNING:     ## ------------------------------------------------------------ ##
+checking for stddef.h... no
 ```
 
 To install into specific directory use full path:
