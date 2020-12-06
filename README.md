@@ -23,7 +23,7 @@ API
 
 * [Simple command line parser](/include/kernaux/cmdline.h) *(work in progress)*
 * [Multiboot 2 (GRUB 2) information parser](/include/kernaux/multiboot2.h)
-* [Serial console](/include/kernaux/console.h)
+* [Serial console](/include/kernaux/console.h) *(work in progress)*
 * [Page Frame Allocator](/include/kernaux/pfa.h) *(work in progress)*
 * ELF utils *(planned)*
 * [Architecture-specific helpers](/include/kernaux/arch/)
