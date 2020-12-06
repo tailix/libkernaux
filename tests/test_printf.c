@@ -33,6 +33,11 @@ static void test(const char *const expected, const char *const format, ...)
 
 int main()
 {
+    memset(buffer, '\0', sizeof(buffer));
+    buffer_index = 0;
+    kernaux_printf(test_putchar, "Hello, World!");
+    assert(strcmp("Hello, World!", buffer) == 0);
+
     test("", "");
     test("Hello, World!", "Hello, World!");
 

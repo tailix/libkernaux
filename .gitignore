@@ -40,4 +40,5 @@
 /tests/test_multiboot2_print
 /tests/test_multiboot2_validation
 /tests/test_pfa
+/tests/test_printf
 /tests/test_stdlib

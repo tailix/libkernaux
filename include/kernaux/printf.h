@@ -7,7 +7,8 @@
 extern "C" {
 #endif
 
-void kernaux_printf(void (*putchar)(char), const char *format, ...);
+void kernaux_printf(void (*putchar)(char), const char *format, ...)
+__attribute__((format(printf, 2, 3)));
 void kernaux_printf_va(void (*putchar)(char), const char *format, va_list va);
 
 #ifdef __cplusplus
