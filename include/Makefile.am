@@ -4,4 +4,5 @@ nobase_include_HEADERS = \
 	kernaux/console.h \
 	kernaux/multiboot2.h \
 	kernaux/pfa.h \
+	kernaux/printf.h \
 	kernaux/stdlib.h

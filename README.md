@@ -27,11 +27,12 @@ API
 * [Page Frame Allocator](/include/kernaux/pfa.h) *(work in progress)*
 * ELF utils *(planned)*
 * [Architecture-specific helpers](/include/kernaux/arch/)
-* [stdlib replacement](/include/kernaux/stdlib.h) (with prefix):
+* [printf replacement](/include/kernaux/printf.h) *(work in progress)*
+* [stdlib replacement](/include/kernaux/stdlib.h):
   * `memset`
   * `strlen`
   * `strncpy`
-  * `itoa` *(incomplete)*
+  * `itoa` *(work in progress)*
 
 
 

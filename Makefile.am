@@ -10,11 +10,13 @@ AM_CFLAGS = \
 lib_LIBRARIES = libkernaux.a
 
 TESTS = \
+	tests/test_printf \
 	tests/test_stdlib
 
 noinst_PROGRAMS = $(TESTS)
 
 libkernaux_a_SOURCES = \
+	src/printf.c \
 	src/stdlib.c
 
 if ARCH_X86
@@ -82,6 +84,10 @@ tests_test_multiboot2_validation_SOURCES = \
 tests_test_pfa_SOURCES = \
 	$(libkernaux_a_SOURCES) \
 	tests/test_pfa.c
+
+tests_test_printf_SOURCES = \
+	$(libkernaux_a_SOURCES) \
+	tests/test_printf.c
 
 tests_test_stdlib_SOURCES = \
 	$(libkernaux_a_SOURCES) \
