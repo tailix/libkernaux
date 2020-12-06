@@ -41,12 +41,7 @@ void kernaux_console_printf(const char *format, ...)
 
     while ((c = *format++) != 0)
     {
-        if (c == '\n') {
-            if (*format != 0) {
-                kernaux_console_putc('\n');
-            }
-        }
-        else if (c != '%') {
+        if (c != '%') {
             kernaux_console_putc(c);
         }
         else {
