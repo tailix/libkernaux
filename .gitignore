@@ -11,6 +11,9 @@
 /autoscan.log
 /compile
 /config.guess
+/config.h
+/config.h.in
+/config.h.in~
 /config.log
 /config.status
 /config.sub
@@ -25,10 +28,7 @@
 /include/Makefile.in
 /install-sh
 /missing
-/src/config.h
-/src/config.h.in
-/src/config.h.in~
-/src/stamp-h1
+/stamp-h1
 /test-driver
 /test-suite.log
 /tests/test*.log

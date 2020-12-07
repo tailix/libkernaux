@@ -1,4 +1,4 @@
-#include "../config.h"
+#include "config.h"
 
 .global kernaux_arch_x86_hang
 .global kernaux_arch_x86_read_cr0

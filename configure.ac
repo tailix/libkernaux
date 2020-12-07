@@ -5,8 +5,8 @@ AC_INIT([libkernaux],
   [libkernaux],
   [https://github.com/kernelmq/libkernaux])
 
+AC_CONFIG_HEADERS([config.h])
 AC_CONFIG_SRCDIR([src/pfa.c])
-AC_CONFIG_HEADERS([src/config.h])
 
 AC_CANONICAL_HOST
 
