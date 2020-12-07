@@ -42,6 +42,7 @@ int main()
     test("Hello, World!", "Hello, World!");
     test("Hello, Alex!", "Hello, %s!", "Alex");
     test("Hello, Alex!", "Hello, %c%c%c%c!", 'A', 'l', 'e', 'x');
+    test("%", "%%");
 
     return 0;
 }
