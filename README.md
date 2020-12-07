@@ -14,6 +14,7 @@ Table of contents
 * [Table of contents](#table-of-contents)
 * [API](#api)
 * [Tips](#tips)
+* [Portability](#portability)
 * [Discussion](#discussion)
 
 
@@ -129,6 +130,21 @@ Disassembly of section .text:
   20:   0f 22 e0              mov    %eax,%cr4
   23:   c3                    ret
 ```
+
+
+
+Portability
+-----------
+
+Except GNU/Linux, the library is periodically successfully built (starting with
+`./autogen.sh`) with **autoconf**, **automake**, **binutils** and
+**gcc**/**clang** (depending on what is present) on the following operating
+systems:
+
+* FreeBSD 12.2
+* OpenBSD 6.8
+* Minix 3.3.0
+* NetBSD 9.1
 
 
 
