@@ -136,8 +136,8 @@ Disassembly of section .text:
 Portability
 -----------
 
-Except GNU/Linux, the library is periodically successfully built and tested
-(starting with `./autogen.sh`) with **autoconf**, **automake**, **binutils** and
+Except GNU/Linux, the library is periodically successfully built (starting with
+`./autogen.sh`) and tested with **autoconf**, **automake**, **binutils** and
 **gcc**/**clang** (depending on what is present) on the following operating
 systems:
 
