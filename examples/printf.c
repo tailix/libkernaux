@@ -8,7 +8,7 @@
 #define BUFFER_SIZE 1024
 
 static char buffer[BUFFER_SIZE];
-static unsigned int buffer_index;
+static unsigned int buffer_index = 0;
 
 static void my_putchar(const char chr)
 {
@@ -18,12 +18,8 @@ static void my_putchar(const char chr)
 
 int main()
 {
-    memset(buffer, '\0', sizeof(buffer));
-    buffer_index = 0;
     kernaux_printf(my_putchar, "Hello, %s! Session ID: %u.", "Alex", 123);
     assert(strcmp(buffer, "Hello, Alex! Session ID: 123.") == 0);
-
     printf("OK!\n");
-
     return 0;
 }
