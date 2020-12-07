@@ -11,6 +11,7 @@ lib_LIBRARIES = libkernaux.a
 
 TESTS = \
 	examples/printf \
+	examples/printf_va \
 	tests/test_printf \
 	tests/test_stdlib
 
@@ -61,6 +62,10 @@ examples_cmdline_SOURCES = \
 examples_printf_SOURCES = \
 	$(libkernaux_a_SOURCES) \
 	examples/printf.c
+
+examples_printf_va_SOURCES = \
+	$(libkernaux_a_SOURCES) \
+	examples/printf_va.c
 
 tests_multiboot2_print1_SOURCES = \
 	$(libkernaux_a_SOURCES) \
