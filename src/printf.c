@@ -195,6 +195,16 @@ void kernaux_printf_va(
         if (formatter.type == TYPE_PERCENT) {
             putchar('%');
         }
+        else if (formatter.type == TYPE_u) {
+            const unsigned int arg = va_arg(va, unsigned int);
+
+            char buf[20];
+            kernaux_itoa(arg, buf, 'd');
+
+            for (const char *arg_ptr = buf; *arg_ptr; ++arg_ptr) {
+                putchar(*arg_ptr);
+            }
+        }
         else if (formatter.type == TYPE_s) {
             const char *const arg = va_arg(va, char*);
 
