@@ -1,7 +1,6 @@
 #include <kernaux/printf.h>
 
 #include <assert.h>
-#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -20,6 +19,5 @@ int main()
 {
     kernaux_printf(my_putchar, "Hello, %s! Session ID: %u.", "Alex", 123);
     assert(strcmp(buffer, "Hello, Alex! Session ID: 123.") == 0);
-    printf("OK!\n");
     return 0;
 }

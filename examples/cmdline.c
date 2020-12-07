@@ -1,7 +1,6 @@
 #include <kernaux/cmdline.h>
 
 #include <assert.h>
-#include <stdio.h>
 #include <string.h>
 
 static const unsigned int ARGV_COUNT_MAX = 100;
@@ -30,8 +29,6 @@ int main()
     assert(argc == 2);
     assert(strcmp(argv[0], "foo") == 0);
     assert(strcmp(argv[1], "bar car") == 0);
-
-    printf("OK!\n");
 
     return 0;
 }
