@@ -1,4 +1,6 @@
+#ifdef HAVE_CONFIG_H
 #include "config.h"
+#endif
 
 #ifdef ARCH_X86
 #include <kernaux/arch/x86.h>

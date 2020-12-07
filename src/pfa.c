@@ -1,4 +1,6 @@
+#ifdef HAVE_CONFIG_H
 #include "config.h"
+#endif
 
 #include <kernaux/pfa.h>
 #include <kernaux/stdlib.h>

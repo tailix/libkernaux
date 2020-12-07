@@ -1,4 +1,6 @@
+#ifdef HAVE_CONFIG_H
 #include "config.h"
+#endif
 
 .global kernaux_arch_x86_hang
 .global kernaux_arch_x86_read_cr0
