@@ -15,7 +15,9 @@
 /config.status
 /config.sub
 /configure
+/configure.ac~
 /configure.scan
+/configure~
 /depcomp
 /examples/*.log
 /examples/*.trs
