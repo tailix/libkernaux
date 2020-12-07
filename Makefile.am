@@ -25,6 +25,10 @@ if ARCH_X86
 libkernaux_a_SOURCES += src/arch/x86.S
 endif
 
+if ARCH_X86_64
+libkernaux_a_SOURCES += src/arch/x86_64.S
+endif
+
 if ENABLE_CMDLINE
 libkernaux_a_SOURCES += src/cmdline.c
 TESTS += \
