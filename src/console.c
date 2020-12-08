@@ -2,8 +2,8 @@
 #include "config.h"
 #endif
 
-#ifdef ARCH_X86
-#include <kernaux/arch/x86.h>
+#ifdef ARCH_I386
+#include <kernaux/arch/i386.h>
 #endif
 
 #include <kernaux/console.h>
@@ -17,8 +17,8 @@ void kernaux_console_print(const char *const s)
 
 void kernaux_console_putc(const char c __attribute__((unused)))
 {
-#ifdef ARCH_X86
-    kernaux_arch_x86_outportb(0x3F8, c);
+#ifdef ARCH_I386
+    kernaux_arch_i386_outportb(0x3F8, c);
 #endif
 }
 

@@ -15,14 +15,14 @@ AC_ARG_ENABLE([console],    AS_HELP_STRING([--disable-console],    [disable seri
 AC_ARG_ENABLE([multiboot2], AS_HELP_STRING([--disable-multiboot2], [disable Multiboot 2 information parser]))
 AC_ARG_ENABLE([pfa],        AS_HELP_STRING([--disable-pfa],        [disable Page Frame Allocator]))
 
-AM_CONDITIONAL([ARCH_X86],          [test "$host_cpu" = x86])
+AM_CONDITIONAL([ARCH_I386],         [test "$host_cpu" = i386])
 AM_CONDITIONAL([ARCH_X86_64],       [test "$host_cpu" = x86_64])
 AM_CONDITIONAL([ENABLE_CMDLINE],    [test "$enable_cmdline"    != no])
 AM_CONDITIONAL([ENABLE_CONSOLE],    [test "$enable_console"    != no])
 AM_CONDITIONAL([ENABLE_MULTIBOOT2], [test "$enable_multiboot2" != no])
 AM_CONDITIONAL([ENABLE_PFA],        [test "$enable_pfa"        != no])
 
-AS_IF([test "$host_cpu" = x86],          [AC_DEFINE([ARCH_X86],          [1], [architecture is x86])])
+AS_IF([test "$host_cpu" = i386],         [AC_DEFINE([ARCH_I386],         [1], [architecture is i386])])
 AS_IF([test "$host_cpu" = x86_64],       [AC_DEFINE([ARCH_X86_64],       [1], [architecture is x86_64])])
 AS_IF([test "$enable_cmdline"    != no], [AC_DEFINE([ENABLE_CMDLINE],    [1], [enabled command line parser])])
 AS_IF([test "$enable_console"    != no], [AC_DEFINE([ENABLE_CONSOLE],    [1], [enabled serial console])])

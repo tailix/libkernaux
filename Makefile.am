@@ -21,8 +21,8 @@ libkernaux_a_SOURCES = \
 	src/printf.c \
 	src/stdlib.c
 
-if ARCH_X86
-libkernaux_a_SOURCES += src/arch/x86.S
+if ARCH_I386
+libkernaux_a_SOURCES += src/arch/i386.S
 endif
 
 if ARCH_X86_64
