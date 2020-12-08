@@ -46,10 +46,10 @@ Configure with cross-compiler in `$PATH` to make without it in `$PATH`:
 
 ```
 ./configure \
-  --host=i386-elf \
-  AR="$(which i386-elf-ar)" \
-  CC="$(which i386-elf-gcc)" \
-  RANLIB="$(which i386-elf-ranlib)" \
+  --host='i386-elfkernelmq' \
+  AR="$(which i386-elfkernelmq-ar)" \
+  CC="$(which i386-elfkernelmq-gcc)" \
+  RANLIB="$(which i386-elfkernelmq-ranlib)" \
   CFLAGS='-ffreestanding -nostdlib -fno-builtin -fno-stack-protector'
 ```
 
