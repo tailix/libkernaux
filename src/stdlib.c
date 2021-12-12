@@ -8,7 +8,7 @@ void *kernaux_memset(void *const buffer, const int value, const size_t size)
 {
     unsigned char *const s = buffer;
 
-    for (unsigned long i = 0; i < size; ++i) {
+    for (size_t i = 0; i < size; ++i) {
         s[i] = value;
     }
 
@@ -29,9 +29,9 @@ size_t kernaux_strlen(const char *const s)
 char *kernaux_strncpy(
     char *const dest,
     const char *const src,
-    const unsigned long slen
+    const size_t slen
 ) {
-    for (unsigned long i = 0; i < slen; ++i) {
+    for (size_t i = 0; i < slen; ++i) {
         dest[i] = src[i];
     }
 
