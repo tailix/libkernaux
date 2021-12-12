@@ -12,6 +12,7 @@ lib_LIBRARIES = libkernaux.a
 TESTS = \
 	examples/printf \
 	examples/printf_va \
+	tests/test_elf \
 	tests/test_printf \
 	tests/test_stdlib
 
@@ -82,6 +83,10 @@ tests_multiboot2_print2_SOURCES = \
 tests_test_cmdline_SOURCES = \
 	$(libkernaux_a_SOURCES) \
 	tests/test_cmdline.c
+
+tests_test_elf_SOURCES = \
+	$(libkernaux_a_SOURCES) \
+	tests/test_elf.c
 
 tests_test_multiboot2_helpers_SOURCES = \
 	$(libkernaux_a_SOURCES) \

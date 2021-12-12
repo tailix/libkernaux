@@ -26,7 +26,7 @@ API
 * [Multiboot 2 (GRUB 2) information parser](/include/kernaux/multiboot2.h)
 * [Serial console](/include/kernaux/console.h)
 * [Page Frame Allocator](/include/kernaux/pfa.h) *(work in progress)*
-* ELF utils *(planned)*
+* [ELF utils](/include/kernaux/elf.h) *(work in progress)*
 * [Architecture-specific helpers](/include/kernaux/arch/)
 * [printf replacement](/include/kernaux/printf.h) *(work in progress)*
 * [stdlib replacement](/include/kernaux/stdlib.h):

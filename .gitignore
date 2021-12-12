@@ -40,6 +40,7 @@
 /tests/multiboot2_print1
 /tests/multiboot2_print2
 /tests/test_cmdline
+/tests/test_elf
 /tests/test_multiboot2_helpers
 /tests/test_multiboot2_print
 /tests/test_multiboot2_validation
