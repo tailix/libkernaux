@@ -22,7 +22,7 @@ Table of contents
 API
 ---
 
-* [Simple command line parser](/include/kernaux/cmdline.h) *(work in progress)*
+* [Simple command line parser](/include/kernaux/cmdline.h)
 * [Multiboot 2 (GRUB 2) information parser](/include/kernaux/multiboot2.h)
 * [Serial console](/include/kernaux/console.h)
 * [Page Frame Allocator](/include/kernaux/pfa.h) *(work in progress)*
