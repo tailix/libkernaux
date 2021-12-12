@@ -40,7 +40,8 @@ Tips
 
 Create configuration script with `./autogen.sh`.
 
-Configure with cross-compiler in `$PATH` to make without it in `$PATH`:
+Configure with [cross-compiler](https://wiki.osdev.org/GCC_Cross-Compiler) in
+`$PATH` to make without it in `$PATH`:
 
 ```
 ./configure \
