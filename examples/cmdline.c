@@ -6,7 +6,7 @@
 static const unsigned int ARGV_COUNT_MAX = 100;
 static const unsigned int ARG_SIZE_MAX = 4096;
 
-static const char *const cmdline = "foo bar\\ car";
+static const char *const cmdline = "foo bar\\ baz \"car cdr\"";
 
 int main()
 {
@@ -26,9 +26,10 @@ int main()
     ));
 
     assert(strcmp(error_msg, "") == 0);
-    assert(argc == 2);
+    assert(argc == 3);
     assert(strcmp(argv[0], "foo") == 0);
-    assert(strcmp(argv[1], "bar car") == 0);
+    assert(strcmp(argv[1], "bar baz") == 0);
+    assert(strcmp(argv[2], "car cdr") == 0);
 
     return 0;
 }

@@ -25,9 +25,20 @@ static void test(
 
 static const char *const argv0[] = {};
 
+static const char *const argv_empty[] = {""};
+static const char *const argv_empty_X2[] = {"", ""};
+static const char *const argv_empty_X3[] = {"", "", ""};
+
 static const char *const argv_foo[] = {"foo"};
 static const char *const argv_foo_bar[] = {"foo", "bar"};
 static const char *const argv_foo_bar_car[] = {"foo", "bar", "car"};
+
+static const char *const argv_spaceX3_X3[] = {"   ", "   ", "   "};
+static const char *const argv_backslashX3_X3[] = {"\\\\\\", "\\\\\\", "\\\\\\"};
+static const char *const argv_quotmarkX3_X3[] = {"\"\"\"", "\"\"\"", "\"\"\""};
+
+static const char *const argv_foospacebar_car[] = {"foo bar", "car"};
+static const char *const argv_foo_barspacecar[] = {"foo", "bar car"};
 
 static const char *const argv_space[] = {" "};
 static const char *const argv_backslash[] = {"\\"};
@@ -63,10 +74,6 @@ static const char *const argv_foo_spacebarspace[] = {"foo", " bar "};
 static const char *const argv_foo_backslashbarbackslash[] = {"foo", "\\bar\\"};
 static const char *const argv_foo_quotmarkbarquotmark[] = {"foo", "\"bar\""};
 
-static const char *const argv_spaceX3_X3[] = {"   ", "   ", "   "};
-static const char *const argv_backslashX3_X3[] = {"\\\\\\", "\\\\\\", "\\\\\\"};
-static const char *const argv_quotmarkX3_X3[] = {"\"\"\"", "\"\"\"", "\"\"\""};
-
 int main()
 {
     test("",             0, 0, true, "", 0, argv0);
@@ -82,6 +89,20 @@ int main()
     test("  foo  bar  ", 0, 0, true, "", 2, argv_foo_bar);
     test("foo bar car",  0, 0, true, "", 3, argv_foo_bar_car);
 
+    test("\"\"",                    0, 0, true, "", 1, argv_empty);
+    test("\"\" \"\"",               0, 0, true, "", 2, argv_empty_X2);
+    test("\"\" \"\" \"\"",          0, 0, true, "", 3, argv_empty_X3);
+    test("\"foo\"",                 0, 0, true, "", 1, argv_foo);
+    test("\"foo\" \"bar\"",         0, 0, true, "", 2, argv_foo_bar);
+    test(" \"foo\" \"bar\"",        0, 0, true, "", 2, argv_foo_bar);
+    test("\"foo\" \"bar\" ",        0, 0, true, "", 2, argv_foo_bar);
+    test(" \"foo\" \"bar\" ",       0, 0, true, "", 2, argv_foo_bar);
+    test("\"foo\"  \"bar\"",        0, 0, true, "", 2, argv_foo_bar);
+    test("\"foo\"  \"bar\"  ",      0, 0, true, "", 2, argv_foo_bar);
+    test("  \"foo\"  \"bar\"",      0, 0, true, "", 2, argv_foo_bar);
+    test("  \"foo\"  \"bar\"  ",    0, 0, true, "", 2, argv_foo_bar);
+    test("\"foo\" \"bar\" \"car\"", 0, 0, true, "", 3, argv_foo_bar_car);
+
     test("foo bar car", 3, 0, true, "", 3, argv_foo_bar_car);
     test("foo bar car", 0, 4, true, "", 3, argv_foo_bar_car);
     test("foo bar car", 3, 4, true, "", 3, argv_foo_bar_car);
@@ -89,6 +110,14 @@ int main()
     test("foo bar car", 2, 0, false, "too many args", 0, argv0);
     test("foo bar car", 0, 3, false, "arg too long",  0, argv0);
     test("foo bar car", 2, 3, false, "arg too long",  0, argv0);
+
+    test("\"foo\" \"bar\" \"car\"", 3, 0, true, "", 3, argv_foo_bar_car);
+    test("\"foo\" \"bar\" \"car\"", 0, 4, true, "", 3, argv_foo_bar_car);
+    test("\"foo\" \"bar\" \"car\"", 3, 4, true, "", 3, argv_foo_bar_car);
+
+    test("\"foo\" \"bar\" \"car\"", 2, 0, false, "too many args", 0, argv0);
+    test("\"foo\" \"bar\" \"car\"", 0, 3, false, "arg too long",  0, argv0);
+    test("\"foo\" \"bar\" \"car\"", 2, 3, false, "arg too long",  0, argv0);
 
     test("\\ ",             0, 0, true, "", 1, argv_space);
     test("\\\\",            0, 0, true, "", 1, argv_backslash);
@@ -123,6 +152,13 @@ int main()
     test("foo \\ bar\\ ",   0, 0, true, "", 2, argv_foo_spacebarspace);
     test("foo \\\\bar\\\\", 0, 0, true, "", 2, argv_foo_backslashbarbackslash);
     test("foo \\\"bar\\\"", 0, 0, true, "", 2, argv_foo_quotmarkbarquotmark);
+
+    test("foo\\ bar car",       0, 0, true, "", 2, argv_foospacebar_car);
+    test("\"foo bar\" car",     0, 0, true, "", 2, argv_foospacebar_car);
+    test("\"foo bar\" \"car\"", 0, 0, true, "", 2, argv_foospacebar_car);
+    test("foo bar\\ car",       0, 0, true, "", 2, argv_foo_barspacecar);
+    test("foo \"bar car\"",     0, 0, true, "", 2, argv_foo_barspacecar);
+    test("\"foo\" \"bar car\"", 0, 0, true, "", 2, argv_foo_barspacecar);
 
     test("\\ \\ \\  \\ \\ \\  \\ \\ \\ ",          3, 0, true, "", 3, argv_spaceX3_X3);
     test("\\\\\\\\\\\\ \\\\\\\\\\\\ \\\\\\\\\\\\", 3, 0, true, "", 3, argv_backslashX3_X3);

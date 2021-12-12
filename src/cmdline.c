@@ -13,6 +13,7 @@ enum State {
     WHITESPACE,
     TOKEN,
     BACKSLASHED,
+    QUOTED,
 };
 
 bool kernaux_cmdline_parse(
@@ -75,6 +76,15 @@ bool kernaux_cmdline_parse(
                 state = BACKSLASHED;
                 argv[(*argc)++] = buffer;
             }
+            else if (cur == '"') {
+                if (*argc >= argv_count_max) {
+                    kernaux_strncpy(error_msg, "too many args", 13);
+                    goto fail;
+                }
+
+                state = QUOTED;
+                argv[(*argc)++] = buffer;
+            }
             else {
                 if (*argc >= argv_count_max) {
                     kernaux_strncpy(error_msg, "too many args", 13);
@@ -106,6 +116,15 @@ bool kernaux_cmdline_parse(
                 }
 
                 state = BACKSLASHED;
+                argv[(*argc)++] = buffer;
+            }
+            else if (cur == '"') {
+                if (*argc >= argv_count_max) {
+                    kernaux_strncpy(error_msg, "too many args", 13);
+                    goto fail;
+                }
+
+                state = QUOTED;
                 argv[(*argc)++] = buffer;
             }
             else {
@@ -150,6 +169,10 @@ bool kernaux_cmdline_parse(
             else if (cur == '\\') {
                 state = BACKSLASHED;
             }
+            else if (cur == '"') {
+                kernaux_strncpy(error_msg, "unescaped quotation mark", 24);
+                goto fail;
+            }
             else {
                 if (buffer_size >= arg_size_max) {
                     kernaux_strncpy(error_msg, "arg too long", 12);
@@ -173,6 +196,32 @@ bool kernaux_cmdline_parse(
                 }
 
                 state = TOKEN;
+                *(buffer++) = cur;
+                ++buffer_size;
+            }
+            break;
+
+        case QUOTED:
+            if (cur == '\0') {
+                kernaux_strncpy(error_msg, "EOL inside quote", 16);
+                goto fail;
+            }
+            else if (cur == '"') {
+                if (buffer_size >= arg_size_max) {
+                    kernaux_strncpy(error_msg, "arg too long", 12);
+                    goto fail;
+                }
+
+                state = WHITESPACE;
+                *(buffer++) = '\0';
+                buffer_size = 0;
+            }
+            else {
+                if (buffer_size >= arg_size_max) {
+                    kernaux_strncpy(error_msg, "arg too long", 12);
+                    goto fail;
+                }
+
                 *(buffer++) = cur;
                 ++buffer_size;
             }
