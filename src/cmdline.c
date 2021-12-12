@@ -12,8 +12,8 @@ enum State {
     FINAL,
     WHITESPACE,
     TOKEN,
-    BACKSLASHED,
-    QUOTED,
+    BACKSLASH,
+    QUOTE,
 };
 
 bool kernaux_cmdline_parse(
@@ -73,7 +73,7 @@ bool kernaux_cmdline_parse(
                     goto fail;
                 }
 
-                state = BACKSLASHED;
+                state = BACKSLASH;
                 argv[(*argc)++] = buffer;
             }
             else if (cur == '"') {
@@ -82,7 +82,7 @@ bool kernaux_cmdline_parse(
                     goto fail;
                 }
 
-                state = QUOTED;
+                state = QUOTE;
                 argv[(*argc)++] = buffer;
             }
             else {
@@ -115,7 +115,7 @@ bool kernaux_cmdline_parse(
                     goto fail;
                 }
 
-                state = BACKSLASHED;
+                state = BACKSLASH;
                 argv[(*argc)++] = buffer;
             }
             else if (cur == '"') {
@@ -124,7 +124,7 @@ bool kernaux_cmdline_parse(
                     goto fail;
                 }
 
-                state = QUOTED;
+                state = QUOTE;
                 argv[(*argc)++] = buffer;
             }
             else {
@@ -167,7 +167,7 @@ bool kernaux_cmdline_parse(
                 buffer_size = 0;
             }
             else if (cur == '\\') {
-                state = BACKSLASHED;
+                state = BACKSLASH;
             }
             else if (cur == '"') {
                 kernaux_strncpy(error_msg, "unescaped quotation mark", 24);
@@ -184,7 +184,7 @@ bool kernaux_cmdline_parse(
             }
             break;
 
-        case BACKSLASHED:
+        case BACKSLASH:
             if (cur == '\0') {
                 kernaux_strncpy(error_msg, "EOL after backslash", 19);
                 goto fail;
@@ -201,7 +201,7 @@ bool kernaux_cmdline_parse(
             }
             break;
 
-        case QUOTED:
+        case QUOTE:
             if (cur == '\0') {
                 kernaux_strncpy(error_msg, "EOL inside quote", 16);
                 goto fail;
