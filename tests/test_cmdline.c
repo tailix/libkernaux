@@ -187,6 +187,12 @@ int main()
     test("\\\"\\", 0, 0, false, "EOL after backslash", 0, argv0);
     test("foo\\",  0, 0, false, "EOL after backslash", 0, argv0);
 
+    test("foo\"",    0, 0, false, "unescaped quotation mark", 0, argv0);
+    test("foo\"bar", 0, 0, false, "unescaped quotation mark", 0, argv0);
+
+    test("\"",    0, 0, false, "EOL inside quote", 0, argv0);
+    test("\"foo", 0, 0, false, "EOL inside quote", 0, argv0);
+
     return 0;
 }
 
