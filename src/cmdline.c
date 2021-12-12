@@ -14,6 +14,7 @@ enum State {
     TOKEN,
     BACKSLASH,
     QUOTE,
+    QUOTE_BACKSLASH,
 };
 
 bool kernaux_cmdline_parse(
@@ -206,6 +207,9 @@ bool kernaux_cmdline_parse(
                 kernaux_strncpy(error_msg, "EOL inside quote", 16);
                 goto fail;
             }
+            else if (cur == '\\') {
+                state = QUOTE_BACKSLASH;
+            }
             else if (cur == '"') {
                 if (buffer_size >= arg_size_max) {
                     kernaux_strncpy(error_msg, "arg too long", 12);
@@ -222,6 +226,23 @@ bool kernaux_cmdline_parse(
                     goto fail;
                 }
 
+                *(buffer++) = cur;
+                ++buffer_size;
+            }
+            break;
+
+        case QUOTE_BACKSLASH:
+            if (cur == '\0') {
+                kernaux_strncpy(error_msg, "EOL after backslash inside quote", 32);
+                goto fail;
+            }
+            else {
+                if (buffer_size >= arg_size_max) {
+                    kernaux_strncpy(error_msg, "arg too long", 12);
+                    goto fail;
+                }
+
+                state = QUOTE;
                 *(buffer++) = cur;
                 ++buffer_size;
             }
