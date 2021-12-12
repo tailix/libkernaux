@@ -24,59 +24,32 @@ static void test(
 );
 
 static const char *const argv0[] = {};
-
 static const char *const argv_foo[] = {"foo"};
-
 static const char *const argv_foo_bar[] = {"foo", "bar"};
-
 static const char *const argv_foo_bar_car[] = {"foo", "bar", "car"};
-
 static const char *const argv_space[] = {" "};
-
 static const char *const argv_backslash[] = {"\\"};
-
 static const char *const argv_foospace[] = {"foo "};
-
 static const char *const argv_foobackslash[] = {"foo\\"};
-
 static const char *const argv_spacefoo[] = {" foo"};
-
 static const char *const argv_backslashfoo[] = {"\\foo"};
-
 static const char *const argv_spacefoospace[] = {" foo "};
-
 static const char *const argv_backslashfoobackslash[] = {"\\foo\\"};
-
 static const char *const argv_foospacebar[] = {"foo bar"};
-
 static const char *const argv_foobackslashbar[] = {"foo\\bar"};
-
 static const char *const argv_spaceX3_X3[] = {"   ", "   ", "   "};
-
 static const char *const argv_backslashX3_X3[] = {"\\\\\\", "\\\\\\", "\\\\\\"};
-
 static const char *const argv_spacefoo_bar[] = {" foo", "bar"};
-
 static const char *const argv_backslashfoo_bar[] = {"\\foo", "bar"};
-
 static const char *const argv_foospace_bar[] = {"foo ", "bar"};
-
 static const char *const argv_foobackslash_bar[] = {"foo\\", "bar"};
-
 static const char *const argv_spacefoospace_bar[] = {" foo ", "bar"};
-
 static const char *const argv_backslashfoobackslash_bar[] = {"\\foo\\", "bar"};
-
 static const char *const argv_foo_spacebar[] = {"foo", " bar"};
-
 static const char *const argv_foo_backslashbar[] = {"foo", "\\bar"};
-
 static const char *const argv_foo_barspace[] = {"foo", "bar "};
-
 static const char *const argv_foo_barbackslash[] = {"foo", "bar\\"};
-
 static const char *const argv_foo_spacebarspace[] = {"foo", " bar "};
-
 static const char *const argv_foo_backslashbarbackslash[] = {"foo", "\\bar\\"};
 
 int main()
