@@ -15,9 +15,9 @@ void *kernaux_memset(void *const buffer, const int value, const size_t size)
     return buffer;
 }
 
-unsigned int kernaux_strlen(const char *const s)
+size_t kernaux_strlen(const char *const s)
 {
-    unsigned int result = 0;
+    size_t result = 0;
 
     while (s[result]) {
         ++result;

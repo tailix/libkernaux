@@ -10,7 +10,7 @@ extern "C" {
 void *kernaux_memset(void *buffer, int value, size_t size)
 __attribute__((nonnull));
 
-unsigned int kernaux_strlen(const char *s) __attribute__((nonnull));
+size_t kernaux_strlen(const char *s) __attribute__((nonnull));
 
 char *kernaux_strncpy(
     char *dest,
