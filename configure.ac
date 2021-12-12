@@ -1,9 +1,9 @@
 AC_PREREQ([2.68])
 AC_INIT([libkernaux],
   [0.0.0],
-  [https://github.com/kernelmq/libkernaux/issues],
+  [https://github.com/tailix/libkernaux/issues],
   [libkernaux],
-  [https://github.com/kernelmq/libkernaux])
+  [https://github.com/tailix/libkernaux])
 
 AC_CONFIG_HEADERS([config.h])
 AC_CONFIG_SRCDIR([src/pfa.c])

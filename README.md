@@ -1,8 +1,6 @@
 libkernaux
 ==========
 
-[![Build Status](https://travis-ci.org/kernelmq/libkernaux.svg?branch=master)](https://travis-ci.org/kernelmq/libkernaux)
-
 Auxiliary library for kernel development.
 
 
@@ -46,10 +44,10 @@ Configure with cross-compiler in `$PATH` to make without it in `$PATH`:
 
 ```
 ./configure \
-  --host='i386-elfkernelmq' \
-  AR="$(which i386-elfkernelmq-ar)" \
-  CC="$(which i386-elfkernelmq-gcc)" \
-  RANLIB="$(which i386-elfkernelmq-ranlib)" \
+  --host='i386-elftailix' \
+  AR="$(which i386-elftailix-ar)" \
+  CC="$(which i386-elftailix-gcc)" \
+  RANLIB="$(which i386-elftailix-ranlib)" \
   CFLAGS='-ffreestanding -nostdlib -fno-builtin -fno-stack-protector'
 ```
 
@@ -66,9 +64,9 @@ configure: WARNING: stdarg.h:     check for missing prerequisite headers?
 configure: WARNING: stdarg.h: see the Autoconf documentation
 configure: WARNING: stdarg.h:     section "Present But Cannot Be Compiled"
 configure: WARNING: stdarg.h: proceeding with the compiler's result
-configure: WARNING:     ## ------------------------------------------------------------ ##
-configure: WARNING:     ## Report this to https://github.com/kernelmq/libkernaux/issues ##
-configure: WARNING:     ## ------------------------------------------------------------ ##
+configure: WARNING:     ## ---------------------------------------------------------- ##
+configure: WARNING:     ## Report this to https://github.com/tailix/libkernaux/issues ##
+configure: WARNING:     ## ---------------------------------------------------------- ##
 checking for stdarg.h... no
 checking stddef.h usability... no
 checking stddef.h presence... yes
@@ -77,9 +75,9 @@ configure: WARNING: stddef.h:     check for missing prerequisite headers?
 configure: WARNING: stddef.h: see the Autoconf documentation
 configure: WARNING: stddef.h:     section "Present But Cannot Be Compiled"
 configure: WARNING: stddef.h: proceeding with the compiler's result
-configure: WARNING:     ## ------------------------------------------------------------ ##
-configure: WARNING:     ## Report this to https://github.com/kernelmq/libkernaux/issues ##
-configure: WARNING:     ## ------------------------------------------------------------ ##
+configure: WARNING:     ## ---------------------------------------------------------- ##
+configure: WARNING:     ## Report this to https://github.com/tailix/libkernaux/issues ##
+configure: WARNING:     ## ---------------------------------------------------------- ##
 checking for stddef.h... no
 ```
 
