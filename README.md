@@ -12,6 +12,8 @@ Table of contents
 * [Table of contents](#table-of-contents)
 * [API](#api)
 * [Tips](#tips)
+  * [Compilation](#compilation)
+  * [Cross-compilation](#cross-compilation)
 * [Portability](#portability)
 * [Discussion](#discussion)
 
@@ -38,6 +40,21 @@ API
 Tips
 ----
 
+### Compilation
+
+```
+./autogen.sh
+./configure
+make
+sudo make install
+```
+
+You can test with `make check`.
+
+It's just a usual library. You can use most of it's APIs in hosted environment.
+
+### Cross-compilation
+
 Create configuration script with `./autogen.sh`.
 
 Configure with [cross-compiler](https://wiki.osdev.org/GCC_Cross-Compiler) in
@@ -52,7 +69,7 @@ Configure with [cross-compiler](https://wiki.osdev.org/GCC_Cross-Compiler) in
   CFLAGS='-ffreestanding -nostdlib -fno-builtin -fno-stack-protector'
 ```
 
-When configuring with cross-compiler you can see the following messages. It's
+You can see the following messages. It's
 [a bug](https://savannah.gnu.org/support/index.php?110393) in **autoconf**, just
 ignore it.
 
