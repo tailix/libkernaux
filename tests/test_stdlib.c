@@ -14,7 +14,7 @@ int main()
         unsigned char buffer[10] =
             {32, 13, 254, 165, 98, 36, 169, 152, 233, 222};
 
-        kernaux_memset(buffer, 0, sizeof(buffer));
+        assert(kernaux_memset(buffer, 0, sizeof(buffer)) == buffer);
 
         for (unsigned int i = 0; i < sizeof(buffer); ++i) {
             assert(buffer[i] == 0);
@@ -25,10 +25,21 @@ int main()
         unsigned char buffer[10] =
             {32, 13, 254, 165, 98, 36, 169, 152, 233, 222};
 
-        kernaux_memset(buffer, 143, sizeof(buffer));
+        assert(kernaux_memset(buffer, 143, sizeof(buffer)) == buffer);
 
         for (unsigned int i = 0; i < sizeof(buffer); ++i) {
             assert(buffer[i] == 143);
+        }
+    }
+
+    {
+        unsigned char buffer[10] =
+            {32, 13, 254, 165, 98, 36, 169, 152, 233, 222};
+
+        assert(kernaux_memset(buffer, 0x89ABCDEF, sizeof(buffer)) == buffer);
+
+        for (unsigned int i = 0; i < sizeof(buffer); ++i) {
+            assert(buffer[i] == 0xEF);
         }
     }
 

@@ -4,16 +4,15 @@
 
 #include <kernaux/stdlib.h>
 
-void kernaux_memset(
-    void *const buffer,
-    const unsigned char value,
-    const unsigned long size
-) {
+void *kernaux_memset(void *const buffer, const int value, const size_t size)
+{
     unsigned char *const s = buffer;
 
     for (unsigned long i = 0; i < size; ++i) {
         s[i] = value;
     }
+
+    return buffer;
 }
 
 unsigned int kernaux_strlen(const char *const s)
