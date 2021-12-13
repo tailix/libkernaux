@@ -158,10 +158,10 @@ Except GNU/Linux, the library is periodically successfully built (starting with
 **gcc**/**clang** (depending on what is present) on the following operating
 systems:
 
-* FreeBSD 12.2
-* OpenBSD 6.8
+* FreeBSD 13.0
 * Minix 3.3.0
-* NetBSD 9.1
+* NetBSD 9.2
+* OpenBSD 7.0
 
 
 
