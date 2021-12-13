@@ -4,6 +4,7 @@ AM_CFLAGS = \
 	-std=c99 \
 	-Wall \
 	-Wextra \
+	-pedantic \
 	-Wno-gnu-variable-sized-type-not-at-end \
 	-I$(top_srcdir)/include
 

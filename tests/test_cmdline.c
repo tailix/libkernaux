@@ -23,8 +23,6 @@ static void test(
     const char *const *const expected_argv
 );
 
-static const char *const argv0[] = {};
-
 static const char *const argv_empty[] = {""};
 static const char *const argv_empty_X2[] = {"", ""};
 static const char *const argv_empty_X3[] = {"", "", ""};
@@ -76,8 +74,8 @@ static const char *const argv_foo_quotmarkbarquotmark[] = {"foo", "\"bar\""};
 
 int main()
 {
-    test("",             0, 0, true, "", 0, argv0);
-    test("   ",          0, 0, true, "", 0, argv0);
+    test("",             0, 0, true, "", 0, NULL);
+    test("   ",          0, 0, true, "", 0, NULL);
     test("foo",          0, 0, true, "", 1, argv_foo);
     test("foo bar",      0, 0, true, "", 2, argv_foo_bar);
     test(" foo bar",     0, 0, true, "", 2, argv_foo_bar);
@@ -107,17 +105,17 @@ int main()
     test("foo bar car", 0, 4, true, "", 3, argv_foo_bar_car);
     test("foo bar car", 3, 4, true, "", 3, argv_foo_bar_car);
 
-    test("foo bar car", 2, 0, false, "too many args", 0, argv0);
-    test("foo bar car", 0, 3, false, "arg too long",  0, argv0);
-    test("foo bar car", 2, 3, false, "arg too long",  0, argv0);
+    test("foo bar car", 2, 0, false, "too many args", 0, NULL);
+    test("foo bar car", 0, 3, false, "arg too long",  0, NULL);
+    test("foo bar car", 2, 3, false, "arg too long",  0, NULL);
 
     test("\"foo\" \"bar\" \"car\"", 3, 0, true, "", 3, argv_foo_bar_car);
     test("\"foo\" \"bar\" \"car\"", 0, 4, true, "", 3, argv_foo_bar_car);
     test("\"foo\" \"bar\" \"car\"", 3, 4, true, "", 3, argv_foo_bar_car);
 
-    test("\"foo\" \"bar\" \"car\"", 2, 0, false, "too many args", 0, argv0);
-    test("\"foo\" \"bar\" \"car\"", 0, 3, false, "arg too long",  0, argv0);
-    test("\"foo\" \"bar\" \"car\"", 2, 3, false, "arg too long",  0, argv0);
+    test("\"foo\" \"bar\" \"car\"", 2, 0, false, "too many args", 0, NULL);
+    test("\"foo\" \"bar\" \"car\"", 0, 3, false, "arg too long",  0, NULL);
+    test("\"foo\" \"bar\" \"car\"", 2, 3, false, "arg too long",  0, NULL);
 
     test("\\ ",                 0, 0, true, "", 1, argv_space);
     test("\"\\ \"",             0, 0, true, "", 1, argv_space);
@@ -203,35 +201,35 @@ int main()
     test("\\\\\\\\\\\\ \\\\\\\\\\\\ \\\\\\\\\\\\", 3, 4, true, "", 3, argv_backslashX3_X3);
     test("\\\"\\\"\\\" \\\"\\\"\\\" \\\"\\\"\\\"", 3, 4, true, "", 3, argv_quotmarkX3_X3);
 
-    test("\\ \\ \\  \\ \\ \\  \\ \\ \\ ",          2, 0, false, "too many args", 0, argv0);
-    test("\\\\\\\\\\\\ \\\\\\\\\\\\ \\\\\\\\\\\\", 2, 0, false, "too many args", 0, argv0);
-    test("\\\"\\\"\\\" \\\"\\\"\\\" \\\"\\\"\\\"", 2, 0, false, "too many args", 0, argv0);
-    test("\\ \\ \\  \\ \\ \\  \\ \\ \\ ",          0, 3, false, "arg too long",  0, argv0);
-    test("\\\\\\\\\\\\ \\\\\\\\\\\\ \\\\\\\\\\\\", 0, 3, false, "arg too long",  0, argv0);
-    test("\\\"\\\"\\\" \\\"\\\"\\\" \\\"\\\"\\\"", 0, 3, false, "arg too long",  0, argv0);
-    test("\\ \\ \\  \\ \\ \\  \\ \\ \\ ",          2, 3, false, "arg too long",  0, argv0);
-    test("\\\\\\\\\\\\ \\\\\\\\\\\\ \\\\\\\\\\\\", 2, 3, false, "arg too long",  0, argv0);
-    test("\\\"\\\"\\\" \\\"\\\"\\\" \\\"\\\"\\\"", 2, 3, false, "arg too long",  0, argv0);
+    test("\\ \\ \\  \\ \\ \\  \\ \\ \\ ",          2, 0, false, "too many args", 0, NULL);
+    test("\\\\\\\\\\\\ \\\\\\\\\\\\ \\\\\\\\\\\\", 2, 0, false, "too many args", 0, NULL);
+    test("\\\"\\\"\\\" \\\"\\\"\\\" \\\"\\\"\\\"", 2, 0, false, "too many args", 0, NULL);
+    test("\\ \\ \\  \\ \\ \\  \\ \\ \\ ",          0, 3, false, "arg too long",  0, NULL);
+    test("\\\\\\\\\\\\ \\\\\\\\\\\\ \\\\\\\\\\\\", 0, 3, false, "arg too long",  0, NULL);
+    test("\\\"\\\"\\\" \\\"\\\"\\\" \\\"\\\"\\\"", 0, 3, false, "arg too long",  0, NULL);
+    test("\\ \\ \\  \\ \\ \\  \\ \\ \\ ",          2, 3, false, "arg too long",  0, NULL);
+    test("\\\\\\\\\\\\ \\\\\\\\\\\\ \\\\\\\\\\\\", 2, 3, false, "arg too long",  0, NULL);
+    test("\\\"\\\"\\\" \\\"\\\"\\\" \\\"\\\"\\\"", 2, 3, false, "arg too long",  0, NULL);
 
-    test("\\",     0, 0, false, "EOL after backslash", 0, argv0);
-    test(" \\",    0, 0, false, "EOL after backslash", 0, argv0);
-    test("\\ \\",  0, 0, false, "EOL after backslash", 0, argv0);
-    test("\\\\\\", 0, 0, false, "EOL after backslash", 0, argv0);
-    test("\\\"\\", 0, 0, false, "EOL after backslash", 0, argv0);
-    test("foo\\",  0, 0, false, "EOL after backslash", 0, argv0);
+    test("\\",     0, 0, false, "EOL after backslash", 0, NULL);
+    test(" \\",    0, 0, false, "EOL after backslash", 0, NULL);
+    test("\\ \\",  0, 0, false, "EOL after backslash", 0, NULL);
+    test("\\\\\\", 0, 0, false, "EOL after backslash", 0, NULL);
+    test("\\\"\\", 0, 0, false, "EOL after backslash", 0, NULL);
+    test("foo\\",  0, 0, false, "EOL after backslash", 0, NULL);
 
-    test("\"\\",     0, 0, false, "EOL after backslash inside quote", 0, argv0);
-    test("\" \\",    0, 0, false, "EOL after backslash inside quote", 0, argv0);
-    test("\"\\ \\",  0, 0, false, "EOL after backslash inside quote", 0, argv0);
-    test("\"\\\\\\", 0, 0, false, "EOL after backslash inside quote", 0, argv0);
-    test("\"\\\"\\", 0, 0, false, "EOL after backslash inside quote", 0, argv0);
-    test("\"foo\\",  0, 0, false, "EOL after backslash inside quote", 0, argv0);
+    test("\"\\",     0, 0, false, "EOL after backslash inside quote", 0, NULL);
+    test("\" \\",    0, 0, false, "EOL after backslash inside quote", 0, NULL);
+    test("\"\\ \\",  0, 0, false, "EOL after backslash inside quote", 0, NULL);
+    test("\"\\\\\\", 0, 0, false, "EOL after backslash inside quote", 0, NULL);
+    test("\"\\\"\\", 0, 0, false, "EOL after backslash inside quote", 0, NULL);
+    test("\"foo\\",  0, 0, false, "EOL after backslash inside quote", 0, NULL);
 
-    test("foo\"",    0, 0, false, "unescaped quotation mark", 0, argv0);
-    test("foo\"bar", 0, 0, false, "unescaped quotation mark", 0, argv0);
+    test("foo\"",    0, 0, false, "unescaped quotation mark", 0, NULL);
+    test("foo\"bar", 0, 0, false, "unescaped quotation mark", 0, NULL);
 
-    test("\"",    0, 0, false, "EOL inside quote", 0, argv0);
-    test("\"foo", 0, 0, false, "EOL inside quote", 0, argv0);
+    test("\"",    0, 0, false, "EOL inside quote", 0, NULL);
+    test("\"foo", 0, 0, false, "EOL inside quote", 0, NULL);
 
     return 0;
 }
