@@ -1,6 +1,8 @@
 libkernaux
 ==========
 
+[![Test](https://github.com/tailix/libkernaux/actions/workflows/test.yml/badge.svg)](https://github.com/tailix/libkernaux/actions/workflows/test.yml)
+
 Auxiliary library for kernel development.
 
 
