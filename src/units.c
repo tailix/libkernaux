@@ -6,103 +6,135 @@
 
 #include <kernaux/stdlib.h>
 
+#define TMP_BUFFER_SIZE (64)
+
 bool kernaux_units_human_raw(
     const size_t value,
     const enum KernAux_Unit unit,
-    char *buffer,
+    char *const buffer,
     const size_t buffer_size
 ) {
-    kernaux_itoa(value, buffer, 10);
-    while (*buffer != '\0') ++buffer;
-    *(buffer++) = ' ';
+    char tmp_buffer[TMP_BUFFER_SIZE];
+    char *tmp = tmp_buffer;
+
+    kernaux_itoa(value, tmp, 10);
+    while (*tmp != '\0') ++tmp;
+    *(tmp++) = ' ';
 
     switch (unit) {
     case KERNAUX_UNIT_BIT:
-        *(buffer++) = 'b';
-        *(buffer++) = 'i';
-        *(buffer++) = 't';
+        *(tmp++) = 'b';
+        *(tmp++) = 'i';
+        *(tmp++) = 't';
         break;
     case KERNAUX_UNIT_BYTE:
-        *(buffer++) = 'B';
-        *(buffer++) = 'y';
-        *(buffer++) = 't';
-        *(buffer++) = 'e';
+        *(tmp++) = 'B';
+        *(tmp++) = 'y';
+        *(tmp++) = 't';
+        *(tmp++) = 'e';
         break;
     }
-    *(buffer++) = '\0';
+
+    *(tmp++) = '\0';
+
+    const size_t tmp_size = kernaux_strlen(tmp_buffer) + 1;
+    if (tmp_size > buffer_size) return false;
+
+    kernaux_strncpy(buffer, tmp_buffer, tmp_size);
+    return true;
 }
 
 bool kernaux_units_human_dec(
     const size_t value,
     const enum KernAux_Unit unit,
     const enum KernAux_UnitPrefixDec prefix,
-    char *buffer,
+    char *const buffer,
     const size_t buffer_size
 ) {
-    kernaux_itoa(value, buffer, 10);
-    while (*buffer != '\0') ++buffer;
-    *(buffer++) = ' ';
+    char tmp_buffer[TMP_BUFFER_SIZE];
+    char *tmp = tmp_buffer;
+
+    kernaux_itoa(value, tmp, 10);
+    while (*tmp != '\0') ++tmp;
+    *(tmp++) = ' ';
 
     switch (prefix) {
     case KERNAUX_UNITPFX_KILO:
-        *(buffer++) = 'k';
+        *(tmp++) = 'k';
         break;
     case KERNAUX_UNITPFX_MEGA:
-        *(buffer++) = 'M';
+        *(tmp++) = 'M';
         break;
     case KERNAUX_UNITPFX_GIGA:
-        *(buffer++) = 'G';
+        *(tmp++) = 'G';
         break;
     }
 
     switch (unit) {
     case KERNAUX_UNIT_BIT:
-        *(buffer++) = 'b';
-        *(buffer++) = 'i';
-        *(buffer++) = 't';
+        *(tmp++) = 'b';
+        *(tmp++) = 'i';
+        *(tmp++) = 't';
         break;
     case KERNAUX_UNIT_BYTE:
-        *(buffer++) = 'B';
+        *(tmp++) = 'B';
         break;
     }
-    *(buffer++) = '\0';
+
+    *(tmp++) = '\0';
+
+    const size_t tmp_size = kernaux_strlen(tmp_buffer) + 1;
+    if (tmp_size > buffer_size) return false;
+
+    kernaux_strncpy(buffer, tmp_buffer, tmp_size);
+    return true;
 }
 
 bool kernaux_units_human_bin(
     const size_t value,
     const enum KernAux_Unit unit,
     const enum KernAux_UnitPrefixBin prefix,
-    char *buffer,
+    char *const buffer,
     const size_t buffer_size
 ) {
-    kernaux_itoa(value, buffer, 10);
-    while (*buffer != '\0') ++buffer;
-    *(buffer++) = ' ';
+    char tmp_buffer[TMP_BUFFER_SIZE];
+    char *tmp = tmp_buffer;
+
+    kernaux_itoa(value, tmp, 10);
+    while (*tmp != '\0') ++tmp;
+    *(tmp++) = ' ';
 
     switch (prefix) {
     case KERNAUX_UNITPFX_KIBI:
-        *(buffer++) = 'K';
-        *(buffer++) = 'i';
+        *(tmp++) = 'K';
+        *(tmp++) = 'i';
         break;
     case KERNAUX_UNITPFX_MEBI:
-        *(buffer++) = 'M';
-        *(buffer++) = 'i';
+        *(tmp++) = 'M';
+        *(tmp++) = 'i';
         break;
     case KERNAUX_UNITPFX_GIBI:
-        *(buffer++) = 'G';
-        *(buffer++) = 'i';
+        *(tmp++) = 'G';
+        *(tmp++) = 'i';
         break;
     }
 
     switch (unit) {
     case KERNAUX_UNIT_BIT:
-        *(buffer++) = 'b';
-        *(buffer++) = 'i';
-        *(buffer++) = 't';
+        *(tmp++) = 'b';
+        *(tmp++) = 'i';
+        *(tmp++) = 't';
         break;
     case KERNAUX_UNIT_BYTE:
-        *(buffer++) = 'B';
+        *(tmp++) = 'B';
         break;
     }
-    *(buffer++) = '\0';
+
+    *(tmp++) = '\0';
+
+    const size_t tmp_size = kernaux_strlen(tmp_buffer) + 1;
+    if (tmp_size > buffer_size) return false;
+
+    kernaux_strncpy(buffer, tmp_buffer, tmp_size);
+    return true;
 }
