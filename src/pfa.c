@@ -6,20 +6,20 @@
 #include <kernaux/stdlib.h>
 
 static void KernAux_PFA_mark(
-    struct KernAux_PFA *pfa,
+    KernAux_PFA pfa,
     bool status,
     size_t start,
     size_t end
 )
 __attribute__((nonnull));
 
-void KernAux_PFA_initialize(struct KernAux_PFA *const pfa)
+void KernAux_PFA_initialize(const KernAux_PFA pfa)
 {
     kernaux_memset(pfa->pages, false, sizeof(pfa->pages));
 }
 
 void KernAux_PFA_mark_available(
-    struct KernAux_PFA *const pfa,
+    const KernAux_PFA pfa,
     const size_t start,
     const size_t end
 ) {
@@ -27,7 +27,7 @@ void KernAux_PFA_mark_available(
 }
 
 void KernAux_PFA_mark_unavailable(
-    struct KernAux_PFA *const pfa,
+    const KernAux_PFA pfa,
     const size_t start,
     const size_t end
 ) {
@@ -35,7 +35,7 @@ void KernAux_PFA_mark_unavailable(
 }
 
 void KernAux_PFA_mark(
-    struct KernAux_PFA *const pfa,
+    const KernAux_PFA pfa,
     const bool status,
     size_t start,
     size_t end
@@ -61,7 +61,7 @@ void KernAux_PFA_mark(
     }
 }
 
-size_t KernAux_PFA_alloc_page(struct KernAux_PFA *const pfa)
+size_t KernAux_PFA_alloc_page(const KernAux_PFA pfa)
 {
     // We start from 1 because 0 indicates failure.
     // It is not very usefull to alloc page at address 0;
@@ -76,7 +76,7 @@ size_t KernAux_PFA_alloc_page(struct KernAux_PFA *const pfa)
     return 0;
 }
 
-void KernAux_PFA_free_page(struct KernAux_PFA *const pfa, size_t page_addr)
+void KernAux_PFA_free_page(const KernAux_PFA pfa, size_t page_addr)
 {
     if (page_addr % KERNAUX_PFA_PAGE_SIZE != 0) return;
 
