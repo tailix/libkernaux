@@ -49,8 +49,6 @@ __attribute__((packed));
 struct KernAux_Multiboot2_TagBase {
     enum KernAux_Multiboot2_TagType type : 32;
     unsigned int size                    : 32;
-
-    unsigned char data[];
 }
 __attribute__((packed));
 
