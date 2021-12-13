@@ -62,7 +62,9 @@ endif
 
 if ENABLE_PFA
 libkernaux_a_SOURCES += src/pfa.c
-TESTS += tests/test_pfa
+TESTS += \
+	examples/pfa \
+	tests/test_pfa
 endif
 
 if ENABLE_UNITS
@@ -75,6 +77,10 @@ endif
 examples_cmdline_SOURCES = \
 	$(libkernaux_a_SOURCES) \
 	examples/cmdline.c
+
+examples_pfa_SOURCES = \
+	$(libkernaux_a_SOURCES) \
+	examples/pfa.c
 
 examples_printf_SOURCES = \
 	$(libkernaux_a_SOURCES) \
