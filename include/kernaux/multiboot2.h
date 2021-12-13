@@ -1,13 +1,13 @@
 #ifndef KERNAUX_INCLUDED_MULTIBOOT2
 #define KERNAUX_INCLUDED_MULTIBOOT2 1
 
-#include <stdbool.h>
-
-#define KERNAUX_MULTIBOOT2_MAGIC 0x36d76289
-
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+#include <stdbool.h>
+
+#define KERNAUX_MULTIBOOT2_MAGIC 0x36d76289
 
 /****************
  * Common types *

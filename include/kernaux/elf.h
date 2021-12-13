@@ -1,11 +1,11 @@
 #ifndef KERNAUX_INCLUDED_ELF
 #define KERNAUX_INCLUDED_ELF 1
 
-#include <stdbool.h>
-
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+#include <stdbool.h>
 
 struct KernAux_ELF_Header {
     unsigned char  magic_0x7F     : 8;

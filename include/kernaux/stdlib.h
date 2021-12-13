@@ -1,11 +1,11 @@
 #ifndef KERNAUX_INCLUDED_STDLIB
 #define KERNAUX_INCLUDED_STDLIB 1
 
-#include <stddef.h>
-
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+#include <stddef.h>
 
 void *kernaux_memset(void *buffer, int value, size_t size)
 __attribute__((nonnull));

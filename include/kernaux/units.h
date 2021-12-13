@@ -1,12 +1,12 @@
 #ifndef KERNAUX_INCLUDED_UNITS
 #define KERNAUX_INCLUDED_UNITS
 
-#include <stdbool.h>
-#include <stddef.h>
-
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+#include <stdbool.h>
+#include <stddef.h>
 
 enum KernAux_Unit {
     KERNAUX_UNIT_BIT,
