@@ -37,6 +37,7 @@
 /examples/cmdline
 /examples/printf
 /examples/printf_va
+/examples/units_human
 /tests/multiboot2_print1
 /tests/multiboot2_print2
 /tests/test_cmdline

@@ -60,6 +60,11 @@ libkernaux_a_SOURCES += src/pfa.c
 TESTS += tests/test_pfa
 endif
 
+if ENABLE_UNITS
+libkernaux_a_SOURCES += src/units.c
+TESTS += examples/units_human
+endif
+
 examples_cmdline_SOURCES = \
 	$(libkernaux_a_SOURCES) \
 	examples/cmdline.c
@@ -71,6 +76,10 @@ examples_printf_SOURCES = \
 examples_printf_va_SOURCES = \
 	$(libkernaux_a_SOURCES) \
 	examples/printf_va.c
+
+examples_units_human_SOURCES = \
+	$(libkernaux_a_SOURCES) \
+	examples/units_human.c
 
 tests_multiboot2_print1_SOURCES = \
 	$(libkernaux_a_SOURCES) \
