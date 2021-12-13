@@ -52,7 +52,8 @@ sudo make install
 
 You can test with `make check`.
 
-It's just a usual library. You can use most of it's APIs in hosted environment.
+This is just a usual library. You can use most of it's APIs in hosted
+environment.
 
 ### Cross-compilation
 
