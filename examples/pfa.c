@@ -3,7 +3,7 @@
 #include <assert.h>
 
 // Create PFA in some static memory area because typically you don't have memory
-// management in kernel before PFA is even used.
+// management in kernel without PFA.
 struct KernAux_PFA pfa;
 
 int main()
