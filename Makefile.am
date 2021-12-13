@@ -13,7 +13,6 @@ lib_LIBRARIES = libkernaux.a
 TESTS = \
 	examples/printf \
 	examples/printf_va \
-	tests/test_elf \
 	tests/test_printf \
 	tests/test_stdlib
 
@@ -40,6 +39,11 @@ endif
 
 if ENABLE_CONSOLE
 libkernaux_a_SOURCES += src/console.c
+endif
+
+if ENABLE_ELF
+libkernaux_a_SOURCES += src/elf.c
+TESTS += tests/test_elf
 endif
 
 if ENABLE_MULTIBOOT2
