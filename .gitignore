@@ -48,3 +48,4 @@
 /tests/test_pfa
 /tests/test_printf
 /tests/test_stdlib
+/tests/test_units_human

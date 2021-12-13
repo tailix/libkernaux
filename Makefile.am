@@ -62,7 +62,9 @@ endif
 
 if ENABLE_UNITS
 libkernaux_a_SOURCES += src/units.c
-TESTS += examples/units_human
+TESTS += \
+	examples/units_human \
+	tests/test_units_human
 endif
 
 examples_cmdline_SOURCES = \
@@ -120,3 +122,7 @@ tests_test_printf_SOURCES = \
 tests_test_stdlib_SOURCES = \
 	$(libkernaux_a_SOURCES) \
 	tests/test_stdlib.c
+
+tests_test_units_human_SOURCES = \
+	$(libkernaux_a_SOURCES) \
+	tests/test_units_human.c
