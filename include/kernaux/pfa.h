@@ -20,6 +20,9 @@ struct KernAux_PFA {
 void KernAux_PFA_initialize(KernAux_PFA pfa)
 __attribute__((nonnull));
 
+bool KernAux_PFA_is_available(KernAux_PFA pfa, size_t page_addr)
+__attribute__((nonnull));
+
 void KernAux_PFA_mark_available(KernAux_PFA pfa, size_t start, size_t end)
 __attribute__((nonnull));
 

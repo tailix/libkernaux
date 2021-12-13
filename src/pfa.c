@@ -18,6 +18,13 @@ void KernAux_PFA_initialize(const KernAux_PFA pfa)
     kernaux_memset(pfa->pages, false, sizeof(pfa->pages));
 }
 
+bool KernAux_PFA_is_available(const KernAux_PFA pfa, const size_t page_addr)
+{
+    if (page_addr % KERNAUX_PFA_PAGE_SIZE != 0) return false;
+
+    return pfa->pages[page_addr / KERNAUX_PFA_PAGE_SIZE];
+}
+
 void KernAux_PFA_mark_available(
     const KernAux_PFA pfa,
     const size_t start,
