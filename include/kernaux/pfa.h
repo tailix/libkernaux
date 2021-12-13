@@ -6,6 +6,7 @@ extern "C" {
 #endif
 
 #include <stdbool.h>
+#include <stddef.h>
 
 #define KERNAUX_PFA_PAGE_SIZE (4 * 1024)
 #define KERNAUX_PFA_PAGES_COUNT_MAX (1024 * 1024)
@@ -19,22 +20,22 @@ __attribute__((nonnull));
 
 void KernAux_PFA_mark_available(
     struct KernAux_PFA *pfa,
-    unsigned int start,
-    unsigned int end
+    size_t start,
+    size_t end
 )
 __attribute__((nonnull));
 
 void KernAux_PFA_mark_unavailable(
     struct KernAux_PFA *pfa,
-    unsigned int start,
-    unsigned int end
+    size_t start,
+    size_t end
 )
 __attribute__((nonnull));
 
-unsigned int KernAux_PFA_alloc_page(struct KernAux_PFA *pfa)
+size_t KernAux_PFA_alloc_page(struct KernAux_PFA *pfa)
 __attribute__((nonnull));
 
-void KernAux_PFA_free_page(struct KernAux_PFA *pfa, unsigned int page_addr)
+void KernAux_PFA_free_page(struct KernAux_PFA *pfa, size_t page_addr)
 __attribute__((nonnull));
 
 #ifdef __cplusplus

@@ -12,7 +12,7 @@ int main()
 
     KernAux_PFA_initialize(&pfa);
 
-    for (unsigned int index = 0; index < KERNAUX_PFA_PAGES_COUNT_MAX; ++index) {
+    for (size_t index = 0; index < KERNAUX_PFA_PAGES_COUNT_MAX; ++index) {
         assert(pfa.pages[index] == false);
     }
 
@@ -20,35 +20,31 @@ int main()
     KernAux_PFA_mark_available(&pfa, 1048576, 134086655);
     KernAux_PFA_mark_unavailable(&pfa, 4194304, 6291455); // [4 MB, 6 MB)
 
-    for (unsigned int index = 0; index < 159; ++index) {
+    for (size_t index = 0; index < 159; ++index) {
         assert(pfa.pages[index] == true);
     }
 
-    for (unsigned int index = 159; index < 256; ++index) {
+    for (size_t index = 159; index < 256; ++index) {
         assert(pfa.pages[index] == false);
     }
 
-    for (unsigned int index = 256; index < 1024; ++index) { // [1 MB, 4 MB)
+    for (size_t index = 256; index < 1024; ++index) { // [1 MB, 4 MB)
         assert(pfa.pages[index] == true);
     }
 
-    for (unsigned int index = 1024; index < 1536; ++index) { // [4 MB, 6 MB)
+    for (size_t index = 1024; index < 1536; ++index) { // [4 MB, 6 MB)
         assert(pfa.pages[index] == false);
     }
 
-    for (unsigned int index = 1536; index < 32736; ++index) { // [6 MB, ~127 MB)
+    for (size_t index = 1536; index < 32736; ++index) { // [6 MB, ~127 MB)
         assert(pfa.pages[index] == true);
     }
 
-    for (
-        unsigned int index = 32736;
-        index < KERNAUX_PFA_PAGES_COUNT_MAX;
-        ++index
-    ) {
+    for (size_t index = 32736; index < KERNAUX_PFA_PAGES_COUNT_MAX; ++index) {
         assert(pfa.pages[index] == false);
     }
 
-    unsigned int page_addr = KernAux_PFA_alloc_page(&pfa);
+    const size_t page_addr = KernAux_PFA_alloc_page(&pfa);
 
     assert(page_addr != 0);
     assert(page_addr % KERNAUX_PFA_PAGE_SIZE == 0);
@@ -58,7 +54,7 @@ int main()
 
     assert(pfa.pages[page_addr / KERNAUX_PFA_PAGE_SIZE]);
 
-    for (unsigned int index = 0; index < KERNAUX_PFA_PAGES_COUNT_MAX; ++index) {
+    for (size_t index = 0; index < KERNAUX_PFA_PAGES_COUNT_MAX; ++index) {
         if (pfa.pages[index]) {
             assert(KernAux_PFA_alloc_page(&pfa) != 0);
         }
