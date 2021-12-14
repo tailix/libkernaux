@@ -71,8 +71,7 @@ void KernAux_PFA_mark(
 size_t KernAux_PFA_alloc_page(const KernAux_PFA pfa)
 {
     // We start from 1 because 0 indicates failure.
-    // It is not very usefull to alloc page at address 0;
-    //
+    // It is not very useful to alloc page at address 0;
     for (size_t index = 1; index < KERNAUX_PFA_PAGES_COUNT_MAX; ++index) {
         if (pfa->pages[index]) {
             pfa->pages[index] = false;
@@ -83,9 +82,51 @@ size_t KernAux_PFA_alloc_page(const KernAux_PFA pfa)
     return 0;
 }
 
+size_t KernAux_PFA_alloc_pages(const KernAux_PFA pfa, const size_t mem_size)
+{
+    if (mem_size % KERNAUX_PFA_PAGE_SIZE != 0) return 0;
+
+    const size_t pages_count = mem_size  / KERNAUX_PFA_PAGE_SIZE;
+
+    // We start from 1 because 0 indicates failure.
+    // It is not very useful to alloc page at address 0;
+    for (size_t start = 1; start < KERNAUX_PFA_PAGES_COUNT_MAX;) {
+        size_t end = start;
+        for (; end < start + pages_count; ++end) {
+            if (!pfa->pages[end]) break;
+        }
+        if (end >= KERNAUX_PFA_PAGES_COUNT_MAX) return 0;
+        if (end == start + pages_count - 1) {
+            for (size_t index = start; index <= end; ++index) {
+                pfa->pages[index] = false;
+            }
+            return start * KERNAUX_PFA_PAGE_SIZE;
+        }
+        start = end + 1;
+    }
+
+    return 0;
+}
+
 void KernAux_PFA_free_page(const KernAux_PFA pfa, size_t page_addr)
 {
     if (page_addr % KERNAUX_PFA_PAGE_SIZE != 0) return;
 
     pfa->pages[page_addr / KERNAUX_PFA_PAGE_SIZE] = true;
+}
+
+void KernAux_PFA_free_pages(
+    const KernAux_PFA pfa,
+    const size_t page_addr,
+    const size_t mem_size
+) {
+    if (page_addr % KERNAUX_PFA_PAGE_SIZE != 0) return;
+    if (mem_size  % KERNAUX_PFA_PAGE_SIZE != 0) return;
+
+    const size_t start_index = page_addr / KERNAUX_PFA_PAGE_SIZE;
+    const size_t pages_count = mem_size  / KERNAUX_PFA_PAGE_SIZE;
+
+    for (size_t index = 0; index < pages_count; ++index) {
+        pfa->pages[start_index + index] = true;
+    }
 }

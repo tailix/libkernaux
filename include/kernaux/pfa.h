@@ -32,7 +32,13 @@ __attribute__((nonnull));
 size_t KernAux_PFA_alloc_page(KernAux_PFA pfa)
 __attribute__((nonnull));
 
+size_t KernAux_PFA_alloc_pages(KernAux_PFA pfa, size_t mem_size)
+__attribute__((nonnull));
+
 void KernAux_PFA_free_page(KernAux_PFA pfa, size_t page_addr)
+__attribute__((nonnull));
+
+void KernAux_PFA_free_pages(KernAux_PFA pfa, size_t page_addr, size_t mem_size)
 __attribute__((nonnull));
 
 #ifdef __cplusplus
