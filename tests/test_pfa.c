@@ -45,13 +45,13 @@ int main()
     }
 
     {
-        const size_t page_addr = KernAux_PFA_alloc_page(&pfa);
+        const size_t page_addr = KernAux_PFA_alloc_pages(&pfa, 1);
 
         assert(page_addr != 0);
         assert(page_addr % KERNAUX_PFA_PAGE_SIZE == 0);
         assert(!KernAux_PFA_is_available(&pfa, page_addr));
 
-        KernAux_PFA_free_page(&pfa, page_addr);
+        KernAux_PFA_free_pages(&pfa, page_addr, 1);
 
         assert(KernAux_PFA_is_available(&pfa, page_addr));
     }
@@ -78,11 +78,11 @@ int main()
 
     for (size_t index = 0; index < KERNAUX_PFA_PAGES_COUNT_MAX; ++index) {
         if (KernAux_PFA_is_available(&pfa, index * KERNAUX_PFA_PAGE_SIZE)) {
-            assert(KernAux_PFA_alloc_page(&pfa) != 0);
+            assert(KernAux_PFA_alloc_pages(&pfa, 1) != 0);
         }
     }
 
-    assert(KernAux_PFA_alloc_page(&pfa) == 0);
+    assert(KernAux_PFA_alloc_pages(&pfa, 1) == 0);
 
     return 0;
 }

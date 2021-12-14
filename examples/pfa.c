@@ -35,9 +35,10 @@ int main()
 
     // When you have configured PFA, you can use it to allocate and free pages.
     {
-        const size_t page_addr = KernAux_PFA_alloc_page(&pfa);
+        const size_t page_addr =
+            KernAux_PFA_alloc_pages(&pfa, KERNAUX_PFA_PAGE_SIZE);
         assert(!KernAux_PFA_is_available(&pfa, page_addr));
-        KernAux_PFA_free_page(&pfa, page_addr);
+        KernAux_PFA_free_pages(&pfa, page_addr, KERNAUX_PFA_PAGE_SIZE);
         assert(KernAux_PFA_is_available(&pfa, page_addr));
     }
 
