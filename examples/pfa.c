@@ -34,10 +34,30 @@ int main()
     assert(!KernAux_PFA_is_available(&pfa, 1024 * 1024 * 128)); // 128 MiB
 
     // When you have configured PFA, you can use it to allocate and free pages.
-    const size_t page_addr = KernAux_PFA_alloc_page(&pfa);
-    assert(!KernAux_PFA_is_available(&pfa, page_addr));
-    KernAux_PFA_free_page(&pfa, page_addr);
-    assert(KernAux_PFA_is_available(&pfa, page_addr));
+    {
+        const size_t page_addr = KernAux_PFA_alloc_page(&pfa);
+        assert(!KernAux_PFA_is_available(&pfa, page_addr));
+        KernAux_PFA_free_page(&pfa, page_addr);
+        assert(KernAux_PFA_is_available(&pfa, page_addr));
+    }
+
+    // You can also allocate multiple continuous pages.
+    {
+        const size_t page_addr =
+            KernAux_PFA_alloc_pages(&pfa, 10 * KERNAUX_PFA_PAGE_SIZE);
+
+        for (size_t index = 0, addr = page_addr; index < 10; ++index) {
+            assert(!KernAux_PFA_is_available(&pfa, addr));
+            addr += KERNAUX_PFA_PAGE_SIZE;
+        }
+
+        KernAux_PFA_free_pages(&pfa, page_addr, 10 * KERNAUX_PFA_PAGE_SIZE);
+
+        for (size_t index = 0, addr = page_addr; index < 10; ++index) {
+            assert(KernAux_PFA_is_available(&pfa, addr));
+            addr += KERNAUX_PFA_PAGE_SIZE;
+        }
+    }
 
     return 0;
 }
