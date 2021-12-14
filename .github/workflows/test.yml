@@ -7,157 +7,23 @@ on:
     branches: [master]
 
 jobs:
-  nowarn_assert_defopt:
+  test:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        assert: ['--enable-assert', '--disable-assert']
+        opt: ['', '-O0', '-O3']
+        werror:
+          - cflag: '-Werror'
+            mb2: '--disable-multiboot2'
+          - cflag: ''
+            mb2: '--enable-multiboot2'
     steps:
       - uses: actions/checkout@v2
       - name: autogen
         run: ./autogen.sh
       - name: configure
-        run: ./configure --enable-assert --disable-multiboot2 CFLAGS='-Werror'
-      - name: make
-        run: make
-      - name: check
-        run: make check
-
-  nowarn_assert_noopt:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: autogen
-        run: ./autogen.sh
-      - name: configure
-        run: ./configure --enable-assert --disable-multiboot2 CFLAGS='-O0 -Werror'
-      - name: make
-        run: make
-      - name: check
-        run: make check
-
-  nowarn_assert_maxopt:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: autogen
-        run: ./autogen.sh
-      - name: configure
-        run: ./configure --disable-assert --disable-multiboot2 CFLAGS='-O3 -Werror'
-      - name: make
-        run: make
-      - name: check
-        run: make check
-
-  nowarn_noassert_defopt:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: autogen
-        run: ./autogen.sh
-      - name: configure
-        run: ./configure --disable-assert --disable-multiboot2 CFLAGS='-Werror'
-      - name: make
-        run: make
-      - name: check
-        run: make check
-
-  nowarn_noassert_noopt:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: autogen
-        run: ./autogen.sh
-      - name: configure
-        run: ./configure --disable-assert --disable-multiboot2 CFLAGS='-O0 -Werror'
-      - name: make
-        run: make
-      - name: check
-        run: make check
-
-  nowarn_noassert_maxopt:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: autogen
-        run: ./autogen.sh
-      - name: configure
-        run: ./configure --disable-assert --disable-multiboot2 CFLAGS='-O3 -Werror'
-      - name: make
-        run: make
-      - name: check
-        run: make check
-
-  warn_assert_defopt:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: autogen
-        run: ./autogen.sh
-      - name: configure
-        run: ./configure --enable-assert
-      - name: make
-        run: make
-      - name: check
-        run: make check
-
-  warn_assert_noopt:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: autogen
-        run: ./autogen.sh
-      - name: configure
-        run: ./configure --enable-assert CFLAGS='-O0'
-      - name: make
-        run: make
-      - name: check
-        run: make check
-
-  warn_assert_maxopt:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: autogen
-        run: ./autogen.sh
-      - name: configure
-        run: ./configure --disable-assert CFLAGS='-O3'
-      - name: make
-        run: make
-      - name: check
-        run: make check
-
-  warn_noassert_defopt:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: autogen
-        run: ./autogen.sh
-      - name: configure
-        run: ./configure --disable-assert
-      - name: make
-        run: make
-      - name: check
-        run: make check
-
-  warn_noassert_noopt:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: autogen
-        run: ./autogen.sh
-      - name: configure
-        run: ./configure --disable-assert CFLAGS='-O0'
-      - name: make
-        run: make
-      - name: check
-        run: make check
-
-  warn_noassert_maxopt:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: autogen
-        run: ./autogen.sh
-      - name: configure
-        run: ./configure --disable-assert CFLAGS='-O3'
+        run: ./configure ${{matrix.assert}} ${{matrix.werror.mb2}} CFLAGS='${{matrix.werror.cflag}} ${{matrix.opt}}'
       - name: make
         run: make
       - name: check
