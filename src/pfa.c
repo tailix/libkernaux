@@ -5,6 +5,16 @@
 #include <kernaux/pfa.h>
 #include <kernaux/stdlib.h>
 
+#define PAGE_INDEX(page_addr) ((page_addr) / KERNAUX_PFA_PAGE_SIZE)
+
+#define FLAG_INDEX_FROM_INDEX(page_index) ((page_index) / 8)
+#define FLAG_MASK_FROM_INDEX(page_index) (1 << ((page_index) % 8))
+
+#define FLAG_INDEX_FROM_ADDR(page_addr) \
+    (FLAG_INDEX_FROM_INDEX(PAGE_INDEX(page_addr)))
+#define FLAG_MASK_FROM_ADDR(page_addr) \
+    (FLAG_MASK_FROM_INDEX(PAGE_INDEX(page_addr)))
+
 static void KernAux_PFA_mark(
     KernAux_PFA pfa,
     bool status,
@@ -22,11 +32,8 @@ bool KernAux_PFA_is_available(const KernAux_PFA pfa, const size_t page_addr)
 {
     if (page_addr % KERNAUX_PFA_PAGE_SIZE != 0) return false;
 
-    const size_t page_index = page_addr / KERNAUX_PFA_PAGE_SIZE;
-    const size_t flag_index = page_index / 8;
-    const unsigned char flag_mask = 1 << (page_index % 8);
-
-    return pfa->flags[flag_index] & flag_mask;
+    return pfa->flags[FLAG_INDEX_FROM_ADDR(page_addr)] &
+           FLAG_MASK_FROM_ADDR(page_addr);
 }
 
 void KernAux_PFA_mark_available(
@@ -68,13 +75,12 @@ void KernAux_PFA_mark(
     const size_t end_index   = end   / KERNAUX_PFA_PAGE_SIZE;
 
     for (size_t index = start_index; index <= end_index; ++index) {
-        const size_t flag_index = index / 8;
-        const unsigned char flag_mask = 1 << (index % 8);
-
         if (status) {
-            pfa->flags[flag_index] |= flag_mask;
+            pfa->flags[FLAG_INDEX_FROM_INDEX(index)] |=
+                FLAG_MASK_FROM_INDEX(index);
         } else {
-            pfa->flags[flag_index] &= ~flag_mask;
+            pfa->flags[FLAG_INDEX_FROM_INDEX(index)] &=
+                ~FLAG_MASK_FROM_INDEX(index);
         }
     }
 }
@@ -95,10 +101,9 @@ size_t KernAux_PFA_alloc_pages(const KernAux_PFA pfa, size_t mem_size)
             index < KERNAUX_PFA_PAGES_COUNT_MAX;
             ++index)
     {
-        const size_t flag_index = index / 8;
-        const unsigned char flag_mask = 1 << (index % 8);
-
-        if (!(pfa->flags[flag_index] & flag_mask)) {
+        if (!(pfa->flags[FLAG_INDEX_FROM_INDEX(index)] &
+              FLAG_MASK_FROM_INDEX(index)))
+        {
             start = 0;
             continue;
         }
@@ -107,9 +112,8 @@ size_t KernAux_PFA_alloc_pages(const KernAux_PFA pfa, size_t mem_size)
 
         if (index - start + 1 == pages_count) {
             for (; index >= start; --index) {
-                const size_t flag_index = index / 8;
-                const unsigned char flag_mask = 1 << (index % 8);
-                pfa->flags[flag_index] &= ~flag_mask;
+                pfa->flags[FLAG_INDEX_FROM_INDEX(index)] &=
+                    ~FLAG_MASK_FROM_INDEX(index);
             }
             return start * KERNAUX_PFA_PAGE_SIZE;
         }
@@ -135,8 +139,7 @@ void KernAux_PFA_free_pages(
     const size_t pages_count = mem_size  / KERNAUX_PFA_PAGE_SIZE;
 
     for (size_t index = 0; index < pages_count; ++index) {
-        const size_t flag_index = (start_index + index) / 8;
-        const unsigned char flag_mask = 1 << ((start_index + index) % 8);
-        pfa->flags[flag_index] |= flag_mask;
+        pfa->flags[FLAG_INDEX_FROM_INDEX(start_index + index)] |=
+            FLAG_MASK_FROM_INDEX(start_index + index);
     }
 }
