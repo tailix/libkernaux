@@ -16,7 +16,10 @@ bool KernAux_Multiboot2_is_valid(
 
     const struct KernAux_Multiboot2_TagBase *none_tag_base = NULL;
 
-    while ((void*)tag_base < (void*)multiboot2 + multiboot2->total_size) {
+    while (tag_base <
+           (struct KernAux_Multiboot2_TagBase*)
+           ((unsigned char*)multiboot2 + multiboot2->total_size))
+    {
         if (!KernAux_Multiboot2_TagBase_is_valid(tag_base)) return false;
 
         if (tag_base->type == KERNAUX_MULTIBOOT2_TAGTYPE_NONE &&
@@ -26,17 +29,21 @@ bool KernAux_Multiboot2_is_valid(
         }
 
         tag_base = (struct KernAux_Multiboot2_TagBase*)(
-            (void*)tag_base + ((tag_base->size + 7) & ~7)
+            (unsigned char*)tag_base + ((tag_base->size + 7) & ~7)
         );
     }
 
-    if ((void*)tag_base != (void*)multiboot2 + multiboot2->total_size) {
+    if (tag_base !=
+        (struct KernAux_Multiboot2_TagBase*)
+        ((unsigned char*)multiboot2 + multiboot2->total_size))
+    {
         return false;
     }
 
     if (none_tag_base !=
-        (void*)tag_base - sizeof(struct KernAux_Multiboot2_Tag_None)
-    ) {
+        (struct KernAux_Multiboot2_TagBase*)
+        ((unsigned char*)tag_base - sizeof(struct KernAux_Multiboot2_Tag_None)))
+    {
         return false;
     }
 

@@ -21,7 +21,7 @@ int main(int argc, char **argv)
     const size_t size = fread(buffer, sizeof(unsigned char), BUFFER_SIZE, fd);
     assert(size > 0);
 
-    assert(KernAux_ELF_Header_is_valid(buffer));
+    assert(KernAux_ELF_Header_is_valid((struct KernAux_ELF_Header*)buffer));
 
     fclose(fd);
 

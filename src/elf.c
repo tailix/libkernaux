@@ -32,11 +32,7 @@ bool KernAux_ELF_Header_is_valid(
         return false;
     }
 
-    if (!(
-        header->os_abi >= 0    &&
-        header->os_abi <= 0x12 &&
-        header->os_abi != 0x05
-    )) {
+    if (!(header->os_abi <= 0x12 && header->os_abi != 0x05)) {
         return false;
     }
 
