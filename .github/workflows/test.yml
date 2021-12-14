@@ -7,7 +7,7 @@ on:
     branches: [master]
 
 jobs:
-  test_deny_warnings:
+  nowarn_assert_defopt:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -20,7 +20,72 @@ jobs:
       - name: check
         run: make check
 
-  test_allow_warnings:
+  nowarn_assert_noopt:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: autogen
+        run: ./autogen.sh
+      - name: configure
+        run: ./configure --enable-assert --disable-multiboot2 CFLAGS='-O0 -Werror'
+      - name: make
+        run: make
+      - name: check
+        run: make check
+
+  nowarn_assert_maxopt:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: autogen
+        run: ./autogen.sh
+      - name: configure
+        run: ./configure --disable-assert --disable-multiboot2 CFLAGS='-O3 -Werror'
+      - name: make
+        run: make
+      - name: check
+        run: make check
+
+  nowarn_noassert_defopt:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: autogen
+        run: ./autogen.sh
+      - name: configure
+        run: ./configure --disable-assert --disable-multiboot2 CFLAGS='-Werror'
+      - name: make
+        run: make
+      - name: check
+        run: make check
+
+  nowarn_noassert_noopt:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: autogen
+        run: ./autogen.sh
+      - name: configure
+        run: ./configure --disable-assert --disable-multiboot2 CFLAGS='-O0 -Werror'
+      - name: make
+        run: make
+      - name: check
+        run: make check
+
+  nowarn_noassert_maxopt:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: autogen
+        run: ./autogen.sh
+      - name: configure
+        run: ./configure --disable-assert --disable-multiboot2 CFLAGS='-O3 -Werror'
+      - name: make
+        run: make
+      - name: check
+        run: make check
+
+  warn_assert_defopt:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -28,6 +93,71 @@ jobs:
         run: ./autogen.sh
       - name: configure
         run: ./configure --enable-assert
+      - name: make
+        run: make
+      - name: check
+        run: make check
+
+  warn_assert_noopt:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: autogen
+        run: ./autogen.sh
+      - name: configure
+        run: ./configure --enable-assert CFLAGS='-O0'
+      - name: make
+        run: make
+      - name: check
+        run: make check
+
+  warn_assert_maxopt:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: autogen
+        run: ./autogen.sh
+      - name: configure
+        run: ./configure --disable-assert CFLAGS='-O3'
+      - name: make
+        run: make
+      - name: check
+        run: make check
+
+  warn_noassert_defopt:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: autogen
+        run: ./autogen.sh
+      - name: configure
+        run: ./configure --disable-assert
+      - name: make
+        run: make
+      - name: check
+        run: make check
+
+  warn_noassert_noopt:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: autogen
+        run: ./autogen.sh
+      - name: configure
+        run: ./configure --disable-assert CFLAGS='-O0'
+      - name: make
+        run: make
+      - name: check
+        run: make check
+
+  warn_noassert_maxopt:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: autogen
+        run: ./autogen.sh
+      - name: configure
+        run: ./configure --disable-assert CFLAGS='-O3'
       - name: make
         run: make
       - name: check

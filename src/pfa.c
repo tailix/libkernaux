@@ -36,18 +36,17 @@ static void KernAux_PFA_mark(
     bool status,
     size_t start,
     size_t end
-)
-__attribute__((nonnull));
+);
 
 void KernAux_PFA_initialize(const KernAux_PFA pfa)
 {
-    assert(pfa);
+    assert_return(pfa);
     kernaux_memset(pfa->flags, 0, sizeof(pfa->flags));
 }
 
 bool KernAux_PFA_is_available(const KernAux_PFA pfa, const size_t page_addr)
 {
-    assert(pfa);
+    assert_retval(pfa, false);
     assert_retval(page_addr % KERNAUX_PFA_PAGE_SIZE == 0, false);
 
     return GET_FLAG_FROM_ADDR(pfa, page_addr);
@@ -75,7 +74,7 @@ void KernAux_PFA_mark(
     size_t start,
     size_t end
 ) {
-    assert(pfa);
+    assert_return(pfa);
     assert_return(start < end);
 
     const size_t start_rem = start % KERNAUX_PFA_PAGE_SIZE;
@@ -103,7 +102,7 @@ void KernAux_PFA_mark(
 
 size_t KernAux_PFA_alloc_pages(const KernAux_PFA pfa, size_t mem_size)
 {
-    assert(pfa);
+    assert_retval(pfa, 0);
 
     const size_t mem_rem = mem_size % KERNAUX_PFA_PAGE_SIZE;
 
@@ -142,7 +141,7 @@ void KernAux_PFA_free_pages(
     const size_t page_addr,
     size_t mem_size
 ) {
-    assert(pfa);
+    assert_return(pfa);
     assert_return(page_addr % KERNAUX_PFA_PAGE_SIZE == 0);
 
     const size_t mem_rem = mem_size % KERNAUX_PFA_PAGE_SIZE;

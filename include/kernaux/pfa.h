@@ -18,23 +18,15 @@ struct KernAux_PFA {
     unsigned char flags[KERNAUX_PFA_FLAGS_SIZE];
 };
 
-void KernAux_PFA_initialize(KernAux_PFA pfa)
-__attribute__((nonnull));
+void KernAux_PFA_initialize(KernAux_PFA pfa);
 
-bool KernAux_PFA_is_available(KernAux_PFA pfa, size_t page_addr)
-__attribute__((nonnull));
+bool KernAux_PFA_is_available(KernAux_PFA pfa, size_t page_addr);
 
-void KernAux_PFA_mark_available(KernAux_PFA pfa, size_t start, size_t end)
-__attribute__((nonnull));
+void KernAux_PFA_mark_available(KernAux_PFA pfa, size_t start, size_t end);
+void KernAux_PFA_mark_unavailable(KernAux_PFA pfa, size_t start, size_t end);
 
-void KernAux_PFA_mark_unavailable(KernAux_PFA pfa, size_t start, size_t end)
-__attribute__((nonnull));
-
-size_t KernAux_PFA_alloc_pages(KernAux_PFA pfa, size_t mem_size)
-__attribute__((nonnull));
-
-void KernAux_PFA_free_pages(KernAux_PFA pfa, size_t page_addr, size_t mem_size)
-__attribute__((nonnull));
+size_t KernAux_PFA_alloc_pages(KernAux_PFA pfa, size_t mem_size);
+void KernAux_PFA_free_pages(KernAux_PFA pfa, size_t page_addr, size_t mem_size);
 
 #ifdef __cplusplus
 }

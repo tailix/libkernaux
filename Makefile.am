@@ -68,7 +68,8 @@ if ENABLE_PFA
 libkernaux_a_SOURCES += src/pfa.c
 TESTS += \
 	examples/pfa \
-	tests/test_pfa
+	tests/test_pfa \
+	tests/test_pfa_assert
 endif
 
 if ENABLE_UNITS
@@ -133,6 +134,10 @@ tests_test_multiboot2_validation_SOURCES = \
 tests_test_pfa_SOURCES = \
 	$(libkernaux_a_SOURCES) \
 	tests/test_pfa.c
+
+tests_test_pfa_assert_SOURCES = \
+	$(libkernaux_a_SOURCES) \
+	tests/test_pfa_assert.c
 
 tests_test_printf_SOURCES = \
 	$(libkernaux_a_SOURCES) \
