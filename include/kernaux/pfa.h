@@ -11,6 +11,11 @@ extern "C" {
 #define KERNAUX_PFA_PAGE_SIZE (4 * 1024)
 #define KERNAUX_PFA_PAGES_COUNT_MAX (1024 * 1024)
 
+#define KernAux_PFA_alloc_page(pfa) \
+    (KernAux_PFA_alloc_pages((pfa), KERNAUX_PFA_PAGE_SIZE))
+#define KernAux_PFA_free_page(pfa, page_addr) \
+    (KernAux_PFA_free_pages((pfa), (page_addr), KERNAUX_PFA_PAGE_SIZE))
+
 typedef struct KernAux_PFA *KernAux_PFA;
 
 struct KernAux_PFA {
@@ -29,13 +34,7 @@ __attribute__((nonnull));
 void KernAux_PFA_mark_unavailable(KernAux_PFA pfa, size_t start, size_t end)
 __attribute__((nonnull));
 
-size_t KernAux_PFA_alloc_page(KernAux_PFA pfa)
-__attribute__((nonnull));
-
 size_t KernAux_PFA_alloc_pages(KernAux_PFA pfa, size_t mem_size)
-__attribute__((nonnull));
-
-void KernAux_PFA_free_page(KernAux_PFA pfa, size_t page_addr)
 __attribute__((nonnull));
 
 void KernAux_PFA_free_pages(KernAux_PFA pfa, size_t page_addr, size_t mem_size)
