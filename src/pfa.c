@@ -15,6 +15,13 @@
 #define FLAG_MASK_FROM_ADDR(page_addr) \
     (FLAG_MASK_FROM_INDEX(PAGE_INDEX(page_addr)))
 
+#define GET_FLAG_FROM_INDEX(pfa, page_index) \
+    (!!((pfa)->flags[FLAG_INDEX_FROM_INDEX(page_index)] & \
+        FLAG_MASK_FROM_INDEX(page_index)))
+#define GET_FLAG_FROM_ADDR(pfa, page_addr) \
+    (!!((pfa)->flags[FLAG_INDEX_FROM_ADDR(page_addr)] & \
+        FLAG_MASK_FROM_ADDR(page_addr)))
+
 static void KernAux_PFA_mark(
     KernAux_PFA pfa,
     bool status,
@@ -32,8 +39,7 @@ bool KernAux_PFA_is_available(const KernAux_PFA pfa, const size_t page_addr)
 {
     if (page_addr % KERNAUX_PFA_PAGE_SIZE != 0) return false;
 
-    return pfa->flags[FLAG_INDEX_FROM_ADDR(page_addr)] &
-           FLAG_MASK_FROM_ADDR(page_addr);
+    return GET_FLAG_FROM_ADDR(pfa, page_addr);
 }
 
 void KernAux_PFA_mark_available(
@@ -101,9 +107,7 @@ size_t KernAux_PFA_alloc_pages(const KernAux_PFA pfa, size_t mem_size)
             index < KERNAUX_PFA_PAGES_COUNT_MAX;
             ++index)
     {
-        if (!(pfa->flags[FLAG_INDEX_FROM_INDEX(index)] &
-              FLAG_MASK_FROM_INDEX(index)))
-        {
+        if (!GET_FLAG_FROM_INDEX(pfa, index)) {
             start = 0;
             continue;
         }
