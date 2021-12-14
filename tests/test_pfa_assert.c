@@ -12,6 +12,7 @@ static unsigned int count = 0;
 
 static void test();
 
+#ifdef ENABLE_ASSERT
 static void assert_cb(
     __attribute__((unused))
     const char *const file,
@@ -22,6 +23,7 @@ static void assert_cb(
 ) {
     ++count;
 }
+#endif
 
 int main()
 {
