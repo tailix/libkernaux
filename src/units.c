@@ -2,9 +2,8 @@
 #include "config.h"
 #endif
 
-#include <kernaux/units.h>
-
 #include <kernaux/stdlib.h>
+#include <kernaux/units.h>
 
 #define TMP_BUFFER_SIZE (64)
 
