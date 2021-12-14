@@ -33,22 +33,3 @@ jobs:
         run: make check
       - name: install
         run: sudo make install
-
-  freestanding:
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        cc: ['gcc', 'clang', 'tcc']
-        assert: ['--enable-assert', '--disable-assert']
-    steps:
-      - uses: actions/checkout@v2
-      - name: dependencies
-        run: sudo apt install clang tcc
-      - name: autogen
-        run: ./autogen.sh
-      - name: configure
-        run: ./configure --host='x86_64' ${{matrix.assert}} CC='${{matrix.cc}}' CFLAGS='-ffreestanding -nostdlib -fno-builtin -fno-stack-protector'
-      - name: make
-        run: make libkernaux.a
-      - name: install
-        run: sudo make install-exec install-data
