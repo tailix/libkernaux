@@ -47,7 +47,7 @@ jobs:
       - name: autogen
         run: ./autogen.sh
       - name: configure
-        run: ./configure ${{matrix.assert}} CC='${{matrix.cc}}' CFLAGS='-ffreestanding -nostdlib -fno-builtin -fno-stack-protector'
+        run: ./configure --host='x86_64' ${{matrix.assert}} CC='${{matrix.cc}}' CFLAGS='-ffreestanding -nostdlib -fno-builtin -fno-stack-protector'
       - name: make
         run: make libkernaux.a
       - name: install
