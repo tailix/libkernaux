@@ -5,7 +5,6 @@ AM_CFLAGS = \
 	-pedantic \
 	-Wall \
 	-Wextra \
-	-Wno-gnu-variable-sized-type-not-at-end \
 	-I$(top_srcdir)/include
 
 lib_LIBRARIES = libkernaux.a
