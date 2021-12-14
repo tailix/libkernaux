@@ -13,8 +13,8 @@ jobs:
       - uses: actions/checkout@v2
       - name: autogen
         run: ./autogen.sh
-      - name: configure --disable-multiboot2 CFLAGS='-Werror'
-        run: ./configure
+      - name: configure
+        run: ./configure CFLAGS='-Werror'
       - name: make
         run: make
       - name: check
