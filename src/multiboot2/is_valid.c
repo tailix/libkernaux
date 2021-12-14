@@ -9,9 +9,7 @@
 bool KernAux_Multiboot2_is_valid(
     const struct KernAux_Multiboot2 *const multiboot2
 ) {
-    if (multiboot2->total_size <= 8) {
-        return false;
-    }
+    if (multiboot2->total_size <= 8) return false;
 
     const struct KernAux_Multiboot2_TagBase *tag_base =
         (struct KernAux_Multiboot2_TagBase*)multiboot2->data;
@@ -19,9 +17,7 @@ bool KernAux_Multiboot2_is_valid(
     const struct KernAux_Multiboot2_TagBase *none_tag_base = NULL;
 
     while ((void*)tag_base < (void*)multiboot2 + multiboot2->total_size) {
-        if (!KernAux_Multiboot2_TagBase_is_valid(tag_base)) {
-            return false;
-        }
+        if (!KernAux_Multiboot2_TagBase_is_valid(tag_base)) return false;
 
         if (tag_base->type == KERNAUX_MULTIBOOT2_TAGTYPE_NONE &&
             none_tag_base == NULL

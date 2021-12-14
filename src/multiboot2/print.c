@@ -87,9 +87,7 @@ void KernAux_Multiboot2_print(
         (struct KernAux_Multiboot2_TagBase*)multiboot2->data;
 
     while ((void*)tag_base < (void*)multiboot2 + multiboot2->total_size) {
-        if (!KernAux_Multiboot2_TagBase_is_valid(tag_base)) {
-            return;
-        }
+        if (!KernAux_Multiboot2_TagBase_is_valid(tag_base)) return;
 
         KernAux_Multiboot2_TagBase_print(tag_base, printf);
 
@@ -103,9 +101,7 @@ void KernAux_Multiboot2_TagBase_print(
     const struct KernAux_Multiboot2_TagBase *const tag_base,
     void (*const printf)(const char *format, ...) __attribute__((format(printf, 1, 2)))
 ) {
-    if (!KernAux_Multiboot2_TagBase_is_valid(tag_base)) {
-        return;
-    }
+    if (!KernAux_Multiboot2_TagBase_is_valid(tag_base)) return;
 
     printf("Multiboot 2 tag\n");
 
