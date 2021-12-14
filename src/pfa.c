@@ -68,9 +68,13 @@ void KernAux_PFA_mark(
     }
 }
 
-size_t KernAux_PFA_alloc_pages(const KernAux_PFA pfa, const size_t mem_size)
+size_t KernAux_PFA_alloc_pages(const KernAux_PFA pfa, size_t mem_size)
 {
-    if (mem_size % KERNAUX_PFA_PAGE_SIZE != 0) return 0;
+    const size_t mem_rem = mem_size % KERNAUX_PFA_PAGE_SIZE;
+
+    if (mem_rem != 0) {
+        mem_size = mem_size - mem_rem + KERNAUX_PFA_PAGE_SIZE;
+    }
 
     const size_t pages_count = mem_size / KERNAUX_PFA_PAGE_SIZE;
 
@@ -101,10 +105,15 @@ size_t KernAux_PFA_alloc_pages(const KernAux_PFA pfa, const size_t mem_size)
 void KernAux_PFA_free_pages(
     const KernAux_PFA pfa,
     const size_t page_addr,
-    const size_t mem_size
+    size_t mem_size
 ) {
     if (page_addr % KERNAUX_PFA_PAGE_SIZE != 0) return;
-    if (mem_size  % KERNAUX_PFA_PAGE_SIZE != 0) return;
+
+    const size_t mem_rem = mem_size % KERNAUX_PFA_PAGE_SIZE;
+
+    if (mem_rem != 0) {
+        mem_size = mem_size - mem_rem + KERNAUX_PFA_PAGE_SIZE;
+    }
 
     const size_t start_index = page_addr / KERNAUX_PFA_PAGE_SIZE;
     const size_t pages_count = mem_size  / KERNAUX_PFA_PAGE_SIZE;

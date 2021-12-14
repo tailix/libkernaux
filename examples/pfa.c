@@ -59,5 +59,14 @@ int main()
         }
     }
 
+    // You can also request amounts of memory which are not factors of page
+    // size.
+    {
+        const size_t page_addr = KernAux_PFA_alloc_pages(&pfa, 123);
+        assert(!KernAux_PFA_is_available(&pfa, page_addr));
+        KernAux_PFA_free_pages(&pfa, page_addr, 123);
+        assert(KernAux_PFA_is_available(&pfa, page_addr));
+    }
+
     return 0;
 }
