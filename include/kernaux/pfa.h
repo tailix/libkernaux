@@ -10,11 +10,12 @@ extern "C" {
 
 #define KERNAUX_PFA_PAGE_SIZE (4 * 1024)
 #define KERNAUX_PFA_PAGES_COUNT_MAX (1024 * 1024)
+#define KERNAUX_PFA_FLAGS_SIZE (KERNAUX_PFA_PAGES_COUNT_MAX / 8)
 
 typedef struct KernAux_PFA *KernAux_PFA;
 
 struct KernAux_PFA {
-    bool pages[KERNAUX_PFA_PAGES_COUNT_MAX];
+    unsigned char flags[KERNAUX_PFA_FLAGS_SIZE];
 };
 
 void KernAux_PFA_initialize(KernAux_PFA pfa)
