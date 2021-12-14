@@ -11,6 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
+        cc: ['gcc', 'clang', 'tcc']
         assert: ['--enable-assert', '--disable-assert']
         opt: ['', '-O0', '-O3']
         werror:
@@ -20,10 +21,12 @@ jobs:
             mb2: '--enable-multiboot2'
     steps:
       - uses: actions/checkout@v2
+      - name: dependencies
+        run: sudo apt install clang tcc
       - name: autogen
         run: ./autogen.sh
       - name: configure
-        run: ./configure ${{matrix.assert}} ${{matrix.werror.mb2}} CFLAGS='${{matrix.werror.cflag}} ${{matrix.opt}}'
+        run: ./configure ${{matrix.assert}} ${{matrix.werror.mb2}} CC='${{matrix.cc}}' CFLAGS='${{matrix.werror.cflag}} ${{matrix.opt}}'
       - name: make
         run: make
       - name: check
