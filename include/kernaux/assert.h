@@ -6,7 +6,7 @@ extern "C" {
 #endif
 
 #define kernaux_assert(cond) \
-    { if (!(cond)) kernaux_assert_do(__FILE__, __LINE__, #cond); }
+    ((cond) ? (void)0 : kernaux_assert_do(__FILE__, __LINE__, #cond))
 
 void kernaux_assert_do(const char *file, int line, const char *str);
 
