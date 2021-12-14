@@ -13,14 +13,12 @@ static const char *KernAux_Multiboot2_TagType_to_str(
 static void KernAux_Multiboot2_Tag_MemoryMap_print(
     const struct KernAux_Multiboot2_Tag_MemoryMap *tag,
     void (*printf)(const char *format, ...) __attribute__((format(printf, 1, 2)))
-)
-__attribute__((nonnull));
+);
 
 static void KernAux_Multiboot2_Tag_ELFSymbols_print(
     const struct KernAux_Multiboot2_Tag_ELFSymbols *tag,
     void (*printf)(const char *format, ...) __attribute__((format(printf, 1, 2)))
-)
-__attribute__((nonnull));
+);
 
 const char *KernAux_Multiboot2_TagType_to_str(
     enum KernAux_Multiboot2_TagType tag_type
