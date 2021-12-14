@@ -10,6 +10,7 @@ AC_CONFIG_SRCDIR([src/pfa.c])
 
 AC_CANONICAL_HOST
 
+AC_ARG_ENABLE([assert],     AS_HELP_STRING([--enable-assert],      [enable runtime assertions]))
 AC_ARG_ENABLE([cmdline],    AS_HELP_STRING([--disable-cmdline],    [disable command line parser]))
 AC_ARG_ENABLE([console],    AS_HELP_STRING([--disable-console],    [disable serial console]))
 AC_ARG_ENABLE([elf],        AS_HELP_STRING([--disable-elf],        [disable ELF utils]))
@@ -19,6 +20,8 @@ AC_ARG_ENABLE([units],      AS_HELP_STRING([--disable-units],      [disable meas
 
 AM_CONDITIONAL([ARCH_I386],         [test "$host_cpu" = i386])
 AM_CONDITIONAL([ARCH_X86_64],       [test "$host_cpu" = x86_64])
+
+AM_CONDITIONAL([ENABLE_ASSERT],     [test "$enable_assert"     != no])
 AM_CONDITIONAL([ENABLE_CMDLINE],    [test "$enable_cmdline"    != no])
 AM_CONDITIONAL([ENABLE_CONSOLE],    [test "$enable_console"    != no])
 AM_CONDITIONAL([ENABLE_ELF],        [test "$enable_elf"        != no])
@@ -28,6 +31,8 @@ AM_CONDITIONAL([ENABLE_UNITS],      [test "$enable_units"      != no])
 
 AS_IF([test "$host_cpu" = i386],         [AC_DEFINE([ARCH_I386],         [1], [architecture is i386])])
 AS_IF([test "$host_cpu" = x86_64],       [AC_DEFINE([ARCH_X86_64],       [1], [architecture is x86_64])])
+
+AS_IF([test "$enable_assert"     != no], [AC_DEFINE([ENABLE_ASSERT],     [1], [enabled runtime assertions])])
 AS_IF([test "$enable_cmdline"    != no], [AC_DEFINE([ENABLE_CMDLINE],    [1], [enabled command line parser])])
 AS_IF([test "$enable_console"    != no], [AC_DEFINE([ENABLE_CONSOLE],    [1], [enabled serial console])])
 AS_IF([test "$enable_elf"        != no], [AC_DEFINE([ENABLE_ELF],        [1], [enabled ELF utils])])

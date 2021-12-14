@@ -14,7 +14,7 @@ jobs:
       - name: autogen
         run: ./autogen.sh
       - name: configure
-        run: ./configure --disable-multiboot2 CFLAGS='-Werror'
+        run: ./configure --enable-assert --disable-multiboot2 CFLAGS='-Werror'
       - name: make
         run: make
       - name: check
@@ -27,7 +27,7 @@ jobs:
       - name: autogen
         run: ./autogen.sh
       - name: configure
-        run: ./configure
+        run: ./configure --enable-assert
       - name: make
         run: make
       - name: check

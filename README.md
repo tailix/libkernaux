@@ -24,6 +24,7 @@ Table of contents
 API
 ---
 
+* [Runtime assertions](/include/kernaux/assert.h)
 * [Measurement units utils](/include/kernaux/units.h) *(work in progress)*
 * [Simple command line parser](/include/kernaux/cmdline.h)
 * [Multiboot 2 (GRUB 2) information parser](/include/kernaux/multiboot2.h)

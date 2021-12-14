@@ -1,3 +1,4 @@
+#include <kernaux/assert.h>
 #include <kernaux/cmdline.h>
 #include <kernaux/console.h>
 #include <kernaux/elf.h>

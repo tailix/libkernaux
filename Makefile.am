@@ -18,6 +18,7 @@ TESTS = \
 noinst_PROGRAMS = $(TESTS)
 
 libkernaux_a_SOURCES = \
+	src/assert.c \
 	src/printf.c \
 	src/stdlib.c
 
@@ -27,6 +28,10 @@ endif
 
 if ARCH_X86_64
 libkernaux_a_SOURCES += src/arch/x86_64.S
+endif
+
+if ENABLE_ASSERT
+TESTS += examples/assert
 endif
 
 if ENABLE_CMDLINE
@@ -72,6 +77,10 @@ TESTS += \
 	examples/units_human \
 	tests/test_units_human
 endif
+
+examples_assert_SOURCES = \
+	$(libkernaux_a_SOURCES) \
+	examples/assert.c
 
 examples_cmdline_SOURCES = \
 	$(libkernaux_a_SOURCES) \

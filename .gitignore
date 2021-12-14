@@ -34,11 +34,13 @@
 /tests/test*.log
 /tests/test*.trs
 
+/examples/assert
 /examples/cmdline
 /examples/pfa
 /examples/printf
 /examples/printf_va
 /examples/units_human
+
 /tests/multiboot2_print1
 /tests/multiboot2_print2
 /tests/test_cmdline
