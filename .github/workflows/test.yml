@@ -7,7 +7,20 @@ on:
     branches: [master]
 
 jobs:
-  test:
+  test_deny_warnings:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: autogen
+        run: ./autogen.sh
+      - name: configure --disable-multiboot2 CFLAGS='-Werror'
+        run: ./configure
+      - name: make
+        run: make
+      - name: check
+        run: make check
+
+  test_allow_warnings:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
