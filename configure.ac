@@ -29,7 +29,7 @@ AM_CONDITIONAL([ENABLE_MULTIBOOT2], [test "$enable_multiboot2" != no])
 AM_CONDITIONAL([ENABLE_PFA],        [test "$enable_pfa"        != no])
 AM_CONDITIONAL([ENABLE_UNITS],      [test "$enable_units"      != no])
 
-AM_CONDITIONAL([ENABLE_ASSERT],     [test "$enable_assert"     != no])
+AM_CONDITIONAL([ENABLE_ASSERT],     [test "$enable_assert"     = yes])
 
 AS_IF([test "$host_cpu" = i386],         [AC_DEFINE([ARCH_I386],         [1], [architecture is i386])])
 AS_IF([test "$host_cpu" = x86_64],       [AC_DEFINE([ARCH_X86_64],       [1], [architecture is x86_64])])
@@ -41,7 +41,7 @@ AS_IF([test "$enable_multiboot2" != no], [AC_DEFINE([ENABLE_MULTIBOOT2], [1], [e
 AS_IF([test "$enable_pfa"        != no], [AC_DEFINE([ENABLE_PFA],        [1], [enabled Page Frame Allocator])])
 AS_IF([test "$enable_units",     != no], [AC_DEFINE([ENABLE_UNITS],      [1], [enabled measurement units utils])])
 
-AS_IF([test "$enable_assert"     != no], [AC_DEFINE([ENABLE_ASSERT],     [1], [enabled runtime assertions])])
+AS_IF([test "$enable_assert"     = yes], [AC_DEFINE([ENABLE_ASSERT],     [1], [enabled runtime assertions])])
 
 AM_INIT_AUTOMAKE([1.9 subdir-objects -Wall -Werror])
 
