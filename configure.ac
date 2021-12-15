@@ -23,6 +23,14 @@ AC_ARG_ENABLE([libc-memset], AS_HELP_STRING([--enable-libc-memset], [enable mems
 AC_ARG_ENABLE([libc-strcpy], AS_HELP_STRING([--enable-libc-strcpy], [enable strcpy replacement]))
 AC_ARG_ENABLE([libc-strlen], AS_HELP_STRING([--enable-libc-strlen], [enable strlen replacement]))
 
+AC_DEFUN([do_enable_libc],
+[
+if test -z "$enable_libc_memset"; then enable_libc_memset=yes; fi
+if test -z "$enable_libc_strcpy"; then enable_libc_strcpy=yes; fi
+if test -z "$enable_libc_strlen"; then enable_libc_strlen=yes; fi
+])
+AS_IF([test "$enable_libc" = yes], do_enable_libc)
+
 AM_CONDITIONAL([ARCH_I386],          [test "$host_cpu" = i386])
 AM_CONDITIONAL([ARCH_X86_64],        [test "$host_cpu" = x86_64])
 
