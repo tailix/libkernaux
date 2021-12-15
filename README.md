@@ -24,26 +24,31 @@ Table of contents
 API
 ---
 
-* [Runtime assertions](/include/kernaux/assert.h)
-  * [Example](/examples/assert.c)
-* [Measurement units utils](/include/kernaux/units.h) *(work in progress)*
-  * [To human](/examples/units_human.c)
-* [Simple command line parser](/include/kernaux/cmdline.h)
-  * [Example](/examples/cmdline.c)
-* [Multiboot 2 (GRUB 2) information parser](/include/kernaux/multiboot2.h)
-* [Serial console](/include/kernaux/console.h)
-* [Page Frame Allocator](/include/kernaux/pfa.h)
-  * [Example](/examples/pfa.c)
-* [ELF utils](/include/kernaux/elf.h) *(work in progress)*
-* [Architecture-specific helpers](/include/kernaux/arch/)
-* [libc replacement](/include/kernaux/libc.h)
-  * `memset`
-  * `strcpy`
-  * `strlen`
-* [itoa replacement](/include/kernaux/itoa.h) *(work in progress)*
-* [printf replacement](/include/kernaux/printf.h) *(work in progress)*
-  * [printf](/examples/printf.c)
-  * [printf_va](/examples/printf_va.c)
+* Runtime environment
+  * [Assertions](/include/kernaux/assert.h)
+    * [Example](/examples/assert.c)
+  * [Serial console](/include/kernaux/console.h)
+  * [Architecture-specific helpers](/include/kernaux/arch/)
+* Algorithms
+  * [Simple command line parser](/include/kernaux/cmdline.h)
+    * [Example](/examples/cmdline.c)
+  * [Page Frame Allocator](/include/kernaux/pfa.h)
+    * [Example](/examples/pfa.c)
+* Data formats
+  * [Multiboot 2 (GRUB 2) information parser](/include/kernaux/multiboot2.h)
+  * [ELF utils](/include/kernaux/elf.h) *(work in progress)*
+* Utilities
+  * [Measurement units utils](/include/kernaux/units.h) *(work in progress)*
+    * [To human](/examples/units_human.c)
+* Usual functions
+  * [libc replacement](/include/kernaux/libc.h)
+    * `memset`
+    * `strcpy`
+    * `strlen`
+  * [itoa replacement](/include/kernaux/itoa.h) *(work in progress)*
+  * [printf replacement](/include/kernaux/printf.h) *(work in progress)*
+    * [printf](/examples/printf.c)
+    * [printf_va](/examples/printf_va.c)
 
 
 
