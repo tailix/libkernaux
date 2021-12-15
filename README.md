@@ -25,14 +25,20 @@ API
 ---
 
 * [Runtime assertions](/include/kernaux/assert.h)
+  * [Example](/examples/assert.c)
 * [Measurement units utils](/include/kernaux/units.h) *(work in progress)*
+  * [Example: to human](/examples/units_human.c)
 * [Simple command line parser](/include/kernaux/cmdline.h)
+  * [Example](/examples/cmdline.c)
 * [Multiboot 2 (GRUB 2) information parser](/include/kernaux/multiboot2.h)
 * [Serial console](/include/kernaux/console.h)
 * [Page Frame Allocator](/include/kernaux/pfa.h)
+  * [Example](/examples/pfa.c)
 * [ELF utils](/include/kernaux/elf.h) *(work in progress)*
 * [Architecture-specific helpers](/include/kernaux/arch/)
 * [printf replacement](/include/kernaux/printf.h) *(work in progress)*
+  * [Example: printf](/examples/printf.c)
+  * [Example: printf_va](/examples/printf_va.c)
 * [stdlib replacement](/include/kernaux/stdlib.h):
   * `memset`
   * `strlen`
