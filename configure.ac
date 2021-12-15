@@ -18,6 +18,7 @@ AC_ARG_ENABLE([pfa],        AS_HELP_STRING([--disable-pfa],        [disable Page
 AC_ARG_ENABLE([units],      AS_HELP_STRING([--disable-units],      [disable measurement units utils]))
 
 AC_ARG_ENABLE([assert],     AS_HELP_STRING([--enable-assert],      [enable runtime assertions]))
+AC_ARG_ENABLE([libc],       AS_HELP_STRING([--enable-libc],        [enable libc replacement]))
 
 AM_CONDITIONAL([ARCH_I386],         [test "$host_cpu" = i386])
 AM_CONDITIONAL([ARCH_X86_64],       [test "$host_cpu" = x86_64])
@@ -30,6 +31,7 @@ AM_CONDITIONAL([ENABLE_PFA],        [test "$enable_pfa"        != no])
 AM_CONDITIONAL([ENABLE_UNITS],      [test "$enable_units"      != no])
 
 AM_CONDITIONAL([ENABLE_ASSERT],     [test "$enable_assert"     = yes])
+AM_CONDITIONAL([ENABLE_LIBC],       [test "$enable_libc"       = yes])
 
 AS_IF([test "$host_cpu" = i386],         [AC_DEFINE([ARCH_I386],         [1], [architecture is i386])])
 AS_IF([test "$host_cpu" = x86_64],       [AC_DEFINE([ARCH_X86_64],       [1], [architecture is x86_64])])
@@ -42,6 +44,7 @@ AS_IF([test "$enable_pfa"        != no], [AC_DEFINE([ENABLE_PFA],        [1], [e
 AS_IF([test "$enable_units",     != no], [AC_DEFINE([ENABLE_UNITS],      [1], [enabled measurement units utils])])
 
 AS_IF([test "$enable_assert"     = yes], [AC_DEFINE([ENABLE_ASSERT],     [1], [enabled runtime assertions])])
+AS_IF([test "$enable_libc"       = yes], [AC_DEFINE([ENABLE_LIBC],       [1], [enabled libc replacement])])
 
 AM_INIT_AUTOMAKE([1.9 subdir-objects -Wall -Werror])
 
