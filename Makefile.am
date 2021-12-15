@@ -20,6 +20,7 @@ noinst_PROGRAMS = $(TESTS)
 libkernaux_a_SOURCES = \
 	src/assert.c \
 	src/itoa.c \
+	src/libc.c \
 	src/printf.c
 
 if ARCH_I386
