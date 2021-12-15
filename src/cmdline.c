@@ -3,7 +3,7 @@
 #endif
 
 #include <kernaux/cmdline.h>
-#include <kernaux/stdlib.h>
+#include <kernaux/libc.h>
 
 #include <stddef.h>
 
@@ -37,14 +37,14 @@ bool kernaux_cmdline_parse(
         return false;
     }
 
-    kernaux_memset(error_msg, '\0', KERNAUX_CMDLINE_ERROR_MSG_SIZE_MAX);
+    memset(error_msg, '\0', KERNAUX_CMDLINE_ERROR_MSG_SIZE_MAX);
     *argc = 0;
 
     for (unsigned int index = 0; index < argv_count_max; ++index) {
         argv[index] = NULL;
     }
 
-    kernaux_memset(buffer, '\0', argv_count_max * arg_size_max);
+    memset(buffer, '\0', argv_count_max * arg_size_max);
 
     if (cmdline[0] == '\0') {
         return true;
@@ -70,7 +70,7 @@ bool kernaux_cmdline_parse(
             }
             else if (cur == '\\') {
                 if (*argc >= argv_count_max) {
-                    kernaux_strncpy(error_msg, "too many args", 13);
+                    strcpy(error_msg, "too many args");
                     goto fail;
                 }
 
@@ -79,7 +79,7 @@ bool kernaux_cmdline_parse(
             }
             else if (cur == '"') {
                 if (*argc >= argv_count_max) {
-                    kernaux_strncpy(error_msg, "too many args", 13);
+                    strcpy(error_msg, "too many args");
                     goto fail;
                 }
 
@@ -88,12 +88,12 @@ bool kernaux_cmdline_parse(
             }
             else {
                 if (*argc >= argv_count_max) {
-                    kernaux_strncpy(error_msg, "too many args", 13);
+                    strcpy(error_msg, "too many args");
                     goto fail;
                 }
 
                 if (buffer_size >= arg_size_max) {
-                    kernaux_strncpy(error_msg, "arg too long", 12);
+                    strcpy(error_msg, "arg too long");
                     goto fail;
                 }
 
@@ -112,7 +112,7 @@ bool kernaux_cmdline_parse(
             }
             else if (cur == '\\') {
                 if (*argc >= argv_count_max) {
-                    kernaux_strncpy(error_msg, "too many args", 13);
+                    strcpy(error_msg, "too many args");
                     goto fail;
                 }
 
@@ -121,7 +121,7 @@ bool kernaux_cmdline_parse(
             }
             else if (cur == '"') {
                 if (*argc >= argv_count_max) {
-                    kernaux_strncpy(error_msg, "too many args", 13);
+                    strcpy(error_msg, "too many args");
                     goto fail;
                 }
 
@@ -130,12 +130,12 @@ bool kernaux_cmdline_parse(
             }
             else {
                 if (*argc >= argv_count_max) {
-                    kernaux_strncpy(error_msg, "too many args", 13);
+                    strcpy(error_msg, "too many args");
                     goto fail;
                 }
 
                 if (buffer_size >= arg_size_max) {
-                    kernaux_strncpy(error_msg, "arg too long", 12);
+                    strcpy(error_msg, "arg too long");
                     goto fail;
                 }
 
@@ -149,7 +149,7 @@ bool kernaux_cmdline_parse(
         case TOKEN:
             if (cur == '\0') {
                 if (buffer_size >= arg_size_max) {
-                    kernaux_strncpy(error_msg, "arg too long", 12);
+                    strcpy(error_msg, "arg too long");
                     goto fail;
                 }
 
@@ -159,7 +159,7 @@ bool kernaux_cmdline_parse(
             }
             else if (cur == ' ') {
                 if (buffer_size >= arg_size_max) {
-                    kernaux_strncpy(error_msg, "arg too long", 12);
+                    strcpy(error_msg, "arg too long");
                     goto fail;
                 }
 
@@ -171,12 +171,12 @@ bool kernaux_cmdline_parse(
                 state = BACKSLASH;
             }
             else if (cur == '"') {
-                kernaux_strncpy(error_msg, "unescaped quotation mark", 24);
+                strcpy(error_msg, "unescaped quotation mark");
                 goto fail;
             }
             else {
                 if (buffer_size >= arg_size_max) {
-                    kernaux_strncpy(error_msg, "arg too long", 12);
+                    strcpy(error_msg, "arg too long");
                     goto fail;
                 }
 
@@ -187,12 +187,12 @@ bool kernaux_cmdline_parse(
 
         case BACKSLASH:
             if (cur == '\0') {
-                kernaux_strncpy(error_msg, "EOL after backslash", 19);
+                strcpy(error_msg, "EOL after backslash");
                 goto fail;
             }
             else {
                 if (buffer_size >= arg_size_max) {
-                    kernaux_strncpy(error_msg, "arg too long", 12);
+                    strcpy(error_msg, "arg too long");
                     goto fail;
                 }
 
@@ -204,7 +204,7 @@ bool kernaux_cmdline_parse(
 
         case QUOTE:
             if (cur == '\0') {
-                kernaux_strncpy(error_msg, "EOL inside quote", 16);
+                strcpy(error_msg, "EOL inside quote");
                 goto fail;
             }
             else if (cur == '\\') {
@@ -212,7 +212,7 @@ bool kernaux_cmdline_parse(
             }
             else if (cur == '"') {
                 if (buffer_size >= arg_size_max) {
-                    kernaux_strncpy(error_msg, "arg too long", 12);
+                    strcpy(error_msg, "arg too long");
                     goto fail;
                 }
 
@@ -222,7 +222,7 @@ bool kernaux_cmdline_parse(
             }
             else {
                 if (buffer_size >= arg_size_max) {
-                    kernaux_strncpy(error_msg, "arg too long", 12);
+                    strcpy(error_msg, "arg too long");
                     goto fail;
                 }
 
@@ -233,12 +233,12 @@ bool kernaux_cmdline_parse(
 
         case QUOTE_BACKSLASH:
             if (cur == '\0') {
-                kernaux_strncpy(error_msg, "EOL after backslash inside quote", 32);
+                strcpy(error_msg, "EOL after backslash inside quote");
                 goto fail;
             }
             else {
                 if (buffer_size >= arg_size_max) {
-                    kernaux_strncpy(error_msg, "arg too long", 12);
+                    strcpy(error_msg, "arg too long");
                     goto fail;
                 }
 
@@ -263,7 +263,7 @@ fail:
         argv[index] = NULL;
     }
 
-    kernaux_memset(buffer, '\0', argv_count_max * arg_size_max);
+    memset(buffer, '\0', argv_count_max * arg_size_max);
 
     return false;
 }

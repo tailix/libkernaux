@@ -12,15 +12,16 @@ lib_LIBRARIES = libkernaux.a
 TESTS = \
 	examples/printf \
 	examples/printf_va \
-	tests/test_printf \
-	tests/test_stdlib
+	tests/test_itoa \
+	tests/test_printf
 
 noinst_PROGRAMS = $(TESTS)
 
 libkernaux_a_SOURCES = \
 	src/assert.c \
-	src/printf.c \
-	src/stdlib.c
+	src/itoa.c \
+	src/libc.c \
+	src/printf.c
 
 if ARCH_I386
 libkernaux_a_SOURCES += src/arch/i386.S
@@ -119,6 +120,10 @@ tests_test_elf_SOURCES = \
 	$(libkernaux_a_SOURCES) \
 	tests/test_elf.c
 
+tests_test_itoa_SOURCES = \
+	$(libkernaux_a_SOURCES) \
+	tests/test_itoa.c
+
 tests_test_multiboot2_helpers_SOURCES = \
 	$(libkernaux_a_SOURCES) \
 	tests/test_multiboot2_helpers.c
@@ -142,10 +147,6 @@ tests_test_pfa_assert_SOURCES = \
 tests_test_printf_SOURCES = \
 	$(libkernaux_a_SOURCES) \
 	tests/test_printf.c
-
-tests_test_stdlib_SOURCES = \
-	$(libkernaux_a_SOURCES) \
-	tests/test_stdlib.c
 
 tests_test_units_human_SOURCES = \
 	$(libkernaux_a_SOURCES) \

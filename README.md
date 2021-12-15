@@ -36,14 +36,14 @@ API
   * [Example](/examples/pfa.c)
 * [ELF utils](/include/kernaux/elf.h) *(work in progress)*
 * [Architecture-specific helpers](/include/kernaux/arch/)
+* [libc replacement](/include/kernaux/libc.h)
+  * `memset`
+  * `strcpy`
+  * `strlen`
+* [itoa replacement](/include/kernaux/itoa.h) *(work in progress)*
 * [printf replacement](/include/kernaux/printf.h) *(work in progress)*
   * [printf](/examples/printf.c)
   * [printf_va](/examples/printf_va.c)
-* [stdlib replacement](/include/kernaux/stdlib.h)
-  * `memset`
-  * `strlen`
-  * `strncpy`
-  * `itoa` *(work in progress)*
 
 
 
@@ -75,6 +75,7 @@ without it in `$PATH`:
 ```
 ./configure \
   --host='i386-elf' \
+  --enable-libc \
   AR="$(which i386-elf-ar)" \
   CC="$(which i386-elf-gcc)" \
   RANLIB="$(which i386-elf-ranlib)" \

@@ -2,8 +2,8 @@
 #include "config.h"
 #endif
 
+#include <kernaux/libc.h>
 #include <kernaux/pfa.h>
-#include <kernaux/stdlib.h>
 
 #include "assert.h"
 
@@ -41,7 +41,7 @@ static void KernAux_PFA_mark(
 void KernAux_PFA_initialize(const KernAux_PFA pfa)
 {
     assert_return(pfa);
-    kernaux_memset(pfa->flags, 0, sizeof(pfa->flags));
+    memset(pfa->flags, 0, sizeof(pfa->flags));
 }
 
 bool KernAux_PFA_is_available(const KernAux_PFA pfa, const size_t page_addr)

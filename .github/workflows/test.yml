@@ -12,8 +12,8 @@ jobs:
     strategy:
       matrix:
         cc: ['gcc', 'clang', 'tcc']
-        assert: ['--enable-assert', '--disable-assert']
         opt: ['', '-O0', '-O3']
+        assert: ['--enable-assert', '--disable-assert']
         werror:
           - cflag: '-Werror'
             mb2: '--disable-multiboot2'
@@ -30,6 +30,6 @@ jobs:
       - name: make
         run: make
       - name: check
-        run: make check
+        run: make check || cat test-suite.log
       - name: install
         run: sudo make install
