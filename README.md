@@ -68,15 +68,16 @@ environment.
 
 Create configuration script with `./autogen.sh`.
 
-Configure with [cross-compiler](https://wiki.osdev.org/GCC_Cross-Compiler) in
-`$PATH` to make without it in `$PATH`:
+Let's assume that your target triplet is `i386-elf`. Configure with
+[cross-compiler](https://wiki.osdev.org/GCC_Cross-Compiler) in `$PATH` to make
+without it in `$PATH`:
 
 ```
 ./configure \
-  --host='i386-elftailix' \
-  AR="$(which i386-elftailix-ar)" \
-  CC="$(which i386-elftailix-gcc)" \
-  RANLIB="$(which i386-elftailix-ranlib)" \
+  --host='i386-elf' \
+  AR="$(which i386-elf-ar)" \
+  CC="$(which i386-elf-gcc)" \
+  RANLIB="$(which i386-elf-ranlib)" \
   CFLAGS='-ffreestanding -nostdlib -fno-builtin -fno-stack-protector'
 ```
 
