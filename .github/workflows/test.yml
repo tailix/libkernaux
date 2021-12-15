@@ -31,6 +31,6 @@ jobs:
       - name: make
         run: make
       - name: check
-        run: make check
+        run: make check || cat test-suite.log
       - name: install
         run: sudo make install
