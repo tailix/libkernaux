@@ -19,6 +19,9 @@ AC_ARG_ENABLE([units],       AS_HELP_STRING([--disable-units],      [disable mea
 
 AC_ARG_ENABLE([assert],      AS_HELP_STRING([--enable-assert],      [enable runtime assertions]))
 AC_ARG_ENABLE([libc],        AS_HELP_STRING([--enable-libc],        [enable libc replacement]))
+AC_ARG_ENABLE([libc-memset], AS_HELP_STRING([--enable-libc-memset], [enable memset replacement]))
+AC_ARG_ENABLE([libc-strcpy], AS_HELP_STRING([--enable-libc-strcpy], [enable strcpy replacement]))
+AC_ARG_ENABLE([libc-strlen], AS_HELP_STRING([--enable-libc-strlen], [enable strlen replacement]))
 
 AM_CONDITIONAL([ARCH_I386],          [test "$host_cpu" = i386])
 AM_CONDITIONAL([ARCH_X86_64],        [test "$host_cpu" = x86_64])
@@ -32,6 +35,9 @@ AM_CONDITIONAL([ENABLE_UNITS],       [test "$enable_units"       != no])
 
 AM_CONDITIONAL([ENABLE_ASSERT],      [test "$enable_assert"      = yes])
 AM_CONDITIONAL([ENABLE_LIBC],        [test "$enable_libc"        = yes])
+AM_CONDITIONAL([ENABLE_LIBC_MEMSET], [test "$enable_libc_memset" = yes])
+AM_CONDITIONAL([ENABLE_LIBC_STRCPY], [test "$enable_libc_strcpy" = yes])
+AM_CONDITIONAL([ENABLE_LIBC_STRLEN], [test "$enable_libc_strlen" = yes])
 
 AS_IF([test "$host_cpu" = i386],          [AC_DEFINE([ARCH_I386],          [1], [architecture is i386])])
 AS_IF([test "$host_cpu" = x86_64],        [AC_DEFINE([ARCH_X86_64],        [1], [architecture is x86_64])])
@@ -45,6 +51,9 @@ AS_IF([test "$enable_units",      != no], [AC_DEFINE([ENABLE_UNITS],       [1], 
 
 AS_IF([test "$enable_assert"      = yes], [AC_DEFINE([ENABLE_ASSERT],      [1], [enabled runtime assertions])])
 AS_IF([test "$enable_libc"        = yes], [AC_DEFINE([ENABLE_LIBC],        [1], [enabled libc replacement])])
+AS_IF([test "$enable_libc_memset" = yes], [AC_DEFINE([ENABLE_LIBC_MEMSET], [1], [enabled memset replacement])])
+AS_IF([test "$enable_libc_strcpy" = yes], [AC_DEFINE([ENABLE_LIBC_STRCPY], [1], [enabled strcpy replacement])])
+AS_IF([test "$enable_libc_strlen" = yes], [AC_DEFINE([ENABLE_LIBC_STRLEN], [1], [enabled strlen replacement])])
 
 AM_INIT_AUTOMAKE([1.9 subdir-objects -Wall -Werror])
 
