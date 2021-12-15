@@ -4,7 +4,6 @@
 
 #include <kernaux/libc.h>
 #include <kernaux/pfa.h>
-#include <kernaux/stdlib.h>
 
 #include "assert.h"
 

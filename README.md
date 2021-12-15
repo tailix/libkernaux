@@ -36,11 +36,10 @@ API
   * [Example](/examples/pfa.c)
 * [ELF utils](/include/kernaux/elf.h) *(work in progress)*
 * [Architecture-specific helpers](/include/kernaux/arch/)
+* [itoa replacement](/include/kernaux/itoa.h) *(work in progress)*
 * [printf replacement](/include/kernaux/printf.h) *(work in progress)*
   * [printf](/examples/printf.c)
   * [printf_va](/examples/printf_va.c)
-* [stdlib replacement](/include/kernaux/stdlib.h)
-  * `itoa` *(work in progress)*
 
 
 

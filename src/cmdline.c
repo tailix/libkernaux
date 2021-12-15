@@ -4,7 +4,6 @@
 
 #include <kernaux/cmdline.h>
 #include <kernaux/libc.h>
-#include <kernaux/stdlib.h>
 
 #include <stddef.h>
 

@@ -2,7 +2,7 @@
 #include "config.h"
 #endif
 
-#include <kernaux/stdlib.h>
+#include <kernaux/itoa.h>
 
 void kernaux_itoa(const int d, char *buf, const int base)
 {

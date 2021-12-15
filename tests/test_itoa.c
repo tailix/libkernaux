@@ -2,15 +2,13 @@
 #include "config.h"
 #endif
 
-#include <kernaux/stdlib.h>
+#include <kernaux/itoa.h>
 
 #include <assert.h>
 #include <string.h>
 
 int main()
 {
-    // kernaux_itoa
-
     {
         char buffer[10];
 

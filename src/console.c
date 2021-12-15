@@ -9,7 +9,6 @@
 #include <kernaux/console.h>
 #include <kernaux/libc.h>
 #include <kernaux/printf.h>
-#include <kernaux/stdlib.h>
 
 void kernaux_console_print(const char *const s)
 {

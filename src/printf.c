@@ -2,8 +2,8 @@
 #include "config.h"
 #endif
 
+#include <kernaux/itoa.h>
 #include <kernaux/printf.h>
-#include <kernaux/stdlib.h>
 
 #include <stdbool.h>
 
