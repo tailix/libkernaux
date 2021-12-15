@@ -5,6 +5,7 @@ nobase_include_HEADERS = \
 	kernaux/assert.h \
 	kernaux/cmdline.h \
 	kernaux/console.h \
+	kernaux/libc.h \
 	kernaux/multiboot2.h \
 	kernaux/pfa.h \
 	kernaux/printf.h \

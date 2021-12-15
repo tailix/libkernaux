@@ -2,6 +2,7 @@
 #include "config.h"
 #endif
 
+#include <kernaux/libc.h>
 #include <kernaux/stdlib.h>
 #include <kernaux/units.h>
 
@@ -36,10 +37,10 @@ bool kernaux_units_human_raw(
 
     *(tmp++) = '\0';
 
-    const size_t tmp_size = kernaux_strlen(tmp_buffer) + 1;
+    const size_t tmp_size = strlen(tmp_buffer) + 1;
     if (tmp_size > buffer_size) return false;
 
-    kernaux_strncpy(buffer, tmp_buffer, tmp_size);
+    strcpy(buffer, tmp_buffer);
     return true;
 }
 
@@ -82,10 +83,10 @@ bool kernaux_units_human_dec(
 
     *(tmp++) = '\0';
 
-    const size_t tmp_size = kernaux_strlen(tmp_buffer) + 1;
+    const size_t tmp_size = strlen(tmp_buffer) + 1;
     if (tmp_size > buffer_size) return false;
 
-    kernaux_strncpy(buffer, tmp_buffer, tmp_size);
+    strcpy(buffer, tmp_buffer);
     return true;
 }
 
@@ -131,9 +132,9 @@ bool kernaux_units_human_bin(
 
     *(tmp++) = '\0';
 
-    const size_t tmp_size = kernaux_strlen(tmp_buffer) + 1;
+    const size_t tmp_size = strlen(tmp_buffer) + 1;
     if (tmp_size > buffer_size) return false;
 
-    kernaux_strncpy(buffer, tmp_buffer, tmp_size);
+    strcpy(buffer, tmp_buffer);
     return true;
 }

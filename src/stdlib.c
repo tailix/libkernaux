@@ -4,42 +4,6 @@
 
 #include <kernaux/stdlib.h>
 
-void *kernaux_memset(void *const buffer, const int value, const size_t size)
-{
-    unsigned char *const s = buffer;
-
-    for (size_t i = 0; i < size; ++i) {
-        s[i] = value;
-    }
-
-    return buffer;
-}
-
-size_t kernaux_strlen(const char *const s)
-{
-    size_t result = 0;
-
-    while (s[result]) {
-        ++result;
-    }
-
-    return result;
-}
-
-char *kernaux_strncpy(
-    char *const dest,
-    const char *const src,
-    const size_t slen
-) {
-    for (size_t i = 0; i < slen; ++i) {
-        dest[i] = src[i];
-    }
-
-    dest[slen] = '\0';
-
-    return dest;
-}
-
 void kernaux_itoa(const int d, char *buf, const int base)
 {
     char *p = buf;

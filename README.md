@@ -40,9 +40,6 @@ API
   * [printf](/examples/printf.c)
   * [printf_va](/examples/printf_va.c)
 * [stdlib replacement](/include/kernaux/stdlib.h)
-  * `memset`
-  * `strlen`
-  * `strncpy`
   * `itoa` *(work in progress)*
 
 

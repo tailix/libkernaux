@@ -7,12 +7,13 @@
 #endif
 
 #include <kernaux/console.h>
+#include <kernaux/libc.h>
 #include <kernaux/printf.h>
 #include <kernaux/stdlib.h>
 
 void kernaux_console_print(const char *const s)
 {
-    kernaux_console_write(s, kernaux_strlen(s));
+    kernaux_console_write(s, strlen(s));
 }
 
 void kernaux_console_putc(const char c __attribute__((unused)))

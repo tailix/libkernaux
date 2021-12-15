@@ -7,3 +7,6 @@
 #include <kernaux/printf.h>
 #include <kernaux/stdlib.h>
 #include <kernaux/units.h>
+
+// We don't include <kernaux/libc.h> because it may
+// conflict with actual freestanding or hosted libc.
