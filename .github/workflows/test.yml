@@ -12,8 +12,9 @@ jobs:
     strategy:
       matrix:
         cc: ['gcc', 'clang', 'tcc']
-        assert: ['--enable-assert', '--disable-assert']
         opt: ['', '-O0', '-O3']
+        assert: ['--enable-assert', '--disable-assert']
+        libc: ['--enable-libc', '--disable-libc']
         werror:
           - cflag: '-Werror'
             mb2: '--disable-multiboot2'
@@ -26,7 +27,7 @@ jobs:
       - name: autogen
         run: ./autogen.sh
       - name: configure
-        run: ./configure ${{matrix.assert}} ${{matrix.werror.mb2}} CC='${{matrix.cc}}' CFLAGS='${{matrix.werror.cflag}} ${{matrix.opt}}'
+        run: ./configure ${{matrix.assert}} ${{matrix.libc}} ${{matrix.werror.mb2}} CC='${{matrix.cc}}' CFLAGS='${{matrix.werror.cflag}} ${{matrix.opt}}'
       - name: make
         run: make
       - name: check
