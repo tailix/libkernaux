@@ -27,8 +27,10 @@ API
 * Runtime environment
   * [Assertions](/include/kernaux/assert.h)
     * [Example](/examples/assert.c)
-  * [Serial console](/include/kernaux/console.h)
   * [Architecture-specific helpers](/include/kernaux/arch/)
+* Device drivers (for debugging only)
+  * [Serial console](/include/kernaux/console.h)
+  * Framebuffer *(planned)*
 * Algorithms
   * [Simple command line parser](/include/kernaux/cmdline.h)
     * [Example](/examples/cmdline.c)
