@@ -14,6 +14,7 @@ jobs:
         cc: ['gcc', 'clang', 'tcc']
         opt: ['', '-O0', '-O3']
         assert: ['--enable-assert', '--disable-assert']
+        null_guard: ['--enable-null-guard', '--disable-null-guard']
         werror:
           - cflag: '-Werror'
             mb2: '--disable-multiboot2'
@@ -26,7 +27,7 @@ jobs:
       - name: autogen
         run: ./autogen.sh
       - name: configure
-        run: ./configure ${{matrix.assert}} ${{matrix.werror.mb2}} CC='${{matrix.cc}}' CFLAGS='${{matrix.opt}} ${{matrix.werror.cflag}}'
+        run: ./configure ${{matrix.assert}} ${{matrix.null_guard}} ${{matrix.werror.mb2}} CC='${{matrix.cc}}' CFLAGS='${{matrix.opt}} ${{matrix.werror.cflag}}'
       - name: make
         run: make
       - name: check

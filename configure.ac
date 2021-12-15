@@ -22,6 +22,7 @@ AC_ARG_ENABLE([libc],        AS_HELP_STRING([--enable-libc],        [enable libc
 AC_ARG_ENABLE([libc-memset], AS_HELP_STRING([--enable-libc-memset], [enable memset replacement]))
 AC_ARG_ENABLE([libc-strcpy], AS_HELP_STRING([--enable-libc-strcpy], [enable strcpy replacement]))
 AC_ARG_ENABLE([libc-strlen], AS_HELP_STRING([--enable-libc-strlen], [enable strlen replacement]))
+AC_ARG_ENABLE([null-guard],  AS_HELP_STRING([--enable-null-guard],  [enable NULL-guard]))
 
 AC_DEFUN([do_enable_libc],
 [
@@ -46,6 +47,7 @@ AM_CONDITIONAL([ENABLE_LIBC],        [test "$enable_libc"        = yes])
 AM_CONDITIONAL([ENABLE_LIBC_MEMSET], [test "$enable_libc_memset" = yes])
 AM_CONDITIONAL([ENABLE_LIBC_STRCPY], [test "$enable_libc_strcpy" = yes])
 AM_CONDITIONAL([ENABLE_LIBC_STRLEN], [test "$enable_libc_strlen" = yes])
+AM_CONDITIONAL([ENABLE_NULL_GUARD],  [test "$enable_null_guard"  = yes])
 
 AS_IF([test "$host_cpu" = i386],          [AC_DEFINE([ARCH_I386],          [1], [architecture is i386])])
 AS_IF([test "$host_cpu" = x86_64],        [AC_DEFINE([ARCH_X86_64],        [1], [architecture is x86_64])])
@@ -62,6 +64,7 @@ AS_IF([test "$enable_libc"        = yes], [AC_DEFINE([ENABLE_LIBC],        [1], 
 AS_IF([test "$enable_libc_memset" = yes], [AC_DEFINE([ENABLE_LIBC_MEMSET], [1], [enabled memset replacement])])
 AS_IF([test "$enable_libc_strcpy" = yes], [AC_DEFINE([ENABLE_LIBC_STRCPY], [1], [enabled strcpy replacement])])
 AS_IF([test "$enable_libc_strlen" = yes], [AC_DEFINE([ENABLE_LIBC_STRLEN], [1], [enabled strlen replacement])])
+AS_IF([test "$enable_null_guard"  = yes], [AC_DEFINE([ENABLE_NULL_GUARD],  [1], [enabled NULL-guard])])
 
 AM_INIT_AUTOMAKE([1.9 subdir-objects -Wall -Werror])
 

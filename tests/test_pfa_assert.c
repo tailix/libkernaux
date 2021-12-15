@@ -30,8 +30,10 @@ int main()
     kernaux_assert_cb = NULL;
     test();
 
+#if defined(ENABLE_ASSERT) || defined(ENABLE_NULL_GUARD)
 #ifdef ENABLE_ASSERT
     kernaux_assert_cb = assert_cb;
+#endif
     test();
 #endif
 
@@ -40,36 +42,49 @@ int main()
 
 void test()
 {
+    unsigned int acc = 0;
     struct KernAux_PFA pfa;
     KernAux_PFA_initialize(&pfa);
 
+#ifdef ENABLE_NULL_GUARD
     KernAux_PFA_initialize(NULL);
-    if (kernaux_assert_cb) assert(count == 1);
+    if (kernaux_assert_cb) assert(count == ++acc);
+#endif
 
+#ifdef ENABLE_NULL_GUARD
     assert(!KernAux_PFA_is_available(NULL, KERNAUX_PFA_PAGE_SIZE));
-    if (kernaux_assert_cb) assert(count == 2);
+    if (kernaux_assert_cb) assert(count == ++acc);
+#endif
 
     assert(!KernAux_PFA_is_available(&pfa, 123));
-    if (kernaux_assert_cb) assert(count == 3);
+    if (kernaux_assert_cb) assert(count == ++acc);
 
+#ifdef ENABLE_NULL_GUARD
     KernAux_PFA_mark_available(NULL, 0, KERNAUX_PFA_PAGE_SIZE);
-    if (kernaux_assert_cb) assert(count == 4);
+    if (kernaux_assert_cb) assert(count == ++acc);
+#endif
 
     KernAux_PFA_mark_available(&pfa, KERNAUX_PFA_PAGE_SIZE, 0);
-    if (kernaux_assert_cb) assert(count == 5);
+    if (kernaux_assert_cb) assert(count == ++acc);
 
+#ifdef ENABLE_NULL_GUARD
     KernAux_PFA_mark_unavailable(NULL, 0, KERNAUX_PFA_PAGE_SIZE);
-    if (kernaux_assert_cb) assert(count == 6);
+    if (kernaux_assert_cb) assert(count == ++acc);
+#endif
 
     KernAux_PFA_mark_unavailable(&pfa, KERNAUX_PFA_PAGE_SIZE, 0);
-    if (kernaux_assert_cb) assert(count == 7);
+    if (kernaux_assert_cb) assert(count == ++acc);
 
+#ifdef ENABLE_NULL_GUARD
     assert(KernAux_PFA_alloc_pages(NULL, KERNAUX_PFA_PAGE_SIZE) == 0);
-    if (kernaux_assert_cb) assert(count == 8);
+    if (kernaux_assert_cb) assert(count == ++acc);
+#endif
 
+#ifdef ENABLE_NULL_GUARD
     KernAux_PFA_free_pages(NULL, KERNAUX_PFA_PAGE_SIZE, KERNAUX_PFA_PAGE_SIZE);
-    if (kernaux_assert_cb) assert(count == 9);
+    if (kernaux_assert_cb) assert(count == ++acc);
+#endif
 
     KernAux_PFA_free_pages(&pfa, 123, KERNAUX_PFA_PAGE_SIZE);
-    if (kernaux_assert_cb) assert(count == 10);
+    if (kernaux_assert_cb) assert(count == ++acc);
 }
