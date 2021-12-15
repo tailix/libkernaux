@@ -13,9 +13,9 @@ Table of contents
 * [Overview](#libkernaux)
 * [Table of contents](#table-of-contents)
 * [API](#api)
-* [Tips](#tips)
-  * [Compilation](#compilation)
-  * [Cross-compilation](#cross-compilation)
+* [Compilation](#compilation)
+  * [Native](#native)
+  * [Cross](#cross)
 * [Portability](#portability)
 * [Discussion](#discussion)
 
@@ -41,10 +41,10 @@ API
 
 
 
-Tips
-----
+Compilation
+-----------
 
-### Compilation
+### Native
 
 ```
 ./autogen.sh
@@ -58,7 +58,7 @@ You can test with `make check`.
 This is just a usual library. You can use most of it's APIs in hosted
 environment.
 
-### Cross-compilation
+### Cross
 
 Create configuration script with `./autogen.sh`.
 
