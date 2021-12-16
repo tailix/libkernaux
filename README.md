@@ -19,6 +19,9 @@ Table of contents
   * [Cross](#cross)
 * [Portability](#portability)
 * [Discussion](#discussion)
+* [Summary](#summary)
+  * [Pure code size](#pure-code-size)
+  * [Used header files](#used-header-files)
 
 
 
@@ -198,3 +201,35 @@ Discussion
 
 * [Topic on OSDev.org forum](https://forum.osdev.org/viewtopic.php?f=1&t=37958)
 * [Thread on r/osdev](https://www.reddit.com/r/osdev/comments/k3ueeu/libkernaux_auxiliary_library_for_kernel/)
+
+
+
+Summary
+-------
+
+This information is updated from time to time.
+
+### Pure code size
+
+`cloc --vcs=git include/ src/`
+
+```
+-------------------------------------------------------------------------------
+Language                     files          blank        comment           code
+-------------------------------------------------------------------------------
+C                               12            236             19           1548
+C/C++ Header                    14            179             64            597
+Assembly                         2              7              6             28
+make                             1              0              0             13
+-------------------------------------------------------------------------------
+SUM:                            29            422             89           2186
+-------------------------------------------------------------------------------
+```
+
+### Used header files
+
+`git grep '#include <' -- include/ src/ | grep -v '#include <kernaux' | awk '{ print $2; }' | sort | uniq`
+
+* `stdarg.h`
+* `stdbool.h`
+* `stddef.h`
