@@ -1,3 +1,5 @@
+// TODO: Use [u]int(8|16|32)_t when problem with <stdint.h> is fixed.
+
 #ifndef KERNAUX_INCLUDED_ARCH_I386
 #define KERNAUX_INCLUDED_ARCH_I386 1
 
