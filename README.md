@@ -13,8 +13,9 @@ Table of contents
 * [Overview](#libkernaux)
 * [Table of contents](#table-of-contents)
 * [API](#api)
-* [Compilation](#compilation)
-  * [Native](#native)
+* [Tips](#tips)
+  * [Installation](#installation)
+  * [Development](#development)
   * [Cross](#cross)
 * [Portability](#portability)
 * [Discussion](#discussion)
@@ -54,10 +55,10 @@ API
 
 
 
-Compilation
------------
+Tips
+----
 
-### Native
+### Installation
 
 ```
 ./autogen.sh
@@ -66,10 +67,18 @@ make
 sudo make install
 ```
 
-You can test with `make check`.
-
 This is just a usual library. You can use most of it's APIs in hosted
 environment.
+
+### Development
+
+```
+./autogen.sh
+./configure --enable-assert --enable-null-guard
+make
+```
+
+You can test with `make check`.
 
 ### Cross
 
