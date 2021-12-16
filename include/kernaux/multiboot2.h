@@ -39,8 +39,8 @@ enum KernAux_Multiboot2_TagType {
 };
 
 struct KernAux_Multiboot2 {
-    unsigned int total_size : 32;
-    unsigned int reserved1  : 32;
+    unsigned total_size : 32;
+    unsigned reserved1  : 32;
 
     unsigned char data[];
 }
@@ -48,7 +48,7 @@ __attribute__((packed));
 
 struct KernAux_Multiboot2_TagBase {
     enum KernAux_Multiboot2_TagType type : 32;
-    unsigned int size                    : 32;
+    unsigned size                        : 32;
 }
 __attribute__((packed));
 
@@ -86,8 +86,8 @@ struct KernAux_Multiboot2_Tag_Module {
     // size = ?
     struct KernAux_Multiboot2_TagBase base;
 
-    unsigned int mod_start : 32;
-    unsigned int mod_end   : 32;
+    unsigned mod_start : 32;
+    unsigned mod_end   : 32;
 
     char cmdline[];
 }
@@ -98,8 +98,8 @@ struct KernAux_Multiboot2_Tag_BasicMemoryInfo {
     // size = 16
     struct KernAux_Multiboot2_TagBase base;
 
-    unsigned int mem_lower : 32;
-    unsigned int mem_upper : 32;
+    unsigned mem_lower : 32;
+    unsigned mem_upper : 32;
 }
 __attribute__((packed));
 
@@ -108,9 +108,9 @@ struct KernAux_Multiboot2_Tag_BIOSBootDevice {
     // size = 20
     struct KernAux_Multiboot2_TagBase base;
 
-    unsigned int bios_dev      : 32;
-    unsigned int partition     : 32;
-    unsigned int sub_partition : 32;
+    unsigned bios_dev      : 32;
+    unsigned partition     : 32;
+    unsigned sub_partition : 32;
 }
 __attribute__((packed));
 
@@ -119,8 +119,8 @@ struct KernAux_Multiboot2_Tag_MemoryMap {
     // size = ?
     struct KernAux_Multiboot2_TagBase base;
 
-    unsigned int entry_size    : 32;
-    unsigned int entry_version : 32;
+    unsigned entry_size    : 32;
+    unsigned entry_version : 32;
 
     unsigned char data[];
 }
@@ -131,10 +131,10 @@ struct KernAux_Multiboot2_Tag_VBEInfo {
     // size = 784
     struct KernAux_Multiboot2_TagBase base;
 
-    unsigned short vbe_mode          : 16;
-    unsigned short vbe_interface_seg : 16;
-    unsigned short vbe_interface_off : 16;
-    unsigned short vbe_interface_len : 16;
+    unsigned vbe_mode          : 16;
+    unsigned vbe_interface_seg : 16;
+    unsigned vbe_interface_off : 16;
+    unsigned vbe_interface_len : 16;
     unsigned char vbe_control_info[512];
     unsigned char vbe_mode_info[256];
 }
@@ -146,12 +146,12 @@ struct KernAux_Multiboot2_Tag_FramebufferInfo {
     struct KernAux_Multiboot2_TagBase base;
 
     unsigned long long framebuffer_addr : 64;
-    unsigned int framebuffer_pitch      : 32;
-    unsigned int framebuffer_width      : 32;
-    unsigned int framebuffer_height     : 32;
-    unsigned char framebuffer_bpp       : 8;
-    unsigned char framebuffer_type      : 8;
-    unsigned char reserved1             : 8;
+    unsigned framebuffer_pitch          : 32;
+    unsigned framebuffer_width          : 32;
+    unsigned framebuffer_height         : 32;
+    unsigned framebuffer_bpp            : 8;
+    unsigned framebuffer_type           : 8;
+    unsigned reserved1                  : 8;
 
     unsigned char data[];
 }
@@ -162,10 +162,10 @@ struct KernAux_Multiboot2_Tag_ELFSymbols {
     // size = ?
     struct KernAux_Multiboot2_TagBase base;
 
-    unsigned short num       : 16;
-    unsigned short ent_size  : 16;
-    unsigned short shndx     : 16;
-    unsigned short reserved1 : 16;
+    unsigned num       : 16;
+    unsigned ent_size  : 16;
+    unsigned shndx     : 16;
+    unsigned reserved1 : 16;
 
     unsigned char section_headers[];
 }
@@ -176,15 +176,15 @@ struct KernAux_Multiboot2_Tag_APMTable {
     // size = 28
     struct KernAux_Multiboot2_TagBase base;
 
-    unsigned short version     : 16;
-    unsigned short cseg        : 16;
-    unsigned int offset        : 32;
-    unsigned short cseg_16     : 16;
-    unsigned short dseg        : 16;
-    unsigned short flags       : 16;
-    unsigned short cseg_len    : 16;
-    unsigned short cseg_16_len : 16;
-    unsigned short dseg_len    : 16;
+    unsigned version     : 16;
+    unsigned cseg        : 16;
+    unsigned offset      : 32;
+    unsigned cseg_16     : 16;
+    unsigned dseg        : 16;
+    unsigned flags       : 16;
+    unsigned cseg_len    : 16;
+    unsigned cseg_16_len : 16;
+    unsigned dseg_len    : 16;
 }
 __attribute__((packed));
 
@@ -193,7 +193,7 @@ struct KernAux_Multiboot2_Tag_EFI32bitSystemTablePtr {
     // size = 12
     struct KernAux_Multiboot2_TagBase base;
 
-    unsigned int pointer : 32;
+    unsigned pointer : 32;
 }
 __attribute__((packed));
 
@@ -211,8 +211,8 @@ struct KernAux_Multiboot2_Tag_SMBIOSTables {
     // size = ?
     struct KernAux_Multiboot2_TagBase base;
 
-    unsigned char major : 8;
-    unsigned char minor : 8;
+    unsigned major : 8;
+    unsigned minor : 8;
     unsigned char reserved1[6];
 
     unsigned char data[];
@@ -251,8 +251,8 @@ struct KernAux_Multiboot2_Tag_EFIMemoryMap {
     // size = ?
     struct KernAux_Multiboot2_TagBase base;
 
-    unsigned int descriptor_size    : 32;
-    unsigned int descriptor_version : 32;
+    unsigned descriptor_size    : 32;
+    unsigned descriptor_version : 32;
 
     unsigned char data[];
 }
@@ -270,7 +270,7 @@ struct KernAux_Multiboot2_Tag_EFI32bitImageHandlePtr {
     // size = 12
     struct KernAux_Multiboot2_TagBase base;
 
-    unsigned int pointer : 32;
+    unsigned pointer : 32;
 }
 __attribute__((packed));
 
@@ -288,7 +288,7 @@ struct KernAux_Multiboot2_Tag_ImageLoadBasePhysAddr {
     // size = 12
     struct KernAux_Multiboot2_TagBase base;
 
-    unsigned int load_base_addr : 32;
+    unsigned load_base_addr : 32;
 }
 __attribute__((packed));
 
@@ -299,8 +299,8 @@ __attribute__((packed));
 struct KernAux_Multiboot2_Tag_MemoryMap_EntryBase {
     unsigned long long base_addr : 64;
     unsigned long long length    : 64;
-    unsigned int type            : 32;
-    unsigned int reserved1       : 32;
+    unsigned type                : 32;
+    unsigned reserved1           : 32;
 }
 __attribute__((packed));
 
