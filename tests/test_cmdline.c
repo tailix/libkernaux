@@ -9,17 +9,17 @@
 #include <stddef.h>
 #include <string.h>
 
-static const unsigned int ARGV_COUNT_MAX = 100;
-static const unsigned int ARG_SIZE_MAX = 4096;
+static const size_t ARGV_COUNT_MAX = 100;
+static const size_t ARG_SIZE_MAX = 4096;
 
 static void test(
     const char *cmdline,
-    unsigned int argv_count_max,
-    unsigned int arg_size_max,
+    size_t argv_count_max,
+    size_t arg_size_max,
 
     bool expected_result,
     const char *expected_error_msg,
-    unsigned int expected_argc,
+    size_t expected_argc,
     const char *const *const expected_argv
 );
 
@@ -236,12 +236,12 @@ int main()
 
 void test(
     const char *const cmdline,
-    unsigned int argv_count_max,
-    unsigned int arg_size_max,
+    size_t argv_count_max,
+    size_t arg_size_max,
 
     const bool expected_result,
     const char *const expected_error_msg,
-    unsigned int expected_argc,
+    size_t expected_argc,
     const char *const *const expected_argv
 ) {
     if (argv_count_max == 0) {
@@ -253,7 +253,7 @@ void test(
     }
 
     char error_msg[KERNAUX_CMDLINE_ERROR_MSG_SIZE_MAX];
-    unsigned int argc = 1234;
+    size_t argc = 1234;
     char *argv[argv_count_max];
     char buffer[argv_count_max * arg_size_max];
 
@@ -272,11 +272,11 @@ void test(
     assert(strcmp(error_msg, expected_error_msg) == 0);
     assert(argc == expected_argc);
 
-    for (unsigned int index = 0; index < argc; ++index) {
+    for (size_t index = 0; index < argc; ++index) {
         assert(strcmp(argv[index], expected_argv[index]) == 0);
     }
 
-    for (unsigned int index = argc; index < argv_count_max; ++index) {
+    for (size_t index = argc; index < argv_count_max; ++index) {
         assert(argv[index] == NULL);
     }
 }

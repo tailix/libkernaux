@@ -300,11 +300,11 @@ void KernAux_Multiboot2_Tag_MemoryMap_print(
         (struct KernAux_Multiboot2_Tag_MemoryMap_EntryBase*)tag->data;
 
     for (
-        unsigned int index = 0;
+        size_t index = 0;
         index < (tag->base.size - sizeof(*tag)) / tag->entry_size;
         ++index
     ) {
-        printf("    entry %u\n", index);
+        printf("    entry %lu\n", index);
         printf("      base addr: %llu\n", entries[index].base_addr);
         printf("      length: %llu\n",    entries[index].length);
         printf("      type: %u\n",        entries[index].type);

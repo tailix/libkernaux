@@ -12,7 +12,7 @@
 #define BUFFER_SIZE 1024
 
 static char buffer[BUFFER_SIZE];
-static unsigned int buffer_index;
+static size_t buffer_index;
 
 static void test_putchar(const char chr)
 {

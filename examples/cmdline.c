@@ -3,15 +3,15 @@
 #include <assert.h>
 #include <string.h>
 
-static const unsigned int ARGV_COUNT_MAX = 100;
-static const unsigned int ARG_SIZE_MAX = 4096;
+static const size_t ARGV_COUNT_MAX = 100;
+static const size_t ARG_SIZE_MAX = 4096;
 
 static const char *const cmdline = "foo bar\\ baz \"car cdr\"";
 
 int main()
 {
     char error_msg[KERNAUX_CMDLINE_ERROR_MSG_SIZE_MAX];
-    unsigned int argc;
+    size_t argc;
     char *argv[ARGV_COUNT_MAX];
     char buffer[ARGV_COUNT_MAX * ARG_SIZE_MAX];
 

@@ -28,9 +28,9 @@ void kernaux_console_puts(const char *const s)
     kernaux_console_putc('\n');
 }
 
-void kernaux_console_write(const char *const data, const unsigned int size)
+void kernaux_console_write(const char *const data, const size_t size)
 {
-    for (unsigned int i = 0; i < size; i++) {
+    for (size_t i = 0; i < size; i++) {
         kernaux_console_putc(data[i]);
     }
 }

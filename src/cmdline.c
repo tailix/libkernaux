@@ -5,8 +5,6 @@
 #include <kernaux/cmdline.h>
 #include <kernaux/libc.h>
 
-#include <stddef.h>
-
 enum State {
     INITIAL,
     FINAL,
@@ -20,11 +18,11 @@ enum State {
 bool kernaux_cmdline_parse(
     const char *const cmdline,
     char *error_msg,
-    unsigned int *const argc,
+    size_t *const argc,
     char **argv,
     char *buffer,
-    const unsigned int argv_count_max,
-    const unsigned int arg_size_max
+    const size_t argv_count_max,
+    const size_t arg_size_max
 ) {
     if (
         cmdline == NULL ||
@@ -40,7 +38,7 @@ bool kernaux_cmdline_parse(
     memset(error_msg, '\0', KERNAUX_CMDLINE_ERROR_MSG_SIZE_MAX);
     *argc = 0;
 
-    for (unsigned int index = 0; index < argv_count_max; ++index) {
+    for (size_t index = 0; index < argv_count_max; ++index) {
         argv[index] = NULL;
     }
 
@@ -52,9 +50,9 @@ bool kernaux_cmdline_parse(
 
     enum State state = INITIAL;
 
-    unsigned int buffer_size = 0;
+    size_t buffer_size = 0;
 
-    for (unsigned int index = 0; ; ++index) {
+    for (size_t index = 0; ; ++index) {
         const char cur = cmdline[index];
 
         switch (state) {
@@ -259,7 +257,7 @@ bool kernaux_cmdline_parse(
 fail:
     *argc = 0;
 
-    for (unsigned int index = 0; index < argv_count_max; ++index) {
+    for (size_t index = 0; index < argv_count_max; ++index) {
         argv[index] = NULL;
     }
 

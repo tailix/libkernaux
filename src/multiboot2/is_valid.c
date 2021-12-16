@@ -159,7 +159,7 @@ bool KernAux_Multiboot2_Tag_None_is_valid(
 bool KernAux_Multiboot2_Tag_BootCmdLine_is_valid(
     const struct KernAux_Multiboot2_Tag_BootCmdLine *const tag
 ) {
-    unsigned int index = 1;
+    size_t index = 1;
 
     for (
         const char *ptr = tag->cmdline;
@@ -178,7 +178,7 @@ bool KernAux_Multiboot2_Tag_BootCmdLine_is_valid(
 bool KernAux_Multiboot2_Tag_BootLoaderName_is_valid(
     const struct KernAux_Multiboot2_Tag_BootLoaderName *const tag
 ) {
-    unsigned int index = 1;
+    size_t index = 1;
 
     for (
         const char *ptr = tag->name;
@@ -197,7 +197,7 @@ bool KernAux_Multiboot2_Tag_BootLoaderName_is_valid(
 bool KernAux_Multiboot2_Tag_Module_is_valid(
     const struct KernAux_Multiboot2_Tag_Module *const tag
 ) {
-    unsigned int index = 1;
+    size_t index = 1;
 
     for (
         const char *ptr = tag->cmdline;

@@ -6,6 +6,7 @@ extern "C" {
 #endif
 
 #include <stdbool.h>
+#include <stddef.h>
 
 #define KERNAUX_CMDLINE_ERROR_MSG_SIZE_MAX 256
 #define KERNAUX_CMDLINE_ERROR_MSG_SLEN_MAX \
@@ -14,11 +15,11 @@ extern "C" {
 bool kernaux_cmdline_parse(
     const char *cmdline,
     char *error_msg,
-    unsigned int *argc,
+    size_t *argc,
     char **argv,
     char *buffer,
-    unsigned int argv_count_max,
-    unsigned int arg_size_max
+    size_t argv_count_max,
+    size_t arg_size_max
 );
 
 #ifdef __cplusplus
