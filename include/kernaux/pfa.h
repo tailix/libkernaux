@@ -7,6 +7,7 @@ extern "C" {
 
 #include <stdbool.h>
 #include <stddef.h>
+#include <stdint.h>
 
 #define KERNAUX_PFA_PAGE_SIZE (4 * 1024)
 #define KERNAUX_PFA_PAGES_COUNT_MAX (1024 * 1024)
@@ -15,7 +16,7 @@ extern "C" {
 typedef struct KernAux_PFA *KernAux_PFA;
 
 struct KernAux_PFA {
-    unsigned char flags[KERNAUX_PFA_FLAGS_SIZE];
+    uint8_t flags[KERNAUX_PFA_FLAGS_SIZE];
 };
 
 void KernAux_PFA_initialize(KernAux_PFA pfa);
