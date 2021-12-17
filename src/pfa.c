@@ -2,10 +2,9 @@
 #include "config.h"
 #endif
 
+#include <kernaux/assert.h>
 #include <kernaux/libc.h>
 #include <kernaux/pfa.h>
-
-#include "assert.h"
 
 #define PAGE_INDEX(page_addr) ((page_addr) / KERNAUX_PFA_PAGE_SIZE)
 
@@ -40,14 +39,14 @@ static void KernAux_PFA_mark(
 
 void KernAux_PFA_initialize(const KernAux_PFA pfa)
 {
-    notnull_return(pfa);
+    KERNAUX_NOTNULL_RETURN(pfa);
     memset(pfa->flags, 0, sizeof(pfa->flags));
 }
 
 bool KernAux_PFA_is_available(const KernAux_PFA pfa, const size_t page_addr)
 {
-    notnull_retval(pfa, false);
-    assert_retval(page_addr % KERNAUX_PFA_PAGE_SIZE == 0, false);
+    KERNAUX_NOTNULL_RETVAL(pfa, false);
+    KERNAUX_ASSERT_RETVAL(page_addr % KERNAUX_PFA_PAGE_SIZE == 0, false);
 
     return GET_FLAG_FROM_ADDR(pfa, page_addr);
 }
@@ -74,8 +73,8 @@ void KernAux_PFA_mark(
     size_t start,
     size_t end
 ) {
-    notnull_return(pfa);
-    assert_return(start < end);
+    KERNAUX_NOTNULL_RETURN(pfa);
+    KERNAUX_ASSERT_RETURN(start < end);
 
     const size_t start_rem = start % KERNAUX_PFA_PAGE_SIZE;
     const size_t end_rem = (end + 1) % KERNAUX_PFA_PAGE_SIZE;
@@ -102,7 +101,7 @@ void KernAux_PFA_mark(
 
 size_t KernAux_PFA_alloc_pages(const KernAux_PFA pfa, size_t mem_size)
 {
-    notnull_retval(pfa, 0);
+    KERNAUX_NOTNULL_RETVAL(pfa, 0);
 
     const size_t mem_rem = mem_size % KERNAUX_PFA_PAGE_SIZE;
 
@@ -141,8 +140,8 @@ void KernAux_PFA_free_pages(
     const size_t page_addr,
     size_t mem_size
 ) {
-    notnull_return(pfa);
-    assert_return(page_addr % KERNAUX_PFA_PAGE_SIZE == 0);
+    KERNAUX_NOTNULL_RETURN(pfa);
+    KERNAUX_ASSERT_RETURN(page_addr % KERNAUX_PFA_PAGE_SIZE == 0);
 
     const size_t mem_rem = mem_size % KERNAUX_PFA_PAGE_SIZE;
 
