@@ -23,7 +23,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: dependencies
-        run: sudo apt install clang cppcheck tcc
+        run: sudo apt install clang tcc
       - name: autogen
         run: ./autogen.sh
       - name: configure
@@ -32,11 +32,18 @@ jobs:
         run: make
       - name: check
         run: make check || cat test-suite.log
+      - name: install
+        run: sudo make install
+
+  cppcheck:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: dependencies
+        run: sudo apt install cppcheck
       - name: cppcheck source code
         run: cppcheck --quiet --error-exitcode=1 --std=c99 --enable=warning,style,performance,portability include/ src/
       - name: cppcheck examples
         run: cppcheck --quiet --error-exitcode=1 --std=c99 --enable=warning,style,performance,portability --suppress=duplicateExpression --suppress=staticStringCompare examples/
       - name: cppcheck tests
         run: cppcheck --quiet --error-exitcode=1 --std=c99 --enable=warning,style,performance,portability --suppress=unusedStructMember tests/
-      - name: install
-        run: sudo make install
