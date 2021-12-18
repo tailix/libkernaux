@@ -10,6 +10,8 @@ AM_CFLAGS = \
 lib_LIBRARIES = libkernaux.a
 
 TESTS = \
+	examples/assert_return \
+	examples/assert_simple \
 	examples/printf \
 	examples/printf_va \
 	tests/test_itoa \
@@ -31,29 +33,23 @@ if ARCH_X86_64
 libkernaux_a_SOURCES += src/arch/x86_64.S
 endif
 
-if ENABLE_ASSERT
-TESTS += \
-	examples/assert_return \
-	examples/assert_simple
-endif
-
-if ENABLE_CMDLINE
+if WITH_CMDLINE
 libkernaux_a_SOURCES += src/cmdline.c
 TESTS += \
 	examples/cmdline \
 	tests/test_cmdline
 endif
 
-if ENABLE_CONSOLE
+if WITH_CONSOLE
 libkernaux_a_SOURCES += src/console.c
 endif
 
-if ENABLE_ELF
+if WITH_ELF
 libkernaux_a_SOURCES += src/elf.c
 TESTS += tests/test_elf
 endif
 
-if ENABLE_MULTIBOOT2
+if WITH_MULTIBOOT2
 libkernaux_a_SOURCES += \
 	src/multiboot2/helpers.c \
 	src/multiboot2/is_valid.c \
@@ -67,7 +63,7 @@ noinst_PROGRAMS += \
 	tests/multiboot2_print2
 endif
 
-if ENABLE_PFA
+if WITH_PFA
 libkernaux_a_SOURCES += src/pfa.c
 TESTS += \
 	examples/pfa \
@@ -75,7 +71,7 @@ TESTS += \
 	tests/test_pfa_assert
 endif
 
-if ENABLE_UNITS
+if WITH_UNITS
 libkernaux_a_SOURCES += src/units.c
 TESTS += \
 	examples/units_human \

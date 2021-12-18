@@ -17,9 +17,9 @@ jobs:
         null_guard: ['--enable-null-guard', '--disable-null-guard']
         werror:
           - cflag: '-Werror'
-            mb2: '--disable-multiboot2'
+            mb2: '--without-multiboot2'
           - cflag: ''
-            mb2: '--enable-multiboot2'
+            mb2: '--with-multiboot2'
     steps:
       - uses: actions/checkout@v2
       - name: dependencies

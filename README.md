@@ -106,7 +106,7 @@ cross-compiler in `$PATH` to make without it in `$PATH`:
 ```
 ./configure \
   --host='i386-elf' \
-  --enable-libc \
+  --with-libc \
   AR="$(which i386-elf-ar)" \
   CC="$(which i386-elf-gcc)" \
   RANLIB="$(which i386-elf-ranlib)" \
