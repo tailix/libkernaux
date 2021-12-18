@@ -31,7 +31,8 @@ extern "C" {
 #define KERNAUX_ARCH_I386_CR4_PGE ((uint32_t)0x00000080) // 7: Page Global Enabled
 // TODO: bits 8-31
 
-struct KernAux_Arch_I386_PageTableEntry {
+// Page table entry
+struct KernAux_Arch_I386_PTE {
     unsigned present        : 1;
     unsigned writable       : 1;
     unsigned user           : 1;
@@ -46,7 +47,8 @@ struct KernAux_Arch_I386_PageTableEntry {
 }
 __attribute__((packed));
 
-struct KernAux_Arch_I386_PageDirEntry {
+// Page directory entry
+struct KernAux_Arch_I386_PDE {
     unsigned present        : 1;
     unsigned writable       : 1;
     unsigned user           : 1;
