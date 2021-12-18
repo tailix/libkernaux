@@ -32,7 +32,9 @@ libkernaux_a_SOURCES += src/arch/x86_64.S
 endif
 
 if ENABLE_ASSERT
-TESTS += examples/assert
+TESTS += \
+	examples/assert_return \
+	examples/assert_simple
 endif
 
 if ENABLE_CMDLINE
@@ -80,9 +82,13 @@ TESTS += \
 	tests/test_units_human
 endif
 
-examples_assert_SOURCES = \
+examples_assert_return_SOURCES = \
 	$(libkernaux_a_SOURCES) \
-	examples/assert.c
+	examples/assert_return.c
+
+examples_assert_simple_SOURCES = \
+	$(libkernaux_a_SOURCES) \
+	examples/assert_simple.c
 
 examples_cmdline_SOURCES = \
 	$(libkernaux_a_SOURCES) \
