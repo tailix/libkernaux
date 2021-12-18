@@ -31,7 +31,29 @@ extern "C" {
 #define KERNAUX_ARCH_I386_CR4_PGE ((uint32_t)0x00000080) // 7: Page Global Enabled
 // TODO: bits 8-31
 
+// Global descriptor table entry
+// TODO: validate this according to spec
+struct KernAux_Arch_I386_GDTE {
+    unsigned int limit_low              : 16;
+    unsigned int base_low               : 24;
+    unsigned int accessed               : 1;
+    unsigned int read_write             : 1;
+    unsigned int conforming_expand_down : 1;
+    unsigned int code                   : 1;
+    unsigned int always_1               : 1;
+    unsigned int DPL                    : 2;
+    unsigned int present                : 1;
+    unsigned int limit_high             : 4;
+    unsigned int available              : 1;
+    unsigned int always_0               : 1;
+    unsigned int big                    : 1;
+    unsigned int gran                   : 1;
+    unsigned int base_high              : 8;
+}
+__attribute__((packed));
+
 // Page table entry
+// TODO: validate this according to spec
 struct KernAux_Arch_I386_PTE {
     unsigned present        : 1;
     unsigned writable       : 1;
@@ -48,6 +70,7 @@ struct KernAux_Arch_I386_PTE {
 __attribute__((packed));
 
 // Page directory entry
+// TODO: validate this according to spec
 struct KernAux_Arch_I386_PDE {
     unsigned present        : 1;
     unsigned writable       : 1;
