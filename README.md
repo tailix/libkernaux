@@ -32,7 +32,7 @@ API
 * Runtime environment
   * [Assertions](/include/kernaux/assert.h)
     * [Simple](/examples/assert_simple.c)
-    * [With return](/example/assert_return.c)
+    * [With return](/examples/assert_return.c)
   * [Architecture-specific helpers](/include/kernaux/arch/)
 * Device drivers (for debugging only)
   * [Serial console](/include/kernaux/console.h)
