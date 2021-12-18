@@ -41,12 +41,12 @@ inline static void kernaux_arch_i386_outportd(uint16_t port, uint32_t value);
 
 void kernaux_arch_i386_hang() __attribute__((noreturn));
 
-uint16_t kernaux_arch_i386_read_cr0();
-uint16_t kernaux_arch_i386_read_cr4();
+uint32_t kernaux_arch_i386_read_cr0();
+uint32_t kernaux_arch_i386_read_cr4();
 
-void kernaux_arch_i386_write_cr0(volatile uint16_t value);
-void kernaux_arch_i386_write_cr3(volatile uint16_t value);
-void kernaux_arch_i386_write_cr4(volatile uint16_t value);
+void kernaux_arch_i386_write_cr0(volatile uint32_t value);
+void kernaux_arch_i386_write_cr3(volatile uint32_t value);
+void kernaux_arch_i386_write_cr4(volatile uint32_t value);
 
 uint8_t kernaux_arch_i386_inportb(const uint16_t port)
 {
