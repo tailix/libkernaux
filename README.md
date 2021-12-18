@@ -14,6 +14,7 @@ Table of contents
 * [Table of contents](#table-of-contents)
 * [API](#api)
 * [Tips](#tips)
+  * [Non-default options](#non-default-options)
   * [Installation](#installation)
   * [Development](#development)
   * [Cross](#cross)
@@ -61,6 +62,23 @@ API
 
 Tips
 ----
+
+### Non-default options
+
+Because this library has no external dependencies, we use **autoconf** features
+to control behavior of the library, and packages to choose it's components. Here
+are some non-default options:
+
+* `--enable-assert` - use value of extern variable `kernaux_assert_cb` as a
+  callback function for internal assertions. You still can use assertions in
+  your own application (kernel) even if this option was not enabled.
+* `--enable-null-guard` - safely return from functions which require non-null
+  pointers as arguments. NULL-guard works with assertions, so this option
+  doesn't have effect if your assetion function was set and ends execution of
+  application (kernel). However it prevents crashes because of NULL pointer
+  dereference in other cases.
+* `--with-libc` - provides the replacement for some standard C functions. Useful
+  in freestanding environment, where no libc is present.
 
 ### Installation
 
