@@ -20,6 +20,17 @@ extern "C" {
 #define KERNAUX_ARCH_I386_CR0_CD ((uint32_t)0x40000000) // 30: Cache disable
 #define KERNAUX_ARCH_I386_CR0_PG ((uint32_t)0x80000000) // 31: Paging
 
+// Some CR4 bits
+#define KERNAUX_ARCH_I386_CR4_VME ((uint32_t)0x00000001) // 0: Virtual 8086 Mode Extensions
+#define KERNAUX_ARCH_I386_CR4_PVI ((uint32_t)0x00000002) // 1: Protected-mode Virtual Interrupts
+#define KERNAUX_ARCH_I386_CR4_TSD ((uint32_t)0x00000004) // 2: Time Stamp Disable
+#define KERNAUX_ARCH_I386_CR4_DE  ((uint32_t)0x00000008) // 3: Debugging Extensions
+#define KERNAUX_ARCH_I386_CR4_PSE ((uint32_t)0x00000010) // 4: Page Size Extension
+#define KERNAUX_ARCH_I386_CR4_PAE ((uint32_t)0x00000020) // 5: Physical Address Extension
+#define KERNAUX_ARCH_I386_CR4_MCE ((uint32_t)0x00000040) // 6: Machine Check Exception
+#define KERNAUX_ARCH_I386_CR4_PGE ((uint32_t)0x00000080) // 7: Page Global Enabled
+// TODO: bits 8-31
+
 inline static uint8_t  kernaux_arch_i386_inportb(uint16_t port);
 inline static uint16_t kernaux_arch_i386_inportw(uint16_t port);
 inline static uint32_t kernaux_arch_i386_inportd(uint16_t port);
