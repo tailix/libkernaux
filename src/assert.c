@@ -8,21 +8,23 @@
 
 void (*kernaux_assert_cb)(const char *file, int line, const char *str) = NULL;
 
+#ifdef KERNAUX_ENABLE_ASSERT
 void kernaux_assert_do(
-#ifndef KERNAUX_ENABLE_ASSERT
-    __attribute__((unused))
-#endif
     const char *const file,
-#ifndef KERNAUX_ENABLE_ASSERT
-    __attribute__((unused))
-#endif
     const int line,
-#ifndef KERNAUX_ENABLE_ASSERT
-    __attribute__((unused))
-#endif
     const char *const str
 ) {
-#ifdef KERNAUX_ENABLE_ASSERT
     if (kernaux_assert_cb) kernaux_assert_cb(file, line, str);
-#endif
 }
+#else
+void kernaux_assert_do(
+    __attribute__((unused))
+    const char *const file,
+    __attribute__((unused))
+    const int line,
+    __attribute__((unused))
+    const char *const str
+) {
+    // Do nothing.
+}
+#endif
