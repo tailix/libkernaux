@@ -7,6 +7,8 @@ extern "C" {
 
 #include <stdint.h>
 
+#define KERNAUX_ARCH_I386_PAGE_DIR_TABLE_LENGTH 1024
+
 // CR0 bits
 #define KERNAUX_ARCH_I386_CR0_PE ((uint32_t)0x00000001) // 0:  Protected Mode Enable
 #define KERNAUX_ARCH_I386_CR0_MP ((uint32_t)0x00000002) // 1:  Monitor co-processor
@@ -82,6 +84,18 @@ struct KernAux_Arch_I386_PTE {
     unsigned global         : 1;
     unsigned available      : 3;
     unsigned addr           : 20;
+}
+__attribute__((packed));
+
+// Page directory
+struct KernAux_Arch_I386_PageDir {
+    struct KernAux_Arch_I386_PDE pdes[KERNAUX_ARCH_I386_PAGE_DIR_TABLE_LENGTH];
+}
+__attribute__((packed));
+
+// Page table
+struct KernAux_Arch_I386_PageTable {
+    struct KernAux_Arch_I386_PTE ptes[KERNAUX_ARCH_I386_PAGE_DIR_TABLE_LENGTH];
 }
 __attribute__((packed));
 
