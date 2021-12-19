@@ -26,11 +26,11 @@ libkernaux_a_SOURCES = \
 	src/printf.c
 
 if ARCH_I386
-libkernaux_a_SOURCES += src/arch/i386.S
+libkernaux_a_SOURCES += src/arch/i386/asm.S
 endif
 
 if ARCH_X86_64
-libkernaux_a_SOURCES += src/arch/x86_64.S
+libkernaux_a_SOURCES += src/arch/x86_64/asm.S
 endif
 
 if WITH_CMDLINE
