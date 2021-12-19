@@ -79,14 +79,14 @@ are some non-default options:
   dereference in other cases.
 * `--with-arch` - includes architecture-specific code (except assembly). May be
   useful for testing. You can also separately enable or disable components:
-  * `--with-arch-i386`
-  * `--with-arch-x86-64`
+  * `--with[out]-arch-i386`
+  * `--with[out]-arch-x86-64`
 * `--with-libc` - provides the replacement for some standard C functions. Useful
   in freestanding environment, where no libc is present. You can also separately
   enable or disable components:
-  * `--with-libc-memset`
-  * `--with-libc-strcpy`
-  * `--with-libc-strlen`
+  * `--with[out]-libc-memset`
+  * `--with[out]-libc-strcpy`
+  * `--with[out]-libc-strlen`
 
 ### Installation
 
