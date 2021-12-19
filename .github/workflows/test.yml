@@ -27,7 +27,7 @@ jobs:
       - name: autogen
         run: ./autogen.sh
       - name: configure
-        run: ./configure ${{matrix.assert}} ${{matrix.null_guard}} ${{matrix.werror.mb2}} CC='${{matrix.cc}}' CFLAGS='${{matrix.opt}} ${{matrix.werror.cflag}}'
+        run: ./configure --with-arch ${{matrix.assert}} ${{matrix.null_guard}} ${{matrix.werror.mb2}} CC='${{matrix.cc}}' CFLAGS='${{matrix.opt}} ${{matrix.werror.cflag}}'
       - name: make
         run: make
       - name: check
