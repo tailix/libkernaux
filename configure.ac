@@ -35,6 +35,13 @@ AC_ARG_WITH(  [libc-strlen], AS_HELP_STRING([--with-libc-strlen],   [with strlen
 
 
 
+AC_DEFUN([do_arch],
+[
+if test -z "$with_arch_i386"   -a "$host_cpu" = i386;   then with_arch_i386=yes;   fi
+if test -z "$with_arch_x86_64" -a "$host_cpu" = x86_64; then with_arch_x86_64=yes; fi
+])
+AS_IF([true], do_arch)
+
 AC_DEFUN([do_with_arch],
 [
 if test -z "$with_arch_i386";   then with_arch_i386=yes;   fi
