@@ -77,10 +77,6 @@ are some non-default options:
   doesn't have effect if your assetion function was set and ends execution of
   application (kernel). However it prevents crashes because of NULL pointer
   dereference in other cases.
-* `--with-arch` - includes architecture-specific code (except assembly). May be
-  useful for testing. You can also separately enable or disable components:
-  * `--with[out]-arch-i386`
-  * `--with[out]-arch-x86-64`
 * `--with-libc` - provides the replacement for some standard C functions. Useful
   in freestanding environment, where no libc is present. You can also separately
   enable or disable components:
@@ -104,7 +100,7 @@ environment.
 
 ```
 ./autogen.sh
-./configure --enable-assert --enable-null-guard --with-arch
+./configure --enable-assert --enable-null-guard
 make
 ```
 

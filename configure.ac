@@ -25,29 +25,12 @@ AC_ARG_WITH(  [pfa],         AS_HELP_STRING([--without-pfa],        [without Pag
 AC_ARG_WITH(  [units],       AS_HELP_STRING([--without-units],      [without measurement units utils]))
 
 dnl Packages (disabled by default)
-AC_ARG_WITH(  [arch],        AS_HELP_STRING([--with-arch],          [with architecture-specific code]))
-AC_ARG_WITH(  [arch-i386],   AS_HELP_STRING([--with-arch-i386],     [with i386-specific code]))
-AC_ARG_WITH(  [arch-x86-64], AS_HELP_STRING([--with_arch-x86-64],   [with x86_64-specific code]))
 AC_ARG_WITH(  [libc],        AS_HELP_STRING([--with-libc],          [with libc replacement]))
 AC_ARG_WITH(  [libc-memset], AS_HELP_STRING([--with-libc-memset],   [with memset replacement]))
 AC_ARG_WITH(  [libc-strcpy], AS_HELP_STRING([--with-libc-strcpy],   [with strcpy replacement]))
 AC_ARG_WITH(  [libc-strlen], AS_HELP_STRING([--with-libc-strlen],   [with strlen replacement]))
 
 
-
-AC_DEFUN([do_arch],
-[
-if test -z "$with_arch_i386"   -a "$host_cpu" = i386;   then with_arch_i386=yes;   fi
-if test -z "$with_arch_x86_64" -a "$host_cpu" = x86_64; then with_arch_x86_64=yes; fi
-])
-AS_IF([true], do_arch)
-
-AC_DEFUN([do_with_arch],
-[
-if test -z "$with_arch_i386";   then with_arch_i386=yes;   fi
-if test -z "$with_arch_x86_64"; then with_arch_x86_64=yes; fi
-])
-AS_IF([test "$with_arch" = yes], do_with_arch)
 
 AC_DEFUN([do_with_libc],
 [
@@ -76,9 +59,6 @@ AM_CONDITIONAL([WITH_PFA],           [test "$with_pfa"          != no])
 AM_CONDITIONAL([WITH_UNITS],         [test "$with_units"        != no])
 
 dnl Packages (disabled by default)
-AM_CONDITIONAL([WITH_ARCH],          [test "$with_arch"         = yes])
-AM_CONDITIONAL([WITH_ARCH_I386],     [test "$with_arch_i386"    = yes])
-AM_CONDITIONAL([WITH_ARCH_X86_64],   [test "$with_arch_x86_64"  = yes])
 AM_CONDITIONAL([WITH_LIBC],          [test "$with_libc"         = yes])
 AM_CONDITIONAL([WITH_LIBC_MEMSET],   [test "$with_libc_memset"  = yes])
 AM_CONDITIONAL([WITH_LIBC_STRCPY],   [test "$with_libc_strcpy"  = yes])
@@ -103,9 +83,6 @@ AS_IF([test "$with_pfa"           != no], [AC_DEFINE([WITH_PFA],                
 AS_IF([test "$with_units",        != no], [AC_DEFINE([WITH_UNITS],                [1], [with measurement units utils])])
 
 dnl Packages (disabled by default)
-AS_IF([test "$with_arch"          = yes], [AC_DEFINE([WITH_ARCH],                 [1], [with architecture-specific code])])
-AS_IF([test "$with_arch_i386"     = yes], [AC_DEFINE([WITH_ARCH_I386],            [1], [with i386-specific code])])
-AS_IF([test "$with_arch_x86_64"   = yes], [AC_DEFINE([WITH_ARCH_X86_64],          [1], [with x86_64-specific code])])
 AS_IF([test "$with_libc"          = yes], [AC_DEFINE([WITH_LIBC],                 [1], [with libc replacement])])
 AS_IF([test "$with_libc_memset"   = yes], [AC_DEFINE([WITH_LIBC_MEMSET],          [1], [with memset replacement])])
 AS_IF([test "$with_libc_strcpy"   = yes], [AC_DEFINE([WITH_LIBC_STRCPY],          [1], [with strcpy replacement])])

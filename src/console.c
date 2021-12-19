@@ -17,7 +17,7 @@ void kernaux_console_print(const char *const s)
 
 void kernaux_console_putc(const char c __attribute__((unused)))
 {
-#if defined(ARCH_I386) && defined(WITH_ARCH_I386)
+#ifdef ARCH_I386
     kernaux_arch_i386_outportb(0x3F8, c);
 #endif
 }
