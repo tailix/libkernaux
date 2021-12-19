@@ -52,6 +52,22 @@ struct KernAux_Arch_I386_GDTE {
 }
 __attribute__((packed));
 
+// Page directory entry
+// TODO: validate this according to spec
+struct KernAux_Arch_I386_PDE {
+    unsigned present        : 1;
+    unsigned writable       : 1;
+    unsigned user           : 1;
+    unsigned write_through  : 1;
+    unsigned cache_disabled : 1;
+    unsigned accessed       : 1;
+    unsigned available0     : 1;
+    unsigned page_size      : 1;
+    unsigned available1     : 4;
+    unsigned addr           : 20;
+}
+__attribute__((packed));
+
 // Page table entry
 // TODO: validate this according to spec
 struct KernAux_Arch_I386_PTE {
@@ -65,22 +81,6 @@ struct KernAux_Arch_I386_PTE {
     unsigned attr_table     : 1;
     unsigned global         : 1;
     unsigned available      : 3;
-    unsigned addr           : 20;
-}
-__attribute__((packed));
-
-// Page directory entry
-// TODO: validate this according to spec
-struct KernAux_Arch_I386_PDE {
-    unsigned present        : 1;
-    unsigned writable       : 1;
-    unsigned user           : 1;
-    unsigned write_through  : 1;
-    unsigned cache_disabled : 1;
-    unsigned accessed       : 1;
-    unsigned available0     : 1;
-    unsigned page_size      : 1;
-    unsigned available1     : 4;
     unsigned addr           : 20;
 }
 __attribute__((packed));
