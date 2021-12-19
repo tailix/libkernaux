@@ -30,6 +30,7 @@ if ARCH_I386
 libkernaux_a_SOURCES += src/arch/i386/asm.S
 endif
 libkernaux_a_SOURCES += src/arch/i386/paging.c
+TESTS += tests/test_arch_i386_paging
 endif
 
 if WITH_ARCH_X86_64
@@ -110,6 +111,10 @@ examples_printf_va_SOURCES = \
 examples_units_human_SOURCES = \
 	$(libkernaux_a_SOURCES) \
 	examples/units_human.c
+
+tests_test_arch_i386_paging_SOURCES = \
+	$(libkernaux_a_SOURCES) \
+	tests/test_arch_i386_paging.c
 
 tests_multiboot2_print1_SOURCES = \
 	$(libkernaux_a_SOURCES) \

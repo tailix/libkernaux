@@ -44,6 +44,7 @@
 
 /tests/multiboot2_print1
 /tests/multiboot2_print2
+/tests/test_arch_i386_paging
 /tests/test_cmdline
 /tests/test_elf
 /tests/test_itoa
