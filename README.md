@@ -165,21 +165,21 @@ configure: WARNING:     ## -----------------------------------------------------
 checking for stddef.h... no
 ```
 
-To install into specific directory use full path:
-`DESTDIR="$(pwd)/dest" make install` instead of `DESTDIR=dest make install`.
-
 When configured with cross-compiler, library can't be build and installed with
 just `make && sudo make install`. Instead use the following commands:
 
 * `make libkernaux.a`
-* `sudo make install-exec`
-* `sudo make install-data`
+* `sudo make install-exec install-data`
 
-Check if compilation targets i386: `objdump -d src/arch/i386.o`. It should
+To install into specific directory use full path:
+`DESTDIR="$(pwd)/dest" sudo make install-exec install-data` instead of
+`DESTDIR=dest sudo make install-exec install-data`.
+
+Check if compilation targets i386: `objdump -d src/arch/i386/asm.o`. It should
 output something like this:
 
 ```
-src/arch/i386.o:     file format elf32-i386
+src/arch/i386/asm.o:     file format elf32-i386
 
 
 Disassembly of section .text:
