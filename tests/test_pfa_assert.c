@@ -42,7 +42,9 @@ int main()
 
 void test()
 {
+#if defined(KERNAUX_ENABLE_GUARD_COND) || defined(KERNAUX_ENABLE_GUARD_NULL)
     unsigned int acc = 0;
+#endif
     struct KernAux_PFA pfa;
     KernAux_PFA_initialize(&pfa);
 
