@@ -8,7 +8,9 @@
 #include <assert.h>
 #include <stddef.h>
 
+#if defined(KERNAUX_ENABLE_ASSERT) || defined(KERNAUX_ENABLE_GUARD_COND) || defined(KERNAUX_ENABLE_GUARD_NULL)
 static unsigned int count = 0;
+#endif
 
 static void test();
 
