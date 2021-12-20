@@ -1,5 +1,5 @@
 #ifndef KERNAUX_INCLUDED_CONSOLE
-#define KERNAUX_INCLUDED_CONSOLE 1
+#define KERNAUX_INCLUDED_CONSOLE
 
 #ifdef __cplusplus
 extern "C" {

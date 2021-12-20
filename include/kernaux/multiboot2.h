@@ -1,5 +1,5 @@
 #ifndef KERNAUX_INCLUDED_MULTIBOOT2
-#define KERNAUX_INCLUDED_MULTIBOOT2 1
+#define KERNAUX_INCLUDED_MULTIBOOT2
 
 #ifdef __cplusplus
 extern "C" {

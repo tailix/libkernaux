@@ -1,5 +1,5 @@
 #ifndef KERNAUX_INCLUDED_PRINTF
-#define KERNAUX_INCLUDED_PRINTF 1
+#define KERNAUX_INCLUDED_PRINTF
 
 #ifdef __cplusplus
 extern "C" {

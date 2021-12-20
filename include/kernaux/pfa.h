@@ -1,5 +1,5 @@
 #ifndef KERNAUX_INCLUDED_PFA
-#define KERNAUX_INCLUDED_PFA 1
+#define KERNAUX_INCLUDED_PFA
 
 #ifdef __cplusplus
 extern "C" {

@@ -1,5 +1,5 @@
 #ifndef KERNAUX_INCLUDED_ELF
-#define KERNAUX_INCLUDED_ELF 1
+#define KERNAUX_INCLUDED_ELF
 
 #ifdef __cplusplus
 extern "C" {

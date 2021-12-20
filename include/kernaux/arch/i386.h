@@ -1,5 +1,5 @@
 #ifndef KERNAUX_INCLUDED_ARCH_I386
-#define KERNAUX_INCLUDED_ARCH_I386 1
+#define KERNAUX_INCLUDED_ARCH_I386
 
 #ifdef __cplusplus
 extern "C" {

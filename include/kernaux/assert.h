@@ -1,5 +1,5 @@
 #ifndef KERNAUX_INCLUDED_ASSERT
-#define KERNAUX_INCLUDED_ASSERT 1
+#define KERNAUX_INCLUDED_ASSERT
 
 #ifdef __cplusplus
 extern "C" {

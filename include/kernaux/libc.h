@@ -1,5 +1,5 @@
 #ifndef KERNAUX_INCLUDED_LIBC
-#define KERNAUX_INCLUDED_LIBC 1
+#define KERNAUX_INCLUDED_LIBC
 
 #ifdef __cplusplus
 extern "C" {
