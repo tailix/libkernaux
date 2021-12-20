@@ -52,8 +52,8 @@ AS_IF([test "$with_libc" = yes], do_with_libc)
 
 
 dnl Architecture
-AM_CONDITIONAL([ARCH_I386],         [test "$host_cpu" = i386])
-AM_CONDITIONAL([ARCH_X86_64],       [test "$host_cpu" = x86_64])
+AM_CONDITIONAL([ASM_I386],          [test "$host_cpu" = i386])
+AM_CONDITIONAL([ASM_X86_64],        [test "$host_cpu" = x86_64])
 
 dnl Features (disabled by default)
 AM_CONDITIONAL([ENABLE_ASSERT],     [test "$enable_assert"     = yes])
@@ -76,8 +76,8 @@ AM_CONDITIONAL([WITH_LIBC_STRLEN],  [test "$with_libc_strlen"  = yes])
 
 
 dnl Architecture
-AS_IF([test "$host_cpu" = i386],          [AC_DEFINE([ARCH_I386],                 [1], [architecture is i386])])
-AS_IF([test "$host_cpu" = x86_64],        [AC_DEFINE([ARCH_X86_64],               [1], [architecture is x86_64])])
+AS_IF([test "$host_cpu" = i386],          [AC_DEFINE([ASM_I386],                  [1], [architecture is i386])])
+AS_IF([test "$host_cpu" = x86_64],        [AC_DEFINE([ASM_X86_64],                [1], [architecture is x86_64])])
 
 dnl Features (disabled by default)
 AS_IF([test "$enable_assert"      = yes], [AC_DEFINE([KERNAUX_ENABLE_ASSERT],     [1], [enabled runtime assertions])])

@@ -30,10 +30,12 @@ API
 ---
 
 * Runtime environment
+  * Architecture-specific code
+    * [Declarations](/include/kernaux/arch/)
+    * [Functions](/include/kernaux/asm/)
   * [Assertions](/include/kernaux/assert.h)
     * [Simple](/examples/assert_simple.c)
     * [Guards](/examples/assert_guards.c)
-  * [Architecture-specific helpers](/include/kernaux/arch/)
 * Device drivers (for debugging only)
   * [Serial console](/include/kernaux/console.h)
   * Framebuffer *(planned)*
@@ -177,39 +179,39 @@ To install into specific directory use full path:
 `DESTDIR="$(pwd)/dest" sudo make install-exec install-data` instead of
 `DESTDIR=dest sudo make install-exec install-data`.
 
-Check if compilation targets i386: `objdump -d src/arch/i386/asm.o`. It should
-output something like this:
+Check if compilation targets i386: `objdump -d src/asm/i386.o`. It should output
+something like this:
 
 ```
-src/arch/i386/asm.o:     file format elf32-i386
+src/asm/i386.o:     file format elf32-i386
 
 
 Disassembly of section .text:
 
-00000000 <kernaux_arch_i386_hang>:
+00000000 <kernaux_asm_i386_hang>:
    0:   fa                    cli
    1:   f4                    hlt
-   2:   eb fc                 jmp    0 <kernaux_arch_i386_hang>
+   2:   eb fc                 jmp    0 <kernaux_asm_i386_hang>
 
-00000004 <kernaux_arch_i386_read_cr0>:
+00000004 <kernaux_asm_i386_read_cr0>:
    4:   0f 20 c0              mov    %cr0,%eax
    7:   c3                    ret
 
-00000008 <kernaux_arch_i386_read_cr4>:
+00000008 <kernaux_asm_i386_read_cr4>:
    8:   0f 20 e0              mov    %cr4,%eax
    b:   c3                    ret
 
-0000000c <kernaux_arch_i386_write_cr0>:
+0000000c <kernaux_asm_i386_write_cr0>:
    c:   8b 44 24 04           mov    0x4(%esp),%eax
   10:   0f 22 c0              mov    %eax,%cr0
   13:   c3                    ret
 
-00000014 <kernaux_arch_i386_write_cr3>:
+00000014 <kernaux_asm_i386_write_cr3>:
   14:   8b 44 24 04           mov    0x4(%esp),%eax
   18:   0f 22 d8              mov    %eax,%cr3
   1b:   c3                    ret
 
-0000001c <kernaux_arch_i386_write_cr4>:
+0000001c <kernaux_asm_i386_write_cr4>:
   1c:   8b 44 24 04           mov    0x4(%esp),%eax
   20:   0f 22 e0              mov    %eax,%cr4
   23:   c3                    ret

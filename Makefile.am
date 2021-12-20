@@ -25,12 +25,12 @@ libkernaux_a_SOURCES = \
 	src/libc.c \
 	src/printf.c
 
-if ARCH_I386
-libkernaux_a_SOURCES += src/arch/i386/asm.S
+if ASM_I386
+libkernaux_a_SOURCES += src/asm/i386.S
 endif
 
-if ARCH_X86_64
-libkernaux_a_SOURCES += src/arch/x86_64/asm.S
+if ASM_X86_64
+libkernaux_a_SOURCES += src/asm/x86_64.S
 endif
 
 if WITH_CMDLINE
