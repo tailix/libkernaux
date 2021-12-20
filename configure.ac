@@ -14,7 +14,9 @@ AC_CANONICAL_HOST
 
 dnl Features (disabled by default)
 AC_ARG_ENABLE([assert],      AS_HELP_STRING([--enable-assert],      [enable runtime assertions]))
-AC_ARG_ENABLE([null-guard],  AS_HELP_STRING([--enable-null-guard],  [enable NULL-guard]))
+AC_ARG_ENABLE([guard],       AS_HELP_STRING([--enable-guard],       [enable argument guards]))
+AC_ARG_ENABLE([guard-cond],  AS_HELP_STRING([--enable-guard-cond],  [enable condition guard]))
+AC_ARG_ENABLE([guard-null],  AS_HELP_STRING([--enable-guard-null],  [enable NULL-guard]))
 
 dnl Packages (enabled by default)
 AC_ARG_WITH(  [cmdline],     AS_HELP_STRING([--without-cmdline],    [without command line parser]))
@@ -32,6 +34,13 @@ AC_ARG_WITH(  [libc-strlen], AS_HELP_STRING([--with-libc-strlen],   [with strlen
 
 
 
+AC_DEFUN([do_enable_guard],
+[
+if test -z "$enable_guard_cond"; then enable_guard_cond=yes; fi
+if test -z "$enable_guard_null"; then enable_guard_null=yes; fi
+])
+AS_IF([test "$enable_guard" = yes], do_enable_guard)
+
 AC_DEFUN([do_with_libc],
 [
 if test -z "$with_libc_memset"; then with_libc_memset=yes; fi
@@ -48,7 +57,8 @@ AM_CONDITIONAL([ARCH_X86_64],        [test "$host_cpu" = x86_64])
 
 dnl Features (disabled by default)
 AM_CONDITIONAL([ENABLE_ASSERT],      [test "$enable_assert"     = yes])
-AM_CONDITIONAL([ENABLE_NULL_GUARD],  [test "$enable_null_guard" = yes])
+AM_CONDITIONAL([ENABLE_GUARD_COND],  [test "$enable_guard_cond" = yes])
+AM_CONDITIONAL([ENABLE_GUARD_NULL],  [test "$enable_guard_null" = yes])
 
 dnl Packages (enabled by default)
 AM_CONDITIONAL([WITH_CMDLINE],       [test "$with_cmdline"      != no])
@@ -59,7 +69,6 @@ AM_CONDITIONAL([WITH_PFA],           [test "$with_pfa"          != no])
 AM_CONDITIONAL([WITH_UNITS],         [test "$with_units"        != no])
 
 dnl Packages (disabled by default)
-AM_CONDITIONAL([WITH_LIBC],          [test "$with_libc"         = yes])
 AM_CONDITIONAL([WITH_LIBC_MEMSET],   [test "$with_libc_memset"  = yes])
 AM_CONDITIONAL([WITH_LIBC_STRCPY],   [test "$with_libc_strcpy"  = yes])
 AM_CONDITIONAL([WITH_LIBC_STRLEN],   [test "$with_libc_strlen"  = yes])
@@ -72,7 +81,8 @@ AS_IF([test "$host_cpu" = x86_64],        [AC_DEFINE([ARCH_X86_64],             
 
 dnl Features (disabled by default)
 AS_IF([test "$enable_assert"      = yes], [AC_DEFINE([KERNAUX_ENABLE_ASSERT],     [1], [enabled runtime assertions])])
-AS_IF([test "$enable_null_guard"  = yes], [AC_DEFINE([KERNAUX_ENABLE_NULL_GUARD], [1], [enabled NULL-guard])])
+AS_IF([test "$enable_guard_cond"  = yes], [AC_DEFINE([KERNAUX_ENABLE_GUARD_COND], [1], [enabled condition guard])])
+AS_IF([test "$enable_guard_null"  = yes], [AC_DEFINE([KERNAUX_ENABLE_GUARD_NULL], [1], [enabled NULL-guard])])
 
 dnl Packages (enabled by default)
 AS_IF([test "$with_cmdline"       != no], [AC_DEFINE([WITH_CMDLINE],              [1], [with command line parser])])
@@ -83,7 +93,6 @@ AS_IF([test "$with_pfa"           != no], [AC_DEFINE([WITH_PFA],                
 AS_IF([test "$with_units",        != no], [AC_DEFINE([WITH_UNITS],                [1], [with measurement units utils])])
 
 dnl Packages (disabled by default)
-AS_IF([test "$with_libc"          = yes], [AC_DEFINE([WITH_LIBC],                 [1], [with libc replacement])])
 AS_IF([test "$with_libc_memset"   = yes], [AC_DEFINE([WITH_LIBC_MEMSET],          [1], [with memset replacement])])
 AS_IF([test "$with_libc_strcpy"   = yes], [AC_DEFINE([WITH_LIBC_STRCPY],          [1], [with strcpy replacement])])
 AS_IF([test "$with_libc_strlen"   = yes], [AC_DEFINE([WITH_LIBC_STRLEN],          [1], [with strlen replacement])])

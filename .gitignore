@@ -34,7 +34,7 @@
 /tests/test*.log
 /tests/test*.trs
 
-/examples/assert_return
+/examples/assert_guards
 /examples/assert_simple
 /examples/cmdline
 /examples/pfa

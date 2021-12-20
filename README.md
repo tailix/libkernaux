@@ -32,7 +32,7 @@ API
 * Runtime environment
   * [Assertions](/include/kernaux/assert.h)
     * [Simple](/examples/assert_simple.c)
-    * [With return](/examples/assert_return.c)
+    * [Guards](/examples/assert_guards.c)
   * [Architecture-specific helpers](/include/kernaux/arch/)
 * Device drivers (for debugging only)
   * [Serial console](/include/kernaux/console.h)
@@ -72,14 +72,16 @@ are some non-default options:
 * `--enable-assert` - use value of extern variable `kernaux_assert_cb` as a
   callback function for internal assertions. You still can use assertions in
   your own application (kernel) even if this option was not enabled.
-* `--enable-null-guard` - safely return from functions which require non-null
-  pointers as arguments. NULL-guard works with assertions, so this option
-  doesn't have effect if your assetion function was set and ends execution of
-  application (kernel). However it prevents crashes because of NULL pointer
-  dereference in other cases.
+* `--enable-guard` - safely return from functions even when assertions are
+  disabled. This option doesn't have effect if your assetion function was set
+  and ends execution of application (kernel). However it prevents crashes and
+  undefined behabior in other cases. You can also separately enable or disable
+  guards:
+  * `--(enable|disable)-guard-cond`
+  * `--(enable|disable)-guard-null`
 * `--with-libc` - provides the replacement for some standard C functions. Useful
   in freestanding environment, where no libc is present. You can also separately
-  enable or disable components:
+  include or exclude components:
   * `--with[out]-libc-memset`
   * `--with[out]-libc-strcpy`
   * `--with[out]-libc-strlen`
@@ -100,7 +102,7 @@ environment.
 
 ```
 ./autogen.sh
-./configure --enable-assert --enable-null-guard
+./configure --enable-assert --enable-guard
 make
 ```
 

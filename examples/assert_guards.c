@@ -1,5 +1,5 @@
 #define KERNAUX_ENABLE_ASSERT
-#define KERNAUX_ENABLE_NULL_GUARD
+#define KERNAUX_ENABLE_GUARD
 #include <kernaux/assert.h>
 
 #include <assert.h>

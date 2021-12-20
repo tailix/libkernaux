@@ -10,7 +10,7 @@ AM_CFLAGS = \
 lib_LIBRARIES = libkernaux.a
 
 TESTS = \
-	examples/assert_return \
+	examples/assert_guards \
 	examples/assert_simple \
 	examples/printf \
 	examples/printf_va \
@@ -78,9 +78,9 @@ TESTS += \
 	tests/test_units_human
 endif
 
-examples_assert_return_SOURCES = \
+examples_assert_guards_SOURCES = \
 	$(libkernaux_a_SOURCES) \
-	examples/assert_return.c
+	examples/assert_guards.c
 
 examples_assert_simple_SOURCES = \
 	$(libkernaux_a_SOURCES) \

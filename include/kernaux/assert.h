@@ -12,14 +12,17 @@ extern "C" {
 #define KERNAUX_ASSERT(cond) ((void)sizeof((cond)))
 #endif
 
-#define KERNAUX_ASSERT_RETURN(cond) \
-    { KERNAUX_ASSERT(cond); if (!(cond)) return; }
-#define KERNAUX_ASSERT_RETVAL(cond, val) \
-    { KERNAUX_ASSERT(cond); if (!(cond)) return (val); }
+#if defined(KERNAUX_ENABLE_GUARD) || defined(KERNAUX_ENABLE_GUARD_COND)
+#define KERNAUX_ASSERT_RETURN(cond)       { KERNAUX_ASSERT(cond); if (!(cond)) return;       }
+#define KERNAUX_ASSERT_RETVAL(cond, val)  { KERNAUX_ASSERT(cond); if (!(cond)) return (val); }
+#else
+#define KERNAUX_ASSERT_RETURN(cond)       { KERNAUX_ASSERT(cond); }
+#define KERNAUX_ASSERT_RETVAL(cond, val)  { KERNAUX_ASSERT(cond); }
+#endif
 
-#ifdef KERNAUX_ENABLE_NULL_GUARD
-#define KERNAUX_NOTNULL_RETURN(cond)      { KERNAUX_ASSERT_RETURN(cond);      }
-#define KERNAUX_NOTNULL_RETVAL(cond, val) { KERNAUX_ASSERT_RETVAL(cond, val); }
+#if defined(KERNAUX_ENABLE_GUARD) || defined(KERNAUX_ENABLE_GUARD_NULL)
+#define KERNAUX_NOTNULL_RETURN(cond)      { KERNAUX_ASSERT(cond); if (!(cond)) return;       }
+#define KERNAUX_NOTNULL_RETVAL(cond, val) { KERNAUX_ASSERT(cond); if (!(cond)) return (val); }
 #else
 #define KERNAUX_NOTNULL_RETURN(cond)      { KERNAUX_ASSERT(cond); }
 #define KERNAUX_NOTNULL_RETVAL(cond, val) { KERNAUX_ASSERT(cond); }
