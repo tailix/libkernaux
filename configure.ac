@@ -52,26 +52,26 @@ AS_IF([test "$with_libc" = yes], do_with_libc)
 
 
 dnl Architecture
-AM_CONDITIONAL([ARCH_I386],          [test "$host_cpu" = i386])
-AM_CONDITIONAL([ARCH_X86_64],        [test "$host_cpu" = x86_64])
+AM_CONDITIONAL([ARCH_I386],         [test "$host_cpu" = i386])
+AM_CONDITIONAL([ARCH_X86_64],       [test "$host_cpu" = x86_64])
 
 dnl Features (disabled by default)
-AM_CONDITIONAL([ENABLE_ASSERT],      [test "$enable_assert"     = yes])
-AM_CONDITIONAL([ENABLE_GUARD_COND],  [test "$enable_guard_cond" = yes])
-AM_CONDITIONAL([ENABLE_GUARD_NULL],  [test "$enable_guard_null" = yes])
+AM_CONDITIONAL([ENABLE_ASSERT],     [test "$enable_assert"     = yes])
+AM_CONDITIONAL([ENABLE_GUARD_COND], [test "$enable_guard_cond" = yes])
+AM_CONDITIONAL([ENABLE_GUARD_NULL], [test "$enable_guard_null" = yes])
 
 dnl Packages (enabled by default)
-AM_CONDITIONAL([WITH_CMDLINE],       [test "$with_cmdline"      != no])
-AM_CONDITIONAL([WITH_CONSOLE],       [test "$with_console"      != no])
-AM_CONDITIONAL([WITH_ELF],           [test "$with_elf"          != no])
-AM_CONDITIONAL([WITH_MULTIBOOT2],    [test "$with_multiboot2"   != no])
-AM_CONDITIONAL([WITH_PFA],           [test "$with_pfa"          != no])
-AM_CONDITIONAL([WITH_UNITS],         [test "$with_units"        != no])
+AM_CONDITIONAL([WITH_CMDLINE],      [test "$with_cmdline"      != no])
+AM_CONDITIONAL([WITH_CONSOLE],      [test "$with_console"      != no])
+AM_CONDITIONAL([WITH_ELF],          [test "$with_elf"          != no])
+AM_CONDITIONAL([WITH_MULTIBOOT2],   [test "$with_multiboot2"   != no])
+AM_CONDITIONAL([WITH_PFA],          [test "$with_pfa"          != no])
+AM_CONDITIONAL([WITH_UNITS],        [test "$with_units"        != no])
 
 dnl Packages (disabled by default)
-AM_CONDITIONAL([WITH_LIBC_MEMSET],   [test "$with_libc_memset"  = yes])
-AM_CONDITIONAL([WITH_LIBC_STRCPY],   [test "$with_libc_strcpy"  = yes])
-AM_CONDITIONAL([WITH_LIBC_STRLEN],   [test "$with_libc_strlen"  = yes])
+AM_CONDITIONAL([WITH_LIBC_MEMSET],  [test "$with_libc_memset"  = yes])
+AM_CONDITIONAL([WITH_LIBC_STRCPY],  [test "$with_libc_strcpy"  = yes])
+AM_CONDITIONAL([WITH_LIBC_STRLEN],  [test "$with_libc_strlen"  = yes])
 
 
 
