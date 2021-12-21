@@ -15,6 +15,16 @@ extern "C" {
 
 #define KERNAUX_ARCH_I386_PAGES_COUNT_MAX (1024 * 1024)
 
+#define KERNAUX_ARCH_I386_ADDR_TO_PDE_INDEX(addr) \
+    ((((uint32_t)addr) & 0xFFFFFFFF) >> 22)
+#define KERNAUX_ARCH_I386_ADDR_TO_PTE_INDEX(addr) \
+    (((((uint32_t)addr) & 0xFFFFFFFF) >> 12) & 0x3FF)
+
+#define KERNAUX_ARCH_I386_ADDR_TO_PDE_ADDR(addr) \
+    ((((uint32_t)addr) & 0xFFFFFFFF) >> 12)
+#define KERNAUX_ARCH_I386_ADDR_TO_PTE_ADDR(addr) \
+    KERNAUX_ARCH_I386_ADDR_TO_PDE_ADDR(addr)
+
 // CR0 bits
 #define KERNAUX_ARCH_I386_CR0_PE ((uint32_t)0x00000001) // 0:  Protected Mode Enable
 #define KERNAUX_ARCH_I386_CR0_MP ((uint32_t)0x00000002) // 1:  Monitor co-processor
