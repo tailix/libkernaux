@@ -7,7 +7,13 @@ extern "C" {
 
 #include <stdint.h>
 
-#define KERNAUX_ARCH_I386_PAGE_DIR_TABLE_LENGTH 1024
+#define KERNAUX_ARCH_I386_PAGE_SIZE     (1024 * 4)        // 4 KiB
+#define KERNAUX_ARCH_I386_PAGE_BIG_SIZE (1024 * 1024 * 4) // 4 MiB
+
+#define KERNAUX_ARCH_I386_PAGE_DIR_ENTRIES_COUNT   1024
+#define KERNAUX_ARCH_I386_PAGE_TABLE_ENTRIES_COUNT 1024
+
+#define KERNAUX_ARCH_I386_PAGES_COUNT_MAX (1024 * 1024)
 
 // CR0 bits
 #define KERNAUX_ARCH_I386_CR0_PE ((uint32_t)0x00000001) // 0:  Protected Mode Enable
@@ -89,13 +95,13 @@ __attribute__((packed));
 
 // Page directory
 struct KernAux_Arch_I386_PageDir {
-    struct KernAux_Arch_I386_PDE pdes[KERNAUX_ARCH_I386_PAGE_DIR_TABLE_LENGTH];
+    struct KernAux_Arch_I386_PDE pdes[KERNAUX_ARCH_I386_PAGE_DIR_ENTRIES_COUNT];
 }
 __attribute__((packed));
 
 // Page table
 struct KernAux_Arch_I386_PageTable {
-    struct KernAux_Arch_I386_PTE ptes[KERNAUX_ARCH_I386_PAGE_DIR_TABLE_LENGTH];
+    struct KernAux_Arch_I386_PTE ptes[KERNAUX_ARCH_I386_PAGE_TABLE_ENTRIES_COUNT];
 }
 __attribute__((packed));
 
