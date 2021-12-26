@@ -6,7 +6,7 @@
 #include <kernaux/asm/i386.h>
 #endif
 
-#include <kernaux/console.h>
+#include <kernaux/drivers/console.h>
 #include <kernaux/libc.h>
 #include <kernaux/printf.h>
 

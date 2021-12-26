@@ -6,7 +6,7 @@ nobase_include_HEADERS = \
 	kernaux/asm/x86_64.h \
 	kernaux/assert.h \
 	kernaux/cmdline.h \
-	kernaux/console.h \
+	kernaux/drivers/console.h \
 	kernaux/itoa.h \
 	kernaux/libc.h \
 	kernaux/multiboot2.h \
