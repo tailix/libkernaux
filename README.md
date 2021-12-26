@@ -18,11 +18,11 @@ Table of contents
   * [Installation](#installation)
   * [Development](#development)
   * [Cross](#cross)
-* [Portability](#portability)
-* [Discussion](#discussion)
 * [Summary](#summary)
   * [Pure code size](#pure-code-size)
   * [Used header files](#used-header-files)
+* [Portability](#portability)
+* [Discussion](#discussion)
 
 
 
@@ -219,29 +219,6 @@ Disassembly of section .text:
 
 
 
-Portability
------------
-
-Except GNU/Linux, the library is periodically successfully built (starting with
-`./autogen.sh`) and tested with **autoconf**, **automake**, **binutils** and
-**gcc**/**clang** (depending on what is present) on the following operating
-systems:
-
-* FreeBSD 13.0
-* Minix 3.3.0
-* NetBSD 9.2
-* OpenBSD 7.0
-
-
-
-Discussion
-----------
-
-* [Topic on OSDev.org forum](https://forum.osdev.org/viewtopic.php?f=1&t=37958)
-* [Thread on r/osdev](https://www.reddit.com/r/osdev/comments/k3ueeu/libkernaux_auxiliary_library_for_kernel/)
-
-
-
 Summary
 -------
 
@@ -272,3 +249,26 @@ SUM:                            29            422             89           2186
 * `stdbool.h`
 * `stddef.h`
 * `stdint.h`
+
+
+
+Portability
+-----------
+
+Except GNU/Linux, the library is periodically successfully built (starting with
+`./autogen.sh`) and tested with **autoconf**, **automake**, **binutils** and
+**gcc**/**clang** (depending on what is present) on the following operating
+systems:
+
+* FreeBSD 13.0
+* Minix 3.3.0
+* NetBSD 9.2
+* OpenBSD 7.0
+
+
+
+Discussion
+----------
+
+* [Topic on OSDev.org forum](https://forum.osdev.org/viewtopic.php?f=1&t=37958)
+* [Thread on r/osdev](https://www.reddit.com/r/osdev/comments/k3ueeu/libkernaux_auxiliary_library_for_kernel/)
