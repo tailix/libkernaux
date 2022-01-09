@@ -19,11 +19,11 @@ void main(
         panic("Multiboot 2 magic number is invalid");
     }
 
-    KernAux_Multiboot2_print(multiboot2_info, printf);
-
     if (!KernAux_Multiboot2_is_valid(multiboot2_info)) {
         panic("Multiboot 2 info is invalid");
     }
+
+    KernAux_Multiboot2_print(multiboot2_info, printf);
 }
 
 void halt()
