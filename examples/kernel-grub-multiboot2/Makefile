@@ -23,10 +23,13 @@ CFLAGS = \
 
 OBJS = main.c.o start.S.o
 
-all: run
+all: run0
 
-run: $(IMAGE)
+run0: $(IMAGE)
 	qemu-system-i386 -cdrom $< -serial stdio -display none
+
+run1: $(IMAGE)
+	qemu-system-i386 -cdrom $< -serial stdio
 
 clean:
 	rm -f $(IMAGE) $(KERNEL) $(OBJS)
