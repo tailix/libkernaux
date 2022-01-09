@@ -15,6 +15,7 @@ CFLAGS =               \
 	-pedantic            \
 	-Wall                \
 	-Wextra              \
+	-Werror              \
 	-ffreestanding       \
 	-fno-builtin         \
 	-fno-stack-protector \
