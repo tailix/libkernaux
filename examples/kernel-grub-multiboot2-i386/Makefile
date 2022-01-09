@@ -10,7 +10,7 @@ ROOTFS = rootfs
 GRUBCFG = $(ROOTFS)/boot/grub/grub.cfg
 KERNEL  = $(ROOTFS)/boot/kernel
 
-CFLAGS =               \
+CFLAGS = \
 	-std=c99             \
 	-pedantic            \
 	-Wall                \
