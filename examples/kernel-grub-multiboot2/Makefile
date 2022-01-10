@@ -5,6 +5,9 @@ CCPREFIX = i386-elftailix-
 AS = $(CCPREFIX)as
 CC = $(CCPREFIX)gcc
 
+GRUB_FILE = grub-file
+GRUB_MKRESCUE = grub-mkrescue
+
 IMAGE = image.iso
 LINKERSCR = linker.ld
 ROOTFS = rootfs
@@ -32,11 +35,11 @@ clean:
 	rm -f $(IMAGE) $(KERNEL) $(OBJS)
 
 $(IMAGE): $(GRUBCFG) $(KERNEL)
-	grub-mkrescue $(ROOTFS) -o $@
+	$(GRUB_MKRESCUE) $(ROOTFS) -o $@
 
 $(KERNEL): $(LINKERSCR) $(OBJS)
 	$(CC) -T $(LINKERSCR) -o $@ $(OBJS) -ffreestanding -nostdlib -lgcc -lkernaux -Wl,-L../..
-	grub-file --is-x86-multiboot2 $@
+	$(GRUB_FILE) --is-x86-multiboot2 $@
 
 %.c.o: %.c
 	$(CC) -c $< -o $@ $(CFLAGS)
