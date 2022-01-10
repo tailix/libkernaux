@@ -1,3 +1,5 @@
+all: run
+
 CCPREFIX = i386-elftailix-
 
 AS = $(CCPREFIX)as
@@ -23,13 +25,8 @@ CFLAGS = \
 
 OBJS = main.c.o start.S.o
 
-all: run0
-
-run0: $(IMAGE)
+run: $(IMAGE)
 	qemu-system-i386 -cdrom $< -serial stdio -display none
-
-run1: $(IMAGE)
-	qemu-system-i386 -cdrom $< -serial stdio
 
 clean:
 	rm -f $(IMAGE) $(KERNEL) $(OBJS)
