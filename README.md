@@ -15,6 +15,7 @@ Table of contents
 * [API](#api)
 * [Tips](#tips)
   * [Non-default options](#non-default-options)
+  * [Default options](#default-options)
   * [Installation](#installation)
   * [Development](#development)
   * [Cross](#cross)
@@ -87,6 +88,15 @@ are some non-default options:
   * `--with[out]-libc-memset`
   * `--with[out]-libc-strcpy`
   * `--with[out]-libc-strlen`
+
+### Default options
+
+* `--with[out]-cmdline`
+* `--with[out]-console`
+* `--with[out]-elf`
+* `--with[out]-multiboot2`
+* `--with[out]-pfa`
+* `--with[out]-units`
 
 ### Installation
 
