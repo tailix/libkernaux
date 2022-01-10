@@ -41,7 +41,7 @@ TESTS += \
 endif
 
 if WITH_CONSOLE
-libkernaux_a_SOURCES += src/drivers/console.c
+libkernaux_a_SOURCES += src/console.c
 endif
 
 if WITH_ELF

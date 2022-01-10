@@ -2,7 +2,7 @@
 #include <stdint.h>
 
 #include <kernaux/asm/i386.h>
-#include <kernaux/drivers/console.h>
+#include <kernaux/console.h>
 #include <kernaux/multiboot2.h>
 
 void halt();

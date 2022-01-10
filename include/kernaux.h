@@ -8,6 +8,7 @@
 
 #include <kernaux/assert.h>
 #include <kernaux/cmdline.h>
+#include <kernaux/console.h>
 #include <kernaux/elf.h>
 #include <kernaux/itoa.h>
 #include <kernaux/multiboot2.h>
@@ -17,5 +18,3 @@
 
 #include <kernaux/arch/i386.h>
 #include <kernaux/arch/x86_64.h>
-
-#include <kernaux/drivers/console.h>

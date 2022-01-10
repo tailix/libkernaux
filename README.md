@@ -37,7 +37,7 @@ API
     * [Simple](/examples/assert_simple.c)
     * [Guards](/examples/assert_guards.c)
 * Device drivers (for debugging only)
-  * [Serial console](/include/kernaux/drivers/console.h)
+  * [Serial console](/include/kernaux/console.h)
   * Framebuffer *(planned)*
 * Algorithms
   * [Simple command line parser](/include/kernaux/cmdline.h)
