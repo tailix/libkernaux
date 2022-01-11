@@ -147,8 +147,6 @@ struct KernAux_Multiboot2_Tag_FramebufferInfo {
     unsigned framebuffer_bpp            : 8;
     unsigned framebuffer_type           : 8;
     unsigned reserved1                  : 8;
-
-    unsigned char data[];
 }
 __attribute__((packed));
 
