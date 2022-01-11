@@ -205,8 +205,6 @@ struct KernAux_Multiboot2_Tag_SMBIOSTables {
     unsigned major : 8;
     unsigned minor : 8;
     unsigned char reserved1[6];
-
-    unsigned char data[];
 }
 __attribute__((packed));
 
