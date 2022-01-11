@@ -301,7 +301,10 @@ void KernAux_Multiboot2_Tag_MemoryMap_print(
     printf("  entries:\n");
 
     const struct KernAux_Multiboot2_Tag_MemoryMap_EntryBase *const entries =
-        (struct KernAux_Multiboot2_Tag_MemoryMap_EntryBase*)tag->data;
+        (struct KernAux_Multiboot2_Tag_MemoryMap_EntryBase*)
+        KERNAUX_MULTIBOOT2_TAG_DATA(
+            (struct KernAux_Multiboot2_Tag_MemoryMap*)tag
+        );
 
     for (
         size_t index = 0;

@@ -118,8 +118,6 @@ struct KernAux_Multiboot2_Tag_MemoryMap {
 
     unsigned entry_size    : 32;
     unsigned entry_version : 32;
-
-    unsigned char data[];
 }
 __attribute__((packed));
 
