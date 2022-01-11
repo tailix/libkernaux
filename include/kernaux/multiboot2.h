@@ -159,8 +159,6 @@ struct KernAux_Multiboot2_Tag_ELFSymbols {
     unsigned ent_size  : 16;
     unsigned shndx     : 16;
     unsigned reserved1 : 16;
-
-    unsigned char section_headers[];
 }
 __attribute__((packed));
 
