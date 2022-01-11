@@ -15,11 +15,6 @@ jobs:
         opt: ['', '-O0', '-O3']
         assert: ['--enable-assert', '--disable-assert']
         guard: ['--enable-guard', '--disable-guard']
-        werror:
-          - cflag: '-Werror'
-            mb2: '--without-multiboot2'
-          - cflag: ''
-            mb2: '--with-multiboot2'
     steps:
       - uses: actions/checkout@v2
       - name: dependencies
@@ -27,7 +22,7 @@ jobs:
       - name: autogen
         run: ./autogen.sh
       - name: configure
-        run: ./configure ${{matrix.assert}} ${{matrix.guard}} ${{matrix.werror.mb2}} CC='${{matrix.cc}}' CFLAGS='${{matrix.opt}} ${{matrix.werror.cflag}}'
+        run: ./configure ${{matrix.assert}} ${{matrix.guard}} CC='${{matrix.cc}}' CFLAGS='${{matrix.opt}}'
       - name: make
         run: make
       - name: check
