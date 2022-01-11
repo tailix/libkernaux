@@ -64,7 +64,6 @@ $(IMAGE): $(FULL_KERNEL) $(FULL_LIMINE_CD) $(FULL_LIMINE_ELTORITO) $(FULL_LIMINE
 
 $(FULL_KERNEL): $(LINKERSCR) $(OBJS)
 	$(CC) -T $(LINKERSCR) -o $@ $(OBJS) -ffreestanding -nostdlib -zmax-page-size=0x1000 -static -lgcc # -lkernaux -Wl,-L../..
-	$(GRUB_FILE) --is-x86-multiboot2 $@
 
 $(FULL_LIMINE_CD):
 	cp -f $(LIMINE_CD) $(FULL_LIMINE_CD)

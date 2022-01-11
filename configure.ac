@@ -99,7 +99,7 @@ AS_IF([test "$with_libc_strlen"   = yes], [AC_DEFINE([WITH_LIBC_STRLEN],        
 
 
 
-AM_INIT_AUTOMAKE([1.9 subdir-objects -Wall -Werror])
+AM_INIT_AUTOMAKE([1.9 subdir-objects])
 
 AC_CONFIG_FILES([
   Makefile
