@@ -1,4 +1,5 @@
 /image.iso
+/main.c.d
 /rootfs/boot/kernel
 /rootfs/boot/limine-cd.bin
 /rootfs/boot/limine-eltorito-efi.bin
