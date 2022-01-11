@@ -41,7 +41,7 @@ uint16_t kernaux_asm_i386_inportw(const uint16_t port)
 uint32_t kernaux_asm_i386_inportd(const uint16_t port)
 {
     register uint32_t result;
-    __asm__ volatile("ind %1, %0" : "=a" (result) : "dN" (port));
+    __asm__ volatile("inl %1, %0" : "=a" (result) : "dN" (port));
     return result;
 }
 
@@ -57,7 +57,7 @@ void kernaux_asm_i386_outportw(const uint16_t port, const uint16_t value)
 
 void kernaux_asm_i386_outportd(const uint16_t port, const uint32_t value)
 {
-    __asm__ volatile("outd %1, %0" : : "dN" (port), "a" (value));
+    __asm__ volatile("outl %1, %0" : : "dN" (port), "a" (value));
 }
 
 #ifdef __cplusplus
