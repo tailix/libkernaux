@@ -87,8 +87,6 @@ struct KernAux_Multiboot2_Tag_Module {
 
     unsigned mod_start : 32;
     unsigned mod_end   : 32;
-
-    char cmdline[];
 }
 __attribute__((packed));
 

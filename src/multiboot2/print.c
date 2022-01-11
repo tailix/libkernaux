@@ -140,7 +140,7 @@ void KernAux_Multiboot2_TagBase_print(
 
             printf("  start: %u\n",   tag_module->mod_start);
             printf("  end: %u\n",     tag_module->mod_end);
-            printf("  cmdline: %s\n", tag_module->cmdline);
+            printf("  cmdline: %s\n", KERNAUX_MULTIBOOT2_TAG_DATA(tag_module));
         }
         break;
     case KERNAUX_MULTIBOOT2_TAGTYPE_BASIC_MEMORY_INFO:

@@ -200,7 +200,7 @@ bool KernAux_Multiboot2_Tag_Module_is_valid(
     size_t index = 1;
 
     for (
-        const char *ptr = tag->cmdline;
+        const char *ptr = (char*)KERNAUX_MULTIBOOT2_TAG_DATA(tag);
         *ptr && index < tag->base.size;
         ++ptr
     ) {
