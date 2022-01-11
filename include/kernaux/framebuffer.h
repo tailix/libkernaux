@@ -5,6 +5,16 @@
 extern "C" {
 #endif
 
+typedef struct
+{
+    
+    int framewidth;
+    int frameheight;
+    
+
+} framebuffer_t;
+
+
 #ifdef __cplusplus
 }
 #endif
