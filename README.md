@@ -39,7 +39,7 @@ API
     * [Guards](/examples/assert_guards.c)
 * Device drivers (for debugging only)
   * [Serial console](/include/kernaux/console.h)
-  * [Framebuffer](/include/kernaux/framebuffer.h) *(planned)*
+  * [Framebuffer](/include/kernaux/framebuffer.h) *(work in progress)*
 * Algorithms
   * [Simple command line parser](/include/kernaux/cmdline.h)
     * [Example](/examples/cmdline.c)
