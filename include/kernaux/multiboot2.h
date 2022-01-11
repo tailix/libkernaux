@@ -236,8 +236,6 @@ struct KernAux_Multiboot2_Tag_EFIMemoryMap {
 
     unsigned descriptor_size    : 32;
     unsigned descriptor_version : 32;
-
-    unsigned char data[];
 }
 __attribute__((packed));
 
