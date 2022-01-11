@@ -226,8 +226,6 @@ struct KernAux_Multiboot2_Tag_NetworkingInfo {
     // type = 16
     // size = ?
     struct KernAux_Multiboot2_TagBase base;
-
-    unsigned char data[];
 }
 __attribute__((packed));
 
