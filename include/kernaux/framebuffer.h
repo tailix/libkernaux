@@ -29,6 +29,8 @@ framebuffer_t framebuffer(uint32_t width, uint32_t height, uint32_t pitch, uint3
 
 void putpixel(framebuffer_t* _framebuffer, int x, int y, uint32_t hex);
 
+void fillarea(framebuffer_t* _framebuffer, int x0, int y0, int x1, int y1, uint32_t hex);
+
 #ifdef __cplusplus
 }
 #endif

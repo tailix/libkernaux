@@ -1,3 +1,9 @@
+/***
+ * @ashusharmasigdev [ashusharma.sigmadev@gmail.com] [github.com/ashusharmasigdev] [caitraos.github.io]
+ * date : 12 jan 2022
+ * file : framebuffer.c
+*/
+
 #ifdef HAVE_CONFIG_H
 #include "config.h"
 #endif
@@ -66,4 +72,21 @@ void putpixel(framebuffer_t* _framebuffer, int x, int y, uint32_t hex)
             break;
         }
     }
+}
+
+
+void fillarea(framebuffer_t* _framebuffer, int x0, int y0, int x1, int y1, uint32_t hex)
+{
+    if(y1 > _framebuffer->height)   return;
+    if(x1 > _framebuffer->width)   return;
+    
+    for (int y = y0; y < y1; y++)
+    {
+        for (int x = x0; x < x1; x++)
+        {
+            putpixel(_framebuffer, x, y, hex);
+        }
+        
+    }
+    
 }
