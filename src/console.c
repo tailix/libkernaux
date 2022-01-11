@@ -12,7 +12,7 @@
 
 void kernaux_console_putc(const char c __attribute__((unused)))
 {
-#if defined(ASM_I386) || defined(ASM_X86_64)
+#ifdef ASM_I386
     kernaux_asm_i386_outportb(0x3F8, c);
 #endif
 }
