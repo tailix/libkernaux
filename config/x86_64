@@ -1,0 +1,3 @@
+#!/bin/sh
+
+exec ./configure --host='x86_64-elf' --enable-assert --enable-guard --with-libc AR=`which x86_64-elf-ar` CC=`which x86_64-elf-gcc` RANLIB=`which x86_64-elf-ranlib` CFLAGS='-ffreestanding -nostdlib -fno-builtin -fno-stack-protector'

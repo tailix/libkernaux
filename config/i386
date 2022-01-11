@@ -1,0 +1,3 @@
+#!/bin/sh
+
+exec ./configure --host='i386-elf' --enable-assert --enable-guard --with-libc AR=`which i386-elf-ar` CC=`which i386-elf-gcc` RANLIB=`which i386-elf-ranlib` CFLAGS='-ffreestanding -nostdlib -fno-builtin -fno-stack-protector'

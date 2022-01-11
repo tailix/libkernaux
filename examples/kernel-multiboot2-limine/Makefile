@@ -1,6 +1,6 @@
 all: run
 
-CCPREFIX = i386-elftailix-
+CCPREFIX = i386-elf-
 
 AS = $(CCPREFIX)as
 CC = $(CCPREFIX)gcc
