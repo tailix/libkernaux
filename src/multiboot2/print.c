@@ -120,7 +120,9 @@ void KernAux_Multiboot2_TagBase_print(
     case KERNAUX_MULTIBOOT2_TAGTYPE_BOOT_CMD_LINE:
         printf(
             "  cmdline: %s\n",
-            ((struct KernAux_Multiboot2_Tag_BootCmdLine*)tag_base)->cmdline
+            KERNAUX_MULTIBOOT2_TAG_DATA(
+                (struct KernAux_Multiboot2_Tag_BootCmdLine*)tag_base
+            )
         );
         break;
     case KERNAUX_MULTIBOOT2_TAGTYPE_BOOT_LOADER_NAME:

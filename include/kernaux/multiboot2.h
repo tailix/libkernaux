@@ -5,9 +5,12 @@
 extern "C" {
 #endif
 
+#include <stdint.h>
 #include <stdbool.h>
 
 #define KERNAUX_MULTIBOOT2_MAGIC 0x36d76289
+
+#define KERNAUX_MULTIBOOT2_TAG_DATA(tag) (((uint8_t*)(tag)) + sizeof(*(tag)))
 
 /****************
  * Common types *
@@ -67,8 +70,6 @@ struct KernAux_Multiboot2_Tag_BootCmdLine {
     // type = 1
     // size = ?
     struct KernAux_Multiboot2_TagBase base;
-
-    char cmdline[];
 }
 __attribute__((packed));
 

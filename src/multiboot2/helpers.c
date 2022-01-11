@@ -63,5 +63,5 @@ const char *KernAux_Multiboot2_boot_cmd_line(
 
     if (!tag) return NULL;
 
-    return tag->cmdline;
+    return (char*)KERNAUX_MULTIBOOT2_TAG_DATA(tag);
 }
