@@ -39,7 +39,7 @@ API
     * [Guards](/examples/assert_guards.c)
 * Device drivers (for debugging only)
   * [Serial console](/include/kernaux/console.h)
-  * Framebuffer *(planned)*
+  * [Framebuffer](/include/kernaux/framebuffer.h) *(planned)*
 * Algorithms
   * [Simple command line parser](/include/kernaux/cmdline.h)
     * [Example](/examples/cmdline.c)
@@ -94,6 +94,7 @@ are some non-default options:
 * `--with[out]-cmdline`
 * `--with[out]-console`
 * `--with[out]-elf`
+* `--with[out]-framebuffer`
 * `--with[out]-multiboot2`
 * `--with[out]-pfa`
 * `--with[out]-units`

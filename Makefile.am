@@ -49,6 +49,10 @@ libkernaux_a_SOURCES += src/elf.c
 TESTS += tests/test_elf
 endif
 
+if WITH_FRAMEBUFFER
+libkernaux_a_SOURCES += src/framebuffer.c
+endif
+
 if WITH_MULTIBOOT2
 libkernaux_a_SOURCES += \
 	src/multiboot2/helpers.c \

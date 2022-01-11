@@ -8,6 +8,7 @@ nobase_include_HEADERS = \
 	kernaux/cmdline.h \
 	kernaux/console.h \
 	kernaux/elf.h \
+	kernaux/framebuffer.h \
 	kernaux/itoa.h \
 	kernaux/libc.h \
 	kernaux/multiboot2.h \

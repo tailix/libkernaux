@@ -10,6 +10,7 @@
 #include <kernaux/cmdline.h>
 #include <kernaux/console.h>
 #include <kernaux/elf.h>
+#include <kernaux/framebuffer.h>
 #include <kernaux/itoa.h>
 #include <kernaux/multiboot2.h>
 #include <kernaux/pfa.h>
