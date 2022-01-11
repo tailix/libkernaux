@@ -128,7 +128,9 @@ void KernAux_Multiboot2_TagBase_print(
     case KERNAUX_MULTIBOOT2_TAGTYPE_BOOT_LOADER_NAME:
         printf(
             "  name: %s\n",
-            ((struct KernAux_Multiboot2_Tag_BootLoaderName*)tag_base)->name
+            KERNAUX_MULTIBOOT2_TAG_DATA(
+                (struct KernAux_Multiboot2_Tag_BootLoaderName*)tag_base
+            )
         );
         break;
     case KERNAUX_MULTIBOOT2_TAGTYPE_MODULE:

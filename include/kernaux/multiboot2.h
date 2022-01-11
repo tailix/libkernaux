@@ -77,8 +77,6 @@ struct KernAux_Multiboot2_Tag_BootLoaderName {
     // type = 2
     // size = ?
     struct KernAux_Multiboot2_TagBase base;
-
-    char name[];
 }
 __attribute__((packed));
 
