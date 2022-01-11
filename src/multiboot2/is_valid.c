@@ -12,7 +12,7 @@ bool KernAux_Multiboot2_is_valid(
     if (multiboot2->total_size <= 8) return false;
 
     const struct KernAux_Multiboot2_TagBase *tag_base =
-        (struct KernAux_Multiboot2_TagBase*)multiboot2->data;
+        (struct KernAux_Multiboot2_TagBase*)KERNAUX_MULTIBOOT2_DATA(multiboot2);
 
     const struct KernAux_Multiboot2_TagBase *none_tag_base = NULL;
 
@@ -162,7 +162,7 @@ bool KernAux_Multiboot2_Tag_BootCmdLine_is_valid(
     size_t index = 1;
 
     for (
-        const char *ptr = (char*)KERNAUX_MULTIBOOT2_TAG_DATA(tag);
+        const char *ptr = (char*)KERNAUX_MULTIBOOT2_DATA(tag);
         *ptr && index < tag->base.size;
         ++ptr
     ) {
@@ -181,7 +181,7 @@ bool KernAux_Multiboot2_Tag_BootLoaderName_is_valid(
     size_t index = 1;
 
     for (
-        const char *ptr = (char*)KERNAUX_MULTIBOOT2_TAG_DATA(tag);
+        const char *ptr = (char*)KERNAUX_MULTIBOOT2_DATA(tag);
         *ptr && index < tag->base.size;
         ++ptr
     ) {
@@ -200,7 +200,7 @@ bool KernAux_Multiboot2_Tag_Module_is_valid(
     size_t index = 1;
 
     for (
-        const char *ptr = (char*)KERNAUX_MULTIBOOT2_TAG_DATA(tag);
+        const char *ptr = (char*)KERNAUX_MULTIBOOT2_DATA(tag);
         *ptr && index < tag->base.size;
         ++ptr
     ) {

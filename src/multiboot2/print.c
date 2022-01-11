@@ -82,7 +82,7 @@ void KernAux_Multiboot2_print(
     printf("  reserved1: %u\n", multiboot2->reserved1);
 
     const struct KernAux_Multiboot2_TagBase *tag_base =
-        (struct KernAux_Multiboot2_TagBase*)multiboot2->data;
+        (struct KernAux_Multiboot2_TagBase*)KERNAUX_MULTIBOOT2_DATA(multiboot2);
 
     while (tag_base <
            (struct KernAux_Multiboot2_TagBase*)
@@ -120,7 +120,7 @@ void KernAux_Multiboot2_TagBase_print(
     case KERNAUX_MULTIBOOT2_TAGTYPE_BOOT_CMD_LINE:
         printf(
             "  cmdline: %s\n",
-            KERNAUX_MULTIBOOT2_TAG_DATA(
+            KERNAUX_MULTIBOOT2_DATA(
                 (struct KernAux_Multiboot2_Tag_BootCmdLine*)tag_base
             )
         );
@@ -128,7 +128,7 @@ void KernAux_Multiboot2_TagBase_print(
     case KERNAUX_MULTIBOOT2_TAGTYPE_BOOT_LOADER_NAME:
         printf(
             "  name: %s\n",
-            KERNAUX_MULTIBOOT2_TAG_DATA(
+            KERNAUX_MULTIBOOT2_DATA(
                 (struct KernAux_Multiboot2_Tag_BootLoaderName*)tag_base
             )
         );
@@ -140,7 +140,7 @@ void KernAux_Multiboot2_TagBase_print(
 
             printf("  start: %u\n",   tag_module->mod_start);
             printf("  end: %u\n",     tag_module->mod_end);
-            printf("  cmdline: %s\n", KERNAUX_MULTIBOOT2_TAG_DATA(tag_module));
+            printf("  cmdline: %s\n", KERNAUX_MULTIBOOT2_DATA(tag_module));
         }
         break;
     case KERNAUX_MULTIBOOT2_TAGTYPE_BASIC_MEMORY_INFO:
@@ -302,9 +302,7 @@ void KernAux_Multiboot2_Tag_MemoryMap_print(
 
     const struct KernAux_Multiboot2_Tag_MemoryMap_EntryBase *const entries =
         (struct KernAux_Multiboot2_Tag_MemoryMap_EntryBase*)
-        KERNAUX_MULTIBOOT2_TAG_DATA(
-            (struct KernAux_Multiboot2_Tag_MemoryMap*)tag
-        );
+        KERNAUX_MULTIBOOT2_DATA((struct KernAux_Multiboot2_Tag_MemoryMap*)tag);
 
     for (
         size_t index = 0;

@@ -10,7 +10,7 @@ extern "C" {
 
 #define KERNAUX_MULTIBOOT2_MAGIC 0x36d76289
 
-#define KERNAUX_MULTIBOOT2_TAG_DATA(tag) (((uint8_t*)(tag)) + sizeof(*(tag)))
+#define KERNAUX_MULTIBOOT2_DATA(ptr) (((uint8_t*)(ptr)) + sizeof(*(ptr)))
 
 /****************
  * Common types *
@@ -44,8 +44,6 @@ enum KernAux_Multiboot2_TagType {
 struct KernAux_Multiboot2 {
     unsigned total_size : 32;
     unsigned reserved1  : 32;
-
-    unsigned char data[];
 }
 __attribute__((packed));
 
