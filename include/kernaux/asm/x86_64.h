@@ -7,6 +7,8 @@ extern "C" {
 
 #include <kernaux/arch/x86_64.h>
 
+void kernaux_asm_x86_64_hang() __attribute__((noreturn));
+
 #ifdef __cplusplus
 }
 #endif
