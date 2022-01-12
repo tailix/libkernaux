@@ -123,22 +123,11 @@ You can test with `make check`.
 
 ### Cross
 
-The library depends on `stdint.h` header. According to the standards it must be
-present in freestanding environment. However when you build GCC cross-compiler
-using [instructions from OSDev Wiki](https://wiki.osdev.org/GCC_Cross-Compiler)
-the header is missing. To fix this issue you may add `use_gcc_stdint=provide` to
-the end of `gcc/config.gcc` in your GCC source code extracted from tarball:
-
-```
-echo 'use_gcc_stdint=provide' >> gcc-11.2.0/gcc/config.gcc
-```
-
----
-
 Create configuration script with `./autogen.sh`.
 
 Let's assume that your target triplet is `i386-elf`. Configure with
-cross-compiler in `$PATH` to make without it in `$PATH`:
+[cross-compiler](https://wiki.osdev.org/GCC_Cross-Compiler) in `$PATH` to make
+without it in `$PATH`:
 
 ```
 ./configure \
