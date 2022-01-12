@@ -178,8 +178,8 @@ just `make && sudo make install`. Instead use the following commands:
 * `sudo make install-exec install-data`
 
 To install into specific directory use full path:
-`DESTDIR="$(pwd)/dest" sudo make install-exec install-data` instead of
-`DESTDIR=dest sudo make install-exec install-data`.
+`DESTDIR="$(pwd)/dest" make install-exec install-data` instead of
+`DESTDIR=dest make install-exec install-data`.
 
 Check if compilation targets i386: `objdump -d src/asm/i386.o`. It should output
 something like this:
