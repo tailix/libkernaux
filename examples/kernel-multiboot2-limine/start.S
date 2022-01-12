@@ -32,9 +32,9 @@ _kernel_stack_end:
 
 .global _start
 
-.type _start, @function
-.type main,   @function
-.type halt,   @function
+.type _start,   @function
+.type main,     @function
+.type poweroff, @function
 
 _start:
     mov $_kernel_stack_end, %esp // Initialize stack
@@ -43,6 +43,6 @@ _start:
     push %eax // Multiboot magic number
     call main
 
-    call halt
+    call poweroff
 
 .size _start, . - _start

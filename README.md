@@ -19,9 +19,6 @@ Table of contents
   * [Installation](#installation)
   * [Development](#development)
   * [Cross](#cross)
-* [Summary](#summary)
-  * [Pure code size](#pure-code-size)
-  * [Used header files](#used-header-files)
 * [Portability](#portability)
 * [Discussion](#discussion)
 
@@ -37,9 +34,11 @@ API
   * [Assertions](/include/kernaux/assert.h)
     * [Simple](/examples/assert_simple.c)
     * [Guards](/examples/assert_guards.c)
+  * Stack trace *(planned)*
 * Device drivers (for debugging only)
   * [Serial console](/include/kernaux/console.h)
   * [Framebuffer](/include/kernaux/framebuffer.h) *(work in progress)*
+  * USB *(planned)*
 * Algorithms
   * [Simple command line parser](/include/kernaux/cmdline.h)
     * [Example](/examples/cmdline.c)
@@ -47,6 +46,7 @@ API
     * [Example](/examples/pfa.c)
 * Data formats
   * [Multiboot 2 (GRUB 2) information parser](/include/kernaux/multiboot2.h)
+  * Stivale 2 (Limine) information parser *(planned)*
   * [ELF utils](/include/kernaux/elf.h) *(work in progress)*
 * Utilities
   * [Measurement units utils](/include/kernaux/units.h) *(work in progress)*
@@ -78,7 +78,7 @@ are some non-default options:
 * `--enable-guard` - safely return from functions even when assertions are
   disabled. This option doesn't have effect if your assetion function was set
   and ends execution of application (kernel). However it prevents crashes and
-  undefined behabior in other cases. You can also separately enable or disable
+  undefined behavior in other cases. You can also separately enable or disable
   guards:
   * `--(enable|disable)-guard-cond`
   * `--(enable|disable)-guard-null`
@@ -123,22 +123,11 @@ You can test with `make check`.
 
 ### Cross
 
-The library depends on `stdint.h` header. According to the standards it must be
-present in freestanding environment. However when you build GCC cross-compiler
-using [instructions from OSDev Wiki](https://wiki.osdev.org/GCC_Cross-Compiler)
-the header is missing. To fix this issue you may add `use_gcc_stdint=provide` to
-the end of `gcc/config.gcc` in your GCC source code extracted from tarball:
-
-```
-echo 'use_gcc_stdint=provide' >> gcc-11.2.0/gcc/config.gcc
-```
-
----
-
 Create configuration script with `./autogen.sh`.
 
 Let's assume that your target triplet is `i386-elf`. Configure with
-cross-compiler in `$PATH` to make without it in `$PATH`:
+[cross-compiler](https://wiki.osdev.org/GCC_Cross-Compiler) in `$PATH` to make
+without it in `$PATH`:
 
 ```
 ./configure \
@@ -189,8 +178,8 @@ just `make && sudo make install`. Instead use the following commands:
 * `sudo make install-exec install-data`
 
 To install into specific directory use full path:
-`DESTDIR="$(pwd)/dest" sudo make install-exec install-data` instead of
-`DESTDIR=dest sudo make install-exec install-data`.
+`DESTDIR="$(pwd)/dest" make install-exec install-data` instead of
+`DESTDIR=dest make install-exec install-data`.
 
 Check if compilation targets i386: `objdump -d src/asm/i386.o`. It should output
 something like this:
@@ -229,39 +218,6 @@ Disassembly of section .text:
   20:   0f 22 e0              mov    %eax,%cr4
   23:   c3                    ret
 ```
-
-
-
-Summary
--------
-
-This information is updated from time to time.
-
-### Pure code size
-
-`cloc --vcs=git include/ src/`
-
-```
--------------------------------------------------------------------------------
-Language                     files          blank        comment           code
--------------------------------------------------------------------------------
-C                               12            236             19           1548
-C/C++ Header                    14            179             64            597
-Assembly                         2              7              6             28
-make                             1              0              0             13
--------------------------------------------------------------------------------
-SUM:                            29            422             89           2186
--------------------------------------------------------------------------------
-```
-
-### Used header files
-
-`git grep '#include <' -- include/ src/ | grep -v '#include <kernaux' | awk '{ print $2; }' | sort | uniq`
-
-* `stdarg.h`
-* `stdbool.h`
-* `stddef.h`
-* `stdint.h`
 
 
 
