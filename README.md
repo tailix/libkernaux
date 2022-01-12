@@ -19,9 +19,6 @@ Table of contents
   * [Installation](#installation)
   * [Development](#development)
   * [Cross](#cross)
-* [Summary](#summary)
-  * [Pure code size](#pure-code-size)
-  * [Used header files](#used-header-files)
 * [Portability](#portability)
 * [Discussion](#discussion)
 
@@ -221,39 +218,6 @@ Disassembly of section .text:
   20:   0f 22 e0              mov    %eax,%cr4
   23:   c3                    ret
 ```
-
-
-
-Summary
--------
-
-This information is updated from time to time.
-
-### Pure code size
-
-`cloc --vcs=git include/ src/`
-
-```
--------------------------------------------------------------------------------
-Language                     files          blank        comment           code
--------------------------------------------------------------------------------
-C                               12            236             19           1548
-C/C++ Header                    14            179             64            597
-Assembly                         2              7              6             28
-make                             1              0              0             13
--------------------------------------------------------------------------------
-SUM:                            29            422             89           2186
--------------------------------------------------------------------------------
-```
-
-### Used header files
-
-`git grep '#include <' -- include/ src/ | grep -v '#include <kernaux' | awk '{ print $2; }' | sort | uniq`
-
-* `stdarg.h`
-* `stdbool.h`
-* `stddef.h`
-* `stdint.h`
 
 
 
