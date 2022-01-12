@@ -40,6 +40,7 @@ API
 * Device drivers (for debugging only)
   * [Serial console](/include/kernaux/console.h)
   * [Framebuffer](/include/kernaux/framebuffer.h) *(planned)*
+  * USB *(planned)*
 * Algorithms
   * [Simple command line parser](/include/kernaux/cmdline.h)
     * [Example](/examples/cmdline.c)
