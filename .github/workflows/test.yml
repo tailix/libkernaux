@@ -42,23 +42,3 @@ jobs:
         run: cppcheck --quiet --error-exitcode=1 --std=c99 --enable=warning,style,performance,portability --suppress=duplicateExpression --suppress=staticStringCompare examples/
       - name: cppcheck tests
         run: cppcheck --quiet --error-exitcode=1 --std=c99 --enable=warning,style,performance,portability --suppress=unusedStructMember tests/
-
-  # TODO: finish this
-  example-kernel-multiboot2-grub:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: dependencies
-        run: sudo apt install build-essential qemu-system-x86 wget
-      - name: vendor-fetch
-        run: ./vendor/fetch.sh
-      - name: vendor-cross-build
-        run: ./vendor/cross/build/i386/build.sh
-      - name: autogen
-        run: ./autogen.sh
-      - name: configure
-        run: PATH="$(pwd)/vendor/cross/bin:$PATH" ./config/i386
-      - name: make
-        run: make libkernaux.a
-      - name: make-example
-        run: cd 'examples/kernel-multiboot2-grub' && make image.iso
