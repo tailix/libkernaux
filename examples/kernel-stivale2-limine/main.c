@@ -4,6 +4,7 @@
 #include "stivale2.h"
 
 static void poweroff();
+static void putc(char c);
 
 // We need to tell the stivale bootloader where we want our stack to be.
 // We are going to allocate our stack as an array in .bss.
@@ -104,6 +105,21 @@ void *stivale2_get_tag(struct stivale2_struct *stivale2_struct, uint64_t id) {
  
 // The following will be our kernel's entry point.
 void _start(struct stivale2_struct *stivale2_struct __attribute__((unused))) {
+    putc('H');
+    putc('e');
+    putc('l');
+    putc('l');
+    putc('o');
+    putc(',');
+    putc(' ');
+    putc('W');
+    putc('o');
+    putc('r');
+    putc('l');
+    putc('d');
+    putc('!');
+    putc('\n');
+
     poweroff();
 }
 
@@ -111,5 +127,12 @@ void poweroff()
 {
     const uint16_t port  = 0x604;
     const uint16_t value = 0x2000;
+    __asm__ volatile("outw %1, %0" : : "dN" (port), "a" (value));
+}
+
+void putc(const char c)
+{
+    const uint16_t port  = 0x3F8;
+    const uint16_t value = c;
     __asm__ volatile("outw %1, %0" : : "dN" (port), "a" (value));
 }
