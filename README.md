@@ -48,6 +48,7 @@ API
     * [Example](/examples/pfa.c)
 * Data formats
   * [Multiboot 2 (GRUB 2) information parser](/include/kernaux/multiboot2.h)
+  * Stivale 2 (Limine) information parser *(planned)*
   * [ELF utils](/include/kernaux/elf.h) *(work in progress)*
 * Utilities
   * [Measurement units utils](/include/kernaux/units.h) *(work in progress)*
