@@ -79,7 +79,7 @@ are some non-default options:
 * `--enable-guard` - safely return from functions even when assertions are
   disabled. This option doesn't have effect if your assetion function was set
   and ends execution of application (kernel). However it prevents crashes and
-  undefined behabior in other cases. You can also separately enable or disable
+  undefined behavior in other cases. You can also separately enable or disable
   guards:
   * `--(enable|disable)-guard-cond`
   * `--(enable|disable)-guard-null`
