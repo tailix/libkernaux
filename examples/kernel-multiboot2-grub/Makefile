@@ -1,15 +1,19 @@
-all: run
+all: test
 
-CCPREFIX = i386-elf-
+CCPREFIX = ../../vendor/cross/bin/i386-elf-
 
 AS = $(CCPREFIX)as
 CC = $(CCPREFIX)gcc
 
+DIFF = diff
 GRUB_FILE = grub-file
 GRUB_MKRESCUE = grub-mkrescue
+QEMU = qemu-system-i386
 
+EXPECTED = expected.txt
 IMAGE = image.iso
 LINKERSCR = linker.ld
+OUTPUT = output.txt
 ROOTFS = rootfs
 
 GRUBCFG = $(ROOTFS)/boot/grub/grub.cfg
@@ -28,11 +32,14 @@ CFLAGS = \
 
 OBJS = main.c.o start.S.o
 
+test: run
+	$(DIFF) -a -Z $(EXPECTED) $(OUTPUT)
+
 run: $(IMAGE)
-	qemu-system-i386 -cdrom $< -serial stdio -display none
+	$(QEMU) -cdrom $< -serial stdio -display none | tee $(OUTPUT)
 
 clean:
-	rm -f $(IMAGE) $(KERNEL) $(OBJS)
+	rm -f $(OUTPUT) $(IMAGE) $(KERNEL) $(OBJS)
 
 $(IMAGE): $(GRUBCFG) $(KERNEL)
 	$(GRUB_MKRESCUE) $(ROOTFS) -o $@

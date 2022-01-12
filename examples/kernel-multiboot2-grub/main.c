@@ -5,7 +5,7 @@
 #include <kernaux/console.h>
 #include <kernaux/multiboot2.h>
 
-void halt();
+void poweroff();
 
 static void panic(const char *str);
 
@@ -28,9 +28,9 @@ void main(
     KernAux_Multiboot2_print(multiboot2_info, kernaux_console_printf);
 }
 
-void halt()
+void poweroff()
 {
-    panic("Kernel main function returned");
+    kernaux_asm_i386_outportw(0x604, 0x2000);
 }
 
 void panic(const char *const str)

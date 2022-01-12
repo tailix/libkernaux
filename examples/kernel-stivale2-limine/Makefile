@@ -1,15 +1,19 @@
-all: run
+all: test
 
-CCPREFIX = x86_64-elf-
+CCPREFIX = ../../vendor/cross/bin/x86_64-elf-
 
 AS = $(CCPREFIX)as
 CC = $(CCPREFIX)gcc
 
+DIFF = diff
 LIMINE = ../../vendor/limine/build/bin
+QEMU = qemu-system-x86_64
 XORRISO = xorriso
 
+EXPECTED = expected.txt
 IMAGE = image.iso
 LINKERSCR = linker.ld
+OUTPUT = output.txt
 ROOTFS = rootfs
 
 LIMINE_CD       = $(LIMINE)/limine-cd.bin
@@ -52,11 +56,14 @@ CFLAGS = \
 
 OBJS = main.c.o # start.S.o
 
+test: run
+	$(DIFF) -a -Z $(EXPECTED) $(OUTPUT)
+
 run: $(IMAGE)
-	qemu-system-x86_64 -cdrom $< -serial stdio # -display none
+	$(QEMU) -cdrom $< -serial stdio -display none | tee $(OUTPUT)
 
 clean:
-	rm -f $(IMAGE) $(OBJS) $(FULL_KERNEL) $(FULL_LIMINE_CD) $(FULL_LIMINE_ELTORITO) $(FULL_LIMINE_SYS)
+	rm -f $(OUTPUT) $(IMAGE) $(FULL_KERNEL) $(FULL_LIMINE_CD) $(FULL_LIMINE_ELTORITO) $(FULL_LIMINE_SYS) $(OBJS)
 
 $(IMAGE): $(FULL_KERNEL) $(FULL_LIMINE_CD) $(FULL_LIMINE_ELTORITO) $(FULL_LIMINE_SYS)
 	$(XORRISO) -as mkisofs -b $(REL_LIMINE_CD) -no-emul-boot -boot-load-size 4 -boot-info-table --efi-boot $(REL_LIMINE_ELTORITO) -efi-boot-part --efi-boot-image --protective-msdos-label $(ROOTFS) -o $@
