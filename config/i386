@@ -1,3 +1,17 @@
 #!/bin/sh
 
-exec ./configure --host='i386-elf' --enable-assert --enable-guard --with-libc AR=`which i386-elf-ar` CC=`which i386-elf-gcc` RANLIB=`which i386-elf-ranlib` CFLAGS='-ffreestanding -nostdlib -fno-builtin -fno-stack-protector'
+set -e
+
+ARCH='i386'
+HOST="$ARCH-elf"
+REPO="$(pwd)"
+PREFIX="$REPO/vendor/cross"
+BIN="$PREFIX/bin"
+
+export     AR="$BIN/$HOST-ar"
+export     CC="$BIN/$HOST-gcc"
+export RANLIB="$BIN/$HOST-ranlib"
+
+export CFLAGS='-ffreestanding -nostdlib -fno-builtin -fno-stack-protector'
+
+./configure --host="$HOST" --enable-assert --enable-guard --with-libc
