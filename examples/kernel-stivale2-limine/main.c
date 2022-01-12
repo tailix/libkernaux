@@ -2,7 +2,9 @@
 #include <stddef.h>
 
 #include "stivale2.h"
- 
+
+static void poweroff();
+
 // We need to tell the stivale bootloader where we want our stack to be.
 // We are going to allocate our stack as an array in .bss.
 static uint8_t stack[8192];
@@ -126,8 +128,12 @@ void _start(struct stivale2_struct *stivale2_struct) {
     // a simple "Hello World" to screen.
     term_write("Hello World", 11);
  
-    // We're done, just hang...
-    for (;;) {
-        __asm__ ("hlt");
-    }
+    poweroff();
+}
+
+void poweroff()
+{
+    const uint16_t port  = 0x604;
+    const uint16_t value = 0x2000;
+    __asm__ volatile("outw %1, %0" : : "dN" (port), "a" (value));
 }
