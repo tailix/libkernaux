@@ -54,3 +54,13 @@
 /tests/test_pfa_assert
 /tests/test_printf
 /tests/test_units_human
+
+/vendor/*
+!/vendor/cross/
+!/vendor/fetch.sh
+!/vendor/limine/
+!/vendor/sha256sums.txt
+!/vendor/wget.txt
+
+/vendor/cross/*
+!/vendor/cross/.keep
