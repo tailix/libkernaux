@@ -42,6 +42,8 @@
 /examples/printf_va
 /examples/units_human
 
+/tests/multiboot2_header_print1
+/tests/multiboot2_header_print2
 /tests/multiboot2_info_print1
 /tests/multiboot2_info_print2
 /tests/test_cmdline
