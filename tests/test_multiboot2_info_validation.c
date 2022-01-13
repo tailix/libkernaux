@@ -527,10 +527,10 @@ tag_vbe_info_invalid_size = {
  **************/
 
 static const struct {
-    struct KernAux_Multiboot2 multiboot2;
+    struct KernAux_Multiboot2_Info multiboot2_info;
     struct KernAux_Multiboot2_ITag_None tag_none;
 } multiboot2_empty_valid = {
-    .multiboot2 = {
+    .multiboot2_info = {
         .total_size = 8 + 8,
         .reserved1 = 0,
     },
@@ -543,11 +543,11 @@ static const struct {
 };
 
 static const struct {
-    struct KernAux_Multiboot2 multiboot2;
+    struct KernAux_Multiboot2_Info multiboot2_info;
     struct KernAux_Multiboot2_ITag_BasicMemoryInfo tag_basic_memory_info;
     struct KernAux_Multiboot2_ITag_None tag_none;
 } multiboot2_with_some_additional_tag_valid = {
-    .multiboot2 = {
+    .multiboot2_info = {
         .total_size = 8 + 16 + 8,
         .reserved1 = 0,
     },
@@ -568,13 +568,13 @@ static const struct {
 };
 
 static const struct {
-    struct KernAux_Multiboot2 multiboot2;
+    struct KernAux_Multiboot2_Info multiboot2_info;
     struct KernAux_Multiboot2_ITag_BasicMemoryInfo tag_basic_memory_info;
     struct KernAux_Multiboot2_ITag_BIOSBootDevice tag_bios_boot_device;
     unsigned char _align1[4];
     struct KernAux_Multiboot2_ITag_None tag_none;
 } multiboot2_with_more_additional_tags_valid = {
-    .multiboot2 = {
+    .multiboot2_info = {
         .total_size = 8 + 16 + (20 + 4) + 8,
         .reserved1 = 0,
     },
@@ -604,10 +604,10 @@ static const struct {
 };
 
 static const struct {
-    struct KernAux_Multiboot2 multiboot2;
+    struct KernAux_Multiboot2_Info multiboot2_info;
     struct KernAux_Multiboot2_ITag_None tag_none;
 } multiboot2_empty_invalid_size = {
-    .multiboot2 = {
+    .multiboot2_info = {
         .total_size = 8,
         .reserved1 = 0,
     },
@@ -619,16 +619,17 @@ static const struct {
     },
 };
 
-static const struct KernAux_Multiboot2 multiboot2_without_none_tag_invalid = {
+static const struct KernAux_Multiboot2_Info
+multiboot2_without_none_tag_invalid = {
     .total_size = 8,
     .reserved1 = 0,
 };
 
 static const struct {
-    struct KernAux_Multiboot2 multiboot2;
+    struct KernAux_Multiboot2_Info multiboot2_info;
     struct KernAux_Multiboot2_ITag_BasicMemoryInfo tag_basic_memory_info;
 } multiboot2_with_invalid_last_tag_invalid = {
-    .multiboot2 = {
+    .multiboot2_info = {
         .total_size = 8 + 16,
         .reserved1 = 0,
     },
@@ -643,14 +644,14 @@ static const struct {
 };
 
 static const struct {
-    struct KernAux_Multiboot2 multiboot2;
+    struct KernAux_Multiboot2_Info multiboot2_info;
     struct KernAux_Multiboot2_ITag_BasicMemoryInfo tag_basic_memory_info;
     struct KernAux_Multiboot2_ITag_None tag_none1;
     struct KernAux_Multiboot2_ITag_BIOSBootDevice tag_bios_boot_device;
     unsigned char _align1[4];
     struct KernAux_Multiboot2_ITag_None tag_none2;
 } multiboot2_with_early_none_tag_invalid = {
-    .multiboot2 = {
+    .multiboot2_info = {
         .total_size = 8 + 16 + 8 + (20 + 4) + 8,
         .reserved1 = 0,
     },
@@ -686,13 +687,13 @@ static const struct {
 };
 
 static const struct {
-    struct KernAux_Multiboot2 multiboot2;
+    struct KernAux_Multiboot2_Info multiboot2_info;
     struct KernAux_Multiboot2_ITag_BasicMemoryInfo tag_basic_memory_info;
     struct KernAux_Multiboot2_ITag_BIOSBootDevice tag_bios_boot_device;
     unsigned char _align1[4];
     struct KernAux_Multiboot2_ITag_None tag_none;
 } multiboot2_with_more_additional_tags_invalid_size_too_big = {
-    .multiboot2 = {
+    .multiboot2_info = {
         .total_size = 8 + 16 + (20 + 4) + 8 + 1,
         .reserved1 = 0,
     },
@@ -722,13 +723,13 @@ static const struct {
 };
 
 static const struct {
-    struct KernAux_Multiboot2 multiboot2;
+    struct KernAux_Multiboot2_Info multiboot2_info;
     struct KernAux_Multiboot2_ITag_BasicMemoryInfo tag_basic_memory_info;
     struct KernAux_Multiboot2_ITag_BIOSBootDevice tag_bios_boot_device;
     unsigned char _align1[4];
     struct KernAux_Multiboot2_ITag_None tag_none;
 } multiboot2_with_more_additional_tags_invalid_size_too_small = {
-    .multiboot2 = {
+    .multiboot2_info = {
         .total_size = 8 + 16 + (20 + 4) + 8 - 1,
         .reserved1 = 0,
     },
@@ -765,45 +766,49 @@ int main()
 {
     // Multiboot2
 
-    assert(KernAux_Multiboot2_is_valid(
-        (struct KernAux_Multiboot2*)&multiboot2_example1
+    assert(KernAux_Multiboot2_Info_is_valid(
+        (struct KernAux_Multiboot2_Info*)&multiboot2_example1
     ));
 
-    assert(KernAux_Multiboot2_is_valid(
-        (struct KernAux_Multiboot2*)&multiboot2_example2
+    assert(KernAux_Multiboot2_Info_is_valid(
+        (struct KernAux_Multiboot2_Info*)&multiboot2_example2
     ));
 
-    assert(KernAux_Multiboot2_is_valid(&multiboot2_empty_valid.multiboot2));
+    assert(KernAux_Multiboot2_Info_is_valid(
+        &multiboot2_empty_valid.multiboot2_info
+    ));
 
-    assert(KernAux_Multiboot2_is_valid(
-        &multiboot2_with_some_additional_tag_valid.multiboot2)
+    assert(KernAux_Multiboot2_Info_is_valid(
+        &multiboot2_with_some_additional_tag_valid.multiboot2_info)
     );
 
-    assert(KernAux_Multiboot2_is_valid(
-        &multiboot2_with_more_additional_tags_valid.multiboot2)
+    assert(KernAux_Multiboot2_Info_is_valid(
+        &multiboot2_with_more_additional_tags_valid.multiboot2_info)
     );
 
-    assert(!KernAux_Multiboot2_is_valid(
-        &multiboot2_empty_invalid_size.multiboot2
+    assert(!KernAux_Multiboot2_Info_is_valid(
+        &multiboot2_empty_invalid_size.multiboot2_info
     ));
 
-    assert(!KernAux_Multiboot2_is_valid(&multiboot2_without_none_tag_invalid));
-
-    assert(!KernAux_Multiboot2_is_valid(
-        &multiboot2_with_invalid_last_tag_invalid.multiboot2
+    assert(!KernAux_Multiboot2_Info_is_valid(
+        &multiboot2_without_none_tag_invalid
     ));
 
-    assert(!KernAux_Multiboot2_is_valid(
-        &multiboot2_with_early_none_tag_invalid.multiboot2
+    assert(!KernAux_Multiboot2_Info_is_valid(
+        &multiboot2_with_invalid_last_tag_invalid.multiboot2_info
     ));
 
-    assert(!KernAux_Multiboot2_is_valid(
-        &multiboot2_with_more_additional_tags_invalid_size_too_big.multiboot2)
-    );
+    assert(!KernAux_Multiboot2_Info_is_valid(
+        &multiboot2_with_early_none_tag_invalid.multiboot2_info
+    ));
 
-    assert(!KernAux_Multiboot2_is_valid(
-        &multiboot2_with_more_additional_tags_invalid_size_too_small.multiboot2)
-    );
+    assert(!KernAux_Multiboot2_Info_is_valid(
+        &multiboot2_with_more_additional_tags_invalid_size_too_big.multiboot2_info
+    ));
+
+    assert(!KernAux_Multiboot2_Info_is_valid(
+        &multiboot2_with_more_additional_tags_invalid_size_too_small.multiboot2_info
+    ));
 
     // ITagBase
 

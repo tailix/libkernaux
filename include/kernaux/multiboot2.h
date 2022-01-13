@@ -74,7 +74,7 @@ enum KernAux_Multiboot2_ITag {
     KERNAUX_MULTIBOOT2_ITAG_IMAGE_LOAD_BASE_PHYS_ADDR = 21,
 };
 
-struct KernAux_Multiboot2 {
+struct KernAux_Multiboot2_Info {
     uint32_t total_size;
     uint32_t reserved1;
 }
@@ -321,28 +321,28 @@ __attribute__((packed));
  ********************************/
 
 const struct KernAux_Multiboot2_ITagBase
-*KernAux_Multiboot2_first_tag_with_type(
-    const struct KernAux_Multiboot2 *multiboot2,
+*KernAux_Multiboot2_Info_first_tag_with_type(
+    const struct KernAux_Multiboot2_Info *multiboot2_info,
     enum KernAux_Multiboot2_ITag tag_type
 );
 
 const struct KernAux_Multiboot2_ITagBase
-*KernAux_Multiboot2_tag_with_type_after(
-    const struct KernAux_Multiboot2 *multiboot2,
+*KernAux_Multiboot2_Info_tag_with_type_after(
+    const struct KernAux_Multiboot2_Info *multiboot2_info,
     enum KernAux_Multiboot2_ITag tag_type,
     const struct KernAux_Multiboot2_ITagBase *after_tag
 );
 
-const char *KernAux_Multiboot2_boot_cmd_line(
-    const struct KernAux_Multiboot2 *multiboot2
+const char *KernAux_Multiboot2_Info_boot_cmd_line(
+    const struct KernAux_Multiboot2_Info *multiboot2_info
 );
 
 /*******************************
  * Information print functions *
  *******************************/
 
-void KernAux_Multiboot2_print(
-    const struct KernAux_Multiboot2 *multiboot2,
+void KernAux_Multiboot2_Info_print(
+    const struct KernAux_Multiboot2_Info *multiboot2_info,
     void (*printf)(const char *format, ...)
 );
 
@@ -355,8 +355,8 @@ void KernAux_Multiboot2_ITagBase_print(
  * Information validation functions *
  ************************************/
 
-bool KernAux_Multiboot2_is_valid(
-    const struct KernAux_Multiboot2 *multiboot2
+bool KernAux_Multiboot2_Info_is_valid(
+    const struct KernAux_Multiboot2_Info *multiboot2_info
 );
 
 bool KernAux_Multiboot2_ITagBase_is_valid(

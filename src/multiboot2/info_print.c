@@ -73,21 +73,21 @@ const char *KernAux_Multiboot2_ITag_to_str(
     }
 }
 
-void KernAux_Multiboot2_print(
-    const struct KernAux_Multiboot2 *const multiboot2,
+void KernAux_Multiboot2_Info_print(
+    const struct KernAux_Multiboot2_Info *const multiboot2_info,
     void (*const printf)(const char *format, ...) __attribute__((format(printf, 1, 2)))
 ) {
     printf("Multiboot 2 info\n");
-    printf("  size: %u\n", multiboot2->total_size);
-    printf("  reserved1: %u\n", multiboot2->reserved1);
+    printf("  size: %u\n", multiboot2_info->total_size);
+    printf("  reserved1: %u\n", multiboot2_info->reserved1);
 
     const struct KernAux_Multiboot2_ITagBase *tag_base =
         (struct KernAux_Multiboot2_ITagBase*)
-        KERNAUX_MULTIBOOT2_DATA(multiboot2);
+        KERNAUX_MULTIBOOT2_DATA(multiboot2_info);
 
     while (tag_base <
            (struct KernAux_Multiboot2_ITagBase*)
-           ((unsigned char*)multiboot2 + multiboot2->total_size))
+           ((unsigned char*)multiboot2_info + multiboot2_info->total_size))
     {
         if (!KernAux_Multiboot2_ITagBase_is_valid(tag_base)) return;
 
