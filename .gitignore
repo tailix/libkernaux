@@ -55,9 +55,6 @@
 /tests/test_printf
 /tests/test_units_human
 
-<<<<<<< HEAD
-/.vscode
-=======
 /vendor/*
 !/vendor/cross/
 !/vendor/fetch.sh
@@ -79,4 +76,3 @@
 
 /vendor/cross/build/x86_64/gcc/*
 !/vendor/cross/build/x86_64/gcc/.keep
->>>>>>> 35f09ea17dbb95003df3740f0438327980ef17b1

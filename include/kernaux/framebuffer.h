@@ -36,7 +36,6 @@ enum kernAux_vga_color_palatte
 
 typedef struct KernAux_Framebuffer
 {
-    
     uint32_t    frame_width;
     uint32_t    frame_height;
     uint32_t    frame_pitch;

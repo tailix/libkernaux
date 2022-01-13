@@ -13,7 +13,7 @@ void KernAux_Framebuffer_init_default(KernAux_Framebuffer* _framebuffer, uint32_
     KERNAUX_ASSERT_RETURN(pitch > 0);
     KERNAUX_ASSERT_RETURN(depth > 0);
     KERNAUX_ASSERT(buf_addr != NULL);
-    
+
     _framebuffer->frame_width = width;
     _framebuffer->frame_height = height;
     _framebuffer->frame_pitch = pitch;
