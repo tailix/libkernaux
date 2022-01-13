@@ -444,6 +444,18 @@ struct KernAux_Multiboot2_ITag_MemoryMap_EntryBase {
 }
 __attribute__((packed));
 
+/********************
+ * String functions *
+ ********************/
+
+const char *KernAux_Multiboot2_HTag_to_str(
+    enum KernAux_Multiboot2_HTag tag_type
+);
+
+const char *KernAux_Multiboot2_ITag_to_str(
+    enum KernAux_Multiboot2_ITag tag_type
+);
+
 /***************************
  * Header helper functions *
  ***************************/
