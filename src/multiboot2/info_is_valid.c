@@ -4,6 +4,7 @@
 
 #include <kernaux/multiboot2.h>
 
+#include <stdbool.h>
 #include <stddef.h>
 
 bool KernAux_Multiboot2_Info_is_valid(
