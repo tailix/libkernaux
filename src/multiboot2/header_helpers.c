@@ -25,7 +25,7 @@ const struct KernAux_Multiboot2_HTagBase
         if (tag_base->type == tag_type) return tag_base;
 
         tag_base = (struct KernAux_Multiboot2_HTagBase*)(
-            (uint8_t*)tag_base + ((tag_base->size + 7) & ~7)
+            (uint8_t*)tag_base + KERNAUX_MULTIBOOT2_TAG_SIZE_ALIGN(tag_base)
         );
     }
 
@@ -51,7 +51,7 @@ const struct KernAux_Multiboot2_HTagBase
         if (tag_base->type == tag_type && tag_base > after_tag) return tag_base;
 
         tag_base = (struct KernAux_Multiboot2_HTagBase*)(
-            (uint8_t*)tag_base + ((tag_base->size + 7) & ~7)
+            (uint8_t*)tag_base + KERNAUX_MULTIBOOT2_TAG_SIZE_ALIGN(tag_base)
         );
     }
 

@@ -30,7 +30,8 @@ bool KernAux_Multiboot2_Info_is_valid(
         }
 
         tag_base = (struct KernAux_Multiboot2_ITagBase*)(
-            (unsigned char*)tag_base + ((tag_base->size + 7) & ~7)
+            (unsigned char*)tag_base +
+            KERNAUX_MULTIBOOT2_TAG_SIZE_ALIGN(tag_base)
         );
     }
 
