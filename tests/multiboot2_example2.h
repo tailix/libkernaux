@@ -1,5 +1,5 @@
 static const struct {
-    struct KernAux_Multiboot2 multiboot2;
+    struct KernAux_Multiboot2_Info multiboot2_info;
 
     struct {
         struct KernAux_Multiboot2_ITag_BootCmdLine tag;
@@ -113,7 +113,7 @@ static const struct {
 
     struct KernAux_Multiboot2_ITag_None tag_none;
 } multiboot2_example2 = {
-    .multiboot2 = {
+    .multiboot2_info = {
         .total_size = sizeof(multiboot2_example2),
         .reserved1 = 0,
     },
