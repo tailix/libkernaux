@@ -19,7 +19,7 @@ static const struct {
     },
     .tag_none = {
         .base = {
-            .type = KERNAUX_MULTIBOOT2_TAGTYPE_NONE,
+            .type = KERNAUX_MULTIBOOT2_ITAG_NONE,
             .size = sizeof(multiboot2_without_boot_cmd_line.tag_none),
         },
     },
@@ -44,7 +44,7 @@ static const struct {
     .tag_boot_cmd_line = {
         .tag = {
             .base = {
-                .type = KERNAUX_MULTIBOOT2_TAGTYPE_BOOT_CMD_LINE,
+                .type = KERNAUX_MULTIBOOT2_ITAG_BOOT_CMD_LINE,
                 .size = sizeof(
                     multiboot2_with_some_boot_cmd_line.tag_boot_cmd_line
                 ),
@@ -54,7 +54,7 @@ static const struct {
     },
     .tag_none = {
         .base = {
-            .type = KERNAUX_MULTIBOOT2_TAGTYPE_NONE,
+            .type = KERNAUX_MULTIBOOT2_ITAG_NONE,
             .size = sizeof(multiboot2_with_some_boot_cmd_line.tag_none),
         },
     },
@@ -86,7 +86,7 @@ static const struct {
     .tag_boot_cmd_line1 = {
         .tag = {
             .base = {
-                .type = KERNAUX_MULTIBOOT2_TAGTYPE_BOOT_CMD_LINE,
+                .type = KERNAUX_MULTIBOOT2_ITAG_BOOT_CMD_LINE,
                 .size = sizeof(
                     multiboot2_with_two_boot_cmd_lines.tag_boot_cmd_line1
                 ),
@@ -97,7 +97,7 @@ static const struct {
     .tag_boot_cmd_line2 = {
         .tag = {
             .base = {
-                .type = KERNAUX_MULTIBOOT2_TAGTYPE_BOOT_CMD_LINE,
+                .type = KERNAUX_MULTIBOOT2_ITAG_BOOT_CMD_LINE,
                 .size = sizeof(
                     multiboot2_with_two_boot_cmd_lines.tag_boot_cmd_line2
                 ),
@@ -107,7 +107,7 @@ static const struct {
     },
     .tag_none = {
         .base = {
-            .type = KERNAUX_MULTIBOOT2_TAGTYPE_NONE,
+            .type = KERNAUX_MULTIBOOT2_ITAG_NONE,
             .size = sizeof(multiboot2_with_two_boot_cmd_lines.tag_none),
         },
     },
@@ -146,196 +146,196 @@ int main()
     assert(
         KernAux_Multiboot2_first_tag_with_type(
             (struct KernAux_Multiboot2*)multiboot2_example1,
-            KERNAUX_MULTIBOOT2_TAGTYPE_EFI_32BIT_SYSTEM_TABLE_PTR
+            KERNAUX_MULTIBOOT2_ITAG_EFI_32BIT_SYSTEM_TABLE_PTR
         ) == 0
     );
 
     assert(
         KernAux_Multiboot2_first_tag_with_type(
             (struct KernAux_Multiboot2*)multiboot2_example1,
-            KERNAUX_MULTIBOOT2_TAGTYPE_EFI_64BIT_SYSTEM_TABLE_PTR
+            KERNAUX_MULTIBOOT2_ITAG_EFI_64BIT_SYSTEM_TABLE_PTR
         ) == 0
     );
 
     assert(
         KernAux_Multiboot2_first_tag_with_type(
             (struct KernAux_Multiboot2*)multiboot2_example1,
-            KERNAUX_MULTIBOOT2_TAGTYPE_SMBIOS_TABLES
+            KERNAUX_MULTIBOOT2_ITAG_SMBIOS_TABLES
         ) == 0
     );
 
     assert(
         KernAux_Multiboot2_first_tag_with_type(
             (struct KernAux_Multiboot2*)multiboot2_example1,
-            KERNAUX_MULTIBOOT2_TAGTYPE_ACPI_NEW_RSDP
+            KERNAUX_MULTIBOOT2_ITAG_ACPI_NEW_RSDP
         ) == 0
     );
 
     assert(
         KernAux_Multiboot2_first_tag_with_type(
             (struct KernAux_Multiboot2*)multiboot2_example1,
-            KERNAUX_MULTIBOOT2_TAGTYPE_NETWORKING_INFO
+            KERNAUX_MULTIBOOT2_ITAG_NETWORKING_INFO
         ) == 0
     );
 
     assert(
         KernAux_Multiboot2_first_tag_with_type(
             (struct KernAux_Multiboot2*)multiboot2_example1,
-            KERNAUX_MULTIBOOT2_TAGTYPE_EFI_MEMORY_MAP
+            KERNAUX_MULTIBOOT2_ITAG_EFI_MEMORY_MAP
         ) == 0
     );
 
     assert(
         KernAux_Multiboot2_first_tag_with_type(
             (struct KernAux_Multiboot2*)multiboot2_example1,
-            KERNAUX_MULTIBOOT2_TAGTYPE_EFI_BOOT_SERVICES_NOT_TERMINATED
+            KERNAUX_MULTIBOOT2_ITAG_EFI_BOOT_SERVICES_NOT_TERMINATED
         ) == 0
     );
 
     assert(
         KernAux_Multiboot2_first_tag_with_type(
             (struct KernAux_Multiboot2*)multiboot2_example1,
-            KERNAUX_MULTIBOOT2_TAGTYPE_EFI_32BIT_IMAGE_HANDLE_PTR
+            KERNAUX_MULTIBOOT2_ITAG_EFI_32BIT_IMAGE_HANDLE_PTR
         ) == 0
     );
 
     assert(
         KernAux_Multiboot2_first_tag_with_type(
             (struct KernAux_Multiboot2*)multiboot2_example1,
-            KERNAUX_MULTIBOOT2_TAGTYPE_EFI_64BIT_IMAGE_HANDLE_PTR
+            KERNAUX_MULTIBOOT2_ITAG_EFI_64BIT_IMAGE_HANDLE_PTR
         ) == 0
     );
 
     assert(
         KernAux_Multiboot2_first_tag_with_type(
             &multiboot2_example2.multiboot2,
-            KERNAUX_MULTIBOOT2_TAGTYPE_NONE
+            KERNAUX_MULTIBOOT2_ITAG_NONE
         ) == &multiboot2_example2.tag_none.base
     );
 
     assert(
         KernAux_Multiboot2_first_tag_with_type(
             &multiboot2_example2.multiboot2,
-            KERNAUX_MULTIBOOT2_TAGTYPE_BOOT_CMD_LINE
+            KERNAUX_MULTIBOOT2_ITAG_BOOT_CMD_LINE
         ) == &multiboot2_example2.tag_boot_cmd_line.tag.base
     );
 
     assert(
         KernAux_Multiboot2_first_tag_with_type(
             &multiboot2_example2.multiboot2,
-            KERNAUX_MULTIBOOT2_TAGTYPE_BOOT_LOADER_NAME
+            KERNAUX_MULTIBOOT2_ITAG_BOOT_LOADER_NAME
         ) == &multiboot2_example2.tag_boot_loader_name.tag.base
     );
 
     assert(
         KernAux_Multiboot2_first_tag_with_type(
             &multiboot2_example2.multiboot2,
-            KERNAUX_MULTIBOOT2_TAGTYPE_MODULE
+            KERNAUX_MULTIBOOT2_ITAG_MODULE
         ) == &multiboot2_example2.tag_module1.tag.base
     );
 
     assert(
         KernAux_Multiboot2_first_tag_with_type(
             &multiboot2_example2.multiboot2,
-            KERNAUX_MULTIBOOT2_TAGTYPE_BASIC_MEMORY_INFO
+            KERNAUX_MULTIBOOT2_ITAG_BASIC_MEMORY_INFO
         ) == &multiboot2_example2.tag_basic_memory_info.base
     );
 
     assert(
         KernAux_Multiboot2_first_tag_with_type(
             &multiboot2_example2.multiboot2,
-            KERNAUX_MULTIBOOT2_TAGTYPE_FRAMEBUFFER_INFO
+            KERNAUX_MULTIBOOT2_ITAG_FRAMEBUFFER_INFO
         ) == &multiboot2_example2.tag_framebuffer_info.tag.base
     );
 
     assert(
         KernAux_Multiboot2_first_tag_with_type(
             &multiboot2_example2.multiboot2,
-            KERNAUX_MULTIBOOT2_TAGTYPE_ELF_SYMBOLS
+            KERNAUX_MULTIBOOT2_ITAG_ELF_SYMBOLS
         ) == &multiboot2_example2.tag_elf_symbols.tag.base
     );
 
     assert(
         KernAux_Multiboot2_first_tag_with_type(
             &multiboot2_example2.multiboot2,
-            KERNAUX_MULTIBOOT2_TAGTYPE_APM_TABLE
+            KERNAUX_MULTIBOOT2_ITAG_APM_TABLE
         ) == &multiboot2_example2.tag_apm_table.base
     );
 
     assert(
         KernAux_Multiboot2_first_tag_with_type(
             &multiboot2_example2.multiboot2,
-            KERNAUX_MULTIBOOT2_TAGTYPE_EFI_32BIT_SYSTEM_TABLE_PTR
+            KERNAUX_MULTIBOOT2_ITAG_EFI_32BIT_SYSTEM_TABLE_PTR
         ) == &multiboot2_example2.tag_efi_32bit_system_table_ptr.base
     );
 
     assert(
         KernAux_Multiboot2_first_tag_with_type(
             &multiboot2_example2.multiboot2,
-            KERNAUX_MULTIBOOT2_TAGTYPE_EFI_64BIT_SYSTEM_TABLE_PTR
+            KERNAUX_MULTIBOOT2_ITAG_EFI_64BIT_SYSTEM_TABLE_PTR
         ) == &multiboot2_example2.tag_efi_64bit_system_table_ptr.base
     );
 
     assert(
         KernAux_Multiboot2_first_tag_with_type(
             &multiboot2_example2.multiboot2,
-            KERNAUX_MULTIBOOT2_TAGTYPE_SMBIOS_TABLES
+            KERNAUX_MULTIBOOT2_ITAG_SMBIOS_TABLES
         ) == &multiboot2_example2.tag_smbios_tables.tag.base
     );
 
     assert(
         KernAux_Multiboot2_first_tag_with_type(
             &multiboot2_example2.multiboot2,
-            KERNAUX_MULTIBOOT2_TAGTYPE_ACPI_OLD_RSDP
+            KERNAUX_MULTIBOOT2_ITAG_ACPI_OLD_RSDP
         ) == &multiboot2_example2.tag_acpi_old_rsdp.tag.base
     );
 
     assert(
         KernAux_Multiboot2_first_tag_with_type(
             &multiboot2_example2.multiboot2,
-            KERNAUX_MULTIBOOT2_TAGTYPE_ACPI_NEW_RSDP
+            KERNAUX_MULTIBOOT2_ITAG_ACPI_NEW_RSDP
         ) == &multiboot2_example2.tag_acpi_new_rsdp.tag.base
     );
 
     assert(
         KernAux_Multiboot2_first_tag_with_type(
             &multiboot2_example2.multiboot2,
-            KERNAUX_MULTIBOOT2_TAGTYPE_NETWORKING_INFO
+            KERNAUX_MULTIBOOT2_ITAG_NETWORKING_INFO
         ) == &multiboot2_example2.tag_networking_info.tag.base
     );
 
     assert(
         KernAux_Multiboot2_first_tag_with_type(
             &multiboot2_example2.multiboot2,
-            KERNAUX_MULTIBOOT2_TAGTYPE_EFI_MEMORY_MAP
+            KERNAUX_MULTIBOOT2_ITAG_EFI_MEMORY_MAP
         ) == &multiboot2_example2.tag_efi_memory_map.tag.base
     );
 
     assert(
         KernAux_Multiboot2_first_tag_with_type(
             &multiboot2_example2.multiboot2,
-            KERNAUX_MULTIBOOT2_TAGTYPE_EFI_BOOT_SERVICES_NOT_TERMINATED
+            KERNAUX_MULTIBOOT2_ITAG_EFI_BOOT_SERVICES_NOT_TERMINATED
         ) == &multiboot2_example2.tag_efi_boot_services_not_terminated.base
     );
 
     assert(
         KernAux_Multiboot2_first_tag_with_type(
             &multiboot2_example2.multiboot2,
-            KERNAUX_MULTIBOOT2_TAGTYPE_EFI_32BIT_IMAGE_HANDLE_PTR
+            KERNAUX_MULTIBOOT2_ITAG_EFI_32BIT_IMAGE_HANDLE_PTR
         ) == &multiboot2_example2.tag_efi_32bit_image_handle_ptr.base
     );
 
     assert(
         KernAux_Multiboot2_first_tag_with_type(
             &multiboot2_example2.multiboot2,
-            KERNAUX_MULTIBOOT2_TAGTYPE_EFI_64BIT_IMAGE_HANDLE_PTR
+            KERNAUX_MULTIBOOT2_ITAG_EFI_64BIT_IMAGE_HANDLE_PTR
         ) == &multiboot2_example2.tag_efi_64bit_image_handle_ptr.base
     );
 
     assert(
         KernAux_Multiboot2_first_tag_with_type(
             &multiboot2_example2.multiboot2,
-            KERNAUX_MULTIBOOT2_TAGTYPE_IMAGE_LOAD_BASE_PHYS_ADDR
+            KERNAUX_MULTIBOOT2_ITAG_IMAGE_LOAD_BASE_PHYS_ADDR
         ) == &multiboot2_example2.tag_image_load_base_phys_addr.base
     );
 
@@ -344,10 +344,10 @@ int main()
     assert(
         KernAux_Multiboot2_tag_with_type_after(
             &multiboot2_example2.multiboot2,
-            KERNAUX_MULTIBOOT2_TAGTYPE_MODULE,
+            KERNAUX_MULTIBOOT2_ITAG_MODULE,
             KernAux_Multiboot2_first_tag_with_type(
                 &multiboot2_example2.multiboot2,
-                KERNAUX_MULTIBOOT2_TAGTYPE_MODULE
+                KERNAUX_MULTIBOOT2_ITAG_MODULE
             ) - 1
         ) == (struct KernAux_Multiboot2_TagBase*)
             &multiboot2_example2.tag_module1
@@ -356,10 +356,10 @@ int main()
     assert(
         KernAux_Multiboot2_tag_with_type_after(
             &multiboot2_example2.multiboot2,
-            KERNAUX_MULTIBOOT2_TAGTYPE_MODULE,
+            KERNAUX_MULTIBOOT2_ITAG_MODULE,
             KernAux_Multiboot2_first_tag_with_type(
                 &multiboot2_example2.multiboot2,
-                KERNAUX_MULTIBOOT2_TAGTYPE_MODULE
+                KERNAUX_MULTIBOOT2_ITAG_MODULE
             )
         ) == (struct KernAux_Multiboot2_TagBase*)
             &multiboot2_example2.tag_module2
@@ -368,13 +368,13 @@ int main()
     assert(
         KernAux_Multiboot2_tag_with_type_after(
             &multiboot2_example2.multiboot2,
-            KERNAUX_MULTIBOOT2_TAGTYPE_MODULE,
+            KERNAUX_MULTIBOOT2_ITAG_MODULE,
             KernAux_Multiboot2_tag_with_type_after(
                 &multiboot2_example2.multiboot2,
-                KERNAUX_MULTIBOOT2_TAGTYPE_MODULE,
+                KERNAUX_MULTIBOOT2_ITAG_MODULE,
                 KernAux_Multiboot2_first_tag_with_type(
                     &multiboot2_example2.multiboot2,
-                    KERNAUX_MULTIBOOT2_TAGTYPE_MODULE
+                    KERNAUX_MULTIBOOT2_ITAG_MODULE
                 )
             )
         ) == 0

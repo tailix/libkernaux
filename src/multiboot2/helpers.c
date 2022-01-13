@@ -8,7 +8,7 @@
 
 const struct KernAux_Multiboot2_TagBase *KernAux_Multiboot2_first_tag_with_type(
     const struct KernAux_Multiboot2 *const multiboot2,
-    const enum KernAux_Multiboot2_TagType tag_type
+    const enum KernAux_Multiboot2_ITag tag_type
 ) {
     const struct KernAux_Multiboot2_TagBase *tag_base =
         (struct KernAux_Multiboot2_TagBase*)KERNAUX_MULTIBOOT2_DATA(multiboot2);
@@ -30,7 +30,7 @@ const struct KernAux_Multiboot2_TagBase *KernAux_Multiboot2_first_tag_with_type(
 
 const struct KernAux_Multiboot2_TagBase *KernAux_Multiboot2_tag_with_type_after(
     const struct KernAux_Multiboot2 *const multiboot2,
-    const enum KernAux_Multiboot2_TagType tag_type,
+    const enum KernAux_Multiboot2_ITag tag_type,
     const struct KernAux_Multiboot2_TagBase *const after_tag
 ) {
     const struct KernAux_Multiboot2_TagBase *tag_base =
@@ -58,7 +58,7 @@ const char *KernAux_Multiboot2_boot_cmd_line(
         (struct KernAux_Multiboot2_Tag_BootCmdLine*)
         KernAux_Multiboot2_first_tag_with_type(
             multiboot2,
-            KERNAUX_MULTIBOOT2_TAGTYPE_BOOT_CMD_LINE
+            KERNAUX_MULTIBOOT2_ITAG_BOOT_CMD_LINE
         );
 
     if (!tag) return NULL;

@@ -15,21 +15,21 @@
 
 static const struct KernAux_Multiboot2_Tag_None tag_none_valid = {
     .base = {
-        .type = KERNAUX_MULTIBOOT2_TAGTYPE_NONE,
+        .type = KERNAUX_MULTIBOOT2_ITAG_NONE,
         .size = 8,
     },
 };
 
 static const struct KernAux_Multiboot2_Tag_None tag_none_invalid_type = {
     .base = {
-        .type = KERNAUX_MULTIBOOT2_TAGTYPE_BOOT_CMD_LINE,
+        .type = KERNAUX_MULTIBOOT2_ITAG_BOOT_CMD_LINE,
         .size = 8,
     },
 };
 
 static const struct KernAux_Multiboot2_Tag_None tag_none_invalid_size = {
     .base = {
-        .type = KERNAUX_MULTIBOOT2_TAGTYPE_NONE,
+        .type = KERNAUX_MULTIBOOT2_ITAG_NONE,
         .size = 9,
     },
 };
@@ -44,7 +44,7 @@ static const struct {
 } tag_boot_cmd_line_with_empty_cmdline_valid = {
     .tag = {
         .base = {
-            .type = KERNAUX_MULTIBOOT2_TAGTYPE_BOOT_CMD_LINE,
+            .type = KERNAUX_MULTIBOOT2_ITAG_BOOT_CMD_LINE,
             .size = 9,
         },
     },
@@ -57,7 +57,7 @@ static const struct {
 } tag_boot_cmd_line_with_some_cmdline_valid = {
     .tag = {
         .base = {
-            .type = KERNAUX_MULTIBOOT2_TAGTYPE_BOOT_CMD_LINE,
+            .type = KERNAUX_MULTIBOOT2_ITAG_BOOT_CMD_LINE,
             .size = 22,
         },
     },
@@ -70,7 +70,7 @@ static const struct {
 } tag_boot_cmd_line_invalid_type = {
     .tag = {
         .base = {
-            .type = KERNAUX_MULTIBOOT2_TAGTYPE_NONE,
+            .type = KERNAUX_MULTIBOOT2_ITAG_NONE,
             .size = 9,
         },
     },
@@ -83,7 +83,7 @@ static const struct {
 } tag_boot_cmd_line_with_empty_cmdline_invalid_size = {
     .tag = {
         .base = {
-            .type = KERNAUX_MULTIBOOT2_TAGTYPE_BOOT_CMD_LINE,
+            .type = KERNAUX_MULTIBOOT2_ITAG_BOOT_CMD_LINE,
             .size = 10,
         },
     },
@@ -96,7 +96,7 @@ static const struct {
 } tag_boot_cmd_line_with_some_cmdline_invalid_size = {
     .tag = {
         .base = {
-            .type = KERNAUX_MULTIBOOT2_TAGTYPE_BOOT_CMD_LINE,
+            .type = KERNAUX_MULTIBOOT2_ITAG_BOOT_CMD_LINE,
             .size = 23,
         },
     },
@@ -113,7 +113,7 @@ static const struct {
 } tag_boot_loader_name_with_empty_name_valid = {
     .tag = {
         .base = {
-            .type = KERNAUX_MULTIBOOT2_TAGTYPE_BOOT_LOADER_NAME,
+            .type = KERNAUX_MULTIBOOT2_ITAG_BOOT_LOADER_NAME,
             .size = 9,
         },
     },
@@ -126,7 +126,7 @@ static const struct {
 } tag_boot_loader_name_with_some_name_valid = {
     .tag = {
         .base = {
-            .type = KERNAUX_MULTIBOOT2_TAGTYPE_BOOT_LOADER_NAME,
+            .type = KERNAUX_MULTIBOOT2_ITAG_BOOT_LOADER_NAME,
             .size = 22,
         },
     },
@@ -139,7 +139,7 @@ static const struct {
 } tag_boot_loader_name_invalid_type = {
     .tag = {
         .base = {
-            .type = KERNAUX_MULTIBOOT2_TAGTYPE_NONE,
+            .type = KERNAUX_MULTIBOOT2_ITAG_NONE,
             .size = 9,
         },
     },
@@ -152,7 +152,7 @@ static const struct {
 } tag_boot_loader_name_with_empty_name_invalid_size = {
     .tag = {
         .base = {
-            .type = KERNAUX_MULTIBOOT2_TAGTYPE_BOOT_LOADER_NAME,
+            .type = KERNAUX_MULTIBOOT2_ITAG_BOOT_LOADER_NAME,
             .size = 10,
         },
     },
@@ -165,7 +165,7 @@ static const struct {
 } tag_boot_loader_name_with_some_name_invalid_size = {
     .tag = {
         .base = {
-            .type = KERNAUX_MULTIBOOT2_TAGTYPE_BOOT_LOADER_NAME,
+            .type = KERNAUX_MULTIBOOT2_ITAG_BOOT_LOADER_NAME,
             .size = 23,
         },
     },
@@ -182,7 +182,7 @@ static const struct {
 } tag_module_with_empty_name_valid = {
     .tag = {
         .base = {
-            .type = KERNAUX_MULTIBOOT2_TAGTYPE_MODULE,
+            .type = KERNAUX_MULTIBOOT2_ITAG_MODULE,
             .size = 17,
         },
         .mod_start = 123,
@@ -197,7 +197,7 @@ static const struct {
 } tag_module_with_some_name_valid = {
     .tag = {
         .base = {
-            .type = KERNAUX_MULTIBOOT2_TAGTYPE_MODULE,
+            .type = KERNAUX_MULTIBOOT2_ITAG_MODULE,
             .size = 30,
         },
         .mod_start = 123,
@@ -212,7 +212,7 @@ static const struct {
 } tag_module_invalid_type = {
     .tag = {
         .base = {
-            .type = KERNAUX_MULTIBOOT2_TAGTYPE_NONE,
+            .type = KERNAUX_MULTIBOOT2_ITAG_NONE,
             .size = 17,
         },
         .mod_start = 123,
@@ -227,7 +227,7 @@ static const struct {
 } tag_module_with_empty_name_invalid_size = {
     .tag = {
         .base = {
-            .type = KERNAUX_MULTIBOOT2_TAGTYPE_MODULE,
+            .type = KERNAUX_MULTIBOOT2_ITAG_MODULE,
             .size = 18,
         },
         .mod_start = 123,
@@ -242,7 +242,7 @@ static const struct {
 } tag_module_with_some_name_invalid_size = {
     .tag = {
         .base = {
-            .type = KERNAUX_MULTIBOOT2_TAGTYPE_MODULE,
+            .type = KERNAUX_MULTIBOOT2_ITAG_MODULE,
             .size = 31,
         },
         .mod_start = 123,
@@ -257,7 +257,7 @@ static const struct {
 } tag_module_with_equal_start_end_invalid = {
     .tag = {
         .base = {
-            .type = KERNAUX_MULTIBOOT2_TAGTYPE_MODULE,
+            .type = KERNAUX_MULTIBOOT2_ITAG_MODULE,
             .size = 31,
         },
         .mod_start = 123,
@@ -272,7 +272,7 @@ static const struct {
 } tag_module_with_reversed_start_end_invalid = {
     .tag = {
         .base = {
-            .type = KERNAUX_MULTIBOOT2_TAGTYPE_MODULE,
+            .type = KERNAUX_MULTIBOOT2_ITAG_MODULE,
             .size = 31,
         },
         .mod_start = 456,
@@ -288,7 +288,7 @@ static const struct {
 static const struct KernAux_Multiboot2_Tag_BasicMemoryInfo
 tag_basic_memory_info_valid = {
     .base = {
-        .type = KERNAUX_MULTIBOOT2_TAGTYPE_BASIC_MEMORY_INFO,
+        .type = KERNAUX_MULTIBOOT2_ITAG_BASIC_MEMORY_INFO,
         .size = 16,
     },
     .mem_lower = 123,
@@ -298,7 +298,7 @@ tag_basic_memory_info_valid = {
 static const struct KernAux_Multiboot2_Tag_BasicMemoryInfo
 tag_basic_memory_info_invalid_type = {
     .base = {
-        .type = KERNAUX_MULTIBOOT2_TAGTYPE_NONE,
+        .type = KERNAUX_MULTIBOOT2_ITAG_NONE,
         .size = 16,
     },
     .mem_lower = 123,
@@ -308,7 +308,7 @@ tag_basic_memory_info_invalid_type = {
 static const struct KernAux_Multiboot2_Tag_BasicMemoryInfo
 tag_basic_memory_info_invalid_size = {
     .base = {
-        .type = KERNAUX_MULTIBOOT2_TAGTYPE_BASIC_MEMORY_INFO,
+        .type = KERNAUX_MULTIBOOT2_ITAG_BASIC_MEMORY_INFO,
         .size = 17,
     },
     .mem_lower = 123,
@@ -322,7 +322,7 @@ tag_basic_memory_info_invalid_size = {
 static const struct KernAux_Multiboot2_Tag_BIOSBootDevice
 tag_bios_boot_device_valid = {
     .base = {
-        .type = KERNAUX_MULTIBOOT2_TAGTYPE_BIOS_BOOT_DEVICE,
+        .type = KERNAUX_MULTIBOOT2_ITAG_BIOS_BOOT_DEVICE,
         .size = 20,
     },
     .bios_dev = 123,
@@ -333,7 +333,7 @@ tag_bios_boot_device_valid = {
 static const struct KernAux_Multiboot2_Tag_BIOSBootDevice
 tag_bios_boot_device_invalid_type = {
     .base = {
-        .type = KERNAUX_MULTIBOOT2_TAGTYPE_NONE,
+        .type = KERNAUX_MULTIBOOT2_ITAG_NONE,
         .size = 20,
     },
     .bios_dev = 123,
@@ -344,7 +344,7 @@ tag_bios_boot_device_invalid_type = {
 static const struct KernAux_Multiboot2_Tag_BIOSBootDevice
 tag_bios_boot_device_invalid_size = {
     .base = {
-        .type = KERNAUX_MULTIBOOT2_TAGTYPE_BIOS_BOOT_DEVICE,
+        .type = KERNAUX_MULTIBOOT2_ITAG_BIOS_BOOT_DEVICE,
         .size = 21,
     },
     .bios_dev = 123,
@@ -359,7 +359,7 @@ tag_bios_boot_device_invalid_size = {
 static const struct KernAux_Multiboot2_Tag_MemoryMap
 tag_memory_map_with_empty_data_valid = {
     .base = {
-        .type = KERNAUX_MULTIBOOT2_TAGTYPE_MEMORY_MAP,
+        .type = KERNAUX_MULTIBOOT2_ITAG_MEMORY_MAP,
         .size = 16,
     },
     .entry_size = 8,
@@ -372,7 +372,7 @@ static const struct {
 } tag_memory_map_with_some_small_data_items_valid = {
     .tag = {
         .base = {
-            .type = KERNAUX_MULTIBOOT2_TAGTYPE_MEMORY_MAP,
+            .type = KERNAUX_MULTIBOOT2_ITAG_MEMORY_MAP,
             .size = 16 + 8 * 2,
         },
         .entry_size = 8,
@@ -386,7 +386,7 @@ static const struct {
 } tag_memory_map_with_some_large_data_items_valid = {
     .tag = {
         .base = {
-            .type = KERNAUX_MULTIBOOT2_TAGTYPE_MEMORY_MAP,
+            .type = KERNAUX_MULTIBOOT2_ITAG_MEMORY_MAP,
             .size = 16 + 64 * 2,
         },
         .entry_size = 64,
@@ -397,7 +397,7 @@ static const struct {
 static const struct KernAux_Multiboot2_Tag_MemoryMap
 tag_memory_map_invalid_type = {
     .base = {
-        .type = KERNAUX_MULTIBOOT2_TAGTYPE_NONE,
+        .type = KERNAUX_MULTIBOOT2_ITAG_NONE,
         .size = 16,
     },
     .entry_size = 8,
@@ -407,7 +407,7 @@ tag_memory_map_invalid_type = {
 static const struct KernAux_Multiboot2_Tag_MemoryMap
 tag_memory_map_with_empty_data_invalid_size = {
     .base = {
-        .type = KERNAUX_MULTIBOOT2_TAGTYPE_MEMORY_MAP,
+        .type = KERNAUX_MULTIBOOT2_ITAG_MEMORY_MAP,
         .size = 16 + 1,
     },
     .entry_size = 8,
@@ -420,7 +420,7 @@ static const struct {
 } tag_memory_map_with_some_large_data_items_invalid_size = {
     .tag = {
         .base = {
-            .type = KERNAUX_MULTIBOOT2_TAGTYPE_MEMORY_MAP,
+            .type = KERNAUX_MULTIBOOT2_ITAG_MEMORY_MAP,
             .size = 16 + 64 * 2 + 1,
         },
         .entry_size = 64,
@@ -431,7 +431,7 @@ static const struct {
 static const struct KernAux_Multiboot2_Tag_MemoryMap
 tag_memory_map_with_empty_data_invalid_entry_size_zero = {
     .base = {
-        .type = KERNAUX_MULTIBOOT2_TAGTYPE_MEMORY_MAP,
+        .type = KERNAUX_MULTIBOOT2_ITAG_MEMORY_MAP,
         .size = 16,
     },
     .entry_size = 0,
@@ -441,7 +441,7 @@ tag_memory_map_with_empty_data_invalid_entry_size_zero = {
 static const struct KernAux_Multiboot2_Tag_MemoryMap
 tag_memory_map_with_empty_data_invalid_entry_size_not_mul8 = {
     .base = {
-        .type = KERNAUX_MULTIBOOT2_TAGTYPE_MEMORY_MAP,
+        .type = KERNAUX_MULTIBOOT2_ITAG_MEMORY_MAP,
         .size = 16,
     },
     .entry_size = 9,
@@ -454,7 +454,7 @@ static const struct {
 } tag_memory_map_with_some_small_data_items_invalid_entry_size_not_mul8 = {
     .tag = {
         .base = {
-            .type = KERNAUX_MULTIBOOT2_TAGTYPE_MEMORY_MAP,
+            .type = KERNAUX_MULTIBOOT2_ITAG_MEMORY_MAP,
             .size = 16 + 9 * 2,
         },
         .entry_size = 9,
@@ -468,7 +468,7 @@ static const struct {
 } tag_memory_map_with_some_large_data_items_invalid_entry_size_not_mul8 = {
     .tag = {
         .base = {
-            .type = KERNAUX_MULTIBOOT2_TAGTYPE_MEMORY_MAP,
+            .type = KERNAUX_MULTIBOOT2_ITAG_MEMORY_MAP,
             .size = 16 + 63 * 2,
         },
         .entry_size = 63,
@@ -483,7 +483,7 @@ static const struct {
 static const struct KernAux_Multiboot2_Tag_VBEInfo
 tag_vbe_info_valid = {
     .base = {
-        .type = KERNAUX_MULTIBOOT2_TAGTYPE_VBE_INFO,
+        .type = KERNAUX_MULTIBOOT2_ITAG_VBE_INFO,
         .size = 784,
     },
     .vbe_mode = 123,
@@ -497,7 +497,7 @@ tag_vbe_info_valid = {
 static const struct KernAux_Multiboot2_Tag_VBEInfo
 tag_vbe_info_invalid_type = {
     .base = {
-        .type = KERNAUX_MULTIBOOT2_TAGTYPE_NONE,
+        .type = KERNAUX_MULTIBOOT2_ITAG_NONE,
         .size = 784,
     },
     .vbe_mode = 123,
@@ -511,7 +511,7 @@ tag_vbe_info_invalid_type = {
 static const struct KernAux_Multiboot2_Tag_VBEInfo
 tag_vbe_info_invalid_size = {
     .base = {
-        .type = KERNAUX_MULTIBOOT2_TAGTYPE_VBE_INFO,
+        .type = KERNAUX_MULTIBOOT2_ITAG_VBE_INFO,
         .size = 784 + 1,
     },
     .vbe_mode = 123,
@@ -536,7 +536,7 @@ static const struct {
     },
     .tag_none = {
         .base = {
-            .type = KERNAUX_MULTIBOOT2_TAGTYPE_NONE,
+            .type = KERNAUX_MULTIBOOT2_ITAG_NONE,
             .size = 8,
         },
     },
@@ -553,7 +553,7 @@ static const struct {
     },
     .tag_basic_memory_info = {
         .base = {
-            .type = KERNAUX_MULTIBOOT2_TAGTYPE_BASIC_MEMORY_INFO,
+            .type = KERNAUX_MULTIBOOT2_ITAG_BASIC_MEMORY_INFO,
             .size = 16,
         },
         .mem_lower = 123,
@@ -561,7 +561,7 @@ static const struct {
     },
     .tag_none = {
         .base = {
-            .type = KERNAUX_MULTIBOOT2_TAGTYPE_NONE,
+            .type = KERNAUX_MULTIBOOT2_ITAG_NONE,
             .size = 8,
         },
     },
@@ -580,7 +580,7 @@ static const struct {
     },
     .tag_basic_memory_info = {
         .base = {
-            .type = KERNAUX_MULTIBOOT2_TAGTYPE_BASIC_MEMORY_INFO,
+            .type = KERNAUX_MULTIBOOT2_ITAG_BASIC_MEMORY_INFO,
             .size = 16,
         },
         .mem_lower = 123,
@@ -588,7 +588,7 @@ static const struct {
     },
     .tag_bios_boot_device = {
         .base = {
-            .type = KERNAUX_MULTIBOOT2_TAGTYPE_BIOS_BOOT_DEVICE,
+            .type = KERNAUX_MULTIBOOT2_ITAG_BIOS_BOOT_DEVICE,
             .size = 20,
         },
         .bios_dev = 123,
@@ -597,7 +597,7 @@ static const struct {
     },
     .tag_none = {
         .base = {
-            .type = KERNAUX_MULTIBOOT2_TAGTYPE_NONE,
+            .type = KERNAUX_MULTIBOOT2_ITAG_NONE,
             .size = 8,
         },
     },
@@ -613,7 +613,7 @@ static const struct {
     },
     .tag_none = {
         .base = {
-            .type = KERNAUX_MULTIBOOT2_TAGTYPE_NONE,
+            .type = KERNAUX_MULTIBOOT2_ITAG_NONE,
             .size = 8,
         },
     },
@@ -634,7 +634,7 @@ static const struct {
     },
     .tag_basic_memory_info = {
         .base = {
-            .type = KERNAUX_MULTIBOOT2_TAGTYPE_BASIC_MEMORY_INFO,
+            .type = KERNAUX_MULTIBOOT2_ITAG_BASIC_MEMORY_INFO,
             .size = 16,
         },
         .mem_lower = 123,
@@ -656,7 +656,7 @@ static const struct {
     },
     .tag_basic_memory_info = {
         .base = {
-            .type = KERNAUX_MULTIBOOT2_TAGTYPE_BASIC_MEMORY_INFO,
+            .type = KERNAUX_MULTIBOOT2_ITAG_BASIC_MEMORY_INFO,
             .size = 16,
         },
         .mem_lower = 123,
@@ -664,13 +664,13 @@ static const struct {
     },
     .tag_none1 = {
         .base = {
-            .type = KERNAUX_MULTIBOOT2_TAGTYPE_NONE,
+            .type = KERNAUX_MULTIBOOT2_ITAG_NONE,
             .size = 8,
         },
     },
     .tag_bios_boot_device = {
         .base = {
-            .type = KERNAUX_MULTIBOOT2_TAGTYPE_BIOS_BOOT_DEVICE,
+            .type = KERNAUX_MULTIBOOT2_ITAG_BIOS_BOOT_DEVICE,
             .size = 20,
         },
         .bios_dev = 123,
@@ -679,7 +679,7 @@ static const struct {
     },
     .tag_none2 = {
         .base = {
-            .type = KERNAUX_MULTIBOOT2_TAGTYPE_NONE,
+            .type = KERNAUX_MULTIBOOT2_ITAG_NONE,
             .size = 8,
         },
     },
@@ -698,7 +698,7 @@ static const struct {
     },
     .tag_basic_memory_info = {
         .base = {
-            .type = KERNAUX_MULTIBOOT2_TAGTYPE_BASIC_MEMORY_INFO,
+            .type = KERNAUX_MULTIBOOT2_ITAG_BASIC_MEMORY_INFO,
             .size = 16,
         },
         .mem_lower = 123,
@@ -706,7 +706,7 @@ static const struct {
     },
     .tag_bios_boot_device = {
         .base = {
-            .type = KERNAUX_MULTIBOOT2_TAGTYPE_BIOS_BOOT_DEVICE,
+            .type = KERNAUX_MULTIBOOT2_ITAG_BIOS_BOOT_DEVICE,
             .size = 20,
         },
         .bios_dev = 123,
@@ -715,7 +715,7 @@ static const struct {
     },
     .tag_none = {
         .base = {
-            .type = KERNAUX_MULTIBOOT2_TAGTYPE_NONE,
+            .type = KERNAUX_MULTIBOOT2_ITAG_NONE,
             .size = 8,
         },
     },
@@ -734,7 +734,7 @@ static const struct {
     },
     .tag_basic_memory_info = {
         .base = {
-            .type = KERNAUX_MULTIBOOT2_TAGTYPE_BASIC_MEMORY_INFO,
+            .type = KERNAUX_MULTIBOOT2_ITAG_BASIC_MEMORY_INFO,
             .size = 16,
         },
         .mem_lower = 123,
@@ -742,7 +742,7 @@ static const struct {
     },
     .tag_bios_boot_device = {
         .base = {
-            .type = KERNAUX_MULTIBOOT2_TAGTYPE_BIOS_BOOT_DEVICE,
+            .type = KERNAUX_MULTIBOOT2_ITAG_BIOS_BOOT_DEVICE,
             .size = 20,
         },
         .bios_dev = 123,
@@ -751,7 +751,7 @@ static const struct {
     },
     .tag_none = {
         .base = {
-            .type = KERNAUX_MULTIBOOT2_TAGTYPE_NONE,
+            .type = KERNAUX_MULTIBOOT2_ITAG_NONE,
             .size = 8,
         },
     },
