@@ -11,7 +11,7 @@
 
 static const struct {
     struct KernAux_Multiboot2 multiboot2;
-    struct KernAux_Multiboot2_Tag_None tag_none;
+    struct KernAux_Multiboot2_ITag_None tag_none;
 } multiboot2_without_boot_cmd_line = {
     .multiboot2 = {
         .total_size = sizeof(multiboot2_without_boot_cmd_line),
@@ -29,13 +29,13 @@ static const struct {
     struct KernAux_Multiboot2 multiboot2;
 
     struct {
-        struct KernAux_Multiboot2_Tag_BootCmdLine tag;
+        struct KernAux_Multiboot2_ITag_BootCmdLine tag;
         char cmdline[14];
     } tag_boot_cmd_line;
 
     unsigned char _align1[2];
 
-    struct KernAux_Multiboot2_Tag_None tag_none;
+    struct KernAux_Multiboot2_ITag_None tag_none;
 } multiboot2_with_some_boot_cmd_line = {
     .multiboot2 = {
         .total_size = sizeof(multiboot2_with_some_boot_cmd_line),
@@ -64,20 +64,20 @@ static const struct {
     struct KernAux_Multiboot2 multiboot2;
 
     struct {
-        struct KernAux_Multiboot2_Tag_BootCmdLine tag;
+        struct KernAux_Multiboot2_ITag_BootCmdLine tag;
         char cmdline[14];
     } tag_boot_cmd_line1;
 
     unsigned char _align1[2];
 
     struct {
-        struct KernAux_Multiboot2_Tag_BootCmdLine tag;
+        struct KernAux_Multiboot2_ITag_BootCmdLine tag;
         char cmdline[13];
     } tag_boot_cmd_line2;
 
     unsigned char _align2[3];
 
-    struct KernAux_Multiboot2_Tag_None tag_none;
+    struct KernAux_Multiboot2_ITag_None tag_none;
 } multiboot2_with_two_boot_cmd_lines = {
     .multiboot2 = {
         .total_size = sizeof(multiboot2_with_two_boot_cmd_lines),

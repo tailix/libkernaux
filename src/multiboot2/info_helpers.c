@@ -58,8 +58,8 @@ const struct KernAux_Multiboot2_ITagBase
 const char *KernAux_Multiboot2_boot_cmd_line(
     const struct KernAux_Multiboot2 *const multiboot2
 ) {
-    const struct KernAux_Multiboot2_Tag_BootCmdLine *const tag =
-        (struct KernAux_Multiboot2_Tag_BootCmdLine*)
+    const struct KernAux_Multiboot2_ITag_BootCmdLine *const tag =
+        (struct KernAux_Multiboot2_ITag_BootCmdLine*)
         KernAux_Multiboot2_first_tag_with_type(
             multiboot2,
             KERNAUX_MULTIBOOT2_ITAG_BOOT_CMD_LINE
