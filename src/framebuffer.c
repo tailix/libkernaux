@@ -5,7 +5,7 @@
 #include <kernaux/assert.h>
 #include <kernaux/framebuffer.h>
 
-void KernAux_Framebuffer_init_default(KernAux_Framebuffer* _framebuffer, uint32_t width, uint32_t height, uint32_t pitch, uint32_t depth, uintptr_t buf_addr, uint8_t frame_type)
+void KernAux_Framebuffer_init_default(KernAux_Framebuffer _framebuffer, uint32_t width, uint32_t height, uint32_t pitch, uint32_t depth, uintptr_t buf_addr, uint8_t frame_type)
 {
     KERNAUX_NOTNULL_RETURN(_framebuffer);
     KERNAUX_ASSERT_RETURN(width > 0);
@@ -28,7 +28,7 @@ void KernAux_Framebuffer_init_default(KernAux_Framebuffer* _framebuffer, uint32_
     _framebuffer->bluemask_shift = 0;
 }
 
-void KernAux_Framebuffer_init(KernAux_Framebuffer* _framebuffer, uint32_t width, uint32_t height, uint32_t pitch, uint32_t depth, uintptr_t buf_addr, uint8_t frame_type, uint8_t redmask_sz, uint8_t redmask_shift, uint8_t greenmask_sz, uint8_t greenmask_shift, uint8_t bluemask_sz, uint8_t bluemask_shift)
+void KernAux_Framebuffer_init(KernAux_Framebuffer _framebuffer, uint32_t width, uint32_t height, uint32_t pitch, uint32_t depth, uintptr_t buf_addr, uint8_t frame_type, uint8_t redmask_sz, uint8_t redmask_shift, uint8_t greenmask_sz, uint8_t greenmask_shift, uint8_t bluemask_sz, uint8_t bluemask_shift)
 {
     KERNAUX_NOTNULL_RETURN(_framebuffer);
     KERNAUX_ASSERT_RETURN(width > 0);
@@ -51,7 +51,7 @@ void KernAux_Framebuffer_init(KernAux_Framebuffer* _framebuffer, uint32_t width,
     _framebuffer->bluemask_shift = bluemask_shift;
 }
 
-void KernAux_Framebuffer_putpixel_rgb(KernAux_Framebuffer *_framebuffer, int x, int y, uint32_t hex)
+void KernAux_Framebuffer_putpixel_rgb(KernAux_Framebuffer _framebuffer, int x, int y, uint32_t hex)
 {
     KERNAUX_NOTNULL_RETURN(_framebuffer);
     KERNAUX_ASSERT_RETURN(_framebuffer->frame_type == FRAME_TYPE_RGB);
@@ -86,7 +86,7 @@ void KernAux_Framebuffer_putpixel_rgb(KernAux_Framebuffer *_framebuffer, int x, 
     }
 }
 
-void KernAux_Framebuffer_putpixel_ega(KernAux_Framebuffer* _framebuffer, int x, int y, enum kernAux_vga_color_palatte color)
+void KernAux_Framebuffer_putpixel_ega(KernAux_Framebuffer _framebuffer, int x, int y, enum KernAux_Framebuffer_VGAColorPalette color)
 {
     KERNAUX_NOTNULL_RETURN(_framebuffer);
     KERNAUX_ASSERT_RETURN(_framebuffer->frame_type == FRAME_TYPE_EGA);
@@ -112,7 +112,7 @@ void KernAux_Framebuffer_putpixel_ega(KernAux_Framebuffer* _framebuffer, int x, 
     }
 }
 
-void KernAux_Framebuffer_fillarea_rgb(KernAux_Framebuffer *_framebuffer, int x0, int y0, int x1, int y1, uint32_t hex)
+void KernAux_Framebuffer_fillarea_rgb(KernAux_Framebuffer _framebuffer, int x0, int y0, int x1, int y1, uint32_t hex)
 {
     KERNAUX_NOTNULL_RETURN(_framebuffer);
     KERNAUX_ASSERT_RETURN(_framebuffer->frame_type == FRAME_TYPE_RGB);
@@ -128,7 +128,7 @@ void KernAux_Framebuffer_fillarea_rgb(KernAux_Framebuffer *_framebuffer, int x0,
     }
 }
 
-void KernAux_Framebuffer_fillarea_ega(KernAux_Framebuffer* _framebuffer, int x0, int y0, int x1, int y1, enum kernAux_vga_color_palatte color)
+void KernAux_Framebuffer_fillarea_ega(KernAux_Framebuffer _framebuffer, int x0, int y0, int x1, int y1, enum KernAux_Framebuffer_VGAColorPalette color)
 {
     KERNAUX_NOTNULL_RETURN(_framebuffer);
     KERNAUX_ASSERT_RETURN(_framebuffer->frame_type == FRAME_TYPE_EGA);
