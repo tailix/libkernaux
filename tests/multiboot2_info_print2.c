@@ -7,16 +7,16 @@
 #include <assert.h>
 #include <stdio.h>
 
-#include "multiboot2_example2.h"
+#include "multiboot2_info_example2.h"
 
 int main()
 {
     assert(KernAux_Multiboot2_Info_is_valid(
-        &multiboot2_example2.multiboot2_info
+        &multiboot2_info_example2.multiboot2_info
     ));
 
     KernAux_Multiboot2_Info_print(
-        &multiboot2_example2.multiboot2_info,
+        &multiboot2_info_example2.multiboot2_info,
         (void (*)(const char *format, ...))printf
     );
 
