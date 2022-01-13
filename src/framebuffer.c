@@ -93,23 +93,19 @@ void KernAux_Framebuffer_putpixel_ega(KernAux_Framebuffer framebuffer, int x, in
     KERNAUX_ASSERT_RETURN(x <= framebuffer->frame_width);
     KERNAUX_ASSERT_RETURN(y <= framebuffer->frame_height);
 
-    switch (framebuffer->frame_depth)
-    {
-        case 16:
-        {
-            uint16_t *spix = (uint16_t*)framebuffer->buffer_addr;
-            size_t vr = (y * framebuffer->frame_pitch) / 2;
-            spix[vr + x] = color;
-            break;
-        }
-        default:
-        {
-            uint8_t *spix = (uint8_t*)framebuffer->buffer_addr;
-            size_t vr = (y * framebuffer->frame_pitch);
-            spix[vr + x] = color;
-            break;
-        }
-    }
+    KernAux_Framebuffer_putchar_ega(framebuffer, x, y, ' ', color);
+}
+
+void KernAux_Framebuffer_putchar_ega(KernAux_Framebuffer framebuffer, int x, int y, unsigned char c, enum KernAux_Framebuffer_VGAColorPalette color)
+{
+    KERNAUX_NOTNULL_RETURN(framebuffer);
+    KERNAUX_ASSERT_RETURN(framebuffer->frame_type == FRAME_TYPE_EGA);
+    KERNAUX_ASSERT_RETURN(x <= framebuffer->frame_width);
+    KERNAUX_ASSERT_RETURN(y <= framebuffer->frame_height);
+    
+    uint16_t *spix = (uint16_t*)framebuffer->buffer_addr;
+    const size_t index = y * framebuffer->frame_width + x;
+	spix[index] = (uint16_t)c | (uint16_t)color << 8;
 }
 
 void KernAux_Framebuffer_fillarea_rgb(KernAux_Framebuffer framebuffer, int x0, int y0, int x1, int y1, uint32_t hex)
