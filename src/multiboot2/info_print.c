@@ -5,6 +5,7 @@
 #include <kernaux/multiboot2.h>
 
 #include <stddef.h>
+#include <stdint.h>
 
 static void KernAux_Multiboot2_ITag_MemoryMap_print(
     const struct KernAux_Multiboot2_ITag_MemoryMap *tag,
@@ -30,7 +31,7 @@ void KernAux_Multiboot2_Info_print(
 
     while (tag_base <
            (struct KernAux_Multiboot2_ITagBase*)
-           ((unsigned char*)multiboot2_info + multiboot2_info->total_size))
+           ((uint8_t*)multiboot2_info + multiboot2_info->total_size))
     {
         if (!KernAux_Multiboot2_ITagBase_is_valid(tag_base)) return;
 
@@ -46,7 +47,7 @@ void KernAux_Multiboot2_ITagBase_print(
 ) {
     if (!KernAux_Multiboot2_ITagBase_is_valid(tag_base)) return;
 
-    printf("Multiboot 2 tag\n");
+    printf("Multiboot 2 info tag\n");
 
     printf(
         "  type: %u (%s)\n",
