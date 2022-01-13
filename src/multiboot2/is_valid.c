@@ -11,16 +11,17 @@ bool KernAux_Multiboot2_is_valid(
 ) {
     if (multiboot2->total_size <= 8) return false;
 
-    const struct KernAux_Multiboot2_TagBase *tag_base =
-        (struct KernAux_Multiboot2_TagBase*)KERNAUX_MULTIBOOT2_DATA(multiboot2);
+    const struct KernAux_Multiboot2_ITagBase *tag_base =
+        (struct KernAux_Multiboot2_ITagBase*)
+        KERNAUX_MULTIBOOT2_DATA(multiboot2);
 
-    const struct KernAux_Multiboot2_TagBase *none_tag_base = NULL;
+    const struct KernAux_Multiboot2_ITagBase *none_tag_base = NULL;
 
     while (tag_base <
-           (struct KernAux_Multiboot2_TagBase*)
+           (struct KernAux_Multiboot2_ITagBase*)
            ((unsigned char*)multiboot2 + multiboot2->total_size))
     {
-        if (!KernAux_Multiboot2_TagBase_is_valid(tag_base)) return false;
+        if (!KernAux_Multiboot2_ITagBase_is_valid(tag_base)) return false;
 
         if (tag_base->type == KERNAUX_MULTIBOOT2_ITAG_NONE &&
             none_tag_base == NULL
@@ -28,20 +29,20 @@ bool KernAux_Multiboot2_is_valid(
             none_tag_base = tag_base;
         }
 
-        tag_base = (struct KernAux_Multiboot2_TagBase*)(
+        tag_base = (struct KernAux_Multiboot2_ITagBase*)(
             (unsigned char*)tag_base + ((tag_base->size + 7) & ~7)
         );
     }
 
     if (tag_base !=
-        (struct KernAux_Multiboot2_TagBase*)
+        (struct KernAux_Multiboot2_ITagBase*)
         ((unsigned char*)multiboot2 + multiboot2->total_size))
     {
         return false;
     }
 
     if (none_tag_base !=
-        (struct KernAux_Multiboot2_TagBase*)
+        (struct KernAux_Multiboot2_ITagBase*)
         ((unsigned char*)tag_base - sizeof(struct KernAux_Multiboot2_Tag_None)))
     {
         return false;
@@ -50,8 +51,8 @@ bool KernAux_Multiboot2_is_valid(
     return true;
 }
 
-bool KernAux_Multiboot2_TagBase_is_valid(
-    const struct KernAux_Multiboot2_TagBase *const tag_base
+bool KernAux_Multiboot2_ITagBase_is_valid(
+    const struct KernAux_Multiboot2_ITagBase *const tag_base
 ) {
     switch (tag_base->type) {
     case KERNAUX_MULTIBOOT2_ITAG_NONE:
