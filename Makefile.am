@@ -57,11 +57,15 @@ endif
 if WITH_MULTIBOOT2
 libkernaux_a_SOURCES += \
 	src/multiboot2/header_helpers.c \
+	src/multiboot2/header_is_valid.c \
+	src/multiboot2/header_print.c \
 	src/multiboot2/info_helpers.c \
 	src/multiboot2/info_is_valid.c \
 	src/multiboot2/info_print.c
 TESTS += \
 	tests/test_multiboot2_header_helpers \
+	tests/test_multiboot2_header_print \
+	tests/test_multiboot2_header_validation \
 	tests/test_multiboot2_info_helpers \
 	tests/test_multiboot2_info_print \
 	tests/test_multiboot2_info_validation
@@ -150,6 +154,16 @@ tests_test_itoa_SOURCES = \
 tests_test_multiboot2_header_helpers_SOURCES = \
 	$(libkernaux_a_SOURCES) \
 	tests/test_multiboot2_header_helpers.c \
+	tests/multiboot2_header_example1.h \
+	tests/multiboot2_header_example2.h
+
+tests_test_multiboot2_header_print_SOURCES = \
+	$(libkernaux_a_SOURCES) \
+	tests/test_multiboot2_header_print.c
+
+tests_test_multiboot2_header_validation_SOURCES = \
+	$(libkernaux_a_SOURCES) \
+	tests/test_multiboot2_header_validation.c \
 	tests/multiboot2_header_example1.h \
 	tests/multiboot2_header_example2.h
 

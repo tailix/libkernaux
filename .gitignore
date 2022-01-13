@@ -50,6 +50,8 @@
 /tests/test_elf
 /tests/test_itoa
 /tests/test_multiboot2_header_helpers
+/tests/test_multiboot2_header_print
+/tests/test_multiboot2_header_validation
 /tests/test_multiboot2_info_helpers
 /tests/test_multiboot2_info_print
 /tests/test_multiboot2_info_validation
