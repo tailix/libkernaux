@@ -1,4 +1,4 @@
-static const unsigned char multiboot2_example1[864] = {
+static const unsigned char multiboot2_info_example1[864] = {
     96, 3, 0, 0, 0, 0, 0, 0, 21, 0, 0, 0, 12, 0, 0, 0,
     0, 0, 64, 0, 0, 0, 232, 133, 1, 0, 0, 0, 21, 0, 0, 0,
     104, 101, 108, 108, 111, 32, 107, 101, 114, 110, 101, 108, 0, 139, 69, 228,

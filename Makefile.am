@@ -114,12 +114,12 @@ examples_units_human_SOURCES = \
 tests_multiboot2_info_print1_SOURCES = \
 	$(libkernaux_a_SOURCES) \
 	tests/multiboot2_info_print1.c \
-	tests/multiboot2_example1.h
+	tests/multiboot2_info_example1.h
 
 tests_multiboot2_info_print2_SOURCES = \
 	$(libkernaux_a_SOURCES) \
 	tests/multiboot2_info_print2.c \
-	tests/multiboot2_example2.h
+	tests/multiboot2_info_example2.h
 
 tests_test_cmdline_SOURCES = \
 	$(libkernaux_a_SOURCES) \
@@ -136,8 +136,8 @@ tests_test_itoa_SOURCES = \
 tests_test_multiboot2_info_helpers_SOURCES = \
 	$(libkernaux_a_SOURCES) \
 	tests/test_multiboot2_info_helpers.c \
-	tests/multiboot2_example1.h \
-	tests/multiboot2_example2.h
+	tests/multiboot2_info_example1.h \
+	tests/multiboot2_info_example2.h
 
 tests_test_multiboot2_info_print_SOURCES = \
 	$(libkernaux_a_SOURCES) \
@@ -146,8 +146,8 @@ tests_test_multiboot2_info_print_SOURCES = \
 tests_test_multiboot2_info_validation_SOURCES = \
 	$(libkernaux_a_SOURCES) \
 	tests/test_multiboot2_info_validation.c \
-	tests/multiboot2_example1.h \
-	tests/multiboot2_example2.h
+	tests/multiboot2_info_example1.h \
+	tests/multiboot2_info_example2.h
 
 tests_test_pfa_SOURCES = \
 	$(libkernaux_a_SOURCES) \

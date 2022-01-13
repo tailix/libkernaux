@@ -6,8 +6,8 @@
 
 #include <assert.h>
 
-#include "multiboot2_example1.h"
-#include "multiboot2_example2.h"
+#include "multiboot2_info_example1.h"
+#include "multiboot2_info_example2.h"
 
 /************
  * Tag_None *
@@ -767,11 +767,11 @@ int main()
     // Multiboot2
 
     assert(KernAux_Multiboot2_Info_is_valid(
-        (struct KernAux_Multiboot2_Info*)&multiboot2_example1
+        (struct KernAux_Multiboot2_Info*)&multiboot2_info_example1
     ));
 
     assert(KernAux_Multiboot2_Info_is_valid(
-        (struct KernAux_Multiboot2_Info*)&multiboot2_example2
+        (struct KernAux_Multiboot2_Info*)&multiboot2_info_example2
     ));
 
     assert(KernAux_Multiboot2_Info_is_valid(
