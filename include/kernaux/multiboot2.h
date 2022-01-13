@@ -31,17 +31,17 @@ enum KernAux_Multiboot2_HTag {
 };
 
 struct KernAux_Multiboot2_Header {
-    uint32_t magic;
-    uint32_t arch;
-    uint32_t total_size;
-    uint32_t checksum;
+    unsigned magic      : 32;
+    unsigned arch       : 32;
+    unsigned total_size : 32;
+    unsigned checksum   : 32;
 }
 __attribute__((packed));
 
 struct KernAux_Multiboot2_HTagBase {
     enum KernAux_Multiboot2_HTag type : 16;
-    uint16_t flags;
-    uint32_t size;
+    unsigned flags                    : 16;
+    unsigned size                     : 32;
 }
 __attribute__((packed));
 
@@ -75,14 +75,14 @@ enum KernAux_Multiboot2_ITag {
 };
 
 struct KernAux_Multiboot2_Info {
-    uint32_t total_size;
-    uint32_t reserved1;
+    unsigned total_size : 32;
+    unsigned reserved1  : 32;
 }
 __attribute__((packed));
 
 struct KernAux_Multiboot2_ITagBase {
     enum KernAux_Multiboot2_ITag type : 32;
-    uint32_t size;
+    unsigned size                     : 32;
 }
 __attribute__((packed));
 
