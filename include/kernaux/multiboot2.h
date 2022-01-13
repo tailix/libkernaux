@@ -316,9 +316,9 @@ struct KernAux_Multiboot2_ITag_MemoryMap_EntryBase {
 }
 __attribute__((packed));
 
-/********************
- * Helper functions *
- ********************/
+/********************************
+ * Information helper functions *
+ ********************************/
 
 const struct KernAux_Multiboot2_ITagBase
 *KernAux_Multiboot2_first_tag_with_type(
