@@ -93,9 +93,7 @@ void KernAux_Multiboot2_Info_print(
 
         KernAux_Multiboot2_ITagBase_print(tag_base, printf);
 
-        tag_base = (struct KernAux_Multiboot2_ITagBase*)(
-            KERNAUX_MULTIBOOT2_TAG_NEXT(tag_base)
-        );
+        tag_base = KERNAUX_MULTIBOOT2_ITAG_NEXT(tag_base);
     }
 }
 

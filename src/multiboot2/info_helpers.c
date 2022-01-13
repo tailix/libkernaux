@@ -23,9 +23,7 @@ const struct KernAux_Multiboot2_ITagBase
         if (!KernAux_Multiboot2_ITagBase_is_valid(tag_base)) return NULL;
         if (tag_base->type == tag_type) return tag_base;
 
-        tag_base = (struct KernAux_Multiboot2_ITagBase*)(
-            KERNAUX_MULTIBOOT2_TAG_NEXT(tag_base)
-        );
+        tag_base = KERNAUX_MULTIBOOT2_ITAG_NEXT(tag_base);
     }
 
     return NULL;
@@ -48,9 +46,7 @@ const struct KernAux_Multiboot2_ITagBase
         if (!KernAux_Multiboot2_ITagBase_is_valid(tag_base)) return NULL;
         if (tag_base->type == tag_type && tag_base > after_tag) return tag_base;
 
-        tag_base = (struct KernAux_Multiboot2_ITagBase*)(
-            KERNAUX_MULTIBOOT2_TAG_NEXT(tag_base)
-        );
+        tag_base = KERNAUX_MULTIBOOT2_ITAG_NEXT(tag_base);
     }
 
     return NULL;
