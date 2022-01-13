@@ -308,7 +308,7 @@ __attribute__((packed));
  * Additional structures *
  *************************/
 
-struct KernAux_Multiboot2_Tag_MemoryMap_EntryBase {
+struct KernAux_Multiboot2_ITag_MemoryMap_EntryBase {
     unsigned long long base_addr : 64;
     unsigned long long length    : 64;
     unsigned type                : 32;
