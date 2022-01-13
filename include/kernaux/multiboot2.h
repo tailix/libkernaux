@@ -75,14 +75,14 @@ enum KernAux_Multiboot2_ITag {
 };
 
 struct KernAux_Multiboot2 {
-    unsigned total_size : 32;
-    unsigned reserved1  : 32;
+    uint32_t total_size;
+    uint32_t reserved1;
 }
 __attribute__((packed));
 
 struct KernAux_Multiboot2_TagBase {
     enum KernAux_Multiboot2_ITag type : 32;
-    unsigned size                     : 32;
+    uint32_t size;
 }
 __attribute__((packed));
 
