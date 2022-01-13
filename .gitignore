@@ -67,12 +67,15 @@
 
 /vendor/cross/build/i386/binutils/*
 !/vendor/cross/build/i386/binutils/.keep
-
 /vendor/cross/build/i386/gcc/*
 !/vendor/cross/build/i386/gcc/.keep
 
+/vendor/cross/build/riscv64/binutils/*
+!/vendor/cross/build/riscv64/binutils/.keep
+/vendor/cross/build/riscv64/gcc/*
+!/vendor/cross/build/riscv64/gcc/.keep
+
 /vendor/cross/build/x86_64/binutils/*
 !/vendor/cross/build/x86_64/binutils/.keep
-
 /vendor/cross/build/x86_64/gcc/*
 !/vendor/cross/build/x86_64/gcc/.keep
