@@ -19,6 +19,7 @@ Table of contents
   * [Installation](#installation)
   * [Development](#development)
   * [Cross](#cross)
+* [Architectures](#architectures)
 * [Portability](#portability)
 * [Discussion](#discussion)
 
@@ -218,6 +219,20 @@ Disassembly of section .text:
   20:   0f 22 e0              mov    %eax,%cr4
   23:   c3                    ret
 ```
+
+
+
+Architectures
+-------------
+
+Architectures should be properly identified. We use the following scheme, but it
+may change in future:
+
+* `x86`
+  * `i386`
+  * `x86_64`
+* `riscv`
+  * `riscv64`
 
 
 
