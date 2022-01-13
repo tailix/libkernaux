@@ -11,6 +11,8 @@ extern "C" {
 #define KERNAUX_MULTIBOOT2_MAGIC 0x36d76289
 
 #define KERNAUX_MULTIBOOT2_DATA(ptr) (((uint8_t*)(ptr)) + sizeof(*(ptr)))
+#define KERNAUX_MULTIBOOT2_TAG_SIZE_ALIGN(tag_base) \
+    (((tag_base)->size + 7) & ~7)
 
 /***********************
  * Header common types *
