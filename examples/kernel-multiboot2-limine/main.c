@@ -11,7 +11,7 @@ static void panic(const char *str);
 
 void main(
     const uint32_t multiboot2_magic,
-    const struct KernAux_Multiboot2 *const multiboot2_info
+    const struct KernAux_Multiboot2_Info *const multiboot2_info
 ) {
     if (multiboot2_magic != KERNAUX_MULTIBOOT2_MAGIC) {
         panic("Multiboot 2 magic number is invalid");
@@ -19,13 +19,13 @@ void main(
         kernaux_console_printf("Multiboot 2 magic number is valid\n");
     }
 
-    if (!KernAux_Multiboot2_is_valid(multiboot2_info)) {
+    if (!KernAux_Multiboot2_Info_is_valid(multiboot2_info)) {
         panic("Multiboot 2 info is invalid");
     } else {
         kernaux_console_printf("Multiboot 2 info is valid\n");
     }
 
-    KernAux_Multiboot2_print(multiboot2_info, kernaux_console_printf);
+    KernAux_Multiboot2_Info_print(multiboot2_info, kernaux_console_printf);
 }
 
 void poweroff()
