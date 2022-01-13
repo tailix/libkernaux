@@ -351,9 +351,9 @@ void KernAux_Multiboot2_ITagBase_print(
     void (*printf)(const char *format, ...)
 );
 
-/************************
- * Validation functions *
- ************************/
+/************************************
+ * Information validation functions *
+ ************************************/
 
 bool KernAux_Multiboot2_is_valid(
     const struct KernAux_Multiboot2 *multiboot2
@@ -363,91 +363,91 @@ bool KernAux_Multiboot2_ITagBase_is_valid(
     const struct KernAux_Multiboot2_ITagBase *tag_base
 );
 
-bool KernAux_Multiboot2_Tag_None_is_valid(
+bool KernAux_Multiboot2_ITag_None_is_valid(
     const struct KernAux_Multiboot2_Tag_None *tag
 );
 
-bool KernAux_Multiboot2_Tag_BootCmdLine_is_valid(
+bool KernAux_Multiboot2_ITag_BootCmdLine_is_valid(
     const struct KernAux_Multiboot2_Tag_BootCmdLine *tag
 );
 
-bool KernAux_Multiboot2_Tag_BootLoaderName_is_valid(
+bool KernAux_Multiboot2_ITag_BootLoaderName_is_valid(
     const struct KernAux_Multiboot2_Tag_BootLoaderName *tag
 );
 
-bool KernAux_Multiboot2_Tag_Module_is_valid(
+bool KernAux_Multiboot2_ITag_Module_is_valid(
     const struct KernAux_Multiboot2_Tag_Module *tag
 );
 
-bool KernAux_Multiboot2_Tag_BasicMemoryInfo_is_valid(
+bool KernAux_Multiboot2_ITag_BasicMemoryInfo_is_valid(
     const struct KernAux_Multiboot2_Tag_BasicMemoryInfo *tag
 );
 
-bool KernAux_Multiboot2_Tag_BIOSBootDevice_is_valid(
+bool KernAux_Multiboot2_ITag_BIOSBootDevice_is_valid(
     const struct KernAux_Multiboot2_Tag_BIOSBootDevice *tag
 );
 
-bool KernAux_Multiboot2_Tag_MemoryMap_is_valid(
+bool KernAux_Multiboot2_ITag_MemoryMap_is_valid(
     const struct KernAux_Multiboot2_Tag_MemoryMap *tag
 );
 
-bool KernAux_Multiboot2_Tag_VBEInfo_is_valid(
+bool KernAux_Multiboot2_ITag_VBEInfo_is_valid(
     const struct KernAux_Multiboot2_Tag_VBEInfo *tag
 );
 
-bool KernAux_Multiboot2_Tag_FramebufferInfo_is_valid(
+bool KernAux_Multiboot2_ITag_FramebufferInfo_is_valid(
     const struct KernAux_Multiboot2_Tag_FramebufferInfo *tag
 );
 
-bool KernAux_Multiboot2_Tag_ELFSymbols_is_valid(
+bool KernAux_Multiboot2_ITag_ELFSymbols_is_valid(
     const struct KernAux_Multiboot2_Tag_ELFSymbols *tag
 );
 
-bool KernAux_Multiboot2_Tag_APMTable_is_valid(
+bool KernAux_Multiboot2_ITag_APMTable_is_valid(
     const struct KernAux_Multiboot2_Tag_APMTable *tag
 );
 
-bool KernAux_Multiboot2_Tag_EFI32bitSystemTablePtr_is_valid(
+bool KernAux_Multiboot2_ITag_EFI32bitSystemTablePtr_is_valid(
     const struct KernAux_Multiboot2_Tag_EFI32bitSystemTablePtr *tag
 );
 
-bool KernAux_Multiboot2_Tag_EFI64bitSystemTablePtr_is_valid(
+bool KernAux_Multiboot2_ITag_EFI64bitSystemTablePtr_is_valid(
     const struct KernAux_Multiboot2_Tag_EFI64bitSystemTablePtr *tag
 );
 
-bool KernAux_Multiboot2_Tag_SMBIOSTables_is_valid(
+bool KernAux_Multiboot2_ITag_SMBIOSTables_is_valid(
     const struct KernAux_Multiboot2_Tag_SMBIOSTables *tag
 );
 
-bool KernAux_Multiboot2_Tag_ACPIOldRSDP_is_valid(
+bool KernAux_Multiboot2_ITag_ACPIOldRSDP_is_valid(
     const struct KernAux_Multiboot2_Tag_ACPIOldRSDP *tag
 );
 
-bool KernAux_Multiboot2_Tag_ACPINewRSDP_is_valid(
+bool KernAux_Multiboot2_ITag_ACPINewRSDP_is_valid(
     const struct KernAux_Multiboot2_Tag_ACPINewRSDP *tag
 );
 
-bool KernAux_Multiboot2_Tag_NetworkingInfo_is_valid(
+bool KernAux_Multiboot2_ITag_NetworkingInfo_is_valid(
     const struct KernAux_Multiboot2_Tag_NetworkingInfo *tag
 );
 
-bool KernAux_Multiboot2_Tag_EFIMemoryMap_is_valid(
+bool KernAux_Multiboot2_ITag_EFIMemoryMap_is_valid(
     const struct KernAux_Multiboot2_Tag_EFIMemoryMap *tag
 );
 
-bool KernAux_Multiboot2_Tag_EFIBootServicesNotTerminated_is_valid(
+bool KernAux_Multiboot2_ITag_EFIBootServicesNotTerminated_is_valid(
     const struct KernAux_Multiboot2_Tag_EFIBootServicesNotTerminated *tag
 );
 
-bool KernAux_Multiboot2_Tag_EFI32bitImageHandlePtr_is_valid(
+bool KernAux_Multiboot2_ITag_EFI32bitImageHandlePtr_is_valid(
     const struct KernAux_Multiboot2_Tag_EFI32bitImageHandlePtr *tag
 );
 
-bool KernAux_Multiboot2_Tag_EFI64bitImageHandlePtr_is_valid(
+bool KernAux_Multiboot2_ITag_EFI64bitImageHandlePtr_is_valid(
     const struct KernAux_Multiboot2_Tag_EFI64bitImageHandlePtr *tag
 );
 
-bool KernAux_Multiboot2_Tag_ImageLoadBasePhysAddr_is_valid(
+bool KernAux_Multiboot2_ITag_ImageLoadBasePhysAddr_is_valid(
     const struct KernAux_Multiboot2_Tag_ImageLoadBasePhysAddr *tag
 );
 

@@ -57,12 +57,12 @@ endif
 if WITH_MULTIBOOT2
 libkernaux_a_SOURCES += \
 	src/multiboot2/helpers.c \
-	src/multiboot2/is_valid.c \
+	src/multiboot2/info_is_valid.c \
 	src/multiboot2/print.c
 TESTS += \
 	tests/test_multiboot2_helpers \
 	tests/test_multiboot2_print \
-	tests/test_multiboot2_validation
+	tests/test_multiboot2_info_validation
 noinst_PROGRAMS += \
 	tests/multiboot2_print1 \
 	tests/multiboot2_print2
@@ -143,9 +143,9 @@ tests_test_multiboot2_print_SOURCES = \
 	$(libkernaux_a_SOURCES) \
 	tests/test_multiboot2_print.c
 
-tests_test_multiboot2_validation_SOURCES = \
+tests_test_multiboot2_info_validation_SOURCES = \
 	$(libkernaux_a_SOURCES) \
-	tests/test_multiboot2_validation.c \
+	tests/test_multiboot2_info_validation.c \
 	tests/multiboot2_example1.h \
 	tests/multiboot2_example2.h
 

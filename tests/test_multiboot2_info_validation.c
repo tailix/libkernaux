@@ -930,163 +930,163 @@ int main()
 
     // Tag_None
 
-    assert(KernAux_Multiboot2_Tag_None_is_valid(&tag_none_valid));
-    assert(!KernAux_Multiboot2_Tag_None_is_valid(&tag_none_invalid_type));
-    assert(!KernAux_Multiboot2_Tag_None_is_valid(&tag_none_invalid_size));
+    assert(KernAux_Multiboot2_ITag_None_is_valid(&tag_none_valid));
+    assert(!KernAux_Multiboot2_ITag_None_is_valid(&tag_none_invalid_type));
+    assert(!KernAux_Multiboot2_ITag_None_is_valid(&tag_none_invalid_size));
 
     // Tag_BootCmdLine
 
-    assert(KernAux_Multiboot2_Tag_BootCmdLine_is_valid(
+    assert(KernAux_Multiboot2_ITag_BootCmdLine_is_valid(
         &tag_boot_cmd_line_with_empty_cmdline_valid.tag
     ));
 
-    assert(KernAux_Multiboot2_Tag_BootCmdLine_is_valid(
+    assert(KernAux_Multiboot2_ITag_BootCmdLine_is_valid(
         &tag_boot_cmd_line_with_some_cmdline_valid.tag
     ));
 
-    assert(!KernAux_Multiboot2_Tag_BootCmdLine_is_valid(
+    assert(!KernAux_Multiboot2_ITag_BootCmdLine_is_valid(
         &tag_boot_cmd_line_invalid_type.tag
     ));
 
-    assert(!KernAux_Multiboot2_Tag_BootCmdLine_is_valid(
+    assert(!KernAux_Multiboot2_ITag_BootCmdLine_is_valid(
         &tag_boot_cmd_line_with_empty_cmdline_invalid_size.tag
     ));
 
-    assert(!KernAux_Multiboot2_Tag_BootCmdLine_is_valid(
+    assert(!KernAux_Multiboot2_ITag_BootCmdLine_is_valid(
         &tag_boot_cmd_line_with_some_cmdline_invalid_size.tag
     ));
 
     // Tag_BootLoaderName
 
-    assert(KernAux_Multiboot2_Tag_BootLoaderName_is_valid(
+    assert(KernAux_Multiboot2_ITag_BootLoaderName_is_valid(
         &tag_boot_loader_name_with_empty_name_valid.tag
     ));
 
-    assert(KernAux_Multiboot2_Tag_BootLoaderName_is_valid(
+    assert(KernAux_Multiboot2_ITag_BootLoaderName_is_valid(
         &tag_boot_loader_name_with_some_name_valid.tag
     ));
 
-    assert(!KernAux_Multiboot2_Tag_BootLoaderName_is_valid(
+    assert(!KernAux_Multiboot2_ITag_BootLoaderName_is_valid(
         &tag_boot_loader_name_invalid_type.tag
     ));
 
-    assert(!KernAux_Multiboot2_Tag_BootLoaderName_is_valid(
+    assert(!KernAux_Multiboot2_ITag_BootLoaderName_is_valid(
         &tag_boot_loader_name_with_empty_name_invalid_size.tag
     ));
 
-    assert(!KernAux_Multiboot2_Tag_BootLoaderName_is_valid(
+    assert(!KernAux_Multiboot2_ITag_BootLoaderName_is_valid(
         &tag_boot_loader_name_with_some_name_invalid_size.tag
     ));
 
     // Tag_Module
 
-    assert(KernAux_Multiboot2_Tag_Module_is_valid(
+    assert(KernAux_Multiboot2_ITag_Module_is_valid(
         &tag_module_with_empty_name_valid.tag
     ));
 
-    assert(KernAux_Multiboot2_Tag_Module_is_valid(
+    assert(KernAux_Multiboot2_ITag_Module_is_valid(
         &tag_module_with_some_name_valid.tag
     ));
 
-    assert(!KernAux_Multiboot2_Tag_Module_is_valid(
+    assert(!KernAux_Multiboot2_ITag_Module_is_valid(
         &tag_module_invalid_type.tag
     ));
 
-    assert(!KernAux_Multiboot2_Tag_Module_is_valid(
+    assert(!KernAux_Multiboot2_ITag_Module_is_valid(
         &tag_module_with_empty_name_invalid_size.tag
     ));
 
-    assert(!KernAux_Multiboot2_Tag_Module_is_valid(
+    assert(!KernAux_Multiboot2_ITag_Module_is_valid(
         &tag_module_with_some_name_invalid_size.tag
     ));
 
-    assert(!KernAux_Multiboot2_Tag_Module_is_valid(
+    assert(!KernAux_Multiboot2_ITag_Module_is_valid(
         &tag_module_with_equal_start_end_invalid.tag
     ));
 
-    assert(!KernAux_Multiboot2_Tag_Module_is_valid(
+    assert(!KernAux_Multiboot2_ITag_Module_is_valid(
         &tag_module_with_reversed_start_end_invalid.tag
     ));
 
     // Tag_BasicMemoryInfo
 
-    assert(KernAux_Multiboot2_Tag_BasicMemoryInfo_is_valid(
+    assert(KernAux_Multiboot2_ITag_BasicMemoryInfo_is_valid(
         &tag_basic_memory_info_valid
     ));
 
-    assert(!KernAux_Multiboot2_Tag_BasicMemoryInfo_is_valid(
+    assert(!KernAux_Multiboot2_ITag_BasicMemoryInfo_is_valid(
         &tag_basic_memory_info_invalid_type
     ));
 
-    assert(!KernAux_Multiboot2_Tag_BasicMemoryInfo_is_valid(
+    assert(!KernAux_Multiboot2_ITag_BasicMemoryInfo_is_valid(
         &tag_basic_memory_info_invalid_size
     ));
 
     // Tag_BIOSBootDevice
 
-    assert(KernAux_Multiboot2_Tag_BIOSBootDevice_is_valid(
+    assert(KernAux_Multiboot2_ITag_BIOSBootDevice_is_valid(
         &tag_bios_boot_device_valid
     ));
 
-    assert(!KernAux_Multiboot2_Tag_BIOSBootDevice_is_valid(
+    assert(!KernAux_Multiboot2_ITag_BIOSBootDevice_is_valid(
         &tag_bios_boot_device_invalid_type
     ));
 
-    assert(!KernAux_Multiboot2_Tag_BIOSBootDevice_is_valid(
+    assert(!KernAux_Multiboot2_ITag_BIOSBootDevice_is_valid(
         &tag_bios_boot_device_invalid_size
     ));
 
     // Tag_MemoryMap
 
-    assert(KernAux_Multiboot2_Tag_MemoryMap_is_valid(
+    assert(KernAux_Multiboot2_ITag_MemoryMap_is_valid(
         &tag_memory_map_with_empty_data_valid
     ));
 
-    assert(KernAux_Multiboot2_Tag_MemoryMap_is_valid(
+    assert(KernAux_Multiboot2_ITag_MemoryMap_is_valid(
         &tag_memory_map_with_some_small_data_items_valid.tag
     ));
 
-    assert(KernAux_Multiboot2_Tag_MemoryMap_is_valid(
+    assert(KernAux_Multiboot2_ITag_MemoryMap_is_valid(
         &tag_memory_map_with_some_large_data_items_valid.tag
     ));
 
-    assert(!KernAux_Multiboot2_Tag_MemoryMap_is_valid(
+    assert(!KernAux_Multiboot2_ITag_MemoryMap_is_valid(
         &tag_memory_map_invalid_type
     ));
 
-    assert(!KernAux_Multiboot2_Tag_MemoryMap_is_valid(
+    assert(!KernAux_Multiboot2_ITag_MemoryMap_is_valid(
         &tag_memory_map_with_some_large_data_items_invalid_size.tag
     ));
 
-    assert(!KernAux_Multiboot2_Tag_MemoryMap_is_valid(
+    assert(!KernAux_Multiboot2_ITag_MemoryMap_is_valid(
         &tag_memory_map_with_empty_data_invalid_entry_size_zero
     ));
 
-    assert(!KernAux_Multiboot2_Tag_MemoryMap_is_valid(
+    assert(!KernAux_Multiboot2_ITag_MemoryMap_is_valid(
         &tag_memory_map_with_empty_data_invalid_entry_size_not_mul8
     ));
 
-    assert(!KernAux_Multiboot2_Tag_MemoryMap_is_valid(
+    assert(!KernAux_Multiboot2_ITag_MemoryMap_is_valid(
         &tag_memory_map_with_some_small_data_items_invalid_entry_size_not_mul8
             .tag
     ));
 
-    assert(!KernAux_Multiboot2_Tag_MemoryMap_is_valid(
+    assert(!KernAux_Multiboot2_ITag_MemoryMap_is_valid(
         &tag_memory_map_with_some_large_data_items_invalid_entry_size_not_mul8
             .tag
     ));
 
     // Tag_VBEInfo
 
-    assert(KernAux_Multiboot2_Tag_VBEInfo_is_valid(
+    assert(KernAux_Multiboot2_ITag_VBEInfo_is_valid(
         &tag_vbe_info_valid
     ));
 
-    assert(!KernAux_Multiboot2_Tag_VBEInfo_is_valid(
+    assert(!KernAux_Multiboot2_ITag_VBEInfo_is_valid(
         &tag_vbe_info_invalid_type
     ));
 
-    assert(!KernAux_Multiboot2_Tag_VBEInfo_is_valid(
+    assert(!KernAux_Multiboot2_ITag_VBEInfo_is_valid(
         &tag_vbe_info_invalid_size
     ));
 

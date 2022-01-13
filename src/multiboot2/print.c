@@ -291,7 +291,7 @@ void KernAux_Multiboot2_Tag_MemoryMap_print(
     const struct KernAux_Multiboot2_Tag_MemoryMap *const tag,
     void (*printf)(const char *format, ...) __attribute__((format(printf, 1, 2)))
 ) {
-    if (!KernAux_Multiboot2_Tag_MemoryMap_is_valid(tag)) {
+    if (!KernAux_Multiboot2_ITag_MemoryMap_is_valid(tag)) {
         printf("  invalid!\n");
         return;
     }
@@ -322,7 +322,7 @@ void KernAux_Multiboot2_Tag_ELFSymbols_print(
     const struct KernAux_Multiboot2_Tag_ELFSymbols *const tag,
     void (*printf)(const char *format, ...) __attribute__((format(printf, 1, 2)))
 ) {
-    if (!KernAux_Multiboot2_Tag_ELFSymbols_is_valid(tag)) {
+    if (!KernAux_Multiboot2_ITag_ELFSymbols_is_valid(tag)) {
         printf("  invalid!\n");
         return;
     }
