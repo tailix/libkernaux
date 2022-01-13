@@ -40,4 +40,68 @@ void KernAux_Multiboot2_HTagBase_print(
     if (!KernAux_Multiboot2_HTagBase_is_valid(tag_base)) return;
 
     printf("Multiboot 2 header tag\n");
+
+    printf(
+        "  type: %u (%s)\n",
+        tag_base->type,
+        KernAux_Multiboot2_HTag_to_str(tag_base->type)
+    );
+
+    printf("  flags: %u\n", tag_base->flags);
+    printf("  size: %u\n", tag_base->size);
+
+    switch (tag_base->type) {
+    case KERNAUX_MULTIBOOT2_HTAG_NONE:
+        break;
+    case KERNAUX_MULTIBOOT2_HTAG_INFO_REQ:
+        {
+            // TODO: print
+        }
+        break;
+    case KERNAUX_MULTIBOOT2_HTAG_ADDR:
+        {
+            // TODO: print
+        }
+        break;
+    case KERNAUX_MULTIBOOT2_HTAG_ENTRY_ADDR:
+        {
+            // TODO: print
+        }
+        break;
+    case KERNAUX_MULTIBOOT2_HTAG_FLAGS:
+        {
+            // TODO: print
+        }
+        break;
+    case KERNAUX_MULTIBOOT2_HTAG_FRAMEBUFFER:
+        {
+            // TODO: print
+        }
+        break;
+    case KERNAUX_MULTIBOOT2_HTAG_MODULE_ALIGN:
+        {
+            // TODO: print
+        }
+        break;
+    case KERNAUX_MULTIBOOT2_HTAG_EFI_BOOT_SERVICES:
+        {
+            // TODO: print
+        }
+        break;
+    case KERNAUX_MULTIBOOT2_HTAG_EFI_I386_ENTRY_ADDR:
+        {
+            // TODO: print
+        }
+        break;
+    case KERNAUX_MULTIBOOT2_HTAG_EFI_AMD64_ENTRY_ADDR:
+        {
+            // TODO: print
+        }
+        break;
+    case KERNAUX_MULTIBOOT2_HTAG_RELOCATABLE_HEADER:
+        {
+            // TODO: print
+        }
+        break;
+    }
 }
