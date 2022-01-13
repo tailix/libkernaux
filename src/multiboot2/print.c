@@ -6,8 +6,8 @@
 
 #include <stddef.h>
 
-static const char *KernAux_Multiboot2_TagType_to_str(
-    enum KernAux_Multiboot2_TagType tag_type
+static const char *KernAux_Multiboot2_ITag_to_str(
+    enum KernAux_Multiboot2_ITag tag_type
 );
 
 static void KernAux_Multiboot2_Tag_MemoryMap_print(
@@ -20,53 +20,53 @@ static void KernAux_Multiboot2_Tag_ELFSymbols_print(
     void (*printf)(const char *format, ...) __attribute__((format(printf, 1, 2)))
 );
 
-const char *KernAux_Multiboot2_TagType_to_str(
-    enum KernAux_Multiboot2_TagType tag_type
+const char *KernAux_Multiboot2_ITag_to_str(
+    enum KernAux_Multiboot2_ITag tag_type
 ) {
     switch (tag_type) {
-    case KERNAUX_MULTIBOOT2_TAGTYPE_NONE:
+    case KERNAUX_MULTIBOOT2_ITAG_NONE:
         return "none";
-    case KERNAUX_MULTIBOOT2_TAGTYPE_BOOT_CMD_LINE:
+    case KERNAUX_MULTIBOOT2_ITAG_BOOT_CMD_LINE:
         return "boot cmd line";
-    case KERNAUX_MULTIBOOT2_TAGTYPE_BOOT_LOADER_NAME:
+    case KERNAUX_MULTIBOOT2_ITAG_BOOT_LOADER_NAME:
         return "boot loader name";
-    case KERNAUX_MULTIBOOT2_TAGTYPE_MODULE:
+    case KERNAUX_MULTIBOOT2_ITAG_MODULE:
         return "module";
-    case KERNAUX_MULTIBOOT2_TAGTYPE_BASIC_MEMORY_INFO:
+    case KERNAUX_MULTIBOOT2_ITAG_BASIC_MEMORY_INFO:
         return "basic memory info";
-    case KERNAUX_MULTIBOOT2_TAGTYPE_BIOS_BOOT_DEVICE:
+    case KERNAUX_MULTIBOOT2_ITAG_BIOS_BOOT_DEVICE:
         return "BIOS boot device";
-    case KERNAUX_MULTIBOOT2_TAGTYPE_MEMORY_MAP:
+    case KERNAUX_MULTIBOOT2_ITAG_MEMORY_MAP:
         return "memory map";
-    case KERNAUX_MULTIBOOT2_TAGTYPE_VBE_INFO:
+    case KERNAUX_MULTIBOOT2_ITAG_VBE_INFO:
         return "VBE info";
-    case KERNAUX_MULTIBOOT2_TAGTYPE_FRAMEBUFFER_INFO:
+    case KERNAUX_MULTIBOOT2_ITAG_FRAMEBUFFER_INFO:
         return "framebuffer info";
-    case KERNAUX_MULTIBOOT2_TAGTYPE_ELF_SYMBOLS:
+    case KERNAUX_MULTIBOOT2_ITAG_ELF_SYMBOLS:
         return "ELF symbols";
-    case KERNAUX_MULTIBOOT2_TAGTYPE_APM_TABLE:
+    case KERNAUX_MULTIBOOT2_ITAG_APM_TABLE:
         return "APM table";
-    case KERNAUX_MULTIBOOT2_TAGTYPE_EFI_32BIT_SYSTEM_TABLE_PTR:
+    case KERNAUX_MULTIBOOT2_ITAG_EFI_32BIT_SYSTEM_TABLE_PTR:
         return "EFI 32bit system table ptr";
-    case KERNAUX_MULTIBOOT2_TAGTYPE_EFI_64BIT_SYSTEM_TABLE_PTR:
+    case KERNAUX_MULTIBOOT2_ITAG_EFI_64BIT_SYSTEM_TABLE_PTR:
         return "EFI 64bit system table ptr";
-    case KERNAUX_MULTIBOOT2_TAGTYPE_SMBIOS_TABLES:
+    case KERNAUX_MULTIBOOT2_ITAG_SMBIOS_TABLES:
         return "SMBIOS tables";
-    case KERNAUX_MULTIBOOT2_TAGTYPE_ACPI_OLD_RSDP:
+    case KERNAUX_MULTIBOOT2_ITAG_ACPI_OLD_RSDP:
         return "ACPI old RSDP";
-    case KERNAUX_MULTIBOOT2_TAGTYPE_ACPI_NEW_RSDP:
+    case KERNAUX_MULTIBOOT2_ITAG_ACPI_NEW_RSDP:
         return "ACPI new RSDP";
-    case KERNAUX_MULTIBOOT2_TAGTYPE_NETWORKING_INFO:
+    case KERNAUX_MULTIBOOT2_ITAG_NETWORKING_INFO:
         return "networking info";
-    case KERNAUX_MULTIBOOT2_TAGTYPE_EFI_MEMORY_MAP:
+    case KERNAUX_MULTIBOOT2_ITAG_EFI_MEMORY_MAP:
         return "EFI memory map";
-    case KERNAUX_MULTIBOOT2_TAGTYPE_EFI_BOOT_SERVICES_NOT_TERMINATED:
+    case KERNAUX_MULTIBOOT2_ITAG_EFI_BOOT_SERVICES_NOT_TERMINATED:
         return "EFI boot services not terminated";
-    case KERNAUX_MULTIBOOT2_TAGTYPE_EFI_32BIT_IMAGE_HANDLE_PTR:
+    case KERNAUX_MULTIBOOT2_ITAG_EFI_32BIT_IMAGE_HANDLE_PTR:
         return "EFI 32bit image handle ptr";
-    case KERNAUX_MULTIBOOT2_TAGTYPE_EFI_64BIT_IMAGE_HANDLE_PTR:
+    case KERNAUX_MULTIBOOT2_ITAG_EFI_64BIT_IMAGE_HANDLE_PTR:
         return "EFI 64bit image handle ptr";
-    case KERNAUX_MULTIBOOT2_TAGTYPE_IMAGE_LOAD_BASE_PHYS_ADDR:
+    case KERNAUX_MULTIBOOT2_ITAG_IMAGE_LOAD_BASE_PHYS_ADDR:
         return "image load base phys addr";
     default:
         return NULL;
@@ -109,15 +109,15 @@ void KernAux_Multiboot2_TagBase_print(
     printf(
         "  type: %u (%s)\n",
         tag_base->type,
-        KernAux_Multiboot2_TagType_to_str(tag_base->type)
+        KernAux_Multiboot2_ITag_to_str(tag_base->type)
     );
 
     printf("  size: %u\n", tag_base->size);
 
     switch (tag_base->type) {
-    case KERNAUX_MULTIBOOT2_TAGTYPE_NONE:
+    case KERNAUX_MULTIBOOT2_ITAG_NONE:
         break;
-    case KERNAUX_MULTIBOOT2_TAGTYPE_BOOT_CMD_LINE:
+    case KERNAUX_MULTIBOOT2_ITAG_BOOT_CMD_LINE:
         printf(
             "  cmdline: %s\n",
             KERNAUX_MULTIBOOT2_DATA(
@@ -125,7 +125,7 @@ void KernAux_Multiboot2_TagBase_print(
             )
         );
         break;
-    case KERNAUX_MULTIBOOT2_TAGTYPE_BOOT_LOADER_NAME:
+    case KERNAUX_MULTIBOOT2_ITAG_BOOT_LOADER_NAME:
         printf(
             "  name: %s\n",
             KERNAUX_MULTIBOOT2_DATA(
@@ -133,7 +133,7 @@ void KernAux_Multiboot2_TagBase_print(
             )
         );
         break;
-    case KERNAUX_MULTIBOOT2_TAGTYPE_MODULE:
+    case KERNAUX_MULTIBOOT2_ITAG_MODULE:
         {
             const struct KernAux_Multiboot2_Tag_Module *const tag_module =
                 (struct KernAux_Multiboot2_Tag_Module*)tag_base;
@@ -143,7 +143,7 @@ void KernAux_Multiboot2_TagBase_print(
             printf("  cmdline: %s\n", KERNAUX_MULTIBOOT2_DATA(tag_module));
         }
         break;
-    case KERNAUX_MULTIBOOT2_TAGTYPE_BASIC_MEMORY_INFO:
+    case KERNAUX_MULTIBOOT2_ITAG_BASIC_MEMORY_INFO:
         {
             const struct KernAux_Multiboot2_Tag_BasicMemoryInfo *const tag_bmi =
                 (struct KernAux_Multiboot2_Tag_BasicMemoryInfo*)tag_base;
@@ -152,7 +152,7 @@ void KernAux_Multiboot2_TagBase_print(
             printf("  mem upper: %u\n", tag_bmi->mem_upper);
         }
         break;
-    case KERNAUX_MULTIBOOT2_TAGTYPE_BIOS_BOOT_DEVICE:
+    case KERNAUX_MULTIBOOT2_ITAG_BIOS_BOOT_DEVICE:
         {
             const struct KernAux_Multiboot2_Tag_BIOSBootDevice *const tag_bbd =
                 (struct KernAux_Multiboot2_Tag_BIOSBootDevice*)tag_base;
@@ -162,13 +162,13 @@ void KernAux_Multiboot2_TagBase_print(
             printf("  sub_partition: %u\n", tag_bbd->sub_partition);
         }
         break;
-    case KERNAUX_MULTIBOOT2_TAGTYPE_MEMORY_MAP:
+    case KERNAUX_MULTIBOOT2_ITAG_MEMORY_MAP:
         KernAux_Multiboot2_Tag_MemoryMap_print(
             (struct KernAux_Multiboot2_Tag_MemoryMap*)tag_base,
             printf
         );
         break;
-    case KERNAUX_MULTIBOOT2_TAGTYPE_VBE_INFO:
+    case KERNAUX_MULTIBOOT2_ITAG_VBE_INFO:
         {
             const struct KernAux_Multiboot2_Tag_VBEInfo *const tag_vbe =
                 (struct KernAux_Multiboot2_Tag_VBEInfo*)tag_base;
@@ -179,7 +179,7 @@ void KernAux_Multiboot2_TagBase_print(
             printf("  VBE interface len: %hu\n", tag_vbe->vbe_interface_len);
         }
         break;
-    case KERNAUX_MULTIBOOT2_TAGTYPE_FRAMEBUFFER_INFO:
+    case KERNAUX_MULTIBOOT2_ITAG_FRAMEBUFFER_INFO:
         {
             const struct KernAux_Multiboot2_Tag_FramebufferInfo *const tag_fb =
                 (struct KernAux_Multiboot2_Tag_FramebufferInfo*)tag_base;
@@ -193,13 +193,13 @@ void KernAux_Multiboot2_TagBase_print(
             printf("  reserved1: %u\n",          tag_fb->reserved1);
         }
         break;
-    case KERNAUX_MULTIBOOT2_TAGTYPE_ELF_SYMBOLS:
+    case KERNAUX_MULTIBOOT2_ITAG_ELF_SYMBOLS:
         KernAux_Multiboot2_Tag_ELFSymbols_print(
             (struct KernAux_Multiboot2_Tag_ELFSymbols*)tag_base,
             printf
         );
         break;
-    case KERNAUX_MULTIBOOT2_TAGTYPE_APM_TABLE:
+    case KERNAUX_MULTIBOOT2_ITAG_APM_TABLE:
         {
             const struct KernAux_Multiboot2_Tag_APMTable *const tag_apm =
                 (struct KernAux_Multiboot2_Tag_APMTable*)tag_base;
@@ -215,17 +215,17 @@ void KernAux_Multiboot2_TagBase_print(
             printf("  dseg len: %hu\n",    tag_apm->dseg_len);
         }
         break;
-    case KERNAUX_MULTIBOOT2_TAGTYPE_EFI_32BIT_SYSTEM_TABLE_PTR:
+    case KERNAUX_MULTIBOOT2_ITAG_EFI_32BIT_SYSTEM_TABLE_PTR:
         {
             // TODO: print
         }
         break;
-    case KERNAUX_MULTIBOOT2_TAGTYPE_EFI_64BIT_SYSTEM_TABLE_PTR:
+    case KERNAUX_MULTIBOOT2_ITAG_EFI_64BIT_SYSTEM_TABLE_PTR:
         {
             // TODO: print
         }
         break;
-    case KERNAUX_MULTIBOOT2_TAGTYPE_SMBIOS_TABLES:
+    case KERNAUX_MULTIBOOT2_ITAG_SMBIOS_TABLES:
         {
             const struct KernAux_Multiboot2_Tag_SMBIOSTables *const tag_smbios =
                 (struct KernAux_Multiboot2_Tag_SMBIOSTables*)tag_base;
@@ -244,39 +244,39 @@ void KernAux_Multiboot2_TagBase_print(
             );
         }
         break;
-    case KERNAUX_MULTIBOOT2_TAGTYPE_ACPI_OLD_RSDP:
+    case KERNAUX_MULTIBOOT2_ITAG_ACPI_OLD_RSDP:
         {
             // TODO: print
         }
         break;
-    case KERNAUX_MULTIBOOT2_TAGTYPE_ACPI_NEW_RSDP:
+    case KERNAUX_MULTIBOOT2_ITAG_ACPI_NEW_RSDP:
         {
             // TODO: print
         }
         break;
-    case KERNAUX_MULTIBOOT2_TAGTYPE_NETWORKING_INFO:
+    case KERNAUX_MULTIBOOT2_ITAG_NETWORKING_INFO:
         {
             // TODO: print
         }
         break;
-    case KERNAUX_MULTIBOOT2_TAGTYPE_EFI_MEMORY_MAP:
+    case KERNAUX_MULTIBOOT2_ITAG_EFI_MEMORY_MAP:
         {
             // TODO: print
         }
         break;
-    case KERNAUX_MULTIBOOT2_TAGTYPE_EFI_BOOT_SERVICES_NOT_TERMINATED:
+    case KERNAUX_MULTIBOOT2_ITAG_EFI_BOOT_SERVICES_NOT_TERMINATED:
         break;
-    case KERNAUX_MULTIBOOT2_TAGTYPE_EFI_32BIT_IMAGE_HANDLE_PTR:
+    case KERNAUX_MULTIBOOT2_ITAG_EFI_32BIT_IMAGE_HANDLE_PTR:
         {
             // TODO: print
         }
         break;
-    case KERNAUX_MULTIBOOT2_TAGTYPE_EFI_64BIT_IMAGE_HANDLE_PTR:
+    case KERNAUX_MULTIBOOT2_ITAG_EFI_64BIT_IMAGE_HANDLE_PTR:
         {
             // TODO: print
         }
         break;
-    case KERNAUX_MULTIBOOT2_TAGTYPE_IMAGE_LOAD_BASE_PHYS_ADDR:
+    case KERNAUX_MULTIBOOT2_ITAG_IMAGE_LOAD_BASE_PHYS_ADDR:
         printf(
             "  load base addr: %u\n",
             ((struct KernAux_Multiboot2_Tag_ImageLoadBasePhysAddr*)tag_base)->
