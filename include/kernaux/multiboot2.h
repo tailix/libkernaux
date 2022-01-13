@@ -337,9 +337,9 @@ const char *KernAux_Multiboot2_boot_cmd_line(
     const struct KernAux_Multiboot2 *multiboot2
 );
 
-/*******************
- * Print functions *
- *******************/
+/*******************************
+ * Information print functions *
+ *******************************/
 
 void KernAux_Multiboot2_print(
     const struct KernAux_Multiboot2 *multiboot2,

@@ -10,12 +10,12 @@ static const char *KernAux_Multiboot2_ITag_to_str(
     enum KernAux_Multiboot2_ITag tag_type
 );
 
-static void KernAux_Multiboot2_Tag_MemoryMap_print(
+static void KernAux_Multiboot2_ITag_MemoryMap_print(
     const struct KernAux_Multiboot2_Tag_MemoryMap *tag,
     void (*printf)(const char *format, ...) __attribute__((format(printf, 1, 2)))
 );
 
-static void KernAux_Multiboot2_Tag_ELFSymbols_print(
+static void KernAux_Multiboot2_ITag_ELFSymbols_print(
     const struct KernAux_Multiboot2_Tag_ELFSymbols *tag,
     void (*printf)(const char *format, ...) __attribute__((format(printf, 1, 2)))
 );
@@ -164,7 +164,7 @@ void KernAux_Multiboot2_ITagBase_print(
         }
         break;
     case KERNAUX_MULTIBOOT2_ITAG_MEMORY_MAP:
-        KernAux_Multiboot2_Tag_MemoryMap_print(
+        KernAux_Multiboot2_ITag_MemoryMap_print(
             (struct KernAux_Multiboot2_Tag_MemoryMap*)tag_base,
             printf
         );
@@ -195,7 +195,7 @@ void KernAux_Multiboot2_ITagBase_print(
         }
         break;
     case KERNAUX_MULTIBOOT2_ITAG_ELF_SYMBOLS:
-        KernAux_Multiboot2_Tag_ELFSymbols_print(
+        KernAux_Multiboot2_ITag_ELFSymbols_print(
             (struct KernAux_Multiboot2_Tag_ELFSymbols*)tag_base,
             printf
         );
@@ -287,7 +287,7 @@ void KernAux_Multiboot2_ITagBase_print(
     }
 }
 
-void KernAux_Multiboot2_Tag_MemoryMap_print(
+void KernAux_Multiboot2_ITag_MemoryMap_print(
     const struct KernAux_Multiboot2_Tag_MemoryMap *const tag,
     void (*printf)(const char *format, ...) __attribute__((format(printf, 1, 2)))
 ) {
@@ -318,7 +318,7 @@ void KernAux_Multiboot2_Tag_MemoryMap_print(
     }
 }
 
-void KernAux_Multiboot2_Tag_ELFSymbols_print(
+void KernAux_Multiboot2_ITag_ELFSymbols_print(
     const struct KernAux_Multiboot2_Tag_ELFSymbols *const tag,
     void (*printf)(const char *format, ...) __attribute__((format(printf, 1, 2)))
 ) {
