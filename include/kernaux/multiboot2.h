@@ -25,6 +25,14 @@ extern "C" {
  * Header common types *
  ***********************/
 
+struct KernAux_Multiboot2_Header {
+    unsigned magic      : 32;
+    unsigned arch       : 32;
+    unsigned total_size : 32;
+    unsigned checksum   : 32;
+}
+__attribute__((packed));
+
 enum KernAux_Multiboot2_HTag {
     KERNAUX_MULTIBOOT2_HTAG_NONE = 0,
     KERNAUX_MULTIBOOT2_HTAG_INFO_REQ = 1,
@@ -39,14 +47,6 @@ enum KernAux_Multiboot2_HTag {
     KERNAUX_MULTIBOOT2_HTAG_RELOCATABLE_HEADER = 10,
 };
 
-struct KernAux_Multiboot2_Header {
-    unsigned magic      : 32;
-    unsigned arch       : 32;
-    unsigned total_size : 32;
-    unsigned checksum   : 32;
-}
-__attribute__((packed));
-
 struct KernAux_Multiboot2_HTagBase {
     enum KernAux_Multiboot2_HTag type : 16;
     unsigned flags                    : 16;
@@ -57,6 +57,12 @@ __attribute__((packed));
 /****************************
  * Information common types *
  ****************************/
+
+struct KernAux_Multiboot2_Info {
+    unsigned total_size : 32;
+    unsigned reserved1  : 32;
+}
+__attribute__((packed));
 
 enum KernAux_Multiboot2_ITag {
     KERNAUX_MULTIBOOT2_ITAG_NONE = 0,
@@ -82,12 +88,6 @@ enum KernAux_Multiboot2_ITag {
     KERNAUX_MULTIBOOT2_ITAG_EFI_64BIT_IMAGE_HANDLE_PTR = 20,
     KERNAUX_MULTIBOOT2_ITAG_IMAGE_LOAD_BASE_PHYS_ADDR = 21,
 };
-
-struct KernAux_Multiboot2_Info {
-    unsigned total_size : 32;
-    unsigned reserved1  : 32;
-}
-__attribute__((packed));
 
 struct KernAux_Multiboot2_ITagBase {
     enum KernAux_Multiboot2_ITag type : 32;
