@@ -12,9 +12,9 @@ extern "C" {
 
 #define KERNAUX_MULTIBOOT2_DATA(ptr) (((uint8_t*)(ptr)) + sizeof(*(ptr)))
 
-/****************
- * Common types *
- ****************/
+/***********************
+ * Header common types *
+ ***********************/
 
 enum KernAux_Multiboot2_HTag {
     KERNAUX_MULTIBOOT2_HTAG_NONE = 0,
@@ -29,6 +29,25 @@ enum KernAux_Multiboot2_HTag {
     KERNAUX_MULTIBOOT2_HTAG_EFI_AMD64_ENTRY_ADDR = 9,
     KERNAUX_MULTIBOOT2_HTAG_RELOCATABLE_HEADER = 10,
 };
+
+struct KernAux_Multiboot2_Header {
+    uint32_t magic;
+    uint32_t arch;
+    uint32_t total_size;
+    uint32_t checksum;
+}
+__attribute__((packed));
+
+struct KernAux_Multiboot2_HTagBase {
+    enum KernAux_Multiboot2_HTag type : 16;
+    uint16_t flags;
+    uint32_t size;
+}
+__attribute__((packed));
+
+/****************************
+ * Information common types *
+ ****************************/
 
 enum KernAux_Multiboot2_ITag {
     KERNAUX_MULTIBOOT2_ITAG_NONE = 0,
