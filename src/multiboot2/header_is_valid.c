@@ -26,6 +26,10 @@ bool KernAux_Multiboot2_Header_is_valid(
         return false;
     }
 
+    if (multiboot2_header->total_size % KERNAUX_MULTIBOOT2_TAG_ALIGN != 0) {
+        return false;
+    }
+
     if (multiboot2_header->checksum !=
         KERNAUX_MULTIBOOT2_CHECKSUM(
             multiboot2_header->arch,

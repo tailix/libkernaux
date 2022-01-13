@@ -19,6 +19,8 @@ extern "C" {
 
 #define KERNAUX_MULTIBOOT2_DATA(ptr) (((uint8_t*)(ptr)) + sizeof(*(ptr)))
 
+#define KERNAUX_MULTIBOOT2_TAG_ALIGN 8
+
 #define KERNAUX_MULTIBOOT2_HTAG_NEXT(tag_base) \
     ((struct KernAux_Multiboot2_HTagBase*)KERNAUX_MULTIBOOT2_TAG_NEXT(tag_base))
 #define KERNAUX_MULTIBOOT2_ITAG_NEXT(tag_base) \

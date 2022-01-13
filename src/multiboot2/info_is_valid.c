@@ -18,6 +18,10 @@ bool KernAux_Multiboot2_Info_is_valid(
         return false;
     }
 
+    if (multiboot2_info->total_size % KERNAUX_MULTIBOOT2_TAG_ALIGN != 0) {
+        return false;
+    }
+
     const struct KernAux_Multiboot2_ITagBase *tag_base =
         (struct KernAux_Multiboot2_ITagBase*)
         KERNAUX_MULTIBOOT2_DATA(multiboot2_info);
