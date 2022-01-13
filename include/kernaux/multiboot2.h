@@ -86,6 +86,109 @@ struct KernAux_Multiboot2_ITagBase {
 }
 __attribute__((packed));
 
+/*************************
+ * Header tag structures *
+ *************************/
+
+struct KernAux_Multiboot2_HTag_None {
+    // type = 0
+    // size = 8
+    struct KernAux_Multiboot2_HTagBase base;
+}
+__attribute__((packed));
+
+struct KernAux_Multiboot2_HTag_InfoReq {
+    // type = 1
+    // size > 8
+    struct KernAux_Multiboot2_HTagBase base;
+}
+__attribute__((packed));
+
+struct KernAux_Multiboot2_HTag_Addr {
+    // type = 2
+    // size = 24
+    struct KernAux_Multiboot2_HTagBase base;
+
+    unsigned header_addr   : 32;
+    unsigned load_addr     : 32;
+    unsigned load_end_addr : 32;
+    unsigned bss_end_addr  : 32;
+}
+__attribute__((packed));
+
+struct KernAux_Multiboot2_HTag_EntryAddr {
+    // type = 3
+    // size = 12
+    struct KernAux_Multiboot2_HTagBase base;
+
+    unsigned entry_addr : 32;
+}
+__attribute__((packed));
+
+struct KernAux_Multiboot2_HTag_Flags {
+    // type = 4
+    // size = 12
+    struct KernAux_Multiboot2_HTagBase base;
+
+    unsigned console_flags : 32;
+}
+__attribute__((packed));
+
+struct KernAux_Multiboot2_HTag_Framebuffer {
+    // type = 5
+    // size = 20
+    struct KernAux_Multiboot2_HTagBase base;
+
+    unsigned width  : 32;
+    unsigned height : 32;
+    unsigned depth  : 32;
+}
+__attribute__((packed));
+
+struct KernAux_Multiboot2_HTag_ModuleAlign {
+    // type = 6
+    // size = 8
+    struct KernAux_Multiboot2_HTagBase base;
+}
+__attribute__((packed));
+
+struct KernAux_Multiboot2_HTag_EFIBootServices {
+    // type = 7
+    // size = 8
+    struct KernAux_Multiboot2_HTagBase base;
+}
+__attribute__((packed));
+
+struct KernAux_Multiboot2_HTag_EFII386EntryAddr {
+    // type = 8
+    // size = 12
+    struct KernAux_Multiboot2_HTagBase base;
+
+    unsigned entry_addr : 32;
+}
+__attribute__((packed));
+
+struct KernAux_Multiboot2_HTag_EFIAmd64EntryAddr {
+    // type = 9
+    // size = 12
+    struct KernAux_Multiboot2_HTagBase base;
+
+    unsigned entry_addr : 32;
+}
+__attribute__((packed));
+
+struct KernAux_Multiboot2_HTag_RelocatableHeader {
+    // type = 10
+    // size = 24
+    struct KernAux_Multiboot2_HTagBase base;
+
+    unsigned min_addr    : 32;
+    unsigned max_addr    : 32;
+    unsigned align       : 32;
+    unsigned preferences : 32;
+}
+__attribute__((packed));
+
 /******************************
  * Information tag structures *
  ******************************/
