@@ -304,9 +304,9 @@ struct KernAux_Multiboot2_ITag_ImageLoadBasePhysAddr {
 }
 __attribute__((packed));
 
-/*************************
- * Additional structures *
- *************************/
+/*************************************
+ * Information additional structures *
+ *************************************/
 
 struct KernAux_Multiboot2_ITag_MemoryMap_EntryBase {
     unsigned long long base_addr : 64;
