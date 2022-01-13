@@ -349,7 +349,7 @@ int main()
                 &multiboot2_example2.multiboot2,
                 KERNAUX_MULTIBOOT2_ITAG_MODULE
             ) - 1
-        ) == (struct KernAux_Multiboot2_TagBase*)
+        ) == (struct KernAux_Multiboot2_ITagBase*)
             &multiboot2_example2.tag_module1
     );
 
@@ -361,7 +361,7 @@ int main()
                 &multiboot2_example2.multiboot2,
                 KERNAUX_MULTIBOOT2_ITAG_MODULE
             )
-        ) == (struct KernAux_Multiboot2_TagBase*)
+        ) == (struct KernAux_Multiboot2_ITagBase*)
             &multiboot2_example2.tag_module2
     );
 

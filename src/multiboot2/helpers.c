@@ -6,21 +6,23 @@
 
 #include <stddef.h>
 
-const struct KernAux_Multiboot2_TagBase *KernAux_Multiboot2_first_tag_with_type(
+const struct KernAux_Multiboot2_ITagBase
+*KernAux_Multiboot2_first_tag_with_type(
     const struct KernAux_Multiboot2 *const multiboot2,
     const enum KernAux_Multiboot2_ITag tag_type
 ) {
-    const struct KernAux_Multiboot2_TagBase *tag_base =
-        (struct KernAux_Multiboot2_TagBase*)KERNAUX_MULTIBOOT2_DATA(multiboot2);
+    const struct KernAux_Multiboot2_ITagBase *tag_base =
+        (struct KernAux_Multiboot2_ITagBase*)
+        KERNAUX_MULTIBOOT2_DATA(multiboot2);
 
     while (tag_base <
-           (struct KernAux_Multiboot2_TagBase*)
+           (struct KernAux_Multiboot2_ITagBase*)
            ((unsigned char*)multiboot2 + multiboot2->total_size))
     {
-        if (!KernAux_Multiboot2_TagBase_is_valid(tag_base)) return NULL;
+        if (!KernAux_Multiboot2_ITagBase_is_valid(tag_base)) return NULL;
         if (tag_base->type == tag_type) return tag_base;
 
-        tag_base = (struct KernAux_Multiboot2_TagBase*)(
+        tag_base = (struct KernAux_Multiboot2_ITagBase*)(
             (unsigned char*)tag_base + ((tag_base->size + 7) & ~7)
         );
     }
@@ -28,22 +30,24 @@ const struct KernAux_Multiboot2_TagBase *KernAux_Multiboot2_first_tag_with_type(
     return NULL;
 }
 
-const struct KernAux_Multiboot2_TagBase *KernAux_Multiboot2_tag_with_type_after(
+const struct KernAux_Multiboot2_ITagBase
+*KernAux_Multiboot2_tag_with_type_after(
     const struct KernAux_Multiboot2 *const multiboot2,
     const enum KernAux_Multiboot2_ITag tag_type,
-    const struct KernAux_Multiboot2_TagBase *const after_tag
+    const struct KernAux_Multiboot2_ITagBase *const after_tag
 ) {
-    const struct KernAux_Multiboot2_TagBase *tag_base =
-        (struct KernAux_Multiboot2_TagBase*)KERNAUX_MULTIBOOT2_DATA(multiboot2);
+    const struct KernAux_Multiboot2_ITagBase *tag_base =
+        (struct KernAux_Multiboot2_ITagBase*)
+        KERNAUX_MULTIBOOT2_DATA(multiboot2);
 
     while (tag_base <
-           (struct KernAux_Multiboot2_TagBase*)
+           (struct KernAux_Multiboot2_ITagBase*)
            (unsigned char*)multiboot2 + multiboot2->total_size)
     {
-        if (!KernAux_Multiboot2_TagBase_is_valid(tag_base)) return NULL;
+        if (!KernAux_Multiboot2_ITagBase_is_valid(tag_base)) return NULL;
         if (tag_base->type == tag_type && tag_base > after_tag) return tag_base;
 
-        tag_base = (struct KernAux_Multiboot2_TagBase*)(
+        tag_base = (struct KernAux_Multiboot2_ITagBase*)(
             (unsigned char*)tag_base + ((tag_base->size + 7) & ~7)
         );
     }

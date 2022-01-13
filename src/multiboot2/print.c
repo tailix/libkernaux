@@ -81,28 +81,29 @@ void KernAux_Multiboot2_print(
     printf("  size: %u\n", multiboot2->total_size);
     printf("  reserved1: %u\n", multiboot2->reserved1);
 
-    const struct KernAux_Multiboot2_TagBase *tag_base =
-        (struct KernAux_Multiboot2_TagBase*)KERNAUX_MULTIBOOT2_DATA(multiboot2);
+    const struct KernAux_Multiboot2_ITagBase *tag_base =
+        (struct KernAux_Multiboot2_ITagBase*)
+        KERNAUX_MULTIBOOT2_DATA(multiboot2);
 
     while (tag_base <
-           (struct KernAux_Multiboot2_TagBase*)
+           (struct KernAux_Multiboot2_ITagBase*)
            ((unsigned char*)multiboot2 + multiboot2->total_size))
     {
-        if (!KernAux_Multiboot2_TagBase_is_valid(tag_base)) return;
+        if (!KernAux_Multiboot2_ITagBase_is_valid(tag_base)) return;
 
-        KernAux_Multiboot2_TagBase_print(tag_base, printf);
+        KernAux_Multiboot2_ITagBase_print(tag_base, printf);
 
-        tag_base = (struct KernAux_Multiboot2_TagBase*)(
+        tag_base = (struct KernAux_Multiboot2_ITagBase*)(
             (unsigned char*)tag_base + ((tag_base->size + 7) & ~7)
         );
     }
 }
 
-void KernAux_Multiboot2_TagBase_print(
-    const struct KernAux_Multiboot2_TagBase *const tag_base,
+void KernAux_Multiboot2_ITagBase_print(
+    const struct KernAux_Multiboot2_ITagBase *const tag_base,
     void (*const printf)(const char *format, ...) __attribute__((format(printf, 1, 2)))
 ) {
-    if (!KernAux_Multiboot2_TagBase_is_valid(tag_base)) return;
+    if (!KernAux_Multiboot2_ITagBase_is_valid(tag_base)) return;
 
     printf("Multiboot 2 tag\n");
 
