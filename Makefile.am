@@ -56,6 +56,7 @@ endif
 
 if WITH_MULTIBOOT2
 libkernaux_a_SOURCES += \
+	src/multiboot2/header_helpers.c \
 	src/multiboot2/info_helpers.c \
 	src/multiboot2/info_is_valid.c \
 	src/multiboot2/info_print.c

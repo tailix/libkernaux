@@ -419,6 +419,23 @@ struct KernAux_Multiboot2_ITag_MemoryMap_EntryBase {
 }
 __attribute__((packed));
 
+/***************************
+ * Header helper functions *
+ ***************************/
+
+const struct KernAux_Multiboot2_HTagBase
+*KernAux_Multiboot2_Header_first_tag_with_type(
+    const struct KernAux_Multiboot2_Header *multiboot2_header,
+    enum KernAux_Multiboot2_HTag tag_type
+);
+
+const struct KernAux_Multiboot2_HTagBase
+*KernAux_Multiboot2_Header_tag_with_type_after(
+    const struct KernAux_Multiboot2_Header *multiboot2_header,
+    enum KernAux_Multiboot2_HTag tag_type,
+    const struct KernAux_Multiboot2_HTagBase *after_tag
+);
+
 /********************************
  * Information helper functions *
  ********************************/
