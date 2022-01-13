@@ -384,7 +384,11 @@ struct KernAux_stivale2_struct_vmap
  *******************************/
 int KernAux_get_stivale2_tag_count(KernAux_stivale2_struct* stivale2_params);
 bool KernAux_get_stivale2_framebuffer(KernAux_stivale2_struct* stivale2_params, KernAux_stivale2_struct_tag_framebuffer* framebuffer);
-
+bool KernAux_get_stivale2_memmap(KernAux_stivale2_struct* stivale2_params, KernAux_stivale2_struct_tag_memmap* memmap);
+bool KernAux_get_stivale2_edid(KernAux_stivale2_struct* stivale2_params, KernAux_stivale2_struct_tag_edid* edid);
+bool KernAux_get_stivale2_modules(KernAux_stivale2_struct* stivale2_params, KernAux_stivale2_struct_tag_modules* modules);
+bool KernAux_get_stivale2_kernel_file_v2(KernAux_stivale2_struct* stivale2_params, KernAux_stivale2_struct_tag_kernel_file_v2* kfile);
+bool KernAux_get_stivale2_smp(KernAux_stivale2_struct* stivale2_params, KernAux_stivale2_struct_tag_smp* smp);
 
 #ifdef __cplusplus
 }
