@@ -37,7 +37,7 @@ API
   * Stack trace *(planned)*
 * Device drivers (for debugging only)
   * [Serial console](/include/kernaux/console.h)
-  * [Framebuffer](/include/kernaux/framebuffer.h) *(planned)*
+  * [Framebuffer](/include/kernaux/framebuffer.h) *(work in progress)*
   * USB *(planned)*
 * Algorithms
   * [Simple command line parser](/include/kernaux/cmdline.h)

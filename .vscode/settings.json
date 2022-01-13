@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "framebuffer.h": "c",
+        "stdint.h": "c"
+    }
+}
