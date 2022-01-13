@@ -66,6 +66,8 @@ TESTS += \
 	tests/test_multiboot2_info_print \
 	tests/test_multiboot2_info_validation
 noinst_PROGRAMS += \
+	tests/multiboot2_header_print1 \
+	tests/multiboot2_header_print2 \
 	tests/multiboot2_info_print1 \
 	tests/multiboot2_info_print2
 endif
@@ -112,6 +114,16 @@ examples_printf_va_SOURCES = \
 examples_units_human_SOURCES = \
 	$(libkernaux_a_SOURCES) \
 	examples/units_human.c
+
+tests_multiboot2_header_print1_SOURCES = \
+	$(libkernaux_a_SOURCES) \
+	tests/multiboot2_header_print1.c \
+	tests/multiboot2_header_example1.h
+
+tests_multiboot2_header_print2_SOURCES = \
+	$(libkernaux_a_SOURCES) \
+	tests/multiboot2_header_print2.c \
+	tests/multiboot2_header_example2.h
 
 tests_multiboot2_info_print1_SOURCES = \
 	$(libkernaux_a_SOURCES) \
