@@ -21,15 +21,24 @@ extern "C" {
 #define KERNAUX_MULTIBOOT2_TAG_SIZE_ALIGN(tag_base) \
     (((tag_base)->size + 7) & ~7)
 
+/****************
+ * Common types *
+ ****************/
+
+enum KernAux_Multiboot2_Arch {
+    KERNAUX_MULTIBOOT2_ARCH_I386   = 1,
+    KERNAUX_MULTIBOOT2_ARCH_MIPS32 = 4,
+};
+
 /***********************
  * Header common types *
  ***********************/
 
 struct KernAux_Multiboot2_Header {
-    unsigned magic      : 32;
-    unsigned arch       : 32;
-    unsigned total_size : 32;
-    unsigned checksum   : 32;
+    unsigned magic                    : 32;
+    enum KernAux_Multiboot2_Arch arch : 32;
+    unsigned total_size               : 32;
+    unsigned checksum                 : 32;
 }
 __attribute__((packed));
 
