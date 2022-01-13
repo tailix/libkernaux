@@ -482,6 +482,20 @@ const char *KernAux_Multiboot2_Info_boot_cmd_line(
     const struct KernAux_Multiboot2_Info *multiboot2_info
 );
 
+/**************************
+ * Header print functions *
+ **************************/
+
+void KernAux_Multiboot2_Header_print(
+    const struct KernAux_Multiboot2_Header *multiboot2_header,
+    void (*printf)(const char *format, ...)
+);
+
+void KernAux_Multiboot2_HTagBase_print(
+    const struct KernAux_Multiboot2_HTagBase *tag_base,
+    void (*printf)(const char *format, ...)
+);
+
 /*******************************
  * Information print functions *
  *******************************/
