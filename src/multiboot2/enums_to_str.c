@@ -6,8 +6,21 @@
 
 #include <stddef.h>
 
+const char *KernAux_Multiboot2_Header_Arch_to_str(
+    const enum KernAux_Multiboot2_Header_Arch arch
+) {
+    switch (arch) {
+    case KERNAUX_MULTIBOOT2_HEADER_ARCH_I386:
+        return "i386";
+    case KERNAUX_MULTIBOOT2_HEADER_ARCH_MIPS32:
+        return "MIPS32"; // TODO: specify this architecture in README
+    default:
+        return NULL;
+    }
+}
+
 const char *KernAux_Multiboot2_HTag_to_str(
-    enum KernAux_Multiboot2_HTag tag_type
+    const enum KernAux_Multiboot2_HTag tag_type
 ) {
     switch (tag_type) {
     case KERNAUX_MULTIBOOT2_HTAG_NONE:
@@ -38,7 +51,7 @@ const char *KernAux_Multiboot2_HTag_to_str(
 }
 
 const char *KernAux_Multiboot2_ITag_to_str(
-    enum KernAux_Multiboot2_ITag tag_type
+    const enum KernAux_Multiboot2_ITag tag_type
 ) {
     switch (tag_type) {
     case KERNAUX_MULTIBOOT2_ITAG_NONE:
@@ -85,6 +98,21 @@ const char *KernAux_Multiboot2_ITag_to_str(
         return "EFI 64bit image handle ptr";
     case KERNAUX_MULTIBOOT2_ITAG_IMAGE_LOAD_BASE_PHYS_ADDR:
         return "image load base phys addr";
+    default:
+        return NULL;
+    }
+}
+
+const char *KernAux_Multiboot2_HTag_RelocatableHeader_Preference_to_str(
+    const enum KernAux_Multiboot2_HTag_RelocatableHeader_Preference pref
+) {
+    switch (pref) {
+    case KERNAUX_MULTIBOOT2_HTAG_RELOCATABLE_HEADER_PREFERENCE_NONE:
+        return "none";
+    case KERNAUX_MULTIBOOT2_HTAG_RELOCATABLE_HEADER_PREFERENCE_LOWEST:
+        return "lowest";
+    case KERNAUX_MULTIBOOT2_HTAG_RELOCATABLE_HEADER_PREFERENCE_HIGHEST:
+        return "highest";
     default:
         return NULL;
     }

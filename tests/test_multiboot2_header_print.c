@@ -13,9 +13,9 @@
 static const char output2[] =
     "Multiboot 2 header\n"
     "  magic: 3897708758\n"
-    "  arch: 1\n"
+    "  arch: 0 (i386)\n"
     "  size: 272\n"
-    "  checksum: 397258265\n"
+    "  checksum: 397258266\n"
     "Multiboot 2 header tag\n"
     "  type: 1 (information request)\n"
     "  flags: 0\n"

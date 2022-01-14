@@ -43,8 +43,7 @@ extern "C" {
  ***********************/
 
 enum KernAux_Multiboot2_Header_Arch {
-    KERNAUX_MULTIBOOT2_HEADER_ARCH_NONE   = 0,
-    KERNAUX_MULTIBOOT2_HEADER_ARCH_I386   = 1,
+    KERNAUX_MULTIBOOT2_HEADER_ARCH_I386   = 0,
     KERNAUX_MULTIBOOT2_HEADER_ARCH_MIPS32 = 4,
 };
 
@@ -465,12 +464,20 @@ __attribute__((packed));
  * String functions *
  ********************/
 
+const char *KernAux_Multiboot2_Header_Arch_to_str(
+    enum KernAux_Multiboot2_Header_Arch arch
+);
+
 const char *KernAux_Multiboot2_HTag_to_str(
     enum KernAux_Multiboot2_HTag tag_type
 );
 
 const char *KernAux_Multiboot2_ITag_to_str(
     enum KernAux_Multiboot2_ITag tag_type
+);
+
+const char *KernAux_Multiboot2_HTag_RelocatableHeader_Preference_to_str(
+    enum KernAux_Multiboot2_HTag_RelocatableHeader_Preference pref
 );
 
 /***************************

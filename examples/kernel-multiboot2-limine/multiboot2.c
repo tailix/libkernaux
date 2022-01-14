@@ -10,10 +10,10 @@ __attribute__((packed))
 multiboot2_header = {
     .multiboot2_header = {
         .magic = KERNAUX_MULTIBOOT2_HEADER_MAGIC,
-        .arch = KERNAUX_MULTIBOOT2_ARCH_NONE,
+        .arch = KERNAUX_MULTIBOOT2_HEADER_ARCH_I386,
         .total_size = sizeof(multiboot2_header),
         .checksum = KERNAUX_MULTIBOOT2_HEADER_CHECKSUM(
-            KERNAUX_MULTIBOOT2_ARCH_NONE,
+            KERNAUX_MULTIBOOT2_HEADER_ARCH_I386,
             sizeof(multiboot2_header)
         ),
     },
