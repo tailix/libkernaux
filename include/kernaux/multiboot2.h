@@ -30,6 +30,8 @@ extern "C" {
 #define KERNAUX_MULTIBOOT2_TAG_SIZE_ALIGN(tag_base) \
     (((tag_base)->size + 7) & ~7)
 
+#define KERNAUX_MULTIBOOT2_HTAG_FLAG_OPTIONAL 1
+
 /****************
  * Common types *
  ****************/
