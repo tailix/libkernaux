@@ -11,6 +11,9 @@ extern "C" {
 #define KERNAUX_MULTIBOOT2_HEADER_MAGIC 0xE85250D6
 #define KERNAUX_MULTIBOOT2_INFO_MAGIC   0x36D76289
 
+#define KERNAUX_MULTIBOOT2_HEADER_SECTION ".multiboot"
+#define KERNAUX_MULTIBOOT2_HEADER_ALIGN 4
+
 #define KERNAUX_MULTIBOOT2_HEADER_CHECKSUM(arch, total_size) \
     ((uint32_t)(-(                                           \
         ((uint32_t)KERNAUX_MULTIBOOT2_HEADER_MAGIC) +        \
