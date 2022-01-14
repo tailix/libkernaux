@@ -16,6 +16,10 @@ static const struct {
 
     uint8_t _align2[4];
 
+    struct KernAux_Multiboot2_HTag_Framebuffer tag_framebuffer;
+
+    uint8_t _align3[4];
+
     struct KernAux_Multiboot2_HTag_None tag_none;
 } multiboot2_header_example2 = {
     .multiboot2_header = {
@@ -89,6 +93,16 @@ static const struct {
             KERNAUX_MULTIBOOT2_HTAG_FLAGS_REQUIRE_CONSOLE |
             KERNAUX_MULTIBOOT2_HTAG_FLAGS_EGA_SUPPORT
         ),
+    },
+    .tag_framebuffer = {
+        .base = {
+            .type = KERNAUX_MULTIBOOT2_HTAG_FRAMEBUFFER,
+            .flags = 0,
+            .size = sizeof(multiboot2_header_example2.tag_framebuffer),
+        },
+        .width = 0,
+        .height = 0,
+        .depth = 0,
     },
     .tag_none = {
         .base = {
