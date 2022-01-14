@@ -4,12 +4,23 @@
 
 #include <kernaux/multiboot2.h>
 
+#include <stdbool.h>
 #include <stddef.h>
+#include <stdint.h>
 
 bool KernAux_Multiboot2_Info_is_valid(
     const struct KernAux_Multiboot2_Info *const multiboot2_info
 ) {
-    if (multiboot2_info->total_size <= 8) return false;
+    if (multiboot2_info->total_size <
+        sizeof(struct KernAux_Multiboot2_Info) +
+        sizeof(struct KernAux_Multiboot2_ITag_None))
+    {
+        return false;
+    }
+
+    if (multiboot2_info->total_size % KERNAUX_MULTIBOOT2_TAG_ALIGN != 0) {
+        return false;
+    }
 
     const struct KernAux_Multiboot2_ITagBase *tag_base =
         (struct KernAux_Multiboot2_ITagBase*)
@@ -19,7 +30,7 @@ bool KernAux_Multiboot2_Info_is_valid(
 
     while (tag_base <
            (struct KernAux_Multiboot2_ITagBase*)
-           ((unsigned char*)multiboot2_info + multiboot2_info->total_size))
+           ((uint8_t*)multiboot2_info + multiboot2_info->total_size))
     {
         if (!KernAux_Multiboot2_ITagBase_is_valid(tag_base)) return false;
 
@@ -29,21 +40,19 @@ bool KernAux_Multiboot2_Info_is_valid(
             none_tag_base = tag_base;
         }
 
-        tag_base = (struct KernAux_Multiboot2_ITagBase*)(
-            (unsigned char*)tag_base + ((tag_base->size + 7) & ~7)
-        );
+        tag_base = KERNAUX_MULTIBOOT2_ITAG_NEXT(tag_base);
     }
 
     if (tag_base !=
         (struct KernAux_Multiboot2_ITagBase*)
-        ((unsigned char*)multiboot2_info + multiboot2_info->total_size))
+        ((uint8_t*)multiboot2_info + multiboot2_info->total_size))
     {
         return false;
     }
 
     if (none_tag_base !=
         (struct KernAux_Multiboot2_ITagBase*)
-        ((unsigned char*)tag_base -
+        ((uint8_t*)tag_base -
          sizeof(struct KernAux_Multiboot2_ITag_None)))
     {
         return false;

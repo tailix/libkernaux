@@ -8,13 +8,52 @@ extern "C" {
 #include <stdint.h>
 #include <stdbool.h>
 
-#define KERNAUX_MULTIBOOT2_MAGIC 0x36d76289
+#define KERNAUX_MULTIBOOT2_HEADER_MAGIC 0xE85250D6
+#define KERNAUX_MULTIBOOT2_INFO_MAGIC   0x36D76289
+
+#define KERNAUX_MULTIBOOT2_HEADER_ALIGN 4
+
+#define KERNAUX_MULTIBOOT2_HEADER_CHECKSUM(arch, total_size) \
+    ((uint32_t)(-(                                           \
+        ((uint32_t)KERNAUX_MULTIBOOT2_HEADER_MAGIC) +        \
+        ((uint32_t)(arch)) +                                 \
+        ((uint32_t)(total_size))                             \
+    )))
 
 #define KERNAUX_MULTIBOOT2_DATA(ptr) (((uint8_t*)(ptr)) + sizeof(*(ptr)))
+
+#define KERNAUX_MULTIBOOT2_TAG_ALIGN 8
+
+#define KERNAUX_MULTIBOOT2_HTAG_NEXT(tag_base) \
+    ((struct KernAux_Multiboot2_HTagBase*)KERNAUX_MULTIBOOT2_TAG_NEXT(tag_base))
+#define KERNAUX_MULTIBOOT2_ITAG_NEXT(tag_base) \
+    ((struct KernAux_Multiboot2_ITagBase*)KERNAUX_MULTIBOOT2_TAG_NEXT(tag_base))
+#define KERNAUX_MULTIBOOT2_TAG_NEXT(tag_base) \
+    ((uint8_t*)tag_base + KERNAUX_MULTIBOOT2_TAG_SIZE_ALIGN(tag_base))
+#define KERNAUX_MULTIBOOT2_TAG_SIZE_ALIGN(tag_base) \
+    (((tag_base)->size + 7) & ~7)
+
+#define KERNAUX_MULTIBOOT2_HTAG_BASE_FLAG_OPTIONAL 1
+
+#define KERNAUX_MULTIBOOT2_HTAG_FLAGS_REQUIRE_CONSOLE (1 << 0)
+#define KERNAUX_MULTIBOOT2_HTAG_FLAGS_EGA_SUPPORT     (1 << 1)
 
 /***********************
  * Header common types *
  ***********************/
+
+enum KernAux_Multiboot2_Header_Arch {
+    KERNAUX_MULTIBOOT2_HEADER_ARCH_I386   = 0,
+    KERNAUX_MULTIBOOT2_HEADER_ARCH_MIPS32 = 4,
+};
+
+struct KernAux_Multiboot2_Header {
+    unsigned magic                           : 32;
+    enum KernAux_Multiboot2_Header_Arch arch : 32;
+    unsigned total_size                      : 32;
+    unsigned checksum                        : 32;
+}
+__attribute__((packed));
 
 enum KernAux_Multiboot2_HTag {
     KERNAUX_MULTIBOOT2_HTAG_NONE = 0,
@@ -30,14 +69,6 @@ enum KernAux_Multiboot2_HTag {
     KERNAUX_MULTIBOOT2_HTAG_RELOCATABLE_HEADER = 10,
 };
 
-struct KernAux_Multiboot2_Header {
-    unsigned magic      : 32;
-    unsigned arch       : 32;
-    unsigned total_size : 32;
-    unsigned checksum   : 32;
-}
-__attribute__((packed));
-
 struct KernAux_Multiboot2_HTagBase {
     enum KernAux_Multiboot2_HTag type : 16;
     unsigned flags                    : 16;
@@ -48,6 +79,12 @@ __attribute__((packed));
 /****************************
  * Information common types *
  ****************************/
+
+struct KernAux_Multiboot2_Info {
+    unsigned total_size : 32;
+    unsigned reserved1  : 32;
+}
+__attribute__((packed));
 
 enum KernAux_Multiboot2_ITag {
     KERNAUX_MULTIBOOT2_ITAG_NONE = 0,
@@ -74,15 +111,134 @@ enum KernAux_Multiboot2_ITag {
     KERNAUX_MULTIBOOT2_ITAG_IMAGE_LOAD_BASE_PHYS_ADDR = 21,
 };
 
-struct KernAux_Multiboot2_Info {
-    unsigned total_size : 32;
-    unsigned reserved1  : 32;
-}
-__attribute__((packed));
-
 struct KernAux_Multiboot2_ITagBase {
     enum KernAux_Multiboot2_ITag type : 32;
     unsigned size                     : 32;
+}
+__attribute__((packed));
+
+/***************************
+ * Header additional types *
+ ***************************/
+
+enum KernAux_Multiboot2_HTag_RelocatableHeader_Preference {
+    KERNAUX_MULTIBOOT2_HTAG_RELOCATABLE_HEADER_PREFERENCE_NONE    = 0,
+    KERNAUX_MULTIBOOT2_HTAG_RELOCATABLE_HEADER_PREFERENCE_LOWEST  = 1,
+    KERNAUX_MULTIBOOT2_HTAG_RELOCATABLE_HEADER_PREFERENCE_HIGHEST = 2,
+};
+
+/********************************
+ * Information additional types *
+ ********************************/
+
+struct KernAux_Multiboot2_ITag_MemoryMap_EntryBase {
+    unsigned long long base_addr : 64;
+    unsigned long long length    : 64;
+    unsigned type                : 32;
+    unsigned reserved1           : 32;
+}
+__attribute__((packed));
+
+/*************************
+ * Header tag structures *
+ *************************/
+
+struct KernAux_Multiboot2_HTag_None {
+    // type = 0
+    // size = 8
+    struct KernAux_Multiboot2_HTagBase base;
+}
+__attribute__((packed));
+
+struct KernAux_Multiboot2_HTag_InfoReq {
+    // type = 1
+    // size > 8
+    struct KernAux_Multiboot2_HTagBase base;
+}
+__attribute__((packed));
+
+struct KernAux_Multiboot2_HTag_Addr {
+    // type = 2
+    // size = 24
+    struct KernAux_Multiboot2_HTagBase base;
+
+    unsigned header_addr   : 32;
+    unsigned load_addr     : 32;
+    unsigned load_end_addr : 32;
+    unsigned bss_end_addr  : 32;
+}
+__attribute__((packed));
+
+struct KernAux_Multiboot2_HTag_EntryAddr {
+    // type = 3
+    // size = 12
+    struct KernAux_Multiboot2_HTagBase base;
+
+    unsigned entry_addr : 32;
+}
+__attribute__((packed));
+
+struct KernAux_Multiboot2_HTag_Flags {
+    // type = 4
+    // size = 12
+    struct KernAux_Multiboot2_HTagBase base;
+
+    unsigned console_flags : 32;
+}
+__attribute__((packed));
+
+struct KernAux_Multiboot2_HTag_Framebuffer {
+    // type = 5
+    // size = 20
+    struct KernAux_Multiboot2_HTagBase base;
+
+    unsigned width  : 32;
+    unsigned height : 32;
+    unsigned depth  : 32;
+}
+__attribute__((packed));
+
+struct KernAux_Multiboot2_HTag_ModuleAlign {
+    // type = 6
+    // size = 8
+    struct KernAux_Multiboot2_HTagBase base;
+}
+__attribute__((packed));
+
+struct KernAux_Multiboot2_HTag_EFIBootServices {
+    // type = 7
+    // size = 8
+    struct KernAux_Multiboot2_HTagBase base;
+}
+__attribute__((packed));
+
+struct KernAux_Multiboot2_HTag_EFII386EntryAddr {
+    // type = 8
+    // size = 12
+    struct KernAux_Multiboot2_HTagBase base;
+
+    unsigned entry_addr : 32;
+}
+__attribute__((packed));
+
+struct KernAux_Multiboot2_HTag_EFIAmd64EntryAddr {
+    // type = 9
+    // size = 12
+    struct KernAux_Multiboot2_HTagBase base;
+
+    unsigned entry_addr : 32;
+}
+__attribute__((packed));
+
+struct KernAux_Multiboot2_HTag_RelocatableHeader {
+    // type = 10
+    // size = 24
+    struct KernAux_Multiboot2_HTagBase base;
+
+    unsigned min_addr                                                     : 32;
+    unsigned max_addr                                                     : 32;
+    unsigned align                                                        : 32;
+    enum KernAux_Multiboot2_HTag_RelocatableHeader_Preference preferences : 32;
 }
 __attribute__((packed));
 
@@ -304,17 +460,42 @@ struct KernAux_Multiboot2_ITag_ImageLoadBasePhysAddr {
 }
 __attribute__((packed));
 
-/*************************
- * Additional structures *
- *************************/
+/********************
+ * String functions *
+ ********************/
 
-struct KernAux_Multiboot2_ITag_MemoryMap_EntryBase {
-    unsigned long long base_addr : 64;
-    unsigned long long length    : 64;
-    unsigned type                : 32;
-    unsigned reserved1           : 32;
-}
-__attribute__((packed));
+const char *KernAux_Multiboot2_Header_Arch_to_str(
+    enum KernAux_Multiboot2_Header_Arch arch
+);
+
+const char *KernAux_Multiboot2_HTag_to_str(
+    enum KernAux_Multiboot2_HTag tag_type
+);
+
+const char *KernAux_Multiboot2_ITag_to_str(
+    enum KernAux_Multiboot2_ITag tag_type
+);
+
+const char *KernAux_Multiboot2_HTag_RelocatableHeader_Preference_to_str(
+    enum KernAux_Multiboot2_HTag_RelocatableHeader_Preference pref
+);
+
+/***************************
+ * Header helper functions *
+ ***************************/
+
+const struct KernAux_Multiboot2_HTagBase
+*KernAux_Multiboot2_Header_first_tag_with_type(
+    const struct KernAux_Multiboot2_Header *multiboot2_header,
+    enum KernAux_Multiboot2_HTag tag_type
+);
+
+const struct KernAux_Multiboot2_HTagBase
+*KernAux_Multiboot2_Header_tag_with_type_after(
+    const struct KernAux_Multiboot2_Header *multiboot2_header,
+    enum KernAux_Multiboot2_HTag tag_type,
+    const struct KernAux_Multiboot2_HTagBase *after_tag
+);
 
 /********************************
  * Information helper functions *
@@ -337,6 +518,20 @@ const char *KernAux_Multiboot2_Info_boot_cmd_line(
     const struct KernAux_Multiboot2_Info *multiboot2_info
 );
 
+/**************************
+ * Header print functions *
+ **************************/
+
+void KernAux_Multiboot2_Header_print(
+    const struct KernAux_Multiboot2_Header *multiboot2_header,
+    void (*printf)(const char *format, ...)
+);
+
+void KernAux_Multiboot2_HTagBase_print(
+    const struct KernAux_Multiboot2_HTagBase *tag_base,
+    void (*printf)(const char *format, ...)
+);
+
 /*******************************
  * Information print functions *
  *******************************/
@@ -349,6 +544,62 @@ void KernAux_Multiboot2_Info_print(
 void KernAux_Multiboot2_ITagBase_print(
     const struct KernAux_Multiboot2_ITagBase *tag_base,
     void (*printf)(const char *format, ...)
+);
+
+/*******************************
+ * Header validation functions *
+ *******************************/
+
+bool KernAux_Multiboot2_Header_is_valid(
+    const struct KernAux_Multiboot2_Header *multiboot2_header
+);
+
+bool KernAux_Multiboot2_HTagBase_is_valid(
+    const struct KernAux_Multiboot2_HTagBase *tag_base
+);
+
+bool KernAux_Multiboot2_HTag_None_is_valid(
+    const struct KernAux_Multiboot2_HTag_None *tag
+);
+
+bool KernAux_Multiboot2_HTag_InfoReq_is_valid(
+    const struct KernAux_Multiboot2_HTag_InfoReq *tag
+);
+
+bool KernAux_Multiboot2_HTag_Addr_is_valid(
+    const struct KernAux_Multiboot2_HTag_Addr *tag
+);
+
+bool KernAux_Multiboot2_HTag_EntryAddr_is_valid(
+    const struct KernAux_Multiboot2_HTag_EntryAddr *tag
+);
+
+bool KernAux_Multiboot2_HTag_Flags_is_valid(
+    const struct KernAux_Multiboot2_HTag_Flags *tag
+);
+
+bool KernAux_Multiboot2_HTag_Framebuffer_is_valid(
+    const struct KernAux_Multiboot2_HTag_Framebuffer *tag
+);
+
+bool KernAux_Multiboot2_HTag_ModuleAlign_is_valid(
+    const struct KernAux_Multiboot2_HTag_ModuleAlign *tag
+);
+
+bool KernAux_Multiboot2_HTag_EFIBootServices_is_valid(
+    const struct KernAux_Multiboot2_HTag_EFIBootServices *tag
+);
+
+bool KernAux_Multiboot2_HTag_EFII386EntryAddr_is_valid(
+    const struct KernAux_Multiboot2_HTag_EFII386EntryAddr *tag
+);
+
+bool KernAux_Multiboot2_HTag_EFIAmd64EntryAddr_is_valid(
+    const struct KernAux_Multiboot2_HTag_EFIAmd64EntryAddr *tag
+);
+
+bool KernAux_Multiboot2_HTag_RelocatableHeader_is_valid(
+    const struct KernAux_Multiboot2_HTag_RelocatableHeader *tag
 );
 
 /************************************
