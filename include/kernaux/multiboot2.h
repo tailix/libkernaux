@@ -8,13 +8,14 @@ extern "C" {
 #include <stdint.h>
 #include <stdbool.h>
 
-#define KERNAUX_MULTIBOOT2_MAGIC 0x36d76289
+#define KERNAUX_MULTIBOOT2_HEADER_MAGIC 0xE85250D6
+#define KERNAUX_MULTIBOOT2_INFO_MAGIC   0x36D76289
 
-#define KERNAUX_MULTIBOOT2_CHECKSUM(arch, total_size) \
-    ((uint32_t)(-(                                    \
-        ((uint32_t)KERNAUX_MULTIBOOT2_MAGIC) +        \
-        ((uint32_t)(arch)) +                          \
-        ((uint32_t)(total_size))                      \
+#define KERNAUX_MULTIBOOT2_HEADER_CHECKSUM(arch, total_size) \
+    ((uint32_t)(-(                                           \
+        ((uint32_t)KERNAUX_MULTIBOOT2_HEADER_MAGIC) +        \
+        ((uint32_t)(arch)) +                                 \
+        ((uint32_t)(total_size))                             \
     )))
 
 #define KERNAUX_MULTIBOOT2_DATA(ptr) (((uint8_t*)(ptr)) + sizeof(*(ptr)))
@@ -46,6 +47,7 @@ enum KernAux_Multiboot2_HTag_RelocatableHeader_Preference {
  ****************/
 
 enum KernAux_Multiboot2_Arch {
+    KERNAUX_MULTIBOOT2_ARCH_NONE   = 0,
     KERNAUX_MULTIBOOT2_ARCH_I386   = 1,
     KERNAUX_MULTIBOOT2_ARCH_MIPS32 = 4,
 };

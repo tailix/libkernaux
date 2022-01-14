@@ -45,7 +45,7 @@ CFLAGS = \
 	-fno-stack-protector \
 	-I../../include
 
-OBJS = main.c.o start.S.o
+OBJS = main.c.o multiboot2.c.o start.S.o
 
 test: run
 	$(DIFF) -a -Z $(EXPECTED) $(OUTPUT)
