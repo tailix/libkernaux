@@ -24,6 +24,14 @@ static const struct {
 
     struct KernAux_Multiboot2_HTag_EFIBootServices tag_efi_boot_services;
 
+    struct KernAux_Multiboot2_HTag_EFII386EntryAddr tag_efi_i386_entry_addr;
+
+    uint8_t _align4[4];
+
+    struct KernAux_Multiboot2_HTag_EFIAmd64EntryAddr tag_efi_amd64_entry_addr;
+
+    uint8_t _align5[4];
+
     struct KernAux_Multiboot2_HTag_None tag_none;
 } multiboot2_header_example2 = {
     .multiboot2_header = {
@@ -121,6 +129,22 @@ static const struct {
             .flags = 0,
             .size = sizeof(multiboot2_header_example2.tag_efi_boot_services),
         },
+    },
+    .tag_efi_i386_entry_addr = {
+        .base = {
+            .type = KERNAUX_MULTIBOOT2_HTAG_EFI_I386_ENTRY_ADDR,
+            .flags = 0,
+            .size = sizeof(multiboot2_header_example2.tag_efi_i386_entry_addr),
+        },
+        .entry_addr = 0,
+    },
+    .tag_efi_amd64_entry_addr = {
+        .base = {
+            .type = KERNAUX_MULTIBOOT2_HTAG_EFI_AMD64_ENTRY_ADDR,
+            .flags = 0,
+            .size = sizeof(multiboot2_header_example2.tag_efi_amd64_entry_addr),
+        },
+        .entry_addr = 0,
     },
     .tag_none = {
         .base = {
