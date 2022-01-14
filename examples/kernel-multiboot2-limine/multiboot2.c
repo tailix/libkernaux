@@ -5,7 +5,9 @@ __attribute__((aligned(KERNAUX_MULTIBOOT2_HEADER_ALIGN)))
 const struct {
     struct KernAux_Multiboot2_Header multiboot2_header;
     struct KernAux_Multiboot2_HTag_None tag_none;
-} multiboot2_header = {
+}
+__attribute__((packed))
+multiboot2_header = {
     .multiboot2_header = {
         .magic = KERNAUX_MULTIBOOT2_HEADER_MAGIC,
         .arch = KERNAUX_MULTIBOOT2_ARCH_NONE,
