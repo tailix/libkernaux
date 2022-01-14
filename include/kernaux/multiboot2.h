@@ -35,6 +35,12 @@ extern "C" {
 #define KERNAUX_MULTIBOOT2_HTAG_FLAGS_REQUIRE_CONSOLE (1 << 0)
 #define KERNAUX_MULTIBOOT2_HTAG_FLAGS_EGA_SUPPORT     (1 << 1)
 
+enum KernAux_Multiboot2_HTag_RelocatableHeader_Preference {
+    KERNAUX_MULTIBOOT2_HTAG_RELOCATABLE_HEADER_PREFERENCE_NONE    = 0,
+    KERNAUX_MULTIBOOT2_HTAG_RELOCATABLE_HEADER_PREFERENCE_LOWEST  = 1,
+    KERNAUX_MULTIBOOT2_HTAG_RELOCATABLE_HEADER_PREFERENCE_HIGHEST = 2,
+};
+
 /****************
  * Common types *
  ****************/
@@ -214,10 +220,10 @@ struct KernAux_Multiboot2_HTag_RelocatableHeader {
     // size = 24
     struct KernAux_Multiboot2_HTagBase base;
 
-    unsigned min_addr    : 32;
-    unsigned max_addr    : 32;
-    unsigned align       : 32;
-    unsigned preferences : 32;
+    unsigned min_addr                                                     : 32;
+    unsigned max_addr                                                     : 32;
+    unsigned align                                                        : 32;
+    enum KernAux_Multiboot2_HTag_RelocatableHeader_Preference preferences : 32;
 }
 __attribute__((packed));
 
