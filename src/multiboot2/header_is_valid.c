@@ -11,9 +11,12 @@
 bool KernAux_Multiboot2_Header_is_valid(
     const struct KernAux_Multiboot2_Header *const multiboot2_header
 ) {
-    if (multiboot2_header->magic != KERNAUX_MULTIBOOT2_MAGIC) return false;
+    if (multiboot2_header->magic != KERNAUX_MULTIBOOT2_HEADER_MAGIC) {
+        return false;
+    }
 
-    if (multiboot2_header->arch != KERNAUX_MULTIBOOT2_ARCH_I386 &&
+    if (multiboot2_header->arch != KERNAUX_MULTIBOOT2_ARCH_NONE &&
+        multiboot2_header->arch != KERNAUX_MULTIBOOT2_ARCH_I386 &&
         multiboot2_header->arch != KERNAUX_MULTIBOOT2_ARCH_MIPS32)
     {
         return false;
@@ -31,7 +34,7 @@ bool KernAux_Multiboot2_Header_is_valid(
     }
 
     if (multiboot2_header->checksum !=
-        KERNAUX_MULTIBOOT2_CHECKSUM(
+        KERNAUX_MULTIBOOT2_HEADER_CHECKSUM(
             multiboot2_header->arch,
             multiboot2_header->total_size
         )

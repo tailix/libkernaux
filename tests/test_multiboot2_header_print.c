@@ -12,10 +12,10 @@
 // TODO: add more tags
 static const char output2[] =
     "Multiboot 2 header\n"
-    "  magic: 920085129\n"
+    "  magic: 3897708758\n"
     "  arch: 1\n"
     "  size: 272\n"
-    "  checksum: 3374881894\n"
+    "  checksum: 397258265\n"
     "Multiboot 2 header tag\n"
     "  type: 1 (information request)\n"
     "  flags: 0\n"

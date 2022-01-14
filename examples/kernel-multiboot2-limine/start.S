@@ -1,21 +1,3 @@
-.set MULTIBOOT_MAGIC, 0xE85250D6
-.set MULTIBOOT_ARCH, 0
-.set MULTIBOOT_LENGTH, 16 + 8
-.set MULTIBOOT_CHECKSUM, -(MULTIBOOT_MAGIC + MULTIBOOT_ARCH + MULTIBOOT_LENGTH)
-
-
-
-.section .multiboot
-.align 4
-.long MULTIBOOT_MAGIC
-.long MULTIBOOT_ARCH
-.long MULTIBOOT_LENGTH
-.long MULTIBOOT_CHECKSUM
-.long 0
-.long 8
-
-
-
 .section .bss
 
 .global _kernel_stack_start
