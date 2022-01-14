@@ -6,6 +6,8 @@ static const struct {
         enum KernAux_Multiboot2_ITag mbi_tag_types[22];
     } tag_info_req;
 
+    struct KernAux_Multiboot2_HTag_Addr tag_addr;
+
     struct KernAux_Multiboot2_HTag_None tag_none;
 } multiboot2_header_example2 = {
     .multiboot2_header = {
@@ -49,6 +51,17 @@ static const struct {
             KERNAUX_MULTIBOOT2_ITAG_EFI_64BIT_IMAGE_HANDLE_PTR,
             KERNAUX_MULTIBOOT2_ITAG_IMAGE_LOAD_BASE_PHYS_ADDR,
         },
+    },
+    .tag_addr = {
+        .base = {
+            .type = KERNAUX_MULTIBOOT2_HTAG_ADDR,
+            .flags = 0,
+            .size = sizeof(multiboot2_header_example2.tag_addr),
+        },
+        .header_addr = 0,
+        .load_addr = 0,
+        .load_end_addr = 0,
+        .bss_end_addr = 0,
     },
     .tag_none = {
         .base = {
