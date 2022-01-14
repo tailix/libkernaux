@@ -5,6 +5,7 @@
 #include <kernaux/multiboot2.h>
 
 #include <stddef.h>
+#include <stdint.h>
 
 const struct KernAux_Multiboot2_ITagBase
 *KernAux_Multiboot2_Info_first_tag_with_type(
@@ -17,14 +18,12 @@ const struct KernAux_Multiboot2_ITagBase
 
     while (tag_base <
            (struct KernAux_Multiboot2_ITagBase*)
-           ((unsigned char*)multiboot2_info + multiboot2_info->total_size))
+           ((uint8_t*)multiboot2_info + multiboot2_info->total_size))
     {
         if (!KernAux_Multiboot2_ITagBase_is_valid(tag_base)) return NULL;
         if (tag_base->type == tag_type) return tag_base;
 
-        tag_base = (struct KernAux_Multiboot2_ITagBase*)(
-            (unsigned char*)tag_base + ((tag_base->size + 7) & ~7)
-        );
+        tag_base = KERNAUX_MULTIBOOT2_ITAG_NEXT(tag_base);
     }
 
     return NULL;
@@ -42,14 +41,12 @@ const struct KernAux_Multiboot2_ITagBase
 
     while (tag_base <
            (struct KernAux_Multiboot2_ITagBase*)
-           (unsigned char*)multiboot2_info + multiboot2_info->total_size)
+           ((uint8_t*)multiboot2_info + multiboot2_info->total_size))
     {
         if (!KernAux_Multiboot2_ITagBase_is_valid(tag_base)) return NULL;
         if (tag_base->type == tag_type && tag_base > after_tag) return tag_base;
 
-        tag_base = (struct KernAux_Multiboot2_ITagBase*)(
-            (unsigned char*)tag_base + ((tag_base->size + 7) & ~7)
-        );
+        tag_base = KERNAUX_MULTIBOOT2_ITAG_NEXT(tag_base);
     }
 
     return NULL;

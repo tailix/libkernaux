@@ -37,16 +37,20 @@ API
     * [Guards](/examples/assert_guards.c)
   * Stack trace *(planned)*
 * Device drivers (for debugging only)
-  * [Serial console](/include/kernaux/console.h)
+  * [Serial console](/include/kernaux/console.h) *(work in progress)*
   * [Framebuffer](/include/kernaux/framebuffer.h) *(work in progress)*
   * USB *(planned)*
 * Algorithms
   * [Simple command line parser](/include/kernaux/cmdline.h)
     * [Example](/examples/cmdline.c)
-  * [Page Frame Allocator](/include/kernaux/pfa.h)
+  * [Page Frame Allocator](/include/kernaux/pfa.h) *(work in progress)*
     * [Example](/examples/pfa.c)
 * Data formats
+<<<<<<< HEAD
   * [Multiboot 2 (GRUB 2) information parser](/include/kernaux/multiboot2.h)
+=======
+  * [Multiboot 2 (GRUB 2) information parser](/include/kernaux/multiboot2.h) *(work in progress)*
+>>>>>>> 0c07388df839806e9cc4e546c7d6e8cda6646a60
   * [Stivale 2 (Limine) information parser](/include/kernaux/stivale2.h) *(work in progress)*
   * [ELF utils](/include/kernaux/elf.h) *(work in progress)*
 * Utilities

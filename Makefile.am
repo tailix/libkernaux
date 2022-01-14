@@ -56,14 +56,23 @@ endif
 
 if WITH_MULTIBOOT2
 libkernaux_a_SOURCES += \
+	src/multiboot2/enums_to_str.c \
+	src/multiboot2/header_helpers.c \
+	src/multiboot2/header_is_valid.c \
+	src/multiboot2/header_print.c \
 	src/multiboot2/info_helpers.c \
 	src/multiboot2/info_is_valid.c \
 	src/multiboot2/info_print.c
 TESTS += \
+	tests/test_multiboot2_header_helpers \
+	tests/test_multiboot2_header_print \
+	tests/test_multiboot2_header_validation \
 	tests/test_multiboot2_info_helpers \
 	tests/test_multiboot2_info_print \
 	tests/test_multiboot2_info_validation
 noinst_PROGRAMS += \
+	tests/multiboot2_header_print1 \
+	tests/multiboot2_header_print2 \
 	tests/multiboot2_info_print1 \
 	tests/multiboot2_info_print2
 endif
@@ -111,6 +120,16 @@ examples_units_human_SOURCES = \
 	$(libkernaux_a_SOURCES) \
 	examples/units_human.c
 
+tests_multiboot2_header_print1_SOURCES = \
+	$(libkernaux_a_SOURCES) \
+	tests/multiboot2_header_print1.c \
+	tests/multiboot2_header_example1.h
+
+tests_multiboot2_header_print2_SOURCES = \
+	$(libkernaux_a_SOURCES) \
+	tests/multiboot2_header_print2.c \
+	tests/multiboot2_header_example2.h
+
 tests_multiboot2_info_print1_SOURCES = \
 	$(libkernaux_a_SOURCES) \
 	tests/multiboot2_info_print1.c \
@@ -132,6 +151,22 @@ tests_test_elf_SOURCES = \
 tests_test_itoa_SOURCES = \
 	$(libkernaux_a_SOURCES) \
 	tests/test_itoa.c
+
+tests_test_multiboot2_header_helpers_SOURCES = \
+	$(libkernaux_a_SOURCES) \
+	tests/test_multiboot2_header_helpers.c \
+	tests/multiboot2_header_example1.h \
+	tests/multiboot2_header_example2.h
+
+tests_test_multiboot2_header_print_SOURCES = \
+	$(libkernaux_a_SOURCES) \
+	tests/test_multiboot2_header_print.c
+
+tests_test_multiboot2_header_validation_SOURCES = \
+	$(libkernaux_a_SOURCES) \
+	tests/test_multiboot2_header_validation.c \
+	tests/multiboot2_header_example1.h \
+	tests/multiboot2_header_example2.h
 
 tests_test_multiboot2_info_helpers_SOURCES = \
 	$(libkernaux_a_SOURCES) \
