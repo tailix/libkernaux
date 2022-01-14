@@ -12,6 +12,10 @@ static const struct {
 
     uint8_t _align1[4];
 
+    struct KernAux_Multiboot2_HTag_Flags tag_flags;
+
+    uint8_t _align2[4];
+
     struct KernAux_Multiboot2_HTag_None tag_none;
 } multiboot2_header_example2 = {
     .multiboot2_header = {
@@ -74,6 +78,17 @@ static const struct {
             .size = sizeof(multiboot2_header_example2.tag_entry_addr),
         },
         .entry_addr = 0,
+    },
+    .tag_flags = {
+        .base = {
+            .type = KERNAUX_MULTIBOOT2_HTAG_FLAGS,
+            .flags = 0,
+            .size = sizeof(multiboot2_header_example2.tag_flags),
+        },
+        .console_flags = (
+            KERNAUX_MULTIBOOT2_HTAG_FLAGS_REQUIRE_CONSOLE |
+            KERNAUX_MULTIBOOT2_HTAG_FLAGS_EGA_SUPPORT
+        ),
     },
     .tag_none = {
         .base = {
