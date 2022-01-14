@@ -7,10 +7,7 @@
 #define __USE_POSIX2
 #include <stdio.h>
 
-// static const char output1[] = "";
-
-// TODO: add more tags
-static const char output2[] =
+static const char output[] =
     "Multiboot 2 header\n"
     "  magic: 3897708758\n"
     "  arch: 0 (i386)\n"
@@ -63,25 +60,23 @@ static const char output2[] =
 
 int main()
 {
-    /*
     {
         FILE *const fd = popen("tests/multiboot2_header_print1", "r");
         assert(fd != NULL);
 
-        for (const char *ch = output1; *ch; ++ch) {
+        for (const char *ch = output; *ch; ++ch) {
             assert(fgetc(fd) == *ch);
         }
 
         const int status = pclose(fd);
         assert(status == 0);
     }
-    */
 
     {
         FILE *const fd = popen("tests/multiboot2_header_print2", "r");
         assert(fd != NULL);
 
-        for (const char *ch = output2; *ch; ++ch) {
+        for (const char *ch = output; *ch; ++ch) {
             assert(fgetc(fd) == *ch);
         }
 
