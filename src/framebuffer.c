@@ -103,9 +103,18 @@ void KernAux_Framebuffer_putchar_ega(KernAux_Framebuffer framebuffer, int x, int
     KERNAUX_ASSERT_RETURN(x <= framebuffer->frame_width);
     KERNAUX_ASSERT_RETURN(y <= framebuffer->frame_height);
     
-    uint16_t *spix = (uint16_t*)framebuffer->buffer_addr;
-    const size_t index = y * framebuffer->frame_width + x;
-	spix[index] = (uint16_t)c | (uint16_t)color << 8;
+    if(framebuffer->frame_depth == 16)
+    {
+        uint16_t *spix = (uint16_t*)framebuffer->buffer_addr;
+        const size_t index = y * framebuffer->frame_width + x;
+        spix[index] = (uint16_t)c | (uint16_t)color << 8;
+    }
+    else
+    {
+        uint8_t *spix = (uint8_t*)framebuffer->buffer_addr;
+        const size_t index = y * framebuffer->frame_width + x;
+        spix[index] = (uint8_t)c | (uint8_t)color << 8;
+    }
 }
 
 void KernAux_Framebuffer_fillarea_rgb(KernAux_Framebuffer framebuffer, int x0, int y0, int x1, int y1, uint32_t hex)
