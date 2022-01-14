@@ -20,6 +20,8 @@ static const struct {
 
     uint8_t _align3[4];
 
+    struct KernAux_Multiboot2_HTag_ModuleAlign tag_module_align;
+
     struct KernAux_Multiboot2_HTag_None tag_none;
 } multiboot2_header_example2 = {
     .multiboot2_header = {
@@ -103,6 +105,13 @@ static const struct {
         .width = 0,
         .height = 0,
         .depth = 0,
+    },
+    .tag_module_align = {
+        .base = {
+            .type = KERNAUX_MULTIBOOT2_HTAG_MODULE_ALIGN,
+            .flags = 0,
+            .size = sizeof(multiboot2_header_example2.tag_module_align),
+        },
     },
     .tag_none = {
         .base = {
