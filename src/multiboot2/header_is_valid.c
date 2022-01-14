@@ -148,8 +148,7 @@ bool KernAux_Multiboot2_HTag_InfoReq_is_valid(
     return (
         tag->base.type == KERNAUX_MULTIBOOT2_HTAG_INFO_REQ &&
         tag->base.size > 8 &&
-        // TODO: write this
-        true
+        tag->base.size % 4 == 0
     );
 }
 
@@ -158,9 +157,7 @@ bool KernAux_Multiboot2_HTag_Addr_is_valid(
 ) {
     return (
         tag->base.type == KERNAUX_MULTIBOOT2_HTAG_ADDR &&
-        tag->base.size == 24 &&
-        // TODO: write this
-        true
+        tag->base.size == 24
     );
 }
 
@@ -169,9 +166,7 @@ bool KernAux_Multiboot2_HTag_EntryAddr_is_valid(
 ) {
     return (
         tag->base.type == KERNAUX_MULTIBOOT2_HTAG_ENTRY_ADDR &&
-        tag->base.size == 12 &&
-        // TODO: write this
-        true
+        tag->base.size == 12
     );
 }
 
@@ -180,9 +175,7 @@ bool KernAux_Multiboot2_HTag_Flags_is_valid(
 ) {
     return (
         tag->base.type == KERNAUX_MULTIBOOT2_HTAG_FLAGS &&
-        tag->base.size == 12 &&
-        // TODO: write this
-        true
+        tag->base.size == 12
     );
 }
 
@@ -191,9 +184,7 @@ bool KernAux_Multiboot2_HTag_Framebuffer_is_valid(
 ) {
     return (
         tag->base.type == KERNAUX_MULTIBOOT2_HTAG_FRAMEBUFFER &&
-        tag->base.size == 20 &&
-        // TODO: write this
-        true
+        tag->base.size == 20
     );
 }
 
@@ -220,9 +211,7 @@ bool KernAux_Multiboot2_HTag_EFII386EntryAddr_is_valid(
 ) {
     return (
         tag->base.type == KERNAUX_MULTIBOOT2_HTAG_EFI_I386_ENTRY_ADDR &&
-        tag->base.size == 12 &&
-        // TODO: write this
-        true
+        tag->base.size == 12
     );
 }
 
@@ -231,9 +220,7 @@ bool KernAux_Multiboot2_HTag_EFIAmd64EntryAddr_is_valid(
 ) {
     return (
         tag->base.type == KERNAUX_MULTIBOOT2_HTAG_EFI_AMD64_ENTRY_ADDR &&
-        tag->base.size == 12 &&
-        // TODO: write this
-        true
+        tag->base.size == 12
     );
 }
 
@@ -243,8 +230,8 @@ bool KernAux_Multiboot2_HTag_RelocatableHeader_is_valid(
     if (!(
         tag->base.type == KERNAUX_MULTIBOOT2_HTAG_RELOCATABLE_HEADER &&
         tag->base.size == 24 &&
-        // TODO: write this
-        true
+        tag->min_addr <= tag->max_addr
+        // TODO: additional requirements?
     )) {
         return false;
     }
