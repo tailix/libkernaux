@@ -38,25 +38,21 @@ extern "C" {
 #define KERNAUX_MULTIBOOT2_HTAG_FLAGS_REQUIRE_CONSOLE (1 << 0)
 #define KERNAUX_MULTIBOOT2_HTAG_FLAGS_EGA_SUPPORT     (1 << 1)
 
-/****************
- * Common types *
- ****************/
-
-enum KernAux_Multiboot2_Arch {
-    KERNAUX_MULTIBOOT2_ARCH_NONE   = 0,
-    KERNAUX_MULTIBOOT2_ARCH_I386   = 1,
-    KERNAUX_MULTIBOOT2_ARCH_MIPS32 = 4,
-};
-
 /***********************
  * Header common types *
  ***********************/
 
+enum KernAux_Multiboot2_Header_Arch {
+    KERNAUX_MULTIBOOT2_HEADER_ARCH_NONE   = 0,
+    KERNAUX_MULTIBOOT2_HEADER_ARCH_I386   = 1,
+    KERNAUX_MULTIBOOT2_HEADER_ARCH_MIPS32 = 4,
+};
+
 struct KernAux_Multiboot2_Header {
-    unsigned magic                    : 32;
-    enum KernAux_Multiboot2_Arch arch : 32;
-    unsigned total_size               : 32;
-    unsigned checksum                 : 32;
+    unsigned magic                           : 32;
+    enum KernAux_Multiboot2_Header_Arch arch : 32;
+    unsigned total_size                      : 32;
+    unsigned checksum                        : 32;
 }
 __attribute__((packed));
 
