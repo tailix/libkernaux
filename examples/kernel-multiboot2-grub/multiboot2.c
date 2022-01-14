@@ -1,6 +1,6 @@
 #include <kernaux/multiboot2.h>
 
-__attribute__((section(KERNAUX_MULTIBOOT2_HEADER_SECTION), used))
+__attribute__((section(".multiboot2"), used))
 __attribute__((aligned(KERNAUX_MULTIBOOT2_HEADER_ALIGN)))
 const struct {
     struct KernAux_Multiboot2_Header multiboot2_header;
