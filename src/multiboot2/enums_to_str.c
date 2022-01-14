@@ -29,7 +29,7 @@ const char *KernAux_Multiboot2_HTag_to_str(
     case KERNAUX_MULTIBOOT2_HTAG_EFI_I386_ENTRY_ADDR:
         return "EFI i386 entry address";
     case KERNAUX_MULTIBOOT2_HTAG_EFI_AMD64_ENTRY_ADDR:
-        return "EFI AMD64 entry address";
+        return "EFI amd64 entry address";
     case KERNAUX_MULTIBOOT2_HTAG_RELOCATABLE_HEADER:
         return "relocatable header";
     default:
