@@ -238,10 +238,22 @@ bool KernAux_Multiboot2_HTag_EFIAmd64EntryAddr_is_valid(
 bool KernAux_Multiboot2_HTag_RelocatableHeader_is_valid(
     const struct KernAux_Multiboot2_HTag_RelocatableHeader *tag
 ) {
-    return (
+    if (!(
         tag->base.type == KERNAUX_MULTIBOOT2_HTAG_RELOCATABLE_HEADER &&
         tag->base.size == 24 &&
         // TODO: write this
         true
-    );
+    )) {
+        return false;
+    }
+
+    switch (tag->preferences) {
+    case KERNAUX_MULTIBOOT2_HTAG_RELOCATABLE_HEADER_PREFERENCE_NONE:    break;
+    case KERNAUX_MULTIBOOT2_HTAG_RELOCATABLE_HEADER_PREFERENCE_LOWEST:  break;
+    case KERNAUX_MULTIBOOT2_HTAG_RELOCATABLE_HEADER_PREFERENCE_HIGHEST: break;
+    default:
+        return false;
+    }
+
+    return true;
 }
