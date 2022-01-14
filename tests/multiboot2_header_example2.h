@@ -32,6 +32,8 @@ static const struct {
 
     uint8_t _align5[4];
 
+    struct KernAux_Multiboot2_HTag_RelocatableHeader tag_relocatable_header;
+
     struct KernAux_Multiboot2_HTag_None tag_none;
 } multiboot2_header_example2 = {
     .multiboot2_header = {
@@ -145,6 +147,18 @@ static const struct {
             .size = sizeof(multiboot2_header_example2.tag_efi_amd64_entry_addr),
         },
         .entry_addr = 0,
+    },
+    .tag_relocatable_header = {
+        .base = {
+            .type = KERNAUX_MULTIBOOT2_HTAG_RELOCATABLE_HEADER,
+            .flags = 0,
+            .size = sizeof(multiboot2_header_example2.tag_relocatable_header),
+        },
+        .min_addr = 0,
+        .max_addr = 0,
+        .align = 0,
+        .preferences =
+            KERNAUX_MULTIBOOT2_HTAG_RELOCATABLE_HEADER_PREFERENCE_LOWEST,
     },
     .tag_none = {
         .base = {
