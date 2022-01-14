@@ -1,5 +1,6 @@
 #include <kernaux/multiboot2.h>
 
+// TODO: add more tags
 __attribute__((section(".multiboot2"), used))
 __attribute__((aligned(KERNAUX_MULTIBOOT2_HEADER_ALIGN)))
 const struct {
