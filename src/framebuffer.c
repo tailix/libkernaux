@@ -97,6 +97,7 @@ void KernAux_Framebuffer_putpixel_ega(KernAux_Framebuffer framebuffer, int x, in
     KernAux_Framebuffer_putchar_ega(framebuffer, x, y, ' ', color);
 }
 
+
 void KernAux_Framebuffer_putchar_ega(KernAux_Framebuffer framebuffer, int x, int y, unsigned char c, enum KernAux_Framebuffer_VGAColorPalette color)
 {
     KERNAUX_NOTNULL_RETURN(framebuffer);
@@ -120,7 +121,7 @@ void KernAux_Framebuffer_putchar_ega(KernAux_Framebuffer framebuffer, int x, int
 
 void KernAux_Framebuffer_putchar8x16_rgb(KernAux_Framebuffer framebuffer, int x, int y, unsigned char c, uint32_t fg, uint32_t bg)
 {
-    
+
 #ifdef KERNAUX_INCLUDED_EXTRAS_FONT8X16
     
     const KernAux_FontCharMap charBitmap = KernAux_get_font8x16_unicode(c);
@@ -145,6 +146,8 @@ void KernAux_Framebuffer_putchar8x16_rgb(KernAux_Framebuffer framebuffer, int x,
 #endif
     
 }
+
+
 
 void KernAux_Framebuffer_fillarea_rgb(KernAux_Framebuffer framebuffer, int x0, int y0, int x1, int y1, uint32_t hex)
 {
