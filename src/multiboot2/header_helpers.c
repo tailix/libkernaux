@@ -20,8 +20,7 @@ const struct KernAux_Multiboot2_HTagBase
            (struct KernAux_Multiboot2_HTagBase*)
            ((uint8_t*)multiboot2_header + multiboot2_header->total_size))
     {
-        // TODO: uncommend when implemented
-        // if (!KernAux_Multiboot2_HTagBase_is_valid(tag_base)) return NULL;
+        if (!KernAux_Multiboot2_HTagBase_is_valid(tag_base)) return NULL;
         if (tag_base->type == tag_type) return tag_base;
 
         tag_base = KERNAUX_MULTIBOOT2_HTAG_NEXT(tag_base);
@@ -44,8 +43,7 @@ const struct KernAux_Multiboot2_HTagBase
            (struct KernAux_Multiboot2_HTagBase*)
            ((uint8_t*)multiboot2_header + multiboot2_header->total_size))
     {
-        // TODO: uncommend when implemented
-        // if (!KernAux_Multiboot2_HTagBase_is_valid(tag_base)) return NULL;
+        if (!KernAux_Multiboot2_HTagBase_is_valid(tag_base)) return NULL;
         if (tag_base->type == tag_type && tag_base > after_tag) return tag_base;
 
         tag_base = KERNAUX_MULTIBOOT2_HTAG_NEXT(tag_base);
