@@ -5,34 +5,29 @@ static const struct {
         struct KernAux_Multiboot2_ITag_BootCmdLine tag;
         char cmdline[15];
     } tag_boot_cmd_line;
-
     uint8_t _align1[1];
 
     struct {
         struct KernAux_Multiboot2_ITag_BootLoaderName tag;
         char name[22];
     } tag_boot_loader_name;
-
     uint8_t _align2[2];
 
     struct {
         struct KernAux_Multiboot2_ITag_Module tag;
         char cmdline[17];
     } tag_module1;
-
     uint8_t _align3[7];
 
     struct {
         struct KernAux_Multiboot2_ITag_Module tag;
         char cmdline[17];
     } tag_module2;
-
     uint8_t _align4[7];
 
     struct KernAux_Multiboot2_ITag_BasicMemoryInfo tag_basic_memory_info;
 
     struct KernAux_Multiboot2_ITag_BIOSBootDevice tag_bios_boot_device;
-
     uint8_t _align5[4];
 
     struct {
@@ -47,7 +42,6 @@ static const struct {
         struct KernAux_Multiboot2_ITag_FramebufferInfo tag;
         uint8_t data[8];
     } tag_framebuffer_info;
-
     uint8_t _align6[1];
 
     struct {
@@ -55,18 +49,17 @@ static const struct {
 
         uint8_t data[420 - sizeof(struct KernAux_Multiboot2_ITag_ELFSymbols)];
     } tag_elf_symbols;
-
     uint8_t _align7[4];
 
     struct KernAux_Multiboot2_ITag_APMTable tag_apm_table;
-
     uint8_t _align8[4];
 
-    struct KernAux_Multiboot2_ITag_EFI32bitSystemTablePtr tag_efi_32bit_system_table_ptr;
-
+    struct KernAux_Multiboot2_ITag_EFI32bitSystemTablePtr
+        tag_efi_32bit_system_table_ptr;
     uint8_t _align9[4];
 
-    struct KernAux_Multiboot2_ITag_EFI64bitSystemTablePtr tag_efi_64bit_system_table_ptr;
+    struct KernAux_Multiboot2_ITag_EFI64bitSystemTablePtr
+        tag_efi_64bit_system_table_ptr;
 
     struct {
         struct KernAux_Multiboot2_ITag_SMBIOSTables tag;
@@ -94,19 +87,17 @@ static const struct {
     } tag_efi_memory_map;
 
     struct KernAux_Multiboot2_ITag_EFIBootServicesNotTerminated
-    tag_efi_boot_services_not_terminated;
+        tag_efi_boot_services_not_terminated;
 
     struct KernAux_Multiboot2_ITag_EFI32bitImageHandlePtr
-    tag_efi_32bit_image_handle_ptr;
-
+        tag_efi_32bit_image_handle_ptr;
     uint8_t _align10[4];
 
     struct KernAux_Multiboot2_ITag_EFI64bitImageHandlePtr
-    tag_efi_64bit_image_handle_ptr;
+        tag_efi_64bit_image_handle_ptr;
 
     struct KernAux_Multiboot2_ITag_ImageLoadBasePhysAddr
-    tag_image_load_base_phys_addr;
-
+        tag_image_load_base_phys_addr;
     uint8_t _align11[4];
 
     struct KernAux_Multiboot2_ITag_None tag_none;
