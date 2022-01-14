@@ -1,15 +1,21 @@
-// TODO: do we really need this?
-static const uint8_t multiboot2_header_example1[] = {
-    214, 80, 82, 232, 0, 0, 0, 0, 16, 1, 0, 0, 26, 174, 173, 23, 1, 0, 0, 0, 96,
-    0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0, 0, 3, 0, 0, 0, 4, 0, 0, 0, 5, 0,
-    0, 0, 6, 0, 0, 0, 7, 0, 0, 0, 8, 0, 0, 0, 9, 0, 0, 0, 10, 0, 0, 0, 11, 0, 0,
-    0, 12, 0, 0, 0, 13, 0, 0, 0, 14, 0, 0, 0, 15, 0, 0, 0, 16, 0, 0, 0, 17, 0,
-    0, 0, 18, 0, 0, 0, 19, 0, 0, 0, 20, 0, 0, 0, 21, 0, 0, 0, 2, 0, 0, 0, 24, 0,
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 12, 0, 0,
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 12, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0,
-    5, 0, 0, 0, 20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6,
-    0, 0, 0, 8, 0, 0, 0, 7, 0, 0, 0, 8, 0, 0, 0, 8, 0, 0, 0, 12, 0, 0, 0, 0, 0,
-    0, 0, 0, 0, 0, 0, 9, 0, 0, 0, 12, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 0, 0,
-    0, 24, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0,
-    8, 0, 0, 0,
+static const struct {
+    struct KernAux_Multiboot2_Header multiboot2_header;
+    struct KernAux_Multiboot2_HTag_None tag_none;
+} multiboot2_header_example1 = {
+    .multiboot2_header = {
+        .magic = KERNAUX_MULTIBOOT2_HEADER_MAGIC,
+        .arch = KERNAUX_MULTIBOOT2_HEADER_ARCH_MIPS32,
+        .total_size = sizeof(multiboot2_header_example1),
+        .checksum = KERNAUX_MULTIBOOT2_HEADER_CHECKSUM(
+            KERNAUX_MULTIBOOT2_HEADER_ARCH_MIPS32,
+            sizeof(multiboot2_header_example1)
+        ),
+    },
+    .tag_none = {
+        .base = {
+            .type = KERNAUX_MULTIBOOT2_HTAG_NONE,
+            .flags = 0,
+            .size = sizeof(multiboot2_header_example1.tag_none),
+        },
+    },
 };
