@@ -13,7 +13,11 @@ void KernAux_Multiboot2_Header_print(
 ) {
     printf("Multiboot 2 header\n");
     printf("  magic: %u\n", multiboot2_header->magic);
-    printf("  arch: %u\n", multiboot2_header->arch);
+    printf(
+        "  arch: %u (%s)\n",
+        multiboot2_header->arch,
+        KernAux_Multiboot2_Header_Arch_to_str(multiboot2_header->arch)
+    );
     printf("  size: %u\n", multiboot2_header->total_size);
     printf("  checksum: %u\n", multiboot2_header->checksum);
 
