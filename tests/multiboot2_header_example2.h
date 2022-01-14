@@ -9,15 +9,12 @@ static const struct {
     struct KernAux_Multiboot2_HTag_Addr tag_addr;
 
     struct KernAux_Multiboot2_HTag_EntryAddr tag_entry_addr;
-
     uint8_t _align1[4];
 
     struct KernAux_Multiboot2_HTag_Flags tag_flags;
-
     uint8_t _align2[4];
 
     struct KernAux_Multiboot2_HTag_Framebuffer tag_framebuffer;
-
     uint8_t _align3[4];
 
     struct KernAux_Multiboot2_HTag_ModuleAlign tag_module_align;
@@ -25,11 +22,9 @@ static const struct {
     struct KernAux_Multiboot2_HTag_EFIBootServices tag_efi_boot_services;
 
     struct KernAux_Multiboot2_HTag_EFII386EntryAddr tag_efi_i386_entry_addr;
-
     uint8_t _align4[4];
 
     struct KernAux_Multiboot2_HTag_EFIAmd64EntryAddr tag_efi_amd64_entry_addr;
-
     uint8_t _align5[4];
 
     struct KernAux_Multiboot2_HTag_RelocatableHeader tag_relocatable_header;
