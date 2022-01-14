@@ -4,6 +4,7 @@
 
 #include <kernaux/assert.h>
 #include <kernaux/framebuffer.h>
+#include <kernaux/extras/font.h>
 
 void KernAux_Framebuffer_init_default(KernAux_Framebuffer framebuffer, uint32_t width, uint32_t height, uint32_t pitch, uint32_t depth, uintptr_t buf_addr, uint8_t frame_type)
 {
@@ -115,6 +116,34 @@ void KernAux_Framebuffer_putchar_ega(KernAux_Framebuffer framebuffer, int x, int
         const size_t index = y * framebuffer->frame_width + x;
         spix[index] = (uint8_t)c | (uint8_t)color << 8;
     }
+}
+
+void KernAux_Framebuffer_putchar8x16_rgb(KernAux_Framebuffer framebuffer, int x, int y, unsigned char c, uint32_t fg, uint32_t bg)
+{
+    
+#ifdef KERNAUX_INCLUDED_EXTRAS_FONT8X16
+    
+    const KernAux_FontCharMap charBitmap = KernAux_get_font8x16_unicode(c);
+
+    for (size_t y = 0; y < 16; y++)
+    {
+        for (size_t x = 0; x < 8; x++)
+        {
+            if(charBitmap->data[y] & (1 << x))
+            {
+                KernAux_Framebuffer_putpixel_rgb(framebuffer, x, y, fg);
+            }
+            else
+            {
+                if(bg != RGB_COLOR_TRANSPARENT)
+                    KernAux_Framebuffer_putpixel_rgb(framebuffer, x, y, bg);
+            }
+        }
+        
+    }
+
+#endif
+    
 }
 
 void KernAux_Framebuffer_fillarea_rgb(KernAux_Framebuffer framebuffer, int x0, int y0, int x1, int y1, uint32_t hex)

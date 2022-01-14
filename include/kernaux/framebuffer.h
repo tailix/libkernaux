@@ -8,6 +8,7 @@ extern "C" {
 #include <stdint.h>
 #include <stddef.h>
 
+
 enum KernAux_Framebuffer_FrameType {
     FRAME_TYPE_RGB = 1,
     FRAME_TYPE_EGA = 2
@@ -32,6 +33,11 @@ enum KernAux_Framebuffer_VGAColorPalette {
     VGA_BRIGHT_WHITE = 0x0F
 };
 
+enum KernAux_RGB_CommonColors {
+    RGB_COLOR_TRANSPARENT = 0,
+
+};
+
 typedef struct KernAux_Framebuffer {
     uint32_t  frame_width;
     uint32_t  frame_height;
@@ -49,11 +55,13 @@ typedef struct KernAux_Framebuffer {
 
 
 void KernAux_Framebuffer_init_default(KernAux_Framebuffer framebuffer, uint32_t width, uint32_t height, uint32_t pitch, uint32_t depth, uintptr_t buf_addr, uint8_t frame_type);
-void KernAux_Framebuffer_init(KernAux_Framebuffer _framebuffer, uint32_t width, uint32_t height, uint32_t pitch, uint32_t depth, uintptr_t buf_addr, uint8_t frame_type, uint8_t redmask_sz, uint8_t redmask_shift, uint8_t greenmask_sz, uint8_t greenmask_shift, uint8_t bluemask_sz, uint8_t bluemask_shift);
+void KernAux_Framebuffer_init(KernAux_Framebuffer framebuffer, uint32_t width, uint32_t height, uint32_t pitch, uint32_t depth, uintptr_t buf_addr, uint8_t frame_type, uint8_t redmask_sz, uint8_t redmask_shift, uint8_t greenmask_sz, uint8_t greenmask_shift, uint8_t bluemask_sz, uint8_t bluemask_shift);
 
 void KernAux_Framebuffer_putpixel_rgb(KernAux_Framebuffer framebuffer, int x, int y, uint32_t hex);
 void KernAux_Framebuffer_putpixel_ega(KernAux_Framebuffer framebuffer, int x, int y, enum KernAux_Framebuffer_VGAColorPalette color);
+
 void KernAux_Framebuffer_putchar_ega(KernAux_Framebuffer framebuffer, int x, int y, unsigned char c, enum KernAux_Framebuffer_VGAColorPalette color);
+void KernAux_Framebuffer_putchar8x16_rgb(KernAux_Framebuffer framebuffer, int x, int y, unsigned char c, uint32_t fg, uint32_t bg);
 
 void KernAux_Framebuffer_fillarea_rgb(KernAux_Framebuffer framebuffer, int x0, int y0, int x1, int y1, uint32_t hex);
 void KernAux_Framebuffer_fillarea_ega(KernAux_Framebuffer framebuffer, int x0, int y0, int x1, int y1, enum KernAux_Framebuffer_VGAColorPalette color);
