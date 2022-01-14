@@ -38,12 +38,6 @@ extern "C" {
 #define KERNAUX_MULTIBOOT2_HTAG_FLAGS_REQUIRE_CONSOLE (1 << 0)
 #define KERNAUX_MULTIBOOT2_HTAG_FLAGS_EGA_SUPPORT     (1 << 1)
 
-enum KernAux_Multiboot2_HTag_RelocatableHeader_Preference {
-    KERNAUX_MULTIBOOT2_HTAG_RELOCATABLE_HEADER_PREFERENCE_NONE    = 0,
-    KERNAUX_MULTIBOOT2_HTAG_RELOCATABLE_HEADER_PREFERENCE_LOWEST  = 1,
-    KERNAUX_MULTIBOOT2_HTAG_RELOCATABLE_HEADER_PREFERENCE_HIGHEST = 2,
-};
-
 /****************
  * Common types *
  ****************/
@@ -125,6 +119,28 @@ enum KernAux_Multiboot2_ITag {
 struct KernAux_Multiboot2_ITagBase {
     enum KernAux_Multiboot2_ITag type : 32;
     unsigned size                     : 32;
+}
+__attribute__((packed));
+
+/***************************
+ * Header additional types *
+ ***************************/
+
+enum KernAux_Multiboot2_HTag_RelocatableHeader_Preference {
+    KERNAUX_MULTIBOOT2_HTAG_RELOCATABLE_HEADER_PREFERENCE_NONE    = 0,
+    KERNAUX_MULTIBOOT2_HTAG_RELOCATABLE_HEADER_PREFERENCE_LOWEST  = 1,
+    KERNAUX_MULTIBOOT2_HTAG_RELOCATABLE_HEADER_PREFERENCE_HIGHEST = 2,
+};
+
+/********************************
+ * Information additional types *
+ ********************************/
+
+struct KernAux_Multiboot2_ITag_MemoryMap_EntryBase {
+    unsigned long long base_addr : 64;
+    unsigned long long length    : 64;
+    unsigned type                : 32;
+    unsigned reserved1           : 32;
 }
 __attribute__((packed));
 
@@ -446,18 +462,6 @@ struct KernAux_Multiboot2_ITag_ImageLoadBasePhysAddr {
     struct KernAux_Multiboot2_ITagBase base;
 
     unsigned load_base_addr : 32;
-}
-__attribute__((packed));
-
-/*************************************
- * Information additional structures *
- *************************************/
-
-struct KernAux_Multiboot2_ITag_MemoryMap_EntryBase {
-    unsigned long long base_addr : 64;
-    unsigned long long length    : 64;
-    unsigned type                : 32;
-    unsigned reserved1           : 32;
 }
 __attribute__((packed));
 
