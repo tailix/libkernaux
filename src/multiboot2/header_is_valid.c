@@ -15,9 +15,9 @@ bool KernAux_Multiboot2_Header_is_valid(
         return false;
     }
 
-    if (multiboot2_header->arch != KERNAUX_MULTIBOOT2_ARCH_NONE &&
-        multiboot2_header->arch != KERNAUX_MULTIBOOT2_ARCH_I386 &&
-        multiboot2_header->arch != KERNAUX_MULTIBOOT2_ARCH_MIPS32)
+    if (multiboot2_header->arch != KERNAUX_MULTIBOOT2_HEADER_ARCH_NONE &&
+        multiboot2_header->arch != KERNAUX_MULTIBOOT2_HEADER_ARCH_I386 &&
+        multiboot2_header->arch != KERNAUX_MULTIBOOT2_HEADER_ARCH_MIPS32)
     {
         return false;
     }
