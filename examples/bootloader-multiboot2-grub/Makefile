@@ -9,7 +9,7 @@ CONFIG_LIBKERNAUX = ../../config/i386
 DIFF = diff
 GRUB_FILE = grub-file
 GRUB_MKRESCUE = grub-mkrescue
-QEMU = qemu-system-i386
+QEMU = qemu-system-i386 -serial stdio -display none
 
 BUILD_LIBKERNAUX = build-libkernaux
 EXPECTED = expected.txt
@@ -38,7 +38,7 @@ test: run
 	$(DIFF) -a -Z $(EXPECTED) $(OUTPUT)
 
 run: $(IMAGE)
-	$(QEMU) -cdrom $< -serial stdio -display none | tee $(OUTPUT)
+	$(QEMU) -cdrom $< | tee $(OUTPUT)
 
 clean:
 	make -C $(BUILD_LIBKERNAUX) distclean || true

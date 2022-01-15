@@ -9,7 +9,7 @@ CONFIG_LIBKERNAUX = ../../config/i386
 DIFF = diff
 GRUB_FILE = grub-file
 LIMINE = ../../vendor/limine/build/bin
-QEMU = qemu-system-x86_64
+QEMU = qemu-system-x86_64 -serial stdio -display none
 XORRISO = xorriso
 
 BUILD_LIBKERNAUX = build-libkernaux
@@ -53,7 +53,7 @@ test: run
 	$(DIFF) -a -Z $(EXPECTED) $(OUTPUT)
 
 run: $(IMAGE)
-	$(QEMU) -cdrom $< -serial stdio -display none | tee $(OUTPUT)
+	$(QEMU) -cdrom $< | tee $(OUTPUT)
 
 clean:
 	make -C $(BUILD_LIBKERNAUX) distclean || true
