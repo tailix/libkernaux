@@ -104,7 +104,7 @@ void KernAux_Framebuffer_putchar_ega(KernAux_Framebuffer framebuffer, int x, int
     KERNAUX_ASSERT_RETURN(framebuffer->frame_type == FRAME_TYPE_EGA);
     KERNAUX_ASSERT_RETURN(x <= framebuffer->frame_width);
     KERNAUX_ASSERT_RETURN(y <= framebuffer->frame_height);
-    
+
     if(framebuffer->frame_depth == 16)
     {
         uint16_t *spix = (uint16_t*)framebuffer->buffer_addr;
@@ -123,7 +123,6 @@ void KernAux_Framebuffer_putchar8x16_rgb(KernAux_Framebuffer framebuffer, int x,
 {
 
 #ifdef KERNAUX_INCLUDED_EXTRAS_FONT8X16
-    
     const KernAux_FontCharMap charBitmap = KernAux_get_font8x16_unicode(c);
 
     for (size_t y = 0; y < 16; y++)
@@ -140,11 +139,8 @@ void KernAux_Framebuffer_putchar8x16_rgb(KernAux_Framebuffer framebuffer, int x,
                     KernAux_Framebuffer_putpixel_rgb(framebuffer, x, y, bg);
             }
         }
-        
     }
-
 #endif
-    
 }
 
 
