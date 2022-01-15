@@ -556,6 +556,12 @@ void KernAux_Multiboot2_ITag_BootCmdLine_print(
     __attribute__((format(printf, 1, 2)))
 );
 
+void KernAux_Multiboot2_ITag_BootLoaderName_print(
+    const struct KernAux_Multiboot2_ITag_BootLoaderName *tag,
+    void (*printf)(const char *format, ...)
+    __attribute__((format(printf, 1, 2)))
+);
+
 void KernAux_Multiboot2_ITag_MemoryMap_print(
     const struct KernAux_Multiboot2_ITag_MemoryMap *tag,
     void (*printf)(const char *format, ...)
