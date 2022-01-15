@@ -70,6 +70,7 @@
 !/vendor/limine
 !/vendor/opensbi
 !/vendor/sha256sums.txt
+!/vendor/u-boot
 !/vendor/wget.txt
 
 /vendor/cross/*
