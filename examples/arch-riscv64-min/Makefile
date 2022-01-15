@@ -5,8 +5,10 @@ CCPREFIX = ../../vendor/cross/bin/riscv64-elf-
 AS = $(CCPREFIX)as
 CC = $(CCPREFIX)gcc
 
+CONFIG_LIBKERNAUX = ../../config/riscv64
 QEMU = qemu-system-riscv64
 
+BUILD_LIBKERNAUX = build-libkernaux
 KERNEL = kernel.elf
 LINKERSCR = linker.ld
 
@@ -25,10 +27,15 @@ run: $(KERNEL)
 	$(QEMU) -machine virt -bios $< -serial stdio -display none
 
 clean:
+	make -C $(BUILD_LIBKERNAUX) distclean || true
 	rm -f $(KERNEL) $(OBJS)
 
-$(KERNEL): $(LINKERSCR) $(OBJS)
-	$(CC) -T $(LINKERSCR) -o $@ $(OBJS) -nostdlib -lgcc
+$(KERNEL): $(LINKERSCR) $(OBJS) build-libkernaux.a
+	$(CC) -T $(LINKERSCR) -o $@ $(OBJS) -nostdlib -lgcc -lkernaux -Wl,-L$(BUILD_LIBKERNAUX)
+
+build-libkernaux.a:
+	cd $(BUILD_LIBKERNAUX) && ../$(CONFIG_LIBKERNAUX)
+	cd $(BUILD_LIBKERNAUX) && make libkernaux.a
 
 %.c.o: %.c
 	$(CC) -c $< -o $@ $(CFLAGS)

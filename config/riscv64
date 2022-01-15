@@ -1,0 +1,19 @@
+#!/bin/sh
+
+set -e
+
+ARCH='riscv64'
+HOST="$ARCH-elf"
+REPO="$(realpath "$(dirname "$(realpath "$0")")/..")"
+PREFIX="$REPO/vendor/cross"
+BIN="$PREFIX/bin"
+
+if [ -f "$REPO/Makefile" ]; then make -C "$REPO" distclean; fi
+
+export     AR="$BIN/$HOST-ar"
+export     CC="$BIN/$HOST-gcc"
+export RANLIB="$BIN/$HOST-ranlib"
+
+export CFLAGS='-ffreestanding -nostdlib -fno-builtin -fno-stack-protector'
+
+"$REPO/configure" --host="$HOST" --enable-assert --enable-guard --with-libc
