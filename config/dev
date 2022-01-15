@@ -1,3 +1,9 @@
 #!/bin/sh
 
-exec ./configure --enable-assert --enable-guard
+set -e
+
+REPO="$(realpath "$(dirname "$(realpath "$0")")/..")"
+
+if [ -f "$REPO/Makefile" ]; then make -C "$REPO" distclean; fi
+
+"$REPO/configure" --enable-assert --enable-guard

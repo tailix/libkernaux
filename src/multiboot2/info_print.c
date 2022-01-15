@@ -7,19 +7,9 @@
 #include <stddef.h>
 #include <stdint.h>
 
-static void KernAux_Multiboot2_ITag_MemoryMap_print(
-    const struct KernAux_Multiboot2_ITag_MemoryMap *tag,
-    void (*printf)(const char *format, ...) __attribute__((format(printf, 1, 2)))
-);
-
-static void KernAux_Multiboot2_ITag_ELFSymbols_print(
-    const struct KernAux_Multiboot2_ITag_ELFSymbols *tag,
-    void (*printf)(const char *format, ...) __attribute__((format(printf, 1, 2)))
-);
-
 void KernAux_Multiboot2_Info_print(
     const struct KernAux_Multiboot2_Info *const multiboot2_info,
-    void (*const printf)(const char *format, ...) __attribute__((format(printf, 1, 2)))
+    void (*const printf)(const char *format, ...)
 ) {
     printf("Multiboot 2 info\n");
     printf("  size: %u\n", multiboot2_info->total_size);
@@ -43,7 +33,7 @@ void KernAux_Multiboot2_Info_print(
 
 void KernAux_Multiboot2_ITagBase_print(
     const struct KernAux_Multiboot2_ITagBase *const tag_base,
-    void (*const printf)(const char *format, ...) __attribute__((format(printf, 1, 2)))
+    void (*const printf)(const char *format, ...)
 ) {
     if (!KernAux_Multiboot2_ITagBase_is_valid(tag_base)) return;
 
@@ -61,19 +51,15 @@ void KernAux_Multiboot2_ITagBase_print(
     case KERNAUX_MULTIBOOT2_ITAG_NONE:
         break;
     case KERNAUX_MULTIBOOT2_ITAG_BOOT_CMD_LINE:
-        printf(
-            "  cmdline: %s\n",
-            KERNAUX_MULTIBOOT2_DATA(
-                (struct KernAux_Multiboot2_ITag_BootCmdLine*)tag_base
-            )
+        KernAux_Multiboot2_ITag_BootCmdLine_print(
+            (struct KernAux_Multiboot2_ITag_BootCmdLine*)tag_base,
+            printf
         );
         break;
     case KERNAUX_MULTIBOOT2_ITAG_BOOT_LOADER_NAME:
-        printf(
-            "  name: %s\n",
-            KERNAUX_MULTIBOOT2_DATA(
-                (struct KernAux_Multiboot2_ITag_BootLoaderName*)tag_base
-            )
+        KernAux_Multiboot2_ITag_BootLoaderName_print(
+            (struct KernAux_Multiboot2_ITag_BootLoaderName*)tag_base,
+            printf
         );
         break;
     case KERNAUX_MULTIBOOT2_ITAG_MODULE:
@@ -229,9 +215,33 @@ void KernAux_Multiboot2_ITagBase_print(
     }
 }
 
+void KernAux_Multiboot2_ITag_BootCmdLine_print(
+    const struct KernAux_Multiboot2_ITag_BootCmdLine *const tag,
+    void (*printf)(const char *format, ...)
+) {
+    if (!KernAux_Multiboot2_ITag_BootCmdLine_is_valid(tag)) {
+        printf("  invalid!\n");
+        return;
+    }
+
+    printf("  cmdline: %s\n", KERNAUX_MULTIBOOT2_DATA(tag));
+}
+
+void KernAux_Multiboot2_ITag_BootLoaderName_print(
+    const struct KernAux_Multiboot2_ITag_BootLoaderName *const tag,
+    void (*printf)(const char *format, ...)
+) {
+    if (!KernAux_Multiboot2_ITag_BootLoaderName_is_valid(tag)) {
+        printf("  invalid!\n");
+        return;
+    }
+
+    printf("  name: %s\n", KERNAUX_MULTIBOOT2_DATA(tag));
+}
+
 void KernAux_Multiboot2_ITag_MemoryMap_print(
     const struct KernAux_Multiboot2_ITag_MemoryMap *const tag,
-    void (*printf)(const char *format, ...) __attribute__((format(printf, 1, 2)))
+    void (*printf)(const char *format, ...)
 ) {
     if (!KernAux_Multiboot2_ITag_MemoryMap_is_valid(tag)) {
         printf("  invalid!\n");
@@ -262,7 +272,7 @@ void KernAux_Multiboot2_ITag_MemoryMap_print(
 
 void KernAux_Multiboot2_ITag_ELFSymbols_print(
     const struct KernAux_Multiboot2_ITag_ELFSymbols *const tag,
-    void (*printf)(const char *format, ...) __attribute__((format(printf, 1, 2)))
+    void (*printf)(const char *format, ...)
 ) {
     if (!KernAux_Multiboot2_ITag_ELFSymbols_is_valid(tag)) {
         printf("  invalid!\n");

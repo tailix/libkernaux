@@ -30,6 +30,10 @@ if ASM_I386
 libkernaux_a_SOURCES += src/asm/i386.S
 endif
 
+if ASM_RISCV64
+libkernaux_a_SOURCES += src/asm/riscv64.S
+endif
+
 if ASM_X86_64
 libkernaux_a_SOURCES += src/asm/x86_64.S
 endif

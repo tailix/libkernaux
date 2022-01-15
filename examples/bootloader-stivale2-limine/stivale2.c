@@ -1,14 +1,10 @@
 #include <stdint.h>
-#include <stddef.h>
 
 #include "stivale2.h"
 
-static void poweroff();
-static void putc(char c);
-
 // We need to tell the stivale bootloader where we want our stack to be.
 // We are going to allocate our stack as an array in .bss.
-static uint8_t stack[8192];
+extern uint8_t stack[8192];
  
 // stivale2 uses a linked list of tags for both communicating TO the
 // bootloader, or receiving info FROM it. More information about these tags
@@ -80,59 +76,3 @@ static struct stivale2_header stivale_hdr = {
     // points to the first one in the linked list.
     .tags = (uintptr_t)&framebuffer_hdr_tag
 };
- 
-// We will now write a helper function which will allow us to scan for tags
-// that we want FROM the bootloader (structure tags).
-void *stivale2_get_tag(struct stivale2_struct *stivale2_struct, uint64_t id) {
-    struct stivale2_tag *current_tag = (void *)stivale2_struct->tags;
-    for (;;) {
-        // If the tag pointer is NULL (end of linked list), we did not find
-        // the tag. Return NULL to signal this.
-        if (current_tag == NULL) {
-            return NULL;
-        }
- 
-        // Check whether the identifier matches. If it does, return a pointer
-        // to the matching tag.
-        if (current_tag->identifier == id) {
-            return current_tag;
-        }
- 
-        // Get a pointer to the next tag in the linked list and repeat.
-        current_tag = (void *)current_tag->next;
-    }
-}
- 
-// The following will be our kernel's entry point.
-void _start(struct stivale2_struct *stivale2_struct __attribute__((unused))) {
-    putc('H');
-    putc('e');
-    putc('l');
-    putc('l');
-    putc('o');
-    putc(',');
-    putc(' ');
-    putc('W');
-    putc('o');
-    putc('r');
-    putc('l');
-    putc('d');
-    putc('!');
-    putc('\n');
-
-    poweroff();
-}
-
-void poweroff()
-{
-    const uint16_t port  = 0x604;
-    const uint16_t value = 0x2000;
-    __asm__ volatile("outw %1, %0" : : "dN" (port), "a" (value));
-}
-
-void putc(const char c)
-{
-    const uint16_t port  = 0x3F8;
-    const uint16_t value = c;
-    __asm__ volatile("outw %1, %0" : : "dN" (port), "a" (value));
-}
