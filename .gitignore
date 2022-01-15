@@ -84,6 +84,3 @@
 !/vendor/cross/build/x86_64/binutils/.keep
 /vendor/cross/build/x86_64/gcc/*
 !/vendor/cross/build/x86_64/gcc/.keep
-
-
-/.vscode
