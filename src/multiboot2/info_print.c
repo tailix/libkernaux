@@ -51,11 +51,9 @@ void KernAux_Multiboot2_ITagBase_print(
     case KERNAUX_MULTIBOOT2_ITAG_NONE:
         break;
     case KERNAUX_MULTIBOOT2_ITAG_BOOT_CMD_LINE:
-        printf(
-            "  cmdline: %s\n",
-            KERNAUX_MULTIBOOT2_DATA(
-                (struct KernAux_Multiboot2_ITag_BootCmdLine*)tag_base
-            )
+        KernAux_Multiboot2_ITag_BootCmdLine_print(
+            (struct KernAux_Multiboot2_ITag_BootCmdLine*)tag_base,
+            printf
         );
         break;
     case KERNAUX_MULTIBOOT2_ITAG_BOOT_LOADER_NAME:
@@ -217,6 +215,19 @@ void KernAux_Multiboot2_ITagBase_print(
         );
         break;
     }
+}
+
+void KernAux_Multiboot2_ITag_BootCmdLine_print(
+    const struct KernAux_Multiboot2_ITag_BootCmdLine *const tag,
+    void (*printf)(const char *format, ...)
+    __attribute__((format(printf, 1, 2)))
+) {
+    if (!KernAux_Multiboot2_ITag_BootCmdLine_is_valid(tag)) {
+        printf("  invalid!\n");
+        return;
+    }
+
+    printf("  cmdline: %s\n", KERNAUX_MULTIBOOT2_DATA(tag));
 }
 
 void KernAux_Multiboot2_ITag_MemoryMap_print(

@@ -550,6 +550,12 @@ void KernAux_Multiboot2_ITagBase_print(
     __attribute__((format(printf, 1, 2)))
 );
 
+void KernAux_Multiboot2_ITag_BootCmdLine_print(
+    const struct KernAux_Multiboot2_ITag_BootCmdLine *tag,
+    void (*printf)(const char *format, ...)
+    __attribute__((format(printf, 1, 2)))
+);
+
 void KernAux_Multiboot2_ITag_MemoryMap_print(
     const struct KernAux_Multiboot2_ITag_MemoryMap *tag,
     void (*printf)(const char *format, ...)
