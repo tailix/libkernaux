@@ -1,5 +1,7 @@
+/build-libkernaux/*
+!/build-libkernaux/.keep
+
 /image.iso
-/main.c.d
 /output.txt
 /rootfs/boot/kernel
 /rootfs/boot/limine-cd.bin

@@ -3,7 +3,7 @@ static const struct {
 
     struct {
         struct KernAux_Multiboot2_HTag_InfoReq tag;
-        enum KernAux_Multiboot2_ITag mbi_tag_types[22];
+        uint32_t mbi_tag_types[22];
     } tag_info_req;
 
     struct KernAux_Multiboot2_HTag_Addr tag_addr;

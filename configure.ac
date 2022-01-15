@@ -54,6 +54,7 @@ AS_IF([test "$with_libc" = yes], do_with_libc)
 
 dnl Architecture
 AM_CONDITIONAL([ASM_I386],          [test "$host_cpu" = i386])
+AM_CONDITIONAL([ASM_RISCV64],       [test "$host_cpu" = riscv64])
 AM_CONDITIONAL([ASM_X86_64],        [test "$host_cpu" = x86_64])
 
 dnl Features (disabled by default)
@@ -79,6 +80,7 @@ AM_CONDITIONAL([WITH_LIBC_STRLEN],  [test "$with_libc_strlen"  = yes])
 
 dnl Architecture
 AS_IF([test "$host_cpu" = i386],          [AC_DEFINE([ASM_I386],                  [1], [architecture is i386])])
+AS_IF([test "$host_cpu" = riscv64],       [AC_DEFINE([ASM_RISCV64],               [1], [architecture is RISC-V 64-bit])])
 AS_IF([test "$host_cpu" = x86_64],        [AC_DEFINE([ASM_X86_64],                [1], [architecture is x86_64])])
 
 dnl Features (disabled by default)

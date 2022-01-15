@@ -12,7 +12,7 @@ extern const struct KernAux_Multiboot2_Header multiboot2_header;
 static void panic(const char *str);
 
 void main(
-    const uint32_t multiboot2_magic,
+    const uint32_t multiboot2_info_magic,
     const struct KernAux_Multiboot2_Info *const multiboot2_info
 ) {
     if (!KernAux_Multiboot2_Header_is_valid(&multiboot2_header)) {
@@ -23,10 +23,10 @@ void main(
 
     KernAux_Multiboot2_Header_print(&multiboot2_header, kernaux_console_printf);
 
-    if (multiboot2_magic != KERNAUX_MULTIBOOT2_INFO_MAGIC) {
-        panic("Multiboot 2 magic number is invalid");
+    if (multiboot2_info_magic != KERNAUX_MULTIBOOT2_INFO_MAGIC) {
+        panic("Multiboot 2 info magic number is invalid");
     } else {
-        kernaux_console_printf("Multiboot 2 magic number is valid\n");
+        kernaux_console_printf("Multiboot 2 info magic number is valid\n");
     }
 
     if (!KernAux_Multiboot2_Info_is_valid(multiboot2_info)) {
@@ -46,5 +46,5 @@ void poweroff()
 void panic(const char *const str)
 {
     kernaux_console_printf("panic: %s\n", str);
-    kernaux_asm_i386_hang();
+    poweroff();
 }
