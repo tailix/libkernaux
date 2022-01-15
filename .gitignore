@@ -1,4 +1,5 @@
 *.a
+*.c.d
 *.o
 .deps/
 .dirstamp
