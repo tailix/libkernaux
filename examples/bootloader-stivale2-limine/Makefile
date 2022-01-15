@@ -56,7 +56,7 @@ CFLAGS = \
 	-MMD
 	# -pedantic            \
 
-OBJS = main.c.o # start.S.o
+OBJS = main.c.o stivale2.c.o
 
 test: run
 	$(DIFF) -a -Z $(EXPECTED) $(OUTPUT)
