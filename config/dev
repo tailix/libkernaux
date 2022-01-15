@@ -1,3 +1,7 @@
 #!/bin/sh
 
-exec ./configure --enable-assert --enable-guard
+set -e
+
+REPO="$(realpath "$(dirname "$(realpath "$0")")/..")"
+
+"$REPO/configure" --enable-assert --enable-guard

@@ -4,7 +4,7 @@ set -e
 
 ARCH='i386'
 HOST="$ARCH-elf"
-REPO="$(pwd)"
+REPO="$(realpath "$(dirname "$(realpath "$0")")/..")"
 PREFIX="$REPO/vendor/cross"
 BIN="$PREFIX/bin"
 
@@ -14,4 +14,4 @@ export RANLIB="$BIN/$HOST-ranlib"
 
 export CFLAGS='-ffreestanding -nostdlib -fno-builtin -fno-stack-protector'
 
-./configure --host="$HOST" --enable-assert --enable-guard --with-libc
+"$REPO/configure" --host="$HOST" --enable-assert --enable-guard --with-libc
