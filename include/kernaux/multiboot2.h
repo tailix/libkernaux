@@ -525,11 +525,13 @@ const char *KernAux_Multiboot2_Info_boot_cmd_line(
 void KernAux_Multiboot2_Header_print(
     const struct KernAux_Multiboot2_Header *multiboot2_header,
     void (*printf)(const char *format, ...)
+    __attribute__((format(printf, 1, 2)))
 );
 
 void KernAux_Multiboot2_HTagBase_print(
     const struct KernAux_Multiboot2_HTagBase *tag_base,
     void (*printf)(const char *format, ...)
+    __attribute__((format(printf, 1, 2)))
 );
 
 /*******************************
@@ -539,11 +541,25 @@ void KernAux_Multiboot2_HTagBase_print(
 void KernAux_Multiboot2_Info_print(
     const struct KernAux_Multiboot2_Info *multiboot2_info,
     void (*printf)(const char *format, ...)
+    __attribute__((format(printf, 1, 2)))
 );
 
 void KernAux_Multiboot2_ITagBase_print(
     const struct KernAux_Multiboot2_ITagBase *tag_base,
     void (*printf)(const char *format, ...)
+    __attribute__((format(printf, 1, 2)))
+);
+
+void KernAux_Multiboot2_ITag_MemoryMap_print(
+    const struct KernAux_Multiboot2_ITag_MemoryMap *tag,
+    void (*printf)(const char *format, ...)
+    __attribute__((format(printf, 1, 2)))
+);
+
+void KernAux_Multiboot2_ITag_ELFSymbols_print(
+    const struct KernAux_Multiboot2_ITag_ELFSymbols *tag,
+    void (*printf)(const char *format, ...)
+    __attribute__((format(printf, 1, 2)))
 );
 
 /*******************************
