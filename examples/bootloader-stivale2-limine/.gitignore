@@ -1,3 +1,6 @@
+/build-libkernaux/*
+!/build-libkernaux/.keep
+
 /image.iso
 /main.c.d
 /output.txt
