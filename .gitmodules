@@ -1,3 +1,6 @@
 [submodule "vendor/limine"]
 	path = vendor/limine
 	url = https://github.com/limine-bootloader/limine.git
+[submodule "vendor/opensbi"]
+	path = vendor/opensbi
+	url = https://github.com/riscv-software-src/opensbi.git

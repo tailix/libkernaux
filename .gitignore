@@ -66,7 +66,8 @@
 /vendor/*
 !/vendor/cross/
 !/vendor/fetch.sh
-!/vendor/limine/
+!/vendor/limine
+!/vendor/opensbi
 !/vendor/sha256sums.txt
 !/vendor/wget.txt
 
