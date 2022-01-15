@@ -46,5 +46,5 @@ void poweroff()
 void panic(const char *const str)
 {
     kernaux_console_printf("panic: %s\n", str);
-    kernaux_asm_i386_hang();
+    poweroff();
 }

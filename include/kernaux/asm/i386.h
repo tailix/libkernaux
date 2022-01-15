@@ -7,8 +7,6 @@ extern "C" {
 
 #include <kernaux/arch/i386.h>
 
-void kernaux_asm_i386_hang() __attribute__((noreturn));
-
 inline static uint8_t  kernaux_asm_i386_inportb(uint16_t port);
 inline static uint16_t kernaux_asm_i386_inportw(uint16_t port);
 inline static uint32_t kernaux_asm_i386_inportd(uint16_t port);
