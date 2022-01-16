@@ -1,42 +1,61 @@
+##########################
+# Common generated files #
+##########################
+
 *.a
 *.c.d
 *.o
 .deps/
 .dirstamp
 
-/Makefile
-/Makefile.in
+############################
+# Always generated in root #
+############################
+
 /aclocal.m4
 /ar-lib
 /autom4te.cache/
 /autoscan.log
 /compile
 /config.guess
-/config.h
 /config.h.in
 /config.h.in~
-/config.log
-/config.status
 /config.sub
 /configure
 /configure.ac~
-/configure.scan
 /configure~
 /depcomp
-/examples/*.log
-/examples/*.trs
-/include/Makefile
-/include/Makefile.in
 /install-sh
+/Makefile.in
 /missing
-/stamp-h1
 /test-driver
-/test-suite.log
-/tests/test*.log
-/tests/test*.trs
+
+/include/Makefile.in
+
+########################
+# To build out of root #
+########################
 
 /build/*
 !/build/.keep
+
+###########################################
+# Only generated when configuring in root #
+###########################################
+
+/config.h
+/config.log
+/config.status
+/stamp-h1
+/test-suite.log
+
+/Makefile
+/include/Makefile
+
+/examples/*.log
+/examples/*.trs
+/tests/test*.log
+/tests/test*.trs
 
 /examples/assert_guards
 /examples/assert_simple
@@ -63,6 +82,10 @@
 /tests/test_pfa_assert
 /tests/test_printf
 /tests/test_units_human
+
+###############
+# Vendor code #
+###############
 
 /vendor/*
 !/vendor/cross/
