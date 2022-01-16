@@ -26,10 +26,10 @@
 /configure~
 /depcomp
 /install-sh
-/Makefile.in
 /missing
 /test-driver
 
+/Makefile.in
 /include/Makefile.in
 
 ########################
