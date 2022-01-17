@@ -97,16 +97,6 @@ noinst_PROGRAMS += \
 endif
 endif
 
-if WITH_PRINTF
-libkernaux_a_SOURCES += src/printf.c
-if ENABLE_TESTS
-TESTS += \
-	examples/printf \
-	examples/printf_va \
-	tests/test_printf
-endif
-endif
-
 if WITH_PFA
 libkernaux_a_SOURCES += src/pfa.c
 if ENABLE_TESTS
@@ -114,6 +104,16 @@ TESTS += \
 	examples/pfa \
 	tests/test_pfa \
 	tests/test_pfa_assert
+endif
+endif
+
+if WITH_PRINTF
+libkernaux_a_SOURCES += src/printf.c
+if ENABLE_TESTS
+TESTS += \
+	examples/printf \
+	examples/printf_va \
+	tests/test_printf
 endif
 endif
 
