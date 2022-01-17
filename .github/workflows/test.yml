@@ -11,7 +11,9 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        cc: ['gcc', 'clang', 'tcc']
+        # TODO: something is wrong with TCC, Multiboot 2 info tag struct size
+        #cc: ['gcc', 'clang', 'tcc']
+        cc: ['gcc', 'clang']
         opt: ['', '-O0', '-O3']
         assert: ['--enable-assert', '--disable-assert']
         guard: ['--enable-guard', '--disable-guard']
