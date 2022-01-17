@@ -112,13 +112,3 @@
 /tests/test_pfa_assert
 /tests/test_printf
 /tests/test_units_human
-
-###############
-# Vendor code #
-###############
-
-/vendor/*
-!/vendor/cross/
-!/vendor/limine
-!/vendor/opensbi
-!/vendor/u-boot
