@@ -13,6 +13,7 @@ nobase_include_HEADERS = \
 	kernaux/framebuffer.h \
 	kernaux/itoa.h \
 	kernaux/libc.h \
+	kernaux/mbr.h \
 	kernaux/multiboot2.h \
 	kernaux/pfa.h \
 	kernaux/printf.h \

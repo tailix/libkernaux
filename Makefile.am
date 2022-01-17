@@ -58,6 +58,10 @@ if WITH_FRAMEBUFFER
 libkernaux_a_SOURCES += src/framebuffer.c
 endif
 
+if WITH_MBR
+libkernaux_a_SOURCES += src/mbr.c
+endif
+
 if WITH_MULTIBOOT2
 libkernaux_a_SOURCES += \
 	src/multiboot2/enums_to_str.c \

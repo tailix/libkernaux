@@ -46,6 +46,7 @@ API
   * [Page Frame Allocator](/include/kernaux/pfa.h) *(work in progress)*
     * [Example](/examples/pfa.c)
 * Data formats
+  * [Master Boot Record](/include/kernaux/mbr.h) *(work in progress)*
   * [Multiboot 2 (GRUB 2) information parser](/include/kernaux/multiboot2.h) *(work in progress)*
   * Stivale 2 (Limine) information parser *(planned)*
   * [ELF utils](/include/kernaux/elf.h) *(work in progress)*
@@ -96,6 +97,7 @@ are some non-default options:
 * `--with[out]-console`
 * `--with[out]-elf`
 * `--with[out]-framebuffer`
+* `--with[out]-mbr`
 * `--with[out]-multiboot2`
 * `--with[out]-pfa`
 * `--with[out]-units`

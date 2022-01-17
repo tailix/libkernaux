@@ -12,6 +12,7 @@
 #include <kernaux/elf.h>
 #include <kernaux/framebuffer.h>
 #include <kernaux/itoa.h>
+#include <kernaux/mbr.h>
 #include <kernaux/multiboot2.h>
 #include <kernaux/pfa.h>
 #include <kernaux/printf.h>
