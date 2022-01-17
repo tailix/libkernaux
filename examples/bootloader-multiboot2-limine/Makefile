@@ -1,6 +1,6 @@
 all: test
 
-CCPREFIX = ../../vendor/cross/bin/i386-elf-
+CCPREFIX = ../../vendor/cross/root/bin/i386-elf-
 
 AS = $(CCPREFIX)as
 CC = $(CCPREFIX)gcc

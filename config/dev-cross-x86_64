@@ -8,7 +8,7 @@ if [ -f "$REPO/Makefile" ]; then make -C "$REPO" distclean; fi
 ARCH='x86_64'
 HOST="$ARCH-elf"
 PREFIX="$REPO/dest/dev-cross-$ARCH"
-CROSS="$REPO/vendor/cross/bin/$HOST"
+CROSS="$REPO/vendor/cross/root/bin/$HOST"
 
 export     AR="$CROSS-ar"
 export     CC="$CROSS-gcc"

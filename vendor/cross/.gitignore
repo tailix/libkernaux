@@ -1,6 +1,9 @@
 /src/*
 !/src/.keep
 
+/root/*
+!/root/.keep
+
 /build/i386/binutils/*
 !/build/i386/binutils/.keep
 /build/i386/gcc/*

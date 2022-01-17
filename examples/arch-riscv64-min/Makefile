@@ -1,6 +1,6 @@
 all: run
 
-CCPREFIX = ../../vendor/cross/bin/riscv64-elf-
+CCPREFIX = ../../vendor/cross/root/bin/riscv64-elf-
 
 AS = $(CCPREFIX)as
 CC = $(CCPREFIX)gcc
