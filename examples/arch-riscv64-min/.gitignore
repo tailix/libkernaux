@@ -1,4 +1,1 @@
-/build-libkernaux/*
-!/build-libkernaux/.keep
-
 /kernel.elf
