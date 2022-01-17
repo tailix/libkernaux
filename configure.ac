@@ -6,7 +6,7 @@ AC_INIT([libkernaux],
   [https://github.com/tailix/libkernaux])
 
 AC_CONFIG_HEADERS([config.h])
-AC_CONFIG_SRCDIR([src/pfa.c])
+AC_CONFIG_SRCDIR([src/assert.c])
 
 AC_CANONICAL_BUILD
 AC_CANONICAL_HOST
