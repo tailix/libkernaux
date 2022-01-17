@@ -16,10 +16,10 @@ extern "C" {
 
 struct KernAux_Mbr_Entry {
     uint8_t  drive_attributes;
-    unsigned start_chs_address : 24;
+    unsigned first_sector_chs_addr : 24;
     uint8_t  partition_type;
-    unsigned last_chs_address : 24;
-    uint32_t start_lba;
+    unsigned last_sector_chs_addr : 24;
+    uint32_t first_sector_lba_addr;
     uint32_t sectors_count;
 }
 __attribute__((packed));
