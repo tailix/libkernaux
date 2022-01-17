@@ -73,6 +73,7 @@
 /tests/test_cmdline
 /tests/test_elf
 /tests/test_itoa
+/tests/test_mbr
 /tests/test_multiboot2_header_helpers
 /tests/test_multiboot2_header_print
 /tests/test_multiboot2_header_validation

@@ -5,6 +5,7 @@
 extern "C" {
 #endif
 
+#include <stdbool.h>
 #include <stdint.h>
 
 #define KERNAUX_MBR_SIZE 512
@@ -37,6 +38,10 @@ struct KernAux_Mbr {
     struct KernAux_Mbr_Info info;
 }
 __attribute__((packed));
+
+bool KernAux_Mbr_is_valid(const struct KernAux_Mbr *mbr);
+bool KernAux_Mbr_Info_is_valid(const struct KernAux_Mbr_Info *mbr_info);
+bool KernAux_Mbr_Entry_is_valid(const struct KernAux_Mbr_Entry *mbr_entry);
 
 #ifdef __cplusplus
 }

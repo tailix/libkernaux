@@ -60,6 +60,7 @@ endif
 
 if WITH_MBR
 libkernaux_a_SOURCES += src/mbr.c
+TESTS += tests/test_mbr
 endif
 
 if WITH_MULTIBOOT2
@@ -159,6 +160,10 @@ tests_test_elf_SOURCES = \
 tests_test_itoa_SOURCES = \
 	$(libkernaux_a_SOURCES) \
 	tests/test_itoa.c
+
+tests_test_mbr_SOURCES = \
+	$(libkernaux_a_SOURCES) \
+	tests/test_mbr.c
 
 tests_test_multiboot2_header_helpers_SOURCES = \
 	$(libkernaux_a_SOURCES) \
