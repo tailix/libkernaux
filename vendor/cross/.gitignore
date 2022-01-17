@@ -1,10 +1,5 @@
-/*
-
-!/.gitignore
-!/build/
-!/fetch.sh
-!/sha256sums.txt
-!/wget.txt
+/src/*
+!/src/.keep
 
 /build/i386/binutils/*
 !/build/i386/binutils/.keep
