@@ -10,15 +10,17 @@ AM_CFLAGS = \
 
 lib_LIBRARIES = libkernaux.a
 
-TESTS = \
-	examples/assert_guards \
-	examples/assert_simple
-
 noinst_PROGRAMS = $(TESTS)
 
 libkernaux_a_SOURCES = \
 	src/assert.c \
 	src/libc.c
+
+if ENABLE_TESTS
+TESTS = \
+	examples/assert_guards \
+	examples/assert_simple
+endif
 
 if ASM_I386
 libkernaux_a_SOURCES += src/asm/i386.S
@@ -34,9 +36,11 @@ endif
 
 if WITH_CMDLINE
 libkernaux_a_SOURCES += src/cmdline.c
+if ENABLE_TESTS
 TESTS += \
 	examples/cmdline \
 	tests/test_cmdline
+endif
 endif
 
 if WITH_CONSOLE
@@ -45,7 +49,9 @@ endif
 
 if WITH_ELF
 libkernaux_a_SOURCES += src/elf.c
+if ENABLE_TESTS
 TESTS += tests/test_elf
+endif
 endif
 
 if WITH_FRAMEBUFFER
@@ -54,12 +60,16 @@ endif
 
 if WITH_ITOA
 libkernaux_a_SOURCES += src/itoa.c
+if ENABLE_TESTS
 TESTS += tests/test_itoa
+endif
 endif
 
 if WITH_MBR
 libkernaux_a_SOURCES += src/mbr.c
+if ENABLE_TESTS
 TESTS += tests/test_mbr
+endif
 endif
 
 if WITH_MULTIBOOT2
@@ -71,6 +81,7 @@ libkernaux_a_SOURCES += \
 	src/multiboot2/info_helpers.c \
 	src/multiboot2/info_is_valid.c \
 	src/multiboot2/info_print.c
+if ENABLE_TESTS
 TESTS += \
 	tests/test_multiboot2_header_helpers \
 	tests/test_multiboot2_header_print \
@@ -84,28 +95,35 @@ noinst_PROGRAMS += \
 	tests/multiboot2_info_print1 \
 	tests/multiboot2_info_print2
 endif
+endif
 
 if WITH_PRINTF
 libkernaux_a_SOURCES += src/printf.c
+if ENABLE_TESTS
 TESTS += \
 	examples/printf \
 	examples/printf_va \
 	tests/test_printf
 endif
+endif
 
 if WITH_PFA
 libkernaux_a_SOURCES += src/pfa.c
+if ENABLE_TESTS
 TESTS += \
 	examples/pfa \
 	tests/test_pfa \
 	tests/test_pfa_assert
 endif
+endif
 
 if WITH_UNITS
 libkernaux_a_SOURCES += src/units.c
+if ENABLE_TESTS
 TESTS += \
 	examples/units_human \
 	tests/test_units_human
+endif
 endif
 
 examples_assert_guards_SOURCES = \

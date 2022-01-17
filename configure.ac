@@ -8,6 +8,7 @@ AC_INIT([libkernaux],
 AC_CONFIG_HEADERS([config.h])
 AC_CONFIG_SRCDIR([src/pfa.c])
 
+AC_CANONICAL_BUILD
 AC_CANONICAL_HOST
 
 
@@ -17,6 +18,7 @@ AC_ARG_ENABLE([assert],      AS_HELP_STRING([--enable-assert],       [enable run
 AC_ARG_ENABLE([guard],       AS_HELP_STRING([--enable-guard],        [enable argument guards]))
 AC_ARG_ENABLE([guard-cond],  AS_HELP_STRING([--enable-guard-cond],   [enable condition guard]))
 AC_ARG_ENABLE([guard-null],  AS_HELP_STRING([--enable-guard-null],   [enable NULL-guard]))
+AC_ARG_ENABLE([tests],       AS_HELP_STRING([--enable-tests],        [enable tests and examples]))
 
 dnl Packages (enabled by default)
 AC_ARG_WITH(  [cmdline],     AS_HELP_STRING([--without-cmdline],     [without command line parser]))
@@ -53,6 +55,10 @@ if test -z "$with_libc_strlen"; then with_libc_strlen=yes; fi
 ])
 AS_IF([test "$with_libc" = yes], do_with_libc)
 
+
+
+AS_IF([test "$host_cpu" != "$build_cpu" -a "$enable_tests" = yes], AC_MSG_ERROR([can not build cross-platform tests]))
+
 AS_IF([test "$with_itoa" = no -a "$with_printf" != no], AC_MSG_ERROR([package `printf' requires package `itoa']))
 AS_IF([test "$with_itoa" = no -a "$with_units"  != no], AC_MSG_ERROR([package `units' requires package `itoa']))
 
@@ -67,6 +73,7 @@ dnl Features (disabled by default)
 AM_CONDITIONAL([ENABLE_ASSERT],     [test "$enable_assert"     = yes])
 AM_CONDITIONAL([ENABLE_GUARD_COND], [test "$enable_guard_cond" = yes])
 AM_CONDITIONAL([ENABLE_GUARD_NULL], [test "$enable_guard_null" = yes])
+AM_CONDITIONAL([ENABLE_TESTS],      [test "$enable_tests"      = yes])
 
 dnl Packages (enabled by default)
 AM_CONDITIONAL([WITH_CMDLINE],      [test "$with_cmdline"      != no])
@@ -96,6 +103,7 @@ dnl Features (disabled by default)
 AS_IF([test "$enable_assert"      = yes], [AC_DEFINE([KERNAUX_ENABLE_ASSERT],     [1], [enabled runtime assertions])])
 AS_IF([test "$enable_guard_cond"  = yes], [AC_DEFINE([KERNAUX_ENABLE_GUARD_COND], [1], [enabled condition guard])])
 AS_IF([test "$enable_guard_null"  = yes], [AC_DEFINE([KERNAUX_ENABLE_GUARD_NULL], [1], [enabled NULL-guard])])
+AS_IF([test "$enable_tests"       = yes], [AC_DEFINE([ENABLE_TESTS],              [1], [enabled tests and examples])])
 
 dnl Packages (enabled by default)
 AS_IF([test "$with_cmdline"       != no], [AC_DEFINE([WITH_CMDLINE],              [1], [with command line parser])])

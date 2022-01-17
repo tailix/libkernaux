@@ -120,7 +120,7 @@ environment.
 
 ```
 ./autogen.sh
-./configure --enable-assert --enable-guard
+./configure --enable-tests --enable-assert --enable-guard
 make
 ```
 
@@ -176,15 +176,8 @@ configure: WARNING:     ## -----------------------------------------------------
 checking for stddef.h... no
 ```
 
-When configured with cross-compiler, library can't be build and installed with
-just `make && sudo make install`. Instead use the following commands:
-
-* `make libkernaux.a`
-* `sudo make install-exec install-data`
-
-To install into specific directory use full path:
-`DESTDIR="$(pwd)/dest" make install-exec install-data` instead of
-`DESTDIR=dest make install-exec install-data`.
+To install into specific directory use full path: `DESTDIR="$(pwd)/dest" make
+install` instead of `DESTDIR=dest make install`.
 
 Check if compilation targets i386: `objdump -d src/asm/i386.o`. It should output
 something like this:
