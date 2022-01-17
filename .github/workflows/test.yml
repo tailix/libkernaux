@@ -20,7 +20,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: dependencies
-        run: sudo apt install clang tcc
+        run: sudo apt-get -y install clang tcc
       - name: autogen
         run: ./autogen.sh
       - name: configure
@@ -37,7 +37,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: dependencies
-        run: sudo apt install cppcheck
+        run: sudo apt-get -y install cppcheck
       - name: cppcheck source code
         run: cppcheck --quiet --error-exitcode=1 --std=c99 --enable=warning,style,performance,portability include/ src/
       - name: cppcheck examples
