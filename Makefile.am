@@ -12,19 +12,13 @@ lib_LIBRARIES = libkernaux.a
 
 TESTS = \
 	examples/assert_guards \
-	examples/assert_simple \
-	examples/printf \
-	examples/printf_va \
-	tests/test_itoa \
-	tests/test_printf
+	examples/assert_simple
 
 noinst_PROGRAMS = $(TESTS)
 
 libkernaux_a_SOURCES = \
 	src/assert.c \
-	src/itoa.c \
-	src/libc.c \
-	src/printf.c
+	src/libc.c
 
 if ASM_I386
 libkernaux_a_SOURCES += src/asm/i386.S
@@ -58,6 +52,11 @@ if WITH_FRAMEBUFFER
 libkernaux_a_SOURCES += src/framebuffer.c
 endif
 
+if WITH_ITOA
+libkernaux_a_SOURCES += src/itoa.c
+TESTS += tests/test_itoa
+endif
+
 if WITH_MBR
 libkernaux_a_SOURCES += src/mbr.c
 TESTS += tests/test_mbr
@@ -84,6 +83,14 @@ noinst_PROGRAMS += \
 	tests/multiboot2_header_print2 \
 	tests/multiboot2_info_print1 \
 	tests/multiboot2_info_print2
+endif
+
+if WITH_PRINTF
+libkernaux_a_SOURCES += src/printf.c
+TESTS += \
+	examples/printf \
+	examples/printf_va \
+	tests/test_printf
 endif
 
 if WITH_PFA

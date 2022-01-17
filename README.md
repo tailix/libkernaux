@@ -97,8 +97,10 @@ are some non-default options:
 * `--with[out]-console`
 * `--with[out]-elf`
 * `--with[out]-framebuffer`
+* `--with[out]-itoa`
 * `--with[out]-mbr`
 * `--with[out]-multiboot2`
+* `--with[out]-printf`
 * `--with[out]-pfa`
 * `--with[out]-units`
 

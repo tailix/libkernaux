@@ -23,9 +23,11 @@ AC_ARG_WITH(  [cmdline],     AS_HELP_STRING([--without-cmdline],     [without co
 AC_ARG_WITH(  [console],     AS_HELP_STRING([--without-console],     [without serial console]))
 AC_ARG_WITH(  [elf],         AS_HELP_STRING([--without-elf],         [without ELF utils]))
 AC_ARG_WITH(  [framebuffer], AS_HELP_STRING([--without-framebuffer], [without framebuffer]))
+AC_ARG_WITH(  [itoa],        AS_HELP_STRING([--without-itoa],        [without itoa]))
 AC_ARG_WITH(  [mbr],         AS_HELP_STRING([--without-mbr],         [without Master Boot Record]))
 AC_ARG_WITH(  [multiboot2],  AS_HELP_STRING([--without-multiboot2],  [without Multiboot 2 information parser]))
 AC_ARG_WITH(  [pfa],         AS_HELP_STRING([--without-pfa],         [without Page Frame Allocator]))
+AC_ARG_WITH(  [printf],      AS_HELP_STRING([--without-printf],      [without printf]))
 AC_ARG_WITH(  [units],       AS_HELP_STRING([--without-units],       [without measurement units utils]))
 
 dnl Packages (disabled by default)
@@ -51,6 +53,9 @@ if test -z "$with_libc_strlen"; then with_libc_strlen=yes; fi
 ])
 AS_IF([test "$with_libc" = yes], do_with_libc)
 
+AS_IF([test "$with_itoa" = no -a "$with_printf" != no], AC_MSG_ERROR([package `printf' requires package `itoa']))
+AS_IF([test "$with_itoa" = no -a "$with_units"  != no], AC_MSG_ERROR([package `units' requires package `itoa']))
+
 
 
 dnl Architecture
@@ -68,9 +73,11 @@ AM_CONDITIONAL([WITH_CMDLINE],      [test "$with_cmdline"      != no])
 AM_CONDITIONAL([WITH_CONSOLE],      [test "$with_console"      != no])
 AM_CONDITIONAL([WITH_ELF],          [test "$with_elf"          != no])
 AM_CONDITIONAL([WITH_FRAMEBUFFER],  [test "$with_framebuffer"  != no])
+AM_CONDITIONAL([WITH_ITOA],         [test "$with_itoa"         != no])
 AM_CONDITIONAL([WITH_MBR],          [test "$with_mbr"          != no])
 AM_CONDITIONAL([WITH_MULTIBOOT2],   [test "$with_multiboot2"   != no])
 AM_CONDITIONAL([WITH_PFA],          [test "$with_pfa"          != no])
+AM_CONDITIONAL([WITH_PRINTF],       [test "$with_printf"       != no])
 AM_CONDITIONAL([WITH_UNITS],        [test "$with_units"        != no])
 
 dnl Packages (disabled by default)
@@ -95,9 +102,11 @@ AS_IF([test "$with_cmdline"       != no], [AC_DEFINE([WITH_CMDLINE],            
 AS_IF([test "$with_console"       != no], [AC_DEFINE([WITH_CONSOLE],              [1], [with serial console])])
 AS_IF([test "$with_elf"           != no], [AC_DEFINE([WITH_ELF],                  [1], [with ELF utils])])
 AS_IF([test "$with_framebuffer"   != no], [AC_DEFINE([WITH_FRAMEBUFFER],          [1], [with framebuffer])])
+AS_IF([test "$with_itoa"          != no], [AC_DEFINE([WITH_ITOA],                 [1], [with itoa])])
 AS_IF([test "$with_mbr"           != no], [AC_DEFINE([WITH_MBR],                  [1], [with Master Boot Record])])
 AS_IF([test "$with_multiboot2"    != no], [AC_DEFINE([WITH_MULTIBOOT2],           [1], [with Multiboot 2 information parser])])
 AS_IF([test "$with_pfa"           != no], [AC_DEFINE([WITH_PFA],                  [1], [with Page Frame Allocator])])
+AS_IF([test "$with_printf"        != no], [AC_DEFINE([WITH_PRINTF],               [1], [with printf])])
 AS_IF([test "$with_units",        != no], [AC_DEFINE([WITH_UNITS],                [1], [with measurement units utils])])
 
 dnl Packages (disabled by default)
