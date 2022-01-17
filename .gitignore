@@ -37,8 +37,14 @@
 # To build out of root #
 ########################
 
-/build/*
-!/build/.keep
+/build/root-native/*
+!/build/root-native/config
+/build/root-cross-i386-linux/*
+!/build/root-cross-i386-linux/config
+/build/root-cross-riscv64-linux/*
+!/build/root-cross-riscv64-linux/config
+/build/root-cross-x86_64-linux/*
+!/build/root-cross-x86_64-linux/config
 
 ###########################################
 # Only generated when configuring in root #
