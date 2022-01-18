@@ -3,6 +3,7 @@
 #endif
 
 #include <kernaux/itoa.h>
+#include <kernaux/libc.h>
 
 void kernaux_itoa(const int d, char *buf, const int base)
 {
@@ -41,5 +42,25 @@ void kernaux_itoa(const int d, char *buf, const int base)
         *p2 = tmp;
         p1++;
         p2--;
+    }
+}
+
+void kernaux_utoa10(uint64_t value, char *buffer)
+{
+    char *pos = buffer;
+
+    if (value == 0) *(pos++) = '0';
+
+    while (value > 0) {
+        *(pos++) = value % 10 + '0';
+        value = value / 10;
+    }
+
+    *(pos--) = '\0';
+
+    while (buffer < pos) {
+        const char tmp = *buffer;
+        *(buffer++) = *pos;
+        *(pos--)    = tmp;
     }
 }
