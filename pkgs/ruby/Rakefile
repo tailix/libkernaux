@@ -52,6 +52,15 @@ rescue LoadError
   nil
 end
 
+begin
+  require 'rake/extensiontask'
+  Rake::ExtensionTask.new 'libkernaux' do |ext|
+    ext.lib_dir = 'lib/kernaux'
+  end
+rescue LoadError
+  nil
+end
+
 desc 'Open development console'
 task :console do
   sh 'bundle', 'exec', File.expand_path(File.join('bin', 'console'), __dir__)

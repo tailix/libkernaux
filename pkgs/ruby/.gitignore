@@ -1,5 +1,6 @@
 *.gem
 *.rbc
+*.so
 
 /.byebug_history
 /.config/

@@ -7,3 +7,6 @@ require_relative 'kernaux/version'
 #
 module KernAux
 end
+
+# Native extension
+require_relative 'kernaux/libkernaux'
