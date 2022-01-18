@@ -20,8 +20,8 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: ruby/setup-ruby@v1
-          with:
-            ruby-version: 3.0
+        with:
+          ruby-version: 3.0
 
       - name: dependencies
         run: sudo apt-get -y install clang tcc
