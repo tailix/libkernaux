@@ -23,3 +23,13 @@ void kernaux_utoa10(uint64_t value, char *buffer)
         *(pos--)    = tmp;
     }
 }
+
+void kernaux_itoa10(int64_t value, char *buffer)
+{
+    if (value >= 0) {
+        kernaux_utoa10(value, buffer);
+    } else {
+        *(buffer++) = '-';
+        kernaux_utoa10(-value, buffer);
+    }
+}
