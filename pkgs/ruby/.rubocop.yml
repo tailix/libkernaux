@@ -44,6 +44,10 @@ RSpec/ExampleLength:
 Style/AndOr:
   EnforcedStyle: conditionals
 
+Style/Documentation:
+  Exclude:
+    - 'Rakefile'
+
 Style/DoubleNegation:
   Enabled: false
 

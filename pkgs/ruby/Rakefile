@@ -2,6 +2,18 @@
 
 require 'bundler/gem_tasks'
 
+module Bundler
+  class GemHelper
+    def tag_version(*)
+      yield if block_given?
+    end
+
+    def git_push(*); end
+
+    def perform_git_push(*); end
+  end
+end
+
 CLEAN << '.yardoc'
 CLEAN << 'coverage'
 CLEAN << 'doc'
