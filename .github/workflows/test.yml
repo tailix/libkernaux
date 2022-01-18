@@ -42,7 +42,7 @@ jobs:
       - name: rake compile
         working-directory: pkgs/ruby
         run: rake compile
-      - name: test
+      - name: test & lint
         working-directory: pkgs/ruby
         run: rake
 
