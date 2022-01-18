@@ -54,7 +54,7 @@ end
 
 begin
   require 'rake/extensiontask'
-  Rake::ExtensionTask.new 'libkernaux' do |ext|
+  Rake::ExtensionTask.new 'default' do |ext|
     ext.lib_dir = 'lib/kernaux'
   end
 rescue LoadError

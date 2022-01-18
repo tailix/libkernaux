@@ -1,5 +1,5 @@
 #include <ruby.h>
 
-void Init_libkernaux()
+void Init_default()
 {
 }

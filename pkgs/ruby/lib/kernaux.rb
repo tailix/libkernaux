@@ -9,4 +9,4 @@ module KernAux
 end
 
 # Native extension
-require_relative 'kernaux/libkernaux'
+require_relative 'kernaux/default'

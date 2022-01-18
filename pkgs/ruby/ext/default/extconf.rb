@@ -2,4 +2,4 @@
 
 require 'mkmf'
 
-create_makefile 'kernaux/libkernaux'
+create_makefile 'kernaux/default'
