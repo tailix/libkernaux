@@ -19,6 +19,10 @@ jobs:
         guard: ['--enable-guard', '--disable-guard']
     steps:
       - uses: actions/checkout@v2
+      - uses: ruby/setup-ruby@v1
+          with:
+            ruby-version: 3.0
+
       - name: dependencies
         run: sudo apt-get -y install clang tcc
       - name: autogen
@@ -31,6 +35,16 @@ jobs:
         run: make check || (cat test-suite.log && false)
       - name: install
         run: sudo make install
+
+      - name: bundle
+        working-directory: pkgs/ruby
+        run: bundle install
+      - name: rake compile
+        working-directory: pkgs/ruby
+        run: rake compile
+      - name: test
+        working-directory: pkgs/ruby
+        run: rake
 
   cppcheck:
     runs-on: ubuntu-latest
