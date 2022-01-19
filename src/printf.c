@@ -115,6 +115,10 @@ static size_t _etoa(out_fct_type out, char* buffer, size_t idx, size_t maxlen, d
 #endif // PRINTF_SUPPORT_EXPONENTIAL
 #endif // ENABLE_FLOAT
 
+/*******************************
+ * Implementations: public API *
+ *******************************/
+
 int kernaux_printf(void (*out)(char character, void* arg), void* arg, const char* format, ...)
 {
     va_list va;
@@ -153,6 +157,10 @@ int kernaux_sprintf(char* buffer, const char* format, ...)
     va_end(va);
     return ret;
 }
+
+/******************************************
+ * Implementation: main internal function *
+ ******************************************/
 
 int _vsnprintf(out_fct_type out, char* buffer, const size_t maxlen, const char* format, va_list va)
 {
@@ -440,7 +448,9 @@ int _vsnprintf(out_fct_type out, char* buffer, const size_t maxlen, const char* 
     return (int)idx;
 }
 
-
+/*************************************
+ * Implementations: helper functions *
+ *************************************/
 
 // internal buffer output
 void _out_buffer(char character, void* buffer, size_t idx, size_t maxlen)
@@ -450,13 +460,11 @@ void _out_buffer(char character, void* buffer, size_t idx, size_t maxlen)
     }
 }
 
-
 // internal null output
 void _out_null(char character, void* buffer, size_t idx, size_t maxlen)
 {
     (void)character; (void)buffer; (void)idx; (void)maxlen;
 }
-
 
 // internal output function wrapper
 void _out_fct(char character, void* buffer, size_t idx, size_t maxlen)
@@ -468,7 +476,6 @@ void _out_fct(char character, void* buffer, size_t idx, size_t maxlen)
     }
 }
 
-
 // internal secure strlen
 // \return The length of the string (excluding the terminating 0) limited by 'maxsize'
 unsigned int _strnlen_s(const char* str, size_t maxsize)
@@ -478,14 +485,12 @@ unsigned int _strnlen_s(const char* str, size_t maxsize)
     return (unsigned int)(s - str);
 }
 
-
 // internal test if char is a digit (0-9)
 // \return true if char is a digit
 bool _is_digit(char ch)
 {
     return (ch >= '0') && (ch <= '9');
 }
-
 
 // internal ASCII string to unsigned int conversion
 unsigned int _atoi(const char** str)
@@ -496,7 +501,6 @@ unsigned int _atoi(const char** str)
     }
     return i;
 }
-
 
 // output the specified string in reverse, taking care of any zero-padding
 size_t _out_rev(out_fct_type out, char* buffer, size_t idx, size_t maxlen, const char* buf, size_t len, unsigned int width, unsigned int flags)
@@ -524,7 +528,6 @@ size_t _out_rev(out_fct_type out, char* buffer, size_t idx, size_t maxlen, const
 
     return idx;
 }
-
 
 // internal itoa format
 size_t _ntoa_format(out_fct_type out, char* buffer, size_t idx, size_t maxlen, char* buf, size_t len, bool negative, unsigned int base, unsigned int prec, unsigned int width, unsigned int flags)
@@ -579,7 +582,6 @@ size_t _ntoa_format(out_fct_type out, char* buffer, size_t idx, size_t maxlen, c
     return _out_rev(out, buffer, idx, maxlen, buf, len, width, flags);
 }
 
-
 // internal itoa for 'long' type
 size_t _ntoa_long(out_fct_type out, char* buffer, size_t idx, size_t maxlen, unsigned long value, bool negative, unsigned long base, unsigned int prec, unsigned int width, unsigned int flags)
 {
@@ -602,7 +604,6 @@ size_t _ntoa_long(out_fct_type out, char* buffer, size_t idx, size_t maxlen, uns
 
     return _ntoa_format(out, buffer, idx, maxlen, buf, len, negative, (unsigned int)base, prec, width, flags);
 }
-
 
 // internal itoa for 'long long' type
 #ifdef PRINTF_SUPPORT_LONG_LONG
@@ -628,7 +629,6 @@ size_t _ntoa_long_long(out_fct_type out, char* buffer, size_t idx, size_t maxlen
     return _ntoa_format(out, buffer, idx, maxlen, buf, len, negative, (unsigned int)base, prec, width, flags);
 }
 #endif // PRINTF_SUPPORT_LONG_LONG
-
 
 #ifdef ENABLE_FLOAT
 // internal ftoa for fixed decimal floating point
@@ -756,7 +756,6 @@ size_t _ftoa(out_fct_type out, char* buffer, size_t idx, size_t maxlen, double v
 
     return _out_rev(out, buffer, idx, maxlen, buf, len, width, flags);
 }
-
 
 #ifdef PRINTF_SUPPORT_EXPONENTIAL
 // internal ftoa variant for exponential floating-point type, contributed by Martijn Jasperse <m.jasperse@gmail.com>
