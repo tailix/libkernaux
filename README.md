@@ -57,6 +57,7 @@ API
   * [libc replacement](/include/kernaux/libc.h)
   * [itoa/ftoa replacement](/include/kernaux/ntoa.h) *(work in progress)*
   * [printf replacement](/include/kernaux/printf.h) *(work in progress)*
+    * Code from [https://github.com/mpaland/printf](https://github.com/mpaland/printf). Thank you!
     * [printf](/examples/printf.c)
     * [vprintf](/examples/printf_va.c)
     * `snprintf`
