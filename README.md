@@ -57,8 +57,6 @@ API
   * [libc replacement](/include/kernaux/libc.h)
   * [itoa/ftoa replacement](/include/kernaux/ntoa.h) *(work in progress)*
   * [printf replacement](/include/kernaux/printf.h) *(work in progress)*
-    * [printf](/examples/printf.c)
-    * [printf_va](/examples/printf_va.c)
 
 
 
