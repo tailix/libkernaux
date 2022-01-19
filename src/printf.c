@@ -77,6 +77,7 @@
 #define FLAGS_LONG_LONG (1u <<  9u)
 #define FLAGS_PRECISION (1u << 10u)
 #define FLAGS_ADAPT_EXP (1u << 11u)
+#define FLAGS_CUSTOM    (1u << 12u)
 
 // output function type
 typedef void (*out_fct_type)(char character, void* buffer, size_t idx, size_t maxlen);
@@ -259,6 +260,14 @@ int _vsnprintf(out_fct_type out, char* buffer, const size_t maxlen, const char* 
                 flags |= (sizeof(size_t) == sizeof(long) ? FLAGS_LONG : FLAGS_LONG_LONG);
                 format++;
                 break;
+            case 'S':
+                if (*(++format) == 'U') {
+                    flags |= FLAGS_CUSTOM;
+                    format++;
+                } else {
+                    format--;
+                }
+                break;
             default:
                 break;
         }
@@ -405,6 +414,13 @@ int _vsnprintf(out_fct_type out, char* buffer, const size_t maxlen, const char* 
                 format++;
                 break;
             }
+
+            case 'S':
+                if (flags & FLAGS_CUSTOM) {
+                    // TODO: implement this
+                }
+                format++;
+                break;
 
             case 'p':
             {
