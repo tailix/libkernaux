@@ -91,6 +91,8 @@ are some non-default options:
 
 ### Default options
 
+* `--enable-float`, disable with `--disable-float`
+
 * `--with[out]-cmdline`
 * `--with[out]-console`
 * `--with[out]-elf`
