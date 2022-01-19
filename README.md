@@ -55,9 +55,6 @@ API
     * [To human](/examples/units_human.c)
 * Usual functions
   * [libc replacement](/include/kernaux/libc.h)
-    * `memset`
-    * `strcpy`
-    * `strlen`
   * [itoa/ftoa replacement](/include/kernaux/ntoa.h) *(work in progress)*
   * [printf replacement](/include/kernaux/printf.h) *(work in progress)*
     * [printf](/examples/printf.c)
