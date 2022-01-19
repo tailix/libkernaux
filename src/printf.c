@@ -36,7 +36,7 @@
 #include <stdint.h>
 
 // import float.h for DBL_MAX
-#ifdef PRINTF_SUPPORT_FLOAT
+#ifdef ENABLE_FLOAT
 #include <float.h>
 #endif
 
@@ -53,12 +53,6 @@
 // default: 32 byte
 #ifndef PRINTF_FTOA_BUFFER_SIZE
 #define PRINTF_FTOA_BUFFER_SIZE    32U
-#endif
-
-// support for the floating point type (%f)
-// default: activated
-#ifndef PRINTF_DISABLE_SUPPORT_FLOAT
-#define PRINTF_SUPPORT_FLOAT
 #endif
 
 // support for exponential floating point notation (%e/%g)
@@ -318,7 +312,7 @@ static size_t _ntoa_long_long(out_fct_type out, char* buffer, size_t idx, size_t
 #endif  // PRINTF_SUPPORT_LONG_LONG
 
 
-#if defined(PRINTF_SUPPORT_FLOAT)
+#ifdef ENABLE_FLOAT
 
 #if defined(PRINTF_SUPPORT_EXPONENTIAL)
 // forward declaration so that _ftoa can switch to exp notation for values > PRINTF_MAX_FLOAT
@@ -561,7 +555,7 @@ static size_t _etoa(out_fct_type out, char* buffer, size_t idx, size_t maxlen, d
   return idx;
 }
 #endif  // PRINTF_SUPPORT_EXPONENTIAL
-#endif  // PRINTF_SUPPORT_FLOAT
+#endif  // ENABLE_FLOAT
 
 
 // internal vsnprintf
@@ -745,7 +739,7 @@ static int _vsnprintf(out_fct_type out, char* buffer, const size_t maxlen, const
         format++;
         break;
       }
-#if defined(PRINTF_SUPPORT_FLOAT)
+#ifdef ENABLE_FLOAT
       case 'f' :
       case 'F' :
         if (*format == 'F') flags |= FLAGS_UPPERCASE;
@@ -763,7 +757,7 @@ static int _vsnprintf(out_fct_type out, char* buffer, const size_t maxlen, const
         format++;
         break;
 #endif  // PRINTF_SUPPORT_EXPONENTIAL
-#endif  // PRINTF_SUPPORT_FLOAT
+#endif  // ENABLE_FLOAT
       case 'c' : {
         unsigned int l = 1U;
         // pre padding
