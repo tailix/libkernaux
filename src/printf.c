@@ -33,6 +33,7 @@
 #include <kernaux/printf.h>
 
 #include <stdbool.h>
+#include <stddef.h>
 #include <stdint.h>
 
 // import float.h for DBL_MAX
