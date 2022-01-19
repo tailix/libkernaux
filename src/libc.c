@@ -30,3 +30,12 @@ size_t strlen(const char *s)
     return ss - s;
 }
 #endif // WITH_LIBC_STRLEN
+
+#ifdef WITH_LIBC_STRNLEN
+size_t strnlen(const char *s, size_t maxlen)
+{
+    const char *ss = s;
+    while (*ss != '\0' && maxlen--) ++ss;
+    return ss - s;
+}
+#endif // WITH_LIBC_STRNLEN

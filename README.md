@@ -87,6 +87,7 @@ are some non-default options:
   * `--with[out]-libc-memset`
   * `--with[out]-libc-strcpy`
   * `--with[out]-libc-strlen`
+  * `--with[out]-libc-strnlen`
 
 ### Default options
 

@@ -14,29 +14,30 @@ AC_CANONICAL_HOST
 
 
 dnl Features (disabled by default)
-AC_ARG_ENABLE([assert],      AS_HELP_STRING([--enable-assert],       [enable runtime assertions]))
-AC_ARG_ENABLE([guard],       AS_HELP_STRING([--enable-guard],        [enable argument guards]))
-AC_ARG_ENABLE([guard-cond],  AS_HELP_STRING([--enable-guard-cond],   [enable condition guard]))
-AC_ARG_ENABLE([guard-null],  AS_HELP_STRING([--enable-guard-null],   [enable NULL-guard]))
-AC_ARG_ENABLE([tests],       AS_HELP_STRING([--enable-tests],        [enable tests and examples]))
+AC_ARG_ENABLE([assert],       AS_HELP_STRING([--enable-assert],       [enable runtime assertions]))
+AC_ARG_ENABLE([guard],        AS_HELP_STRING([--enable-guard],        [enable argument guards]))
+AC_ARG_ENABLE([guard-cond],   AS_HELP_STRING([--enable-guard-cond],   [enable condition guard]))
+AC_ARG_ENABLE([guard-null],   AS_HELP_STRING([--enable-guard-null],   [enable NULL-guard]))
+AC_ARG_ENABLE([tests],        AS_HELP_STRING([--enable-tests],        [enable tests and examples]))
 
 dnl Packages (enabled by default)
-AC_ARG_WITH(  [cmdline],     AS_HELP_STRING([--without-cmdline],     [without command line parser]))
-AC_ARG_WITH(  [console],     AS_HELP_STRING([--without-console],     [without serial console]))
-AC_ARG_WITH(  [elf],         AS_HELP_STRING([--without-elf],         [without ELF utils]))
-AC_ARG_WITH(  [framebuffer], AS_HELP_STRING([--without-framebuffer], [without framebuffer]))
-AC_ARG_WITH(  [mbr],         AS_HELP_STRING([--without-mbr],         [without Master Boot Record]))
-AC_ARG_WITH(  [multiboot2],  AS_HELP_STRING([--without-multiboot2],  [without Multiboot 2 information parser]))
-AC_ARG_WITH(  [ntoa],        AS_HELP_STRING([--without-ntoa],        [without itoa/ftoa]))
-AC_ARG_WITH(  [pfa],         AS_HELP_STRING([--without-pfa],         [without Page Frame Allocator]))
-AC_ARG_WITH(  [printf],      AS_HELP_STRING([--without-printf],      [without printf]))
-AC_ARG_WITH(  [units],       AS_HELP_STRING([--without-units],       [without measurement units utils]))
+AC_ARG_WITH(  [cmdline],      AS_HELP_STRING([--without-cmdline],     [without command line parser]))
+AC_ARG_WITH(  [console],      AS_HELP_STRING([--without-console],     [without serial console]))
+AC_ARG_WITH(  [elf],          AS_HELP_STRING([--without-elf],         [without ELF utils]))
+AC_ARG_WITH(  [framebuffer],  AS_HELP_STRING([--without-framebuffer], [without framebuffer]))
+AC_ARG_WITH(  [mbr],          AS_HELP_STRING([--without-mbr],         [without Master Boot Record]))
+AC_ARG_WITH(  [multiboot2],   AS_HELP_STRING([--without-multiboot2],  [without Multiboot 2 information parser]))
+AC_ARG_WITH(  [ntoa],         AS_HELP_STRING([--without-ntoa],        [without itoa/ftoa]))
+AC_ARG_WITH(  [pfa],          AS_HELP_STRING([--without-pfa],         [without Page Frame Allocator]))
+AC_ARG_WITH(  [printf],       AS_HELP_STRING([--without-printf],      [without printf]))
+AC_ARG_WITH(  [units],        AS_HELP_STRING([--without-units],       [without measurement units utils]))
 
 dnl Packages (disabled by default)
-AC_ARG_WITH(  [libc],        AS_HELP_STRING([--with-libc],           [with libc replacement]))
-AC_ARG_WITH(  [libc-memset], AS_HELP_STRING([--with-libc-memset],    [with memset replacement]))
-AC_ARG_WITH(  [libc-strcpy], AS_HELP_STRING([--with-libc-strcpy],    [with strcpy replacement]))
-AC_ARG_WITH(  [libc-strlen], AS_HELP_STRING([--with-libc-strlen],    [with strlen replacement]))
+AC_ARG_WITH(  [libc],         AS_HELP_STRING([--with-libc],           [with libc replacement]))
+AC_ARG_WITH(  [libc-memset],  AS_HELP_STRING([--with-libc-memset],    [with memset replacement]))
+AC_ARG_WITH(  [libc-strcpy],  AS_HELP_STRING([--with-libc-strcpy],    [with strcpy replacement]))
+AC_ARG_WITH(  [libc-strlen],  AS_HELP_STRING([--with-libc-strlen],    [with strlen replacement]))
+AC_ARG_WITH(  [libc-strnlen], AS_HELP_STRING([--with-libc-strnlen],   [with strnlen replacement]))
 
 
 
@@ -49,9 +50,10 @@ AS_IF([test "$enable_guard" = yes], do_enable_guard)
 
 AC_DEFUN([do_with_libc],
 [
-if test -z "$with_libc_memset"; then with_libc_memset=yes; fi
-if test -z "$with_libc_strcpy"; then with_libc_strcpy=yes; fi
-if test -z "$with_libc_strlen"; then with_libc_strlen=yes; fi
+if test -z "$with_libc_memset";  then with_libc_memset=yes;  fi
+if test -z "$with_libc_strcpy";  then with_libc_strcpy=yes;  fi
+if test -z "$with_libc_strlen";  then with_libc_strlen=yes;  fi
+if test -z "$with_libc_strnlen"; then with_libc_strnlen=yes; fi
 ])
 AS_IF([test "$with_libc" = yes], do_with_libc)
 
@@ -91,6 +93,7 @@ dnl Packages (disabled by default)
 AM_CONDITIONAL([WITH_LIBC_MEMSET],  [test "$with_libc_memset"  = yes])
 AM_CONDITIONAL([WITH_LIBC_STRCPY],  [test "$with_libc_strcpy"  = yes])
 AM_CONDITIONAL([WITH_LIBC_STRLEN],  [test "$with_libc_strlen"  = yes])
+AM_CONDITIONAL([WITH_LIBC_STRNLEN], [test "$with_libc_strnlen" = yes])
 
 
 
@@ -121,6 +124,7 @@ dnl Packages (disabled by default)
 AS_IF([test "$with_libc_memset"   = yes], [AC_DEFINE([WITH_LIBC_MEMSET],          [1], [with memset replacement])])
 AS_IF([test "$with_libc_strcpy"   = yes], [AC_DEFINE([WITH_LIBC_STRCPY],          [1], [with strcpy replacement])])
 AS_IF([test "$with_libc_strlen"   = yes], [AC_DEFINE([WITH_LIBC_STRLEN],          [1], [with strlen replacement])])
+AS_IF([test "$with_libc_strnlen"  = yes], [AC_DEFINE([WITH_LIBC_STRNLEN],         [1], [with strnlen replacement])])
 
 
 
