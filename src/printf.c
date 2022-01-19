@@ -852,16 +852,6 @@ int kernaux_vprintf(void (*out)(char character, void* arg), void* arg, const cha
 }
 
 
-int kernaux_sprintf(char* buffer, const char* format, ...)
-{
-  va_list va;
-  va_start(va, format);
-  const int ret = _vsnprintf(_out_buffer, buffer, (size_t)-1, format, va);
-  va_end(va);
-  return ret;
-}
-
-
 int kernaux_snprintf(char* buffer, size_t count, const char* format, ...)
 {
   va_list va;
@@ -875,4 +865,14 @@ int kernaux_snprintf(char* buffer, size_t count, const char* format, ...)
 int kernaux_vsnprintf(char* buffer, size_t count, const char* format, va_list va)
 {
   return _vsnprintf(_out_buffer, buffer, count, format, va);
+}
+
+
+int kernaux_sprintf(char* buffer, const char* format, ...)
+{
+  va_list va;
+  va_start(va, format);
+  const int ret = _vsnprintf(_out_buffer, buffer, (size_t)-1, format, va);
+  va_end(va);
+  return ret;
 }
