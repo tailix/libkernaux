@@ -109,10 +109,6 @@ static size_t _ftoa(out_fct_type out, char* buffer, size_t idx, size_t maxlen, d
 #ifdef PRINTF_SUPPORT_EXPONENTIAL
 static size_t _etoa(out_fct_type out, char* buffer, size_t idx, size_t maxlen, double value, unsigned int prec, unsigned int width, unsigned int flags);
 #endif // PRINTF_SUPPORT_EXPONENTIAL
-
-#ifdef PRINTF_SUPPORT_EXPONENTIAL
-static size_t _etoa(out_fct_type out, char* buffer, size_t idx, size_t maxlen, double value, unsigned int prec, unsigned int width, unsigned int flags);
-#endif // PRINTF_SUPPORT_EXPONENTIAL
 #endif // ENABLE_FLOAT
 
 /*******************************
