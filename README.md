@@ -58,7 +58,7 @@ API
     * `memset`
     * `strcpy`
     * `strlen`
-  * [itoa replacement](/include/kernaux/itoa.h) *(work in progress)*
+  * [itoa/ftoa replacement](/include/kernaux/ntoa.h) *(work in progress)*
   * [printf replacement](/include/kernaux/printf.h) *(work in progress)*
     * [printf](/examples/printf.c)
     * [printf_va](/examples/printf_va.c)
@@ -97,9 +97,9 @@ are some non-default options:
 * `--with[out]-console`
 * `--with[out]-elf`
 * `--with[out]-framebuffer`
-* `--with[out]-itoa`
 * `--with[out]-mbr`
 * `--with[out]-multiboot2`
+* `--with[out]-ntoa`
 * `--with[out]-printf`
 * `--with[out]-pfa`
 * `--with[out]-units`

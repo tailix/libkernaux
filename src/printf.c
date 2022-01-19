@@ -2,7 +2,7 @@
 #include "config.h"
 #endif
 
-#include <kernaux/itoa.h>
+#include <kernaux/ntoa.h>
 #include <kernaux/printf.h>
 
 #include <stdbool.h>

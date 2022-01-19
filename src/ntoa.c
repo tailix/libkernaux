@@ -2,7 +2,7 @@
 #include "config.h"
 #endif
 
-#include <kernaux/itoa.h>
+#include <kernaux/ntoa.h>
 
 void kernaux_utoa10(uint64_t value, char *buffer)
 {

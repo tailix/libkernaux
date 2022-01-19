@@ -58,13 +58,6 @@ if WITH_FRAMEBUFFER
 libkernaux_a_SOURCES += src/framebuffer.c
 endif
 
-if WITH_ITOA
-libkernaux_a_SOURCES += src/itoa.c
-if ENABLE_TESTS
-TESTS += tests/test_itoa
-endif
-endif
-
 if WITH_MBR
 libkernaux_a_SOURCES += src/mbr.c
 if ENABLE_TESTS
@@ -94,6 +87,13 @@ noinst_PROGRAMS += \
 	tests/multiboot2_header_print2 \
 	tests/multiboot2_info_print1 \
 	tests/multiboot2_info_print2
+endif
+endif
+
+if WITH_NTOA
+libkernaux_a_SOURCES += src/ntoa.c
+if ENABLE_TESTS
+TESTS += tests/test_ntoa
 endif
 endif
 
@@ -182,9 +182,9 @@ tests_test_elf_SOURCES = \
 	$(libkernaux_a_SOURCES) \
 	tests/test_elf.c
 
-tests_test_itoa_SOURCES = \
+tests_test_ntoa_SOURCES = \
 	$(libkernaux_a_SOURCES) \
-	tests/test_itoa.c
+	tests/test_ntoa.c
 
 tests_test_mbr_SOURCES = \
 	$(libkernaux_a_SOURCES) \

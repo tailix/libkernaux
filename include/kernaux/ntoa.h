@@ -1,5 +1,5 @@
-#ifndef KERNAUX_INCLUDED_ITOA
-#define KERNAUX_INCLUDED_ITOA
+#ifndef KERNAUX_INCLUDED_NTOA
+#define KERNAUX_INCLUDED_NTOA
 
 #ifdef __cplusplus
 extern "C" {

@@ -11,9 +11,9 @@
 #include <kernaux/console.h>
 #include <kernaux/elf.h>
 #include <kernaux/framebuffer.h>
-#include <kernaux/itoa.h>
 #include <kernaux/mbr.h>
 #include <kernaux/multiboot2.h>
+#include <kernaux/ntoa.h>
 #include <kernaux/pfa.h>
 #include <kernaux/printf.h>
 #include <kernaux/units.h>

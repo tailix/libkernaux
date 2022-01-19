@@ -100,7 +100,6 @@
 /tests/multiboot2_info_print2
 /tests/test_cmdline
 /tests/test_elf
-/tests/test_itoa
 /tests/test_mbr
 /tests/test_multiboot2_header_helpers
 /tests/test_multiboot2_header_print
@@ -108,6 +107,7 @@
 /tests/test_multiboot2_info_helpers
 /tests/test_multiboot2_info_print
 /tests/test_multiboot2_info_validation
+/tests/test_ntoa
 /tests/test_pfa
 /tests/test_pfa_assert
 /tests/test_printf

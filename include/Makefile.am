@@ -31,14 +31,14 @@ endif
 if WITH_FRAMEBUFFER
 nobase_include_HEADERS += kernaux/framebuffer.h
 endif
-if WITH_ITOA
-nobase_include_HEADERS += kernaux/itoa.h
-endif
 if WITH_MBR
 nobase_include_HEADERS += kernaux/mbr.h
 endif
 if WITH_MULTIBOOT2
 nobase_include_HEADERS += kernaux/multiboot2.h
+endif
+if WITH_NTOA
+nobase_include_HEADERS += kernaux/ntoa.h
 endif
 if WITH_PFA
 nobase_include_HEADERS += kernaux/pfa.h
