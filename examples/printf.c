@@ -10,7 +10,7 @@
 static char buffer[BUFFER_SIZE];
 static size_t buffer_index = 0;
 
-static void my_putchar(const char chr)
+static void my_putchar(const char chr, void *arg __attribute__((unused)))
 {
     if (buffer_index >= BUFFER_SIZE) abort();
     buffer[buffer_index++] = chr;
