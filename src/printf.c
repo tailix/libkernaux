@@ -834,7 +834,7 @@ static int _vsnprintf(out_fct_type out, char* buffer, const size_t maxlen, const
 
 ///////////////////////////////////////////////////////////////////////////////
 
-int printf_(void (*out)(char character, void* arg), void* arg, const char* format, ...)
+int kernaux_printf(void (*out)(char character, void* arg), void* arg, const char* format, ...)
 {
   va_list va;
   va_start(va, format);
@@ -845,14 +845,14 @@ int printf_(void (*out)(char character, void* arg), void* arg, const char* forma
 }
 
 
-int vprintf_(void (*out)(char character, void* arg), void* arg, const char* format, va_list va)
+int kernaux_vprintf(void (*out)(char character, void* arg), void* arg, const char* format, va_list va)
 {
   const out_fct_wrap_type out_fct_wrap = { out, arg };
   return _vsnprintf(_out_fct, (char*)(uintptr_t)&out_fct_wrap, (size_t)-1, format, va);
 }
 
 
-int sprintf_(char* buffer, const char* format, ...)
+int kernaux_sprintf(char* buffer, const char* format, ...)
 {
   va_list va;
   va_start(va, format);
@@ -862,7 +862,7 @@ int sprintf_(char* buffer, const char* format, ...)
 }
 
 
-int snprintf_(char* buffer, size_t count, const char* format, ...)
+int kernaux_snprintf(char* buffer, size_t count, const char* format, ...)
 {
   va_list va;
   va_start(va, format);
@@ -872,7 +872,7 @@ int snprintf_(char* buffer, size_t count, const char* format, ...)
 }
 
 
-int vsnprintf_(char* buffer, size_t count, const char* format, va_list va)
+int kernaux_vsnprintf(char* buffer, size_t count, const char* format, va_list va)
 {
   return _vsnprintf(_out_buffer, buffer, count, format, va);
 }
