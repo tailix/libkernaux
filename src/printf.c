@@ -30,6 +30,7 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
+#include <kernaux/libc.h>
 #include <kernaux/printf.h>
 
 #include <stdbool.h>
@@ -94,7 +95,6 @@ static int _vsnprintf(out_fct_type out, char* buffer, const size_t maxlen, const
 static inline void _out_buffer(char character, void* buffer, size_t idx, size_t maxlen);
 static inline void _out_null(char character, void* buffer, size_t idx, size_t maxlen);
 static inline void _out_fct(char character, void* buffer, size_t idx, size_t maxlen);
-static inline unsigned int _strnlen_s(const char* str, size_t maxsize);
 static inline bool _is_digit(char ch);
 static unsigned int _atoi(const char** str);
 static size_t _out_rev(out_fct_type out, char* buffer, size_t idx, size_t maxlen, const char* buf, size_t len, unsigned int width, unsigned int flags);
@@ -381,7 +381,7 @@ int _vsnprintf(out_fct_type out, char* buffer, const size_t maxlen, const char* 
             case 's':
             {
                 const char* p = va_arg(va, char*);
-                unsigned int l = _strnlen_s(p, precision ? precision : (size_t)-1);
+                unsigned int l = strnlen(p, precision ? precision : (size_t)-1);
                 // pre padding
                 if (flags & FLAGS_PRECISION) {
                     l = (l < precision ? l : precision);
@@ -479,15 +479,6 @@ void _out_fct(char character, void* buffer, size_t idx, size_t maxlen)
         // buffer is the output fct pointer
         ((out_fct_wrap_type*)buffer)->fct(character, ((out_fct_wrap_type*)buffer)->arg);
     }
-}
-
-// internal secure strlen
-// \return The length of the string (excluding the terminating 0) limited by 'maxsize'
-unsigned int _strnlen_s(const char* str, size_t maxsize)
-{
-    const char* s;
-    for (s = str; *s && maxsize--; ++s);
-    return (unsigned int)(s - str);
 }
 
 // internal test if char is a digit (0-9)
