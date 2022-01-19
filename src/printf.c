@@ -30,17 +30,14 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
+#include <kernaux/printf.h>
+
 #include <stdbool.h>
 #include <stdint.h>
 
-#include "printf.h"
-
-
-// define this globally (e.g. gcc -DPRINTF_INCLUDE_CONFIG_H ...) to include the
-// printf_config.h header file
-// default: undefined
-#ifdef PRINTF_INCLUDE_CONFIG_H
-#include "printf_config.h"
+// import float.h for DBL_MAX
+#ifdef PRINTF_SUPPORT_FLOAT
+#include <float.h>
 #endif
 
 
@@ -110,12 +107,6 @@
 #define FLAGS_LONG_LONG (1U <<  9U)
 #define FLAGS_PRECISION (1U << 10U)
 #define FLAGS_ADAPT_EXP (1U << 11U)
-
-
-// import float.h for DBL_MAX
-#if defined(PRINTF_SUPPORT_FLOAT)
-#include <float.h>
-#endif
 
 
 // output function type
