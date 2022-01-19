@@ -280,7 +280,7 @@ size_t _ntoa_long(out_fct_type out, char* buffer, size_t idx, size_t maxlen, uns
 
 
 // internal itoa for 'long long' type
-#if defined(PRINTF_SUPPORT_LONG_LONG)
+#ifdef PRINTF_SUPPORT_LONG_LONG
 size_t _ntoa_long_long(out_fct_type out, char* buffer, size_t idx, size_t maxlen, unsigned long long value, bool negative, unsigned long long base, unsigned int prec, unsigned int width, unsigned int flags)
 {
   char buf[PRINTF_NTOA_BUFFER_SIZE];
@@ -327,7 +327,7 @@ size_t _ftoa(out_fct_type out, char* buffer, size_t idx, size_t maxlen, double v
   // test for very large values
   // standard printf behavior is to print EVERY whole number digit -- which could be 100s of characters overflowing your buffers == bad
   if ((value > PRINTF_MAX_FLOAT) || (value < -PRINTF_MAX_FLOAT)) {
-#if defined(PRINTF_SUPPORT_EXPONENTIAL)
+#ifdef PRINTF_SUPPORT_EXPONENTIAL
     return _etoa(out, buffer, idx, maxlen, value, prec, width, flags);
 #else
     return 0u;
@@ -433,7 +433,7 @@ size_t _ftoa(out_fct_type out, char* buffer, size_t idx, size_t maxlen, double v
 }
 
 
-#if defined(PRINTF_SUPPORT_EXPONENTIAL)
+#ifdef PRINTF_SUPPORT_EXPONENTIAL
 // internal ftoa variant for exponential floating-point type, contributed by Martijn Jasperse <m.jasperse@gmail.com>
 size_t _etoa(out_fct_type out, char* buffer, size_t idx, size_t maxlen, double value, unsigned int prec, unsigned int width, unsigned int flags)
 {
@@ -632,7 +632,7 @@ int _vsnprintf(out_fct_type out, char* buffer, const size_t maxlen, const char* 
           format++;
         }
         break;
-#if defined(PRINTF_SUPPORT_PTRDIFF_T)
+#ifdef PRINTF_SUPPORT_PTRDIFF_T
       case 't' :
         flags |= (sizeof(ptrdiff_t) == sizeof(long) ? FLAGS_LONG : FLAGS_LONG_LONG);
         format++;
@@ -693,7 +693,7 @@ int _vsnprintf(out_fct_type out, char* buffer, const size_t maxlen, const char* 
         if ((*format == 'i') || (*format == 'd')) {
           // signed
           if (flags & FLAGS_LONG_LONG) {
-#if defined(PRINTF_SUPPORT_LONG_LONG)
+#ifdef PRINTF_SUPPORT_LONG_LONG
             const long long value = va_arg(va, long long);
             idx = _ntoa_long_long(out, buffer, idx, maxlen, (unsigned long long)(value > 0 ? value : 0 - value), value < 0, base, precision, width, flags);
 #endif
@@ -710,7 +710,7 @@ int _vsnprintf(out_fct_type out, char* buffer, const size_t maxlen, const char* 
         else {
           // unsigned
           if (flags & FLAGS_LONG_LONG) {
-#if defined(PRINTF_SUPPORT_LONG_LONG)
+#ifdef PRINTF_SUPPORT_LONG_LONG
             idx = _ntoa_long_long(out, buffer, idx, maxlen, va_arg(va, unsigned long long), false, base, precision, width, flags);
 #endif
           }
@@ -732,7 +732,7 @@ int _vsnprintf(out_fct_type out, char* buffer, const size_t maxlen, const char* 
         idx = _ftoa(out, buffer, idx, maxlen, va_arg(va, double), precision, width, flags);
         format++;
         break;
-#if defined(PRINTF_SUPPORT_EXPONENTIAL)
+#ifdef PRINTF_SUPPORT_EXPONENTIAL
       case 'e':
       case 'E':
       case 'g':
@@ -793,7 +793,7 @@ int _vsnprintf(out_fct_type out, char* buffer, const size_t maxlen, const char* 
       case 'p' : {
         width = sizeof(void*) * 2u;
         flags |= FLAGS_ZEROPAD | FLAGS_UPPERCASE;
-#if defined(PRINTF_SUPPORT_LONG_LONG)
+#ifdef PRINTF_SUPPORT_LONG_LONG
         const bool is_ll = sizeof(uintptr_t) == sizeof(long long);
         if (is_ll) {
           idx = _ntoa_long_long(out, buffer, idx, maxlen, (uintptr_t)va_arg(va, void*), false, 16u, precision, width, flags);
@@ -801,7 +801,7 @@ int _vsnprintf(out_fct_type out, char* buffer, const size_t maxlen, const char* 
         else {
 #endif
           idx = _ntoa_long(out, buffer, idx, maxlen, (unsigned long)((uintptr_t)va_arg(va, void*)), false, 16u, precision, width, flags);
-#if defined(PRINTF_SUPPORT_LONG_LONG)
+#ifdef PRINTF_SUPPORT_LONG_LONG
         }
 #endif
         format++;
