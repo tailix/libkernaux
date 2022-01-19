@@ -182,10 +182,6 @@ tests_test_elf_SOURCES = \
 	$(libkernaux_a_SOURCES) \
 	tests/test_elf.c
 
-tests_test_ntoa_SOURCES = \
-	$(libkernaux_a_SOURCES) \
-	tests/test_ntoa.c
-
 tests_test_mbr_SOURCES = \
 	$(libkernaux_a_SOURCES) \
 	tests/test_mbr.c
@@ -221,6 +217,10 @@ tests_test_multiboot2_info_validation_SOURCES = \
 	tests/test_multiboot2_info_validation.c \
 	tests/multiboot2_info_example1.h \
 	tests/multiboot2_info_example2.h
+
+tests_test_ntoa_SOURCES = \
+	$(libkernaux_a_SOURCES) \
+	tests/test_ntoa.c
 
 tests_test_pfa_SOURCES = \
 	$(libkernaux_a_SOURCES) \
