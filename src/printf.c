@@ -191,7 +191,7 @@ int _vsnprintf(out_fct_type out, char* buffer, const size_t maxlen, const char* 
                 case '+': flags |= FLAGS_PLUS;    format++; n = 1u; break;
                 case ' ': flags |= FLAGS_SPACE;   format++; n = 1u; break;
                 case '#': flags |= FLAGS_HASH;    format++; n = 1u; break;
-                default :                                   n = 0u; break;
+                default:                                    n = 0u; break;
             }
         } while (n);
 
@@ -229,7 +229,7 @@ int _vsnprintf(out_fct_type out, char* buffer, const size_t maxlen, const char* 
 
         // evaluate length field
         switch (*format) {
-            case 'l' :
+            case 'l':
                 flags |= FLAGS_LONG;
                 format++;
                 if (*format == 'l') {
@@ -237,7 +237,7 @@ int _vsnprintf(out_fct_type out, char* buffer, const size_t maxlen, const char* 
                     format++;
                 }
             break;
-            case 'h' :
+            case 'h':
                 flags |= FLAGS_SHORT;
                 format++;
                 if (*format == 'h') {
@@ -246,32 +246,32 @@ int _vsnprintf(out_fct_type out, char* buffer, const size_t maxlen, const char* 
                 }
                 break;
 #ifdef PRINTF_SUPPORT_PTRDIFF_T
-            case 't' :
+            case 't':
                 flags |= (sizeof(ptrdiff_t) == sizeof(long) ? FLAGS_LONG : FLAGS_LONG_LONG);
                 format++;
                 break;
 #endif
-            case 'j' :
+            case 'j':
                 flags |= (sizeof(intmax_t) == sizeof(long) ? FLAGS_LONG : FLAGS_LONG_LONG);
                 format++;
                 break;
-            case 'z' :
+            case 'z':
                 flags |= (sizeof(size_t) == sizeof(long) ? FLAGS_LONG : FLAGS_LONG_LONG);
                 format++;
                 break;
-            default :
+            default:
                 break;
         }
 
         // evaluate specifier
         switch (*format) {
-            case 'd' :
-            case 'i' :
-            case 'u' :
-            case 'x' :
-            case 'X' :
-            case 'o' :
-            case 'b' :
+            case 'd':
+            case 'i':
+            case 'u':
+            case 'x':
+            case 'X':
+            case 'o':
+            case 'b':
             {
                 // set the base
                 unsigned int base;
@@ -340,8 +340,8 @@ int _vsnprintf(out_fct_type out, char* buffer, const size_t maxlen, const char* 
                 break;
             }
 #ifdef ENABLE_FLOAT
-            case 'f' :
-            case 'F' :
+            case 'f':
+            case 'F':
                 if (*format == 'F') flags |= FLAGS_UPPERCASE;
                 idx = _ftoa(out, buffer, idx, maxlen, va_arg(va, double), precision, width, flags);
                 format++;
@@ -425,12 +425,12 @@ int _vsnprintf(out_fct_type out, char* buffer, const size_t maxlen, const char* 
                 break;
             }
 
-            case '%' :
+            case '%':
                 out('%', buffer, idx++, maxlen);
                 format++;
                 break;
 
-            default :
+            default:
                 out(*format, buffer, idx++, maxlen);
                 format++;
                 break;
