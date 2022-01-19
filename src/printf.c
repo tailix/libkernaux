@@ -1,14 +1,12 @@
-///////////////////////////////////////////////////////////////////////////////
-// \author (c) Marco Paland (info@paland.com)
-//             2014-2019, PALANDesign Hannover, Germany
-//
-// \brief Tiny printf, sprintf and (v)snprintf implementation, optimized for speed on
-//        embedded systems with a very limited resources. These routines are thread
-//        safe and reentrant!
-//        Use this instead of the bloated standard/newlib printf cause these use
-//        malloc for printf (and may not be thread safe).
-//
-///////////////////////////////////////////////////////////////////////////////
+/**
+ * Copyright (c) 2014-2019 Marco Paland <info@paland.com>
+ *
+ * Tiny printf, sprintf and (v)snprintf implementation, optimized for speed on
+ * embedded systems with a very limited resources. These routines are thread
+ * safe and reentrant!
+ *
+ * Author: Marco Paland (info@paland.com) PALANDesign Hannover, Germany
+ */
 
 #include <kernaux/libc.h>
 #include <kernaux/printf.h>
