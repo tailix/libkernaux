@@ -46,9 +46,10 @@ API
   * [Page Frame Allocator](/include/kernaux/pfa.h) *(work in progress)*
     * [Example](/examples/pfa.c)
 * Data formats
-  * [Multiboot 2 (GRUB 2) information parser](/include/kernaux/multiboot2.h) *(work in progress)*
-  * Stivale 2 (Limine) information parser *(planned)*
-  * [ELF utils](/include/kernaux/elf.h) *(work in progress)*
+  * [ELF](/include/kernaux/elf.h) *(work in progress)*
+  * [Master Boot Record](/include/kernaux/mbr.h) *(work in progress)*
+  * [Multiboot 2 (GRUB 2)](/include/kernaux/multiboot2.h) *(work in progress)*
+  * Stivale 2 (Limine) *(planned)*
 * Utilities
   * [Measurement units utils](/include/kernaux/units.h) *(work in progress)*
     * [To human](/examples/units_human.c)
@@ -57,7 +58,7 @@ API
     * `memset`
     * `strcpy`
     * `strlen`
-  * [itoa replacement](/include/kernaux/itoa.h) *(work in progress)*
+  * [itoa/ftoa replacement](/include/kernaux/ntoa.h) *(work in progress)*
   * [printf replacement](/include/kernaux/printf.h) *(work in progress)*
     * [printf](/examples/printf.c)
     * [printf_va](/examples/printf_va.c)
@@ -96,7 +97,10 @@ are some non-default options:
 * `--with[out]-console`
 * `--with[out]-elf`
 * `--with[out]-framebuffer`
+* `--with[out]-mbr`
 * `--with[out]-multiboot2`
+* `--with[out]-ntoa`
+* `--with[out]-printf`
 * `--with[out]-pfa`
 * `--with[out]-units`
 
@@ -116,7 +120,7 @@ environment.
 
 ```
 ./autogen.sh
-./configure --enable-assert --enable-guard
+./configure --enable-tests --enable-assert --enable-guard
 make
 ```
 
@@ -172,15 +176,8 @@ configure: WARNING:     ## -----------------------------------------------------
 checking for stddef.h... no
 ```
 
-When configured with cross-compiler, library can't be build and installed with
-just `make && sudo make install`. Instead use the following commands:
-
-* `make libkernaux.a`
-* `sudo make install-exec install-data`
-
-To install into specific directory use full path:
-`DESTDIR="$(pwd)/dest" make install-exec install-data` instead of
-`DESTDIR=dest make install-exec install-data`.
+To install into specific directory use full path: `DESTDIR="$(pwd)/dest" make
+install` instead of `DESTDIR=dest make install`.
 
 Check if compilation targets i386: `objdump -d src/asm/i386.o`. It should output
 something like this:

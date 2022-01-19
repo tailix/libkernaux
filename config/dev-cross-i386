@@ -1,0 +1,19 @@
+#!/bin/sh
+
+set -e
+
+REPO="$(realpath "$(dirname "$(realpath "$0")")/..")"
+if [ -f "$REPO/Makefile" ]; then make -C "$REPO" distclean; fi
+
+ARCH='i386'
+HOST="$ARCH-elf"
+PREFIX="$REPO/dest/dev-cross-$ARCH"
+CROSS="$REPO/vendor/cross/root/bin/$HOST"
+
+export     AR="$CROSS-ar"
+export     CC="$CROSS-gcc"
+export RANLIB="$CROSS-ranlib"
+
+export CFLAGS='-ffreestanding -nostdlib -fno-builtin -fno-stack-protector -fno-pic'
+
+"$REPO/configure" --host="$HOST" --prefix="$PREFIX" --with-libc

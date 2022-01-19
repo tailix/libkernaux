@@ -6,8 +6,9 @@ AC_INIT([libkernaux],
   [https://github.com/tailix/libkernaux])
 
 AC_CONFIG_HEADERS([config.h])
-AC_CONFIG_SRCDIR([src/pfa.c])
+AC_CONFIG_SRCDIR([src/assert.c])
 
+AC_CANONICAL_BUILD
 AC_CANONICAL_HOST
 
 
@@ -17,14 +18,18 @@ AC_ARG_ENABLE([assert],      AS_HELP_STRING([--enable-assert],       [enable run
 AC_ARG_ENABLE([guard],       AS_HELP_STRING([--enable-guard],        [enable argument guards]))
 AC_ARG_ENABLE([guard-cond],  AS_HELP_STRING([--enable-guard-cond],   [enable condition guard]))
 AC_ARG_ENABLE([guard-null],  AS_HELP_STRING([--enable-guard-null],   [enable NULL-guard]))
+AC_ARG_ENABLE([tests],       AS_HELP_STRING([--enable-tests],        [enable tests and examples]))
 
 dnl Packages (enabled by default)
 AC_ARG_WITH(  [cmdline],     AS_HELP_STRING([--without-cmdline],     [without command line parser]))
 AC_ARG_WITH(  [console],     AS_HELP_STRING([--without-console],     [without serial console]))
 AC_ARG_WITH(  [elf],         AS_HELP_STRING([--without-elf],         [without ELF utils]))
 AC_ARG_WITH(  [framebuffer], AS_HELP_STRING([--without-framebuffer], [without framebuffer]))
+AC_ARG_WITH(  [mbr],         AS_HELP_STRING([--without-mbr],         [without Master Boot Record]))
 AC_ARG_WITH(  [multiboot2],  AS_HELP_STRING([--without-multiboot2],  [without Multiboot 2 information parser]))
+AC_ARG_WITH(  [ntoa],        AS_HELP_STRING([--without-ntoa],        [without itoa/ftoa]))
 AC_ARG_WITH(  [pfa],         AS_HELP_STRING([--without-pfa],         [without Page Frame Allocator]))
+AC_ARG_WITH(  [printf],      AS_HELP_STRING([--without-printf],      [without printf]))
 AC_ARG_WITH(  [units],       AS_HELP_STRING([--without-units],       [without measurement units utils]))
 
 dnl Packages (disabled by default)
@@ -52,6 +57,13 @@ AS_IF([test "$with_libc" = yes], do_with_libc)
 
 
 
+AS_IF([test "$host_cpu" != "$build_cpu" -a "$enable_tests" = yes], AC_MSG_ERROR([can not build cross-platform tests]))
+
+AS_IF([test "$with_ntoa" = no -a "$with_printf" != no], AC_MSG_ERROR([package `printf' requires package `ntoa']))
+AS_IF([test "$with_ntoa" = no -a "$with_units"  != no], AC_MSG_ERROR([package `units' requires package `ntoa']))
+
+
+
 dnl Architecture
 AM_CONDITIONAL([ASM_I386],          [test "$host_cpu" = i386])
 AM_CONDITIONAL([ASM_RISCV64],       [test "$host_cpu" = riscv64])
@@ -61,14 +73,18 @@ dnl Features (disabled by default)
 AM_CONDITIONAL([ENABLE_ASSERT],     [test "$enable_assert"     = yes])
 AM_CONDITIONAL([ENABLE_GUARD_COND], [test "$enable_guard_cond" = yes])
 AM_CONDITIONAL([ENABLE_GUARD_NULL], [test "$enable_guard_null" = yes])
+AM_CONDITIONAL([ENABLE_TESTS],      [test "$enable_tests"      = yes])
 
 dnl Packages (enabled by default)
 AM_CONDITIONAL([WITH_CMDLINE],      [test "$with_cmdline"      != no])
 AM_CONDITIONAL([WITH_CONSOLE],      [test "$with_console"      != no])
 AM_CONDITIONAL([WITH_ELF],          [test "$with_elf"          != no])
 AM_CONDITIONAL([WITH_FRAMEBUFFER],  [test "$with_framebuffer"  != no])
+AM_CONDITIONAL([WITH_MBR],          [test "$with_mbr"          != no])
 AM_CONDITIONAL([WITH_MULTIBOOT2],   [test "$with_multiboot2"   != no])
+AM_CONDITIONAL([WITH_NTOA],         [test "$with_ntoa"         != no])
 AM_CONDITIONAL([WITH_PFA],          [test "$with_pfa"          != no])
+AM_CONDITIONAL([WITH_PRINTF],       [test "$with_printf"       != no])
 AM_CONDITIONAL([WITH_UNITS],        [test "$with_units"        != no])
 
 dnl Packages (disabled by default)
@@ -87,14 +103,18 @@ dnl Features (disabled by default)
 AS_IF([test "$enable_assert"      = yes], [AC_DEFINE([KERNAUX_ENABLE_ASSERT],     [1], [enabled runtime assertions])])
 AS_IF([test "$enable_guard_cond"  = yes], [AC_DEFINE([KERNAUX_ENABLE_GUARD_COND], [1], [enabled condition guard])])
 AS_IF([test "$enable_guard_null"  = yes], [AC_DEFINE([KERNAUX_ENABLE_GUARD_NULL], [1], [enabled NULL-guard])])
+AS_IF([test "$enable_tests"       = yes], [AC_DEFINE([ENABLE_TESTS],              [1], [enabled tests and examples])])
 
 dnl Packages (enabled by default)
 AS_IF([test "$with_cmdline"       != no], [AC_DEFINE([WITH_CMDLINE],              [1], [with command line parser])])
 AS_IF([test "$with_console"       != no], [AC_DEFINE([WITH_CONSOLE],              [1], [with serial console])])
 AS_IF([test "$with_elf"           != no], [AC_DEFINE([WITH_ELF],                  [1], [with ELF utils])])
 AS_IF([test "$with_framebuffer"   != no], [AC_DEFINE([WITH_FRAMEBUFFER],          [1], [with framebuffer])])
+AS_IF([test "$with_mbr"           != no], [AC_DEFINE([WITH_MBR],                  [1], [with Master Boot Record])])
 AS_IF([test "$with_multiboot2"    != no], [AC_DEFINE([WITH_MULTIBOOT2],           [1], [with Multiboot 2 information parser])])
+AS_IF([test "$with_ntoa"          != no], [AC_DEFINE([WITH_NTOA],                 [1], [with ntoa])])
 AS_IF([test "$with_pfa"           != no], [AC_DEFINE([WITH_PFA],                  [1], [with Page Frame Allocator])])
+AS_IF([test "$with_printf"        != no], [AC_DEFINE([WITH_PRINTF],               [1], [with printf])])
 AS_IF([test "$with_units",        != no], [AC_DEFINE([WITH_UNITS],                [1], [with measurement units utils])])
 
 dnl Packages (disabled by default)

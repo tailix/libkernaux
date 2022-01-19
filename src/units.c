@@ -2,8 +2,8 @@
 #include "config.h"
 #endif
 
-#include <kernaux/itoa.h>
 #include <kernaux/libc.h>
+#include <kernaux/ntoa.h>
 #include <kernaux/units.h>
 
 #define TMP_BUFFER_SIZE (64)
@@ -17,7 +17,7 @@ bool kernaux_units_human_raw(
     char tmp_buffer[TMP_BUFFER_SIZE];
     char *tmp = tmp_buffer;
 
-    kernaux_itoa(value, tmp, 10);
+    kernaux_utoa10(value, tmp);
     while (*tmp != '\0') ++tmp;
     *(tmp++) = ' ';
 
@@ -54,7 +54,7 @@ bool kernaux_units_human_dec(
     char tmp_buffer[TMP_BUFFER_SIZE];
     char *tmp = tmp_buffer;
 
-    kernaux_itoa(value, tmp, 10);
+    kernaux_utoa10(value, tmp);
     while (*tmp != '\0') ++tmp;
     *(tmp++) = ' ';
 
@@ -100,7 +100,7 @@ bool kernaux_units_human_bin(
     char tmp_buffer[TMP_BUFFER_SIZE];
     char *tmp = tmp_buffer;
 
-    kernaux_itoa(value, tmp, 10);
+    kernaux_utoa10(value, tmp);
     while (*tmp != '\0') ++tmp;
     *(tmp++) = ' ';
 

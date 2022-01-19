@@ -1,6 +1,3 @@
-/build-libkernaux/*
-!/build-libkernaux/.keep
-
 /image.iso
 /output.txt
 /rootfs/boot/kernel
