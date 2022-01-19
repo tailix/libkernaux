@@ -47,15 +47,18 @@ extern "C" {
 void _putchar(char character);
 
 /**
- * Tiny printf implementation
+ * Tiny printf/vprintf implementation
  * You have to implement _putchar if you use printf()
  * To avoid conflicts with the regular printf() API it is overridden by macro defines
  * and internal underscore-appended functions like printf_() are used
  * \param format A string that specifies the format of the output
+ * \param va A value identifying a variable arguments list
  * \return The number of characters that are written into the array, not counting the terminating null character
  */
 #define printf printf_
-int printf_(const char* format, ...);
+#define vprintf vprintf_
+int  printf_(const char* format, ...);
+int vprintf_(const char* format, va_list va);
 
 /**
  * Tiny sprintf implementation
@@ -81,15 +84,6 @@ int sprintf_(char* buffer, const char* format, ...);
 #define vsnprintf vsnprintf_
 int  snprintf_(char* buffer, size_t count, const char* format, ...);
 int vsnprintf_(char* buffer, size_t count, const char* format, va_list va);
-
-/**
- * Tiny vprintf implementation
- * \param format A string that specifies the format of the output
- * \param va A value identifying a variable arguments list
- * \return The number of characters that are WRITTEN into the buffer, not counting the terminating null character
- */
-#define vprintf vprintf_
-int vprintf_(const char* format, va_list va);
 
 /**
  * printf with output function
