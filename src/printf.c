@@ -2,7 +2,7 @@
 #include "config.h"
 #endif
 
-#include <kernaux/itoa.h>
+#include <kernaux/ntoa.h>
 #include <kernaux/printf.h>
 
 #include <stdbool.h>
@@ -200,8 +200,8 @@ void kernaux_printf_va(
         else if (formatter.type == TYPE_u) {
             const unsigned int arg = va_arg(va, unsigned int);
 
-            char buf[20];
-            kernaux_itoa(arg, buf, 'd');
+            char buf[KERNAUX_ITOA_BUFFER_SIZE];
+            kernaux_utoa10(arg, buf);
 
             for (const char *arg_ptr = buf; *arg_ptr; ++arg_ptr) {
                 putchar(*arg_ptr);

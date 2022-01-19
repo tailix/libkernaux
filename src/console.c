@@ -2,16 +2,18 @@
 #include "config.h"
 #endif
 
+#include <kernaux/console.h>
+#include <kernaux/libc.h>
+
 #ifdef ASM_I386
 #include <kernaux/asm/i386.h>
 #endif
 #ifdef ASM_X86_64
 #include <kernaux/asm/x86_64.h>
 #endif
-
-#include <kernaux/console.h>
-#include <kernaux/libc.h>
+#ifdef WITH_PRINTF
 #include <kernaux/printf.h>
+#endif
 
 void kernaux_console_putc(const char c __attribute__((unused)))
 {
@@ -30,6 +32,7 @@ void kernaux_console_print(const char *const s)
     }
 }
 
+#ifdef WITH_PRINTF
 void kernaux_console_printf(const char *format, ...)
 {
     va_list va;
@@ -37,6 +40,7 @@ void kernaux_console_printf(const char *format, ...)
     kernaux_printf_va(kernaux_console_putc, format, va);
     va_end(va);
 }
+#endif
 
 void kernaux_console_puts(const char *const s)
 {
