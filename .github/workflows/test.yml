@@ -60,7 +60,8 @@ jobs:
       - name: dependencies
         run: sudo apt-get -y install cppcheck
       - name: cppcheck source code
-        run: cppcheck --quiet --error-exitcode=1 --std=c99 --enable=warning,style,performance,portability include/ src/
+        # TODO: don't suppress "src/printf.c"
+        run: cppcheck --quiet --error-exitcode=1 --std=c99 --enable=warning,style,performance,portability --suppress='*:src/printf.c' include/ src/
       - name: cppcheck examples
         run: cppcheck --quiet --error-exitcode=1 --std=c99 --enable=warning,style,performance,portability --suppress=duplicateExpression --suppress=staticStringCompare examples/
       - name: cppcheck tests
