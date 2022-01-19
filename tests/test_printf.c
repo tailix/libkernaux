@@ -14,8 +14,10 @@
 static char buffer[BUFFER_SIZE];
 static size_t buffer_index;
 
-static void test_putchar(const char chr)
-{
+static void test_putchar(
+    const char chr,
+    void *const arg __attribute__((unused))
+) {
     if (buffer_index >= BUFFER_SIZE) {
         printf("Buffer overflow!\n");
         abort();
