@@ -40,53 +40,29 @@
 #include <float.h>
 #endif
 
-
 // 'ntoa' conversion buffer size, this must be big enough to hold one converted
 // numeric number including padded zeros (dynamically created on stack)
-// default: 32 byte
-#ifndef PRINTF_NTOA_BUFFER_SIZE
-#define PRINTF_NTOA_BUFFER_SIZE    32u
-#endif
+#define PRINTF_NTOA_BUFFER_SIZE 32u
 
 // 'ftoa' conversion buffer size, this must be big enough to hold one converted
 // float number including padded zeros (dynamically created on stack)
-// default: 32 byte
-#ifndef PRINTF_FTOA_BUFFER_SIZE
-#define PRINTF_FTOA_BUFFER_SIZE    32u
-#endif
+#define PRINTF_FTOA_BUFFER_SIZE 32u
 
 // support for exponential floating point notation (%e/%g)
-// default: activated
-#ifndef PRINTF_DISABLE_SUPPORT_EXPONENTIAL
 #define PRINTF_SUPPORT_EXPONENTIAL
-#endif
 
 // define the default floating point precision
-// default: 6 digits
-#ifndef PRINTF_DEFAULT_FLOAT_PRECISION
-#define PRINTF_DEFAULT_FLOAT_PRECISION  6u
-#endif
+#define PRINTF_DEFAULT_FLOAT_PRECISION 6u
 
 // define the largest float suitable to print with %f
-// default: 1e9
-#ifndef PRINTF_MAX_FLOAT
-#define PRINTF_MAX_FLOAT  1e9
-#endif
+#define PRINTF_MAX_FLOAT 1e9
 
 // support for the long long types (%llu or %p)
-// default: activated
-#ifndef PRINTF_DISABLE_SUPPORT_LONG_LONG
 #define PRINTF_SUPPORT_LONG_LONG
-#endif
 
 // support for the ptrdiff_t type (%t)
 // ptrdiff_t is normally defined in <stddef.h> as long or long long type
-// default: activated
-#ifndef PRINTF_DISABLE_SUPPORT_PTRDIFF_T
 #define PRINTF_SUPPORT_PTRDIFF_T
-#endif
-
-///////////////////////////////////////////////////////////////////////////////
 
 // internal flag definitions
 #define FLAGS_ZEROPAD   (1u <<  0u)
@@ -102,16 +78,15 @@
 #define FLAGS_PRECISION (1u << 10u)
 #define FLAGS_ADAPT_EXP (1u << 11u)
 
-
 // output function type
 typedef void (*out_fct_type)(char character, void* buffer, size_t idx, size_t maxlen);
-
 
 // wrapper (used as buffer) for output function type
 typedef struct {
   void  (*fct)(char character, void* arg);
   void* arg;
 } out_fct_wrap_type;
+
 
 
 // internal buffer output
