@@ -30,7 +30,7 @@ static void test(const char *const expected, const char *const format, ...)
     buffer_index = 0;
     va_list va;
     va_start(va, format);
-    kernaux_printf_va(test_putchar, format, va);
+    kernaux_vprintf(test_putchar, NULL, format, va);
     va_end(va);
     assert(strcmp(expected, buffer) == 0);
 }
@@ -39,7 +39,7 @@ int main()
 {
     memset(buffer, '\0', sizeof(buffer));
     buffer_index = 0;
-    kernaux_printf(test_putchar, "Hello, World!");
+    kernaux_printf(test_putchar, NULL, "Hello, World!");
     assert(strcmp("Hello, World!", buffer) == 0);
 
     test("", "");

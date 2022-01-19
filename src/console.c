@@ -15,6 +15,8 @@
 #include <kernaux/printf.h>
 #endif
 
+#include <stddef.h>
+
 void kernaux_console_putc(const char c __attribute__((unused)))
 {
 #ifdef ASM_I386
@@ -37,7 +39,7 @@ void kernaux_console_printf(const char *format, ...)
 {
     va_list va;
     va_start(va, format);
-    kernaux_printf_va(kernaux_console_putc, format, va);
+    kernaux_vprintf(kernaux_console_putc, NULL, format, va);
     va_end(va);
 }
 #endif
