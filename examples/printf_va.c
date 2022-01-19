@@ -1,6 +1,7 @@
 #include <kernaux/printf.h>
 
 #include <assert.h>
+#include <stddef.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -19,7 +20,7 @@ static void my_printf(const char *const format, ...)
 {
     va_list va;
     va_start(va, format);
-    kernaux_printf_va(my_putchar, format, va);
+    kernaux_vprintf(my_putchar, NULL, format, va);
     va_end(va);
 }
 
