@@ -13,6 +13,9 @@ AC_CANONICAL_HOST
 
 
 
+dnl Features (enabled by default)
+AC_ARG_ENABLE([float],        AS_HELP_STRING([--disable-float],       [disable floating-point arithmeric]))
+
 dnl Features (disabled by default)
 AC_ARG_ENABLE([assert],       AS_HELP_STRING([--enable-assert],       [enable runtime assertions]))
 AC_ARG_ENABLE([guard],        AS_HELP_STRING([--enable-guard],        [enable argument guards]))
@@ -71,6 +74,9 @@ AM_CONDITIONAL([ASM_I386],          [test "$host_cpu" = i386])
 AM_CONDITIONAL([ASM_RISCV64],       [test "$host_cpu" = riscv64])
 AM_CONDITIONAL([ASM_X86_64],        [test "$host_cpu" = x86_64])
 
+dnl Features (enabled by default)
+AM_CONDITIONAL([ENABLE_FLOAT],      [test "$enable_float"      != no])
+
 dnl Features (disabled by default)
 AM_CONDITIONAL([ENABLE_ASSERT],     [test "$enable_assert"     = yes])
 AM_CONDITIONAL([ENABLE_GUARD_COND], [test "$enable_guard_cond" = yes])
@@ -101,6 +107,9 @@ dnl Architecture
 AS_IF([test "$host_cpu" = i386],          [AC_DEFINE([ASM_I386],                  [1], [architecture is i386])])
 AS_IF([test "$host_cpu" = riscv64],       [AC_DEFINE([ASM_RISCV64],               [1], [architecture is RISC-V 64-bit])])
 AS_IF([test "$host_cpu" = x86_64],        [AC_DEFINE([ASM_X86_64],                [1], [architecture is x86_64])])
+
+dnl Features (enabled by default)
+AS_IF([test "$enable_float"       != no], [AC_DEFINE([ENABLE_FLOAT],              [1], [enabled floating-point arithmeric])])
 
 dnl Features (disabled by default)
 AS_IF([test "$enable_assert"      = yes], [AC_DEFINE([KERNAUX_ENABLE_ASSERT],     [1], [enabled runtime assertions])])
