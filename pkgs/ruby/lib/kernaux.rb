@@ -24,7 +24,7 @@ module KernAux
   class StandardError < ::StandardError; end
 
   ##
-  # Out base class for runtime errors.
+  # Our base class for runtime errors.
   #
   class RuntimeError < ::RuntimeError; end
 
