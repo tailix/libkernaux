@@ -17,12 +17,14 @@
 
 #include <stddef.h>
 
+#ifdef WITH_PRINTF
 static void kernaux_console_printf_putc(
     const char c,
     void *const arg __attribute__((unused))
 ) {
     kernaux_console_putc(c);
 }
+#endif
 
 void kernaux_console_putc(const char c __attribute__((unused)))
 {
