@@ -24,6 +24,7 @@ AC_ARG_ENABLE([guard-null],   AS_HELP_STRING([--enable-guard-null],   [enable NU
 AC_ARG_ENABLE([tests],        AS_HELP_STRING([--enable-tests],        [enable tests and examples]))
 
 dnl Packages (enabled by default)
+AC_ARG_WITH(  [all],          AS_HELP_STRING([--without-all],         [without all default packages]))
 AC_ARG_WITH(  [cmdline],      AS_HELP_STRING([--without-cmdline],     [without command line parser]))
 AC_ARG_WITH(  [console],      AS_HELP_STRING([--without-console],     [without serial console]))
 AC_ARG_WITH(  [elf],          AS_HELP_STRING([--without-elf],         [without ELF utils]))
@@ -50,6 +51,21 @@ if test -z "$enable_guard_cond"; then enable_guard_cond=yes; fi
 if test -z "$enable_guard_null"; then enable_guard_null=yes; fi
 ])
 AS_IF([test "$enable_guard" = yes], do_enable_guard)
+
+AC_DEFUN([do_without_all],
+[
+if test -z "$with_cmdline";     then with_cmdline=no;     fi
+if test -z "$with_console";     then with_console=no;     fi
+if test -z "$with_elf";         then with_elf=no;         fi
+if test -z "$with_framebuffer"; then with_framebuffer=no; fi
+if test -z "$with_mbr";         then with_mbr=no;         fi
+if test -z "$with_multiboot2";  then with_multiboot2=no;  fi
+if test -z "$with_ntoa";        then with_ntoa=no;        fi
+if test -z "$with_pfa";         then with_pfa=no;         fi
+if test -z "$with_printf";      then with_printf=no;      fi
+if test -z "$with_units";       then with_units=no;       fi
+])
+AS_IF([test "$with_all" = no], do_without_all)
 
 AC_DEFUN([do_with_libc],
 [

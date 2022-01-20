@@ -94,7 +94,12 @@ are some non-default options:
 
 ### Default options
 
+Features:
+
 * `--enable-float`, disable with `--disable-float`
+
+All packages all included by default. To exclude all packages except those
+explicitly included, use `--without-all`:
 
 * `--with[out]-cmdline`
 * `--with[out]-console`
