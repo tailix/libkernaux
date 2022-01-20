@@ -19,20 +19,14 @@ module KernAux
   end
 
   ##
-  # Our base class for standard errors.
-  #
-  class StandardError < ::StandardError; end
-
-  ##
   # Our base class for runtime errors.
-  # The best candidate to rescue from in your code.
   #
-  class RuntimeError < ::RuntimeError; end
+  class Error < RuntimeError; end
 
   ##
   # Raised when assertion has failed or panic has been called.
   #
-  class AssertError < RuntimeError; end
+  class AssertError < Error; end
 end
 
 # Native extension
