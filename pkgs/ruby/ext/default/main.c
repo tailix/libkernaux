@@ -1,3 +1,4 @@
+#include <stddef.h>
 #include <stdint.h>
 
 #include <kernaux.h>
@@ -19,6 +20,10 @@ static VALUE rb_KernAux_utoa10(VALUE self, VALUE number);
 static VALUE rb_KernAux_itoa10(VALUE self, VALUE number);
 #endif
 
+#ifdef HAVE_KERNAUX_SNPRINTF
+static VALUE rb_KernAux_snprintf1(int argc, VALUE *argv, VALUE self);
+#endif
+
 void Init_default()
 {
     rb_KernAux = rb_define_module("KernAux");
@@ -37,6 +42,11 @@ void Init_default()
 #endif
 #ifdef HAVE_KERNAUX_ITOA10
     rb_define_singleton_method(rb_KernAux, "itoa10", rb_KernAux_itoa10, 1);
+#endif
+
+#ifdef HAVE_KERNAUX_SNPRINTF
+    rb_define_singleton_method(rb_KernAux, "snprintf1",
+                               rb_KernAux_snprintf1, -1);
 #endif
 }
 
@@ -99,5 +109,80 @@ VALUE rb_KernAux_itoa10(
     char buffer[KERNAUX_ITOA_BUFFER_SIZE];
     kernaux_itoa10(NUM2LL(number_rb), buffer);
     return rb_funcall(rb_str_new2(buffer), rb_intern("freeze"), 0);
+}
+#endif
+
+#ifdef HAVE_KERNAUX_SNPRINTF
+// TODO: is this implementation correct?
+// FIXME: rewrite to ensure no memory leak on exception.
+VALUE rb_KernAux_snprintf1(
+    const int argc,
+    VALUE *const argv_rb,
+    VALUE self __attribute__((unused))
+) {
+    if (argc != 2 && argc != 3) rb_raise(rb_eArgError, "expected 2 or 3 args");
+
+    VALUE size_rb = argv_rb[0];
+    VALUE format_rb = argv_rb[1];
+
+    const int size = NUM2INT(size_rb);
+    const char *const format = StringValueCStr(format_rb);
+
+    if (size < 0) rb_raise(rb_eRangeError, "expected non-negative size");
+
+    {
+        size_t count = 0;
+        for (const char *fmt = format; *fmt; ++fmt) {
+            if (*fmt == '%') ++count;
+        }
+        if (count > 2) rb_raise(rb_eArgError, "invalid format");
+    }
+
+    union {
+        const char *str;
+        long long ll;
+        unsigned long long ull;
+        double dbl;
+        char chr;
+    } __attribute__((packed)) arg = { .str = "" };
+
+    if (argc == 3 && format[0] == '%') {
+        const char *fmt = format;
+        while (*(fmt + 1)) ++fmt;
+        const char c = *fmt;
+
+        VALUE arg_rb = argv_rb[2];
+
+        if (c == 'd' || c == 'i') {
+            RB_INTEGER_TYPE_P(arg_rb);
+            arg.ll = NUM2LL(arg_rb);
+        } else if (c == 'u' || c == 'x' || c == 'X' || c == 'o' || c == 'b') {
+            RB_INTEGER_TYPE_P(arg_rb);
+            arg.ull = NUM2ULL(arg_rb);
+        } else if (c == 'f' || c == 'F' ||
+                   c == 'e' || c == 'E' ||
+                   c == 'g' || c == 'G')
+        {
+            RB_FLOAT_TYPE_P(arg_rb);
+            arg.dbl = NUM2DBL(arg_rb);
+        } else if (c == 'c') {
+            Check_Type(arg_rb, T_STRING);
+            arg.chr = *StringValuePtr(arg_rb);
+        } else if (c == 's') {
+            Check_Type(arg_rb, T_STRING);
+            arg.str = StringValueCStr(arg_rb);
+        }
+    }
+
+    char *const str = malloc(size);
+    if (!str) rb_raise(rb_eNoMemError, "snprintf1 buffer malloc");
+    const int slen = kernaux_snprintf(str, size, format, arg, "", "", "");
+    VALUE output_rb = rb_funcall(rb_str_new2(str), rb_intern("freeze"), 0);
+    free(str);
+
+    VALUE result_rb = rb_ary_new2(2);
+    rb_ary_push(result_rb, output_rb);
+    rb_ary_push(result_rb, INT2NUM(slen));
+    return rb_funcall(result_rb, rb_intern("freeze"), 0);
 }
 #endif
