@@ -124,7 +124,7 @@ explicitly included, use `--without-all`.
 
 ```
 ./autogen.sh
-./configure
+./configure CFLAGS='-fPIC'
 make
 sudo make install
 ```
@@ -136,7 +136,7 @@ environment.
 
 ```
 ./autogen.sh
-./configure --enable-tests --enable-assert --enable-guard
+./configure --enable-tests --enable-assert --enable-guard CFLAGS='-fPIC'
 make
 ```
 
