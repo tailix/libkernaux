@@ -30,6 +30,14 @@ extern "C" {
 #define KERNAUX_NOTNULL_RETVAL(cond, val) { KERNAUX_ASSERT(cond); }
 #endif
 
+#if defined(KERNAUX_ENABLE_GUARD) || defined(KERNAUX_ENABLE_GUARD_PANIC)
+#define KERNAUX_PANIC_RETURN(msg)         { KERNAUX_PANIC(msg); return;       }
+#define KERNAUX_PANIC_RETVAL(msg, val)    { KERNAUX_PANIC(msg); return (val); }
+#else
+#define KERNAUX_PANIC_RETURN(msg)         { KERNAUX_PANIC(msg); }
+#define KERNAUX_PANIC_RETVAL(msg, val)    { KERNAUX_PANIC(msg); }
+#endif
+
 void kernaux_assert_do(const char *file, int line, const char *str);
 
 extern void (*kernaux_assert_cb)(const char *file, int line, const char *str);

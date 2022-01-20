@@ -40,6 +40,7 @@ zero). Work-in-progress APIs can change at any time.
     * [Assert: simple](/examples/assert_simple.c)
     * [Assert: guards](/examples/assert_guards.c)
     * [Panic: simple](/examples/panic_simple.c)
+    * [Panic: guards](/examples/panic_guards.c)
   * Stack trace *(planned)*
 * Device drivers (for debugging only)
   * [Serial console](/include/kernaux/console.h) (*work in progress*)

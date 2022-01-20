@@ -20,6 +20,7 @@ if ENABLE_TESTS
 TESTS = \
 	examples/assert_guards \
 	examples/assert_simple \
+	examples/panic_guards \
 	examples/panic_simple
 endif
 
@@ -140,6 +141,10 @@ examples_assert_simple_SOURCES = \
 examples_cmdline_SOURCES = \
 	$(libkernaux_a_SOURCES) \
 	examples/cmdline.c
+
+examples_panic_guards_SOURCES = \
+	$(libkernaux_a_SOURCES) \
+	examples/panic_guards.c
 
 examples_panic_simple_SOURCES = \
 	$(libkernaux_a_SOURCES) \
