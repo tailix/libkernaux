@@ -6,6 +6,7 @@ require_relative 'kernaux/version'
 # Auxiliary library for kernel development.
 #
 module KernAux
+  # Default callback for assertions
   DEFAULT_ASSERT_CB = lambda { |file, line, str|
     raise AssertError, "#{file}:#{line}:#{str}"
   }
