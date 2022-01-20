@@ -11,13 +11,15 @@
 
 #define BUFFER_SIZE 1024
 
+static const char *const data = "foobar";
+
 static char buffer[BUFFER_SIZE];
 static size_t buffer_index;
 
-static void test_putchar(
-    const char chr,
-    void *const arg __attribute__((unused))
-) {
+static void test_putchar(const char chr, void *const arg)
+{
+    assert(arg == data);
+
     if (buffer_index >= BUFFER_SIZE) {
         printf("Buffer overflow!\n");
         abort();
@@ -28,12 +30,23 @@ static void test_putchar(
 
 static void test(const char *const expected, const char *const format, ...)
 {
+    va_list va;
+    int result;
+
     memset(buffer, '\0', sizeof(buffer));
     buffer_index = 0;
-    va_list va;
     va_start(va, format);
-    kernaux_vprintf(test_putchar, NULL, format, va);
+    result = kernaux_vprintf(test_putchar, (char*)data, format, va);
     va_end(va);
+    assert((size_t)result == strlen(expected));
+    assert(strcmp(expected, buffer) == 0);
+
+    memset(buffer, '\0', sizeof(buffer));
+    buffer_index = 0;
+    va_start(va, format);
+    result = kernaux_vsnprintf(buffer, sizeof(buffer), format, va);
+    va_end(va);
+    assert((size_t)result == strlen(expected));
     assert(strcmp(expected, buffer) == 0);
 }
 
@@ -41,7 +54,7 @@ int main()
 {
     memset(buffer, '\0', sizeof(buffer));
     buffer_index = 0;
-    kernaux_printf(test_putchar, NULL, "Hello, World!");
+    kernaux_printf(test_putchar, (char*)data, "Hello, World!");
     assert(strcmp("Hello, World!", buffer) == 0);
 
     test("", "");
