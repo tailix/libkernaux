@@ -31,7 +31,7 @@ clean:
 	rm -f $(KERNEL) $(OBJS)
 
 $(KERNEL): $(LINKERSCR) $(OBJS) build-libkernaux.a
-	$(CC) -T $(LINKERSCR) -o $@ $(OBJS) -nostdlib -lgcc -lkernaux -Wl,-L$(LIBKERNAUX_DEST)/lib
+	$(CC) -T $(LINKERSCR) -o $@ $(OBJS) -nostdlib -lkernaux -lgcc -Wl,-L$(LIBKERNAUX_DEST)/lib
 
 build-libkernaux.a:
 	cd $(LIBKERNAUX_BUILD) && ./config
