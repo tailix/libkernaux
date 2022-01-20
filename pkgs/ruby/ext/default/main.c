@@ -163,6 +163,7 @@ VALUE rb_KernAux_snprintf1(
                    c == 'e' || c == 'E' ||
                    c == 'g' || c == 'G')
         {
+            // FIXME: this doesn't work
             RB_FLOAT_TYPE_P(arg_rb);
             arg.dbl = NUM2DBL(arg_rb);
         } else if (c == 'c') {

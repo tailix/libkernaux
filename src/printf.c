@@ -8,6 +8,10 @@
  * Author: Marco Paland (info@paland.com) PALANDesign Hannover, Germany
  */
 
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
+
 #include <kernaux/libc.h>
 #include <kernaux/printf.h>
 

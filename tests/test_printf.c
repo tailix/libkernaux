@@ -96,5 +96,10 @@ int main()
     test("foo123a%", "%s%u%c%%", "foo", 123, 'a');
     test("fooa123%", "%s%c%u%%", "foo", 'a', 123);
 
+#ifdef ENABLE_FLOAT
+    test("1.200000",   "%f", 1.2);
+    test("123.456789", "%f", 123.456789);
+#endif
+
     return 0;
 }
