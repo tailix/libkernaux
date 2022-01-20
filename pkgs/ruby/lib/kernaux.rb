@@ -25,6 +25,7 @@ module KernAux
 
   ##
   # Our base class for runtime errors.
+  # The best candidate to rescue from in your code.
   #
   class RuntimeError < ::RuntimeError; end
 
