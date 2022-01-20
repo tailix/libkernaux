@@ -600,6 +600,10 @@ size_t _ntoa_long_long(out_fct_type out, char* buffer, size_t idx, size_t maxlen
 }
 #endif // PRINTF_SUPPORT_LONG_LONG
 
+/**
+ * Idea: superleaf1995
+ * Implementation: smwmaster
+ */
 static const char *const map =
     "\xD3\xF9\xF9\xF9\xF9\xF9\xF9\xF9\xF9\xF9\xF9\xF9\xF9\xF9\xF9\xF9\xF9\xF9"
     "\xF9\xF9\xF9\xF9\xF9\xF9\xF9\xF9\xF9\xF9\xF9\xF9\xF9\xF9\xF9\xD3\xF9\xF9"
