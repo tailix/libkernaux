@@ -113,6 +113,8 @@ if ENABLE_TESTS
 TESTS += \
 	examples/printf \
 	examples/printf_va \
+	examples/snprintf \
+	examples/snprintf_va \
 	tests/test_printf
 endif
 endif
@@ -149,6 +151,14 @@ examples_printf_SOURCES = \
 examples_printf_va_SOURCES = \
 	$(libkernaux_a_SOURCES) \
 	examples/printf_va.c
+
+examples_snprintf_SOURCES = \
+	$(libkernaux_a_SOURCES) \
+	examples/snprintf.c
+
+examples_snprintf_va_SOURCES = \
+	$(libkernaux_a_SOURCES) \
+	examples/snprintf_va.c
 
 examples_units_human_SOURCES = \
 	$(libkernaux_a_SOURCES) \

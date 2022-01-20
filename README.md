@@ -60,9 +60,8 @@ API
     * Code from [https://github.com/mpaland/printf](https://github.com/mpaland/printf). Thank you!
     * [printf](/examples/printf.c)
     * [vprintf](/examples/printf_va.c)
-    * `snprintf`
-    * `vsnprintf`
-    * `sprintf`
+    * [snprintf](/examples/snprintf.c)
+    * [vsnprintf](/examples/snprintf_va.c)
 
 
 

@@ -92,6 +92,8 @@
 /examples/pfa
 /examples/printf
 /examples/printf_va
+/examples/snprintf
+/examples/snprintf_va
 /examples/units_human
 
 /tests/multiboot2_header_print1
