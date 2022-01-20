@@ -31,7 +31,7 @@ jobs:
       - name: autogen
         run: ./autogen.sh
       - name: configure
-        run: ./configure --enable-tests ${{matrix.assert}} ${{matrix.guard}} CC='${{matrix.cc}}' CFLAGS='${{matrix.opt}}'
+        run: ./configure --enable-tests ${{matrix.assert}} ${{matrix.guard}} CC='${{matrix.cc}}' CFLAGS='${{matrix.opt}} -fPIC'
       - name: make
         run: make
       - name: check
