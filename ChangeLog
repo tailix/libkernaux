@@ -1,0 +1,3 @@
+2022-01-20  Alex Kotov  <kotovalexarian@gmail.com>
+
+	* include/kernaux/assert.h: Added unconditional assertion (panic)

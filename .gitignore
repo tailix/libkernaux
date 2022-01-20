@@ -89,6 +89,7 @@
 /examples/assert_guards
 /examples/assert_simple
 /examples/cmdline
+/examples/panic_simple
 /examples/pfa
 /examples/printf
 /examples/printf_va
