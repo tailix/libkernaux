@@ -1,6 +1,6 @@
 AC_PREREQ([2.68])
 AC_INIT([libkernaux],
-  [0.0.0],
+  [0.1.0],
   [https://github.com/tailix/libkernaux/issues],
   [libkernaux],
   [https://github.com/tailix/libkernaux])

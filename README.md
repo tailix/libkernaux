@@ -28,35 +28,39 @@ Table of contents
 API
 ---
 
+We use [semantic versioning](https://semver.org) for stable APIs. Stable APIs
+can only change when major version number is increased (or minor while major is
+zero). Work-in-progress APIs can change at any time.
+
 * Runtime environment
-  * Architecture-specific code
+  * Architecture-specific code (*work in progress*)
     * [Declarations](/include/kernaux/arch/)
     * [Functions](/include/kernaux/asm/)
-  * [Assertions](/include/kernaux/assert.h)
+  * [Assertions](/include/kernaux/assert.h) (*stable since* **0.1.0**)
     * [Simple](/examples/assert_simple.c)
     * [Guards](/examples/assert_guards.c)
   * Stack trace *(planned)*
 * Device drivers (for debugging only)
-  * [Serial console](/include/kernaux/console.h) *(work in progress)*
-  * [Framebuffer](/include/kernaux/framebuffer.h) *(planned)*
-  * USB *(planned)*
+  * [Serial console](/include/kernaux/console.h) (*work in progress*)
+  * [Framebuffer](/include/kernaux/framebuffer.h) (*planned*)
+  * USB (*planned*)
 * Algorithms
-  * [Simple command line parser](/include/kernaux/cmdline.h)
+  * [Simple command line parser](/include/kernaux/cmdline.h) (*work in progress*)
     * [Example](/examples/cmdline.c)
-  * [Page Frame Allocator](/include/kernaux/pfa.h) *(work in progress)*
+  * [Page Frame Allocator](/include/kernaux/pfa.h) (*work in progress*)
     * [Example](/examples/pfa.c)
 * Data formats
-  * [ELF](/include/kernaux/elf.h) *(work in progress)*
-  * [Master Boot Record](/include/kernaux/mbr.h) *(work in progress)*
-  * [Multiboot 2 (GRUB 2)](/include/kernaux/multiboot2.h) *(work in progress)*
-  * Stivale 2 (Limine) *(planned)*
+  * [ELF](/include/kernaux/elf.h) (*work in progress*)
+  * [Master Boot Record](/include/kernaux/mbr.h) (*work in progress*)
+  * [Multiboot 2 (GRUB 2)](/include/kernaux/multiboot2.h) (*work in progress*)
+  * Stivale 2 (Limine) (*planned*)
 * Utilities
-  * [Measurement units utils](/include/kernaux/units.h) *(work in progress)*
+  * [Measurement units utils](/include/kernaux/units.h) (*work in progress*)
     * [To human](/examples/units_human.c)
 * Usual functions
-  * [libc replacement](/include/kernaux/libc.h)
-  * [itoa/ftoa replacement](/include/kernaux/ntoa.h) *(work in progress)*
-  * [printf replacement](/include/kernaux/printf.h) *(work in progress)*
+  * [libc replacement](/include/kernaux/libc.h) (*stable since* **0.1.0**)
+  * [itoa/ftoa replacement](/include/kernaux/ntoa.h) (*stable since* **0.1.0**)
+  * [printf replacement](/include/kernaux/printf.h) (*stable since* **0.1.0**)
     * Code from [https://github.com/mpaland/printf](https://github.com/mpaland/printf). Thank you!
     * [printf](/examples/printf.c)
     * [vprintf](/examples/printf_va.c)
