@@ -5,6 +5,8 @@ libkernaux
 
 Auxiliary library for kernel development.
 
+[Topic on OSDev.org forum](https://forum.osdev.org/viewtopic.php?f=1&t=37958).
+
 
 
 Table of contents
@@ -21,7 +23,6 @@ Table of contents
   * [Cross](#cross)
 * [Architectures](#architectures)
 * [Portability](#portability)
-* [Discussion](#discussion)
 
 
 
@@ -256,11 +257,3 @@ systems:
 * Minix 3.3.0
 * NetBSD 9.2
 * OpenBSD 7.0
-
-
-
-Discussion
-----------
-
-* [Topic on OSDev.org forum](https://forum.osdev.org/viewtopic.php?f=1&t=37958)
-* [Thread on r/osdev](https://www.reddit.com/r/osdev/comments/k3ueeu/libkernaux_auxiliary_library_for_kernel/)
