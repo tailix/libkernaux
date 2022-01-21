@@ -131,11 +131,13 @@ VALUE rb_KernAux_snprintf1(
     if (size < 0) rb_raise(rb_eRangeError, "expected non-negative size");
 
     {
-        size_t count = 0;
-        for (const char *fmt = format; *fmt; ++fmt) {
-            if (*fmt == '%') ++count;
+        size_t size, perc_count = 0, 0;
+        for (const char *fmt = format; *fmt; ++fmt, ++size) {
+            if (*fmt == '%') ++perc_count;
         }
-        if (count > 2) rb_raise(rb_eArgError, "invalid format");
+        if (size > 100 || perc_count > 2) {
+            rb_raise(rb_eArgError, "invalid format");
+        }
     }
 
     union {
