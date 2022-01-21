@@ -85,7 +85,7 @@ bool kernaux_cmdline(
                 }
 
                 if (buffer_pos >= buffer_size) {
-                    strcpy(error_msg, "arg too long");
+                    strcpy(error_msg, "buffer overflow");
                     goto fail;
                 }
 
@@ -127,7 +127,7 @@ bool kernaux_cmdline(
                 }
 
                 if (buffer_pos >= buffer_size) {
-                    strcpy(error_msg, "arg too long");
+                    strcpy(error_msg, "buffer overflow");
                     goto fail;
                 }
 
@@ -141,7 +141,7 @@ bool kernaux_cmdline(
         case TOKEN:
             if (cur == '\0') {
                 if (buffer_pos >= buffer_size) {
-                    strcpy(error_msg, "arg too long");
+                    strcpy(error_msg, "buffer overflow");
                     goto fail;
                 }
 
@@ -151,7 +151,7 @@ bool kernaux_cmdline(
             }
             else if (cur == ' ') {
                 if (buffer_pos >= buffer_size) {
-                    strcpy(error_msg, "arg too long");
+                    strcpy(error_msg, "buffer overflow");
                     goto fail;
                 }
 
@@ -168,7 +168,7 @@ bool kernaux_cmdline(
             }
             else {
                 if (buffer_pos >= buffer_size) {
-                    strcpy(error_msg, "arg too long");
+                    strcpy(error_msg, "buffer overflow");
                     goto fail;
                 }
 
@@ -184,7 +184,7 @@ bool kernaux_cmdline(
             }
             else {
                 if (buffer_pos >= buffer_size) {
-                    strcpy(error_msg, "arg too long");
+                    strcpy(error_msg, "buffer overflow");
                     goto fail;
                 }
 
@@ -204,7 +204,7 @@ bool kernaux_cmdline(
             }
             else if (cur == '"') {
                 if (buffer_pos >= buffer_size) {
-                    strcpy(error_msg, "arg too long");
+                    strcpy(error_msg, "buffer overflow");
                     goto fail;
                 }
 
@@ -214,7 +214,7 @@ bool kernaux_cmdline(
             }
             else {
                 if (buffer_pos >= buffer_size) {
-                    strcpy(error_msg, "arg too long");
+                    strcpy(error_msg, "buffer overflow");
                     goto fail;
                 }
 
@@ -230,7 +230,7 @@ bool kernaux_cmdline(
             }
             else {
                 if (buffer_pos >= buffer_size) {
-                    strcpy(error_msg, "arg too long");
+                    strcpy(error_msg, "buffer overflow");
                     goto fail;
                 }
 
