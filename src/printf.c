@@ -204,7 +204,7 @@ int _vsnprintf(out_fct_type out, char* buffer, const size_t maxlen, const char* 
                     flags |= FLAGS_LONG_LONG;
                     format++;
                 }
-            break;
+                break;
             case 'h':
                 flags |= FLAGS_SHORT;
                 format++;

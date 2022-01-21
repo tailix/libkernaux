@@ -160,7 +160,7 @@ VALUE rb_KernAux_snprintf1(
     } else if (*fmt == 'h') {
         ++fmt;
         if (*fmt == 'h') ++fmt;
-    } else if (*fmt == 't' || *fmt == 'j' || *fmt == 'z' || *fmt == 'z') {
+    } else if (*fmt == 't' || *fmt == 'j' || *fmt == 'z') {
         ++fmt;
     }
 
