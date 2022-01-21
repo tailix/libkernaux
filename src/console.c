@@ -15,6 +15,17 @@
 #include <kernaux/printf.h>
 #endif
 
+#include <stddef.h>
+
+#ifdef WITH_PRINTF
+static void kernaux_console_printf_putc(
+    const char c,
+    void *const arg __attribute__((unused))
+) {
+    kernaux_console_putc(c);
+}
+#endif
+
 void kernaux_console_putc(const char c __attribute__((unused)))
 {
 #ifdef ASM_I386
@@ -37,7 +48,7 @@ void kernaux_console_printf(const char *format, ...)
 {
     va_list va;
     va_start(va, format);
-    kernaux_printf_va(kernaux_console_putc, format, va);
+    kernaux_vprintf(kernaux_console_printf_putc, NULL, format, va);
     va_end(va);
 }
 #endif

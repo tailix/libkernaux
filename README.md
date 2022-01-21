@@ -5,6 +5,8 @@ libkernaux
 
 Auxiliary library for kernel development.
 
+[Topic on OSDev.org forum](https://forum.osdev.org/viewtopic.php?f=1&t=37958).
+
 
 
 Table of contents
@@ -21,47 +23,52 @@ Table of contents
   * [Cross](#cross)
 * [Architectures](#architectures)
 * [Portability](#portability)
-* [Discussion](#discussion)
 
 
 
 API
 ---
 
+We use [semantic versioning](https://semver.org) for stable APIs. Stable APIs
+can only change when major version number is increased (or minor while major is
+zero). Work-in-progress APIs can change at any time.
+
 * Runtime environment
-  * Architecture-specific code
+  * Architecture-specific code (*work in progress*)
     * [Declarations](/include/kernaux/arch/)
     * [Functions](/include/kernaux/asm/)
-  * [Assertions](/include/kernaux/assert.h)
-    * [Simple](/examples/assert_simple.c)
-    * [Guards](/examples/assert_guards.c)
+  * [Assertions](/include/kernaux/assert.h) (*stable since* **0.1.0**)
+    * [Assert: simple](/examples/assert_simple.c)
+    * [Assert: guards](/examples/assert_guards.c)
+    * [Panic: simple](/examples/panic_simple.c)
+    * [Panic: guards](/examples/panic_guards.c)
   * Stack trace *(planned)*
 * Device drivers (for debugging only)
-  * [Serial console](/include/kernaux/console.h) *(work in progress)*
-  * [Framebuffer](/include/kernaux/framebuffer.h) *(work in progress)*
-  * USB *(planned)*
+  * [Serial console](/include/kernaux/console.h) (*work in progress*)
+  * [Framebuffer](/include/kernaux/framebuffer.h) (*work in progress*)
+  * USB (*planned*)
 * Algorithms
-  * [Simple command line parser](/include/kernaux/cmdline.h)
+  * [Simple command line parser](/include/kernaux/cmdline.h) (*work in progress*)
     * [Example](/examples/cmdline.c)
-  * [Page Frame Allocator](/include/kernaux/pfa.h) *(work in progress)*
+  * [Page Frame Allocator](/include/kernaux/pfa.h) (*work in progress*)
     * [Example](/examples/pfa.c)
 * Data formats
-  * [ELF](/include/kernaux/elf.h) *(work in progress)*
-  * [Master Boot Record](/include/kernaux/mbr.h) *(work in progress)*
-  * [Multiboot 2 (GRUB 2)](/include/kernaux/multiboot2.h) *(work in progress)*
-  * Stivale 2 (Limine) *(planned)*
+  * [ELF](/include/kernaux/elf.h) (*work in progress*)
+  * [Master Boot Record](/include/kernaux/mbr.h) (*work in progress*)
+  * [Multiboot 2 (GRUB 2)](/include/kernaux/multiboot2.h) (*work in progress*)
+  * Stivale 2 (Limine) (*planned*)
 * Utilities
-  * [Measurement units utils](/include/kernaux/units.h) *(work in progress)*
+  * [Measurement units utils](/include/kernaux/units.h) (*work in progress*)
     * [To human](/examples/units_human.c)
 * Usual functions
-  * [libc replacement](/include/kernaux/libc.h)
-    * `memset`
-    * `strcpy`
-    * `strlen`
-  * [itoa/ftoa replacement](/include/kernaux/ntoa.h) *(work in progress)*
-  * [printf replacement](/include/kernaux/printf.h) *(work in progress)*
+  * [libc replacement](/include/kernaux/libc.h) (*stable since* **0.1.0**)
+  * [itoa/ftoa replacement](/include/kernaux/ntoa.h) (*stable since* **0.1.0**)
+  * [printf replacement](/include/kernaux/printf.h) (*stable since* **0.1.0**)
+    * Code from [https://github.com/mpaland/printf](https://github.com/mpaland/printf). Thank you!
     * [printf](/examples/printf.c)
-    * [printf_va](/examples/printf_va.c)
+    * [vprintf](/examples/printf_va.c)
+    * [snprintf](/examples/snprintf.c)
+    * [vsnprintf](/examples/snprintf_va.c)
 
 
 
@@ -90,8 +97,19 @@ are some non-default options:
   * `--with[out]-libc-memset`
   * `--with[out]-libc-strcpy`
   * `--with[out]-libc-strlen`
+  * `--with[out]-libc-strnlen`
 
 ### Default options
+
+#### Features
+
+* `--enable-bloat`, disable with `--disable-bloat`
+* `--enable-float`, disable with `--disable-float`
+
+#### Packages
+
+All packages all included by default. To exclude all packages except those
+explicitly included, use `--without-all`.
 
 * `--with[out]-cmdline`
 * `--with[out]-console`
@@ -108,7 +126,7 @@ are some non-default options:
 
 ```
 ./autogen.sh
-./configure
+./configure CFLAGS='-fPIC'
 make
 sudo make install
 ```
@@ -120,7 +138,7 @@ environment.
 
 ```
 ./autogen.sh
-./configure --enable-tests --enable-assert --enable-guard
+./configure --enable-tests --enable-assert --enable-guard CFLAGS='-fPIC'
 make
 ```
 
@@ -240,11 +258,3 @@ systems:
 * Minix 3.3.0
 * NetBSD 9.2
 * OpenBSD 7.0
-
-
-
-Discussion
-----------
-
-* [Topic on OSDev.org forum](https://forum.osdev.org/viewtopic.php?f=1&t=37958)
-* [Thread on r/osdev](https://www.reddit.com/r/osdev/comments/k3ueeu/libkernaux_auxiliary_library_for_kernel/)

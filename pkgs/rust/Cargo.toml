@@ -1,10 +1,10 @@
 [package]
 name = "kernaux"
-version = "0.0.0"
+version = "0.1.0"
 authors = ["Alex Kotov <kotovalexarian@gmail.com>"]
 edition = "2021"
 description = "Auxiliary library for kernel development"
-readme = false
+readme = true
 homepage = "https://github.com/tailix/libkernaux"
 repository = "https://github.com/tailix/libkernaux.git"
 license = "MIT"
@@ -13,3 +13,4 @@ categories = ["api-bindings", "embedded", "external-ffi-bindings", "no-std", "pa
 publish = true
 
 [dependencies]
+libc = "0.2.113"

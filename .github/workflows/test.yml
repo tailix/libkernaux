@@ -31,7 +31,7 @@ jobs:
       - name: autogen
         run: ./autogen.sh
       - name: configure
-        run: ./configure --enable-tests ${{matrix.assert}} ${{matrix.guard}} CC='${{matrix.cc}}' CFLAGS='${{matrix.opt}}'
+        run: ./configure --enable-tests ${{matrix.assert}} ${{matrix.guard}} CC='${{matrix.cc}}' CFLAGS='${{matrix.opt}} -fPIC'
       - name: make
         run: make
       - name: check
@@ -60,8 +60,11 @@ jobs:
       - name: dependencies
         run: sudo apt-get -y install cppcheck
       - name: cppcheck source code
-        run: cppcheck --quiet --error-exitcode=1 --std=c99 --enable=warning,style,performance,portability include/ src/
+        # TODO: don't suppress "src/printf.c"
+        run: cppcheck --quiet --error-exitcode=1 --std=c99 --enable=warning,style,performance,portability --suppress='*:src/printf.c' include/ src/
       - name: cppcheck examples
         run: cppcheck --quiet --error-exitcode=1 --std=c99 --enable=warning,style,performance,portability --suppress=duplicateExpression --suppress=staticStringCompare examples/
       - name: cppcheck tests
         run: cppcheck --quiet --error-exitcode=1 --std=c99 --enable=warning,style,performance,portability --suppress=unusedStructMember tests/
+      - name: cppcheck ruby
+        run: cppcheck --quiet --error-exitcode=1 --std=c99 --enable=warning,style,performance,portability pkgs/ruby/

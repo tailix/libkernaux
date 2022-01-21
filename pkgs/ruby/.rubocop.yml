@@ -51,6 +51,10 @@ Style/Documentation:
 Style/DoubleNegation:
   Enabled: false
 
+Style/GlobalVars:
+  Exclude:
+    - 'ext/*/extconf.rb'
+
 Style/HashAsLastArrayItem:
   Enabled: false
 

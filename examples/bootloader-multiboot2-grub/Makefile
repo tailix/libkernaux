@@ -48,7 +48,7 @@ $(IMAGE): $(GRUBCFG) $(KERNEL)
 	$(GRUB_MKRESCUE) $(ROOTFS) -o $@
 
 $(KERNEL): $(LINKERSCR) $(OBJS) build-libkernaux.a
-	$(CC) -T $(LINKERSCR) -o $@ $(OBJS) -ffreestanding -nostdlib -lgcc -lkernaux -Wl,-L$(LIBKERNAUX_DEST)/lib
+	$(CC) -T $(LINKERSCR) -o $@ $(OBJS) -ffreestanding -nostdlib -lkernaux -lgcc -Wl,-L$(LIBKERNAUX_DEST)/lib
 	$(GRUB_FILE) --is-x86-multiboot2 $@
 
 build-libkernaux.a:

@@ -89,9 +89,13 @@
 /examples/assert_guards
 /examples/assert_simple
 /examples/cmdline
+/examples/panic_guards
+/examples/panic_simple
 /examples/pfa
 /examples/printf
 /examples/printf_va
+/examples/snprintf
+/examples/snprintf_va
 /examples/units_human
 
 /tests/multiboot2_header_print1
