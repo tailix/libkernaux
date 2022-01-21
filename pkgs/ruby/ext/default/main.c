@@ -135,7 +135,7 @@ VALUE rb_KernAux_snprintf1(
         for (const char *fmt = format; *fmt; ++fmt, ++fmt_size) {
             if (*fmt == '%') ++perc_count;
         }
-        if (fmt_size > 100 || perc_count > 2) {
+        if (fmt_size > 100 || perc_count == 0 || perc_count > 2) {
             rb_raise(rb_eArgError, "invalid format");
         }
     }
@@ -148,7 +148,7 @@ VALUE rb_KernAux_snprintf1(
         char chr;
     } __attribute__((packed)) arg = { .str = "" };
 
-    if (argc == 3 && format[0] == '%') {
+    if (argc == 3) {
         const char *fmt = format;
         while (*(fmt + 1)) ++fmt;
         const char c = *fmt;

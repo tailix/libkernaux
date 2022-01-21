@@ -49,6 +49,14 @@ RSpec.describe KernAux, '.snprintf1' do
       end
     end
 
+    context 'when format doesn\'t include "%" char' do
+      let(:format) { 'foo' }
+
+      specify do
+        expect { snprintf1 }.to raise_error ArgumentError, 'invalid format'
+      end
+    end
+
     context 'when format includes more than two "%" chars' do
       let(:format) { '%%%' }
 
@@ -97,6 +105,14 @@ RSpec.describe KernAux, '.snprintf1' do
 
     context 'when format is too long' do
       let(:format) { "%s#{' ' * 99}" }
+
+      specify do
+        expect { snprintf1 }.to raise_error ArgumentError, 'invalid format'
+      end
+    end
+
+    context 'when format doesn\'t include "%" char' do
+      let(:format) { 'foo' }
 
       specify do
         expect { snprintf1 }.to raise_error ArgumentError, 'invalid format'
