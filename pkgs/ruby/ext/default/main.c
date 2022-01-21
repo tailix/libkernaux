@@ -23,7 +23,7 @@ static VALUE rb_KernAux_itoa10(VALUE self, VALUE number);
 #endif
 
 #ifdef HAVE_KERNAUX_SNPRINTF
-static VALUE rb_KernAux_snprintf1(int argc, VALUE *argv, VALUE self);
+static VALUE rb_KernAux_snprintf1(int argc, const VALUE *argv, VALUE self);
 #endif
 
 #ifdef HAVE_KERNAUX_CMDLINE
@@ -131,12 +131,12 @@ VALUE rb_KernAux_itoa10(
 // FIXME: rewrite to ensure no memory leak on exception.
 VALUE rb_KernAux_snprintf1(
     const int argc,
-    VALUE *const argv_rb,
-    VALUE self __attribute__((unused))
+    const VALUE *const argv_rb,
+    const VALUE self __attribute__((unused))
 ) {
     if (argc != 2 && argc != 3) rb_raise(rb_eArgError, "expected 2 or 3 args");
 
-    VALUE size_rb = argv_rb[0];
+    const VALUE size_rb = argv_rb[0];
     VALUE format_rb = argv_rb[1];
 
     const int size = NUM2INT(size_rb);
@@ -221,10 +221,11 @@ VALUE rb_KernAux_snprintf1(
     char *const str = malloc(size);
     if (!str) rb_raise(rb_eNoMemError, "snprintf1 buffer malloc");
     const int slen = kernaux_snprintf(str, size, format, arg, "", "", "");
-    VALUE output_rb = rb_funcall(rb_str_new2(str), rb_intern("freeze"), 0);
+    const VALUE output_rb =
+        rb_funcall(rb_str_new2(str), rb_intern("freeze"), 0);
     free(str);
 
-    VALUE result_rb = rb_ary_new2(2);
+    const VALUE result_rb = rb_ary_new2(2);
     rb_ary_push(result_rb, output_rb);
     rb_ary_push(result_rb, INT2NUM(slen));
     return rb_funcall(result_rb, rb_intern("freeze"), 0);
@@ -232,7 +233,7 @@ VALUE rb_KernAux_snprintf1(
 #endif
 
 #ifdef HAVE_KERNAUX_CMDLINE
-VALUE rb_KernAux_cmdline(VALUE self_rb, VALUE cmdline_rb)
+VALUE rb_KernAux_cmdline(const VALUE self_rb, const VALUE cmdline_rb)
 {
     Check_Type(cmdline_rb, T_STRING);
     rb_raise(rb_KernAux_CmdlineError, "test");
