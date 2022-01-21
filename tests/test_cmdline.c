@@ -9,13 +9,13 @@
 #include <stddef.h>
 #include <string.h>
 
-static const size_t ARGV_COUNT_MAX = 100;
-static const size_t ARG_SIZE_MAX = 4096;
+#define ARGV_COUNT_MAX 100
+#define BUFFER_SIZE 4096
 
 static void test(
     const char *cmdline,
     size_t argv_count_max,
-    size_t arg_size_max,
+    size_t buffer_size,
 
     bool expected_result,
     const char *expected_error_msg,
@@ -237,25 +237,20 @@ int main()
 void test(
     const char *const cmdline,
     size_t argv_count_max,
-    size_t arg_size_max,
+    size_t buffer_size,
 
     const bool expected_result,
     const char *const expected_error_msg,
     size_t expected_argc,
     const char *const *const expected_argv
 ) {
-    if (argv_count_max == 0) {
-        argv_count_max = ARGV_COUNT_MAX;
-    }
-
-    if (arg_size_max == 0) {
-        arg_size_max = ARG_SIZE_MAX;
-    }
+    if (argv_count_max == 0) argv_count_max = ARGV_COUNT_MAX;
+    if (buffer_size    == 0) buffer_size    = BUFFER_SIZE;
 
     char error_msg[KERNAUX_CMDLINE_ERROR_MSG_SIZE_MAX];
     size_t argc = 1234;
     char *argv[argv_count_max];
-    char buffer[argv_count_max * arg_size_max];
+    char buffer[buffer_size];
 
     assert(
         kernaux_cmdline(
@@ -265,7 +260,7 @@ void test(
             argv,
             buffer,
             argv_count_max,
-            arg_size_max
+            buffer_size
         ) == !!expected_result
     );
 

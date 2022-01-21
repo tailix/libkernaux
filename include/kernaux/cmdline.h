@@ -19,7 +19,7 @@ bool kernaux_cmdline(
     char **argv,
     char *buffer,
     size_t argv_count_max,
-    size_t arg_size_max
+    size_t buffer_size
 );
 
 #ifdef __cplusplus
