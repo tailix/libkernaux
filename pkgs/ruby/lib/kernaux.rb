@@ -46,6 +46,8 @@ module KernAux
   ##
   # Raised when assertion has failed or panic has been called.
   #
+  # @see .panic
+  #
   class AssertError < Error; end
 end
 
