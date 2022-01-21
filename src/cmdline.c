@@ -56,11 +56,9 @@ bool kernaux_cmdline(
         case INITIAL:
             if (cur == '\0') {
                 state = FINAL;
-            }
-            else if (cur == ' ') {
+            } else if (cur == ' ') {
                 state = WHITESPACE;
-            }
-            else if (cur == '\\') {
+            } else if (cur == '\\') {
                 if (*argc >= argv_count_max) {
                     strcpy(error_msg, "too many args");
                     goto fail;
@@ -68,8 +66,7 @@ bool kernaux_cmdline(
 
                 state = BACKSLASH;
                 argv[(*argc)++] = buffer;
-            }
-            else if (cur == '"') {
+            } else if (cur == '"') {
                 if (*argc >= argv_count_max) {
                     strcpy(error_msg, "too many args");
                     goto fail;
@@ -77,8 +74,7 @@ bool kernaux_cmdline(
 
                 state = QUOTE;
                 argv[(*argc)++] = buffer;
-            }
-            else {
+            } else {
                 if (*argc >= argv_count_max) {
                     strcpy(error_msg, "too many args");
                     goto fail;
@@ -99,10 +95,9 @@ bool kernaux_cmdline(
         case WHITESPACE:
             if (cur == '\0') {
                 state = FINAL;
-            }
-            else if (cur == ' ') {
-            }
-            else if (cur == '\\') {
+            } else if (cur == ' ') {
+                // do nothing
+            } else if (cur == '\\') {
                 if (*argc >= argv_count_max) {
                     strcpy(error_msg, "too many args");
                     goto fail;
@@ -110,8 +105,7 @@ bool kernaux_cmdline(
 
                 state = BACKSLASH;
                 argv[(*argc)++] = buffer;
-            }
-            else if (cur == '"') {
+            } else if (cur == '"') {
                 if (*argc >= argv_count_max) {
                     strcpy(error_msg, "too many args");
                     goto fail;
@@ -119,8 +113,7 @@ bool kernaux_cmdline(
 
                 state = QUOTE;
                 argv[(*argc)++] = buffer;
-            }
-            else {
+            } else {
                 if (*argc >= argv_count_max) {
                     strcpy(error_msg, "too many args");
                     goto fail;
@@ -148,8 +141,7 @@ bool kernaux_cmdline(
                 state = FINAL;
                 *(buffer++) = '\0';
                 buffer_pos = 0;
-            }
-            else if (cur == ' ') {
+            } else if (cur == ' ') {
                 if (buffer_pos >= buffer_size) {
                     strcpy(error_msg, "buffer overflow");
                     goto fail;
@@ -158,15 +150,12 @@ bool kernaux_cmdline(
                 state = WHITESPACE;
                 *(buffer++) = '\0';
                 buffer_pos = 0;
-            }
-            else if (cur == '\\') {
+            } else if (cur == '\\') {
                 state = BACKSLASH;
-            }
-            else if (cur == '"') {
+            } else if (cur == '"') {
                 strcpy(error_msg, "unescaped quotation mark");
                 goto fail;
-            }
-            else {
+            } else {
                 if (buffer_pos >= buffer_size) {
                     strcpy(error_msg, "buffer overflow");
                     goto fail;
@@ -181,8 +170,7 @@ bool kernaux_cmdline(
             if (cur == '\0') {
                 strcpy(error_msg, "EOL after backslash");
                 goto fail;
-            }
-            else {
+            } else {
                 if (buffer_pos >= buffer_size) {
                     strcpy(error_msg, "buffer overflow");
                     goto fail;
@@ -198,11 +186,9 @@ bool kernaux_cmdline(
             if (cur == '\0') {
                 strcpy(error_msg, "EOL inside quote");
                 goto fail;
-            }
-            else if (cur == '\\') {
+            } else if (cur == '\\') {
                 state = QUOTE_BACKSLASH;
-            }
-            else if (cur == '"') {
+            } else if (cur == '"') {
                 if (buffer_pos >= buffer_size) {
                     strcpy(error_msg, "buffer overflow");
                     goto fail;
@@ -211,8 +197,7 @@ bool kernaux_cmdline(
                 state = WHITESPACE;
                 *(buffer++) = '\0';
                 buffer_pos = 0;
-            }
-            else {
+            } else {
                 if (buffer_pos >= buffer_size) {
                     strcpy(error_msg, "buffer overflow");
                     goto fail;
@@ -227,8 +212,7 @@ bool kernaux_cmdline(
             if (cur == '\0') {
                 strcpy(error_msg, "EOL after backslash inside quote");
                 goto fail;
-            }
-            else {
+            } else {
                 if (buffer_pos >= buffer_size) {
                     strcpy(error_msg, "buffer overflow");
                     goto fail;
@@ -241,9 +225,7 @@ bool kernaux_cmdline(
             break;
         }
 
-        if (state == FINAL) {
-            break;
-        }
+        if (state == FINAL) break;
     }
 
     return true;
