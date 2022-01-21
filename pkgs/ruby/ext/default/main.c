@@ -129,15 +129,47 @@ VALUE rb_KernAux_snprintf1(
     const char *const format = StringValueCStr(format_rb);
 
     if (size < 0) rb_raise(rb_eRangeError, "expected non-negative size");
+    if (strlen(format) > 100) rb_raise(rb_eArgError, "invalid format");
 
+    const char *fmt = format;
+
+    while (*fmt && *fmt != '%') ++fmt;
+    if (*(fmt++) != '%') rb_raise(rb_eArgError, "invalid format");
+
+    // Mimic printf behavior.
+    if (*fmt == '0' || *fmt == '-' || *fmt == '+' || *fmt == ' ' ||
+        *fmt == '#')
     {
-        size_t fmt_size = 0, perc_count = 0;
-        for (const char *fmt = format; *fmt; ++fmt, ++fmt_size) {
-            if (*fmt == '%') ++perc_count;
+        ++fmt;
+    }
+    if (*fmt >= '0' && *fmt <= '9') {
+        while (*fmt >= '0' && *fmt <= '9') ++fmt;
+    } else if (*fmt == '*') {
+        ++fmt;
+    }
+    if (*fmt == '.') {
+        ++fmt;
+        if (*fmt >= '0' && *fmt <= '9') {
+            while (*fmt >= '0' && *fmt <= '9') ++fmt;
+        } else if (*fmt == '*') {
+            ++fmt;
         }
-        if (fmt_size > 100 || perc_count == 0 || perc_count > 2) {
-            rb_raise(rb_eArgError, "invalid format");
-        }
+    }
+    if (*fmt == 'l') {
+        ++fmt;
+        if (*fmt == 'l') ++fmt;
+    } else if (*fmt == 'h') {
+        ++fmt;
+        if (*fmt == 'h') ++fmt;
+    } else if (*fmt == 't' || *fmt == 'j' || *fmt == 'z' || *fmt == 'z') {
+        ++fmt;
+    }
+
+    const char c = *fmt;
+
+    if (*fmt == '%') ++fmt;
+    while (*fmt) {
+        if (*(fmt++) == '%') rb_raise(rb_eArgError, "invalid format");
     }
 
     union {
@@ -149,10 +181,6 @@ VALUE rb_KernAux_snprintf1(
     } __attribute__((packed)) arg = { .str = "" };
 
     if (argc == 3) {
-        const char *fmt = format;
-        while (*(fmt + 1)) ++fmt;
-        const char c = *fmt;
-
         VALUE arg_rb = argv_rb[2];
 
         if (c == 'd' || c == 'i') {

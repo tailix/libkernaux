@@ -20,6 +20,12 @@ RSpec.describe KernAux, '.snprintf1' do
     specify { expect(snprintf1[0]).to eq '%' }
     specify { expect(snprintf1[1]).to eq 1 }
 
+    context 'with leading and trailing spaces' do
+      let(:format) { '  %%  ' }
+
+      specify { expect(snprintf1[0]).to eq '  %  ' }
+    end
+
     context 'with "%s" format' do
       let(:format) { '%s' }
 
@@ -81,6 +87,12 @@ RSpec.describe KernAux, '.snprintf1' do
     specify { expect(snprintf1[1]).to be_instance_of Integer }
     specify { expect(snprintf1[0]).to eq arg }
     specify { expect(snprintf1[1]).to eq arg.size }
+
+    context 'with leading and trailing spaces' do
+      let(:format) { '  %s  ' }
+
+      specify { expect(snprintf1[0]).to eq "  #{arg}  " }
+    end
 
     context 'with "%%" format' do
       let(:format) { '%%' }
