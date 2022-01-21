@@ -129,7 +129,6 @@ VALUE rb_KernAux_snprintf1(
     const char *const format = StringValueCStr(format_rb);
 
     if (size < 0) rb_raise(rb_eRangeError, "expected non-negative size");
-    if (strlen(format) > 100) rb_raise(rb_eArgError, "invalid format");
 
     const char *fmt = format;
 
