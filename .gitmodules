@@ -1,6 +1,7 @@
 [submodule "vendor/cross"]
 	path = vendor/cross
 	url = https://github.com/tailix/cross.git
+	ignore = dirty
 [submodule "vendor/limine"]
 	path = vendor/limine
 	url = https://github.com/limine-bootloader/limine.git
