@@ -140,7 +140,7 @@ bool kernaux_cmdline(
 
                 state = FINAL;
                 *(buffer++) = '\0';
-                buffer_pos = 0;
+                ++buffer_pos;
             } else if (cur == ' ') {
                 if (buffer_pos >= buffer_size) {
                     strcpy(error_msg, "buffer overflow");
@@ -149,7 +149,7 @@ bool kernaux_cmdline(
 
                 state = WHITESPACE;
                 *(buffer++) = '\0';
-                buffer_pos = 0;
+                ++buffer_pos;
             } else if (cur == '\\') {
                 state = BACKSLASH;
             } else if (cur == '"') {
@@ -196,7 +196,7 @@ bool kernaux_cmdline(
 
                 state = WHITESPACE;
                 *(buffer++) = '\0';
-                buffer_pos = 0;
+                ++buffer_pos;
             } else {
                 if (buffer_pos >= buffer_size) {
                     strcpy(error_msg, "buffer overflow");

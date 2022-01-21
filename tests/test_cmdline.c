@@ -101,21 +101,21 @@ int main()
     test("  \"foo\"  \"bar\"  ",    0, 0, true, "", 2, argv_foo_bar);
     test("\"foo\" \"bar\" \"car\"", 0, 0, true, "", 3, argv_foo_bar_car);
 
-    test("foo bar car", 3, 0, true, "", 3, argv_foo_bar_car);
-    test("foo bar car", 0, 4, true, "", 3, argv_foo_bar_car);
-    test("foo bar car", 3, 4, true, "", 3, argv_foo_bar_car);
+    test("foo bar car", 3, 0,  true, "", 3, argv_foo_bar_car);
+    test("foo bar car", 0, 12, true, "", 3, argv_foo_bar_car);
+    test("foo bar car", 3, 12, true, "", 3, argv_foo_bar_car);
 
-    test("foo bar car", 2, 0, false, "too many args",   0, NULL);
-    test("foo bar car", 0, 3, false, "buffer overflow", 0, NULL);
-    test("foo bar car", 2, 3, false, "buffer overflow", 0, NULL);
+    test("foo bar car", 2, 0,  false, "too many args",   0, NULL);
+    test("foo bar car", 0, 11, false, "buffer overflow", 0, NULL);
+    test("foo bar car", 2, 11, false, "too many args",   0, NULL);
 
-    test("\"foo\" \"bar\" \"car\"", 3, 0, true, "", 3, argv_foo_bar_car);
-    test("\"foo\" \"bar\" \"car\"", 0, 4, true, "", 3, argv_foo_bar_car);
-    test("\"foo\" \"bar\" \"car\"", 3, 4, true, "", 3, argv_foo_bar_car);
+    test("\"foo\" \"bar\" \"car\"", 3, 0,  true, "", 3, argv_foo_bar_car);
+    test("\"foo\" \"bar\" \"car\"", 0, 12, true, "", 3, argv_foo_bar_car);
+    test("\"foo\" \"bar\" \"car\"", 3, 12, true, "", 3, argv_foo_bar_car);
 
-    test("\"foo\" \"bar\" \"car\"", 2, 0, false, "too many args",   0, NULL);
-    test("\"foo\" \"bar\" \"car\"", 0, 3, false, "buffer overflow", 0, NULL);
-    test("\"foo\" \"bar\" \"car\"", 2, 3, false, "buffer overflow", 0, NULL);
+    test("\"foo\" \"bar\" \"car\"", 2, 0,  false, "too many args",   0, NULL);
+    test("\"foo\" \"bar\" \"car\"", 0, 11, false, "buffer overflow", 0, NULL);
+    test("\"foo\" \"bar\" \"car\"", 2, 11, false, "too many args",   0, NULL);
 
     test("\\ ",                 0, 0, true, "", 1, argv_space);
     test("\"\\ \"",             0, 0, true, "", 1, argv_space);
@@ -191,25 +191,25 @@ int main()
     test("foo \"bar car\"",     0, 0, true, "", 2, argv_foo_barspacecar);
     test("\"foo\" \"bar car\"", 0, 0, true, "", 2, argv_foo_barspacecar);
 
-    test("\\ \\ \\  \\ \\ \\  \\ \\ \\ ",          3, 0, true, "", 3, argv_spaceX3_X3);
-    test("\\\\\\\\\\\\ \\\\\\\\\\\\ \\\\\\\\\\\\", 3, 0, true, "", 3, argv_backslashX3_X3);
-    test("\\\"\\\"\\\" \\\"\\\"\\\" \\\"\\\"\\\"", 3, 0, true, "", 3, argv_quotmarkX3_X3);
-    test("\\ \\ \\  \\ \\ \\  \\ \\ \\ ",          0, 4, true, "", 3, argv_spaceX3_X3);
-    test("\\\\\\\\\\\\ \\\\\\\\\\\\ \\\\\\\\\\\\", 0, 4, true, "", 3, argv_backslashX3_X3);
-    test("\\\"\\\"\\\" \\\"\\\"\\\" \\\"\\\"\\\"", 0, 4, true, "", 3, argv_quotmarkX3_X3);
-    test("\\ \\ \\  \\ \\ \\  \\ \\ \\ ",          3, 4, true, "", 3, argv_spaceX3_X3);
-    test("\\\\\\\\\\\\ \\\\\\\\\\\\ \\\\\\\\\\\\", 3, 4, true, "", 3, argv_backslashX3_X3);
-    test("\\\"\\\"\\\" \\\"\\\"\\\" \\\"\\\"\\\"", 3, 4, true, "", 3, argv_quotmarkX3_X3);
+    test("\\ \\ \\  \\ \\ \\  \\ \\ \\ ",          3, 0,  true, "", 3, argv_spaceX3_X3);
+    test("\\\\\\\\\\\\ \\\\\\\\\\\\ \\\\\\\\\\\\", 3, 0,  true, "", 3, argv_backslashX3_X3);
+    test("\\\"\\\"\\\" \\\"\\\"\\\" \\\"\\\"\\\"", 3, 0,  true, "", 3, argv_quotmarkX3_X3);
+    test("\\ \\ \\  \\ \\ \\  \\ \\ \\ ",          0, 12, true, "", 3, argv_spaceX3_X3);
+    test("\\\\\\\\\\\\ \\\\\\\\\\\\ \\\\\\\\\\\\", 0, 12, true, "", 3, argv_backslashX3_X3);
+    test("\\\"\\\"\\\" \\\"\\\"\\\" \\\"\\\"\\\"", 0, 12, true, "", 3, argv_quotmarkX3_X3);
+    test("\\ \\ \\  \\ \\ \\  \\ \\ \\ ",          3, 12, true, "", 3, argv_spaceX3_X3);
+    test("\\\\\\\\\\\\ \\\\\\\\\\\\ \\\\\\\\\\\\", 3, 12, true, "", 3, argv_backslashX3_X3);
+    test("\\\"\\\"\\\" \\\"\\\"\\\" \\\"\\\"\\\"", 3, 12, true, "", 3, argv_quotmarkX3_X3);
 
-    test("\\ \\ \\  \\ \\ \\  \\ \\ \\ ",          2, 0, false, "too many args",   0, NULL);
-    test("\\\\\\\\\\\\ \\\\\\\\\\\\ \\\\\\\\\\\\", 2, 0, false, "too many args",   0, NULL);
-    test("\\\"\\\"\\\" \\\"\\\"\\\" \\\"\\\"\\\"", 2, 0, false, "too many args",   0, NULL);
-    test("\\ \\ \\  \\ \\ \\  \\ \\ \\ ",          0, 3, false, "buffer overflow", 0, NULL);
-    test("\\\\\\\\\\\\ \\\\\\\\\\\\ \\\\\\\\\\\\", 0, 3, false, "buffer overflow", 0, NULL);
-    test("\\\"\\\"\\\" \\\"\\\"\\\" \\\"\\\"\\\"", 0, 3, false, "buffer overflow", 0, NULL);
-    test("\\ \\ \\  \\ \\ \\  \\ \\ \\ ",          2, 3, false, "buffer overflow", 0, NULL);
-    test("\\\\\\\\\\\\ \\\\\\\\\\\\ \\\\\\\\\\\\", 2, 3, false, "buffer overflow", 0, NULL);
-    test("\\\"\\\"\\\" \\\"\\\"\\\" \\\"\\\"\\\"", 2, 3, false, "buffer overflow", 0, NULL);
+    test("\\ \\ \\  \\ \\ \\  \\ \\ \\ ",          2, 0,  false, "too many args",   0, NULL);
+    test("\\\\\\\\\\\\ \\\\\\\\\\\\ \\\\\\\\\\\\", 2, 0,  false, "too many args",   0, NULL);
+    test("\\\"\\\"\\\" \\\"\\\"\\\" \\\"\\\"\\\"", 2, 0,  false, "too many args",   0, NULL);
+    test("\\ \\ \\  \\ \\ \\  \\ \\ \\ ",          0, 11, false, "buffer overflow", 0, NULL);
+    test("\\\\\\\\\\\\ \\\\\\\\\\\\ \\\\\\\\\\\\", 0, 11, false, "buffer overflow", 0, NULL);
+    test("\\\"\\\"\\\" \\\"\\\"\\\" \\\"\\\"\\\"", 0, 11, false, "buffer overflow", 0, NULL);
+    test("\\ \\ \\  \\ \\ \\  \\ \\ \\ ",          2, 11, false, "too many args",   0, NULL);
+    test("\\\\\\\\\\\\ \\\\\\\\\\\\ \\\\\\\\\\\\", 2, 11, false, "too many args",   0, NULL);
+    test("\\\"\\\"\\\" \\\"\\\"\\\" \\\"\\\"\\\"", 2, 11, false, "too many args",   0, NULL);
 
     test("\\",     0, 0, false, "EOL after backslash", 0, NULL);
     test(" \\",    0, 0, false, "EOL after backslash", 0, NULL);
