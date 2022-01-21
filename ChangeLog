@@ -1,0 +1,10 @@
+2022-01-21  Alex Kotov  <kotovalexarian@gmail.com>
+
+	* configure.ac: Allow to disable unnecessary heavy binary data
+
+2022-01-20  Alex Kotov  <kotovalexarian@gmail.com>
+
+	* libkernaux 0.1.0 released
+	* include/kernaux/assert.h: Added unconditional assertion (panic)
+	* include/kernaux/assert.h: Added guards for unconditional assertion (panic)
+	* src/printf.c: Fix bug and actually enable floating-point arithmetics

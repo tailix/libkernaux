@@ -19,7 +19,9 @@ libkernaux_a_SOURCES = \
 if ENABLE_TESTS
 TESTS = \
 	examples/assert_guards \
-	examples/assert_simple
+	examples/assert_simple \
+	examples/panic_guards \
+	examples/panic_simple
 endif
 
 if ASM_I386
@@ -113,6 +115,8 @@ if ENABLE_TESTS
 TESTS += \
 	examples/printf \
 	examples/printf_va \
+	examples/snprintf \
+	examples/snprintf_va \
 	tests/test_printf
 endif
 endif
@@ -138,6 +142,14 @@ examples_cmdline_SOURCES = \
 	$(libkernaux_a_SOURCES) \
 	examples/cmdline.c
 
+examples_panic_guards_SOURCES = \
+	$(libkernaux_a_SOURCES) \
+	examples/panic_guards.c
+
+examples_panic_simple_SOURCES = \
+	$(libkernaux_a_SOURCES) \
+	examples/panic_simple.c
+
 examples_pfa_SOURCES = \
 	$(libkernaux_a_SOURCES) \
 	examples/pfa.c
@@ -149,6 +161,14 @@ examples_printf_SOURCES = \
 examples_printf_va_SOURCES = \
 	$(libkernaux_a_SOURCES) \
 	examples/printf_va.c
+
+examples_snprintf_SOURCES = \
+	$(libkernaux_a_SOURCES) \
+	examples/snprintf.c
+
+examples_snprintf_va_SOURCES = \
+	$(libkernaux_a_SOURCES) \
+	examples/snprintf_va.c
 
 examples_units_human_SOURCES = \
 	$(libkernaux_a_SOURCES) \

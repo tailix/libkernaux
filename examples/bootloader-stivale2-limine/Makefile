@@ -73,7 +73,7 @@ $(IMAGE): $(FULL_KERNEL) $(FULL_LIMINE_CD) $(FULL_LIMINE_ELTORITO) $(FULL_LIMINE
 	$(LIMINE_INSTALL) $@
 
 $(FULL_KERNEL): $(LINKERSCR) $(OBJS) build-libkernaux.a
-	$(CC) -T $(LINKERSCR) -o $@ $(OBJS) -ffreestanding -nostdlib -zmax-page-size=0x1000 -static -lgcc -lkernaux -Wl,-L$(LIBKERNAUX_DEST)/lib
+	$(CC) -T $(LINKERSCR) -o $@ $(OBJS) -ffreestanding -nostdlib -zmax-page-size=0x1000 -static -lkernaux -lgcc -Wl,-L$(LIBKERNAUX_DEST)/lib
 
 $(FULL_LIMINE_CD):
 	cp -f $(LIMINE_CD) $(FULL_LIMINE_CD)
