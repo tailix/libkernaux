@@ -5,6 +5,7 @@
 #include <ruby.h>
 
 static VALUE rb_KernAux = Qnil;
+
 static VALUE rb_KernAux_Error = Qnil;
 static VALUE rb_KernAux_CmdlineError = Qnil;
 
@@ -21,11 +22,9 @@ static VALUE rb_KernAux_utoa10(VALUE self, VALUE number);
 #ifdef HAVE_KERNAUX_ITOA10
 static VALUE rb_KernAux_itoa10(VALUE self, VALUE number);
 #endif
-
 #ifdef HAVE_KERNAUX_SNPRINTF
 static VALUE rb_KernAux_snprintf1(int argc, const VALUE *argv, VALUE self);
 #endif
-
 #ifdef HAVE_KERNAUX_CMDLINE
 static VALUE rb_KernAux_cmdline(VALUE self, VALUE cmdline);
 #endif
@@ -33,6 +32,7 @@ static VALUE rb_KernAux_cmdline(VALUE self, VALUE cmdline);
 void Init_default()
 {
     rb_KernAux = rb_define_module("KernAux");
+
     rb_KernAux_Error =
         rb_define_class_under(rb_KernAux, "Error", rb_eRuntimeError);
     rb_KernAux_CmdlineError =
@@ -53,12 +53,10 @@ void Init_default()
 #ifdef HAVE_KERNAUX_ITOA10
     rb_define_singleton_method(rb_KernAux, "itoa10", rb_KernAux_itoa10, 1);
 #endif
-
 #ifdef HAVE_KERNAUX_SNPRINTF
     rb_define_singleton_method(rb_KernAux, "snprintf1",
                                rb_KernAux_snprintf1, -1);
 #endif
-
 #ifdef HAVE_KERNAUX_CMDLINE
     rb_define_singleton_method(rb_KernAux, "cmdline", rb_KernAux_cmdline, 1);
 #endif
