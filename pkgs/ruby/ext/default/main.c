@@ -131,7 +131,7 @@ VALUE rb_KernAux_snprintf1(
     if (size < 0) rb_raise(rb_eRangeError, "expected non-negative size");
 
     {
-        size_t fmt_size, perc_count = 0, 0;
+        size_t fmt_size = 0, perc_count = 0;
         for (const char *fmt = format; *fmt; ++fmt, ++fmt_size) {
             if (*fmt == '%') ++perc_count;
         }
