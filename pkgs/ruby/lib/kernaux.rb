@@ -20,6 +20,16 @@ module KernAux
     assert_do file, Integer(line), msg
   end
 
+  def self.sprintf(*args)
+    args.map do |arg|
+      if arg.is_a? Array
+        sprintf1(*arg)
+      else
+        arg
+      end
+    end.join.freeze
+  end
+
   def self.sprintf1(format, arg = nil)
     if arg.nil?
       snprintf1(SPRINTF1_BUFFER_SIZE, format).first
