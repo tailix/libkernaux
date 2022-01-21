@@ -49,7 +49,7 @@ RSpec.describe KernAux, '.snprintf1' do
       end
     end
 
-    context 'when format is invalid' do
+    context 'when format includes more than two "%" chars' do
       let(:format) { '%%%' }
 
       specify do
@@ -103,7 +103,7 @@ RSpec.describe KernAux, '.snprintf1' do
       end
     end
 
-    context 'when format is invalid' do
+    context 'when format includes more than two "%" chars' do
       let(:format) { '%%%' }
 
       specify do
