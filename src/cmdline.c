@@ -15,7 +15,7 @@ enum State {
     QUOTE_BACKSLASH,
 };
 
-bool kernaux_cmdline_parse(
+bool kernaux_cmdline(
     const char *const cmdline,
     char *error_msg,
     size_t *const argc,

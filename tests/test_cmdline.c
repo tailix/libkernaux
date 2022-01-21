@@ -258,7 +258,7 @@ void test(
     char buffer[argv_count_max * arg_size_max];
 
     assert(
-        kernaux_cmdline_parse(
+        kernaux_cmdline(
             cmdline,
             error_msg,
             &argc,

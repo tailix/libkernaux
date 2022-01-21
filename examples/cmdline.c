@@ -15,7 +15,7 @@ int main()
     char *argv[ARGV_COUNT_MAX];
     char buffer[ARGV_COUNT_MAX * ARG_SIZE_MAX];
 
-    assert(kernaux_cmdline_parse(
+    assert(kernaux_cmdline(
         cmdline,
         error_msg,
         &argc,
