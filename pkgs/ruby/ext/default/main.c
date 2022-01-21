@@ -5,6 +5,8 @@
 #include <ruby.h>
 
 static VALUE rb_KernAux = Qnil;
+static VALUE rb_KernAux_Error = Qnil;
+static VALUE rb_KernAux_CmdlineError = Qnil;
 
 static void assert_cb(const char *file, int line, const char *str);
 
@@ -24,9 +26,17 @@ static VALUE rb_KernAux_itoa10(VALUE self, VALUE number);
 static VALUE rb_KernAux_snprintf1(int argc, VALUE *argv, VALUE self);
 #endif
 
+#ifdef HAVE_KERNAUX_CMDLINE
+static VALUE rb_KernAux_cmdline(VALUE self, VALUE cmdline);
+#endif
+
 void Init_default()
 {
     rb_KernAux = rb_define_module("KernAux");
+    rb_KernAux_Error =
+        rb_define_class_under(rb_KernAux, "Error", rb_eRuntimeError);
+    rb_KernAux_CmdlineError =
+        rb_define_class_under(rb_KernAux, "CmdlineError", rb_KernAux_Error);
 
     kernaux_assert_cb = assert_cb;
 
@@ -47,6 +57,10 @@ void Init_default()
 #ifdef HAVE_KERNAUX_SNPRINTF
     rb_define_singleton_method(rb_KernAux, "snprintf1",
                                rb_KernAux_snprintf1, -1);
+#endif
+
+#ifdef HAVE_KERNAUX_CMDLINE
+    rb_define_singleton_method(rb_KernAux, "cmdline", rb_KernAux_cmdline, 1);
 #endif
 }
 
@@ -214,5 +228,14 @@ VALUE rb_KernAux_snprintf1(
     rb_ary_push(result_rb, output_rb);
     rb_ary_push(result_rb, INT2NUM(slen));
     return rb_funcall(result_rb, rb_intern("freeze"), 0);
+}
+#endif
+
+#ifdef HAVE_KERNAUX_CMDLINE
+VALUE rb_KernAux_cmdline(VALUE self_rb, VALUE cmdline_rb)
+{
+    Check_Type(cmdline_rb, T_STRING);
+    rb_raise(rb_KernAux_CmdlineError, "test");
+    return Qnil;
 }
 #endif

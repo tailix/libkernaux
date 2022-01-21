@@ -16,4 +16,6 @@ have_func 'kernaux_itoa10'
 
 have_func 'kernaux_snprintf'
 
+have_func 'kernaux_cmdline'
+
 raise 'can\'t create Makefile' unless create_makefile 'kernaux/default'

@@ -49,6 +49,13 @@ module KernAux
   # @see .panic
   #
   class AssertError < Error; end
+
+  ##
+  # Raised when command line parsing goes wrong.
+  #
+  # @see .cmdline
+  #
+  class CmdlineError < Error; end
 end
 
 # Native extension
