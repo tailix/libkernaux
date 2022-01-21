@@ -13,3 +13,4 @@ categories = ["api-bindings", "embedded", "external-ffi-bindings", "no-std", "pa
 publish = true
 
 [dependencies]
+libc = "0.2.113"
