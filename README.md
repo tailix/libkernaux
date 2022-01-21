@@ -103,6 +103,7 @@ are some non-default options:
 
 #### Features
 
+* `--enable-bloat`, disable with `--disable-bloat`
 * `--enable-float`, disable with `--disable-float`
 
 #### Packages

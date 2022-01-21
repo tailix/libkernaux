@@ -73,7 +73,10 @@ static size_t _out_rev(out_fct_type out, char* buffer, size_t idx, size_t maxlen
 static size_t _ntoa_format(out_fct_type out, char* buffer, size_t idx, size_t maxlen, char* buf, size_t len, bool negative, unsigned int base, unsigned int prec, unsigned int width, unsigned int flags);
 static size_t _ntoa_long(out_fct_type out, char* buffer, size_t idx, size_t maxlen, unsigned long value, bool negative, unsigned long base, unsigned int prec, unsigned int width, unsigned int flags);
 static size_t _ntoa_long_long(out_fct_type out, char* buffer, size_t idx, size_t maxlen, unsigned long long value, bool negative, unsigned long long base, unsigned int prec, unsigned int width, unsigned int flags);
+
+#ifdef ENABLE_BLOAT
 static char _custom(unsigned int flags, size_t *index);
+#endif // ENABLE_BLOAT
 
 #ifdef ENABLE_FLOAT
 static size_t _ftoa(out_fct_type out, char* buffer, size_t idx, size_t maxlen, double value, unsigned int prec, unsigned int width, unsigned int flags);
@@ -222,14 +225,16 @@ int _vsnprintf(out_fct_type out, char* buffer, const size_t maxlen, const char* 
                 flags |= (sizeof(size_t) == sizeof(long) ? FLAGS_LONG : FLAGS_LONG_LONG);
                 format++;
                 break;
+#ifdef ENABLE_BLOAT
             case 'S':
                 if (*(++format) == 'U') {
                     flags |= FLAGS_CUSTOM;
-                    format++;
+                    ++format;
                 } else {
-                    format--;
+                    --format;
                 }
                 break;
+#endif // ENABLE_BLOAT
             default:
                 break;
         }
@@ -363,16 +368,18 @@ int _vsnprintf(out_fct_type out, char* buffer, const size_t maxlen, const char* 
                 break;
             }
 
+#ifdef ENABLE_BLOAT
             case 'S':
-            {
-                format++;
-                size_t index = 0;
-                char c;
-                while ((c = _custom(flags, &index))) {
-                    out(c, buffer, idx++, maxlen);
+                if (flags & FLAGS_CUSTOM) {
+                    format++;
+                    size_t index = 0;
+                    char c;
+                    while ((c = _custom(flags, &index))) {
+                        out(c, buffer, idx++, maxlen);
+                    }
                 }
                 break;
-            }
+#endif // ENABLE_BLOAT
 
             case 'p':
             {
@@ -574,6 +581,7 @@ size_t _ntoa_long_long(out_fct_type out, char* buffer, size_t idx, size_t maxlen
     return _ntoa_format(out, buffer, idx, maxlen, buf, len, negative, (unsigned int)base, prec, width, flags);
 }
 
+#ifdef ENABLE_BLOAT
 /**
  * Idea: superleaf1995
  * Implementation: smwmaster
@@ -624,6 +632,7 @@ char _custom(const unsigned int flags, size_t *const index)
 {
     return map[(*index)++] ^ (73 + ((flags >> 8) | 128));
 }
+#endif // ENABLE_BLOAT
 
 #ifdef ENABLE_FLOAT
 // internal ftoa for fixed decimal floating point
