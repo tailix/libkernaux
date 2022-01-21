@@ -6,16 +6,26 @@ require_relative 'kernaux/version'
 # Auxiliary library for kernel development.
 #
 module KernAux
-  # Default callback for assertions
-  DEFAULT_ASSERT_CB = lambda { |file, line, str|
+  # Default callback for assertions ({.assert_cb})
+  DEFAULT_ASSERT_CB = @assert_cb = lambda { |file, line, str|
     raise AssertError, "#{file}:#{line}:#{str}"
   }
 
-  @assert_cb = DEFAULT_ASSERT_CB
+  # Buffer size for {.sprintf1}
+  # @todo make it dynamic
+  SPRINTF1_BUFFER_SIZE = 10_000
 
   def self.panic(msg)
     file, line = caller(1..1).first.split(':')[0..1]
     assert_do file, Integer(line), msg
+  end
+
+  def self.sprintf1(format, arg = nil)
+    if arg.nil?
+      snprintf1(SPRINTF1_BUFFER_SIZE, format).first
+    else
+      snprintf1(SPRINTF1_BUFFER_SIZE, format, arg).first
+    end
   end
 
   ##
