@@ -2,6 +2,9 @@
 
 require_relative 'kernaux/version'
 
+# Native extensions
+require_relative 'kernaux/default'
+
 ##
 # Auxiliary library for kernel development.
 #
@@ -57,6 +60,3 @@ module KernAux
   #
   class CmdlineError < Error; end
 end
-
-# Native extension
-require_relative 'kernaux/default'
