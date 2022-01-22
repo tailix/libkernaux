@@ -18,8 +18,6 @@ AC_ARG_ENABLE([bloat],        AS_HELP_STRING([--disable-bloat],       [disable u
 AC_ARG_ENABLE([float],        AS_HELP_STRING([--disable-float],       [disable floating-point arithmeric]))
 
 dnl Features (disabled by default)
-AC_ARG_ENABLE([assert],       AS_HELP_STRING([--enable-assert],       [enable runtime assertions]))
-AC_ARG_ENABLE([guard],        AS_HELP_STRING([--enable-guard],        [enable assert/panic guards]))
 AC_ARG_ENABLE([tests],        AS_HELP_STRING([--enable-tests],        [enable tests and examples]))
 
 dnl Packages (enabled by default)
@@ -87,8 +85,6 @@ AM_CONDITIONAL([ENABLE_BLOAT],      [test "$enable_bloat"      != no])
 AM_CONDITIONAL([ENABLE_FLOAT],      [test "$enable_float"      != no])
 
 dnl Features (disabled by default)
-AM_CONDITIONAL([ENABLE_ASSERT],     [test "$enable_assert"     = yes])
-AM_CONDITIONAL([ENABLE_GUARD],      [test "$enable_guard"      = yes])
 AM_CONDITIONAL([ENABLE_TESTS],      [test "$enable_tests"      = yes])
 
 dnl Packages (enabled by default)
@@ -121,8 +117,6 @@ AS_IF([test "$enable_bloat"      != no], [AC_DEFINE([ENABLE_BLOAT],          [1]
 AS_IF([test "$enable_float"      != no], [AC_DEFINE([ENABLE_FLOAT],          [1], [enabled floating-point arithmeric])])
 
 dnl Features (disabled by default)
-AS_IF([test "$enable_assert"     = yes], [AC_DEFINE([KERNAUX_ENABLE_ASSERT], [1], [enabled runtime assertions])])
-AS_IF([test "$enable_guard"      = yes], [AC_DEFINE([KERNAUX_ENABLE_GUARD],  [1], [enabled assert/panic guards])])
 AS_IF([test "$enable_tests"      = yes], [AC_DEFINE([ENABLE_TESTS],          [1], [enabled tests and examples])])
 
 dnl Packages (enabled by default)

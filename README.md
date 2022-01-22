@@ -84,16 +84,6 @@ stable options.
 
 ### Non-default options
 
-#### Features
-
-* `--enable-assert` - use value of extern variable `kernaux_assert_cb` as a
-  callback function for internal assertions. You still can use assertions in
-  your own application (kernel) even if this option was not enabled.
-* `--enable-guard` - safely return from functions even when assertions are
-  disabled. This option doesn't have effect if your assetion function was set
-  and ends execution of application (kernel). However it prevents crashes and
-  undefined behavior in other cases.
-
 #### Packages
 
 * `--with-libc` - provides the replacement for some standard C functions. Useful
@@ -140,7 +130,7 @@ environment.
 
 ```
 ./autogen.sh
-./configure --enable-tests --enable-assert --enable-guard CFLAGS='-fPIC'
+./configure --enable-tests CFLAGS='-fPIC'
 make
 ```
 
@@ -157,8 +147,6 @@ without it in `$PATH`:
 ```
 ./configure \
   --host='i386-elf' \
-  --enable-assert \
-  --enable-guard \
   --with-libc \
   AR="$(which i386-elf-ar)" \
   CC="$(which i386-elf-gcc)" \
