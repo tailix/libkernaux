@@ -26,7 +26,7 @@ VALUE rb_KernAux_snprintf1(
     const VALUE *const argv_rb,
     const VALUE self __attribute__((unused))
 ) {
-    if (argc != 2 && argc != 3) rb_raise(rb_eArgError, "expected 2 or 3 args");
+    if (argc < 2 || argc > 4) rb_raise(rb_eArgError, "expected 2, 3 or 4 args");
 
     const VALUE size_rb = argv_rb[0];
     VALUE format_rb = argv_rb[1];
@@ -40,6 +40,8 @@ VALUE rb_KernAux_snprintf1(
 
     while (*fmt && *fmt != '%') ++fmt;
     if (*(fmt++) != '%') rb_raise(rb_eArgError, "invalid format");
+
+    bool has_width = false;
 
     // Mimic printf behavior.
     {
@@ -59,6 +61,7 @@ VALUE rb_KernAux_snprintf1(
         while (*fmt >= '0' && *fmt <= '9') ++fmt;
     } else if (*fmt == '*') {
         ++fmt;
+        has_width = true;
     }
     if (*fmt == '.') {
         ++fmt;
@@ -85,6 +88,9 @@ VALUE rb_KernAux_snprintf1(
         if (*(fmt++) == '%') rb_raise(rb_eArgError, "invalid format");
     }
 
+    int width = 0;
+    if (has_width && argc > 2) width = NUM2INT(argv_rb[2]);
+
     bool use_dbl = false;
     double dbl;
     union {
@@ -94,8 +100,8 @@ VALUE rb_KernAux_snprintf1(
         char chr;
     } __attribute__((packed)) arg = { .str = "" };
 
-    if (argc == 3) {
-        VALUE arg_rb = argv_rb[2];
+    if (argc == (has_width ? 4 : 3)) {
+        VALUE arg_rb = argv_rb[has_width ? 3 : 2];
 
         if (c == 'd' || c == 'i') {
             RB_INTEGER_TYPE_P(arg_rb);
@@ -121,9 +127,18 @@ VALUE rb_KernAux_snprintf1(
 
     char *const str = malloc(size);
     if (!str) rb_raise(rb_eNoMemError, "snprintf1 buffer malloc");
-    const int slen = use_dbl
-        ? kernaux_snprintf(str, size, format, dbl)
-        : kernaux_snprintf(str, size, format, arg);
+
+    int slen;
+    if (has_width) {
+        slen = use_dbl
+            ? kernaux_snprintf(str, size, format, width, dbl)
+            : kernaux_snprintf(str, size, format, width, arg);
+    } else {
+        slen = use_dbl
+            ? kernaux_snprintf(str, size, format, dbl)
+            : kernaux_snprintf(str, size, format, arg);
+    }
+
     const VALUE output_rb =
         rb_funcall(rb_str_new2(str), rb_intern_freeze, 0);
     free(str);

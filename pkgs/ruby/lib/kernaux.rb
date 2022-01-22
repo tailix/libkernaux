@@ -33,13 +33,7 @@ module KernAux
     end.join.freeze
   end
 
-  def self.sprintf1(format, arg = nil)
-    if arg.nil?
-      snprintf1(SPRINTF1_BUFFER_SIZE, format).first
-    else
-      snprintf1(SPRINTF1_BUFFER_SIZE, format, arg).first
-    end
-  end
+  def self.sprintf1(...) = snprintf1(SPRINTF1_BUFFER_SIZE, ...).first
 
   ##
   # Our base class for runtime errors.
