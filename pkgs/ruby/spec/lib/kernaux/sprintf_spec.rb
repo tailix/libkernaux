@@ -105,6 +105,24 @@ RSpec.describe KernAux, '.sprintf' do
       ['',                       ['%#.0llx', 0]],
       ['0x0000614e',             ['%#.8x', 0x614e]],
       ['0b110',                  ['%#b', 6]],
+      # specifier
+      ['Hello testing',          'Hello testing'],
+      ['Hello testing',          ['Hello testing%s']],
+      ['Hello testing',          ['Hello testing%s', '']],
+      ['Hello testing',          ['%s', 'Hello testing']],
+      ['1024',                   ['%d', 1024]],
+      ['-1024',                  ['%d', -1024]],
+      ['1024',                   ['%i', 1024]],
+      ['-1024',                  ['%i', -1024]],
+      ['1024',                   ['%u', 1024]],
+      ['4294966272',             ['%u', 4_294_966_272]],
+      ['777',                    ['%o', 511]],
+      ['37777777001',            ['%o', 4_294_966_785]],
+      ['1234abcd',               ['%x', 305_441_741]],
+      ['edcb5433',               ['%x', 3_989_525_555]],
+      ['1234ABCD',               ['%X', 305_441_741]],
+      ['EDCB5433',               ['%X', 3_989_525_555]],
+      ['%',                      ['%%']],
     ].each do |expected, *args|
       it "transforms #{args.inspect} to #{expected.inspect}" do
         expect(described_class.sprintf(*args)).to eq expected
