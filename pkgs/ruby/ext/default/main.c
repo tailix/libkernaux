@@ -227,7 +227,7 @@ VALUE rb_KernAux_snprintf1(
     if (!str) rb_raise(rb_eNoMemError, "snprintf1 buffer malloc");
     const int slen = use_dbl
         ? kernaux_snprintf(str, size, format, dbl)
-        : kernaux_snprintf(str, size, format, arg, "", "", "");
+        : kernaux_snprintf(str, size, format, arg);
     const VALUE output_rb =
         rb_funcall(rb_str_new2(str), rb_intern_freeze, 0);
     free(str);
