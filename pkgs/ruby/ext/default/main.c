@@ -189,11 +189,12 @@ VALUE rb_KernAux_snprintf1(
         if (*(fmt++) == '%') rb_raise(rb_eArgError, "invalid format");
     }
 
+    bool use_dbl = false;
+    double dbl;
     union {
         const char *str;
         long long ll;
         unsigned long long ull;
-        double dbl;
         char chr;
     } __attribute__((packed)) arg = { .str = "" };
 
@@ -210,9 +211,9 @@ VALUE rb_KernAux_snprintf1(
                    c == 'e' || c == 'E' ||
                    c == 'g' || c == 'G')
         {
-            // FIXME: this doesn't work
             RB_FLOAT_TYPE_P(arg_rb);
-            arg.dbl = NUM2DBL(arg_rb);
+            use_dbl = true;
+            dbl = NUM2DBL(arg_rb);
         } else if (c == 'c') {
             Check_Type(arg_rb, T_STRING);
             arg.chr = *StringValuePtr(arg_rb);
@@ -224,7 +225,9 @@ VALUE rb_KernAux_snprintf1(
 
     char *const str = malloc(size);
     if (!str) rb_raise(rb_eNoMemError, "snprintf1 buffer malloc");
-    const int slen = kernaux_snprintf(str, size, format, arg, "", "", "");
+    const int slen = use_dbl
+        ? kernaux_snprintf(str, size, format, dbl)
+        : kernaux_snprintf(str, size, format, arg, "", "", "");
     const VALUE output_rb =
         rb_funcall(rb_str_new2(str), rb_intern_freeze, 0);
     free(str);
