@@ -1,7 +1,6 @@
 2022-01-21  Alex Kotov  <kotovalexarian@gmail.com>
 
 	* configure.ac: Allow to disable unnecessary heavy binary data
-	* src/printf.c: Fix bug with floating-point arithmetics
 
 2022-01-20  Alex Kotov  <kotovalexarian@gmail.com>
 
