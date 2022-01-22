@@ -99,6 +99,12 @@ RSpec.describe KernAux, '.sprintf' do
       ['-42            ',        ['%0-15d', -42]],
       ['-4.200e+01     ',        ['%0-15.3e', -42.0]],
       ['-42.0          ',        ['%0-15.3g', -42.0]],
+      # # flag
+      ['',                       ['%#.0x', 0]],
+      ['0',                      ['%#.1x', 0]],
+      ['',                       ['%#.0llx', 0]],
+      ['0x0000614e',             ['%#.8x', 0x614e]],
+      ['0b110',                  ['%#b', 6]],
     ].each do |expected, *args|
       it "transforms #{args.inspect} to #{expected.inspect}" do
         expect(described_class.sprintf(*args)).to eq expected
