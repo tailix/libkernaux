@@ -154,10 +154,18 @@ VALUE rb_KernAux_snprintf1(
     if (*(fmt++) != '%') rb_raise(rb_eArgError, "invalid format");
 
     // Mimic printf behavior.
-    if (*fmt == '0' || *fmt == '-' || *fmt == '+' || *fmt == ' ' ||
-        *fmt == '#')
     {
-        ++fmt;
+        bool flags;
+        do {
+            if (*fmt == '0' || *fmt == '-' || *fmt == '+' || *fmt == ' ' ||
+                *fmt == '#')
+            {
+                ++fmt;
+                flags = true;
+            } else {
+                flags = false;
+            }
+        } while (flags);
     }
     if (*fmt >= '0' && *fmt <= '9') {
         while (*fmt >= '0' && *fmt <= '9') ++fmt;

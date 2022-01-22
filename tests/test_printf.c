@@ -1,3 +1,8 @@
+/**
+ * Copyright (c) 2014-2019 Marco Paland <info@paland.com>
+ * Author: Marco Paland (info@paland.com) PALANDesign Hannover, Germany
+ */
+
 #ifdef HAVE_CONFIG_H
 #include "config.h"
 #endif
@@ -99,6 +104,20 @@ int main()
 #ifdef ENABLE_FLOAT
     test("1.200000",   "%f", 1.2);
     test("123.456789", "%f", 123.456789);
+#endif
+
+    test("42",              "%0-d",      42);
+    test("-42",             "%0-d",     -42);
+    test("42   ",           "%0-5d",     42);
+    test("-42  ",           "%0-5d",    -42);
+    test("42             ", "%0-15d",    42);
+    test("-42            ", "%0-15d",   -42);
+#ifdef ENABLE_FLOAT
+    test("-4.200e+01     ", "%0-15.3e", -42.0);
+    test("-42.0          ", "%0-15.3g", -42.0);
+#else
+    test("e",               "%0-15.3e", -42.0);
+    test("g",               "%0-15.3g", -42.0);
 #endif
 
     return 0;
