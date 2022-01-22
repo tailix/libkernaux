@@ -6,43 +6,19 @@
 #include <kernaux.h>
 #include <ruby.h>
 
-#define CMDLINE_ARGV_COUNT_MAX 256
-#define CMDLINE_BUFFER_SIZE 4096
-
-struct Cmdline {
-    char error_msg[KERNAUX_CMDLINE_ERROR_MSG_SIZE_MAX];
-    char *argv[CMDLINE_ARGV_COUNT_MAX];
-    char buffer[CMDLINE_BUFFER_SIZE];
-};
-
-static const struct rb_data_type_struct cmdline_rbdata = {
-    .wrap_struct_name = "cmdline",
-    .function = {
-        .dmark = NULL,
-        .dfree = RUBY_DEFAULT_FREE,
-        .dsize = NULL,
-        .dcompact = NULL,
-        .reserved = { 0 },
-    },
-    .parent = NULL,
-    .data = NULL,
-    .flags = RUBY_TYPED_FREE_IMMEDIATELY,
-};
-
 static VALUE rb_KernAux = Qnil;
-static VALUE rb_KernAux_Cmdline = Qnil;
-
 static VALUE rb_KernAux_Error = Qnil;
-static VALUE rb_KernAux_CmdlineError = Qnil;
 
 static void assert_cb(const char *file, int line, const char *str);
+
+#ifdef HAVE_KERNAUX_CMDLINE
+void init_cmdline();
+#endif // HAVE_KERNAUX_CMDLINE
 
 static VALUE rb_KernAux_assert_cb(VALUE self);
 static VALUE rb_KernAux_assert_cb_EQ(VALUE self, VALUE assert_cb);
 static
 VALUE rb_KernAux_assert_do(VALUE self, VALUE file, VALUE line, VALUE msg);
-
-static VALUE rb_KernAux_Cmdline_ALLOC(VALUE klass);
 
 #ifdef HAVE_KERNAUX_UTOA10
 static VALUE rb_KernAux_utoa10(VALUE self, VALUE number);
@@ -53,22 +29,17 @@ static VALUE rb_KernAux_itoa10(VALUE self, VALUE number);
 #ifdef HAVE_KERNAUX_SNPRINTF
 static VALUE rb_KernAux_snprintf1(int argc, const VALUE *argv, VALUE self);
 #endif
-#ifdef HAVE_KERNAUX_CMDLINE
-static VALUE rb_KernAux_cmdline(VALUE self, VALUE str);
-#endif
 
 void Init_default()
 {
-    rb_KernAux = rb_define_module("KernAux");
-    rb_KernAux_Cmdline =
-        rb_define_class_under(rb_KernAux, "Cmdline", rb_cObject);
+#ifdef HAVE_KERNAUX_CMDLINE
+    init_cmdline();
+#endif // HAVE_KERNAUX_CMDLINE
 
-    rb_define_alloc_func(rb_KernAux_Cmdline, rb_KernAux_Cmdline_ALLOC);
+    rb_KernAux = rb_define_module("KernAux");
 
     rb_KernAux_Error =
         rb_define_class_under(rb_KernAux, "Error", rb_eRuntimeError);
-    rb_KernAux_CmdlineError =
-        rb_define_class_under(rb_KernAux, "CmdlineError", rb_KernAux_Error);
 
     kernaux_assert_cb = assert_cb;
 
@@ -88,9 +59,6 @@ void Init_default()
 #ifdef HAVE_KERNAUX_SNPRINTF
     rb_define_singleton_method(rb_KernAux, "snprintf1",
                                rb_KernAux_snprintf1, -1);
-#endif
-#ifdef HAVE_KERNAUX_CMDLINE
-    rb_define_singleton_method(rb_KernAux, "cmdline", rb_KernAux_cmdline, 1);
 #endif
 }
 
@@ -127,13 +95,6 @@ VALUE rb_KernAux_assert_do(
     kernaux_assert_do(file, line, msg);
 
     return Qnil;
-}
-
-VALUE rb_KernAux_Cmdline_ALLOC(const VALUE klass)
-{
-    struct Cmdline *cmdline;
-    return
-        TypedData_Make_Struct(klass, struct Cmdline, &cmdline_rbdata, cmdline);
 }
 
 #ifdef HAVE_KERNAUX_UTOA10
@@ -265,42 +226,6 @@ VALUE rb_KernAux_snprintf1(
     const VALUE result_rb = rb_ary_new2(2);
     rb_ary_push(result_rb, output_rb);
     rb_ary_push(result_rb, INT2NUM(slen));
-    return rb_funcall(result_rb, rb_intern("freeze"), 0);
-}
-#endif
-
-#ifdef HAVE_KERNAUX_CMDLINE
-VALUE rb_KernAux_cmdline(const VALUE self_rb, VALUE str_rb)
-{
-    const char *const str = StringValueCStr(str_rb);
-    size_t argc;
-
-    const VALUE cmdline_rb =
-        rb_funcall(rb_KernAux_Cmdline, rb_intern("new"), 0);
-    struct Cmdline *cmdline;
-    TypedData_Get_Struct(cmdline_rb, struct Cmdline, &cmdline_rbdata, cmdline);
-    if (!cmdline) rb_raise(rb_KernAux_CmdlineError, "internal error");
-
-    const bool result = kernaux_cmdline(
-        str,
-        cmdline->error_msg,
-        &argc,
-        cmdline->argv,
-        cmdline->buffer,
-        CMDLINE_ARGV_COUNT_MAX,
-        CMDLINE_BUFFER_SIZE
-    );
-
-    if (!result) rb_raise(rb_KernAux_CmdlineError, "%s", cmdline->error_msg);
-
-    VALUE result_rb = rb_ary_new2(argc);
-    for (size_t index = 0; index < argc; ++index) {
-        rb_ary_push(
-            result_rb,
-            rb_funcall(rb_str_new2(cmdline->argv[index]),
-                                   rb_intern("freeze"), 0)
-        );
-    }
     return rb_funcall(result_rb, rb_intern("freeze"), 0);
 }
 #endif
