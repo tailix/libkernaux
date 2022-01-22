@@ -12,7 +12,7 @@ struct Data {
     char buffer[BUFFER_SIZE];
 };
 
-static VALUE rb_KernAux_Cmdline_ALLOC(VALUE klass);
+static VALUE rb_ANON_Data_ALLOC(VALUE klass);
 static VALUE rb_KernAux_cmdline(VALUE self, VALUE cmdline);
 
 static const struct rb_data_type_struct info = {
@@ -32,7 +32,7 @@ static const struct rb_data_type_struct info = {
 static VALUE rb_KernAux = Qnil;
 static VALUE rb_KernAux_Error = Qnil;
 static VALUE rb_KernAux_CmdlineError = Qnil;
-static VALUE rb_KernAux_Cmdline = Qnil;
+static VALUE rb_ANON_Data = Qnil;
 
 void init_cmdline()
 {
@@ -41,13 +41,13 @@ void init_cmdline()
         rb_define_class_under(rb_KernAux, "Error" ,rb_eRuntimeError);
     rb_KernAux_CmdlineError =
         rb_define_class_under(rb_KernAux, "CmdlineError", rb_KernAux_Error);
-    rb_KernAux_Cmdline =
-        rb_define_class_under(rb_KernAux, "Cmdline", rb_cObject);
-    rb_define_alloc_func(rb_KernAux_Cmdline, rb_KernAux_Cmdline_ALLOC);
+    rb_ANON_Data = rb_funcall(rb_cClass, rb_intern("new"), 1, rb_cObject);
+    rb_gc_register_mark_object(rb_ANON_Data);
+    rb_define_alloc_func(rb_ANON_Data, rb_ANON_Data_ALLOC);
     rb_define_singleton_method(rb_KernAux, "cmdline", rb_KernAux_cmdline, 1);
 }
 
-VALUE rb_KernAux_Cmdline_ALLOC(const VALUE klass)
+VALUE rb_ANON_Data_ALLOC(const VALUE klass)
 {
     struct Data *data;
     return TypedData_Make_Struct(klass, struct Data, &info, data);
@@ -58,7 +58,7 @@ VALUE rb_KernAux_cmdline(const VALUE self_rb, VALUE cmdline_rb)
     const char *const cmdline = StringValueCStr(cmdline_rb);
     size_t argc;
 
-    const VALUE data_rb = rb_funcall(rb_KernAux_Cmdline, rb_intern("new"), 0);
+    const VALUE data_rb = rb_funcall(rb_ANON_Data, rb_intern("new"), 0);
     struct Data *data;
     TypedData_Get_Struct(data_rb, struct Data, &info, data);
     if (!data) rb_raise(rb_KernAux_CmdlineError, "internal error");
