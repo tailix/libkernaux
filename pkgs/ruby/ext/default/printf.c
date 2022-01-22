@@ -5,14 +5,12 @@
 
 static VALUE rb_KernAux_snprintf1(int argc, const VALUE *argv, VALUE self);
 
-static ID rb_intern_freeze;
-
+static ID rb_intern_freeze = Qnil;
 static VALUE rb_KernAux = Qnil;
 
 void init_printf()
 {
     rb_gc_register_mark_object(rb_intern_freeze = rb_intern("freeze"));
-
     rb_gc_register_mark_object(rb_KernAux = rb_define_module("KernAux"));
 
     rb_define_singleton_method(rb_KernAux, "snprintf1",

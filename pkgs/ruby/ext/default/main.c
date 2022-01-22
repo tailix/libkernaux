@@ -6,11 +6,6 @@
 #include <kernaux.h>
 #include <ruby.h>
 
-static ID rb_intern_LESS, rb_intern_call, rb_intern_freeze;
-
-static VALUE rb_KernAux = Qnil;
-static VALUE rb_KernAux_Error = Qnil;
-
 void init_assert();
 #ifdef HAVE_KERNAUX_SNPRINTF
 void init_printf();
@@ -25,6 +20,13 @@ static VALUE rb_KernAux_utoa10(VALUE self, VALUE number);
 #ifdef HAVE_KERNAUX_ITOA10
 static VALUE rb_KernAux_itoa10(VALUE self, VALUE number);
 #endif
+
+static ID rb_intern_LESS = Qnil;
+static ID rb_intern_call = Qnil;
+static ID rb_intern_freeze = Qnil;
+
+static VALUE rb_KernAux = Qnil;
+static VALUE rb_KernAux_Error = Qnil;
 
 void Init_default()
 {
@@ -41,7 +43,6 @@ void Init_default()
     rb_gc_register_mark_object(rb_intern_freeze = rb_intern("freeze"));
 
     rb_gc_register_mark_object(rb_KernAux = rb_define_module("KernAux"));
-
     rb_gc_register_mark_object(rb_KernAux_Error =
         rb_define_class_under(rb_KernAux, "Error", rb_eRuntimeError));
 

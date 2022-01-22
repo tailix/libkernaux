@@ -8,8 +8,7 @@ static VALUE rb_KernAux_assert_cb_EQ(VALUE self, VALUE assert_cb);
 static
 VALUE rb_KernAux_assert_do(VALUE self, VALUE file, VALUE line, VALUE msg);
 
-static ID rb_intern_call;
-
+static ID rb_intern_call = Qnil;
 static VALUE rb_KernAux = Qnil;
 
 void init_assert()

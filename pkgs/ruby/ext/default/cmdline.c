@@ -29,7 +29,8 @@ static const struct rb_data_type_struct info = {
     .flags = RUBY_TYPED_FREE_IMMEDIATELY,
 };
 
-static ID rb_intern_freeze, rb_intern_new;
+static ID rb_intern_freeze = Qnil;
+static ID rb_intern_new = Qnil;
 
 static VALUE rb_KernAux = Qnil;
 static VALUE rb_KernAux_Error = Qnil;
@@ -39,7 +40,7 @@ static VALUE rb_ANON_Data = Qnil;
 void init_cmdline()
 {
     rb_gc_register_mark_object(rb_intern_freeze = rb_intern("freeze"));
-    rb_gc_register_mark_object(rb_intern_new = rb_intern("new"));
+    rb_gc_register_mark_object(rb_intern_new    = rb_intern("new"));
 
     rb_gc_register_mark_object(rb_KernAux = rb_define_module("KernAux"));
     rb_gc_register_mark_object(rb_KernAux_Error =
@@ -48,6 +49,7 @@ void init_cmdline()
         rb_define_class_under(rb_KernAux, "CmdlineError", rb_KernAux_Error));
     rb_gc_register_mark_object(rb_ANON_Data =
         rb_funcall(rb_cClass, rb_intern_new, 1, rb_cObject));
+
     rb_define_alloc_func(rb_ANON_Data, rb_ANON_Data_ALLOC);
     rb_define_singleton_method(rb_KernAux, "cmdline", rb_KernAux_cmdline, 1);
 }
