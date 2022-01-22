@@ -38,17 +38,14 @@ void Init_default()
     init_cmdline();
 #endif // HAVE_KERNAUX_CMDLINE
 
-    rb_intern_LESS = rb_intern("<");
-    rb_gc_register_mark_object(rb_intern_LESS);
-    rb_intern_call = rb_intern("call");
-    rb_gc_register_mark_object(rb_intern_call);
-    rb_intern_freeze = rb_intern("freeze");
-    rb_gc_register_mark_object(rb_intern_freeze);
+    rb_gc_register_mark_object(rb_intern_LESS   = rb_intern("<"));
+    rb_gc_register_mark_object(rb_intern_call   = rb_intern("call"));
+    rb_gc_register_mark_object(rb_intern_freeze = rb_intern("freeze"));
 
-    rb_KernAux = rb_define_module("KernAux");
+    rb_gc_register_mark_object(rb_KernAux = rb_define_module("KernAux"));
 
-    rb_KernAux_Error =
-        rb_define_class_under(rb_KernAux, "Error", rb_eRuntimeError);
+    rb_gc_register_mark_object(rb_KernAux_Error =
+        rb_define_class_under(rb_KernAux, "Error", rb_eRuntimeError));
 
     kernaux_assert_cb = assert_cb;
 
