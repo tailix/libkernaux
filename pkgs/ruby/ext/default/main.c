@@ -6,6 +6,8 @@
 #include <kernaux.h>
 #include <ruby.h>
 
+static ID rb_intern_LESS, rb_intern_call, rb_intern_freeze;
+
 static VALUE rb_KernAux = Qnil;
 static VALUE rb_KernAux_Error = Qnil;
 
@@ -35,6 +37,13 @@ void Init_default()
 #ifdef HAVE_KERNAUX_CMDLINE
     init_cmdline();
 #endif // HAVE_KERNAUX_CMDLINE
+
+    rb_intern_LESS = rb_intern("<");
+    rb_gc_register_mark_object(rb_intern_LESS);
+    rb_intern_call = rb_intern("call");
+    rb_gc_register_mark_object(rb_intern_call);
+    rb_intern_freeze = rb_intern("freeze");
+    rb_gc_register_mark_object(rb_intern_freeze);
 
     rb_KernAux = rb_define_module("KernAux");
 
@@ -69,7 +78,7 @@ void assert_cb(const char *const file, const int line, const char *const str)
     const VALUE file_rb = rb_str_new2(file);
     const VALUE line_rb = INT2FIX(line);
     const VALUE str_rb = rb_str_new2(str);
-    rb_funcall(assert_cb_rb, rb_intern("call"), 3, file_rb, line_rb, str_rb);
+    rb_funcall(assert_cb_rb, rb_intern_call, 3, file_rb, line_rb, str_rb);
 }
 
 VALUE rb_KernAux_assert_cb(const VALUE self)
@@ -103,12 +112,12 @@ VALUE rb_KernAux_utoa10(
     const VALUE number_rb
 ) {
     RB_INTEGER_TYPE_P(number_rb);
-    if (rb_funcall(number_rb, rb_intern("<"), 1, INT2FIX(0))) {
+    if (rb_funcall(number_rb, rb_intern_LESS, 1, INT2FIX(0))) {
         rb_raise(rb_eRangeError, "can't convert negative number to uint64_t");
     }
     char buffer[KERNAUX_ITOA_BUFFER_SIZE];
     kernaux_utoa10(NUM2ULL(number_rb), buffer);
-    return rb_funcall(rb_str_new2(buffer), rb_intern("freeze"), 0);
+    return rb_funcall(rb_str_new2(buffer), rb_intern_freeze, 0);
 }
 #endif
 
@@ -120,7 +129,7 @@ VALUE rb_KernAux_itoa10(
     RB_INTEGER_TYPE_P(number_rb);
     char buffer[KERNAUX_ITOA_BUFFER_SIZE];
     kernaux_itoa10(NUM2LL(number_rb), buffer);
-    return rb_funcall(rb_str_new2(buffer), rb_intern("freeze"), 0);
+    return rb_funcall(rb_str_new2(buffer), rb_intern_freeze, 0);
 }
 #endif
 
@@ -220,12 +229,12 @@ VALUE rb_KernAux_snprintf1(
     if (!str) rb_raise(rb_eNoMemError, "snprintf1 buffer malloc");
     const int slen = kernaux_snprintf(str, size, format, arg, "", "", "");
     const VALUE output_rb =
-        rb_funcall(rb_str_new2(str), rb_intern("freeze"), 0);
+        rb_funcall(rb_str_new2(str), rb_intern_freeze, 0);
     free(str);
 
     const VALUE result_rb = rb_ary_new2(2);
     rb_ary_push(result_rb, output_rb);
     rb_ary_push(result_rb, INT2NUM(slen));
-    return rb_funcall(result_rb, rb_intern("freeze"), 0);
+    return rb_funcall(result_rb, rb_intern_freeze, 0);
 }
 #endif
