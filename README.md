@@ -79,7 +79,7 @@ Configuration
 Because this library has no external dependencies, we use **autoconf** features
 to control behavior of the library, and packages to choose it's components.
 Configuration options also follow the [semantic versioning](https://semver.org)
-scheme and are split into stable and work-on-progress ones. Here we cover only
+scheme and are split into stable and work-in-progress ones. Here we cover only
 stable options.
 
 ### Non-default options
