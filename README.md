@@ -15,9 +15,10 @@ Table of contents
 * [Overview](#libkernaux)
 * [Table of contents](#table-of-contents)
 * [API](#api)
-* [Tips](#tips)
+* [Configuration](#configuration)
   * [Non-default options](#non-default-options)
   * [Default options](#default-options)
+* [Tips](#tips)
   * [Installation](#installation)
   * [Development](#development)
   * [Cross](#cross)
@@ -72,14 +73,18 @@ zero). Work-in-progress APIs can change at any time.
 
 
 
-Tips
-----
+Configuration
+-------------
+
+Because this library has no external dependencies, we use **autoconf** features
+to control behavior of the library, and packages to choose it's components.
+Configuration options also follow the [semantic versioning](https://semver.org)
+scheme and are split into stable and work-on-progress ones. Here we cover only
+stable options.
 
 ### Non-default options
 
-Because this library has no external dependencies, we use **autoconf** features
-to control behavior of the library, and packages to choose it's components. Here
-are some non-default options:
+#### Features
 
 * `--enable-assert` - use value of extern variable `kernaux_assert_cb` as a
   callback function for internal assertions. You still can use assertions in
@@ -88,6 +93,9 @@ are some non-default options:
   disabled. This option doesn't have effect if your assetion function was set
   and ends execution of application (kernel). However it prevents crashes and
   undefined behavior in other cases.
+
+#### Packages
+
 * `--with-libc` - provides the replacement for some standard C functions. Useful
   in freestanding environment, where no libc is present. You can also separately
   include or exclude components:
@@ -108,16 +116,13 @@ are some non-default options:
 All packages all included by default. To exclude all packages except those
 explicitly included, use `--without-all`.
 
-* `--with[out]-cmdline`
-* `--with[out]-console`
-* `--with[out]-elf`
-* `--with[out]-framebuffer`
-* `--with[out]-mbr`
-* `--with[out]-multiboot2`
 * `--with[out]-ntoa`
 * `--with[out]-printf`
-* `--with[out]-pfa`
-* `--with[out]-units`
+
+
+
+Tips
+----
 
 ### Installation
 
