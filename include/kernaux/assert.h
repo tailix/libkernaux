@@ -14,7 +14,7 @@ extern "C" {
 #define KERNAUX_ASSERT(cond) ((void)sizeof((cond)))
 #endif
 
-#if defined(KERNAUX_ENABLE_GUARD) || defined(KERNAUX_ENABLE_GUARD_COND)
+#ifdef KERNAUX_ENABLE_GUARD
 #define KERNAUX_ASSERT_RETURN(cond)       { KERNAUX_ASSERT(cond); if (!(cond)) return;       }
 #define KERNAUX_ASSERT_RETVAL(cond, val)  { KERNAUX_ASSERT(cond); if (!(cond)) return (val); }
 #else
@@ -22,7 +22,7 @@ extern "C" {
 #define KERNAUX_ASSERT_RETVAL(cond, val)  { KERNAUX_ASSERT(cond); }
 #endif
 
-#if defined(KERNAUX_ENABLE_GUARD) || defined(KERNAUX_ENABLE_GUARD_NULL)
+#ifdef KERNAUX_ENABLE_GUARD
 #define KERNAUX_NOTNULL_RETURN(cond)      { KERNAUX_ASSERT(cond); if (!(cond)) return;       }
 #define KERNAUX_NOTNULL_RETVAL(cond, val) { KERNAUX_ASSERT(cond); if (!(cond)) return (val); }
 #else
@@ -30,7 +30,7 @@ extern "C" {
 #define KERNAUX_NOTNULL_RETVAL(cond, val) { KERNAUX_ASSERT(cond); }
 #endif
 
-#if defined(KERNAUX_ENABLE_GUARD) || defined(KERNAUX_ENABLE_GUARD_PANIC)
+#ifdef KERNAUX_ENABLE_GUARD
 #define KERNAUX_PANIC_RETURN(msg)         { KERNAUX_PANIC(msg); return;       }
 #define KERNAUX_PANIC_RETVAL(msg, val)    { KERNAUX_PANIC(msg); return (val); }
 #else

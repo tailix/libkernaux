@@ -20,9 +20,6 @@ AC_ARG_ENABLE([float],        AS_HELP_STRING([--disable-float],       [disable f
 dnl Features (disabled by default)
 AC_ARG_ENABLE([assert],       AS_HELP_STRING([--enable-assert],       [enable runtime assertions]))
 AC_ARG_ENABLE([guard],        AS_HELP_STRING([--enable-guard],        [enable assert/panic guards]))
-AC_ARG_ENABLE([guard-cond],   AS_HELP_STRING([--enable-guard-cond],   [enable condition guard]))
-AC_ARG_ENABLE([guard-null],   AS_HELP_STRING([--enable-guard-null],   [enable NULL-guard]))
-AC_ARG_ENABLE([guard-panic],  AS_HELP_STRING([--enable-guard-panic],  [enable panic guard]))
 AC_ARG_ENABLE([tests],        AS_HELP_STRING([--enable-tests],        [enable tests and examples]))
 
 dnl Packages (enabled by default)
@@ -46,14 +43,6 @@ AC_ARG_WITH(  [libc-strlen],  AS_HELP_STRING([--with-libc-strlen],    [with strl
 AC_ARG_WITH(  [libc-strnlen], AS_HELP_STRING([--with-libc-strnlen],   [with strnlen replacement]))
 
 
-
-AC_DEFUN([do_enable_guard],
-[
-if test -z "$enable_guard_cond";  then enable_guard_cond=yes;  fi
-if test -z "$enable_guard_null";  then enable_guard_null=yes;  fi
-if test -z "$enable_guard_panic"; then enable_guard_panic=yes; fi
-])
-AS_IF([test "$enable_guard" = yes], do_enable_guard)
 
 AC_DEFUN([do_without_all],
 [
@@ -99,9 +88,7 @@ AM_CONDITIONAL([ENABLE_FLOAT],       [test "$enable_float"       != no])
 
 dnl Features (disabled by default)
 AM_CONDITIONAL([ENABLE_ASSERT],      [test "$enable_assert"      = yes])
-AM_CONDITIONAL([ENABLE_GUARD_COND],  [test "$enable_guard_cond"  = yes])
-AM_CONDITIONAL([ENABLE_GUARD_NULL],  [test "$enable_guard_null"  = yes])
-AM_CONDITIONAL([ENABLE_GUARD_PANIC], [test "$enable_guard_panic" = yes])
+AM_CONDITIONAL([ENABLE_GUARD],       [test "$enable_guard"       = yes])
 AM_CONDITIONAL([ENABLE_TESTS],       [test "$enable_tests"       = yes])
 
 dnl Packages (enabled by default)
@@ -135,9 +122,7 @@ AS_IF([test "$enable_float"       != no], [AC_DEFINE([ENABLE_FLOAT],            
 
 dnl Features (disabled by default)
 AS_IF([test "$enable_assert"      = yes], [AC_DEFINE([KERNAUX_ENABLE_ASSERT],      [1], [enabled runtime assertions])])
-AS_IF([test "$enable_guard_cond"  = yes], [AC_DEFINE([KERNAUX_ENABLE_GUARD_COND],  [1], [enabled condition guard])])
-AS_IF([test "$enable_guard_null"  = yes], [AC_DEFINE([KERNAUX_ENABLE_GUARD_NULL],  [1], [enabled NULL-guard])])
-AS_IF([test "$enable_guard_panic" = yes], [AC_DEFINE([KERNAUX_ENABLE_GUARD_PANIC], [1], [enabled panic guard])])
+AS_IF([test "$enable_guard"       = yes], [AC_DEFINE([KERNAUX_ENABLE_GUARD],       [1], [enabled assert/panic guards])])
 AS_IF([test "$enable_tests"       = yes], [AC_DEFINE([ENABLE_TESTS],               [1], [enabled tests and examples])])
 
 dnl Packages (enabled by default)
