@@ -17,10 +17,10 @@ enum State {
 
 bool kernaux_cmdline(
     const char *const cmdline,
-    char *error_msg,
+    char *const error_msg,
     size_t *const argc,
-    char **argv,
-    char *buffer,
+    char **const argv,
+    char *const buffer,
     const size_t argv_count_max,
     const size_t buffer_size
 ) {
@@ -43,7 +43,6 @@ bool kernaux_cmdline(
     if (cmdline[0] == '\0') return true;
 
     enum State state = INITIAL;
-
     size_t buffer_pos = 0;
 
     for (size_t index = 0; ; ++index) {
@@ -65,7 +64,7 @@ bool kernaux_cmdline(
                 }
 
                 state = BACKSLASH;
-                argv[(*argc)++] = buffer;
+                argv[(*argc)++] = &buffer[buffer_pos];
             } else if (cur == '"') {
                 if (*argc >= argv_count_max) {
                     strcpy(error_msg, "too many args");
@@ -73,7 +72,7 @@ bool kernaux_cmdline(
                 }
 
                 state = QUOTE;
-                argv[(*argc)++] = buffer;
+                argv[(*argc)++] = &buffer[buffer_pos];
             } else {
                 if (*argc >= argv_count_max) {
                     strcpy(error_msg, "too many args");
@@ -86,9 +85,8 @@ bool kernaux_cmdline(
                 }
 
                 state = TOKEN;
-                argv[(*argc)++] = buffer;
-                *(buffer++) = cur;
-                ++buffer_pos;
+                argv[(*argc)++] = &buffer[buffer_pos];
+                buffer[buffer_pos++] = cur;
             }
             break;
 
@@ -104,7 +102,7 @@ bool kernaux_cmdline(
                 }
 
                 state = BACKSLASH;
-                argv[(*argc)++] = buffer;
+                argv[(*argc)++] = &buffer[buffer_pos];
             } else if (cur == '"') {
                 if (*argc >= argv_count_max) {
                     strcpy(error_msg, "too many args");
@@ -112,7 +110,7 @@ bool kernaux_cmdline(
                 }
 
                 state = QUOTE;
-                argv[(*argc)++] = buffer;
+                argv[(*argc)++] = &buffer[buffer_pos];
             } else {
                 if (*argc >= argv_count_max) {
                     strcpy(error_msg, "too many args");
@@ -125,9 +123,8 @@ bool kernaux_cmdline(
                 }
 
                 state = TOKEN;
-                argv[(*argc)++] = buffer;
-                *(buffer++) = cur;
-                ++buffer_pos;
+                argv[(*argc)++] = &buffer[buffer_pos];
+                buffer[buffer_pos++] = cur;
             }
             break;
 
@@ -139,8 +136,7 @@ bool kernaux_cmdline(
                 }
 
                 state = FINAL;
-                *(buffer++) = '\0';
-                ++buffer_pos;
+                buffer[buffer_pos++] = '\0';
             } else if (cur == ' ') {
                 if (buffer_pos >= buffer_size) {
                     strcpy(error_msg, "buffer overflow");
@@ -148,8 +144,7 @@ bool kernaux_cmdline(
                 }
 
                 state = WHITESPACE;
-                *(buffer++) = '\0';
-                ++buffer_pos;
+                buffer[buffer_pos++] = '\0';
             } else if (cur == '\\') {
                 state = BACKSLASH;
             } else if (cur == '"') {
@@ -161,8 +156,7 @@ bool kernaux_cmdline(
                     goto fail;
                 }
 
-                *(buffer++) = cur;
-                ++buffer_pos;
+                buffer[buffer_pos++] = cur;
             }
             break;
 
@@ -177,8 +171,7 @@ bool kernaux_cmdline(
                 }
 
                 state = TOKEN;
-                *(buffer++) = cur;
-                ++buffer_pos;
+                buffer[buffer_pos++] = cur;
             }
             break;
 
@@ -195,16 +188,14 @@ bool kernaux_cmdline(
                 }
 
                 state = WHITESPACE;
-                *(buffer++) = '\0';
-                ++buffer_pos;
+                buffer[buffer_pos++] = '\0';
             } else {
                 if (buffer_pos >= buffer_size) {
                     strcpy(error_msg, "buffer overflow");
                     goto fail;
                 }
 
-                *(buffer++) = cur;
-                ++buffer_pos;
+                buffer[buffer_pos++] = cur;
             }
             break;
 
@@ -219,8 +210,7 @@ bool kernaux_cmdline(
                 }
 
                 state = QUOTE;
-                *(buffer++) = cur;
-                ++buffer_pos;
+                buffer[buffer_pos++] = cur;
             }
             break;
         }

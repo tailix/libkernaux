@@ -61,7 +61,7 @@ RSpec.describe KernAux, '.cmdline' do
     end
   end
 
-  xcontext 'when there are too many args' do
+  context 'when there are too many args' do
     let(:str) { 'a ' * 257 }
 
     specify do
@@ -70,7 +70,7 @@ RSpec.describe KernAux, '.cmdline' do
     end
   end
 
-  xcontext 'when args cause buffer overflow' do
+  context 'when args cause buffer overflow' do
     let(:str) { 'a' * 4096 }
 
     specify do
