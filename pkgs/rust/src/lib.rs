@@ -5,6 +5,8 @@ use libc::c_char;
 extern "C" {
     #[cfg(test)]
     fn kernaux_utoa10(value: u64, buffer: *mut c_char);
+    #[cfg(test)]
+    fn kernaux_itoa10(value: i64, buffer: *mut c_char);
 }
 
 #[cfg(test)]
@@ -20,5 +22,20 @@ mod tests {
         let result =
             unsafe { CStr::from_ptr(buffer.as_ptr()) }.to_str().unwrap();
         assert_eq!(result, "123");
+    }
+
+    #[test]
+    fn itoa10() {
+        let mut buffer: [i8; 1000] = [0; 1000];
+        unsafe { kernaux_itoa10(123, buffer.as_mut_ptr()) };
+        let result =
+            unsafe { CStr::from_ptr(buffer.as_ptr()) }.to_str().unwrap();
+        assert_eq!(result, "123");
+
+        let mut buffer: [i8; 1000] = [0; 1000];
+        unsafe { kernaux_itoa10(-123, buffer.as_mut_ptr()) };
+        let result =
+            unsafe { CStr::from_ptr(buffer.as_ptr()) }.to_str().unwrap();
+        assert_eq!(result, "-123");
     }
 }
