@@ -47,7 +47,7 @@ VALUE rb_KernAux_utoa10(
     if (rb_funcall(number_rb, rb_intern_LESS, 1, INT2FIX(0))) {
         rb_raise(rb_eRangeError, "can't convert negative number to uint64_t");
     }
-    char buffer[KERNAUX_ITOA10_BUFFER_SIZE];
+    char buffer[KERNAUX_UTOA10_BUFFER_SIZE];
     kernaux_utoa10(NUM2ULL(number_rb), buffer);
     return rb_funcall(rb_str_new2(buffer), rb_intern_freeze, 0);
 }
@@ -74,7 +74,7 @@ VALUE rb_KernAux_utoa16(
     if (rb_funcall(number_rb, rb_intern_LESS, 1, INT2FIX(0))) {
         rb_raise(rb_eRangeError, "can't convert negative number to uint64_t");
     }
-    char buffer[KERNAUX_ITOA16_BUFFER_SIZE];
+    char buffer[KERNAUX_UTOA16_BUFFER_SIZE];
     kernaux_utoa16(NUM2ULL(number_rb), buffer);
     return rb_funcall(rb_str_new2(buffer), rb_intern_freeze, 0);
 }

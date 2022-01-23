@@ -247,7 +247,7 @@ static const struct {
 int main()
 {
     {
-        char buffer[KERNAUX_ITOA10_BUFFER_SIZE];
+        char buffer[KERNAUX_UTOA10_BUFFER_SIZE];
 
         for (
             size_t index = 0;
@@ -257,6 +257,10 @@ int main()
             kernaux_utoa10(utoa10_cases[index].value, buffer);
             assert(strcmp(buffer, utoa10_cases[index].result) == 0);
         }
+    }
+
+    {
+        char buffer[KERNAUX_ITOA10_BUFFER_SIZE];
 
         for (
             size_t index = 0;
@@ -277,7 +281,7 @@ int main()
     }
 
     {
-        char buffer[KERNAUX_ITOA16_BUFFER_SIZE];
+        char buffer[KERNAUX_UTOA16_BUFFER_SIZE];
 
         for (
             size_t index = 0;
@@ -287,6 +291,10 @@ int main()
             kernaux_utoa16(utoa16_cases[index].value, buffer);
             assert(strcmp(buffer, utoa16_cases[index].result) == 0);
         }
+    }
+
+    {
+        char buffer[KERNAUX_ITOA16_BUFFER_SIZE];
 
         for (
             size_t index = 0;
