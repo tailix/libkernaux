@@ -73,6 +73,17 @@ static const char *const argv_foo_spacebarspace[] = {"foo", " bar "};
 static const char *const argv_foo_backslashbarbackslash[] = {"foo", "\\bar\\"};
 static const char *const argv_foo_quotmarkbarquotmark[] = {"foo", "\"bar\""};
 
+static const char *const argv_aX50[] = {
+    "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+};
+
+static const char *const argv_a_X1[] = { "a" };
+static const char *const argv_a_X2[] = { "a", "a" };
+static const char *const argv_a_X3[] = { "a", "a", "a" };
+static const char *const argv_a_X4[] = { "a", "a", "a", "a" };
+static const char *const argv_a_X5[] = { "a", "a", "a", "a", "a" };
+static const char *const argv_a_X6[] = { "a", "a", "a", "a", "a", "a" };
+
 int main()
 {
     test("",             0, 0, true, "", 0, NULL);
@@ -239,30 +250,31 @@ int main()
         true,
         "",
         1,
-        NULL
+        argv_aX50
     );
 
-    test("a",                    1,  0, true,  "",              1, NULL);
+    test("a",                    1,  0, true,  "",              1, argv_a_X1);
+    test("a ",                   1,  0, true,  "",              1, argv_a_X1);
     test("a a",                  1,  0, false, "too many args", 0, NULL);
     test("a a ",                 1,  0, false, "too many args", 0, NULL);
-    test("a a",                  2,  0, true,  "",              2, NULL);
-    test("a a ",                 2,  0, true,  "",              2, NULL);
+    test("a a",                  2,  0, true,  "",              2, argv_a_X2);
+    test("a a ",                 2,  0, true,  "",              2, argv_a_X2);
     test("a a a",                2,  0, false, "too many args", 0, NULL);
     test("a a a ",               2,  0, false, "too many args", 0, NULL);
-    test("a a a",                3,  0, true,  "",              3, NULL);
-    test("a a a ",               3,  0, true,  "",              3, NULL);
+    test("a a a",                3,  0, true,  "",              3, argv_a_X3);
+    test("a a a ",               3,  0, true,  "",              3, argv_a_X3);
     test("a a a a",              3,  0, false, "too many args", 0, NULL);
     test("a a a a ",             3,  0, false, "too many args", 0, NULL);
-    test("a a a a",              4,  0, true,  "",              4, NULL);
-    test("a a a a ",             4,  0, true,  "",              4, NULL);
+    test("a a a a",              4,  0, true,  "",              4, argv_a_X4);
+    test("a a a a ",             4,  0, true,  "",              4, argv_a_X4);
     test("a a a a a",            4,  0, false, "too many args", 0, NULL);
     test("a a a a a ",           4,  0, false, "too many args", 0, NULL);
-    test("a a a a a",            5,  0, true,  "",              5, NULL);
-    test("a a a a a ",           5,  0, true,  "",              5, NULL);
+    test("a a a a a",            5,  0, true,  "",              5, argv_a_X5);
+    test("a a a a a ",           5,  0, true,  "",              5, argv_a_X5);
     test("a a a a a a",          5,  0, false, "too many args", 0, NULL);
     test("a a a a a a ",         5,  0, false, "too many args", 0, NULL);
-    test("a a a a a a",          6,  0, true,  "",              6, NULL);
-    test("a a a a a a ",         6,  0, true,  "",              6, NULL);
+    test("a a a a a a",          6,  0, true,  "",              6, argv_a_X6);
+    test("a a a a a a ",         6,  0, true,  "",              6, argv_a_X6);
 
     {
         char *const buffer = malloc(4096);
@@ -307,9 +319,9 @@ void test(
     assert(argv);
     assert(buffer);
 
-    memset(error_msg, 'a', KERNAUX_CMDLINE_ERROR_MSG_SIZE_MAX);
-    memset(argv,      'a', sizeof(char*) * argv_count_max);
-    memset(buffer,    'a', buffer_size);
+    memset(error_msg, 'x', KERNAUX_CMDLINE_ERROR_MSG_SIZE_MAX);
+    memset(argv,      'x', sizeof(char*) * argv_count_max);
+    memset(buffer,    'x', buffer_size);
 
     assert(
         kernaux_cmdline(
