@@ -38,7 +38,7 @@ zero). Work-in-progress APIs can change at any time.
   * Architecture-specific code (*work in progress*)
     * [Declarations](/include/kernaux/arch/)
     * [Functions](/include/kernaux/asm/)
-  * [Assertions](/include/kernaux/assert.h) (*stable since* **0.1.0**)
+  * [Assertions](/include/kernaux/assert.h) (*stable since* **0.1.0**, *non-breaking since* **0.2.0**)
     * [Assert: simple](/examples/assert_simple.c)
     * [Assert: guards](/examples/assert_guards.c)
     * [Panic: simple](/examples/panic_simple.c)
@@ -49,7 +49,7 @@ zero). Work-in-progress APIs can change at any time.
   * [Framebuffer](/include/kernaux/framebuffer.h) (*planned*)
   * USB (*planned*)
 * Algorithms
-  * [Simple command line parser](/include/kernaux/cmdline.h) (*work in progress*)
+  * [Simple command line parser](/include/kernaux/cmdline.h) (*stable since* **0.2.0**)
     * [Example](/examples/cmdline.c)
   * [Page Frame Allocator](/include/kernaux/pfa.h) (*work in progress*)
     * [Example](/examples/pfa.c)

@@ -2,6 +2,7 @@
 
 	* README.md: Configuration options now follow semver
 	* include/kernaux/assert.h: Do not allow to disable asserts and guards
+	* libkernaux 0.2.0 released
 
 2022-01-21  Alex Kotov  <kotovalexarian@gmail.com>
 
