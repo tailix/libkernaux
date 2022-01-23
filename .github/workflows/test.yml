@@ -37,17 +37,17 @@ jobs:
       - name: install
         run: sudo make install
 
-      - name: bundle
+      - name: Ruby: bundle
         working-directory: pkgs/ruby
-        run: bundle install
+        run: Ruby: bundle install
       - name: rake compile
         working-directory: pkgs/ruby
-        run: rake compile
+        run: Ruby: rake compile
       - name: test & lint
         working-directory: pkgs/ruby
-        run: rake
+        run: Ruby: rake
 
-      - name: test
+      - name: Rust: test
         working-directory: pkgs/rust
         run: cargo test
 
