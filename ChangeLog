@@ -4,6 +4,7 @@
 	* include/kernaux/libc.h: Add funcs "atoi", "isdigit", "isspace"
 	* include/kernaux/ntoa.h: Rename const "KERNAUX_ITOA_BUFFER_SIZE" to
 	"KERNAUX_ITOA10_BUFFER_SIZE"
+	* include/kernaux/ntoa.h: Add funcs "kernaux_utoa16" and "kernaux_itoa16"
 
 2022-01-22  Alex Kotov  <kotovalexarian@gmail.com>
 
