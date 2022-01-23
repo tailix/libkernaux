@@ -13,9 +13,9 @@ Releases
 * `<kernaux/assert.h>` - removed preprocessor directives that can disable panic
   calls and returns.
 
-### New stable APIs
+### New features
 
-* `<kernaux/cmdline.h>` - simple command line parser.
+* `<kernaux/cmdline.h>` is stable now. It's a simple command line parser.
 
 ### Other changes
 
