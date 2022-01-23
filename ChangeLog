@@ -6,6 +6,9 @@
 
 	libkernaux 0.2.0 released
 
+	* configure.ac: Made stable
+	* include/kernaux/cmdline.h: Made stable
+
 2022-01-22  Alex Kotov  <kotovalexarian@gmail.com>
 
 	* README.md: Configuration options now follow semver
