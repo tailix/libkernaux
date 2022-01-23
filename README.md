@@ -89,6 +89,7 @@ stable options.
 * `--with-libc` - provides the replacement for some standard C functions. Useful
   in freestanding environment, where no libc is present. You can also separately
   include or exclude components:
+  * `--with[out]-libc-isdigit`
   * `--with[out]-libc-memset`
   * `--with[out]-libc-strcpy`
   * `--with[out]-libc-strlen`

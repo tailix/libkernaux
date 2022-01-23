@@ -4,6 +4,13 @@
 
 #include <kernaux/libc.h>
 
+#ifdef WITH_LIBC_ISDIGIT
+int isdigit(const int c)
+{
+    return (unsigned)c - '0' < 10;
+}
+#endif // WITH_LIBC_ISDIGIT
+
 #ifdef WITH_LIBC_MEMSET
 void *memset(void *s, int c, size_t n)
 {
