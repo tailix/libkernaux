@@ -10,7 +10,7 @@ Releases
 
 * `./configure` - removed options to disable panic calls and returns in
   `<kernaux/assert.h>`.
-* `<kernaux/assert.h> - removed preprocessor directives that can disable panic
+* `<kernaux/assert.h>` - removed preprocessor directives that can disable panic
   calls and returns.
 
 ### New stable APIs
