@@ -2,6 +2,8 @@
 
 	* include/kernaux/assert.h: Require semicolon after macros
 	* include/kernaux/libc.h: Add funcs "atoi", "isdigit", "isspace"
+	* include/kernaux/ntoa.h: Rename const "KERNAUX_ITOA_BUFFER_SIZE" to
+	"KERNAUX_ITOA10_BUFFER_SIZE"
 
 2022-01-22  Alex Kotov  <kotovalexarian@gmail.com>
 

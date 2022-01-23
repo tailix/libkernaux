@@ -96,7 +96,7 @@ static const struct {
 
 int main()
 {
-    char buffer[KERNAUX_ITOA_BUFFER_SIZE];
+    char buffer[KERNAUX_ITOA10_BUFFER_SIZE];
 
     for (
         size_t index = 0;
