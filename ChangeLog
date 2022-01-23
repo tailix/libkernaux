@@ -4,9 +4,12 @@
 
 2022-01-22  Alex Kotov  <kotovalexarian@gmail.com>
 
+	libkernaux 0.2.0 released
+
+2022-01-22  Alex Kotov  <kotovalexarian@gmail.com>
+
 	* README.md: Configuration options now follow semver
 	* include/kernaux/assert.h: Do not allow to disable asserts and guards
-	* libkernaux 0.2.0 released
 
 2022-01-21  Alex Kotov  <kotovalexarian@gmail.com>
 
@@ -14,7 +17,10 @@
 
 2022-01-20  Alex Kotov  <kotovalexarian@gmail.com>
 
-	* libkernaux 0.1.0 released
 	* include/kernaux/assert.h: Added unconditional assertion (panic)
 	* include/kernaux/assert.h: Added guards for unconditional assertion (panic)
 	* src/printf.c: Fix bug and actually enable floating-point arithmetics
+
+2022-01-20  Alex Kotov  <kotovalexarian@gmail.com>
+
+	libkernaux 0.1.0 released
