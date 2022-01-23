@@ -35,6 +35,7 @@ AC_ARG_WITH(  [units],        AS_HELP_STRING([--without-units],       [without m
 
 dnl Packages (disabled by default)
 AC_ARG_WITH(  [libc],         AS_HELP_STRING([--with-libc],           [with libc replacement]))
+AC_ARG_WITH(  [libc-atoi],    AS_HELP_STRING([--with-libc-atoi],      [with atoi replacement]))
 AC_ARG_WITH(  [libc-isdigit], AS_HELP_STRING([--with-libc-isdigit],   [with isdigit replacement]))
 AC_ARG_WITH(  [libc-isspace], AS_HELP_STRING([--with-libc-isspace],   [with isspace replacement]))
 AC_ARG_WITH(  [libc-memset],  AS_HELP_STRING([--with-libc-memset],    [with memset replacement]))
@@ -61,6 +62,7 @@ AS_IF([test "$with_all" = no], do_without_all)
 
 AC_DEFUN([do_with_libc],
 [
+if test -z "$with_libc_atoi";    then with_libc_atoi=yes;    fi
 if test -z "$with_libc_isdigit"; then with_libc_isdigit=yes; fi
 if test -z "$with_libc_isspace"; then with_libc_isspace=yes; fi
 if test -z "$with_libc_memset";  then with_libc_memset=yes;  fi
@@ -104,6 +106,7 @@ AM_CONDITIONAL([WITH_PRINTF],       [test "$with_printf"       != no])
 AM_CONDITIONAL([WITH_UNITS],        [test "$with_units"        != no])
 
 dnl Packages (disabled by default)
+AM_CONDITIONAL([WITH_LIBC_ATOI],    [test "$with_libc_atoi"    = yes])
 AM_CONDITIONAL([WITH_LIBC_ISDIGIT], [test "$with_libc_isdigit" = yes])
 AM_CONDITIONAL([WITH_LIBC_ISSPACE], [test "$with_libc_isspace" = yes])
 AM_CONDITIONAL([WITH_LIBC_MEMSET],  [test "$with_libc_memset"  = yes])
@@ -138,6 +141,7 @@ AS_IF([test "$with_printf"       != no], [AC_DEFINE([WITH_PRINTF],           [1]
 AS_IF([test "$with_units",       != no], [AC_DEFINE([WITH_UNITS],            [1], [with measurement units utils])])
 
 dnl Packages (disabled by default)
+AS_IF([test "$with_libc_atoi"    = yes], [AC_DEFINE([WITH_LIBC_ATOI],        [1], [with atoi replacement])])
 AS_IF([test "$with_libc_isdigit" = yes], [AC_DEFINE([WITH_LIBC_ISDIGIT],     [1], [with isdigit replacement])])
 AS_IF([test "$with_libc_isspace" = yes], [AC_DEFINE([WITH_LIBC_ISSPACE],     [1], [with isspace replacement])])
 AS_IF([test "$with_libc_memset"  = yes], [AC_DEFINE([WITH_LIBC_MEMSET],      [1], [with memset replacement])])

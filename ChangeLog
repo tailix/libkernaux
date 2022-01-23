@@ -1,7 +1,7 @@
 2022-01-23  Alex Kotov  <kotovalexarian@gmail.com>
 
 	* include/kernaux/assert.h: Require semicolon after macros
-	* include/kernaux/libc.h: Add funcs "isdigit", "isspace"
+	* include/kernaux/libc.h: Add funcs "atoi", "isdigit", "isspace"
 
 2022-01-22  Alex Kotov  <kotovalexarian@gmail.com>
 

@@ -444,11 +444,9 @@ void _out_fct(char character, void* buffer, size_t idx, size_t maxlen)
 // internal ASCII string to unsigned int conversion
 unsigned int _atoi(const char** str)
 {
-    unsigned int i = 0u;
-    while (isdigit(**str)) {
-        i = i * 10u + (unsigned int)(*((*str)++) - '0');
-    }
-    return i;
+    const int result = atoi(*str);
+    while (isdigit(**str)) (*str)++;
+    return result;
 }
 
 // output the specified string in reverse, taking care of any zero-padding

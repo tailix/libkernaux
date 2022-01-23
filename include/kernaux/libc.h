@@ -11,6 +11,9 @@ extern "C" {
 int isdigit(int c);
 int isspace(int c);
 
+// <stdlib.h>
+int atoi(const char *str);
+
 // <string.h>
 void *memset(void *s, int c, size_t n);
 char *strcpy(char *dest, const char *src);

@@ -4,6 +4,23 @@
 
 #include <kernaux/libc.h>
 
+#include <stdbool.h>
+
+#ifdef WITH_LIBC_ATOI
+int atoi(const char *str)
+{
+    while (isspace(*str)) ++str;
+    bool is_negative = false;
+    switch (*str) {
+    case '-': is_negative = true;
+    case '+': ++str;
+    }
+    int result = 0;
+    while (isdigit(*str)) result = 10 * result - (*str++ - '0');
+    return is_negative ? result : -result;
+}
+#endif // WITH_LIBC_ATOI
+
 #ifdef WITH_LIBC_ISDIGIT
 int isdigit(const int c)
 {
