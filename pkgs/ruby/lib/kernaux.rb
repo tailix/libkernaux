@@ -23,17 +23,19 @@ module KernAux
     assert_do file, Integer(line), msg
   end
 
-  def self.sprintf(*args)
-    args.map do |arg|
-      if arg.is_a? Array
-        sprintf1(*arg)
-      else
-        arg
-      end
-    end.join.freeze
-  end
+  if singleton_class.method_defined? :snprintf1
+    def self.sprintf(*args)
+      args.map do |arg|
+        if arg.is_a? Array
+          sprintf1(*arg)
+        else
+          arg
+        end
+      end.join.freeze
+    end
 
-  def self.sprintf1(...) = snprintf1(SPRINTF1_BUFFER_SIZE, ...).first
+    def self.sprintf1(...) = snprintf1(SPRINTF1_BUFFER_SIZE, ...).first
+  end
 
   ##
   # Our base class for runtime errors.
