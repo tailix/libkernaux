@@ -11,6 +11,13 @@ int isdigit(const int c)
 }
 #endif // WITH_LIBC_ISDIGIT
 
+#ifdef WITH_LIBC_ISSPACE
+int isspace(const int c)
+{
+    return c == ' ' || (unsigned)c - '\t' < 5;
+}
+#endif // WITH_LIBC_ISSPACE
+
 #ifdef WITH_LIBC_MEMSET
 void *memset(void *s, int c, size_t n)
 {
