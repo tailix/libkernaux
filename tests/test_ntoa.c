@@ -380,24 +380,14 @@ static void test_utoa_assert(char *const buffer, const int base)
 {
     assert(kernaux_utoa(0, buffer, base) == NULL);
     assert(assert_count_ctr == ++assert_count_exp);
-    const char *pos = assert_last_file;
-    while (*pos) ++pos;
-    while (pos > assert_last_file) if (*(--pos) == '/') break;
-    while (pos > assert_last_file) if (*(--pos) == '/') break;
-    ++pos;
-    assert(strstr(pos, "src/ntoa.c") != NULL);
+    assert(strstr(assert_last_file, "src/ntoa.c") != NULL);
 }
 
 static void test_itoa_assert(char *const buffer, const int base)
 {
     assert(kernaux_itoa(0, buffer, base) == NULL);
     assert(assert_count_ctr == ++assert_count_exp);
-    const char *pos = assert_last_file;
-    while (*pos) ++pos;
-    while (pos > assert_last_file) if (*(--pos) == '/') break;
-    while (pos > assert_last_file) if (*(--pos) == '/') break;
-    ++pos;
-    assert(strstr(pos, "src/ntoa.c") != NULL);
+    assert(strstr(assert_last_file, "src/ntoa.c") != NULL);
 }
 
 int main()
