@@ -385,7 +385,7 @@ static void test_utoa_assert(char *const buffer, const int base)
     while (pos > assert_last_file) if (*(--pos) == '/') break;
     while (pos > assert_last_file) if (*(--pos) == '/') break;
     ++pos;
-    assert(strcmp(pos, "src/ntoa.c") == 0);
+    assert(strstr(pos, "src/ntoa.c") != NULL);
 }
 
 static void test_itoa_assert(char *const buffer, const int base)
@@ -397,7 +397,7 @@ static void test_itoa_assert(char *const buffer, const int base)
     while (pos > assert_last_file) if (*(--pos) == '/') break;
     while (pos > assert_last_file) if (*(--pos) == '/') break;
     ++pos;
-    assert(strcmp(pos, "src/ntoa.c") == 0);
+    assert(strstr(pos, "src/ntoa.c") != NULL);
 }
 
 int main()
