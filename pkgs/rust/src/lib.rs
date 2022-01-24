@@ -42,6 +42,12 @@ mod tests {
         let result =
             unsafe { CStr::from_ptr(buffer.as_ptr()) }.to_str().unwrap();
         assert_eq!(result, "123");
+
+        let mut buffer: [i8; 1000] = [0; 1000];
+        unsafe { kernaux_itoa(-0x123, buffer.as_mut_ptr(), 'x' as c_int) };
+        let result =
+            unsafe { CStr::from_ptr(buffer.as_ptr()) }.to_str().unwrap();
+        assert_eq!(result, "-123");
     }
 
     #[test]
