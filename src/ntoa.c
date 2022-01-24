@@ -9,20 +9,24 @@
 // TODO: example common func, maybe it may become public
 static char *kernaux_utoa(uint64_t value, char *buffer, int base)
 {
-    char alpha = 'a';
-
     switch (base) {
     case 'b': base = 2;  break;
     case 'o': base = 8;  break;
     case 'd': base = 10; break;
-    case 'H':
-    case 'X':
-        alpha = 'A';
-        // fall through
     case 'h':
     case 'x':
         base = 16;
         break;
+    case 'H':
+    case 'X':
+        base = -16;
+        break;
+    }
+
+    char alpha = 'a';
+    if (base < 0) {
+        alpha = 'A';
+        base = -base;
     }
 
     if (base < 2 || base > 36) return NULL;
