@@ -8,7 +8,7 @@ extern "C" {
 #include <stdbool.h>
 
 struct KernAux_ELF_Header {
-    unsigned magic_0x7F     : 8;
+    unsigned magic_0x7f     : 8;
     unsigned magic_E        : 8;
     unsigned magic_L        : 8;
     unsigned magic_F        : 8;

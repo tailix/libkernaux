@@ -770,7 +770,7 @@ size_t _etoa(out_fct_type out, char* buffer, size_t idx, size_t maxlen, double v
     } conv;
 
     conv.F = value;
-    int exp2 = (int)((conv.U >> 52u) & 0x07FFU) - 1023; // effectively log2
+    int exp2 = (int)((conv.U >> 52u) & 0x07ffu) - 1023; // effectively log2
     conv.U = (conv.U & ((1ull << 52u) - 1u)) | (102ull << 52u); // drop the exponent so conv.F is now in [1,2)
     // now approximate log10 from the log2 integer part and an expansion of ln around 1.5
     int expval = (int)(0.1760912590558 + exp2 * 0.301029995663981 + (conv.F - 1.5) * 0.289529654602168);

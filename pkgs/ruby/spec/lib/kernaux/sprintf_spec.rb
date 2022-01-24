@@ -16,7 +16,7 @@ RSpec.describe KernAux, '.sprintf' do
     context 'using original tests' do
       [
         [' 4232',                  ['% d', 4232]],
-        ['This is a test of 12EF', ['This is a test of %X', 0x12EF]],
+        ['This is a test of 12EF', ['This is a test of %X', 0x12ef]],
         ['-1000',                  ['%d', -1000]],
         ['-1',                     ['%d', -1]],
         ['2345',                   ['%d', 2345]],
