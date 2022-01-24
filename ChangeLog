@@ -7,6 +7,7 @@
 	* include/kernaux/ntoa.h: Add funcs "kernaux_utoa16" and "kernaux_itoa16"
 	* include/kernaux/ntoa.h: Add consts "KERNAUX_UTOA10_BUFFER_SIZE" and
 	"KERNAUX_UTOA16_BUFFER_SIZE"
+	* include/kernaux/ntoa.h: Add func "kernaux_utoa"
 
 2022-01-22  Alex Kotov  <kotovalexarian@gmail.com>
 

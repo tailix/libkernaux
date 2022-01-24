@@ -7,8 +7,7 @@
 
 #include <stddef.h>
 
-// TODO: example common func, maybe it may become public
-static char *kernaux_utoa(uint64_t value, char *buffer, int base)
+char *kernaux_utoa(uint64_t value, char *buffer, int base)
 {
     switch (base) {
     case 'b': case 'B': base = 2;   break;
