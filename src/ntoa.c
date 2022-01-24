@@ -2,6 +2,7 @@
 #include "config.h"
 #endif
 
+#include <kernaux/assert.h>
 #include <kernaux/ntoa.h>
 
 #include <stddef.h>
@@ -29,7 +30,7 @@ static char *kernaux_utoa(uint64_t value, char *buffer, int base)
         base = -base;
     }
 
-    if (base < 2 || base > 36) return NULL;
+    KERNAUX_ASSERT_RETVAL(base >= 2 && base <= 36, NULL);
 
     char *pos = buffer;
 
