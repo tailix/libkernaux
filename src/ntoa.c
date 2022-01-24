@@ -11,19 +11,14 @@
 static char *kernaux_utoa(uint64_t value, char *buffer, int base)
 {
     switch (base) {
-    case 'b': base = 2;  break;
-    case 'o': base = 8;  break;
-    case 'd': base = 10; break;
-    case 'h':
-    case 'x':
-        base = 16;
-        break;
-    case 'H':
-    case 'X':
-        base = -16;
-        break;
+    case 'b': case 'B': base = 2;   break;
+    case 'o': case 'O': base = 8;   break;
+    case 'd': case 'D': base = 10;  break;
+    case 'h': case 'x': base = 16;  break;
+    case 'H': case 'X': base = -16; break;
     }
 
+    // Uppercase
     char alpha = 'a';
     if (base < 0) {
         alpha = 'A';
@@ -32,19 +27,18 @@ static char *kernaux_utoa(uint64_t value, char *buffer, int base)
 
     KERNAUX_ASSERT_RETVAL(base >= 2 && base <= 36, NULL);
 
+    // Write to buffer
     char *pos = buffer;
-
     if (value == 0) *(pos++) = '0';
-
     while (value > 0) {
         const char mod = value % base;
         *(pos++) = mod < 10 ? mod + '0' : mod - 10 + alpha;
-        value = value / base;
+        value /=  base;
     }
-
     char *const result = pos;
     *(pos--) = '\0';
 
+    // Reverse buffer
     while (buffer < pos) {
         const char tmp = *buffer;
         *(buffer++) = *pos;
