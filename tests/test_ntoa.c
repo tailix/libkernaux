@@ -365,8 +365,7 @@ static const struct {
 int main()
 {
     {
-        // TODO: replace 1000 with KERNAUX_UTOA_BUFFER_SIZE
-        char buffer[1000];
+        char buffer[KERNAUX_UTOA_BUFFER_SIZE];
 
         for (
             size_t index = 0;
@@ -389,8 +388,7 @@ int main()
     }
 
     {
-        // TODO: replace 1000 with KERNAUX_ITOA_BUFFER_SIZE
-        char buffer[1000];
+        char buffer[KERNAUX_ITOA_BUFFER_SIZE];
 
         for (
             size_t index = 0;
