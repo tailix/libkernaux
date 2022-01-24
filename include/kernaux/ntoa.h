@@ -28,7 +28,6 @@ extern "C" {
 // "-8000000000000000"
 #define KERNAUX_ITOA16_BUFFER_SIZE 18
 
-// TODO: add tests for assertion
 char *kernaux_utoa(uint64_t value, char *buffer, int base);
 char *kernaux_itoa(int64_t  value, char *buffer, int base);
 

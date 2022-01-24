@@ -9,6 +9,8 @@
 
 char *kernaux_utoa(uint64_t value, char *buffer, int base)
 {
+    KERNAUX_NOTNULL_RETVAL(buffer, NULL);
+
     switch (base) {
     case 'b': case 'B': base = 2;   break;
     case 'o': case 'O': base = 8;   break;

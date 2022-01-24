@@ -2,6 +2,7 @@
 #include "config.h"
 #endif
 
+#include <kernaux/assert.h>
 #include <kernaux/ntoa.h>
 
 #include <assert.h>
@@ -362,8 +363,69 @@ static const struct {
     { INT64_MIN,                "-8000000000000000" },
 };
 
+static unsigned int assert_count_exp = 0;
+static unsigned int assert_count_ctr = 0;
+static const char *assert_last_file = NULL;
+
+static void assert_cb(
+    const char *const file,
+    const int line __attribute__((unused)),
+    const char *const msg __attribute__((unused))
+) {
+    ++assert_count_ctr;
+    assert_last_file = file;
+}
+
+static void test_utoa_assert(char *const buffer, const int base)
+{
+    assert(kernaux_utoa(0, buffer, base) == NULL);
+    assert(assert_count_ctr == ++assert_count_exp);
+    const char *pos = assert_last_file;
+    while (*pos) ++pos;
+    while (pos > assert_last_file) if (*(--pos) == '/') break;
+    while (pos > assert_last_file) if (*(--pos) == '/') break;
+    ++pos;
+    assert(strcmp(pos, "src/ntoa.c") == 0);
+}
+
+static void test_itoa_assert(char *const buffer, const int base)
+{
+    assert(kernaux_itoa(0, buffer, base) == NULL);
+    assert(assert_count_ctr == ++assert_count_exp);
+    const char *pos = assert_last_file;
+    while (*pos) ++pos;
+    while (pos > assert_last_file) if (*(--pos) == '/') break;
+    while (pos > assert_last_file) if (*(--pos) == '/') break;
+    ++pos;
+    assert(strcmp(pos, "src/ntoa.c") == 0);
+}
+
 int main()
 {
+    kernaux_assert_cb = assert_cb;
+
+    {
+        char buffer[KERNAUX_UTOA_BUFFER_SIZE];
+
+        test_utoa_assert(NULL, 'd');
+        test_utoa_assert(buffer, 0);
+        test_utoa_assert(buffer, 1);
+        test_utoa_assert(buffer, -1);
+        test_utoa_assert(buffer, 37);
+        test_utoa_assert(buffer, -37);
+    }
+
+    {
+        char buffer[KERNAUX_ITOA_BUFFER_SIZE];
+
+        test_itoa_assert(NULL, 'd');
+        test_itoa_assert(buffer, 0);
+        test_itoa_assert(buffer, 1);
+        test_itoa_assert(buffer, -1);
+        test_itoa_assert(buffer, 37);
+        test_itoa_assert(buffer, -37);
+    }
+
     {
         char buffer[KERNAUX_UTOA_BUFFER_SIZE];
 
