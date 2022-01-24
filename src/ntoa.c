@@ -47,8 +47,7 @@ char *kernaux_utoa(uint64_t value, char *buffer, int base)
     return result;
 }
 
-// TODO: example common func, maybe it may become public
-static char *kernaux_itoa(int64_t value, char *buffer, int base)
+char *kernaux_itoa(int64_t value, char *buffer, int base)
 {
     if (value >= 0) {
         return kernaux_utoa(value, buffer, base);

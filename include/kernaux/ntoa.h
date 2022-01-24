@@ -10,6 +10,9 @@ extern "C" {
 // TODO: define
 #define KERNAUX_UTOA_BUFFER_SIZE (0/0)
 
+// TODO: define
+#define KERNAUX_ITOA_BUFFER_SIZE (0/0)
+
 // "18446744073709551615"
 #define KERNAUX_UTOA10_BUFFER_SIZE 21
 
@@ -26,6 +29,7 @@ extern "C" {
 
 // TODO: add tests for assertion
 char *kernaux_utoa(uint64_t value, char *buffer, int base);
+char *kernaux_itoa(int64_t  value, char *buffer, int base);
 
 void kernaux_utoa10(uint64_t value, char *buffer);
 void kernaux_itoa10(int64_t  value, char *buffer);

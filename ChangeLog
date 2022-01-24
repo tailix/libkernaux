@@ -1,3 +1,7 @@
+2022-01-24  Alex Kotov  <kotovalexarian@gmail.com>
+
+	* include/kernaux/ntoa.h: Add func "kernaux_itoa"
+
 2022-01-23  Alex Kotov  <kotovalexarian@gmail.com>
 
 	* include/kernaux/assert.h: Require semicolon after macros
