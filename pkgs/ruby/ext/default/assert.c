@@ -1,7 +1,7 @@
 #include <kernaux.h>
 #include <ruby.h>
 
-static void assert_cb(const char *file, int line, const char *str);
+static void assert_cb(const char *file, int line, const char *msg);
 
 static VALUE rb_KernAux_assert_cb(VALUE self);
 static VALUE rb_KernAux_assert_cb_EQ(VALUE self, VALUE assert_cb);
@@ -26,14 +26,14 @@ void init_assert()
                                rb_KernAux_assert_do, 3);
 }
 
-void assert_cb(const char *const file, const int line, const char *const str)
+void assert_cb(const char *const file, const int line, const char *const msg)
 {
     const VALUE assert_cb_rb = rb_iv_get(rb_KernAux, "@assert_cb");
     if (assert_cb_rb == Qnil) return;
     const VALUE file_rb = rb_str_new2(file);
     const VALUE line_rb = INT2FIX(line);
-    const VALUE str_rb = rb_str_new2(str);
-    rb_funcall(assert_cb_rb, rb_intern_call, 3, file_rb, line_rb, str_rb);
+    const VALUE msg_rb = rb_str_new2(msg);
+    rb_funcall(assert_cb_rb, rb_intern_call, 3, file_rb, line_rb, msg_rb);
 }
 
 VALUE rb_KernAux_assert_cb(const VALUE self)

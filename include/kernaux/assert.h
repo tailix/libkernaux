@@ -17,9 +17,9 @@ extern "C" {
 #define KERNAUX_NOTNULL_RETURN(cond)      do { KERNAUX_ASSERT(cond); if (!(cond)) return;       } while (0)
 #define KERNAUX_NOTNULL_RETVAL(cond, val) do { KERNAUX_ASSERT(cond); if (!(cond)) return (val); } while (0)
 
-void kernaux_assert_do(const char *file, int line, const char *str);
+void kernaux_assert_do(const char *file, int line, const char *msg);
 
-extern void (*kernaux_assert_cb)(const char *file, int line, const char *str);
+extern void (*kernaux_assert_cb)(const char *file, int line, const char *msg);
 
 #ifdef __cplusplus
 }
