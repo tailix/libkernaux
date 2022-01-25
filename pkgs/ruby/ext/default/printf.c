@@ -10,7 +10,7 @@ static VALUE rb_KernAux = Qnil;
 
 void init_printf()
 {
-    rb_gc_register_mark_object(rb_intern_freeze = rb_intern("freeze"));
+    rb_gc_register_mark_object(ID2SYM(rb_intern_freeze = rb_intern("freeze")));
     rb_gc_register_mark_object(rb_KernAux = rb_define_module("KernAux"));
 
     rb_define_singleton_method(rb_KernAux, "snprintf1",

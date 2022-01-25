@@ -16,13 +16,15 @@ static VALUE rb_KernAux_itoa16(VALUE self, VALUE number);
 
 static ID rb_intern_LESS = Qnil;
 static ID rb_intern_freeze = Qnil;
+
 static VALUE rb_KernAux = Qnil;
 
 void init_ntoa()
 {
-    rb_gc_register_mark_object(rb_intern_LESS   = rb_intern("<"));
-    rb_gc_register_mark_object(rb_intern_freeze = rb_intern("freeze"));
-    rb_gc_register_mark_object(rb_KernAux       = rb_define_module("KernAux"));
+    rb_gc_register_mark_object(ID2SYM(rb_intern_LESS   = rb_intern("<")));
+    rb_gc_register_mark_object(ID2SYM(rb_intern_freeze = rb_intern("freeze")));
+
+    rb_gc_register_mark_object(rb_KernAux = rb_define_module("KernAux"));
 
 #ifdef HAVE_KERNAUX_UTOA10
     rb_define_singleton_method(rb_KernAux, "utoa10", rb_KernAux_utoa10, 1);

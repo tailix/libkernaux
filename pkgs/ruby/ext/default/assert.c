@@ -13,7 +13,7 @@ static VALUE rb_KernAux = Qnil;
 
 void init_assert()
 {
-    rb_gc_register_mark_object(rb_intern_call = rb_intern("call"));
+    rb_gc_register_mark_object(ID2SYM(rb_intern_call = rb_intern("call")));
     rb_gc_register_mark_object(rb_KernAux = rb_define_module("KernAux"));
 
     kernaux_assert_cb = assert_cb;
