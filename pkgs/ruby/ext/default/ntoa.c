@@ -37,6 +37,10 @@ static VALUE rb_KernAux = Qnil;
 static VALUE rb_KernAux_Error = Qnil;
 static VALUE rb_KernAux_InvalidNtoaBaseError = Qnil;
 
+#if defined(HAVE_KERNAUX_UTOA) || defined(HAVE_KERNAUX_ITOA)
+static int convert_base(VALUE base);
+#endif
+
 void init_ntoa()
 {
     rb_gc_register_mark_object(ID2SYM(rb_intern_LESS   = rb_intern("<")));
@@ -89,29 +93,8 @@ VALUE rb_KernAux_utoa(
     if (rb_funcall(number_rb, rb_intern_LESS, 1, INT2FIX(0))) {
         rb_raise(rb_eRangeError, "can't convert negative number to uint64_t");
     }
-
-    int base = 0;
-    if (TYPE(base_rb) == T_SYMBOL) {
-        const ID base_id = SYM2ID(base_rb);
-        if      (base_id == rb_intern_b) base = 'b';
-        else if (base_id == rb_intern_B) base = 'B';
-        else if (base_id == rb_intern_h) base = 'h';
-        else if (base_id == rb_intern_H) base = 'H';
-        else if (base_id == rb_intern_o) base = 'o';
-        else if (base_id == rb_intern_O) base = 'O';
-        else if (base_id == rb_intern_d) base = 'd';
-        else if (base_id == rb_intern_D) base = 'D';
-        else if (base_id == rb_intern_x) base = 'x';
-        else if (base_id == rb_intern_X) base = 'X';
-        else {
-            rb_raise(rb_KernAux_InvalidNtoaBaseError, "invalid base");
-        }
-    } else {
-        base = NUM2INT(base_rb);
-    }
-
     char buffer[KERNAUX_UTOA_BUFFER_SIZE];
-    kernaux_utoa(NUM2ULL(number_rb), buffer, base);
+    kernaux_utoa(NUM2ULL(number_rb), buffer, convert_base(base_rb));
     return rb_funcall(rb_str_new2(buffer), rb_intern_freeze, 0);
 }
 #endif
@@ -123,29 +106,8 @@ VALUE rb_KernAux_itoa(
     const VALUE base_rb
 ) {
     RB_INTEGER_TYPE_P(number_rb);
-
-    int base = 0;
-    if (TYPE(base_rb) == T_SYMBOL) {
-        const ID base_id = SYM2ID(base_rb);
-        if      (base_id == rb_intern_b) base = 'b';
-        else if (base_id == rb_intern_B) base = 'B';
-        else if (base_id == rb_intern_h) base = 'h';
-        else if (base_id == rb_intern_H) base = 'H';
-        else if (base_id == rb_intern_o) base = 'o';
-        else if (base_id == rb_intern_O) base = 'O';
-        else if (base_id == rb_intern_d) base = 'd';
-        else if (base_id == rb_intern_D) base = 'D';
-        else if (base_id == rb_intern_x) base = 'x';
-        else if (base_id == rb_intern_X) base = 'X';
-        else {
-            rb_raise(rb_KernAux_InvalidNtoaBaseError, "invalid base");
-        }
-    } else {
-        base = NUM2INT(base_rb);
-    }
-
     char buffer[KERNAUX_ITOA_BUFFER_SIZE];
-    kernaux_itoa(NUM2LL(number_rb), buffer, base);
+    kernaux_itoa(NUM2LL(number_rb), buffer, convert_base(base_rb));
     return rb_funcall(rb_str_new2(buffer), rb_intern_freeze, 0);
 }
 #endif
@@ -201,5 +163,29 @@ VALUE rb_KernAux_itoa16(
     char buffer[KERNAUX_ITOA16_BUFFER_SIZE];
     kernaux_itoa16(NUM2LL(number_rb), buffer);
     return rb_funcall(rb_str_new2(buffer), rb_intern_freeze, 0);
+}
+#endif
+
+#if defined(HAVE_KERNAUX_UTOA) || defined(HAVE_KERNAUX_ITOA)
+int convert_base(const VALUE base_rb)
+{
+    if (TYPE(base_rb) == T_SYMBOL) {
+        const ID base_id = SYM2ID(base_rb);
+        if      (base_id == rb_intern_b) return 'b';
+        else if (base_id == rb_intern_B) return 'B';
+        else if (base_id == rb_intern_h) return 'h';
+        else if (base_id == rb_intern_H) return 'H';
+        else if (base_id == rb_intern_o) return 'o';
+        else if (base_id == rb_intern_O) return 'O';
+        else if (base_id == rb_intern_d) return 'd';
+        else if (base_id == rb_intern_D) return 'D';
+        else if (base_id == rb_intern_x) return 'x';
+        else if (base_id == rb_intern_X) return 'X';
+        else {
+            rb_raise(rb_KernAux_InvalidNtoaBaseError, "invalid base");
+        }
+    } else {
+        return NUM2INT(base_rb);
+    }
 }
 #endif
