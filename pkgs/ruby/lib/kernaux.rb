@@ -50,7 +50,7 @@ module KernAux
   class AssertError < Error; end
 
   ##
-  # Raised when command line parsing goes wrong.
+  # Raised when command line parsing in {.cmdline} goes wrong.
   #
   # @see .cmdline
   #
