@@ -10,15 +10,17 @@ Gem::Specification.new do |spec|
   spec.license  = 'MIT'
   spec.homepage = "#{repo}/tree/master/pkgs/ruby"
   spec.platform = Gem::Platform::RUBY
-  spec.summary  = 'Auxiliary library for kernel development'
 
   spec.required_ruby_version = '~> 3.0'
 
   spec.authors = ['Alex Kotov']
   spec.email   = %w[kotovalexarian@gmail.com]
 
+  spec.summary =
+    'Binding to libkernaux - auxiliary library for kernel development'
+
   spec.description = <<~DESCRIPTION.split("\n").map(&:strip).join ' '
-    Auxiliary library for kernel development.
+    Binding to libkernaux - auxiliary library for kernel development.
   DESCRIPTION
 
   spec.metadata['homepage_uri']          = spec.homepage
