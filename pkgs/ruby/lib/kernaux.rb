@@ -10,8 +10,8 @@ require_relative 'kernaux/default'
 #
 module KernAux
   # Default callback for assertions ({.assert_cb})
-  DEFAULT_ASSERT_CB = @assert_cb = lambda { |file, line, str|
-    raise AssertError, "#{file}:#{line}:#{str}"
+  DEFAULT_ASSERT_CB = @assert_cb = lambda { |file, line, msg|
+    raise AssertError, "#{file}:#{line}:#{msg}"
   }
 
   # Buffer size for {.sprintf1}
