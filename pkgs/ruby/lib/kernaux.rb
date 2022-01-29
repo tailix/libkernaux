@@ -50,14 +50,14 @@ module KernAux
   class AssertError < Error; end
 
   ##
-  # Raised when command line parsing in {.cmdline} goes wrong.
+  # Raised when command line parsing goes wrong.
   #
   # @see .cmdline
   #
   class CmdlineError < Error; end
 
   ##
-  # Raised when {.utoa} or {.itoa} base is invalid.
+  # Raised when integer base is invalid.
   #
   # @see .utoa
   # @see .itoa
