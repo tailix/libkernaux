@@ -55,4 +55,12 @@ module KernAux
   # @see .cmdline
   #
   class CmdlineError < Error; end
+
+  ##
+  # Raised when {.utoa} or {.itoa} base is invalid.
+  #
+  # @see .utoa
+  # @see .itoa
+  #
+  class InvalidNtoaBaseError < Error; end
 end

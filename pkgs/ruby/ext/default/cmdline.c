@@ -44,7 +44,7 @@ void init_cmdline()
 
     rb_gc_register_mark_object(rb_KernAux = rb_define_module("KernAux"));
     rb_gc_register_mark_object(rb_KernAux_Error =
-        rb_define_class_under(rb_KernAux, "Error" ,rb_eRuntimeError));
+        rb_define_class_under(rb_KernAux, "Error", rb_eRuntimeError));
     rb_gc_register_mark_object(rb_KernAux_CmdlineError =
         rb_define_class_under(rb_KernAux, "CmdlineError", rb_KernAux_Error));
     rb_gc_register_mark_object(rb_ANON_Data =
