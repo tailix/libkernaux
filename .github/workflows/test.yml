@@ -59,6 +59,14 @@ jobs:
           submodules: true
       - name: dependencies
         run: sudo apt-get -y install cppcheck rake
+      - name: autogen
+        run: ./autogen.sh
+      - name: configure
+        run: ./configure CFLAGS='-O3 -fPIC'
+      - name: make
+        run: make
+      - name: install
+        run: sudo make install
       - working-directory: vendor/mruby
         name: build config
         run: cp ../../pkgs/mruby/build_config.rb build_config/default.rb
