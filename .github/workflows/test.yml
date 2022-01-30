@@ -37,10 +37,6 @@ jobs:
       - name: install
         run: sudo make install
 
-      - name: 'Rust: test'
-        working-directory: pkgs/rust
-        run: cargo test
-
   cppcheck:
     runs-on: ubuntu-latest
     steps:
@@ -81,3 +77,22 @@ jobs:
       - working-directory: pkgs/ruby
         name: test & lint
         run: rake
+
+  rust:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+      - name: autogen
+        run: ./autogen.sh
+      - name: configure
+        run: ./configure CFLAGS='-O3 -fPIC'
+      - name: make
+        run: make
+      - name: install
+        run: sudo make install
+      - working-directory: pkgs/rust
+        name: test
+        run: cargo test
