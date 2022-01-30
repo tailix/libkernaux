@@ -61,7 +61,7 @@ jobs:
         run: sudo apt-get -y install cppcheck rake
       - working-directory: vendor/mruby
         name: build config
-        run: cp ../../pkgs/mruby/build_config.rb
+        run: cp ../../pkgs/mruby/build_config.rb build_config/default.rb
       - working-directory: vendor/mruby
         name: test
         run: rake test
