@@ -1,3 +1,8 @@
+#![no_std]
+
+#[cfg(test)]
+extern crate std;
+
 #[cfg(test)]
 use libc::{c_char, c_int};
 
