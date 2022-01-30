@@ -16,30 +16,40 @@ RSpec.describe KernAux, '.itoa' do
     context 'when number is 0' do
       let(:number) { 0 }
 
+      it { is_expected.to be_instance_of String }
+      it { is_expected.to be_frozen }
       it { is_expected.to eq '0' }
     end
 
     context 'when number is 1' do
       let(:number) { 1 }
 
+      it { is_expected.to be_instance_of String }
+      it { is_expected.to be_frozen }
       it { is_expected.to eq '1' }
     end
 
     context 'when number is -1' do
       let(:number) { -1 }
 
+      it { is_expected.to be_instance_of String }
+      it { is_expected.to be_frozen }
       it { is_expected.to eq '-1' }
     end
 
     context 'when number is min int64_t' do
       let(:number) { -2**63 }
 
+      it { is_expected.to be_instance_of String }
+      it { is_expected.to be_frozen }
       it { is_expected.to eq number.to_s base }
     end
 
     context 'when number is max int64_t' do
       let(:number) { 2**63 - 1 }
 
+      it { is_expected.to be_instance_of String }
+      it { is_expected.to be_frozen }
       it { is_expected.to eq number.to_s base }
     end
 
