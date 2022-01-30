@@ -68,11 +68,8 @@ jobs:
       - name: install
         run: sudo make install
       - working-directory: vendor/mruby
-        name: build config
-        run: cp ../../pkgs/mruby/build_config.rb build_config/default.rb
-      - working-directory: vendor/mruby
         name: test
-        run: rake test
+        run: MRUBY_CONFIG=../../pkgs/mruby/build_config.rb rake test
       - working-directory: pkgs/mruby
         name: cppcheck
         run: cppcheck --quiet --error-exitcode=1 --std=c99 --enable=warning,style,performance,portability .
