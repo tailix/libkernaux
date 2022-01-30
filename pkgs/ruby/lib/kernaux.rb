@@ -58,7 +58,7 @@ module KernAux
   #
   # @see .panic Implicit file and line
 
-  # @!parse [ruby] def assert_do(file, line, msg); end
+  # @!parse [ruby]
 
   if singleton_class.method_defined? :snprintf1
     ##
@@ -111,6 +111,17 @@ module KernAux
     # @see .sprintf1 Automatic buffer size
     ##
   end
+
+  ##
+  # @!method cmdline(str)
+  # Parse command line.
+  #
+  # @param str [String] command line string
+  # @return [Array<String>] command line arguments
+  #
+  # @raise [CmdlineError] syntax is invalid
+
+  # @!parse [ruby]
 
   ##
   # Our base class for runtime errors.
