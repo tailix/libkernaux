@@ -164,6 +164,38 @@ module KernAux
   ##
 
   ##
+  # @!method utoa10(number)
+  # Convert `uint64_t` to a decimal string.
+  #
+  # @param number [Integer] a number between 0 and `UINT64_MAX`
+  # @return [String]
+  ##
+
+  ##
+  # @!method itoa10(number)
+  # Convert `int64_t` to a decimal string.
+  #
+  # @param number [Integer] a number between `INT64_MIN` and `INT64_MAX`
+  # @return [String]
+  ##
+
+  ##
+  # @!method utoa16(number)
+  # Convert `uint64_t` to a hexadecimal string.
+  #
+  # @param number [Integer] a number between 0 and `UINT64_MAX`
+  # @return [String]
+  ##
+
+  ##
+  # @!method itoa16(number)
+  # Convert `int64_t` to a hexadecimal string.
+  #
+  # @param number [Integer] a number between `INT64_MIN` and `INT64_MAX`
+  # @return [String]
+  ##
+
+  ##
   # Our base class for runtime errors.
   #
   class Error < RuntimeError; end
