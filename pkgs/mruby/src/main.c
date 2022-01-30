@@ -3,6 +3,7 @@
 #include <stddef.h>
 
 #include <mruby.h>
+#include <mruby/presym.h>
 
 // TODO: implement locking
 // TODO: turn into stack to support nested callbacks
@@ -12,6 +13,7 @@ void mrb_mruby_kernaux_gem_final(mrb_state *const mrb) {}
 
 void mrb_mruby_kernaux_gem_init(mrb_state *const mrb)
 {
+    mrb_define_module_id(mrb, MRB_SYM(KernAux));
     init_assert(mrb);
 }
 

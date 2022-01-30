@@ -20,7 +20,7 @@ void init_assert(mrb_state *const mrb)
 {
     kernaux_assert_cb = assert_cb;
 
-    struct RClass *const rb_KernAux = mrb_define_module(mrb, "KernAux");
+    struct RClass *const rb_KernAux = mrb_module_get_id(mrb, MRB_SYM(KernAux));
     mrb_define_class_method(mrb, rb_KernAux, "assert_cb",
                             rb_KernAux_assert_cb, MRB_ARGS_NONE());
     mrb_define_class_method(mrb, rb_KernAux, "assert_cb=",
