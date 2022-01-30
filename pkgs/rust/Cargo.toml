@@ -1,16 +1,5 @@
-[package]
-name = "kernaux"
-version = "0.2.0"
-authors = ["Alex Kotov <kotovalexarian@gmail.com>"]
-edition = "2021"
-description = "Auxiliary library for kernel development"
-readme = true
-homepage = "https://github.com/tailix/libkernaux/tree/master/pkgs/rust"
-repository = "https://github.com/tailix/libkernaux/tree/master/pkgs/rust"
-license = "MIT"
-keywords = ["ffi", "no_std", "no-std", "embedded", "bindings"]
-categories = ["api-bindings", "embedded", "external-ffi-bindings", "no-std", "parsing"]
-publish = true
-
-[dependencies]
-libc = "0.2.113"
+[workspace]
+members = [
+    "kernaux",
+    "kernaux-sys",
+]
