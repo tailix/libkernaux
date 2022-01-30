@@ -50,6 +50,8 @@ jobs:
         run: cppcheck --quiet --error-exitcode=1 --std=c99 --enable=warning,style,performance,portability --suppress=duplicateExpression --suppress=staticStringCompare examples/
       - name: cppcheck tests
         run: cppcheck --quiet --error-exitcode=1 --std=c99 --enable=warning,style,performance,portability --suppress=unusedStructMember tests/
+      - name: cppcheck mruby
+        run: cppcheck --quiet --error-exitcode=1 --std=c99 --enable=warning,style,performance,portability pkgs/mruby/
       - name: cppcheck ruby
         run: cppcheck --quiet --error-exitcode=1 --std=c99 --enable=warning,style,performance,portability pkgs/ruby/
 
