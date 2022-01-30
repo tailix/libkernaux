@@ -131,16 +131,36 @@ module KernAux
   # which is an alias to a valid integer value. Positive integers and lowercase
   # symbols mean lowercase output when base is greater than 10. Negative
   # integers and uppercase symbols mean uppercase output when base is greater
-  # than 10. Aliases are: `b`, `B` - 2; `o`, `O` - 8; `d`, `D` - 10; `h`, `x` -
-  # 16 (lowercase); `H`, `X` - -10 (uppercase).
+  # than 10. Aliases are: `:b`, `:B` - 2; `:o`, `:O` - 8; `:d`, `:D` - 10; `:h`,
+  # `:x` - 16 (lowercase); `:H`, `:X` - -10 (uppercase).
   #
-  # @param number [Integer] a number between 0 and `UINT64_MAX` - 1
+  # @param number [Integer] a number between 0 and `UINT64_MAX`
   # @param base [Integer, Symbol] base of a numeral system
   # @return [String]
   #
   # @raise [InvalidNtoaBaseError] base is invalid
   #
   # @see .itoa Convert signed integers
+  ##
+
+  ##
+  # @!method itoa(number, base)
+  # Convert `int64_t` to a string in multiple numeral systems.
+  #
+  # Base can be a positive or negative integer between 2 and 36, or a symbol
+  # which is an alias to a valid integer value. Positive integers and lowercase
+  # symbols mean lowercase output when base is greater than 10. Negative
+  # integers and uppercase symbols mean uppercase output when base is greater
+  # than 10. Aliases are: `:b`, `:B` - 2; `:o`, `:O` - 8; `:d`, `:D` - 10; `:h`,
+  # `:x` - 16 (lowercase); `:H`, `:X` - -10 (uppercase).
+  #
+  # @param number [Integer] a number between `INT64_MIN` and `INT64_MAX`
+  # @param base [Integer, Symbol] base of a numeral system
+  # @return [String]
+  #
+  # @raise [InvalidNtoaBaseError] base is invalid
+  #
+  # @see .utoa Convert unsigned integers
   ##
 
   ##
