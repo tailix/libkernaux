@@ -3,6 +3,7 @@
 #include <kernaux.h>
 
 #include <mruby.h>
+#include <mruby/presym.h>
 #include <mruby/string.h>
 #include <mruby/variable.h>
 
@@ -32,7 +33,7 @@ static mrb_value tmp_self;
 void assert_cb(const char *const file, const int line, const char *const msg)
 {
     mrb_value assert_cb_rb =
-        mrb_iv_get(tmp_mrb, tmp_self, mrb_intern_lit(tmp_mrb, "@assert_cb"));
+        mrb_iv_get(tmp_mrb, tmp_self, MRB_IVSYM(assert_cb));
     if (mrb_nil_p(assert_cb_rb)) return;
 
     mrb_value file_rb = mrb_str_new_lit(tmp_mrb, "");
@@ -43,19 +44,20 @@ void assert_cb(const char *const file, const int line, const char *const msg)
     mrb_value msg_rb = mrb_str_new_lit(tmp_mrb, "");
     msg_rb = mrb_str_cat(tmp_mrb, msg_rb, msg, strlen(msg));
 
-    mrb_funcall(tmp_mrb, assert_cb_rb, "call", 3, file_rb, line_rb, msg_rb);
+    mrb_funcall_id(
+        tmp_mrb, assert_cb_rb, MRB_SYM(call), 3, file_rb, line_rb, msg_rb);
 }
 
 mrb_value rb_KernAux_assert_cb(mrb_state *const mrb, const mrb_value self_rb)
 {
-    return mrb_iv_get(mrb, self_rb, mrb_intern_lit(mrb, "@assert_cb"));
+    return mrb_iv_get(mrb, self_rb, MRB_IVSYM(assert_cb));
 }
 
 mrb_value rb_KernAux_assert_cb_EQ(mrb_state *const mrb, const mrb_value self_rb)
 {
     mrb_value assert_cb_rb = mrb_nil_value();
     mrb_get_args(mrb, "o", &assert_cb_rb);
-    mrb_iv_set(mrb, self_rb, mrb_intern_lit(mrb, "@assert_cb"), assert_cb_rb);
+    mrb_iv_set(mrb, self_rb, MRB_IVSYM(assert_cb), assert_cb_rb);
     return assert_cb_rb;
 }
 
