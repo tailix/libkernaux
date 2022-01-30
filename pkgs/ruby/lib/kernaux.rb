@@ -138,6 +138,7 @@ module KernAux
   # @param base [Integer, Symbol] base of a numeral system
   # @return [String]
   #
+  # @raise [RangeError] number is out of range
   # @raise [InvalidNtoaBaseError] base is invalid
   #
   # @see .itoa Convert signed integers
@@ -158,6 +159,7 @@ module KernAux
   # @param base [Integer, Symbol] base of a numeral system
   # @return [String]
   #
+  # @raise [RangeError] number is out of range
   # @raise [InvalidNtoaBaseError] base is invalid
   #
   # @see .utoa Convert unsigned integers
@@ -169,6 +171,8 @@ module KernAux
   #
   # @param number [Integer] a number between 0 and `UINT64_MAX`
   # @return [String]
+  #
+  # @raise [RangeError] number is out of range
   ##
 
   ##
@@ -177,6 +181,8 @@ module KernAux
   #
   # @param number [Integer] a number between `INT64_MIN` and `INT64_MAX`
   # @return [String]
+  #
+  # @raise [RangeError] number is out of range
   ##
 
   ##
@@ -185,6 +191,8 @@ module KernAux
   #
   # @param number [Integer] a number between 0 and `UINT64_MAX`
   # @return [String]
+  #
+  # @raise [RangeError] number is out of range
   ##
 
   ##
@@ -193,6 +201,8 @@ module KernAux
   #
   # @param number [Integer] a number between `INT64_MIN` and `INT64_MAX`
   # @return [String]
+  #
+  # @raise [RangeError] number is out of range
   ##
 
   ##
