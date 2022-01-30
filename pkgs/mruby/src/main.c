@@ -1,8 +1,10 @@
 #include <mruby.h>
 
-void mrb_mruby_kernaux_gem_final(mrb_state *mrb) {}
+void init_assert(mrb_state *mrb);
 
-void mrb_mruby_kernaux_gem_init(mrb_state *mrb)
+void mrb_mruby_kernaux_gem_final(mrb_state *const mrb) {}
+
+void mrb_mruby_kernaux_gem_init(mrb_state *const mrb)
 {
-    /* struct RClass *const rb_KernAux = */ mrb_define_module(mrb, "KernAux");
+    init_assert(mrb);
 }
