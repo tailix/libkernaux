@@ -36,7 +36,7 @@ module KernAux
   # @param msg [String] any message
   # @return [nil]
   #
-  # @raise [AssertError] if {.assert_cb} have not been changed.
+  # @raise [AssertError] if {.assert_cb} have not been changed
   #
   # @see .assert_do Explicit file and line.
   #
@@ -54,13 +54,23 @@ module KernAux
   # @param msg [String] any message
   # @return [nil]
   #
-  # @raise [AssertError] if {.assert_cb} have not been changed.
+  # @raise [AssertError] if {.assert_cb} have not been changed
   #
-  # @see .panic Implicit file and line.
+  # @see .panic Implicit file and line
 
   # @!parse [ruby] def assert_do(file, line, msg); end
 
   if singleton_class.method_defined? :snprintf1
+    ##
+    # Typical `printf`.
+    #
+    # @param args [Array<String, Array<(String, Object)>>]
+    # @return [String] formatted output
+    #
+    # @example
+    #   KernAux.sprintf 'foo', ['%*s', 5, 'bar'], 'car', ['%d', 123]
+    #   #=> "foo  barcar123"
+    #
     def self.sprintf(*args)
       args.map do |arg|
         if arg.is_a? Array
@@ -71,7 +81,35 @@ module KernAux
       end.join.freeze
     end
 
-    def self.sprintf1(...) = snprintf1(SPRINTF1_BUFFER_SIZE, ...).first
+    ##
+    # `printf` for single formatting parameter.
+    #
+    # @param format [String] formatting string
+    # @return [String] formatted output
+    #
+    # @see .sprintf Multiple formatting parameters
+    #
+    # @example
+    #   KernAux.sprintf1 '%%'            #=> "%"
+    #   KernAux.sprintf1 '%s', 'foo'     #=> "foo"
+    #   KernAux.sprintf1 '%5s', 'foo'    #=> "  foo"
+    #   KernAux.sprintf1 '%*s', 5, 'foo' #=> "  foo"
+    #
+    def self.sprintf1(format, *args)
+      snprintf1(SPRINTF1_BUFFER_SIZE, format, *args).first
+    end
+
+    ##
+    # @!method snprintf1(buffer_size, format, ...)
+    # `printf` for single formatting parameter with manual buffer size.
+    #
+    # @param buffer_size [Integer] buffer size (including terminating null
+    #   character)
+    # @param format [String] formatting string
+    # @return [String] formatted output
+    #
+    # @see .sprintf1 Automatic buffer size
+    ##
   end
 
   ##
