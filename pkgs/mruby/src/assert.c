@@ -13,6 +13,10 @@ static mrb_value rb_KernAux_assert_cb(mrb_state *mrb, mrb_value self);
 static mrb_value rb_KernAux_assert_cb_EQ(mrb_state *mrb, mrb_value self);
 static mrb_value rb_KernAux_assert_do(mrb_state *mrb, mrb_value self);
 
+// FIXME: ugly and incorrect
+static mrb_state *tmp_mrb;
+static mrb_value tmp_self;
+
 void init_assert(mrb_state *const mrb)
 {
     kernaux_assert_cb = assert_cb;
@@ -25,10 +29,6 @@ void init_assert(mrb_state *const mrb)
     mrb_define_class_method(mrb, rb_KernAux, "assert_do",
                             rb_KernAux_assert_do, MRB_ARGS_REQ(3));
 }
-
-// FIXME: ugly and incorrect
-static mrb_state *tmp_mrb;
-static mrb_value tmp_self;
 
 void assert_cb(const char *const file, const int line, const char *const msg)
 {
