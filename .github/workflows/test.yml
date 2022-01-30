@@ -37,16 +37,6 @@ jobs:
       - name: install
         run: sudo make install
 
-      - name: 'Ruby: bundle'
-        working-directory: pkgs/ruby
-        run: bundle install
-      - name: 'Ruby: rake compile'
-        working-directory: pkgs/ruby
-        run: rake compile
-      - name: 'Ruby: test & lint'
-        working-directory: pkgs/ruby
-        run: rake
-
       - name: 'Rust: test'
         working-directory: pkgs/rust
         run: cargo test
@@ -66,3 +56,28 @@ jobs:
         run: cppcheck --quiet --error-exitcode=1 --std=c99 --enable=warning,style,performance,portability --suppress=unusedStructMember tests/
       - name: cppcheck ruby
         run: cppcheck --quiet --error-exitcode=1 --std=c99 --enable=warning,style,performance,portability pkgs/ruby/
+
+  ruby:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.0
+      - name: autogen
+        run: ./autogen.sh
+      - name: configure
+        run: ./configure CFLAGS='-O3 -fPIC'
+      - name: make
+        run: make
+      - name: install
+        run: sudo make install
+      - working-directory: pkgs/ruby
+        name: bundle
+        run: bundle install
+      - working-directory: pkgs/ruby
+        name: compile
+        run: rake compile
+      - working-directory: pkgs/ruby
+        name: test & lint
+        run: rake
