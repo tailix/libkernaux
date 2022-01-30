@@ -85,6 +85,7 @@ jobs:
       - uses: actions-rs/toolchain@v1
         with:
           toolchain: stable
+          components: rustfmt, clippy
       - name: autogen
         run: ./autogen.sh
       - name: configure
@@ -96,3 +97,9 @@ jobs:
       - working-directory: pkgs/rust
         name: test
         run: cargo test
+      - working-directory: pkgs/rust
+        name: fmt
+        run: cargo fmt --check
+      - working-directory: pkgs/rust
+        name: clippy
+        run: cargo clippy
