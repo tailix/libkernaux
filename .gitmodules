@@ -11,3 +11,6 @@
 [submodule "vendor/u-boot"]
 	path = vendor/u-boot
 	url = https://source.denx.de/u-boot/u-boot.git
+[submodule "vendor/mruby"]
+	path = vendor/mruby
+	url = https://github.com/mruby/mruby.git

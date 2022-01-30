@@ -55,8 +55,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+        with:
+          submodules: true
       - name: dependencies
-        run: sudo apt-get -y install cppcheck
+        run: sudo apt-get -y install cppcheck rake
+      - working-directory: vendor/mruby
+        name: build config
+        run: cp ../../pkgs/mruby/build_config.rb
+      - working-directory: vendor/mruby
+        name: test
+        run: rake test
       - working-directory: pkgs/mruby
         name: cppcheck
         run: cppcheck --quiet --error-exitcode=1 --std=c99 --enable=warning,style,performance,portability .
