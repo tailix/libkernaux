@@ -50,10 +50,16 @@ jobs:
         run: cppcheck --quiet --error-exitcode=1 --std=c99 --enable=warning,style,performance,portability --suppress=duplicateExpression --suppress=staticStringCompare examples/
       - name: cppcheck tests
         run: cppcheck --quiet --error-exitcode=1 --std=c99 --enable=warning,style,performance,portability --suppress=unusedStructMember tests/
-      - name: cppcheck mruby
-        run: cppcheck --quiet --error-exitcode=1 --std=c99 --enable=warning,style,performance,portability pkgs/mruby/
-      - name: cppcheck ruby
-        run: cppcheck --quiet --error-exitcode=1 --std=c99 --enable=warning,style,performance,portability pkgs/ruby/
+
+  mruby:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: dependencies
+        run: sudo apt-get -y install cppcheck
+      - working-directory: pkgs/mruby
+        name: cppcheck
+        run: cppcheck --quiet --error-exitcode=1 --std=c99 --enable=warning,style,performance,portability .
 
   ruby:
     runs-on: ubuntu-latest
@@ -62,6 +68,8 @@ jobs:
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: 3.0
+      - name: dependencies
+        run: sudo apt-get -y install cppcheck
       - name: autogen
         run: ./autogen.sh
       - name: configure
@@ -79,6 +87,9 @@ jobs:
       - working-directory: pkgs/ruby
         name: test & lint
         run: rake
+      - working-directory: pkgs/ruby
+        name: cppcheck
+        run: cppcheck --quiet --error-exitcode=1 --std=c99 --enable=warning,style,performance,portability .
 
   rust:
     runs-on: ubuntu-latest
