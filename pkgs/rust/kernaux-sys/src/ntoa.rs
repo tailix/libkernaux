@@ -4,20 +4,18 @@ use libc::{c_char, c_int};
 #[cfg(test)]
 #[link(name = "kernaux")]
 extern "C" {
-    fn kernaux_utoa(
-        value: u64,
-        buffer: *mut c_char,
-        base: c_int,
-    ) -> *mut c_char;
-    fn kernaux_itoa(
-        value: i64,
-        buffer: *mut c_char,
-        base: c_int,
-    ) -> *mut c_char;
-    fn kernaux_utoa10(value: u64, buffer: *mut c_char);
-    fn kernaux_itoa10(value: i64, buffer: *mut c_char);
-    fn kernaux_utoa16(value: u64, buffer: *mut c_char);
-    fn kernaux_itoa16(value: i64, buffer: *mut c_char);
+    #[link_name = "kernaux_utoa"]
+    fn utoa(value: u64, buffer: *mut c_char, base: c_int) -> *mut c_char;
+    #[link_name = "kernaux_itoa"]
+    fn itoa(value: i64, buffer: *mut c_char, base: c_int) -> *mut c_char;
+    #[link_name = "kernaux_utoa10"]
+    fn utoa10(value: u64, buffer: *mut c_char);
+    #[link_name = "kernaux_itoa10"]
+    fn itoa10(value: i64, buffer: *mut c_char);
+    #[link_name = "kernaux_utoa16"]
+    fn utoa16(value: u64, buffer: *mut c_char);
+    #[link_name = "kernaux_itoa16"]
+    fn itoa16(value: i64, buffer: *mut c_char);
 }
 
 #[cfg(test)]
@@ -27,10 +25,10 @@ mod tests {
     use std::ffi::CStr;
 
     #[test]
-    fn utoa() {
+    fn test_utoa() {
         let mut buffer: [i8; 1000] = [0; 1000];
         let end: *mut c_char =
-            unsafe { kernaux_utoa(0x123, buffer.as_mut_ptr(), 'x' as c_int) };
+            unsafe { utoa(0x123, buffer.as_mut_ptr(), 'x' as c_int) };
         let result =
             unsafe { CStr::from_ptr(buffer.as_ptr()) }.to_str().unwrap();
         assert_eq!(result, "123");
@@ -38,10 +36,10 @@ mod tests {
     }
 
     #[test]
-    fn itoa() {
+    fn test_itoa() {
         let mut buffer: [i8; 1000] = [0; 1000];
         let end: *mut c_char =
-            unsafe { kernaux_itoa(0x123, buffer.as_mut_ptr(), 'x' as c_int) };
+            unsafe { itoa(0x123, buffer.as_mut_ptr(), 'x' as c_int) };
         let result =
             unsafe { CStr::from_ptr(buffer.as_ptr()) }.to_str().unwrap();
         assert_eq!(result, "123");
@@ -49,7 +47,7 @@ mod tests {
 
         let mut buffer: [i8; 1000] = [0; 1000];
         let end: *mut c_char =
-            unsafe { kernaux_itoa(-0x123, buffer.as_mut_ptr(), 'x' as c_int) };
+            unsafe { itoa(-0x123, buffer.as_mut_ptr(), 'x' as c_int) };
         let result =
             unsafe { CStr::from_ptr(buffer.as_ptr()) }.to_str().unwrap();
         assert_eq!(result, "-123");
@@ -57,48 +55,48 @@ mod tests {
     }
 
     #[test]
-    fn utoa10() {
+    fn test_utoa10() {
         let mut buffer: [i8; 1000] = [0; 1000];
-        unsafe { kernaux_utoa10(123, buffer.as_mut_ptr()) };
+        unsafe { utoa10(123, buffer.as_mut_ptr()) };
         let result =
             unsafe { CStr::from_ptr(buffer.as_ptr()) }.to_str().unwrap();
         assert_eq!(result, "123");
     }
 
     #[test]
-    fn itoa10() {
+    fn test_itoa10() {
         let mut buffer: [i8; 1000] = [0; 1000];
-        unsafe { kernaux_itoa10(123, buffer.as_mut_ptr()) };
+        unsafe { itoa10(123, buffer.as_mut_ptr()) };
         let result =
             unsafe { CStr::from_ptr(buffer.as_ptr()) }.to_str().unwrap();
         assert_eq!(result, "123");
 
         let mut buffer: [i8; 1000] = [0; 1000];
-        unsafe { kernaux_itoa10(-123, buffer.as_mut_ptr()) };
+        unsafe { itoa10(-123, buffer.as_mut_ptr()) };
         let result =
             unsafe { CStr::from_ptr(buffer.as_ptr()) }.to_str().unwrap();
         assert_eq!(result, "-123");
     }
 
     #[test]
-    fn utoa16() {
+    fn test_utoa16() {
         let mut buffer: [i8; 1000] = [0; 1000];
-        unsafe { kernaux_utoa16(0x123, buffer.as_mut_ptr()) };
+        unsafe { utoa16(0x123, buffer.as_mut_ptr()) };
         let result =
             unsafe { CStr::from_ptr(buffer.as_ptr()) }.to_str().unwrap();
         assert_eq!(result, "123");
     }
 
     #[test]
-    fn itoa16() {
+    fn test_itoa16() {
         let mut buffer: [i8; 1000] = [0; 1000];
-        unsafe { kernaux_itoa16(0x123, buffer.as_mut_ptr()) };
+        unsafe { itoa16(0x123, buffer.as_mut_ptr()) };
         let result =
             unsafe { CStr::from_ptr(buffer.as_ptr()) }.to_str().unwrap();
         assert_eq!(result, "123");
 
         let mut buffer: [i8; 1000] = [0; 1000];
-        unsafe { kernaux_itoa16(-0x123, buffer.as_mut_ptr()) };
+        unsafe { itoa16(-0x123, buffer.as_mut_ptr()) };
         let result =
             unsafe { CStr::from_ptr(buffer.as_ptr()) }.to_str().unwrap();
         assert_eq!(result, "-123");
