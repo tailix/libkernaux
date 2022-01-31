@@ -25,7 +25,7 @@ jobs:
           toolchain: stable
 
       - name: dependencies
-        run: sudo apt-get -y install clang tcc
+        run: sudo apt-get --yes install clang tcc
       - name: autogen
         run: ./autogen.sh
       - name: configure
@@ -42,7 +42,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: dependencies
-        run: sudo apt-get -y install cppcheck
+        run: sudo apt-get --yes install cppcheck
       - name: cppcheck source code
         # TODO: don't suppress "src/printf.c"
         run: cppcheck --quiet --error-exitcode=1 --std=c99 --enable=warning,style,performance,portability --suppress='*:src/printf.c' include/ src/
@@ -58,7 +58,7 @@ jobs:
         with:
           submodules: true
       - name: dependencies
-        run: sudo apt-get -y install cppcheck rake
+        run: sudo apt-get --yes install cppcheck rake
       - name: autogen
         run: ./autogen.sh
       - name: configure
@@ -82,7 +82,7 @@ jobs:
         with:
           ruby-version: 3.0
       - name: dependencies
-        run: sudo apt-get -y install cppcheck
+        run: sudo apt-get --yes install cppcheck
       - name: autogen
         run: ./autogen.sh
       - name: configure
