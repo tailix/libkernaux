@@ -15,7 +15,7 @@ task:
 
 ruby_task:
   script:
-    - pkg install --yes autoconf automake ruby rubygem-bundler rubygem-rake
+    - pkg install --yes autoconf automake git ruby rubygem-bundler rubygem-rake
     - ./autogen.sh
     - ./configure CFLAGS='-O3 -fPIC'
     - make
