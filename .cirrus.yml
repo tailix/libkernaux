@@ -1,6 +1,13 @@
+# We use Cirrus CI to test on FreeBSD.
+# For GNU/Linix CI see GitHub Actions.
+
 freebsd_instance:
   image_family: freebsd-13-0
 
 task:
   script:
-    - 'echo "Hello, World!'
+    - ./autogen.sh
+    - ./configure CFLAGS='-O3 -fPIC'
+    - make
+    - make check
+    - sudo make install
