@@ -12,3 +12,15 @@ task:
     - make
     - make check
     - sudo make install
+
+ruby_task:
+  script:
+    - pkg install --yes autoconf automake ruby
+    - ./autogen.sh
+    - ./configure CFLAGS='-O3 -fPIC'
+    - make
+    - sudo make install
+    - cd pkgs/ruby
+    - bundle install
+    - rake compile
+    - rake
