@@ -4,7 +4,7 @@
 freebsd_instance:
   image_family: freebsd-13-0
 
-main_task:
+main_freebsd_task:
   name: Main (FreeBSD)
   script:
     - pkg install --yes autoconf automake
@@ -14,7 +14,7 @@ main_task:
     - make check
     - sudo make install
 
-ruby_task:
+ruby_freebsd_task:
   name: Ruby (FreeBSD)
   dependencies_script:
     - pkg install --yes autoconf automake git wget
