@@ -67,7 +67,6 @@ static int _vsnprintf(out_fct_type out, char* buffer, const size_t maxlen, const
 static inline void _out_buffer(char character, void* buffer, size_t idx, size_t maxlen);
 static inline void _out_null(char character, void* buffer, size_t idx, size_t maxlen);
 static inline void _out_fct(char character, void* buffer, size_t idx, size_t maxlen);
-static inline bool _is_digit(char ch);
 static unsigned int _atoi(const char** str);
 static size_t _out_rev(out_fct_type out, char* buffer, size_t idx, size_t maxlen, const char* buf, size_t len, unsigned int width, unsigned int flags);
 static size_t _ntoa_format(out_fct_type out, char* buffer, size_t idx, size_t maxlen, char* buf, size_t len, bool negative, unsigned int base, unsigned int prec, unsigned int width, unsigned int flags);
@@ -168,7 +167,7 @@ int _vsnprintf(out_fct_type out, char* buffer, const size_t maxlen, const char* 
 
         // evaluate width field
         width = 0u;
-        if (_is_digit(*format)) {
+        if (isdigit(*format)) {
             width = _atoi(&format);
         } else if (*format == '*') {
             const int w = va_arg(va, int);
@@ -186,7 +185,7 @@ int _vsnprintf(out_fct_type out, char* buffer, const size_t maxlen, const char* 
         if (*format == '.') {
             flags |= FLAGS_PRECISION;
             format++;
-            if (_is_digit(*format)) {
+            if (isdigit(*format)) {
                 precision = _atoi(&format);
             } else if (*format == '*') {
                 const int prec = (int)va_arg(va, int);
@@ -442,21 +441,12 @@ void _out_fct(char character, void* buffer, size_t idx, size_t maxlen)
     }
 }
 
-// internal test if char is a digit (0-9)
-// \return true if char is a digit
-bool _is_digit(char ch)
-{
-    return (ch >= '0') && (ch <= '9');
-}
-
 // internal ASCII string to unsigned int conversion
 unsigned int _atoi(const char** str)
 {
-    unsigned int i = 0u;
-    while (_is_digit(**str)) {
-        i = i * 10u + (unsigned int)(*((*str)++) - '0');
-    }
-    return i;
+    const int result = atoi(*str);
+    while (isdigit(**str)) (*str)++;
+    return result;
 }
 
 // output the specified string in reverse, taking care of any zero-padding
@@ -780,7 +770,7 @@ size_t _etoa(out_fct_type out, char* buffer, size_t idx, size_t maxlen, double v
     } conv;
 
     conv.F = value;
-    int exp2 = (int)((conv.U >> 52u) & 0x07FFU) - 1023; // effectively log2
+    int exp2 = (int)((conv.U >> 52u) & 0x07ffu) - 1023; // effectively log2
     conv.U = (conv.U & ((1ull << 52u) - 1u)) | (102ull << 52u); // drop the exponent so conv.F is now in [1,2)
     // now approximate log10 from the log2 integer part and an expansion of ln around 1.5
     int expval = (int)(0.1760912590558 + exp2 * 0.301029995663981 + (conv.F - 1.5) * 0.289529654602168);

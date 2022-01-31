@@ -13,6 +13,8 @@ Layout/AccessModifierIndentation:
 
 Layout/LineLength:
   Max: 80
+  Exclude:
+    - 'spec/lib/kernaux/sprintf_spec.rb'
 
 Lint/AmbiguousOperatorPrecedence:
   Enabled: false
@@ -30,6 +32,7 @@ RSpec/ContextWording:
   Prefixes:
     - 'and'
     - 'for'
+    - 'using'
     - 'when'
     - 'with'
     - 'without'

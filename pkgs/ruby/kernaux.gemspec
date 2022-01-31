@@ -4,26 +4,30 @@ require_relative 'lib/kernaux/version'
 
 Gem::Specification.new do |spec|
   repo = 'https://github.com/tailix/libkernaux'
+  home = "#{repo}/tree/master/pkgs/ruby"
+  bugs = "#{repo}/issues"
 
   spec.name     = 'kernaux'
   spec.version  = KernAux::VERSION
   spec.license  = 'MIT'
-  spec.homepage = "#{repo}/tree/master/pkgs/ruby"
+  spec.homepage = home
   spec.platform = Gem::Platform::RUBY
-  spec.summary  = 'Auxiliary library for kernel development'
 
   spec.required_ruby_version = '~> 3.0'
 
   spec.authors = ['Alex Kotov']
   spec.email   = %w[kotovalexarian@gmail.com]
 
+  spec.summary =
+    'Binding to libkernaux - auxiliary library for kernel development'
+
   spec.description = <<~DESCRIPTION.split("\n").map(&:strip).join ' '
-    Auxiliary library for kernel development.
+    Binding to libkernaux - auxiliary library for kernel development.
   DESCRIPTION
 
-  spec.metadata['homepage_uri']          = spec.homepage
-  spec.metadata['source_code_uri']       = spec.homepage
-  spec.metadata['bug_tracker_uri']       = "#{repo}/issues"
+  spec.metadata['homepage_uri']          = home
+  spec.metadata['source_code_uri']       = home
+  spec.metadata['bug_tracker_uri']       = bugs
   spec.metadata['rubygems_mfa_required'] = 'true'
 
   spec.bindir        = 'exe'

@@ -12,14 +12,14 @@ extern "C" {
 #define KERNAUX_CMDLINE_ERROR_MSG_SLEN_MAX \
   (KERNAUX_CMDLINE_ERROR_MSG_SIZE_MAX - 1)
 
-bool kernaux_cmdline_parse(
+bool kernaux_cmdline(
     const char *cmdline,
     char *error_msg,
     size_t *argc,
     char **argv,
     char *buffer,
     size_t argv_count_max,
-    size_t arg_size_max
+    size_t buffer_size
 );
 
 #ifdef __cplusplus

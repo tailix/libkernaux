@@ -9,7 +9,7 @@ extern "C" {
 #include <stdint.h>
 
 #define KERNAUX_MBR_SIZE 512
-#define KERNAUX_MBR_MAGIC 0xAA55
+#define KERNAUX_MBR_MAGIC 0xaa55
 #define KERNAUX_MBR_ENTRIES 4
 
 #define KERNAUX_MBR_BOOTSTRAP_SIZE \
