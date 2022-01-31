@@ -4,7 +4,7 @@
 freebsd_instance:
   image_family: freebsd-13-0
 
-task:
+main_task:
   script:
     - pkg install --yes autoconf automake
     - ./autogen.sh

@@ -2,6 +2,7 @@ libkernaux
 ==========
 
 [![Test](https://github.com/tailix/libkernaux/actions/workflows/test.yml/badge.svg)](https://github.com/tailix/libkernaux/actions/workflows/test.yml)
+[![FreeBSD build status](https://api.cirrus-ci.com/github/tailix/libkernaux.svg?task=main)](https://cirrus-ci.com/github/tailix/libkernaux)
 
 Auxiliary library for kernel development.
 
