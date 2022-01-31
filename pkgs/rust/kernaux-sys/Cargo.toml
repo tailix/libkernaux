@@ -12,5 +12,7 @@ keywords = ["ffi", "no_std", "no-std", "embedded", "bindings"]
 categories = ["embedded", "external-ffi-bindings", "no-std", "parsing"]
 publish = true
 
-[dependencies]
-libc = "0.2.113"
+[dependencies.libc]
+version = "0.2.113"
+default-features = false
+features = ["extra_traits"]
