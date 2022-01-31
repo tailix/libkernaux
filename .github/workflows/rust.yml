@@ -1,0 +1,34 @@
+name: Rust
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          components: rustfmt, clippy
+      - name: autogen
+        run: ./autogen.sh
+      - name: configure
+        run: ./configure CFLAGS='-O3 -fPIC'
+      - name: make
+        run: make
+      - name: install
+        run: sudo make install
+      - working-directory: pkgs/rust
+        name: test
+        run: cargo test
+      - working-directory: pkgs/rust
+        name: fmt
+        run: cargo fmt --check
+      - working-directory: pkgs/rust
+        name: clippy
+        run: cargo clippy
