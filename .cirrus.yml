@@ -4,7 +4,7 @@
 freebsd_instance:
   image_family: freebsd-13-0
 
-main_task:
+freebsd_main_task:
   script:
     - pkg install --yes autoconf automake
     - ./autogen.sh
@@ -13,7 +13,7 @@ main_task:
     - make check
     - sudo make install
 
-ruby_task:
+freebsd_ruby_task:
   dependencies_script:
     - pkg install --yes autoconf automake git wget
   ruby_cache:
