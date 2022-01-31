@@ -15,8 +15,9 @@ task:
 
 ruby_task:
   dependencies_script:
-    - pkg install --yes autoconf automake git
+    - pkg install --yes autoconf automake git wget
   ruby_cache:
+    fingerprint_key: ruby-3.0.3
     folder: ruby-3.0.3
     populate_script:
       - wget https://cache.ruby-lang.org/pub/ruby/3.0/ruby-3.0.3.tar.gz
@@ -26,6 +27,9 @@ ruby_task:
       - make
       - cd ..
   script:
+    - cd ruby-3.0.3
+    - sudo make install
+    - cd ..
     - ./autogen.sh
     - ./configure CFLAGS='-O3 -fPIC'
     - make
