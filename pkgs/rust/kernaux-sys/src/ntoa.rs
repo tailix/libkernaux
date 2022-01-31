@@ -1,21 +1,19 @@
-#[cfg(test)]
 use libc::{c_char, c_int};
 
-#[cfg(test)]
 #[link(name = "kernaux")]
 extern "C" {
     #[link_name = "kernaux_utoa"]
-    fn utoa(value: u64, buffer: *mut c_char, base: c_int) -> *mut c_char;
+    pub fn utoa(value: u64, buffer: *mut c_char, base: c_int) -> *mut c_char;
     #[link_name = "kernaux_itoa"]
-    fn itoa(value: i64, buffer: *mut c_char, base: c_int) -> *mut c_char;
+    pub fn itoa(value: i64, buffer: *mut c_char, base: c_int) -> *mut c_char;
     #[link_name = "kernaux_utoa10"]
-    fn utoa10(value: u64, buffer: *mut c_char);
+    pub fn utoa10(value: u64, buffer: *mut c_char);
     #[link_name = "kernaux_itoa10"]
-    fn itoa10(value: i64, buffer: *mut c_char);
+    pub fn itoa10(value: i64, buffer: *mut c_char);
     #[link_name = "kernaux_utoa16"]
-    fn utoa16(value: u64, buffer: *mut c_char);
+    pub fn utoa16(value: u64, buffer: *mut c_char);
     #[link_name = "kernaux_itoa16"]
-    fn itoa16(value: i64, buffer: *mut c_char);
+    pub fn itoa16(value: i64, buffer: *mut c_char);
 }
 
 #[cfg(test)]
