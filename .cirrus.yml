@@ -8,7 +8,7 @@ task:
   script:
     - pkg install --yes autoconf automake
     - ./autogen.sh
-    - ./configure CFLAGS='-O3 -fPIC'
+    - ./configure --enable-tests CFLAGS='-O3 -fPIC'
     - make
     - make check
     - sudo make install
