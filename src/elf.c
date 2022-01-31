@@ -8,7 +8,7 @@ bool KernAux_ELF_Header_is_valid(
     const struct KernAux_ELF_Header *const header
 ) {
     if (!(
-        header->magic_0x7F     == 0x7F &&
+        header->magic_0x7f     == 0x7f &&
         header->magic_E        == 'E'  &&
         header->magic_L        == 'L'  &&
         header->magic_F        == 'F'  &&
@@ -42,10 +42,10 @@ bool KernAux_ELF_Header_is_valid(
         header->obj_type == 0x02   || // EXEC
         header->obj_type == 0x03   || // DYN
         header->obj_type == 0x04   || // CORE
-        header->obj_type == 0xFE00 || // LOOS
-        header->obj_type == 0xFEFF || // HIOS
-        header->obj_type == 0xFF00 || // LOPROC
-        header->obj_type == 0xFFFF    // HIPROC
+        header->obj_type == 0xfe00 || // LOOS
+        header->obj_type == 0xfeff || // HIOS
+        header->obj_type == 0xff00 || // LOPROC
+        header->obj_type == 0xffff    // HIPROC
     )) {
         return false;
     }

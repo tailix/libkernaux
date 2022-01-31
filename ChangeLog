@@ -1,10 +1,40 @@
+2022-01-24  Alex Kotov  <kotovalexarian@gmail.com>
+
+	* include/kernaux/ntoa.h: Add func "kernaux_itoa"
+
+2022-01-23  Alex Kotov  <kotovalexarian@gmail.com>
+
+	* include/kernaux/assert.h: Require semicolon after macros
+	* include/kernaux/libc.h: Add funcs "atoi", "isdigit", "isspace"
+	* include/kernaux/ntoa.h: Rename const "KERNAUX_ITOA_BUFFER_SIZE" to
+	"KERNAUX_ITOA10_BUFFER_SIZE"
+	* include/kernaux/ntoa.h: Add funcs "kernaux_utoa16" and "kernaux_itoa16"
+	* include/kernaux/ntoa.h: Add consts "KERNAUX_UTOA10_BUFFER_SIZE" and
+	"KERNAUX_UTOA16_BUFFER_SIZE"
+	* include/kernaux/ntoa.h: Add func "kernaux_utoa"
+
+2022-01-22  Alex Kotov  <kotovalexarian@gmail.com>
+
+	libkernaux 0.2.0 released
+
+	* configure.ac: Made stable
+	* include/kernaux/cmdline.h: Made stable
+
+2022-01-22  Alex Kotov  <kotovalexarian@gmail.com>
+
+	* README.md: Configuration options now follow semver
+	* include/kernaux/assert.h: Do not allow to disable asserts and guards
+
 2022-01-21  Alex Kotov  <kotovalexarian@gmail.com>
 
 	* configure.ac: Allow to disable unnecessary heavy binary data
 
 2022-01-20  Alex Kotov  <kotovalexarian@gmail.com>
 
-	* libkernaux 0.1.0 released
 	* include/kernaux/assert.h: Added unconditional assertion (panic)
 	* include/kernaux/assert.h: Added guards for unconditional assertion (panic)
 	* src/printf.c: Fix bug and actually enable floating-point arithmetics
+
+2022-01-20  Alex Kotov  <kotovalexarian@gmail.com>
+
+	libkernaux 0.1.0 released

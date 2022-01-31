@@ -15,9 +15,10 @@ Table of contents
 * [Overview](#libkernaux)
 * [Table of contents](#table-of-contents)
 * [API](#api)
-* [Tips](#tips)
+* [Configuration](#configuration)
   * [Non-default options](#non-default-options)
   * [Default options](#default-options)
+* [Tips](#tips)
   * [Installation](#installation)
   * [Development](#development)
   * [Cross](#cross)
@@ -37,7 +38,7 @@ zero). Work-in-progress APIs can change at any time.
   * Architecture-specific code (*work in progress*)
     * [Declarations](/include/kernaux/arch/)
     * [Functions](/include/kernaux/asm/)
-  * [Assertions](/include/kernaux/assert.h) (*stable since* **0.1.0**)
+  * [Assertions](/include/kernaux/assert.h) (*stable since* **0.1.0**, *non-breaking since* **0.2.0**)
     * [Assert: simple](/examples/assert_simple.c)
     * [Assert: guards](/examples/assert_guards.c)
     * [Panic: simple](/examples/panic_simple.c)
@@ -48,7 +49,7 @@ zero). Work-in-progress APIs can change at any time.
   * [Framebuffer](/include/kernaux/framebuffer.h) (*planned*)
   * USB (*planned*)
 * Algorithms
-  * [Simple command line parser](/include/kernaux/cmdline.h) (*work in progress*)
+  * [Simple command line parser](/include/kernaux/cmdline.h) (*stable since* **0.2.0**)
     * [Example](/examples/cmdline.c)
   * [Page Frame Allocator](/include/kernaux/pfa.h) (*work in progress*)
     * [Example](/examples/pfa.c)
@@ -72,28 +73,25 @@ zero). Work-in-progress APIs can change at any time.
 
 
 
-Tips
-----
+Configuration
+-------------
+
+Because this library has no external dependencies, we use **autoconf** features
+to control behavior of the library, and packages to choose it's components.
+Configuration options also follow the [semantic versioning](https://semver.org)
+scheme and are split into stable and work-in-progress ones. Here we cover only
+stable options.
 
 ### Non-default options
 
-Because this library has no external dependencies, we use **autoconf** features
-to control behavior of the library, and packages to choose it's components. Here
-are some non-default options:
+#### Packages
 
-* `--enable-assert` - use value of extern variable `kernaux_assert_cb` as a
-  callback function for internal assertions. You still can use assertions in
-  your own application (kernel) even if this option was not enabled.
-* `--enable-guard` - safely return from functions even when assertions are
-  disabled. This option doesn't have effect if your assetion function was set
-  and ends execution of application (kernel). However it prevents crashes and
-  undefined behavior in other cases. You can also separately enable or disable
-  guards:
-  * `--(enable|disable)-guard-cond`
-  * `--(enable|disable)-guard-null`
 * `--with-libc` - provides the replacement for some standard C functions. Useful
   in freestanding environment, where no libc is present. You can also separately
   include or exclude components:
+  * `--with[out]-libc-atoi`
+  * `--with[out]-libc-isdigit`
+  * `--with[out]-libc-isspace`
   * `--with[out]-libc-memset`
   * `--with[out]-libc-strcpy`
   * `--with[out]-libc-strlen`
@@ -111,16 +109,13 @@ are some non-default options:
 All packages all included by default. To exclude all packages except those
 explicitly included, use `--without-all`.
 
-* `--with[out]-cmdline`
-* `--with[out]-console`
-* `--with[out]-elf`
-* `--with[out]-framebuffer`
-* `--with[out]-mbr`
-* `--with[out]-multiboot2`
 * `--with[out]-ntoa`
 * `--with[out]-printf`
-* `--with[out]-pfa`
-* `--with[out]-units`
+
+
+
+Tips
+----
 
 ### Installation
 
@@ -138,7 +133,7 @@ environment.
 
 ```
 ./autogen.sh
-./configure --enable-tests --enable-assert --enable-guard CFLAGS='-fPIC'
+./configure --enable-tests CFLAGS='-fPIC'
 make
 ```
 
@@ -155,8 +150,6 @@ without it in `$PATH`:
 ```
 ./configure \
   --host='i386-elf' \
-  --enable-assert \
-  --enable-guard \
   --with-libc \
   AR="$(which i386-elf-ar)" \
   CC="$(which i386-elf-gcc)" \
@@ -243,6 +236,10 @@ may change in future:
   * `x86_64`
 * `riscv`
   * `riscv64`
+* `arm` - we need more info, now similar to [Debian](https://www.debian.org/ports/arm/)
+  * `armel`
+  * `armhf`
+  * `arm64`
 
 
 

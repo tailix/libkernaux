@@ -1,0 +1,147 @@
+# frozen_string_literal: true
+
+require 'spec_helper'
+
+RSpec.describe KernAux, '.utoa' do
+  if described_class.singleton_class.method_defined? :utoa
+    subject(:utoa) { described_class.utoa number, base }
+
+    let(:number) { rand 0..(2**64 - 1) }
+    let(:base) { rand 2..36 }
+
+    it { is_expected.to be_instance_of String }
+    it { is_expected.to be_frozen }
+    it { is_expected.to eq number.to_s base }
+
+    context 'when number is 0' do
+      let(:number) { 0 }
+
+      it { is_expected.to be_instance_of String }
+      it { is_expected.to be_frozen }
+      it { is_expected.to eq '0' }
+    end
+
+    context 'when number is max uint64_t' do
+      let(:number) { 2**64 - 1 }
+
+      it { is_expected.to be_instance_of String }
+      it { is_expected.to be_frozen }
+      it { is_expected.to eq number.to_s base }
+    end
+
+    context 'when number is -1' do
+      let(:number) { -1 }
+
+      specify do
+        expect { utoa }.to \
+          raise_error RangeError, 'can\'t convert negative number to uint64_t'
+      end
+    end
+
+    context 'when number is greater than max uint64_t' do
+      let(:number) { 2**64 }
+
+      specify do
+        expect { utoa }.to raise_error \
+          RangeError, 'bignum too big to convert into `unsigned long long\''
+      end
+    end
+
+    context 'when base is negative' do
+      let(:base) { -rand(2..36) }
+
+      it { is_expected.to be_instance_of String }
+      it { is_expected.to be_frozen }
+      it { is_expected.to eq number.to_s(-base).upcase }
+    end
+
+    context 'when base is :b' do
+      let(:base) { :b }
+
+      it { is_expected.to be_instance_of String }
+      it { is_expected.to be_frozen }
+      it { is_expected.to eq number.to_s 2 }
+    end
+
+    context 'when base is :B:' do
+      let(:base) { :B }
+
+      it { is_expected.to be_instance_of String }
+      it { is_expected.to be_frozen }
+      it { is_expected.to eq number.to_s 2 }
+    end
+
+    context 'when base is :o' do
+      let(:base) { :o }
+
+      it { is_expected.to be_instance_of String }
+      it { is_expected.to be_frozen }
+      it { is_expected.to eq number.to_s 8 }
+    end
+
+    context 'when base is :O' do
+      let(:base) { :O }
+
+      it { is_expected.to be_instance_of String }
+      it { is_expected.to be_frozen }
+      it { is_expected.to eq number.to_s 8 }
+    end
+
+    context 'when base is :d' do
+      let(:base) { :d }
+
+      it { is_expected.to be_instance_of String }
+      it { is_expected.to be_frozen }
+      it { is_expected.to eq number.to_s }
+    end
+
+    context 'when base is :D' do
+      let(:base) { :D }
+
+      it { is_expected.to be_instance_of String }
+      it { is_expected.to be_frozen }
+      it { is_expected.to eq number.to_s }
+    end
+
+    context 'when base is :h' do
+      let(:base) { :h }
+
+      it { is_expected.to be_instance_of String }
+      it { is_expected.to be_frozen }
+      it { is_expected.to eq number.to_s 16 }
+    end
+
+    context 'when base is :x' do
+      let(:base) { :x }
+
+      it { is_expected.to be_instance_of String }
+      it { is_expected.to be_frozen }
+      it { is_expected.to eq number.to_s 16 }
+    end
+
+    context 'when base is :H' do
+      let(:base) { :H }
+
+      it { is_expected.to be_instance_of String }
+      it { is_expected.to be_frozen }
+      it { is_expected.to eq number.to_s(16).upcase }
+    end
+
+    context 'when base is :X' do
+      let(:base) { :X }
+
+      it { is_expected.to be_instance_of String }
+      it { is_expected.to be_frozen }
+      it { is_expected.to eq number.to_s(16).upcase }
+    end
+
+    context 'when base is an invalid symbol' do
+      let(:base) { :foo }
+
+      specify do
+        expect { utoa }.to \
+          raise_error described_class::InvalidNtoaBaseError, 'invalid base'
+      end
+    end
+  end
+end

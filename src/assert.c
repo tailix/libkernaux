@@ -6,12 +6,12 @@
 
 #include <stddef.h>
 
-void (*kernaux_assert_cb)(const char *file, int line, const char *str) = NULL;
+void (*kernaux_assert_cb)(const char *file, int line, const char *msg) = NULL;
 
 void kernaux_assert_do(
     const char *const file,
     const int line,
-    const char *const str
+    const char *const msg
 ) {
-    if (kernaux_assert_cb) kernaux_assert_cb(file, line, str);
+    if (kernaux_assert_cb) kernaux_assert_cb(file, line, msg);
 }

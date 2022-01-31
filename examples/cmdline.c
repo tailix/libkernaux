@@ -3,8 +3,8 @@
 #include <assert.h>
 #include <string.h>
 
-static const size_t ARGV_COUNT_MAX = 100;
-static const size_t ARG_SIZE_MAX = 4096;
+#define ARGV_COUNT_MAX 100
+#define BUFFER_SIZE 4096
 
 static const char *const cmdline = "foo bar\\ baz \"car cdr\"";
 
@@ -13,16 +13,16 @@ int main()
     char error_msg[KERNAUX_CMDLINE_ERROR_MSG_SIZE_MAX];
     size_t argc;
     char *argv[ARGV_COUNT_MAX];
-    char buffer[ARGV_COUNT_MAX * ARG_SIZE_MAX];
+    char buffer[BUFFER_SIZE];
 
-    assert(kernaux_cmdline_parse(
+    assert(kernaux_cmdline(
         cmdline,
         error_msg,
         &argc,
         argv,
         buffer,
         ARGV_COUNT_MAX,
-        ARG_SIZE_MAX
+        BUFFER_SIZE
     ));
 
     assert(strcmp(error_msg, "") == 0);

@@ -20,7 +20,7 @@ CLEAN << 'doc'
 CLEAN << 'spec/examples.txt'
 
 desc 'Run default checks'
-task default: %i[test lint]
+task default: %i[test lint yard:cov]
 
 desc 'Run tests'
 task test: :spec
@@ -64,4 +64,17 @@ end
 desc 'Open development console'
 task :console do
   sh 'bundle', 'exec', File.expand_path(File.join('bin', 'console'), __dir__)
+end
+
+namespace :yard do
+  desc 'Measure documentation coverage'
+  task :cov do
+    result = `bundle exec yard stats`.lines.last.strip.freeze
+    m = result.match(/\A(\d+(\.\d+)?)% documented\z/)
+    raise 'Invalid result' if m.nil?
+
+    coverage = m[1].to_f.round(2)
+    puts "Documentation coverage: #{coverage}%"
+    raise 'Not fully documented!' if coverage != 100
+  end
 end

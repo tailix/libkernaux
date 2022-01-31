@@ -1,5 +1,3 @@
-#define KERNAUX_ENABLE_ASSERT
-#define KERNAUX_ENABLE_GUARD
 #include <kernaux/assert.h>
 
 #include <assert.h>
@@ -93,7 +91,7 @@ int main()
 
     assert(count == 1);
     assert(strcmp(last_file, __FILE__) == 0);
-    assert(last_line == 30);
+    assert(last_line == 28);
     assert(strcmp(last_str, "value > 100") == 0);
     assert(noreturn_count == 4);
 
@@ -101,7 +99,7 @@ int main()
 
     assert(count == 2);
     assert(strcmp(last_file, __FILE__) == 0);
-    assert(last_line == 36);
+    assert(last_line == 34);
     assert(strcmp(last_str, "value > 100") == 0);
     assert(noreturn_count == 4);
 
@@ -109,7 +107,7 @@ int main()
 
     assert(count == 3);
     assert(strcmp(last_file, __FILE__) == 0);
-    assert(last_line == 43);
+    assert(last_line == 41);
     assert(strcmp(last_str, "value") == 0);
     assert(noreturn_count == 4);
 
@@ -117,7 +115,7 @@ int main()
 
     assert(count == 4);
     assert(strcmp(last_file, __FILE__) == 0);
-    assert(last_line == 49);
+    assert(last_line == 47);
     assert(strcmp(last_str, "value") == 0);
     assert(noreturn_count == 4);
 
