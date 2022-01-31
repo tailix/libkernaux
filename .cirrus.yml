@@ -14,13 +14,23 @@ task:
     - sudo make install
 
 ruby_task:
+  dependencies_script:
+    - pkg install --yes autoconf automake git
+  ruby_cache:
+    folder: ruby-3.0.3
+    populate_script:
+      - wget https://cache.ruby-lang.org/pub/ruby/3.0/ruby-3.0.3.tar.gz
+      - tar -xzf ruby-3.0.3.tar.gz
+      - cd ruby-3.0.3
+      - ./configure
+      - make
+      - cd ..
   script:
-    - pkg install --yes autoconf automake git ruby rubygem-bundler rubygem-rake
     - ./autogen.sh
     - ./configure CFLAGS='-O3 -fPIC'
     - make
     - sudo make install
     - cd pkgs/ruby
     - bundle install
-    - rake compile
-    - rake
+    - bundle exec rake compile
+    - bundle exec rake
