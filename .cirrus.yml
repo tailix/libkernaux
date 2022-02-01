@@ -55,3 +55,10 @@ ruby_freebsd_task:
   ruby_test_script:
     - cd pkgs/ruby
     - bundle exec rake
+
+rust_freebsd_task:
+  name: Rust (FreeBSD)
+  dependencies_script:
+    - pkg install --yes autoconf automake
+  dependencies_rust_script:
+    - curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
