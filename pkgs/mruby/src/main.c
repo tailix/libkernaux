@@ -22,6 +22,7 @@ void mrb_mruby_kernaux_gem_init(mrb_state *const mrb)
 
     mrb_define_module_id(mrb, MRB_SYM(KernAux));
     init_assert(mrb);
+    init_ntoa(mrb);
 }
 
 void current_mrb_start(mrb_state *mrb)
