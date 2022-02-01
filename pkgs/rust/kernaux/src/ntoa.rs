@@ -1,8 +1,15 @@
+pub use kernaux_sys::{
+    ITOA10_BUFFER_SIZE, ITOA16_BUFFER_SIZE, ITOA_BUFFER_SIZE,
+    UTOA10_BUFFER_SIZE, UTOA16_BUFFER_SIZE, UTOA_BUFFER_SIZE,
+};
+
 #[cfg(test)]
 mod tests {
+    use super::*;
+
     use std::ffi::CStr;
 
-    use kernaux_sys::{utoa10, UTOA10_BUFFER_SIZE};
+    use kernaux_sys::utoa10;
 
     #[test]
     fn test_utoa10() {
