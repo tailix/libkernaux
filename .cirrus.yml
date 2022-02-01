@@ -24,7 +24,7 @@ ruby_freebsd_task:
     - wget https://cache.ruby-lang.org/pub/ruby/3.0/ruby-3.0.3.tar.gz
     - tar -xzf ruby-3.0.3.tar.gz
     - cd ruby-3.0.3
-    - ./configure
+    - ./configure --disable-install-doc
     - make
     - sudo make install
   main_build_script:
