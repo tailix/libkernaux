@@ -45,6 +45,7 @@ void current_mrb_finish(mrb_state *mrb)
 
 mrb_state *current_mrb_get()
 {
+    mrb_assert(mrb_stack_count > 0);
     mrb_assert(mrb_stack[mrb_stack_count - 1] != NULL);
 
     return mrb_stack[mrb_stack_count - 1];
