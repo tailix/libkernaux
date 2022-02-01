@@ -16,6 +16,22 @@ main_freebsd_task:
   main_test_script:
     - make check
 
+mruby_freebsd_task:
+  name: mruby (FreeBSD)
+  dependencies_script:
+    - pkg install --yes autoconf automake rubygem-rake wget
+  dependencies_mruby_script:
+    - wget https://github.com/mruby/mruby/archive/3.0.0.zip -O mruby-3.0.0.zip
+    - unzip mruby-3.0.0.zip
+  main_build_script:
+    - ./autogen.sh
+    - ./configure CFLAGS='-O3 -fPIC'
+    - make
+    - sudo make install
+  mruby_test_script:
+    - cd mruby-3.0.0
+    - MRUBY_CONFIG=../pkgs/mruby/build_config.rb rake test
+
 ruby_freebsd_task:
   name: Ruby (FreeBSD)
   dependencies_script:
@@ -37,4 +53,5 @@ ruby_freebsd_task:
     - bundle install
     - bundle exec rake compile
   ruby_test_script:
+    - cd pkgs/ruby
     - bundle exec rake
