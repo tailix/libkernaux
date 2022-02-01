@@ -24,7 +24,6 @@ Table of contents
   * [Development](#development)
   * [Cross](#cross)
 * [Architectures](#architectures)
-* [Portability](#portability)
 
 
 
@@ -241,18 +240,3 @@ may change in future:
   * `armel`
   * `armhf`
   * `arm64`
-
-
-
-Portability
------------
-
-Except GNU/Linux, the library is periodically successfully built (starting with
-`./autogen.sh`) and tested with **autoconf**, **automake**, **binutils** and
-**gcc**/**clang** (depending on what is present) on the following operating
-systems:
-
-* FreeBSD 13.0
-* Minix 3.3.0
-* NetBSD 9.2
-* OpenBSD 7.0
