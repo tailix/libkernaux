@@ -19,21 +19,14 @@ ruby_freebsd_task:
   name: Ruby (FreeBSD)
   dependencies_script:
     - pkg install --yes autoconf automake git wget
-  ruby_cache:
-    fingerprint_key: ruby-3.0.3-fix
-    folder: ruby-3.0.3
-    populate_script:
-      - wget https://cache.ruby-lang.org/pub/ruby/3.0/ruby-3.0.3.tar.gz
-      - tar -xzf ruby-3.0.3.tar.gz
-      - cd ruby-3.0.3
-      - ./configure
-      - make
-      - cd ..
-  upload_caches: [ruby]
-  script:
+  ruby_script:
+    - wget https://cache.ruby-lang.org/pub/ruby/3.0/ruby-3.0.3.tar.gz
+    - tar -xzf ruby-3.0.3.tar.gz
     - cd ruby-3.0.3
+    - ./configure
+    - make
     - sudo make install
-    - cd ..
+  script:
     - ./autogen.sh
     - ./configure CFLAGS='-O3 -fPIC'
     - make
