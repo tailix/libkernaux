@@ -19,7 +19,7 @@ ruby_freebsd_task:
   dependencies_script:
     - pkg install --yes autoconf automake git wget
   ruby_cache:
-    fingerprint_key: ruby-3.0.3
+    fingerprint_key: ruby-3.0.3-fix
     folder: ruby-3.0.3
     populate_script:
       - wget https://cache.ruby-lang.org/pub/ruby/3.0/ruby-3.0.3.tar.gz
