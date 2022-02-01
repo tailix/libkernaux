@@ -28,6 +28,7 @@ ruby_freebsd_task:
       - ./configure
       - make
       - cd ..
+  upload_caches: [ruby]
   script:
     - cd ruby-3.0.3
     - sudo make install
