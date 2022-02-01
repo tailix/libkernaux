@@ -69,6 +69,6 @@ rust_freebsd_task:
     - sudo make install
   rust_test_script:
     - cd pkgs/rust
-    - cargo test
-    - cargo clippy
-    - cargo fmt --check
+    - ~/.cargo/bin/cargo test
+    - ~/.cargo/bin/cargo clippy
+    - ~/.cargo/bin/cargo fmt --check
