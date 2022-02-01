@@ -6,6 +6,7 @@ AM_CFLAGS = \
 	-Wall \
 	-Wextra \
 	-Wno-cast-function-type \
+	-I$(top_builddir)/include \
 	-I$(top_srcdir)/include
 
 lib_LIBRARIES = libkernaux.a

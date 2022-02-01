@@ -81,6 +81,8 @@
 
 /Makefile
 /include/Makefile
+/include/kernaux.h
+/include/kernaux/console.h
 
 /examples/*.log
 /examples/*.trs

@@ -151,11 +151,41 @@ AS_IF([test "$with_libc_strnlen" = yes], [AC_DEFINE([WITH_LIBC_STRNLEN],     [1]
 
 
 
+dnl Architecture
+AS_IF([test "$host_cpu" != i386],         [AC_SUBST([comment_line_asm_i386],     [//])])
+AS_IF([test "$host_cpu" != riscv64],      [AC_SUBST([comment_line_asm_riscv64],  [//])])
+AS_IF([test "$host_cpu" != x86_64],       [AC_SUBST([comment_line_asm_x86_64],   [//])])
+
+dnl Packages (enabled by default)
+AS_IF([test "$with_cmdline"        = no], [AC_SUBST([comment_line_cmdline],      [//])])
+AS_IF([test "$with_console"        = no], [AC_SUBST([comment_line_console],      [//])])
+AS_IF([test "$with_elf"            = no], [AC_SUBST([comment_line_elf],          [//])])
+AS_IF([test "$with_framebuffer"    = no], [AC_SUBST([comment_line_framebuffer],  [//])])
+AS_IF([test "$with_mbr"            = no], [AC_SUBST([comment_line_mbr],          [//])])
+AS_IF([test "$with_multiboot2"     = no], [AC_SUBST([comment_line_multiboot2],   [//])])
+AS_IF([test "$with_ntoa"           = no], [AC_SUBST([comment_line_ntoa],         [//])])
+AS_IF([test "$with_pfa"            = no], [AC_SUBST([comment_line_pfa],          [//])])
+AS_IF([test "$with_printf"         = no], [AC_SUBST([comment_line_printf],       [//])])
+AS_IF([test "$with_units"          = no], [AC_SUBST([comment_line_units],        [//])])
+
+dnl Packages (disabled by default)
+AS_IF([test "$with_libc_atoi"    != yes], [AC_SUBST([comment_line_libc_atoi],    [//])])
+AS_IF([test "$with_libc_isdigit" != yes], [AC_SUBST([comment_line_libc_isdigit], [//])])
+AS_IF([test "$with_libc_isspace" != yes], [AC_SUBST([comment_line_libc_isspace], [//])])
+AS_IF([test "$with_libc_memset"  != yes], [AC_SUBST([comment_line_libc_memset],  [//])])
+AS_IF([test "$with_libc_strcpy"  != yes], [AC_SUBST([comment_line_libc_strcpy],  [//])])
+AS_IF([test "$with_libc_strlen"  != yes], [AC_SUBST([comment_line_libc_strlen],  [//])])
+AS_IF([test "$with_libc_strnlen" != yes], [AC_SUBST([comment_line_libc_strnlen], [//])])
+
+
+
 AM_INIT_AUTOMAKE([1.9 subdir-objects])
 
 AC_CONFIG_FILES([
   Makefile
   include/Makefile
+  include/kernaux.h
+  include/kernaux/console.h
 ])
 
 AC_LANG([C])
