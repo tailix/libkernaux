@@ -8,30 +8,33 @@ main_freebsd_task:
   name: Main (FreeBSD)
   dependencies_script:
     - pkg install --yes autoconf automake
-  script:
+  main_build_script:
     - ./autogen.sh
     - ./configure --enable-tests CFLAGS='-O3 -fPIC'
     - make
-    - make check
     - sudo make install
+  main_test_script:
+    - make check
 
 ruby_freebsd_task:
   name: Ruby (FreeBSD)
   dependencies_script:
     - pkg install --yes autoconf automake git wget
-  ruby_script:
+  dependencies_ruby_script:
     - wget https://cache.ruby-lang.org/pub/ruby/3.0/ruby-3.0.3.tar.gz
     - tar -xzf ruby-3.0.3.tar.gz
     - cd ruby-3.0.3
     - ./configure
     - make
     - sudo make install
-  script:
+  main_build_script:
     - ./autogen.sh
     - ./configure CFLAGS='-O3 -fPIC'
     - make
     - sudo make install
+  ruby_build_script:
     - cd pkgs/ruby
     - bundle install
     - bundle exec rake compile
+  ruby_test_script:
     - bundle exec rake
