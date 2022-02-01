@@ -58,6 +58,9 @@ ruby_freebsd_task:
 
 rust_freebsd_task:
   name: Rust (FreeBSD)
+  env:
+    # FIXME: temporary hack to fix FreeBSD build
+    RUSTFLAGS: '-L /usr/local/lib'
   dependencies_script:
     - pkg install --yes autoconf automake
   dependencies_rust_script:
