@@ -17,13 +17,6 @@ jobs:
         opt: ['', '-O0', '-O3']
     steps:
       - uses: actions/checkout@v2
-      - uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: 3.0
-      - uses: actions-rs/toolchain@v1
-        with:
-          toolchain: stable
-
       - name: dependencies
         run: sudo apt-get --yes install clang tcc
       - name: autogen
@@ -50,3 +43,18 @@ jobs:
         run: cppcheck --quiet --error-exitcode=1 --std=c99 --enable=warning,style,performance,portability --suppress=duplicateExpression --suppress=staticStringCompare examples/
       - name: cppcheck tests
         run: cppcheck --quiet --error-exitcode=1 --std=c99 --enable=warning,style,performance,portability --suppress=unusedStructMember tests/
+
+  cond:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: autogen
+        run: ./autogen.sh
+      - name: configure
+        run: ./configure --enable-tests --without-all CFLAGS='-fPIC'
+      - name: make
+        run: make
+      - name: check
+        run: make check || (cat test-suite.log && false)
+      - name: install
+        run: sudo make install
