@@ -27,8 +27,8 @@ jobs:
         name: test
         run: cargo test
       - working-directory: pkgs/rust
-        name: fmt
-        run: cargo fmt --check
-      - working-directory: pkgs/rust
         name: clippy
         run: cargo clippy
+      - working-directory: pkgs/rust
+        name: fmt
+        run: cargo fmt --check

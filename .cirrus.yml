@@ -62,3 +62,13 @@ rust_freebsd_task:
     - pkg install --yes autoconf automake
   dependencies_rust_script:
     - curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+  main_build_script:
+    - ./autogen.sh
+    - ./configure CFLAGS='-O3 -fPIC'
+    - make
+    - sudo make install
+  rust_test_script:
+    - cd pkgs/rust
+    - cargo test
+    - cargo clippy
+    - cargo fmt --check
