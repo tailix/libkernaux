@@ -6,8 +6,9 @@ freebsd_instance:
 
 main_freebsd_task:
   name: Main (FreeBSD)
-  script:
+  dependencies_script:
     - pkg install --yes autoconf automake
+  script:
     - ./autogen.sh
     - ./configure --enable-tests CFLAGS='-O3 -fPIC'
     - make
