@@ -2,6 +2,7 @@
 
 	* configure.ac: Generate position-independent code by default, disable with
 	"--disable-pic"
+	* configure.ac: "-Werror" by default, disable with "--disable-werror"
 
 2022-02-01  Alex Kotov  <kotovalexarian@gmail.com>
 

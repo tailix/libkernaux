@@ -104,6 +104,7 @@ stable options.
 * `--enable-bloat`, disable with `--disable-bloat`
 * `--enable-float`, disable with `--disable-float`
 * `--enable-pic`, disable with `--disable-pic`
+* `--enable-werror`, disable with `--disable-werror`
 
 #### Packages
 

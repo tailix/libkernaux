@@ -37,6 +37,10 @@ TESTS = \
 	examples/panic_simple
 endif
 
+if ENABLE_WERROR
+AM_CFLAGS += -Werror
+endif
+
 if WITH_CMDLINE
 libkernaux_a_SOURCES += src/cmdline.c
 if ENABLE_TESTS
