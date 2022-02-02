@@ -13,12 +13,7 @@ jobs:
       matrix:
         # TODO: something is wrong with TCC, Multiboot 2 info tag struct size
         #cc: ['gcc', 'clang', 'tcc']
-        cc:
-          - cc: 'gcc'
-            werror: ''
-          - cc: 'clang'
-            # FIXME: -Werror: unknown warning option '-Wno-cast-function-type'
-            werror: '--disable-werror'
+        cc: ['gcc', 'clang']
         opt: ['', '-O0', '-O3']
     steps:
       - uses: actions/checkout@v2
@@ -27,7 +22,7 @@ jobs:
       - name: autogen
         run: ./autogen.sh
       - name: configure
-        run: ./configure --enable-tests ${{matrix.cc.werror}} CC='${{matrix.cc.cc}}' CFLAGS='${{matrix.opt}}'
+        run: ./configure --enable-tests CC='${{matrix.cc}}' CFLAGS='${{matrix.opt}}'
       - name: make
         run: make
       - name: check

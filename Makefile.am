@@ -5,7 +5,6 @@ AM_CFLAGS = \
 	-pedantic \
 	-Wall \
 	-Wextra \
-	-Wno-cast-function-type \
 	-I$(top_builddir)/include \
 	-I$(top_srcdir)/include
 
