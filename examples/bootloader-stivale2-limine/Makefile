@@ -5,6 +5,7 @@ CCPREFIX = ../../vendor/cross/root/bin/x86_64-elf-
 AS = $(CCPREFIX)as
 CC = $(CCPREFIX)gcc
 
+LIBKERNAUX_SRC   = ../..
 LIBKERNAUX_BUILD = ../../build/dev-cross-x86_64
 LIBKERNAUX_DEST  = ../../dest/dev-cross-x86_64
 
@@ -37,21 +38,22 @@ FULL_LIMINE_ELTORITO = $(ROOTFS)/$(REL_LIMINE_ELTORITO)
 FULL_LIMINE_SYS      = $(ROOTFS)/$(REL_LIMINE_SYS)
 
 CFLAGS = \
-	-std=c99             \
-	-Wall                \
-	-Wextra              \
-	-Werror              \
-	-ffreestanding       \
-	-fno-builtin         \
-	-fno-stack-protector \
-	-fno-pic             \
-	-I../../include      \
-	-mabi=sysv           \
-	-mcmodel=kernel      \
-	-mno-80387           \
-	-mno-red-zone        \
+	-std=c99                      \
+	-Wall                         \
+	-Wextra                       \
+	-Werror                       \
+	-ffreestanding                \
+	-fno-builtin                  \
+	-fno-stack-protector          \
+	-fno-pic                      \
+	-I$(LIBKERNAUX_SRC)/include   \
+	-I$(LIBKERNAUX_BUILD)/include \
+	-mabi=sysv                    \
+	-mcmodel=kernel               \
+	-mno-80387                    \
+	-mno-red-zone                 \
 	-MMD
-	# -pedantic            \
+	# -pedantic                     \
 
 OBJS = main.c.o stivale2.c.o
 
