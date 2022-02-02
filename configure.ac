@@ -16,6 +16,7 @@ AC_CANONICAL_HOST
 dnl Features (enabled by default)
 AC_ARG_ENABLE([bloat],        AS_HELP_STRING([--disable-bloat],       [disable unnecessary heavy binary data]))
 AC_ARG_ENABLE([float],        AS_HELP_STRING([--disable-float],       [disable floating-point arithmeric]))
+AC_ARG_ENABLE([pic],          AS_HELP_STRING([--disable-pic],         [do not generate position-independent code]))
 
 dnl Features (disabled by default)
 AC_ARG_ENABLE([tests],        AS_HELP_STRING([--enable-tests],        [enable tests and examples]))
@@ -89,6 +90,7 @@ AM_CONDITIONAL([ASM_X86_64],        [test "$host_cpu" = x86_64])
 dnl Features (enabled by default)
 AM_CONDITIONAL([ENABLE_BLOAT],      [test "$enable_bloat"      != no])
 AM_CONDITIONAL([ENABLE_FLOAT],      [test "$enable_float"      != no])
+AM_CONDITIONAL([ENABLE_PIC],        [test "$enable_pic"        != no])
 
 dnl Features (disabled by default)
 AM_CONDITIONAL([ENABLE_TESTS],      [test "$enable_tests"      = yes])
@@ -124,6 +126,7 @@ AS_IF([test "$host_cpu" = x86_64],        [AC_DEFINE([ASM_X86_64],           [1]
 dnl Features (enabled by default)
 AS_IF([test "$enable_bloat"      != no], [AC_DEFINE([ENABLE_BLOAT],          [1], [enabled unnecessary heavy binary data])])
 AS_IF([test "$enable_float"      != no], [AC_DEFINE([ENABLE_FLOAT],          [1], [enabled floating-point arithmeric])])
+AS_IF([test "$enable_pic"        != no], [AC_DEFINE([ENABLE_PIC],            [1], [generate position-independent code])])
 
 dnl Features (disabled by default)
 AS_IF([test "$enable_tests"      = yes], [AC_DEFINE([ENABLE_TESTS],          [1], [enabled tests and examples])])
@@ -176,6 +179,10 @@ AS_IF([test "$with_libc_memset"  != yes], [AC_SUBST([comment_line_libc_memset], 
 AS_IF([test "$with_libc_strcpy"  != yes], [AC_SUBST([comment_line_libc_strcpy],  [//])])
 AS_IF([test "$with_libc_strlen"  != yes], [AC_SUBST([comment_line_libc_strlen],  [//])])
 AS_IF([test "$with_libc_strnlen" != yes], [AC_SUBST([comment_line_libc_strnlen], [//])])
+
+
+
+AS_IF([test "$enable_pic" != no], [CFLAGS+=' -fpic '], [CFLAGS+=' -fno-pic'])
 
 
 

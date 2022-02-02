@@ -17,14 +17,6 @@ libkernaux_a_SOURCES = \
 	src/assert.c \
 	src/libc.c
 
-if ENABLE_TESTS
-TESTS = \
-	examples/assert_guards \
-	examples/assert_simple \
-	examples/panic_guards \
-	examples/panic_simple
-endif
-
 if ASM_I386
 libkernaux_a_SOURCES += src/asm/i386.S
 endif
@@ -35,6 +27,14 @@ endif
 
 if ASM_X86_64
 libkernaux_a_SOURCES += src/asm/x86_64.S
+endif
+
+if ENABLE_TESTS
+TESTS = \
+	examples/assert_guards \
+	examples/assert_simple \
+	examples/panic_guards \
+	examples/panic_simple
 endif
 
 if WITH_CMDLINE

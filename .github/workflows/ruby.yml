@@ -19,7 +19,7 @@ jobs:
       - name: autogen
         run: ./autogen.sh
       - name: configure
-        run: ./configure CFLAGS='-O3 -fPIC'
+        run: ./configure CFLAGS='-O3'
       - name: make
         run: make
       - name: install
@@ -51,7 +51,7 @@ jobs:
       - name: autogen
         run: ./autogen.sh
       - name: configure
-        run: ./configure --without-all CFLAGS='-O3 -fPIC'
+        run: ./configure --without-all CFLAGS='-O3'
       - name: make
         run: make
       - name: install

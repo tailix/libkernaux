@@ -1,3 +1,8 @@
+2022-02-02  Alex Kotov  <kotovalexarian@gmail.com>
+
+	* configure.ac: Generate position-independent code by default, disable with
+	"--disable-pic"
+
 2022-02-01  Alex Kotov  <kotovalexarian@gmail.com>
 
 	* configure.ac: Generate headers conditionally depending on options

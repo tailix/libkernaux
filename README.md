@@ -103,6 +103,7 @@ stable options.
 
 * `--enable-bloat`, disable with `--disable-bloat`
 * `--enable-float`, disable with `--disable-float`
+* `--enable-pic`, disable with `--disable-pic`
 
 #### Packages
 
@@ -121,7 +122,7 @@ Tips
 
 ```
 ./autogen.sh
-./configure CFLAGS='-fPIC'
+./configure
 make
 sudo make install
 ```
@@ -133,7 +134,7 @@ environment.
 
 ```
 ./autogen.sh
-./configure --enable-tests CFLAGS='-fPIC'
+./configure --enable-tests
 make
 ```
 
@@ -150,6 +151,7 @@ without it in `$PATH`:
 ```
 ./configure \
   --host='i386-elf' \
+  --disable-pic \
   --with-libc \
   AR="$(which i386-elf-ar)" \
   CC="$(which i386-elf-gcc)" \

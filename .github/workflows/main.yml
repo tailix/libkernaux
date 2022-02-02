@@ -22,7 +22,7 @@ jobs:
       - name: autogen
         run: ./autogen.sh
       - name: configure
-        run: ./configure --enable-tests CC='${{matrix.cc}}' CFLAGS='${{matrix.opt}} -fPIC'
+        run: ./configure --enable-tests CC='${{matrix.cc}}' CFLAGS='${{matrix.opt}}'
       - name: make
         run: make
       - name: check
@@ -51,7 +51,7 @@ jobs:
       - name: autogen
         run: ./autogen.sh
       - name: configure
-        run: ./configure --enable-tests --without-all CFLAGS='-fPIC'
+        run: ./configure --enable-tests --without-all
       - name: make
         run: make
       - name: check
