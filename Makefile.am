@@ -36,6 +36,12 @@ TESTS = \
 	examples/panic_simple
 endif
 
+if ENABLE_PIC
+AM_CFLAGS += -fpic
+else
+AM_CFLAGS += -fno-pic
+endif
+
 if ENABLE_WERROR
 AM_CFLAGS += -Werror
 endif
