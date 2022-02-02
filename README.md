@@ -101,10 +101,11 @@ stable options.
 
 #### Features
 
-* `--enable-bloat`, disable with `--disable-bloat`
-* `--enable-float`, disable with `--disable-float`
-* `--enable-pic`, disable with `--disable-pic`
-* `--enable-werror`, disable with `--disable-werror`
+* `--enable-float` (disable with `--disable-float`) - floating-point arithmetic
+* `--enable-pic` (disable with `--disable-pic`) - generate position-independent
+  code
+* `--enable-werror` (disable with `--disable-werror`) - fail on warning
+  (`CFLAGS+='-Werror'`)
 
 #### Packages
 

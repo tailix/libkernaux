@@ -15,7 +15,7 @@ AC_CANONICAL_HOST
 
 dnl Features (enabled by default)
 AC_ARG_ENABLE([bloat],        AS_HELP_STRING([--disable-bloat],       [disable unnecessary heavy binary data]))
-AC_ARG_ENABLE([float],        AS_HELP_STRING([--disable-float],       [disable floating-point arithmeric]))
+AC_ARG_ENABLE([float],        AS_HELP_STRING([--disable-float],       [disable floating-point arithmetic]))
 AC_ARG_ENABLE([pic],          AS_HELP_STRING([--disable-pic],         [do not generate position-independent code]))
 AC_ARG_ENABLE([werror],       AS_HELP_STRING([--disable-werror],      [disable -Werror]))
 
@@ -127,7 +127,7 @@ AS_IF([test "$host_cpu" = x86_64],        [AC_DEFINE([ASM_X86_64],           [1]
 
 dnl Features (enabled by default)
 AS_IF([test "$enable_bloat"      != no], [AC_DEFINE([ENABLE_BLOAT],          [1], [enabled unnecessary heavy binary data])])
-AS_IF([test "$enable_float"      != no], [AC_DEFINE([ENABLE_FLOAT],          [1], [enabled floating-point arithmeric])])
+AS_IF([test "$enable_float"      != no], [AC_DEFINE([ENABLE_FLOAT],          [1], [enabled floating-point arithmetic])])
 AS_IF([test "$enable_pic"        != no], [AC_DEFINE([ENABLE_PIC],            [1], [generate position-independent code])])
 AS_IF([test "$enable_werror"     != no], [AC_DEFINE([ENABLE_WERROR],         [1], [enabled -Werror])])
 
