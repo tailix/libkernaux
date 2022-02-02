@@ -112,6 +112,7 @@ stable options.
 All packages all included by default. To exclude all packages except those
 explicitly included, use `--without-all`.
 
+* `--with[out]-cmdline`
 * `--with[out]-ntoa`
 * `--with[out]-printf`
 
