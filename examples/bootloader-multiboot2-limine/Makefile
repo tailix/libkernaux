@@ -65,7 +65,7 @@ $(IMAGE): $(FULL_KERNEL) $(FULL_LIMINE_CD) $(FULL_LIMINE_ELTORITO) $(FULL_LIMINE
 	$(XORRISO) -as mkisofs -b $(REL_LIMINE_CD) -no-emul-boot -boot-load-size 4 -boot-info-table --efi-boot $(REL_LIMINE_ELTORITO) -efi-boot-part --efi-boot-image --protective-msdos-label $(ROOTFS) -o $@
 	$(LIMINE_INSTALL) $@
 
-$(FULL_KERNEL): $(LINKERSCR) $(OBJS) build-libkernaux.a
+$(FULL_KERNEL): $(LINKERSCR) build-libkernaux.a $(OBJS)
 	$(CC) -T $(LINKERSCR) -o $@ $(OBJS) -ffreestanding -nostdlib -lkernaux -lgcc -Wl,-L$(LIBKERNAUX_DEST)/lib
 	$(GRUB_FILE) --is-x86-multiboot2 $@
 

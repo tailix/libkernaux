@@ -49,7 +49,7 @@ clean:
 $(IMAGE): $(GRUBCFG) $(KERNEL)
 	$(GRUB_MKRESCUE) $(ROOTFS) -o $@
 
-$(KERNEL): $(LINKERSCR) $(OBJS) build-libkernaux.a
+$(KERNEL): $(LINKERSCR) build-libkernaux.a $(OBJS)
 	$(CC) -T $(LINKERSCR) -o $@ $(OBJS) -ffreestanding -nostdlib -lkernaux -lgcc -Wl,-L$(LIBKERNAUX_DEST)/lib
 	$(GRUB_FILE) --is-x86-multiboot2 $@
 
