@@ -186,7 +186,7 @@ AS_IF([test "$with_libc_strnlen" != yes], [AC_SUBST([comment_line_libc_strnlen],
 
 
 AC_DEFUN([do_enable_pic],  [CFLAGS+=' -fpic '])
-AC_DEFUN([do_disable_pic], [CFLAGS+=' -fno-pic'])
+AC_DEFUN([do_disable_pic], [CFLAGS+=' -fno-pic '])
 AS_IF([test "$enable_pic" != no], do_enable_pic, do_disable_pic)
 
 

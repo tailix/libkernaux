@@ -43,7 +43,6 @@ CFLAGS = \
 	-Wextra                       \
 	-Werror                       \
 	-ffreestanding                \
-	-fno-builtin                  \
 	-fno-stack-protector          \
 	-fno-pic                      \
 	-I$(LIBKERNAUX_SRC)/include   \

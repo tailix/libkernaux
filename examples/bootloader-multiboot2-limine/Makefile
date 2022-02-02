@@ -45,7 +45,6 @@ CFLAGS = \
 	-Wextra                       \
 	-Werror                       \
 	-ffreestanding                \
-	-fno-builtin                  \
 	-fno-stack-protector          \
 	-I$(LIBKERNAUX_SRC)/include   \
 	-I$(LIBKERNAUX_BUILD)/include

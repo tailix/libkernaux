@@ -159,7 +159,7 @@ without it in `$PATH`:
   AR="$(which i386-elf-ar)" \
   CC="$(which i386-elf-gcc)" \
   RANLIB="$(which i386-elf-ranlib)" \
-  CFLAGS='-ffreestanding -nostdlib -fno-builtin -fno-stack-protector'
+  CFLAGS='-ffreestanding -nostdlib -fno-stack-protector'
 ```
 
 You can see the following messages. It's
