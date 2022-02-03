@@ -6,7 +6,8 @@ require_relative 'kernaux/version'
 require_relative 'kernaux/default'
 
 ##
-# Binding to libkernaux - auxiliary library for kernel development.
+# Binding to [libkernaux](https://github.com/tailix/libkernaux) - auxiliary
+# library for kernel development.
 #
 module KernAux
   # Default callback for assertions.
