@@ -59,7 +59,7 @@ mrb_value rb_KernAux_utoa(mrb_state *mrb, mrb_value self)
 
     mrb_value result = mrb_str_new_lit(mrb, "");
     result = mrb_str_cat_cstr(mrb, result, buffer);
-    return result;
+    return mrb_obj_freeze(mrb, result);
 }
 
 mrb_value rb_KernAux_itoa(mrb_state *mrb, mrb_value self)
@@ -75,7 +75,7 @@ mrb_value rb_KernAux_itoa(mrb_state *mrb, mrb_value self)
 
     mrb_value result = mrb_str_new_lit(mrb, "");
     result = mrb_str_cat_cstr(mrb, result, buffer);
-    return result;
+    return mrb_obj_freeze(mrb, result);
 }
 
 mrb_value rb_KernAux_utoa10(mrb_state *mrb, mrb_value self)
@@ -95,7 +95,7 @@ mrb_value rb_KernAux_utoa10(mrb_state *mrb, mrb_value self)
 
     mrb_value result = mrb_str_new_lit(mrb, "");
     result = mrb_str_cat_cstr(mrb, result, buffer);
-    return result;
+    return mrb_obj_freeze(mrb, result);
 }
 
 mrb_value rb_KernAux_itoa10(mrb_state *mrb, mrb_value self)
@@ -110,7 +110,7 @@ mrb_value rb_KernAux_itoa10(mrb_state *mrb, mrb_value self)
 
     mrb_value result = mrb_str_new_lit(mrb, "");
     result = mrb_str_cat_cstr(mrb, result, buffer);
-    return result;
+    return mrb_obj_freeze(mrb, result);
 }
 
 mrb_value rb_KernAux_utoa16(mrb_state *mrb, mrb_value self)
@@ -130,7 +130,7 @@ mrb_value rb_KernAux_utoa16(mrb_state *mrb, mrb_value self)
 
     mrb_value result = mrb_str_new_lit(mrb, "");
     result = mrb_str_cat_cstr(mrb, result, buffer);
-    return result;
+    return mrb_obj_freeze(mrb, result);
 }
 
 mrb_value rb_KernAux_itoa16(mrb_state *mrb, mrb_value self)
@@ -145,7 +145,7 @@ mrb_value rb_KernAux_itoa16(mrb_state *mrb, mrb_value self)
 
     mrb_value result = mrb_str_new_lit(mrb, "");
     result = mrb_str_cat_cstr(mrb, result, buffer);
-    return result;
+    return mrb_obj_freeze(mrb, result);
 }
 
 int convert_base(mrb_state *mrb, mrb_value base_rb)

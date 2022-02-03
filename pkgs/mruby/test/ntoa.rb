@@ -2,7 +2,7 @@ def test_utoa(number, base, expected)
   result = KernAux.utoa(number, base)
 
   assert_true result.instance_of? String
-  #assert_true result.frozen?
+  assert_true result.frozen?
   assert_equal expected, result
 end
 
@@ -10,7 +10,7 @@ def test_itoa(number, base, expected)
   result = KernAux.itoa(number, base)
 
   assert_true result.instance_of? String
-  #assert_true result.frozen?
+  assert_true result.frozen?
   assert_equal expected, result
 end
 
