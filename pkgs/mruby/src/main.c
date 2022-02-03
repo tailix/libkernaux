@@ -20,7 +20,10 @@ void mrb_mruby_kernaux_gem_init(mrb_state *const mrb)
         mrb_stack[index] = NULL;
     }
 
-    mrb_define_module_id(mrb, MRB_SYM(KernAux));
+    struct RClass *const rb_KernAux =
+        mrb_define_module_id(mrb, MRB_SYM(KernAux));
+    mrb_define_class_under_id(mrb, rb_KernAux, MRB_SYM(Error), E_RUNTIME_ERROR);
+
     init_assert(mrb);
     init_ntoa(mrb);
 }

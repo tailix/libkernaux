@@ -5,18 +5,32 @@
 #include <kernaux.h>
 
 #include <mruby.h>
+#include <mruby/numeric.h>
 #include <mruby/presym.h>
 #include <mruby/string.h>
 
+static mrb_value rb_KernAux_utoa(mrb_state *mrb, mrb_value self);
+static mrb_value rb_KernAux_itoa(mrb_state *mrb, mrb_value self);
 static mrb_value rb_KernAux_utoa10(mrb_state *mrb, mrb_value self);
 static mrb_value rb_KernAux_itoa10(mrb_state *mrb, mrb_value self);
 static mrb_value rb_KernAux_utoa16(mrb_state *mrb, mrb_value self);
 static mrb_value rb_KernAux_itoa16(mrb_state *mrb, mrb_value self);
 
+static int convert_base(mrb_state *mrb, mrb_value base);
+
 void init_ntoa(mrb_state *const mrb)
 {
     struct RClass *const rb_KernAux = mrb_module_get_id(mrb, MRB_SYM(KernAux));
+    struct RClass *const rb_KernAux_Error =
+        mrb_class_get_under_id(mrb, rb_KernAux, MRB_SYM(Error));
 
+    mrb_define_class_under_id(mrb, rb_KernAux, MRB_SYM(InvalidNtoaBaseError),
+                              rb_KernAux_Error);
+
+    mrb_define_class_method(mrb, rb_KernAux, "utoa",
+                            rb_KernAux_utoa, MRB_ARGS_REQ(2));
+    mrb_define_class_method(mrb, rb_KernAux, "itoa",
+                            rb_KernAux_itoa, MRB_ARGS_REQ(2));
     mrb_define_class_method(mrb, rb_KernAux, "utoa10",
                             rb_KernAux_utoa10, MRB_ARGS_REQ(1));
     mrb_define_class_method(mrb, rb_KernAux, "itoa10",
@@ -25,6 +39,43 @@ void init_ntoa(mrb_state *const mrb)
                             rb_KernAux_utoa16, MRB_ARGS_REQ(1));
     mrb_define_class_method(mrb, rb_KernAux, "itoa16",
                             rb_KernAux_itoa16, MRB_ARGS_REQ(1));
+}
+
+mrb_value rb_KernAux_utoa(mrb_state *mrb, mrb_value self)
+{
+    mrb_int value = 0;
+    mrb_value base;
+    mrb_get_args(mrb, "io", &value, &base);
+
+    if (value < 0) {
+        mrb_raise(mrb, E_RANGE_ERROR,
+                  "can't convert negative number to uint64_t");
+    }
+
+    char buffer[KERNAUX_UTOA_BUFFER_SIZE];
+    current_mrb_start(mrb);
+    kernaux_utoa(value, buffer, convert_base(mrb, base));
+    current_mrb_finish(mrb);
+
+    mrb_value result = mrb_str_new_lit(mrb, "");
+    result = mrb_str_cat_cstr(mrb, result, buffer);
+    return result;
+}
+
+mrb_value rb_KernAux_itoa(mrb_state *mrb, mrb_value self)
+{
+    mrb_int value = 0;
+    mrb_value base;
+    mrb_get_args(mrb, "io", &value, &base);
+
+    char buffer[KERNAUX_ITOA_BUFFER_SIZE];
+    current_mrb_start(mrb);
+    kernaux_itoa(value, buffer, convert_base(mrb, base));
+    current_mrb_finish(mrb);
+
+    mrb_value result = mrb_str_new_lit(mrb, "");
+    result = mrb_str_cat_cstr(mrb, result, buffer);
+    return result;
 }
 
 mrb_value rb_KernAux_utoa10(mrb_state *mrb, mrb_value self)
@@ -95,4 +146,33 @@ mrb_value rb_KernAux_itoa16(mrb_state *mrb, mrb_value self)
     mrb_value result = mrb_str_new_lit(mrb, "");
     result = mrb_str_cat_cstr(mrb, result, buffer);
     return result;
+}
+
+int convert_base(mrb_state *mrb, mrb_value base_rb)
+{
+    if (mrb_obj_is_kind_of(mrb, base_rb, mrb->symbol_class)) {
+        mrb_sym base_sym = mrb_obj_to_sym(mrb, base_rb);
+        switch (base_sym) {
+        case MRB_SYM(b): return 'b';
+        case MRB_SYM(B): return 'B';
+        case MRB_SYM(h): return 'h';
+        case MRB_SYM(H): return 'H';
+        case MRB_SYM(o): return 'o';
+        case MRB_SYM(O): return 'O';
+        case MRB_SYM(d): return 'd';
+        case MRB_SYM(D): return 'D';
+        case MRB_SYM(x): return 'x';
+        case MRB_SYM(X): return 'X';
+        default:
+        {
+            struct RClass *const rb_KernAux =
+                mrb_module_get_id(mrb, MRB_SYM(KernAux));
+            struct RClass *const rb_KernAux_Error =
+                mrb_class_get_under_id(mrb, rb_KernAux, MRB_SYM(Error));
+            mrb_raise(mrb, rb_KernAux_Error, "invalid base");
+        }
+        }
+    } else {
+        return mrb_integer(base_rb);
+    }
 }
