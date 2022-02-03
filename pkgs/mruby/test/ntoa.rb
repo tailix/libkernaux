@@ -19,18 +19,16 @@ assert 'KernAux.utoa' do
   base = 2 + Random.rand(36 - 2)
   test_utoa number, base, number.to_s(base)
 
-  number = 0
   base = 2 + Random.rand(36 - 2)
-  test_utoa number, base, '0'
+  test_utoa 0, base, '0'
 
   number = 2**32 - 1
   base = 2 + Random.rand(36 - 2)
   test_utoa number, base, number.to_s(base)
 
-  number = -1
   base = 2 + Random.rand(36 - 2)
   assert_raise RangeError, 'can\'t convert negative number to uint64_t' do
-    KernAux.utoa number, base
+    KernAux.utoa -1, base
   end
 
   number = Random.rand(2**32 - 1)
@@ -38,44 +36,34 @@ assert 'KernAux.utoa' do
   test_utoa number, base, number.to_s(-base).upcase
 
   number = Random.rand(2**32 - 1)
-  base = :b
-  test_utoa number, base, number.to_s(2)
+  test_utoa number, :b, number.to_s(2)
 
   number = Random.rand(2**32 - 1)
-  base = :B
-  test_utoa number, base, number.to_s(2)
+  test_utoa number, :B, number.to_s(2)
 
   number = Random.rand(2**32 - 1)
-  base = :o
-  test_utoa number, base, number.to_s(8)
+  test_utoa number, :o, number.to_s(8)
 
   number = Random.rand(2**32 - 1)
-  base = :O
-  test_utoa number, base, number.to_s(8)
+  test_utoa number, :O, number.to_s(8)
 
   number = Random.rand(2**32 - 1)
-  base = :d
-  test_utoa number, base, number.to_s(10)
+  test_utoa number, :d, number.to_s(10)
 
   number = Random.rand(2**32 - 1)
-  base = :D
-  test_utoa number, base, number.to_s(10)
+  test_utoa number, :D, number.to_s(10)
 
   number = Random.rand(2**32 - 1)
-  base = :h
-  test_utoa number, base, number.to_s(16)
+  test_utoa number, :h, number.to_s(16)
 
   number = Random.rand(2**32 - 1)
-  base = :x
-  test_utoa number, base, number.to_s(16)
+  test_utoa number, :x, number.to_s(16)
 
   number = Random.rand(2**32 - 1)
-  base = :H
-  test_utoa number, base, number.to_s(16).upcase
+  test_utoa number, :H, number.to_s(16).upcase
 
   number = Random.rand(2**32 - 1)
-  base = :X
-  test_utoa number, base, number.to_s(16).upcase
+  test_utoa number, :X, number.to_s(16).upcase
 end
 
 assert 'KernAux.itoa' do
@@ -83,17 +71,14 @@ assert 'KernAux.itoa' do
   base = 2 + Random.rand(36 - 2)
   test_itoa number, base, number.to_s(base)
 
-  number = 0
   base = 2 + Random.rand(36 - 2)
-  test_itoa number, base, '0'
+  test_itoa 0, base, '0'
 
-  number = 1
   base = 2 + Random.rand(36 - 2)
-  test_itoa number, base, '1'
+  test_itoa 1, base, '1'
 
-  number = -1
   base = 2 + Random.rand(36 - 2)
-  test_itoa number, base, '-1'
+  test_itoa -1, base, '-1'
 
   number = 2**31 - 1
   base = 2 + Random.rand(36 - 2)
@@ -112,44 +97,34 @@ assert 'KernAux.itoa' do
   test_itoa number, base, number.to_s(-base).upcase
 
   number = Random.rand(2**31 - 1) * [1, -1].sample
-  base = :b
-  test_itoa number, base, number.to_s(2)
+  test_itoa number, :b, number.to_s(2)
 
   number = Random.rand(2**31 - 1) * [1, -1].sample
-  base = :B
-  test_itoa number, base, number.to_s(2)
+  test_itoa number, :B, number.to_s(2)
 
   number = Random.rand(2**31 - 1) * [1, -1].sample
-  base = :o
-  test_itoa number, base, number.to_s(8)
+  test_itoa number, :o, number.to_s(8)
 
   number = Random.rand(2**31 - 1) * [1, -1].sample
-  base = :O
-  test_itoa number, base, number.to_s(8)
+  test_itoa number, :O, number.to_s(8)
 
   number = Random.rand(2**31 - 1) * [1, -1].sample
-  base = :d
-  test_itoa number, base, number.to_s(10)
+  test_itoa number, :d, number.to_s(10)
 
   number = Random.rand(2**31 - 1) * [1, -1].sample
-  base = :D
-  test_itoa number, base, number.to_s(10)
+  test_itoa number, :D, number.to_s(10)
 
   number = Random.rand(2**31 - 1) * [1, -1].sample
-  base = :h
-  test_itoa number, base, number.to_s(16)
+  test_itoa number, :h, number.to_s(16)
 
   number = Random.rand(2**31 - 1) * [1, -1].sample
-  base = :x
-  test_itoa number, base, number.to_s(16)
+  test_itoa number, :x, number.to_s(16)
 
   number = Random.rand(2**31 - 1) * [1, -1].sample
-  base = :H
-  test_itoa number, base, number.to_s(16).upcase
+  test_itoa number, :H, number.to_s(16).upcase
 
   number = Random.rand(2**31 - 1) * [1, -1].sample
-  base = :X
-  test_itoa number, base, number.to_s(16).upcase
+  test_itoa number, :X, number.to_s(16).upcase
 end
 
 assert 'KernAux.utoa10' do
