@@ -1,15 +1,31 @@
+def test_utoa(number, base, expected)
+  result = KernAux.utoa(number, base)
+
+  assert_true result.instance_of? String
+  #assert_true result.frozen?
+  assert_equal expected, result
+end
+
+def test_itoa(number, base, expected)
+  result = KernAux.itoa(number, base)
+
+  assert_true result.instance_of? String
+  #assert_true result.frozen?
+  assert_equal expected, result
+end
+
 assert 'KernAux.utoa' do
   number = Random.rand(2**32 - 1)
   base = 2 + Random.rand(36 - 2)
-  assert_equal number.to_s(base), KernAux.utoa(number, base)
+  test_utoa number, base, number.to_s(base)
 
   number = 0
   base = 2 + Random.rand(36 - 2)
-  assert_equal '0', KernAux.utoa(number, base)
+  test_utoa number, base, '0'
 
   number = 2**32 - 1
   base = 2 + Random.rand(36 - 2)
-  assert_equal number.to_s(base), KernAux.utoa(number, base)
+  test_utoa number, base, number.to_s(base)
 
   number = -1
   base = 2 + Random.rand(36 - 2)
@@ -19,113 +35,121 @@ assert 'KernAux.utoa' do
 
   number = Random.rand(2**32 - 1)
   base = -(2 + Random.rand(36 - 2))
-  assert_equal number.to_s(-base).upcase, KernAux.utoa(number, base)
+  test_utoa number, base, number.to_s(-base).upcase
 
   number = Random.rand(2**32 - 1)
   base = :b
-  assert_equal number.to_s(2), KernAux.utoa(number, base)
+  test_utoa number, base, number.to_s(2)
 
   number = Random.rand(2**32 - 1)
   base = :B
-  assert_equal number.to_s(2), KernAux.utoa(number, base)
+  test_utoa number, base, number.to_s(2)
 
   number = Random.rand(2**32 - 1)
   base = :o
-  assert_equal number.to_s(8), KernAux.utoa(number, base)
+  test_utoa number, base, number.to_s(8)
 
   number = Random.rand(2**32 - 1)
   base = :O
-  assert_equal number.to_s(8), KernAux.utoa(number, base)
+  test_utoa number, base, number.to_s(8)
 
   number = Random.rand(2**32 - 1)
   base = :d
-  assert_equal number.to_s(10), KernAux.utoa(number, base)
+  test_utoa number, base, number.to_s(10)
 
   number = Random.rand(2**32 - 1)
   base = :D
-  assert_equal number.to_s(10), KernAux.utoa(number, base)
+  test_utoa number, base, number.to_s(10)
 
   number = Random.rand(2**32 - 1)
   base = :h
-  assert_equal number.to_s(16), KernAux.utoa(number, base)
+  test_utoa number, base, number.to_s(16)
 
   number = Random.rand(2**32 - 1)
   base = :x
-  assert_equal number.to_s(16), KernAux.utoa(number, base)
+  test_utoa number, base, number.to_s(16)
 
   number = Random.rand(2**32 - 1)
   base = :H
-  assert_equal number.to_s(16).upcase, KernAux.utoa(number, base)
+  test_utoa number, base, number.to_s(16).upcase
 
   number = Random.rand(2**32 - 1)
   base = :X
-  assert_equal number.to_s(16).upcase, KernAux.utoa(number, base)
+  test_utoa number, base, number.to_s(16).upcase
 end
 
 assert 'KernAux.itoa' do
   number = Random.rand(2**31 - 1) * [1, -1].sample
   base = 2 + Random.rand(36 - 2)
-  assert_equal number.to_s(base), KernAux.itoa(number, base)
+  test_itoa number, base, number.to_s(base)
 
   number = 0
   base = 2 + Random.rand(36 - 2)
-  assert_equal '0', KernAux.itoa(number, base)
+  test_itoa number, base, '0'
 
   number = 1
   base = 2 + Random.rand(36 - 2)
-  assert_equal '1', KernAux.itoa(number, base)
+  test_itoa number, base, '1'
 
   number = -1
   base = 2 + Random.rand(36 - 2)
-  assert_equal '-1', KernAux.itoa(number, base)
+  test_itoa number, base, '-1'
 
   number = 2**31 - 1
   base = 2 + Random.rand(36 - 2)
-  assert_equal number.to_s(base), KernAux.itoa(number, base)
+  test_itoa number, base, number.to_s(base)
 
   number = -(2**31 - 1)
   base = 2 + Random.rand(36 - 2)
-  assert_equal number.to_s(base), KernAux.itoa(number, base)
+  test_itoa number, base, number.to_s(base)
+
+  number = 2**31 - 1
+  base = -(2 + Random.rand(36 - 2))
+  test_itoa number, base, number.to_s(-base).upcase
+
+  number = -(2**31 - 1)
+  base = -(2 + Random.rand(36 - 2))
+  test_itoa number, base, number.to_s(-base).upcase
 
   number = Random.rand(2**31 - 1) * [1, -1].sample
   base = :b
-  assert_equal number.to_s(2), KernAux.itoa(number, base)
+  test_itoa number, base, number.to_s(2)
 
   number = Random.rand(2**31 - 1) * [1, -1].sample
   base = :B
-  assert_equal number.to_s(2), KernAux.itoa(number, base)
+  test_itoa number, base, number.to_s(2)
 
   number = Random.rand(2**31 - 1) * [1, -1].sample
   base = :o
-  assert_equal number.to_s(8), KernAux.itoa(number, base)
+  test_itoa number, base, number.to_s(8)
 
   number = Random.rand(2**31 - 1) * [1, -1].sample
   base = :O
-  assert_equal number.to_s(8), KernAux.itoa(number, base)
+  test_itoa number, base, number.to_s(8)
 
   number = Random.rand(2**31 - 1) * [1, -1].sample
   base = :d
-  assert_equal number.to_s(10), KernAux.itoa(number, base)
+  test_itoa number, base, number.to_s(10)
 
   number = Random.rand(2**31 - 1) * [1, -1].sample
   base = :D
-  assert_equal number.to_s(10), KernAux.itoa(number, base)
+  test_itoa number, base, number.to_s(10)
 
   number = Random.rand(2**31 - 1) * [1, -1].sample
   base = :h
-  assert_equal number.to_s(16), KernAux.itoa(number, base)
+  test_itoa number, base, number.to_s(16)
 
   number = Random.rand(2**31 - 1) * [1, -1].sample
   base = :x
-  assert_equal number.to_s(16), KernAux.itoa(number, base)
+  test_itoa number, base, number.to_s(16)
 
   number = Random.rand(2**31 - 1) * [1, -1].sample
   base = :H
-  assert_equal number.to_s(16).upcase, KernAux.itoa(number, base)
+  test_itoa number, base, number.to_s(16).upcase
 
   number = Random.rand(2**31 - 1) * [1, -1].sample
   base = :X
-  assert_equal number.to_s(16).upcase, KernAux.itoa(number, base)
+  test_itoa number, base, number.to_s(16).upcase
 end
 
 assert 'KernAux.utoa10' do
