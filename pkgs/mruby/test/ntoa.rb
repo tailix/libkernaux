@@ -60,7 +60,7 @@ assert 'KernAux.utoa' do
 
   base = 2 + Random.rand(36 - 2)
   assert_raise RangeError, 'can\'t convert negative number to uint64_t' do
-    KernAux.utoa -1, base
+    KernAux.utoa(-1, base)
   end
 
   number = Random.rand(2**32 - 1)
@@ -110,7 +110,7 @@ assert 'KernAux.itoa' do
   test_itoa 1, base, '1'
 
   base = 2 + Random.rand(36 - 2)
-  test_itoa -1, base, '-1'
+  test_itoa(-1, base, '-1')
 
   number = 2**31 - 1
   base = 2 + Random.rand(36 - 2)
@@ -166,18 +166,18 @@ assert 'KernAux.utoa10' do
   test_utoa10 2**32 - 1, (2**32 - 1).to_s
 
   assert_raise RangeError, 'can\'t convert negative number to uint64_t' do
-    KernAux.utoa10 -1
+    KernAux.utoa10(-1)
   end
 end
 
 assert 'KernAux.itoa10' do
   test_itoa10 0, '0'
   test_itoa10 1, '1'
-  test_itoa10 -1, '-1'
+  test_itoa10(-1, '-1')
   test_itoa10 123, '123'
-  test_itoa10 -123, '-123'
+  test_itoa10(-123, '-123')
   test_itoa10 2**31 - 1, (2**31 - 1).to_s
-  test_itoa10 -2**31, (-2**31).to_s
+  test_itoa10(-2**31, (-2**31).to_s)
 end
 
 assert 'KernAux.utoa16' do
@@ -187,16 +187,16 @@ assert 'KernAux.utoa16' do
   test_utoa16 2**32 - 1, (2**32 - 1).to_s(16)
 
   assert_raise RangeError, 'can\'t convert negative number to uint64_t' do
-    KernAux.utoa16 -1
+    KernAux.utoa16(-1)
   end
 end
 
 assert 'KernAux.itoa16' do
   test_itoa16 0, '0'
   test_itoa16 1, '1'
-  test_itoa16 -1, '-1'
+  test_itoa16(-1, '-1')
   test_itoa16 0x123, '123'
-  test_itoa16 -0x123, '-123'
+  test_itoa16(-0x123, '-123')
   test_itoa16 2**31 - 1, (2**31 - 1).to_s(16)
-  test_itoa16 -2**31, (-2**31).to_s(16)
+  test_itoa16(-2**31, (-2**31).to_s(16))
 end
