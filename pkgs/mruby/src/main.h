@@ -9,5 +9,6 @@ mrb_state *current_mrb_get();
 
 void init_assert(mrb_state *mrb);
 void init_ntoa(mrb_state *mrb);
+void init_cmdline(mrb_state *mrb);
 
 #endif
