@@ -1,5 +1,5 @@
 # We use Cirrus CI to test on FreeBSD.
-# For GNU/Linix CI see GitHub Actions.
+# For GNU/Linux CI see GitHub Actions.
 
 freebsd_instance:
   image_family: freebsd-13-0
