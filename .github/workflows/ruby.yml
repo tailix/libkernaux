@@ -25,8 +25,8 @@ jobs:
       - name: install
         run: sudo make install
       - working-directory: pkgs/ruby
-        name: bundle
-        run: bundle install
+        name: setup
+        run: ./bin/setup
       - working-directory: pkgs/ruby
         name: compile
         run: rake compile

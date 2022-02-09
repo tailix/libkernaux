@@ -3,7 +3,8 @@ require:
   - rubocop-rake
 
 AllCops:
-  TargetRubyVersion: 3.0
+  # TODO: Explore which exact syntax version mruby is compatible with
+  TargetRubyVersion: 2.7
   DisplayCopNames: true
   NewCops: enable
 

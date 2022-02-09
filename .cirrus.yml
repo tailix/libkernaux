@@ -50,7 +50,7 @@ ruby_freebsd_task:
     - sudo make install
   ruby_build_script:
     - cd pkgs/ruby
-    - bundle install
+    - ./bin/setup
     - bundle exec rake compile
   ruby_test_script:
     - cd pkgs/ruby
