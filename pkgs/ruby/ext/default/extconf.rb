@@ -4,9 +4,6 @@ require 'mkmf'
 
 $CFLAGS += ' -pedantic -Wall -Wextra'
 
-# FIXME: temporary hack to fix FreeBSD build
-$CPPFLAGS += ' -I/usr/local/include'
-
 raise 'libkernaux not found' unless have_library 'kernaux'
 
 raise 'kernaux_assert_do not found' unless have_func 'kernaux_assert_do'

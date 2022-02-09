@@ -18,6 +18,10 @@ main_freebsd_task:
 
 mruby_freebsd_task:
   name: mruby (FreeBSD)
+  env:
+    # FIXME: temporary hack to fix FreeBSD build
+    CPATH: '/usr/local/include'
+    LIBRARY_PATH: '/usr/local/lib'
   dependencies_script:
     - pkg install --yes autoconf automake rubygem-rake wget
   dependencies_mruby_script:
@@ -34,6 +38,9 @@ mruby_freebsd_task:
 
 ruby_freebsd_task:
   name: Ruby (FreeBSD)
+  env:
+    # FIXME: temporary hack to fix FreeBSD build
+    CPATH: '/usr/local/include'
   dependencies_script:
     - pkg install --yes autoconf automake git wget
   dependencies_ruby_script:
