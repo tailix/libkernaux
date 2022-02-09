@@ -9,7 +9,7 @@
 #define TMP_BUFFER_SIZE (64)
 
 bool kernaux_units_human_raw(
-    const size_t value,
+    const uint64_t value,
     const enum KernAux_Unit unit,
     char *const buffer,
     const size_t buffer_size
@@ -45,7 +45,7 @@ bool kernaux_units_human_raw(
 }
 
 bool kernaux_units_human_dec(
-    const size_t value,
+    const uint64_t value,
     const enum KernAux_Unit unit,
     const enum KernAux_UnitPrefixDec prefix,
     char *const buffer,
@@ -91,7 +91,7 @@ bool kernaux_units_human_dec(
 }
 
 bool kernaux_units_human_bin(
-    const size_t value,
+    const uint64_t value,
     const enum KernAux_Unit unit,
     const enum KernAux_UnitPrefixBin prefix,
     char *const buffer,
