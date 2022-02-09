@@ -41,6 +41,7 @@ ruby_freebsd_task:
   env:
     # FIXME: temporary hack to fix FreeBSD build
     CPATH: '/usr/local/include'
+    LIBRARY_PATH: '/usr/local/lib'
   dependencies_script:
     - pkg install --yes autoconf automake git wget
   dependencies_ruby_script:
