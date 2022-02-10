@@ -51,6 +51,39 @@ AC_ARG_WITH(  [libc-strnlen], AS_HELP_STRING([--with-libc-strnlen],   [with strn
 
 
 
+################
+# Default args #
+################
+
+AC_DEFUN([do_without_all],
+[
+if test -z "$with_cmdline";     then with_cmdline=no;     fi
+if test -z "$with_console";     then with_console=no;     fi
+if test -z "$with_elf";         then with_elf=no;         fi
+if test -z "$with_framebuffer"; then with_framebuffer=no; fi
+if test -z "$with_mbr";         then with_mbr=no;         fi
+if test -z "$with_multiboot2";  then with_multiboot2=no;  fi
+if test -z "$with_ntoa";        then with_ntoa=no;        fi
+if test -z "$with_pfa";         then with_pfa=no;         fi
+if test -z "$with_printf";      then with_printf=no;      fi
+if test -z "$with_units";       then with_units=no;       fi
+])
+AS_IF([test "$with_all" = no], do_without_all)
+
+AC_DEFUN([do_with_libc],
+[
+if test -z "$with_libc_atoi";    then with_libc_atoi=yes;    fi
+if test -z "$with_libc_isdigit"; then with_libc_isdigit=yes; fi
+if test -z "$with_libc_isspace"; then with_libc_isspace=yes; fi
+if test -z "$with_libc_memset";  then with_libc_memset=yes;  fi
+if test -z "$with_libc_strcpy";  then with_libc_strcpy=yes;  fi
+if test -z "$with_libc_strlen";  then with_libc_strlen=yes;  fi
+if test -z "$with_libc_strnlen"; then with_libc_strnlen=yes; fi
+])
+AS_IF([test "$with_libc" = yes], do_with_libc)
+
+
+
 ##################
 # Normalize args #
 ##################
@@ -86,35 +119,6 @@ AS_IF([test "$with_libc_memset"  = yes], [with_libc_memset=yes],  [with_libc_mem
 AS_IF([test "$with_libc_strcpy"  = yes], [with_libc_strcpy=yes],  [with_libc_strcpy=no])
 AS_IF([test "$with_libc_strlen"  = yes], [with_libc_strlen=yes],  [with_libc_strlen=no])
 AS_IF([test "$with_libc_strnlen" = yes], [with_libc_strnlen=yes], [with_libc_strnlen=no])
-
-
-
-AC_DEFUN([do_without_all],
-[
-if test -z "$with_cmdline";     then with_cmdline=no;     fi
-if test -z "$with_console";     then with_console=no;     fi
-if test -z "$with_elf";         then with_elf=no;         fi
-if test -z "$with_framebuffer"; then with_framebuffer=no; fi
-if test -z "$with_mbr";         then with_mbr=no;         fi
-if test -z "$with_multiboot2";  then with_multiboot2=no;  fi
-if test -z "$with_ntoa";        then with_ntoa=no;        fi
-if test -z "$with_pfa";         then with_pfa=no;         fi
-if test -z "$with_printf";      then with_printf=no;      fi
-if test -z "$with_units";       then with_units=no;       fi
-])
-AS_IF([test "$with_all" = no], do_without_all)
-
-AC_DEFUN([do_with_libc],
-[
-if test -z "$with_libc_atoi";    then with_libc_atoi=yes;    fi
-if test -z "$with_libc_isdigit"; then with_libc_isdigit=yes; fi
-if test -z "$with_libc_isspace"; then with_libc_isspace=yes; fi
-if test -z "$with_libc_memset";  then with_libc_memset=yes;  fi
-if test -z "$with_libc_strcpy";  then with_libc_strcpy=yes;  fi
-if test -z "$with_libc_strlen";  then with_libc_strlen=yes;  fi
-if test -z "$with_libc_strnlen"; then with_libc_strnlen=yes; fi
-])
-AS_IF([test "$with_libc" = yes], do_with_libc)
 
 
 
