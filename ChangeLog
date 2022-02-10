@@ -1,3 +1,7 @@
+2022-02-10  Alex Kotov  <kotovalexarian@gmail.com>
+
+	* configure.ac: Normalize args
+
 2022-02-02  Alex Kotov  <kotovalexarian@gmail.com>
 
 	* configure.ac: Generate position-independent code by default, disable with

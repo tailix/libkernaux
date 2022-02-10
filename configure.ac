@@ -13,6 +13,10 @@ AC_CANONICAL_HOST
 
 
 
+###############
+# Define args #
+###############
+
 dnl Features (enabled by default)
 AC_ARG_ENABLE([bloat],        AS_HELP_STRING([--disable-bloat],       [disable unnecessary heavy binary data]))
 AC_ARG_ENABLE([float],        AS_HELP_STRING([--disable-float],       [disable floating-point arithmetic]))
@@ -47,6 +51,44 @@ AC_ARG_WITH(  [libc-strnlen], AS_HELP_STRING([--with-libc-strnlen],   [with strn
 
 
 
+##################
+# Normalize args #
+##################
+
+dnl Features (enabled by default)
+AS_IF([test "$enable_bloat"      = no ], [enable_bloat=no],       [enable_bloat=yes])
+AS_IF([test "$enable_float"      = no ], [enable_float=no],       [enable_float=yes])
+AS_IF([test "$enable_pic"        = no ], [enable_pic=no],         [enable_pic=yes])
+AS_IF([test "$enable_werror"     = no ], [enable_werror=no],      [enable_werror=yes])
+
+dnl Features (disabled by default)
+AS_IF([test "$enable_tests"      = yes], [enable_tests=yes],      [enable_tests=no])
+
+dnl Packages (enabled by default)
+AS_IF([test "$with_all"          = no ], [with_all=no],           [with_all=yes])
+AS_IF([test "$with_cmdline"      = no ], [with_cmdline=no],       [with_cmdline=yes])
+AS_IF([test "$with_console"      = no ], [with_console=no],       [with_console=yes])
+AS_IF([test "$with_elf"          = no ], [with_elf=no],           [with_elf=yes])
+AS_IF([test "$with_framebuffer"  = no ], [with_framebuffer=no],   [with_framebuffer=yes])
+AS_IF([test "$with_mbr"          = no ], [with_mbr=no],           [with_mbr=yes])
+AS_IF([test "$with_multiboot2"   = no ], [with_multiboot2=no],    [with_multiboot2=yes])
+AS_IF([test "$with_ntoa"         = no ], [with_ntoa=no],          [with_ntoa=yes])
+AS_IF([test "$with_pfa"          = no ], [with_pfa=no],           [with_pfa=yes])
+AS_IF([test "$with_printf"       = no ], [with_printf=no],        [with_printf=yes])
+AS_IF([test "$with_units"        = no ], [with_units=no],         [with_units=yes])
+
+dnl Packages (disabled by default)
+AS_IF([test "$with_libc"         = yes], [with_libc=yes],         [with_libc=no])
+AS_IF([test "$with_libc_atoi"    = yes], [with_libc_atoi=yes],    [with_libc_atoi=no])
+AS_IF([test "$with_libc_isdigit" = yes], [with_libc_isdigit=yes], [with_libc_isdigit=no])
+AS_IF([test "$with_libc_isspace" = yes], [with_libc_isspace=yes], [with_libc_isspace=no])
+AS_IF([test "$with_libc_memset"  = yes], [with_libc_memset=yes],  [with_libc_memset=no])
+AS_IF([test "$with_libc_strcpy"  = yes], [with_libc_strcpy=yes],  [with_libc_strcpy=no])
+AS_IF([test "$with_libc_strlen"  = yes], [with_libc_strlen=yes],  [with_libc_strlen=no])
+AS_IF([test "$with_libc_strnlen" = yes], [with_libc_strnlen=yes], [with_libc_strnlen=no])
+
+
+
 AC_DEFUN([do_without_all],
 [
 if test -z "$with_cmdline";     then with_cmdline=no;     fi
@@ -78,8 +120,8 @@ AS_IF([test "$with_libc" = yes], do_with_libc)
 
 AS_IF([test "$host_cpu" != "$build_cpu" -a "$enable_tests" = yes], AC_MSG_ERROR([can not build cross-platform tests]))
 
-AS_IF([test "$with_ntoa" = no -a "$with_printf" != no], AC_MSG_ERROR([package `printf' requires package `ntoa']))
-AS_IF([test "$with_ntoa" = no -a "$with_units"  != no], AC_MSG_ERROR([package `units' requires package `ntoa']))
+AS_IF([test "$with_ntoa" = no -a "$with_printf" = yes], AC_MSG_ERROR([package `printf' requires package `ntoa']))
+AS_IF([test "$with_ntoa" = no -a "$with_units"  = yes], AC_MSG_ERROR([package `units' requires package `ntoa']))
 
 
 
@@ -89,25 +131,25 @@ AM_CONDITIONAL([ASM_RISCV64],       [test "$host_cpu" = riscv64])
 AM_CONDITIONAL([ASM_X86_64],        [test "$host_cpu" = x86_64])
 
 dnl Features (enabled by default)
-AM_CONDITIONAL([ENABLE_BLOAT],      [test "$enable_bloat"      != no])
-AM_CONDITIONAL([ENABLE_FLOAT],      [test "$enable_float"      != no])
-AM_CONDITIONAL([ENABLE_PIC],        [test "$enable_pic"        != no])
-AM_CONDITIONAL([ENABLE_WERROR],     [test "$enable_werror"     != no])
+AM_CONDITIONAL([ENABLE_BLOAT],      [test "$enable_bloat"      = yes])
+AM_CONDITIONAL([ENABLE_FLOAT],      [test "$enable_float"      = yes])
+AM_CONDITIONAL([ENABLE_PIC],        [test "$enable_pic"        = yes])
+AM_CONDITIONAL([ENABLE_WERROR],     [test "$enable_werror"     = yes])
 
 dnl Features (disabled by default)
 AM_CONDITIONAL([ENABLE_TESTS],      [test "$enable_tests"      = yes])
 
 dnl Packages (enabled by default)
-AM_CONDITIONAL([WITH_CMDLINE],      [test "$with_cmdline"      != no])
-AM_CONDITIONAL([WITH_CONSOLE],      [test "$with_console"      != no])
-AM_CONDITIONAL([WITH_ELF],          [test "$with_elf"          != no])
-AM_CONDITIONAL([WITH_FRAMEBUFFER],  [test "$with_framebuffer"  != no])
-AM_CONDITIONAL([WITH_MBR],          [test "$with_mbr"          != no])
-AM_CONDITIONAL([WITH_MULTIBOOT2],   [test "$with_multiboot2"   != no])
-AM_CONDITIONAL([WITH_NTOA],         [test "$with_ntoa"         != no])
-AM_CONDITIONAL([WITH_PFA],          [test "$with_pfa"          != no])
-AM_CONDITIONAL([WITH_PRINTF],       [test "$with_printf"       != no])
-AM_CONDITIONAL([WITH_UNITS],        [test "$with_units"        != no])
+AM_CONDITIONAL([WITH_CMDLINE],      [test "$with_cmdline"      = yes])
+AM_CONDITIONAL([WITH_CONSOLE],      [test "$with_console"      = yes])
+AM_CONDITIONAL([WITH_ELF],          [test "$with_elf"          = yes])
+AM_CONDITIONAL([WITH_FRAMEBUFFER],  [test "$with_framebuffer"  = yes])
+AM_CONDITIONAL([WITH_MBR],          [test "$with_mbr"          = yes])
+AM_CONDITIONAL([WITH_MULTIBOOT2],   [test "$with_multiboot2"   = yes])
+AM_CONDITIONAL([WITH_NTOA],         [test "$with_ntoa"         = yes])
+AM_CONDITIONAL([WITH_PFA],          [test "$with_pfa"          = yes])
+AM_CONDITIONAL([WITH_PRINTF],       [test "$with_printf"       = yes])
+AM_CONDITIONAL([WITH_UNITS],        [test "$with_units"        = yes])
 
 dnl Packages (disabled by default)
 AM_CONDITIONAL([WITH_LIBC_ATOI],    [test "$with_libc_atoi"    = yes])
@@ -121,73 +163,73 @@ AM_CONDITIONAL([WITH_LIBC_STRNLEN], [test "$with_libc_strnlen" = yes])
 
 
 dnl Architecture
-AS_IF([test "$host_cpu" = i386],          [AC_DEFINE([ASM_I386],             [1], [architecture is i386])])
-AS_IF([test "$host_cpu" = riscv64],       [AC_DEFINE([ASM_RISCV64],          [1], [architecture is RISC-V 64-bit])])
-AS_IF([test "$host_cpu" = x86_64],        [AC_DEFINE([ASM_X86_64],           [1], [architecture is x86_64])])
+AS_IF([test "$host_cpu" = i386],          [AC_DEFINE([ASM_I386],         [1], [architecture is i386])])
+AS_IF([test "$host_cpu" = riscv64],       [AC_DEFINE([ASM_RISCV64],      [1], [architecture is RISC-V 64-bit])])
+AS_IF([test "$host_cpu" = x86_64],        [AC_DEFINE([ASM_X86_64],       [1], [architecture is x86_64])])
 
 dnl Features (enabled by default)
-AS_IF([test "$enable_bloat"      != no], [AC_DEFINE([ENABLE_BLOAT],          [1], [enabled unnecessary heavy binary data])])
-AS_IF([test "$enable_float"      != no], [AC_DEFINE([ENABLE_FLOAT],          [1], [enabled floating-point arithmetic])])
-AS_IF([test "$enable_pic"        != no], [AC_DEFINE([ENABLE_PIC],            [1], [generate position-independent code])])
-AS_IF([test "$enable_werror"     != no], [AC_DEFINE([ENABLE_WERROR],         [1], [enabled -Werror])])
+AS_IF([test "$enable_bloat"      = yes], [AC_DEFINE([ENABLE_BLOAT],      [1], [enabled unnecessary heavy binary data])])
+AS_IF([test "$enable_float"      = yes], [AC_DEFINE([ENABLE_FLOAT],      [1], [enabled floating-point arithmetic])])
+AS_IF([test "$enable_pic"        = yes], [AC_DEFINE([ENABLE_PIC],        [1], [generate position-independent code])])
+AS_IF([test "$enable_werror"     = yes], [AC_DEFINE([ENABLE_WERROR],     [1], [enabled -Werror])])
 
 dnl Features (disabled by default)
-AS_IF([test "$enable_tests"      = yes], [AC_DEFINE([ENABLE_TESTS],          [1], [enabled tests and examples])])
+AS_IF([test "$enable_tests"      = yes], [AC_DEFINE([ENABLE_TESTS],      [1], [enabled tests and examples])])
 
 dnl Packages (enabled by default)
-AS_IF([test "$with_cmdline"      != no], [AC_DEFINE([WITH_CMDLINE],          [1], [with command line parser])])
-AS_IF([test "$with_console"      != no], [AC_DEFINE([WITH_CONSOLE],          [1], [with serial console])])
-AS_IF([test "$with_elf"          != no], [AC_DEFINE([WITH_ELF],              [1], [with ELF utils])])
-AS_IF([test "$with_framebuffer"  != no], [AC_DEFINE([WITH_FRAMEBUFFER],      [1], [with framebuffer])])
-AS_IF([test "$with_mbr"          != no], [AC_DEFINE([WITH_MBR],              [1], [with Master Boot Record])])
-AS_IF([test "$with_multiboot2"   != no], [AC_DEFINE([WITH_MULTIBOOT2],       [1], [with Multiboot 2 information parser])])
-AS_IF([test "$with_ntoa"         != no], [AC_DEFINE([WITH_NTOA],             [1], [with ntoa])])
-AS_IF([test "$with_pfa"          != no], [AC_DEFINE([WITH_PFA],              [1], [with Page Frame Allocator])])
-AS_IF([test "$with_printf"       != no], [AC_DEFINE([WITH_PRINTF],           [1], [with printf])])
-AS_IF([test "$with_units",       != no], [AC_DEFINE([WITH_UNITS],            [1], [with measurement units utils])])
+AS_IF([test "$with_cmdline"      = yes], [AC_DEFINE([WITH_CMDLINE],      [1], [with command line parser])])
+AS_IF([test "$with_console"      = yes], [AC_DEFINE([WITH_CONSOLE],      [1], [with serial console])])
+AS_IF([test "$with_elf"          = yes], [AC_DEFINE([WITH_ELF],          [1], [with ELF utils])])
+AS_IF([test "$with_framebuffer"  = yes], [AC_DEFINE([WITH_FRAMEBUFFER],  [1], [with framebuffer])])
+AS_IF([test "$with_mbr"          = yes], [AC_DEFINE([WITH_MBR],          [1], [with Master Boot Record])])
+AS_IF([test "$with_multiboot2"   = yes], [AC_DEFINE([WITH_MULTIBOOT2],   [1], [with Multiboot 2 information parser])])
+AS_IF([test "$with_ntoa"         = yes], [AC_DEFINE([WITH_NTOA],         [1], [with ntoa])])
+AS_IF([test "$with_pfa"          = yes], [AC_DEFINE([WITH_PFA],          [1], [with Page Frame Allocator])])
+AS_IF([test "$with_printf"       = yes], [AC_DEFINE([WITH_PRINTF],       [1], [with printf])])
+AS_IF([test "$with_units",       = yes], [AC_DEFINE([WITH_UNITS],        [1], [with measurement units utils])])
 
 dnl Packages (disabled by default)
-AS_IF([test "$with_libc_atoi"    = yes], [AC_DEFINE([WITH_LIBC_ATOI],        [1], [with atoi replacement])])
-AS_IF([test "$with_libc_isdigit" = yes], [AC_DEFINE([WITH_LIBC_ISDIGIT],     [1], [with isdigit replacement])])
-AS_IF([test "$with_libc_isspace" = yes], [AC_DEFINE([WITH_LIBC_ISSPACE],     [1], [with isspace replacement])])
-AS_IF([test "$with_libc_memset"  = yes], [AC_DEFINE([WITH_LIBC_MEMSET],      [1], [with memset replacement])])
-AS_IF([test "$with_libc_strcpy"  = yes], [AC_DEFINE([WITH_LIBC_STRCPY],      [1], [with strcpy replacement])])
-AS_IF([test "$with_libc_strlen"  = yes], [AC_DEFINE([WITH_LIBC_STRLEN],      [1], [with strlen replacement])])
-AS_IF([test "$with_libc_strnlen" = yes], [AC_DEFINE([WITH_LIBC_STRNLEN],     [1], [with strnlen replacement])])
+AS_IF([test "$with_libc_atoi"    = yes], [AC_DEFINE([WITH_LIBC_ATOI],    [1], [with atoi replacement])])
+AS_IF([test "$with_libc_isdigit" = yes], [AC_DEFINE([WITH_LIBC_ISDIGIT], [1], [with isdigit replacement])])
+AS_IF([test "$with_libc_isspace" = yes], [AC_DEFINE([WITH_LIBC_ISSPACE], [1], [with isspace replacement])])
+AS_IF([test "$with_libc_memset"  = yes], [AC_DEFINE([WITH_LIBC_MEMSET],  [1], [with memset replacement])])
+AS_IF([test "$with_libc_strcpy"  = yes], [AC_DEFINE([WITH_LIBC_STRCPY],  [1], [with strcpy replacement])])
+AS_IF([test "$with_libc_strlen"  = yes], [AC_DEFINE([WITH_LIBC_STRLEN],  [1], [with strlen replacement])])
+AS_IF([test "$with_libc_strnlen" = yes], [AC_DEFINE([WITH_LIBC_STRNLEN], [1], [with strnlen replacement])])
 
 
 
 dnl Architecture
-AS_IF([test "$host_cpu" != i386],         [AC_SUBST([comment_line_asm_i386],     [//])])
-AS_IF([test "$host_cpu" != riscv64],      [AC_SUBST([comment_line_asm_riscv64],  [//])])
-AS_IF([test "$host_cpu" != x86_64],       [AC_SUBST([comment_line_asm_x86_64],   [//])])
+AS_IF([test "$host_cpu" != i386],       [AC_SUBST([comment_line_asm_i386],     [//])])
+AS_IF([test "$host_cpu" != riscv64],    [AC_SUBST([comment_line_asm_riscv64],  [//])])
+AS_IF([test "$host_cpu" != x86_64],     [AC_SUBST([comment_line_asm_x86_64],   [//])])
 
 dnl Packages (enabled by default)
-AS_IF([test "$with_cmdline"        = no], [AC_SUBST([comment_line_cmdline],      [//])])
-AS_IF([test "$with_console"        = no], [AC_SUBST([comment_line_console],      [//])])
-AS_IF([test "$with_elf"            = no], [AC_SUBST([comment_line_elf],          [//])])
-AS_IF([test "$with_framebuffer"    = no], [AC_SUBST([comment_line_framebuffer],  [//])])
-AS_IF([test "$with_mbr"            = no], [AC_SUBST([comment_line_mbr],          [//])])
-AS_IF([test "$with_multiboot2"     = no], [AC_SUBST([comment_line_multiboot2],   [//])])
-AS_IF([test "$with_ntoa"           = no], [AC_SUBST([comment_line_ntoa],         [//])])
-AS_IF([test "$with_pfa"            = no], [AC_SUBST([comment_line_pfa],          [//])])
-AS_IF([test "$with_printf"         = no], [AC_SUBST([comment_line_printf],       [//])])
-AS_IF([test "$with_units"          = no], [AC_SUBST([comment_line_units],        [//])])
+AS_IF([test "$with_cmdline"      = no], [AC_SUBST([comment_line_cmdline],      [//])])
+AS_IF([test "$with_console"      = no], [AC_SUBST([comment_line_console],      [//])])
+AS_IF([test "$with_elf"          = no], [AC_SUBST([comment_line_elf],          [//])])
+AS_IF([test "$with_framebuffer"  = no], [AC_SUBST([comment_line_framebuffer],  [//])])
+AS_IF([test "$with_mbr"          = no], [AC_SUBST([comment_line_mbr],          [//])])
+AS_IF([test "$with_multiboot2"   = no], [AC_SUBST([comment_line_multiboot2],   [//])])
+AS_IF([test "$with_ntoa"         = no], [AC_SUBST([comment_line_ntoa],         [//])])
+AS_IF([test "$with_pfa"          = no], [AC_SUBST([comment_line_pfa],          [//])])
+AS_IF([test "$with_printf"       = no], [AC_SUBST([comment_line_printf],       [//])])
+AS_IF([test "$with_units"        = no], [AC_SUBST([comment_line_units],        [//])])
 
 dnl Packages (disabled by default)
-AS_IF([test "$with_libc_atoi"    != yes], [AC_SUBST([comment_line_libc_atoi],    [//])])
-AS_IF([test "$with_libc_isdigit" != yes], [AC_SUBST([comment_line_libc_isdigit], [//])])
-AS_IF([test "$with_libc_isspace" != yes], [AC_SUBST([comment_line_libc_isspace], [//])])
-AS_IF([test "$with_libc_memset"  != yes], [AC_SUBST([comment_line_libc_memset],  [//])])
-AS_IF([test "$with_libc_strcpy"  != yes], [AC_SUBST([comment_line_libc_strcpy],  [//])])
-AS_IF([test "$with_libc_strlen"  != yes], [AC_SUBST([comment_line_libc_strlen],  [//])])
-AS_IF([test "$with_libc_strnlen" != yes], [AC_SUBST([comment_line_libc_strnlen], [//])])
+AS_IF([test "$with_libc_atoi"    = no], [AC_SUBST([comment_line_libc_atoi],    [//])])
+AS_IF([test "$with_libc_isdigit" = no], [AC_SUBST([comment_line_libc_isdigit], [//])])
+AS_IF([test "$with_libc_isspace" = no], [AC_SUBST([comment_line_libc_isspace], [//])])
+AS_IF([test "$with_libc_memset"  = no], [AC_SUBST([comment_line_libc_memset],  [//])])
+AS_IF([test "$with_libc_strcpy"  = no], [AC_SUBST([comment_line_libc_strcpy],  [//])])
+AS_IF([test "$with_libc_strlen"  = no], [AC_SUBST([comment_line_libc_strlen],  [//])])
+AS_IF([test "$with_libc_strnlen" = no], [AC_SUBST([comment_line_libc_strnlen], [//])])
 
 
 
 AC_DEFUN([do_enable_pic],  [CFLAGS+=' -fpic '])
 AC_DEFUN([do_disable_pic], [CFLAGS+=' -fno-pic '])
-AS_IF([test "$enable_pic" != no], do_enable_pic, do_disable_pic)
+AS_IF([test "$enable_pic" = yes], do_enable_pic, do_disable_pic)
 
 
 
