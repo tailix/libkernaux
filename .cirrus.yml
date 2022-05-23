@@ -10,7 +10,7 @@ main_freebsd_task:
     - pkg install --yes autoconf automake
   main_build_script:
     - ./autogen.sh
-    - ./configure --enable-tests CFLAGS='-O3'
+    - ./configure --enable-tests-all CFLAGS='-O3'
     - make
     - sudo make install
   main_test_script:

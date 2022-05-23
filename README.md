@@ -137,7 +137,7 @@ environment.
 
 ```
 ./autogen.sh
-./configure --enable-tests
+./configure --enable-tests-all
 make
 ```
 
