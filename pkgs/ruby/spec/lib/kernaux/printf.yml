@@ -1,5 +1,8 @@
 # Copyright (c) 2014-2019 Marco Paland <info@paland.com>
 
+# TODO: add remaining tests from
+# https://github.com/mpaland/printf/blob/master/test/test_suite.cpp
+
 - result: ' 4232'
   args: [['% d', 4232]]
 - result: 'This is a test of 12EF'
