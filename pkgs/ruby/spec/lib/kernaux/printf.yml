@@ -1,0 +1,448 @@
+# Copyright (c) 2014-2019 Marco Paland <info@paland.com>
+# Author: Marco Paland (info@paland.com) PALANDesign Hannover, Germany
+
+- result: ' 4232'
+  args: [['% d', 4232]]
+- result: 'This is a test of 12EF'
+  args: [['This is a test of %X', 0x12ef]]
+- result: '-1000'
+  args: [['%d', -1000]]
+- result: '-1'
+  args: [['%d', -1]]
+- result: '2345'
+  args: [['%d', 2345]]
+- result: '3 -1000 test'
+  args: [['%d ', 3], ['%d', -1000], [' %s', 'test']]
+- result: '3 -1000 test'
+  args: [['%d ', 3], ['%d ', -1000], ['%s', 'test']]
+- result: '3 -1000 test'
+  args: [['%d', 3], [' %d', -1000], [' %s', 'test']]
+- result: '3 -1000 test'
+  args: [['%d', 3], ' ', ['%d', -1000], ' ', ['%s', 'test']]
+
+# space flag
+
+- result: ' 42'
+  args: [['% d', 42]]
+- result: '-42'
+  args: [['% d', -42]]
+- result: '   42'
+  args: [['% 5d', 42]]
+- result: '  -42'
+  args: [['% 5d', -42]]
+- result: '             42'
+  args: [['% 15d', 42]]
+- result: '            -42'
+  args: [['% 15d', -42]]
+- result: '        -42.987'
+  args: [['% 15.3f', -42.987]]
+- result: '         42.987'
+  args: [['% 15.3f', 42.987]]
+- result: 'Hello testing'
+  args: [['% s', 'Hello testing']]
+- result: ' 1024'
+  args: [['% d', 1024]]
+- result: '-1024'
+  args: [['% d', -1024]]
+- result: ' 1024'
+  args: [['% i', 1024]]
+- result: '-1024'
+  args: [['% i', -1024]]
+- result: '1024'
+  args: [['% u', 1024]]
+- result: '4294966272'
+  args: [['% u', 4_294_966_272]]
+- result: '777'
+  args: [['% o', 511]]
+- result: '37777777001'
+  args: [['% o', 4_294_966_785]]
+- result: '1234abcd'
+  args: [['% x', 305_441_741]]
+- result: 'edcb5433'
+  args: [['% x', 3_989_525_555]]
+- result: '1234ABCD'
+  args: [['% X', 305_441_741]]
+- result: 'EDCB5433'
+  args: [['% X', 3_989_525_555]]
+- result: 'x'
+  args: [['% c', 'x']]
+
+# + flag
+
+- result: '+42'
+  args: [['%+d', 42]]
+- result: '-42'
+  args: [['%+d', -42]]
+- result: '  +42'
+  args: [['%+5d', 42]]
+- result: '  -42'
+  args: [['%+5d', -42]]
+- result: '            +42'
+  args: [['%+15d', 42]]
+- result: '            -42'
+  args: [['%+15d', -42]]
+- result: 'Hello testing'
+  args: [['%+s', 'Hello testing']]
+- result: '+1024'
+  args: [['%+d', 1024]]
+- result: '-1024'
+  args: [['%+d', -1024]]
+- result: '+1024'
+  args: [['%+i', 1024]]
+- result: '-1024'
+  args: [['%+i', -1024]]
+- result: '1024'
+  args: [['%+u', 1024]]
+- result: '4294966272'
+  args: [['%+u', 4_294_966_272]]
+- result: '777'
+  args: [['%+o', 511]]
+- result: '37777777001'
+  args: [['%+o', 4_294_966_785]]
+- result: '1234abcd'
+  args: [['%+x', 305_441_741]]
+- result: 'edcb5433'
+  args: [['%+x', 3_989_525_555]]
+- result: '1234ABCD'
+  args: [['%+X', 305_441_741]]
+- result: 'EDCB5433'
+  args: [['%+X', 3_989_525_555]]
+- result: 'x'
+  args: [['%+c', 'x']]
+- result: '+'
+  args: [['%+.0d', 0]]
+
+# 0 flag
+
+- result: '42'
+  args: [['%0d', 42]]
+- result: '42'
+  args: [['%0ld', 42]]
+- result: '-42'
+  args: [['%0d', -42]]
+- result: '00042'
+  args: [['%05d', 42]]
+- result: '-0042'
+  args: [['%05d', -42]]
+- result: '000000000000042'
+  args: [['%015d', 42]]
+- result: '-00000000000042'
+  args: [['%015d', -42]]
+- result: '000000000042.12'
+  args: [['%015.2f', 42.1234]]
+- result: '00000000042.988'
+  args: [['%015.3f', 42.9876]]
+- result: '-00000042.98760'
+  args: [['%015.5f', -42.9876]]
+
+# - flag
+
+- result: '42'
+  args: [['%-d', 42]]
+- result: '-42'
+  args: [['%-d', -42]]
+- result: '42   '
+  args: [['%-5d', 42]]
+- result: '-42  '
+  args: [['%-5d', -42]]
+- result: '42             '
+  args: [['%-15d', 42]]
+- result: '-42            '
+  args: [['%-15d', -42]]
+- result: '42'
+  args: [['%-0d', 42]]
+- result: '-42'
+  args: [['%-0d', -42]]
+- result: '42   '
+  args: [['%-05d', 42]]
+- result: '-42  '
+  args: [['%-05d', -42]]
+- result: '42             '
+  args: [['%-015d', 42]]
+- result: '-42            '
+  args: [['%-015d', -42]]
+- result: '42'
+  args: [['%0-d', 42]]
+- result: '-42'
+  args: [['%0-d', -42]]
+- result: '42   '
+  args: [['%0-5d', 42]]
+- result: '-42  '
+  args: [['%0-5d', -42]]
+- result: '42             '
+  args: [['%0-15d', 42]]
+- result: '-42            '
+  args: [['%0-15d', -42]]
+- result: '-4.200e+01     '
+  args: [['%0-15.3e', -42.0]]
+- result: '-42.0          '
+  args: [['%0-15.3g', -42.0]]
+
+# # flag
+
+- result: ''
+  args: [['%#.0x', 0]]
+- result: '0'
+  args: [['%#.1x', 0]]
+- result: ''
+  args: [['%#.0llx', 0]]
+- result: '0x0000614e'
+  args: [['%#.8x', 0x614e]]
+- result: '0b110'
+  args: [['%#b', 6]]
+
+# specifier
+
+- result: 'Hello testing'
+  args: ['Hello testing']
+- result: 'Hello testing'
+  args: [['Hello testing%s']]
+- result: 'Hello testing'
+  args: [['Hello testing%s', '']]
+- result: 'Hello testing'
+  args: [['%s', 'Hello testing']]
+- result: '1024'
+  args: [['%d', 1024]]
+- result: '-1024'
+  args: [['%d', -1024]]
+- result: '1024'
+  args: [['%i', 1024]]
+- result: '-1024'
+  args: [['%i', -1024]]
+- result: '1024'
+  args: [['%u', 1024]]
+- result: '4294966272'
+  args: [['%u', 4_294_966_272]]
+- result: '777'
+  args: [['%o', 511]]
+- result: '37777777001'
+  args: [['%o', 4_294_966_785]]
+- result: '1234abcd'
+  args: [['%x', 305_441_741]]
+- result: 'edcb5433'
+  args: [['%x', 3_989_525_555]]
+- result: '1234ABCD'
+  args: [['%X', 305_441_741]]
+- result: 'EDCB5433'
+  args: [['%X', 3_989_525_555]]
+- result: '%'
+  args: [['%%']]
+
+# width
+
+- result: 'Hello testing'
+  args: [['%1s', 'Hello testing']]
+- result: '1024'
+  args: [['%1d', 1024]]
+- result: '-1024'
+  args: [['%1d', -1024]]
+- result: '1024'
+  args: [['%1i', 1024]]
+- result: '-1024'
+  args: [['%1i', -1024]]
+- result: '1024'
+  args: [['%1u', 1024]]
+- result: '4294966272'
+  args: [['%1u', 4_294_966_272]]
+- result: '777'
+  args: [['%1o', 511]]
+- result: '37777777001'
+  args: [['%1o', 4_294_966_785]]
+- result: '1234abcd'
+  args: [['%1x', 305_441_741]]
+- result: 'edcb5433'
+  args: [['%1x', 3_989_525_555]]
+- result: '1234ABCD'
+  args: [['%1X', 305_441_741]]
+- result: 'EDCB5433'
+  args: [['%1X', 3_989_525_555]]
+- result: 'x'
+  args: [['%1c', 'x']]
+
+# width 20
+
+- result: '       Hello testing'
+  args: [['%20s', 'Hello testing']]
+- result: '                1024'
+  args: [['%20d', 1024]]
+- result: '               -1024'
+  args: [['%20d', -1024]]
+- result: '                1024'
+  args: [['%20i', 1024]]
+- result: '               -1024'
+  args: [['%20i', -1024]]
+- result: '                1024'
+  args: [['%20u', 1024]]
+- result: '          4294966272'
+  args: [['%20u', 4_294_966_272]]
+- result: '                 777'
+  args: [['%20o', 511]]
+- result: '         37777777001'
+  args: [['%20o', 4_294_966_785]]
+- result: '            1234abcd'
+  args: [['%20x', 305_441_741]]
+- result: '            edcb5433'
+  args: [['%20x', 3_989_525_555]]
+- result: '            1234ABCD'
+  args: [['%20X', 305_441_741]]
+- result: '            EDCB5433'
+  args: [['%20X', 3_989_525_555]]
+- result: '                   x'
+  args: [['%20c', 'x']]
+
+# width *20
+
+- result: '               Hello'
+  args: [['%*s', 20, 'Hello']]
+- result: '                1024'
+  args: [['%*d', 20, 1024]]
+- result: '               -1024'
+  args: [['%*d', 20, -1024]]
+- result: '                1024'
+  args: [['%*i', 20, 1024]]
+- result: '               -1024'
+  args: [['%*i', 20, -1024]]
+- result: '                1024'
+  args: [['%*u', 20, 1024]]
+- result: '          4294966272'
+  args: [['%*u', 20, 4_294_966_272]]
+- result: '                 777'
+  args: [['%*o', 20, 511]]
+- result: '         37777777001'
+  args: [['%*o', 20, 4_294_966_785]]
+- result: '            1234abcd'
+  args: [['%*x', 20, 305_441_741]]
+- result: '            edcb5433'
+  args: [['%*x', 20, 3_989_525_555]]
+- result: '            1234ABCD'
+  args: [['%*X', 20, 305_441_741]]
+- result: '            EDCB5433'
+  args: [['%*X', 20, 3_989_525_555]]
+- result: '                   x'
+  args: [['%*c', 20, 'x']]
+
+# width -20
+
+- result: 'Hello               '
+  args: [['%-20s', 'Hello']]
+- result: '1024                '
+  args: [['%-20d', 1024]]
+- result: '-1024               '
+  args: [['%-20d', -1024]]
+- result: '1024                '
+  args: [['%-20i', 1024]]
+- result: '-1024               '
+  args: [['%-20i', -1024]]
+- result: '1024                '
+  args: [['%-20u', 1024]]
+- result: '1024.1234           '
+  args: [['%-20.4f', 1024.1234]]
+- result: '4294966272          '
+  args: [['%-20u', 4_294_966_272]]
+- result: '777                 '
+  args: [['%-20o', 511]]
+- result: '37777777001         '
+  args: [['%-20o', 4_294_966_785]]
+- result: '1234abcd            '
+  args: [['%-20x', 305_441_741]]
+- result: 'edcb5433            '
+  args: [['%-20x', 3_989_525_555]]
+- result: '1234ABCD            '
+  args: [['%-20X', 305_441_741]]
+- result: 'EDCB5433            '
+  args: [['%-20X', 3_989_525_555]]
+- result: 'x                   '
+  args: [['%-20c', 'x']]
+- result: '|    9| |9 | |    9|'
+  args: [['|%5d| ', 9],  ['|%-2d|', 9],  [' |%5d|', 9]]
+- result: '|   10| |10| |   10|'
+  args: [['|%5d| ', 10], ['|%-2d|', 10], [' |%5d|', 10]]
+- result: '|    9| |9           | |    9|'
+  args: [['|%5d| ', 9],  ['|%-12d|', 9],  [' |%5d|', 9]]
+- result: '|   10| |10          | |   10|'
+  args: [['|%5d| ', 10], ['|%-12d|', 10], [' |%5d|', 10]]
+
+# width 0-20
+
+- result: 'Hello               '
+  args: [['%0-20s', 'Hello']]
+- result: '1024                '
+  args: [['%0-20d', 1024]]
+- result: '-1024               '
+  args: [['%0-20d', -1024]]
+- result: '1024                '
+  args: [['%0-20i', 1024]]
+- result: '-1024               '
+  args: [['%0-20i', -1024]]
+- result: '1024                '
+  args: [['%0-20u', 1024]]
+- result: '4294966272          '
+  args: [['%0-20u', 4_294_966_272]]
+- result: '777                 '
+  args: [['%0-20o', 511]]
+- result: '37777777001         '
+  args: [['%0-20o', 4_294_966_785]]
+- result: '1234abcd            '
+  args: [['%0-20x', 305_441_741]]
+- result: 'edcb5433            '
+  args: [['%0-20x', 3_989_525_555]]
+- result: '1234ABCD            '
+  args: [['%0-20X', 305_441_741]]
+- result: 'EDCB5433            '
+  args: [['%0-20X', 3_989_525_555]]
+- result: 'x                   '
+  args: [['%0-20c', 'x']]
+
+# padding 20
+
+- result: '00000000000000001024'
+  args: [['%020d', 1024]]
+- result: '-0000000000000001024'
+  args: [['%020d', -1024]]
+- result: '00000000000000001024'
+  args: [['%020i', 1024]]
+- result: '-0000000000000001024'
+  args: [['%020i', -1024]]
+- result: '00000000000000001024'
+  args: [['%020u', 1024]]
+- result: '00000000004294966272'
+  args: [['%020u', 4_294_966_272]]
+- result: '00000000000000000777'
+  args: [['%020o', 511]]
+- result: '00000000037777777001'
+  args: [['%020o', 4_294_966_785]]
+- result: '0000000000001234abcd'
+  args: [['%020x', 305_441_741]]
+- result: '000000000000edcb5433'
+  args: [['%020x', 3_989_525_555]]
+- result: '0000000000001234ABCD'
+  args: [['%020X', 305_441_741]]
+- result: '000000000000EDCB5433'
+  args: [['%020X', 3_989_525_555]]
+
+# padding .20
+
+- result: '00000000000000001024'
+  args: [['%.20d', 1024]]
+- result: '-00000000000000001024'
+  args: [['%.20d', -1024]]
+- result: '00000000000000001024'
+  args: [['%.20i', 1024]]
+- result: '-00000000000000001024'
+  args: [['%.20i', -1024]]
+- result: '00000000000000001024'
+  args: [['%.20u', 1024]]
+- result: '00000000004294966272'
+  args: [['%.20u', 4_294_966_272]]
+- result: '00000000000000000777'
+  args: [['%.20o', 511]]
+- result: '00000000037777777001'
+  args: [['%.20o', 4_294_966_785]]
+- result: '0000000000001234abcd'
+  args: [['%.20x', 305_441_741]]
+- result: '000000000000edcb5433'
+  args: [['%.20x', 3_989_525_555]]
+- result: '0000000000001234ABCD'
+  args: [['%.20X', 305_441_741]]
+- result: '000000000000EDCB5433'
+  args: [['%.20X', 3_989_525_555]]
