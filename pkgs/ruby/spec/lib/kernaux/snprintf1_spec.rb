@@ -6,6 +6,27 @@ RSpec.describe KernAux, '.snprintf1' do
   if described_class.singleton_class.method_defined? :snprintf1
     let(:size) { 10_000 }
 
+    context 'with 0 arguments' do
+      specify do
+        expect { described_class.snprintf1 }.to \
+          raise_error ArgumentError, 'expected 2, 3 or 4 args'
+      end
+    end
+
+    context 'with 1 argument' do
+      specify do
+        expect { described_class.snprintf1 size }.to \
+          raise_error ArgumentError, 'expected 2, 3 or 4 args'
+      end
+    end
+
+    context 'with 5 arguments' do
+      specify do
+        expect { described_class.snprintf1 size, '%*s', 20, 'foo', 'bar' }.to \
+          raise_error ArgumentError, 'expected 2, 3 or 4 args'
+      end
+    end
+
     context 'with 2 arguments' do
       subject(:snprintf1) { described_class.snprintf1 size, format }
 
@@ -183,27 +204,6 @@ RSpec.describe KernAux, '.snprintf1' do
         specify do
           expect { snprintf1 }.to raise_error ArgumentError, 'invalid format'
         end
-      end
-    end
-
-    context 'with 0 arguments' do
-      specify do
-        expect { described_class.snprintf1 }.to \
-          raise_error ArgumentError, 'expected 2, 3 or 4 args'
-      end
-    end
-
-    context 'with 1 argument' do
-      specify do
-        expect { described_class.snprintf1 size }.to \
-          raise_error ArgumentError, 'expected 2, 3 or 4 args'
-      end
-    end
-
-    context 'with 5 arguments' do
-      specify do
-        expect { described_class.snprintf1 size, '%*s', 20, 'foo', 'bar' }.to \
-          raise_error ArgumentError, 'expected 2, 3 or 4 args'
       end
     end
   end
