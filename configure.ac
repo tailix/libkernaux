@@ -133,6 +133,10 @@ AS_IF([test "$with_libc_strnlen"   = yes], [with_libc_strnlen=yes],   [with_libc
 
 
 
+#############
+# Test args #
+#############
+
 AS_IF([test "$host_cpu" != "$build_cpu" -a "$enable_tests" = yes], AC_MSG_ERROR([can not build cross-platform tests]))
 
 AS_IF([test "$enable_tests" = no -a "$enable_tests_python" = yes], AC_MSG_ERROR([Python tests require usual tests]))
@@ -141,6 +145,10 @@ AS_IF([test "$with_ntoa" = no -a "$with_printf" = yes], AC_MSG_ERROR([package `p
 AS_IF([test "$with_ntoa" = no -a "$with_units"  = yes], AC_MSG_ERROR([package `units' requires package `ntoa']))
 
 
+
+#########################
+# Automake conditionals #
+#########################
 
 dnl Architecture
 AM_CONDITIONAL([ASM_I386],            [test "$host_cpu" = i386])
@@ -180,6 +188,10 @@ AM_CONDITIONAL([WITH_LIBC_STRNLEN],   [test "$with_libc_strnlen"   = yes])
 
 
 
+####################
+# Autoconf defines #
+####################
+
 dnl Architecture
 AS_IF([test "$host_cpu" = i386],           [AC_DEFINE([ASM_I386],            [1], [architecture is i386])])
 AS_IF([test "$host_cpu" = riscv64],        [AC_DEFINE([ASM_RISCV64],         [1], [architecture is RISC-V 64-bit])])
@@ -217,6 +229,10 @@ AS_IF([test "$with_libc_strlen"    = yes], [AC_DEFINE([WITH_LIBC_STRLEN],    [1]
 AS_IF([test "$with_libc_strnlen"   = yes], [AC_DEFINE([WITH_LIBC_STRNLEN],   [1], [with strnlen replacement])])
 
 
+
+##########################
+# Autoconf substitutions #
+##########################
 
 dnl Architecture
 AS_IF([test "$host_cpu" != i386],       [AC_SUBST([comment_line_asm_i386],     [//])])
