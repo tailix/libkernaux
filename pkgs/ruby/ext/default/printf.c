@@ -1,6 +1,8 @@
 #include <kernaux.h>
 #include <ruby.h>
 
+#include "dynarg.h"
+
 #ifdef HAVE_KERNAUX_SNPRINTF
 
 static VALUE rb_KernAux_snprintf1(int argc, const VALUE *argv, VALUE self);
@@ -89,37 +91,29 @@ VALUE rb_KernAux_snprintf1(
     int width = 0;
     if (has_width && argc > 2) width = NUM2INT(argv_rb[2]);
 
-    bool use_dbl = false;
-    double dbl;
-    union {
-        const char *str;
-        long long ll;
-        unsigned long long ull;
-        char chr;
-    } __attribute__((packed)) arg = { .str = "" };
+    struct DynArg dynarg = DynArg_create();
 
     if (argc == (has_width ? 4 : 3)) {
         VALUE arg_rb = argv_rb[has_width ? 3 : 2];
 
         if (c == 'd' || c == 'i') {
             RB_INTEGER_TYPE_P(arg_rb);
-            arg.ll = NUM2LL(arg_rb);
+            DynArg_use_long_long(&dynarg, NUM2LL(arg_rb));
         } else if (c == 'u' || c == 'x' || c == 'X' || c == 'o' || c == 'b') {
             RB_INTEGER_TYPE_P(arg_rb);
-            arg.ull = NUM2ULL(arg_rb);
+            DynArg_use_unsigned_long_long(&dynarg, NUM2ULL(arg_rb));
         } else if (c == 'f' || c == 'F' ||
                    c == 'e' || c == 'E' ||
                    c == 'g' || c == 'G')
         {
             RB_FLOAT_TYPE_P(arg_rb);
-            use_dbl = true;
-            dbl = NUM2DBL(arg_rb);
+            DynArg_use_double(&dynarg, NUM2DBL(arg_rb));
         } else if (c == 'c') {
             Check_Type(arg_rb, T_STRING);
-            arg.chr = *StringValuePtr(arg_rb);
+            DynArg_use_char(&dynarg, *StringValuePtr(arg_rb));
         } else if (c == 's') {
             Check_Type(arg_rb, T_STRING);
-            arg.str = StringValueCStr(arg_rb);
+            DynArg_use_str(&dynarg, StringValueCStr(arg_rb));
         }
     }
 
@@ -128,13 +122,13 @@ VALUE rb_KernAux_snprintf1(
 
     int slen;
     if (has_width) {
-        slen = use_dbl
-            ? kernaux_snprintf(str, size, format, width, dbl)
-            : kernaux_snprintf(str, size, format, width, arg);
+        slen = dynarg.use_dbl
+            ? kernaux_snprintf(str, size, format, width, dynarg.dbl)
+            : kernaux_snprintf(str, size, format, width, dynarg.arg);
     } else {
-        slen = use_dbl
-            ? kernaux_snprintf(str, size, format, dbl)
-            : kernaux_snprintf(str, size, format, arg);
+        slen = dynarg.use_dbl
+            ? kernaux_snprintf(str, size, format, dynarg.dbl)
+            : kernaux_snprintf(str, size, format, dynarg.arg);
     }
 
     const VALUE output_rb =
