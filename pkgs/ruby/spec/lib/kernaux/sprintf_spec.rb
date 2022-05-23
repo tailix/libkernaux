@@ -1,8 +1,5 @@
 # frozen_string_literal: true
 
-# Copyright (c) 2014-2019 Marco Paland <info@paland.com>
-# Author: Marco Paland (info@paland.com) PALANDesign Hannover, Germany
-
 require 'spec_helper'
 
 RSpec.describe KernAux, '.sprintf' do

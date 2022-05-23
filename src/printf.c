@@ -4,8 +4,6 @@
  * Tiny printf, sprintf and (v)snprintf implementation, optimized for speed on
  * embedded systems with a very limited resources. These routines are thread
  * safe and reentrant!
- *
- * Author: Marco Paland (info@paland.com) PALANDesign Hannover, Germany
  */
 
 #ifdef HAVE_CONFIG_H

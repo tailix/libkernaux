@@ -1,6 +1,5 @@
 /**
  * Copyright (c) 2014-2019 Marco Paland <info@paland.com>
- * Author: Marco Paland (info@paland.com) PALANDesign Hannover, Germany
  */
 
 #ifdef HAVE_CONFIG_H
