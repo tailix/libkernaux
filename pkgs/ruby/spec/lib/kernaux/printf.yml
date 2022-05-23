@@ -529,3 +529,24 @@
   args: [['%20.5X', 305_441_741]]
 - result: '          00EDCB5433'
   args: [['%20.10X', 3_989_525_555]]
+
+# padding neg numbers
+
+# space padding
+- result: '-5'
+  args: [['% 1d', -5]]
+- result: '-5'
+  args: [['% 2d', -5]]
+- result: ' -5'
+  args: [['% 3d', -5]]
+- result: '  -5'
+  args: [['% 4d', -5]]
+# zero padding
+- result: '-5'
+  args: [['%01d', -5]]
+- result: '-5'
+  args: [['%02d', -5]]
+- result: '-05'
+  args: [['%03d', -5]]
+- result: '-005'
+  args: [['%04d', -5]]
