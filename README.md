@@ -143,6 +143,9 @@ make
 
 You can test with `make check`.
 
+Some tests require Python 3 with YAML and Jinja2. If you don't have them,
+configure with `--disable-tests-python`.
+
 ### Cross
 
 Create configuration script with `./autogen.sh`.
