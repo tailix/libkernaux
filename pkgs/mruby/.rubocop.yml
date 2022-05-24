@@ -25,6 +25,10 @@ Metrics/BlockLength:
     - 'Rakefile'
     - 'test/**/*.rb'
 
+Security/YAMLLoad:
+  Exclude:
+    - 'test/**/*.rb'
+
 Style/AndOr:
   EnforcedStyle: conditionals
 

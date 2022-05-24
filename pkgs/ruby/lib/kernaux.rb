@@ -65,7 +65,7 @@ module KernAux
     ##
     # Typical `printf`.
     #
-    # @param args [Array<String, Array<(String, Object)>>]
+    # @param args [Array<String, Array<(String, Object)>, Array<(String, Integer, Object)>>]
     # @return [String] formatted output
     #
     # @example
@@ -107,7 +107,7 @@ module KernAux
     # @param buffer_size [Integer] buffer size (including terminating null
     #   character)
     # @param format [String] formatting string
-    # @return [String] formatted output
+    # @return [Array<(String, Integer)>] formatted output and it's size
     #
     # @see .sprintf1 Automatic buffer size
     ##
