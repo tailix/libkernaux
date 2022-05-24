@@ -11,7 +11,9 @@ RSpec.describe KernAux, '.sprintf' do
     it { is_expected.to eq 'Hello, World!' }
 
     context 'using original tests' do
-      YAML.safe_load_file(File.expand_path('printf.yml', __dir__)).each do |test|
+      printf_yml = File.expand_path('../../../../../tests/printf.yml', __dir__)
+
+      YAML.safe_load_file(printf_yml).each do |test|
         expected = test['result']
         args     = test['args']
 
