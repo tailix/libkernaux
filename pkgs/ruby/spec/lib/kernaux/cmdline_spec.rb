@@ -65,7 +65,7 @@ RSpec.describe KernAux, '.cmdline' do
     context 'when there are not too many args' do
       let(:str) { 'a ' * 256 }
 
-      specify { expect(cmdline).to eq ['a'] * 256 }
+      it { is_expected.to eq ['a'] * 256 }
     end
 
     context 'when there are too many args' do
@@ -80,7 +80,7 @@ RSpec.describe KernAux, '.cmdline' do
     context 'when args don\'t cause buffer overflow' do
       let(:str) { 'a' * 4095 }
 
-      specify { expect(cmdline).to eq ['a' * 4095] }
+      it { is_expected.to eq ['a' * 4095] }
     end
 
     context 'when args cause buffer overflow' do
