@@ -139,7 +139,7 @@ AS_IF([test "$with_libc_strnlen"   = yes], [with_libc_strnlen=yes],   [with_libc
 
 AS_IF([test "$host_cpu" != "$build_cpu" -a "$enable_tests" = yes], AC_MSG_ERROR([can not build cross-platform tests]))
 
-AS_IF([test "$enable_tests" = no -a "$enable_tests_python" = yes], AC_MSG_ERROR([Python tests require usual tests]))
+AS_IF([test "$enable_tests" = no -a "$enable_tests_python" = yes], AC_MSG_ERROR([feature `tests-python` requires feature `tests`]))
 AS_IF([test "$with_ntoa"    = no -a "$with_printf"         = yes], AC_MSG_ERROR([package `printf' requires package `ntoa']))
 AS_IF([test "$with_ntoa"    = no -a "$with_units"          = yes], AC_MSG_ERROR([package `units' requires package `ntoa']))
 
