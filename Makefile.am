@@ -31,8 +31,10 @@ if ASM_X86_64
 libkernaux_a_SOURCES += src/asm/x86_64.S
 endif
 
+TESTS =
+
 if ENABLE_TESTS
-TESTS = \
+TESTS += \
 	examples/assert_guards \
 	examples/assert_simple \
 	examples/panic_guards \
@@ -130,9 +132,9 @@ TESTS += \
 	examples/printf_va \
 	examples/snprintf \
 	examples/snprintf_va
+endif
 if ENABLE_TESTS_PYTHON
 TESTS += tests/test_printf_gen
-endif
 endif
 endif
 

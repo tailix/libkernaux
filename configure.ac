@@ -24,9 +24,9 @@ AC_ARG_ENABLE([pic],          AS_HELP_STRING([--disable-pic],         [do not ge
 AC_ARG_ENABLE([werror],       AS_HELP_STRING([--disable-werror],      [disable -Werror]))
 
 dnl Features (disabled by default)
-AC_ARG_ENABLE([tests],        AS_HELP_STRING([--enable-tests],        [enable tests and examples]))
+AC_ARG_ENABLE([tests],        AS_HELP_STRING([--enable-tests],        [enable usual tests and examples]))
 AC_ARG_ENABLE([tests-all],    AS_HELP_STRING([--enable-tests-all],    [enable all tests]))
-AC_ARG_ENABLE([tests-python], AS_HELP_STRING([--enable-tests-python], [enable tests that require Python]))
+AC_ARG_ENABLE([tests-python], AS_HELP_STRING([--enable-tests-python], [enable tests that require Python 3 with YAML and Jinja2]))
 
 dnl Packages (enabled by default)
 AC_ARG_WITH(  [all],          AS_HELP_STRING([--without-all],         [without all default packages]))
@@ -137,10 +137,9 @@ AS_IF([test "$with_libc_strnlen"   = yes], [with_libc_strnlen=yes],   [with_libc
 # Test args #
 #############
 
-AS_IF([test "$enable_tests"        = yes -a "$host_cpu" != "$build_cpu"], AC_MSG_ERROR([can not build cross-platform tests]))
-AS_IF([test "$enable_tests_python" = yes -a "$enable_tests" = no       ], AC_MSG_ERROR([feature `tests-python` requires feature `tests`]))
-AS_IF([test "$with_printf"         = yes -a "$with_ntoa"    = no       ], AC_MSG_ERROR([package `printf' requires package `ntoa']))
-AS_IF([test "$with_units"          = yes -a "$with_ntoa"    = no       ], AC_MSG_ERROR([package `units' requires package `ntoa']))
+AS_IF([test "$enable_tests" = yes -a "$host_cpu" != "$build_cpu"], AC_MSG_ERROR([can not build cross-platform tests]))
+AS_IF([test "$with_printf"  = yes -a "$with_ntoa"    = no       ], AC_MSG_ERROR([package `printf' requires package `ntoa']))
+AS_IF([test "$with_units"   = yes -a "$with_ntoa"    = no       ], AC_MSG_ERROR([package `units' requires package `ntoa']))
 
 
 
@@ -202,8 +201,8 @@ AS_IF([test "$enable_pic"          = yes], [AC_DEFINE([ENABLE_PIC],          [1]
 AS_IF([test "$enable_werror"       = yes], [AC_DEFINE([ENABLE_WERROR],       [1], [enabled -Werror])])
 
 dnl Features (disabled by default)
-AS_IF([test "$enable_tests"        = yes], [AC_DEFINE([ENABLE_TESTS],        [1], [enabled tests and examples])])
-AS_IF([test "$enable_tests_python" = yes], [AC_DEFINE([ENABLE_TESTS_PYTHON], [1], [enable tests that require Python])])
+AS_IF([test "$enable_tests"        = yes], [AC_DEFINE([ENABLE_TESTS],        [1], [enabled usual tests and examples])])
+AS_IF([test "$enable_tests_python" = yes], [AC_DEFINE([ENABLE_TESTS_PYTHON], [1], [enabled tests that require Python 3 with YAML and Jinja2])])
 
 dnl Packages (enabled by default)
 AS_IF([test "$with_cmdline"        = yes], [AC_DEFINE([WITH_CMDLINE],        [1], [with command line parser])])

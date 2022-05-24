@@ -84,6 +84,13 @@ stable options.
 
 ### Non-default options
 
+#### Features
+
+* `--enable-tests` - enable usual tests and examples
+* `--enable-tests-all` - enable all tests
+* `--enable-tests-python` - enable tests that require Python 3 with YAML and
+  Jinja2
+
 #### Packages
 
 * `--with-libc` - provides the replacement for some standard C functions. Useful
@@ -137,14 +144,11 @@ environment.
 
 ```
 ./autogen.sh
-./configure --enable-tests-all
+./configure --enable-tests # or --enable-tests-all, but see prerequisites
 make
 ```
 
 You can test with `make check`.
-
-Some tests require Python 3 with YAML and Jinja2. Disable them with
-`--disable-tests-python`.
 
 ### Cross
 

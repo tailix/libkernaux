@@ -22,7 +22,7 @@ jobs:
       - name: autogen
         run: ./autogen.sh
       - name: configure
-        run: ./configure --enable-tests-all CC='${{matrix.cc}}' CFLAGS='${{matrix.opt}}'
+        run: ./configure --enable-tests --enable-tests-python CC='${{matrix.cc}}' CFLAGS='${{matrix.opt}}'
       - name: make
         run: make
       - name: check
@@ -44,7 +44,7 @@ jobs:
         run: tar -xzf libkernaux-0.2.0.tar.gz
       - working-directory: libkernaux-0.2.0
         name: configure
-        run: ./configure --enable-tests-all
+        run: ./configure --enable-tests --enable-tests-python
       - working-directory: libkernaux-0.2.0
         name: make
         run: make
@@ -76,7 +76,7 @@ jobs:
       - name: autogen
         run: ./autogen.sh
       - name: configure
-        run: ./configure --enable-tests-all --without-all
+        run: ./configure --without-all --enable-tests --enable-tests-python
       - name: make
         run: make
       - name: check
