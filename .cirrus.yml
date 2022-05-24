@@ -23,7 +23,7 @@ mruby_freebsd_task:
     CPATH: '/usr/local/include'
     LIBRARY_PATH: '/usr/local/lib'
   dependencies_script:
-    - pkg install --yes autoconf automake rubygem-rake wget
+    - pkg install --yes autoconf automake git rubygem-rake wget
   dependencies_mruby_script:
     - wget https://github.com/mruby/mruby/archive/3.0.0.zip -O mruby-3.0.0.zip
     - unzip mruby-3.0.0.zip
