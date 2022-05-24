@@ -52,10 +52,21 @@ static void test(const char *const expected, const char *const format, ...)
 
 int main()
 {
+    memset(buffer, '\0', sizeof(buffer));
+    buffer_index = 0;
+    kernaux_printf(test_putchar, (char*)data, "Hello, World!");
+    assert(strcmp("Hello, World!", buffer) == 0);
+
     {% for case in cases %}
     {% if not case.fixme %}
+    {% if case.float %}
+#ifdef ENABLE_FLOAT
+    {% endif %}
     printf("%s\n", {{ escape_str(case.result) }});
     test({{ escape_str(case.result) }}, {{ escape_str(fmt(case.args)) }}{{ values(case.args) }});
+    {% if case.float %}
+#endif
+    {% endif %}
     {% endif %}
     {% endfor %}
 

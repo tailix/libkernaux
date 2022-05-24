@@ -3,17 +3,21 @@ from os import path
 from yaml import SafeLoader, safe_load
 
 CASES_ORIG_FILENAME = 'printf_orig.yml'
+CASES_REG_FILENAME  = 'printf.yml'
 TEMPLATE_FILENAME   = 'printf_gen.jinja'
 TEST_FILENAME       = 'test_printf_gen.c'
 
 TESTS_DIRPATH = path.dirname(path.abspath(__file__))
 
 CASES_ORIG_FILEPATH = path.join(TESTS_DIRPATH, CASES_ORIG_FILENAME)
+CASES_REG_FILEPATH  = path.join(TESTS_DIRPATH, CASES_REG_FILENAME)
 TEST_FILEPATH       = path.join(TESTS_DIRPATH, TEST_FILENAME)
 
 def main():
     cases_orig = safe_load(open(CASES_ORIG_FILEPATH))
-    cases = cases_orig
+    cases_reg  = safe_load(open(CASES_REG_FILEPATH))
+
+    cases = cases_reg + cases_orig
 
     jinja_env = Environment(
         keep_trailing_newline=True,

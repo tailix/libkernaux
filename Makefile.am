@@ -135,6 +135,7 @@ if ENABLE_TESTS_PYTHON
 TESTS += tests/test_printf_gen
 noinst_SCRIPTS = tests/printf_gen.py
 noinst_DATA = \
+	tests/printf.yml \
 	tests/printf_orig.yml
 endif
 endif
@@ -281,5 +282,5 @@ tests_test_units_human_SOURCES = \
 	$(libkernaux_a_SOURCES) \
 	tests/test_units_human.c
 
-tests/test_printf_gen.c: tests/printf_gen.py tests/printf_orig.yml
+tests/test_printf_gen.c: tests/printf_gen.py tests/printf.yml tests/printf_orig.yml
 	python3 tests/printf_gen.py

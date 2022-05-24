@@ -61,52 +61,6 @@ int main()
     kernaux_printf(test_putchar, (char*)data, "Hello, World!");
     assert(strcmp("Hello, World!", buffer) == 0);
 
-    test("", "");
-    test("Hello, World!", "Hello, World!");
-    test("Hello, Alex!", "Hello, %s!", "Alex");
-    test("Hello, Alex!", "Hello, %c%c%c%c!", 'A', 'l', 'e', 'x');
-    test("%", "%%");
-    test("%%", "%%%%");
-    test("%%%", "%%%%%%");
-    test("123", "%u", 123);
-    test("123456", "%u%u", 123, 456);
-    test("foo", "%s", "foo");
-    test("foobar", "%s%s", "foo", "bar");
-    test("a", "%c", 'a');
-    test("ab", "%c%c", 'a', 'b');
-    test("abc", "%c%c%c", 'a', 'b', 'c');
-    test("%123fooa", "%%%u%s%c", 123, "foo", 'a');
-    test("%123afoo", "%%%u%c%s", 123, 'a', "foo");
-    test("%a123foo", "%%%c%u%s", 'a', 123, "foo");
-    test("%afoo123", "%%%c%s%u", 'a', "foo", 123);
-    test("%foo123a", "%%%s%u%c", "foo", 123, 'a');
-    test("%fooa123", "%%%s%c%u", "foo", 'a', 123);
-    test("123%fooa", "%u%%%s%c", 123, "foo", 'a');
-    test("123%afoo", "%u%%%c%s", 123, 'a', "foo");
-    test("a%123foo", "%c%%%u%s", 'a', 123, "foo");
-    test("a%foo123", "%c%%%s%u", 'a', "foo", 123);
-    test("foo%123a", "%s%%%u%c", "foo", 123, 'a');
-    test("foo%a123", "%s%%%c%u", "foo", 'a', 123);
-    test("123foo%a", "%u%s%%%c", 123, "foo", 'a');
-    test("123a%foo", "%u%c%%%s", 123, 'a', "foo");
-    test("a123%foo", "%c%u%%%s", 'a', 123, "foo");
-    test("afoo%123", "%c%s%%%u", 'a', "foo", 123);
-    test("foo123%a", "%s%u%%%c", "foo", 123, 'a');
-    test("fooa%123", "%s%c%%%u", "foo", 'a', 123);
-    test("123fooa%", "%u%s%c%%", 123, "foo", 'a');
-    test("123afoo%", "%u%c%s%%", 123, 'a', "foo");
-    test("a123foo%", "%c%u%s%%", 'a', 123, "foo");
-    test("afoo123%", "%c%s%u%%", 'a', "foo", 123);
-    test("foo123a%", "%s%u%c%%", "foo", 123, 'a');
-    test("fooa123%", "%s%c%u%%", "foo", 'a', 123);
-
-#ifdef ENABLE_FLOAT
-    test("1.200000",   "%f", 1.2);
-    test("123.456789", "%f", 123.456789);
-#endif
-
-    test("%", "%*%", 20);
-
     // - flag
     // ...
     test("42",              "%0-d",      42);

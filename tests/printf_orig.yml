@@ -38,8 +38,10 @@
   args: [['% 15d', -42]]
 - result: '        -42.987'
   args: [['% 15.3f', -42.987]]
+  float: true
 - result: '         42.987'
   args: [['% 15.3f', 42.987]]
+  float: true
 - result: 'Hello testing'
   args: [['% s', 'Hello testing']]
 - result: ' 1024'
@@ -132,10 +134,13 @@
   args: [['%015d', -42]]
 - result: '000000000042.12'
   args: [['%015.2f', 42.1234]]
+  float: true
 - result: '00000000042.988'
   args: [['%015.3f', 42.9876]]
+  float: true
 - result: '-00000042.98760'
   args: [['%015.5f', -42.9876]]
+  float: true
 
 # - flag
 
@@ -177,8 +182,10 @@
   args: [['%0-15d', -42]]
 - result: '-4.200e+01     '
   args: [['%0-15.3e', -42.0]]
+  float: true
 - result: '-42.0          '
   args: [['%0-15.3g', -42.0]]
+  float: true
 
 # # flag
 
@@ -340,6 +347,7 @@
   args: [['%-20u', 1024]]
 - result: '1024.1234           '
   args: [['%-20.4f', 1024.1234]]
+  float: true
 - result: '4294966272          '
   args: [['%-20u', 4_294_966_272]]
 - result: '777                 '
