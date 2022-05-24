@@ -559,3 +559,54 @@
   args: [['%03d', -5]]
 - result: '-005'
   args: [['%04d', -5]]
+
+# float padding neg numbers
+
+# space padding
+- result: '-5.0'
+  args: [['% 3.1f', -5.0]]
+  float: true
+- result: '-5.0'
+  args: [['% 4.1f', -5.0]]
+  float: true
+- result: ' -5.0'
+  args: [['% 5.1f', -5.0]]
+  float: true
+- result: '    -5'
+  args: [['% 6.1g', -5.0]]
+  float: true
+- result: '-5.0e+00'
+  args: [['% 6.1e', -5.0]]
+  float: true
+- result: '  -5.0e+00'
+  args: [['% 10.1e', -5.0]]
+  float: true
+# zero padding
+- result: '-5.0'
+  args: [['%03.1f', -5.0]]
+  float: true
+- result: '-5.0'
+  args: [['%04.1f', -5.0]]
+  float: true
+- result: '-05.0'
+  args: [['%05.1f', -5.0]]
+  float: true
+# zero padding no decimal point
+- result: '-5'
+  args: [['%01.0f', -5.0]]
+  float: true
+- result: '-5'
+  args: [['%02.0f', -5.0]]
+  float: true
+- result: '-05'
+  args: [['%03.0f', -5.0]]
+  float: true
+- result: '-005.0e+00'
+  args: [['%010.1e', -5.0]]
+  float: true
+- result: '-05E+00'
+  args: [['%07.0E', -5.0]]
+  float: true
+- result: '-05'
+  args: [['%03.0g', -5.0]]
+  float: true
