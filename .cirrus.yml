@@ -7,11 +7,10 @@ freebsd_instance:
 main_freebsd_task:
   name: Main (FreeBSD)
   dependencies_script:
-    - pkg install --yes autoconf automake py39-pip
-    - pip-3.9 install Jinja2
+    - pkg install --yes autoconf automake
   main_build_script:
     - ./autogen.sh
-    - ./configure --enable-tests-all CFLAGS='-O3'
+    - ./configure --enable-tests-all --disable-tests-python CFLAGS='-O3'
     - make
     - sudo make install
   main_test_script:
