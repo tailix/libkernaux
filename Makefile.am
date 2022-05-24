@@ -272,12 +272,12 @@ tests_test_printf_gen_SOURCES = \
 	tests/test_printf_gen.c \
 	tests/printf_gen.py \
 	tests/printf_gen.jinja \
-	tests/printf.yml \
-	tests/printf_orig.yml
+	common/printf.yml \
+	common/printf_orig.yml
 
 tests_test_units_human_SOURCES = \
 	$(libkernaux_a_SOURCES) \
 	tests/test_units_human.c
 
-tests/test_printf_gen.c: tests/printf_gen.py tests/printf_gen.jinja tests/printf.yml tests/printf_orig.yml
+tests/test_printf_gen.c: tests/printf_gen.py tests/printf_gen.jinja common/printf.yml common/printf_orig.yml
 	python3 tests/printf_gen.py

@@ -7,10 +7,13 @@ CASES_REG_FILENAME  = 'printf.yml'
 TEMPLATE_FILENAME   = 'printf_gen.jinja'
 TEST_FILENAME       = 'test_printf_gen.c'
 
-TESTS_DIRPATH = path.dirname(path.abspath(__file__))
+ROOT_DIRPATH = path.dirname(path.dirname(path.join(path.abspath(__file__))))
 
-CASES_ORIG_FILEPATH = path.join(TESTS_DIRPATH, CASES_ORIG_FILENAME)
-CASES_REG_FILEPATH  = path.join(TESTS_DIRPATH, CASES_REG_FILENAME)
+COMMON_DIRPATH = path.join(ROOT_DIRPATH, 'common')
+TESTS_DIRPATH  = path.join(ROOT_DIRPATH, 'tests')
+
+CASES_ORIG_FILEPATH = path.join(COMMON_DIRPATH, CASES_ORIG_FILENAME)
+CASES_REG_FILEPATH  = path.join(COMMON_DIRPATH, CASES_REG_FILENAME)
 TEST_FILEPATH       = path.join(TESTS_DIRPATH, TEST_FILENAME)
 
 def main():

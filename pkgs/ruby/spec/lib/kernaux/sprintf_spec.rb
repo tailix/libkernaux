@@ -22,7 +22,7 @@ RSpec.describe KernAux, '.sprintf' do
     ].each do |(suffix, description)|
       context description do
         printf_yml =
-          File.expand_path("../../../../../tests/printf#{suffix}.yml", __dir__)
+          File.expand_path("../../../../../common/printf#{suffix}.yml", __dir__)
 
         YAML.safe_load_file(printf_yml).each do |test|
           expected = test['result']
