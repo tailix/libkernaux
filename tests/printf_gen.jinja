@@ -58,7 +58,6 @@ int main()
     assert(strcmp("Hello, World!", buffer) == 0);
 
     {% for case in cases %}
-    {% if not case.fixme %}
     {% if case.float %}
 #ifdef ENABLE_FLOAT
     {% endif %}
@@ -66,7 +65,6 @@ int main()
     test({{ escape_str(case.result) }}, {{ escape_str(fmt(case.args)) }}{{ values(case.args) }});
     {% if case.float %}
 #endif
-    {% endif %}
     {% endif %}
     {% endfor %}
 
