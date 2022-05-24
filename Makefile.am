@@ -129,8 +129,7 @@ TESTS += \
 	examples/printf \
 	examples/printf_va \
 	examples/snprintf \
-	examples/snprintf_va \
-	tests/test_printf
+	examples/snprintf_va
 if ENABLE_TESTS_PYTHON
 TESTS += tests/test_printf_gen
 noinst_SCRIPTS = tests/printf_gen.py
@@ -269,10 +268,6 @@ tests_test_pfa_SOURCES = \
 tests_test_pfa_assert_SOURCES = \
 	$(libkernaux_a_SOURCES) \
 	tests/test_pfa_assert.c
-
-tests_test_printf_SOURCES = \
-	$(libkernaux_a_SOURCES) \
-	tests/test_printf.c
 
 tests_test_printf_gen_SOURCES = \
 	$(libkernaux_a_SOURCES) \
