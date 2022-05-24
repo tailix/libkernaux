@@ -27,6 +27,7 @@ void mrb_mruby_kernaux_gem_init(mrb_state *const mrb)
     init_assert(mrb);
     init_ntoa(mrb);
     init_cmdline(mrb);
+    init_printf(mrb);
 }
 
 void current_mrb_start(mrb_state *mrb)

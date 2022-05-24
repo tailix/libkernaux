@@ -23,10 +23,6 @@ module KernAux
     snprintf1(SPRINTF1_BUFFER_SIZE, format, *args).first
   end
 
-  def self.snprintf1(_buffer_size, _format, ...)
-    ['', 0]
-  end
-
   class Error < RuntimeError; end
   class AssertError < Error; end
 end
