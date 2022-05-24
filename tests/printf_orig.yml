@@ -610,3 +610,58 @@
 - result: '-05'
   args: [['%03.0g', -5.0]]
   float: true
+
+# length
+
+- result: ''
+  args: [['%.0s', 'Hello testing']]
+- result: '                    '
+  args: [['%20.0s', 'Hello testing']]
+- result: ''
+  args: [['%.s', 'Hello testing']]
+- result: '                    '
+  args: [['%20.s', 'Hello testing']]
+- result: '                1024'
+  args: [['%20.0d', 1024]]
+- result: '               -1024'
+  args: [['%20.0d', -1024]]
+- result: '                    '
+  args: [['%20.d', 0]]
+- result: '                1024'
+  args: [['%20.0i', 1024]]
+- result: '               -1024'
+  args: [['%20.i', -1024]]
+- result: '                    '
+  args: [['%20.i', 0]]
+- result: '                1024'
+  args: [['%20.u', 1024]]
+- result: '          4294966272'
+  args: [['%20.0u', 4_294_966_272]]
+- result: '                    '
+  args: [['%20.u', 0]]
+- result: '                 777'
+  args: [['%20.o', 511]]
+- result: '         37777777001'
+  args: [['%20.0o', 4_294_966_785]]
+- result: '                    '
+  args: [['%20.o', 0]]
+- result: '            1234abcd'
+  args: [['%20.x', 305_441_741]]
+- result: '                                          1234abcd'
+  args: [['%50.x', 305_441_741]]
+- result: '                                          1234abcd     12345'
+  args: [['%50.x', 305_441_741], ['%10.u', 12345]]
+- result: '            edcb5433'
+  args: [['%20.0x', 3_989_525_555]]
+- result: '                    '
+  args: [['%20.x', 0]]
+- result: '            1234ABCD'
+  args: [['%20.X', 305_441_741]]
+- result: '            EDCB5433'
+  args: [['%20.0X', 3_989_525_555]]
+- result: '                    '
+  args: [['%20.X', 0]]
+- result: '  '
+  args: [['%02.0u', 0]]
+- result: '  '
+  args: [['%02.0d', 0]]
