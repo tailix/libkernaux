@@ -108,12 +108,10 @@ stable options.
 
 #### Features
 
-* `--enable-bloat` (disable with `--disable-bloat`) - heavy binary data
-* `--enable-float` (disable with `--disable-float`) - floating-point arithmetic
-* `--enable-pic` (disable with `--disable-pic`) - generate position-independent
-  code
-* `--enable-werror` (disable with `--disable-werror`) - fail on warning
-  (`CFLAGS+='-Werror'`)
+* `--(enable|disable)-bloat` - heavy binary data
+* `--(enable|disable)-float` - floating-point arithmetic
+* `--(enable|disable)-pic` - generate position-independent code
+* `--(enable|disable)-werror` - fail on warning (`CFLAGS+='-Werror'`)
 
 #### Packages
 
