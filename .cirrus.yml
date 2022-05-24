@@ -22,9 +22,9 @@ mruby_freebsd_task:
     # FIXME: temporary hack to fix FreeBSD build
     CPATH: '/usr/local/include'
     LIBRARY_PATH: '/usr/local/lib'
+    MRUBY_YAML_USE_SYSTEM_LIBRARY: 'yes'
   dependencies_script:
-    # TODO: use libyaml from system instead of building with libtool
-    - pkg install --yes autoconf automake git libtool rubygem-rake wget
+    - pkg install --yes autoconf automake git rubygem-rake wget
   dependencies_mruby_script:
     - wget https://github.com/mruby/mruby/archive/3.0.0.zip -O mruby-3.0.0.zip
     - unzip mruby-3.0.0.zip
