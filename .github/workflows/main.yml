@@ -30,6 +30,31 @@ jobs:
       - name: install
         run: sudo make install
 
+  dist:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: autogen
+        run: ./autogen.sh
+      - name: configure dist
+        run: ./configure
+      - name: dist
+        run: make dist
+      - name: extract
+        run: tar -xzf libkernaux-0.1.0.tar.gz
+      - working-directory: libkernaux-0.1.0
+        name: configure
+        run: ./configure --enable-tests-all
+      - working-directory: libkernaux-0.1.0
+        name: make
+        run: make
+      - working-directory: libkernaux-0.1.0
+        name: check
+        run: make check || (cat test-suite.log && false)
+      - working-directory: libkernaux-0.1.0
+        name: install
+        run: sudo make install
+
   cppcheck:
     runs-on: ubuntu-latest
     steps:
