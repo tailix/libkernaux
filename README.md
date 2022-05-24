@@ -130,7 +130,7 @@ Tips
 ### Installation
 
 ```
-./autogen.sh
+./autogen.sh # if present
 ./configure
 make
 sudo make install
@@ -142,7 +142,7 @@ environment.
 ### Development
 
 ```
-./autogen.sh
+./autogen.sh # if present
 ./configure --enable-tests # or --enable-tests-all, but see prerequisites
 make
 ```
@@ -151,7 +151,7 @@ You can test with `make check`.
 
 ### Cross
 
-Create configuration script with `./autogen.sh`.
+Create configuration script with `./autogen.sh` (if present).
 
 Let's assume that your target triplet is `i386-elf`. Configure with
 [cross-compiler](https://wiki.osdev.org/GCC_Cross-Compiler) in `$PATH` to make
