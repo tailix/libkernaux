@@ -10,6 +10,12 @@ RSpec.describe KernAux, '.sprintf' do
     it { is_expected.to be_frozen }
     it { is_expected.to eq 'Hello, World!' }
 
+    context 'for empty string value' do
+      subject(:sprintf) { described_class.sprintf ['Hello testing%s'] }
+
+      it { is_expected.to eq 'Hello testing' }
+    end
+
     [
       ['',      'using regular tests'],
       ['_orig', 'using original tests'],

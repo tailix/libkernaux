@@ -205,9 +205,6 @@
 - result: 'Hello testing'
   args: ['Hello testing']
 - result: 'Hello testing'
-  args: [['Hello testing%s']]
-  fixme: true
-- result: 'Hello testing'
   args: [['Hello testing%s', '']]
 - result: 'Hello testing'
   args: [['%s', 'Hello testing']]
