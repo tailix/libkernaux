@@ -65,7 +65,9 @@ module KernAux
     ##
     # Typical `printf`.
     #
-    # @param args [Array<String, Array<(String, Object)>, Array<(String, Integer, Object)>>]
+    # @param args [Array<String,
+    #              Array<(String, Object)>,
+    #              Array<(String, Integer, Object)>>]
     # @return [String] formatted output
     #
     # @example
