@@ -16,6 +16,9 @@ libkernaux_a_SOURCES = \
 	src/assert.c \
 	src/libc.c
 
+CLEANFILES = \
+	tests/test_printf_gen.c
+
 if ASM_I386
 libkernaux_a_SOURCES += src/asm/i386.S
 endif
@@ -128,6 +131,12 @@ TESTS += \
 	examples/snprintf \
 	examples/snprintf_va \
 	tests/test_printf
+if ENABLE_TESTS_PYTHON
+TESTS += tests/test_printf_gen
+noinst_SCRIPTS = tests/printf_gen.py
+noinst_DATA = \
+	tests/printf_orig.yml
+endif
 endif
 endif
 
@@ -264,6 +273,13 @@ tests_test_printf_SOURCES = \
 	$(libkernaux_a_SOURCES) \
 	tests/test_printf.c
 
+tests_test_printf_gen_SOURCES = \
+	$(libkernaux_a_SOURCES) \
+	tests/test_printf_gen.c
+
 tests_test_units_human_SOURCES = \
 	$(libkernaux_a_SOURCES) \
 	tests/test_units_human.c
+
+tests/test_printf_gen.c: tests/printf_gen.py tests/printf_orig.yml
+	python3 tests/printf_gen.py

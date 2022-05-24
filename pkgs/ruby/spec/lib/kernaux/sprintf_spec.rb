@@ -11,11 +11,25 @@ RSpec.describe KernAux, '.sprintf' do
     it { is_expected.to eq 'Hello, World!' }
 
     context 'using original tests' do
-      printf_yml = File.expand_path('../../../../../tests/printf.yml', __dir__)
+      printf_yml =
+        File.expand_path('../../../../../tests/printf_orig.yml', __dir__)
 
       YAML.safe_load_file(printf_yml).each do |test|
         expected = test['result']
-        args     = test['args']
+
+        args = test['args'].map do |arg|
+          if arg.is_a? String
+            arg
+          else
+            arg.map do |item|
+              if item.is_a? Array
+                item[0]
+              else
+                item
+              end
+            end
+          end
+        end
 
         it "transforms #{args.inspect} to #{expected.inspect}" do
           expect(described_class.sprintf(*args)).to eq expected

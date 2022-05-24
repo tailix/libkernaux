@@ -67,7 +67,7 @@
 - result: 'EDCB5433'
   args: [['% X', 3_989_525_555]]
 - result: 'x'
-  args: [['% c', 'x']]
+  args: [['% c', ['x']]]
 
 # + flag
 
@@ -110,7 +110,7 @@
 - result: 'EDCB5433'
   args: [['%+X', 3_989_525_555]]
 - result: 'x'
-  args: [['%+c', 'x']]
+  args: [['%+c', ['x']]]
 - result: '+'
   args: [['%+.0d', 0]]
 
@@ -199,6 +199,7 @@
   args: ['Hello testing']
 - result: 'Hello testing'
   args: [['Hello testing%s']]
+  fixme: true
 - result: 'Hello testing'
   args: [['Hello testing%s', '']]
 - result: 'Hello testing'
@@ -259,7 +260,7 @@
 - result: 'EDCB5433'
   args: [['%1X', 3_989_525_555]]
 - result: 'x'
-  args: [['%1c', 'x']]
+  args: [['%1c', ['x']]]
 
 # width 20
 
@@ -290,7 +291,7 @@
 - result: '            EDCB5433'
   args: [['%20X', 3_989_525_555]]
 - result: '                   x'
-  args: [['%20c', 'x']]
+  args: [['%20c', ['x']]]
 
 # width *20
 
@@ -321,7 +322,7 @@
 - result: '            EDCB5433'
   args: [['%*X', 20, 3_989_525_555]]
 - result: '                   x'
-  args: [['%*c', 20, 'x']]
+  args: [['%*c', 20, ['x']]]
 
 # width -20
 
@@ -354,7 +355,7 @@
 - result: 'EDCB5433            '
   args: [['%-20X', 3_989_525_555]]
 - result: 'x                   '
-  args: [['%-20c', 'x']]
+  args: [['%-20c', ['x']]]
 - result: '|    9| |9 | |    9|'
   args: [['|%5d| ', 9],  ['|%-2d|', 9],  [' |%5d|', 9]]
 - result: '|   10| |10| |   10|'
@@ -393,7 +394,7 @@
 - result: 'EDCB5433            '
   args: [['%0-20X', 3_989_525_555]]
 - result: 'x                   '
-  args: [['%0-20c', 'x']]
+  args: [['%0-20c', ['x']]]
 
 # padding 20
 
