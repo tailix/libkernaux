@@ -2,6 +2,7 @@
 #include "config.h"
 #endif
 
+#include <kernaux/assert.h>
 #include <kernaux/multiboot2.h>
 
 #include <stddef.h>
@@ -12,6 +13,8 @@ const struct KernAux_Multiboot2_HTagBase
     const struct KernAux_Multiboot2_Header *const multiboot2_header,
     const enum KernAux_Multiboot2_HTag tag_type
 ) {
+    KERNAUX_NOTNULL_RETVAL(multiboot2_header, NULL);
+
     const struct KernAux_Multiboot2_HTagBase *tag_base =
         (struct KernAux_Multiboot2_HTagBase*)
         KERNAUX_MULTIBOOT2_DATA(multiboot2_header);
@@ -35,9 +38,14 @@ const struct KernAux_Multiboot2_HTagBase
     const enum KernAux_Multiboot2_HTag tag_type,
     const struct KernAux_Multiboot2_HTagBase *const after_tag
 ) {
+    KERNAUX_NOTNULL_RETVAL(multiboot2_header, NULL);
+    KERNAUX_NOTNULL_RETVAL(after_tag, NULL);
+
     const struct KernAux_Multiboot2_HTagBase *tag_base =
         (struct KernAux_Multiboot2_HTagBase*)
         KERNAUX_MULTIBOOT2_DATA(multiboot2_header);
+
+    KERNAUX_ASSERT_RETVAL(tag_base <= after_tag, NULL);
 
     while (tag_base <
            (struct KernAux_Multiboot2_HTagBase*)

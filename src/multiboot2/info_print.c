@@ -2,6 +2,7 @@
 #include "config.h"
 #endif
 
+#include <kernaux/assert.h>
 #include <kernaux/multiboot2.h>
 
 #include <stddef.h>
@@ -11,6 +12,9 @@ void KernAux_Multiboot2_Info_print(
     const struct KernAux_Multiboot2_Info *const multiboot2_info,
     void (*const printf)(const char *format, ...)
 ) {
+    KERNAUX_NOTNULL_RETURN(multiboot2_info);
+    KERNAUX_NOTNULL_RETURN(printf);
+
     printf("Multiboot 2 info\n");
     printf("  size: %u\n", multiboot2_info->total_size);
     printf("  reserved1: %u\n", multiboot2_info->reserved1);
@@ -35,6 +39,9 @@ void KernAux_Multiboot2_ITagBase_print(
     const struct KernAux_Multiboot2_ITagBase *const tag_base,
     void (*const printf)(const char *format, ...)
 ) {
+    KERNAUX_NOTNULL_RETURN(tag_base);
+    KERNAUX_NOTNULL_RETURN(printf);
+
     if (!KernAux_Multiboot2_ITagBase_is_valid(tag_base)) return;
 
     printf("Multiboot 2 info tag\n");
@@ -219,6 +226,9 @@ void KernAux_Multiboot2_ITag_BootCmdLine_print(
     const struct KernAux_Multiboot2_ITag_BootCmdLine *const tag,
     void (*printf)(const char *format, ...)
 ) {
+    KERNAUX_NOTNULL_RETURN(tag);
+    KERNAUX_NOTNULL_RETURN(printf);
+
     if (!KernAux_Multiboot2_ITag_BootCmdLine_is_valid(tag)) {
         printf("  invalid!\n");
         return;
@@ -231,6 +241,9 @@ void KernAux_Multiboot2_ITag_BootLoaderName_print(
     const struct KernAux_Multiboot2_ITag_BootLoaderName *const tag,
     void (*printf)(const char *format, ...)
 ) {
+    KERNAUX_NOTNULL_RETURN(tag);
+    KERNAUX_NOTNULL_RETURN(printf);
+
     if (!KernAux_Multiboot2_ITag_BootLoaderName_is_valid(tag)) {
         printf("  invalid!\n");
         return;
@@ -243,6 +256,9 @@ void KernAux_Multiboot2_ITag_MemoryMap_print(
     const struct KernAux_Multiboot2_ITag_MemoryMap *const tag,
     void (*printf)(const char *format, ...)
 ) {
+    KERNAUX_NOTNULL_RETURN(tag);
+    KERNAUX_NOTNULL_RETURN(printf);
+
     if (!KernAux_Multiboot2_ITag_MemoryMap_is_valid(tag)) {
         printf("  invalid!\n");
         return;
@@ -274,6 +290,9 @@ void KernAux_Multiboot2_ITag_ELFSymbols_print(
     const struct KernAux_Multiboot2_ITag_ELFSymbols *const tag,
     void (*printf)(const char *format, ...)
 ) {
+    KERNAUX_NOTNULL_RETURN(tag);
+    KERNAUX_NOTNULL_RETURN(printf);
+
     if (!KernAux_Multiboot2_ITag_ELFSymbols_is_valid(tag)) {
         printf("  invalid!\n");
         return;

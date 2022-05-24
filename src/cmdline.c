@@ -2,6 +2,7 @@
 #include "config.h"
 #endif
 
+#include <kernaux/assert.h>
 #include <kernaux/cmdline.h>
 #include <kernaux/libc.h>
 
@@ -24,16 +25,12 @@ bool kernaux_cmdline(
     const size_t argv_count_max,
     const size_t buffer_size
 ) {
-    if (
-        cmdline == NULL ||
-        error_msg == NULL ||
-        argc == NULL ||
-        argv == NULL ||
-        argv_count_max == 0 ||
-        buffer_size == 0
-    ) {
-        return false;
-    }
+    KERNAUX_NOTNULL_RETVAL(cmdline, false);
+    KERNAUX_NOTNULL_RETVAL(error_msg, false);
+    KERNAUX_NOTNULL_RETVAL(argc, false);
+    KERNAUX_NOTNULL_RETVAL(argv, false);
+    KERNAUX_ASSERT_RETVAL(argv_count_max > 0, false);
+    KERNAUX_ASSERT_RETVAL(buffer_size > 0, false);
 
     memset(error_msg, '\0', KERNAUX_CMDLINE_ERROR_MSG_SIZE_MAX);
     *argc = 0;

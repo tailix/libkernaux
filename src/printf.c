@@ -10,6 +10,7 @@
 #include "config.h"
 #endif
 
+#include <kernaux/assert.h>
 #include <kernaux/libc.h>
 #include <kernaux/printf.h>
 
@@ -86,6 +87,9 @@ static size_t _etoa(out_fct_type out, char* buffer, size_t idx, size_t maxlen, d
 
 int kernaux_printf(void (*out)(char character, void* arg), void* arg, const char* format, ...)
 {
+    KERNAUX_NOTNULL_RETVAL(out, 0);
+    KERNAUX_NOTNULL_RETVAL(format, 0);
+
     va_list va;
     va_start(va, format);
     const out_fct_wrap_type out_fct_wrap = { out, arg };
@@ -96,12 +100,18 @@ int kernaux_printf(void (*out)(char character, void* arg), void* arg, const char
 
 int kernaux_vprintf(void (*out)(char character, void* arg), void* arg, const char* format, va_list va)
 {
+    KERNAUX_NOTNULL_RETVAL(out, 0);
+    KERNAUX_NOTNULL_RETVAL(format, 0);
+
     const out_fct_wrap_type out_fct_wrap = { out, arg };
     return _vsnprintf(_out_fct, (char*)(uintptr_t)&out_fct_wrap, (size_t)-1, format, va);
 }
 
 int kernaux_snprintf(char* buffer, size_t count, const char* format, ...)
 {
+    KERNAUX_NOTNULL_RETVAL(buffer, 0);
+    KERNAUX_NOTNULL_RETVAL(format, 0);
+
     va_list va;
     va_start(va, format);
     const int ret = _vsnprintf(_out_buffer, buffer, count, format, va);
@@ -111,11 +121,17 @@ int kernaux_snprintf(char* buffer, size_t count, const char* format, ...)
 
 int kernaux_vsnprintf(char* buffer, size_t count, const char* format, va_list va)
 {
+    KERNAUX_NOTNULL_RETVAL(buffer, 0);
+    KERNAUX_NOTNULL_RETVAL(format, 0);
+
     return _vsnprintf(_out_buffer, buffer, count, format, va);
 }
 
 int kernaux_sprintf(char* buffer, const char* format, ...)
 {
+    KERNAUX_NOTNULL_RETVAL(buffer, 0);
+    KERNAUX_NOTNULL_RETVAL(format, 0);
+
     va_list va;
     va_start(va, format);
     const int ret = _vsnprintf(_out_buffer, buffer, (size_t)-1, format, va);
@@ -129,6 +145,8 @@ int kernaux_sprintf(char* buffer, const char* format, ...)
 
 int _vsnprintf(out_fct_type out, char* buffer, const size_t maxlen, const char* format, va_list va)
 {
+    KERNAUX_NOTNULL_RETVAL(format, 0);
+
     unsigned int flags, width, precision, n;
     size_t idx = 0u;
 
