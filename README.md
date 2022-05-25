@@ -115,7 +115,7 @@ stable options.
 
 #### Packages
 
-All packages all included by default. To exclude all packages except those
+All packages are included by default. To exclude all packages except those
 explicitly included, use `--without-all`.
 
 * `--with[out]-cmdline` - command line parser
