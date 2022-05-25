@@ -4,6 +4,7 @@
 	* configure.ac: Test options made stable
 	* configure.ac: Feature "bloat" made stable
 	* src/: Use assertions everywhere (closes #14)
+	* include/kernaux/printf.h: Add auxiliary API
 
 2022-02-10  Alex Kotov  <kotovalexarian@gmail.com>
 
