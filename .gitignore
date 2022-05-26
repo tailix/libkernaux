@@ -96,6 +96,7 @@
 /examples/panic_simple
 /examples/pfa
 /examples/printf
+/examples/printf_fmt
 /examples/printf_va
 /examples/snprintf
 /examples/snprintf_va

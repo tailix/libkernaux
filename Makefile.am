@@ -140,6 +140,9 @@ endif
 
 if WITH_PRINTF_FMT
 libkernaux_a_SOURCES += src/printf_fmt.c
+if ENABLE_TESTS
+TESTS += examples/printf_fmt
+endif
 endif
 
 if WITH_UNITS
@@ -178,6 +181,10 @@ examples_pfa_SOURCES = \
 examples_printf_SOURCES = \
 	$(libkernaux_a_SOURCES) \
 	examples/printf.c
+
+examples_printf_fmt_SOURCES = \
+	$(libkernaux_a_SOURCES) \
+	examples/printf_fmt.c
 
 examples_printf_va_SOURCES = \
 	$(libkernaux_a_SOURCES) \
