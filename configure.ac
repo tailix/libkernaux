@@ -39,6 +39,7 @@ AC_ARG_WITH(  [multiboot2],   AS_HELP_STRING([--without-multiboot2],  [without M
 AC_ARG_WITH(  [ntoa],         AS_HELP_STRING([--without-ntoa],        [without itoa/ftoa]))
 AC_ARG_WITH(  [pfa],          AS_HELP_STRING([--without-pfa],         [without Page Frame Allocator]))
 AC_ARG_WITH(  [printf],       AS_HELP_STRING([--without-printf],      [without printf]))
+AC_ARG_WITH(  [printf-fmt],   AS_HELP_STRING([--without-printf-fmt],  [without printf format parser]))
 AC_ARG_WITH(  [units],        AS_HELP_STRING([--without-units],       [without measurement units utils]))
 
 dnl Packages (disabled by default)
@@ -75,6 +76,7 @@ if test -z "$with_multiboot2";  then with_multiboot2=no;  fi
 if test -z "$with_ntoa";        then with_ntoa=no;        fi
 if test -z "$with_pfa";         then with_pfa=no;         fi
 if test -z "$with_printf";      then with_printf=no;      fi
+if test -z "$with_printf_fmt";  then with_printf_fmt=no;  fi
 if test -z "$with_units";       then with_units=no;       fi
 ])
 AS_IF([test "$with_all" = no], do_without_all)
@@ -119,6 +121,7 @@ AS_IF([test "$with_multiboot2"     = no ], [with_multiboot2=no],      [with_mult
 AS_IF([test "$with_ntoa"           = no ], [with_ntoa=no],            [with_ntoa=yes])
 AS_IF([test "$with_pfa"            = no ], [with_pfa=no],             [with_pfa=yes])
 AS_IF([test "$with_printf"         = no ], [with_printf=no],          [with_printf=yes])
+AS_IF([test "$with_printf_fmt"     = no ], [with_printf_fmt=no],      [with_printf_fmt=yes])
 AS_IF([test "$with_units"          = no ], [with_units=no],           [with_units=yes])
 
 dnl Packages (disabled by default)
@@ -138,8 +141,9 @@ AS_IF([test "$with_libc_strnlen"   = yes], [with_libc_strnlen=yes],   [with_libc
 #############
 
 AS_IF([test "$enable_tests" = yes -a "$host_cpu" != "$build_cpu"], AC_MSG_ERROR([can not build cross-platform tests]))
-AS_IF([test "$with_printf"  = yes -a "$with_ntoa"    = no       ], AC_MSG_ERROR([package `printf' requires package `ntoa']))
-AS_IF([test "$with_units"   = yes -a "$with_ntoa"    = no       ], AC_MSG_ERROR([package `units' requires package `ntoa']))
+AS_IF([test "$with_printf"  = yes -a "$with_ntoa"       = no    ], AC_MSG_ERROR([package `printf' requires package `ntoa']))
+AS_IF([test "$with_printf"  = yes -a "$with_printf_fmt" = no    ], AC_MSG_ERROR([package `printf' requires package `printf-fmt']))
+AS_IF([test "$with_units"   = yes -a "$with_ntoa"       = no    ], AC_MSG_ERROR([package `units' requires package `ntoa']))
 
 
 
@@ -172,6 +176,7 @@ AM_CONDITIONAL([WITH_MULTIBOOT2],     [test "$with_multiboot2"     = yes])
 AM_CONDITIONAL([WITH_NTOA],           [test "$with_ntoa"           = yes])
 AM_CONDITIONAL([WITH_PFA],            [test "$with_pfa"            = yes])
 AM_CONDITIONAL([WITH_PRINTF],         [test "$with_printf"         = yes])
+AM_CONDITIONAL([WITH_PRINTF_FMT],     [test "$with_printf_fmt"     = yes])
 AM_CONDITIONAL([WITH_UNITS],          [test "$with_units"          = yes])
 
 dnl Packages (disabled by default)
@@ -214,6 +219,7 @@ AS_IF([test "$with_multiboot2"     = yes], [AC_DEFINE([WITH_MULTIBOOT2],     [1]
 AS_IF([test "$with_ntoa"           = yes], [AC_DEFINE([WITH_NTOA],           [1], [with ntoa])])
 AS_IF([test "$with_pfa"            = yes], [AC_DEFINE([WITH_PFA],            [1], [with Page Frame Allocator])])
 AS_IF([test "$with_printf"         = yes], [AC_DEFINE([WITH_PRINTF],         [1], [with printf])])
+AS_IF([test "$with_printf_fmt"     = yes], [AC_DEFINE([WITH_PRINTF_FMT],     [1], [with printf format parser])])
 AS_IF([test "$with_units",         = yes], [AC_DEFINE([WITH_UNITS],          [1], [with measurement units utils])])
 
 dnl Packages (disabled by default)
@@ -246,6 +252,7 @@ AS_IF([test "$with_multiboot2"   = no], [AC_SUBST([comment_line_multiboot2],   [
 AS_IF([test "$with_ntoa"         = no], [AC_SUBST([comment_line_ntoa],         [//])])
 AS_IF([test "$with_pfa"          = no], [AC_SUBST([comment_line_pfa],          [//])])
 AS_IF([test "$with_printf"       = no], [AC_SUBST([comment_line_printf],       [//])])
+AS_IF([test "$with_printf_fmt"   = no], [AC_SUBST([comment_line_printf_fmt],   [//])])
 AS_IF([test "$with_units"        = no], [AC_SUBST([comment_line_units],        [//])])
 
 dnl Packages (disabled by default)

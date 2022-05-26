@@ -16,6 +16,7 @@
 @comment_line_ntoa@#include <kernaux/ntoa.h>
 @comment_line_pfa@#include <kernaux/pfa.h>
 @comment_line_printf@#include <kernaux/printf.h>
+@comment_line_printf_fmt@#include <kernaux/printf_fmt.h>
 @comment_line_units@#include <kernaux/units.h>
 
 #include <kernaux/arch/i386.h>

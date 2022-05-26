@@ -138,6 +138,10 @@ TESTS += tests/test_printf_gen
 endif
 endif
 
+if WITH_PRINTF
+libkernaux_a_SOURCES += src/printf_fmt.c
+endif
+
 if WITH_UNITS
 libkernaux_a_SOURCES += src/units.c
 if ENABLE_TESTS

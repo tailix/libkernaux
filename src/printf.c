@@ -13,9 +13,9 @@
 #include <kernaux/assert.h>
 #include <kernaux/libc.h>
 #include <kernaux/printf.h>
+#include <kernaux/printf_fmt.h>
 
 #include <stdbool.h>
-#include <stddef.h>
 #include <stdint.h>
 
 // import float.h for DBL_MAX
@@ -51,7 +51,6 @@ static int _vsnprintf(out_fct_type out, char* buffer, const size_t maxlen, const
 static inline void _out_buffer(char character, void* buffer, size_t idx, size_t maxlen);
 static inline void _out_null(char character, void* buffer, size_t idx, size_t maxlen);
 static inline void _out_fct(char character, void* buffer, size_t idx, size_t maxlen);
-static unsigned int _atoi(const char** str);
 static size_t _out_rev(out_fct_type out, char* buffer, size_t idx, size_t maxlen, const char* buf, size_t len, unsigned int width, unsigned int flags);
 static size_t _ntoa_format(out_fct_type out, char* buffer, size_t idx, size_t maxlen, char* buf, size_t len, bool negative, unsigned int base, unsigned int prec, unsigned int width, unsigned int flags);
 static size_t _ntoa_long(out_fct_type out, char* buffer, size_t idx, size_t maxlen, unsigned long value, bool negative, unsigned long base, unsigned int prec, unsigned int width, unsigned int flags);
@@ -124,155 +123,6 @@ int kernaux_sprintf(char* buffer, const char* format, ...)
     return ret;
 }
 
-/**********************************
- * Implementations: auxiliary API *
- **********************************/
-
-struct KernAux_Printf_Spec KernAux_Printf_Spec_create()
-{
-    struct KernAux_Printf_Spec spec;
-    KernAux_Printf_Spec_init(&spec);
-    return spec;
-}
-
-void KernAux_Printf_Spec_init(struct KernAux_Printf_Spec *const spec)
-{
-    KERNAUX_NOTNULL_RETURN(spec);
-
-    spec->flags = 0u;
-    spec->width = 0u;
-    spec->precision = 0u;
-}
-
-void KernAux_Printf_Spec_eval_flags(struct KernAux_Printf_Spec *const spec, const char **const format)
-{
-    KERNAUX_NOTNULL_RETURN(spec);
-    KERNAUX_NOTNULL_RETURN(format);
-    KERNAUX_NOTNULL_RETURN(*format);
-
-    bool running = true;
-    do {
-        switch (**format) {
-            case '0': spec->flags |= KERNAUX_PRINTF_FLAGS_ZEROPAD; ++(*format); break;
-            case '-': spec->flags |= KERNAUX_PRINTF_FLAGS_LEFT;    ++(*format); break;
-            case '+': spec->flags |= KERNAUX_PRINTF_FLAGS_PLUS;    ++(*format); break;
-            case ' ': spec->flags |= KERNAUX_PRINTF_FLAGS_SPACE;   ++(*format); break;
-            case '#': spec->flags |= KERNAUX_PRINTF_FLAGS_HASH;    ++(*format); break;
-            default: running = false; break;
-        }
-    } while (running);
-}
-
-bool KernAux_Printf_Spec_eval_width1(struct KernAux_Printf_Spec *const spec, const char **const format)
-{
-    KERNAUX_NOTNULL_RETVAL(spec, false);
-    KERNAUX_NOTNULL_RETVAL(format, false);
-    KERNAUX_NOTNULL_RETVAL(*format, false);
-
-    if (isdigit(**format)) {
-        spec->width = _atoi(format);
-        return false;
-    } else {
-        return **format == '*';
-    }
-}
-
-void KernAux_Printf_Spec_eval_width2(struct KernAux_Printf_Spec *const spec, const char **const format, const int w)
-{
-    KERNAUX_NOTNULL_RETURN(spec);
-    KERNAUX_NOTNULL_RETURN(format);
-    KERNAUX_NOTNULL_RETURN(*format);
-
-    if (w < 0) {
-        spec->flags |= KERNAUX_PRINTF_FLAGS_LEFT; // reverse padding
-        spec->width = (unsigned int)-w;
-    } else {
-        spec->width = (unsigned int)w;
-    }
-
-    ++(*format);
-}
-
-bool KernAux_Printf_Spec_eval_precision1(struct KernAux_Printf_Spec *const spec, const char **const format)
-{
-    KERNAUX_NOTNULL_RETVAL(spec, false);
-    KERNAUX_NOTNULL_RETVAL(format, false);
-    KERNAUX_NOTNULL_RETVAL(*format, false);
-
-    if (**format == '.') {
-        spec->flags |= KERNAUX_PRINTF_FLAGS_PRECISION;
-        ++(*format);
-        if (isdigit(**format)) {
-            spec->precision = _atoi(format);
-            return false;
-        } else {
-            return **format == '*';
-        }
-    } else {
-        return false;
-    }
-}
-
-void KernAux_Printf_Spec_eval_precision2(struct KernAux_Printf_Spec *const spec, const char **const format, const int prec)
-{
-    KERNAUX_NOTNULL_RETURN(spec);
-    KERNAUX_NOTNULL_RETURN(format);
-    KERNAUX_NOTNULL_RETURN(*format);
-
-    spec->precision = prec > 0 ? (unsigned int)prec : 0u;
-    ++(*format);
-}
-
-void KernAux_Printf_Spec_eval_length(struct KernAux_Printf_Spec *const spec, const char **const format)
-{
-    KERNAUX_NOTNULL_RETURN(spec);
-    KERNAUX_NOTNULL_RETURN(format);
-    KERNAUX_NOTNULL_RETURN(*format);
-
-    switch (**format) {
-        case 'l':
-            spec->flags |= KERNAUX_PRINTF_FLAGS_LONG;
-            ++(*format);
-            if (**format == 'l') {
-                spec->flags |= KERNAUX_PRINTF_FLAGS_LONG_LONG;
-                ++(*format);
-            }
-            break;
-        case 'h':
-            spec->flags |= KERNAUX_PRINTF_FLAGS_SHORT;
-            ++(*format);
-            if (**format == 'h') {
-                spec->flags |= KERNAUX_PRINTF_FLAGS_CHAR;
-                ++(*format);
-            }
-            break;
-        case 't':
-            spec->flags |= (sizeof(ptrdiff_t) == sizeof(long) ? KERNAUX_PRINTF_FLAGS_LONG : KERNAUX_PRINTF_FLAGS_LONG_LONG);
-            ++(*format);
-            break;
-        case 'j':
-            spec->flags |= (sizeof(intmax_t) == sizeof(long) ? KERNAUX_PRINTF_FLAGS_LONG : KERNAUX_PRINTF_FLAGS_LONG_LONG);
-            ++(*format);
-            break;
-        case 'z':
-            spec->flags |= (sizeof(size_t) == sizeof(long) ? KERNAUX_PRINTF_FLAGS_LONG : KERNAUX_PRINTF_FLAGS_LONG_LONG);
-            ++(*format);
-            break;
-#ifdef ENABLE_BLOAT
-        case 'S':
-            if (*(++(*format)) == 'U') {
-                spec->flags |= KERNAUX_PRINTF_FLAGS_CUSTOM;
-                ++(*format);
-            } else {
-                --(*format);
-            }
-            break;
-#endif // ENABLE_BLOAT
-        default:
-            break;
-    }
-}
-
 /******************************************
  * Implementation: main internal function *
  ******************************************/
@@ -301,19 +151,19 @@ int _vsnprintf(out_fct_type out, char* buffer, const size_t maxlen, const char* 
             format++;
         }
 
-        struct KernAux_Printf_Spec spec = KernAux_Printf_Spec_create();
+        struct KernAux_PrintfFmt_Spec spec = KernAux_PrintfFmt_Spec_create();
 
-        KernAux_Printf_Spec_eval_flags(&spec, &format);
+        KernAux_PrintfFmt_Spec_eval_flags(&spec, &format);
 
-        if (KernAux_Printf_Spec_eval_width1(&spec, &format)) {
-            KernAux_Printf_Spec_eval_width2(&spec, &format, va_arg(va, int));
+        if (KernAux_PrintfFmt_Spec_eval_width1(&spec, &format)) {
+            KernAux_PrintfFmt_Spec_eval_width2(&spec, &format, va_arg(va, int));
         }
 
-        if (KernAux_Printf_Spec_eval_precision1(&spec, &format)) {
-            KernAux_Printf_Spec_eval_precision2(&spec, &format, va_arg(va, int));
+        if (KernAux_PrintfFmt_Spec_eval_precision1(&spec, &format)) {
+            KernAux_PrintfFmt_Spec_eval_precision2(&spec, &format, va_arg(va, int));
         }
 
-        KernAux_Printf_Spec_eval_length(&spec, &format);
+        KernAux_PrintfFmt_Spec_eval_length(&spec, &format);
 
         // evaluate specifier
         switch (*format) {
@@ -335,44 +185,44 @@ int _vsnprintf(out_fct_type out, char* buffer, const size_t maxlen, const char* 
                     base = 2u;
                 } else {
                     base = 10u;
-                    spec.flags &= ~KERNAUX_PRINTF_FLAGS_HASH; // no hash for dec format
+                    spec.flags &= ~KERNAUX_PRINTF_FMT_FLAGS_HASH; // no hash for dec format
                 }
                 // uppercase
                 if (*format == 'X') {
-                    spec.flags |= KERNAUX_PRINTF_FLAGS_UPPERCASE;
+                    spec.flags |= KERNAUX_PRINTF_FMT_FLAGS_UPPERCASE;
                 }
 
                 // no plus or space flag for u, x, X, o, b
                 if ((*format != 'i') && (*format != 'd')) {
-                    spec.flags &= ~(KERNAUX_PRINTF_FLAGS_PLUS | KERNAUX_PRINTF_FLAGS_SPACE);
+                    spec.flags &= ~(KERNAUX_PRINTF_FMT_FLAGS_PLUS | KERNAUX_PRINTF_FMT_FLAGS_SPACE);
                 }
 
                 // ignore '0' flag when precision is given
-                if (spec.flags & KERNAUX_PRINTF_FLAGS_PRECISION) {
-                    spec.flags &= ~KERNAUX_PRINTF_FLAGS_ZEROPAD;
+                if (spec.flags & KERNAUX_PRINTF_FMT_FLAGS_PRECISION) {
+                    spec.flags &= ~KERNAUX_PRINTF_FMT_FLAGS_ZEROPAD;
                 }
 
                 // convert the integer
                 if ((*format == 'i') || (*format == 'd')) {
                     // signed
-                    if (spec.flags & KERNAUX_PRINTF_FLAGS_LONG_LONG) {
+                    if (spec.flags & KERNAUX_PRINTF_FMT_FLAGS_LONG_LONG) {
                         const long long value = va_arg(va, long long);
                         idx = _ntoa_long_long(out, buffer, idx, maxlen, (unsigned long long)(value > 0 ? value : 0 - value), value < 0, base, spec.precision, spec.width, spec.flags);
-                    } else if (spec.flags & KERNAUX_PRINTF_FLAGS_LONG) {
+                    } else if (spec.flags & KERNAUX_PRINTF_FMT_FLAGS_LONG) {
                         const long value = va_arg(va, long);
                         idx = _ntoa_long(out, buffer, idx, maxlen, (unsigned long)(value > 0 ? value : 0 - value), value < 0, base, spec.precision, spec.width, spec.flags);
                     } else {
-                        const int value = (spec.flags & KERNAUX_PRINTF_FLAGS_CHAR) ? (char)va_arg(va, int) : (spec.flags & KERNAUX_PRINTF_FLAGS_SHORT) ? (short int)va_arg(va, int) : va_arg(va, int);
+                        const int value = (spec.flags & KERNAUX_PRINTF_FMT_FLAGS_CHAR) ? (char)va_arg(va, int) : (spec.flags & KERNAUX_PRINTF_FMT_FLAGS_SHORT) ? (short int)va_arg(va, int) : va_arg(va, int);
                         idx = _ntoa_long(out, buffer, idx, maxlen, (unsigned int)(value > 0 ? value : 0 - value), value < 0, base, spec.precision, spec.width, spec.flags);
                     }
                 } else {
                     // unsigned
-                    if (spec.flags & KERNAUX_PRINTF_FLAGS_LONG_LONG) {
+                    if (spec.flags & KERNAUX_PRINTF_FMT_FLAGS_LONG_LONG) {
                         idx = _ntoa_long_long(out, buffer, idx, maxlen, va_arg(va, unsigned long long), false, base, spec.precision, spec.width, spec.flags);
-                    } else if (spec.flags & KERNAUX_PRINTF_FLAGS_LONG) {
+                    } else if (spec.flags & KERNAUX_PRINTF_FMT_FLAGS_LONG) {
                         idx = _ntoa_long(out, buffer, idx, maxlen, va_arg(va, unsigned long), false, base, spec.precision, spec.width, spec.flags);
                     } else {
-                        const unsigned int value = (spec.flags & KERNAUX_PRINTF_FLAGS_CHAR) ? (unsigned char)va_arg(va, unsigned int) : (spec.flags & KERNAUX_PRINTF_FLAGS_SHORT) ? (unsigned short int)va_arg(va, unsigned int) : va_arg(va, unsigned int);
+                        const unsigned int value = (spec.flags & KERNAUX_PRINTF_FMT_FLAGS_CHAR) ? (unsigned char)va_arg(va, unsigned int) : (spec.flags & KERNAUX_PRINTF_FMT_FLAGS_SHORT) ? (unsigned short int)va_arg(va, unsigned int) : va_arg(va, unsigned int);
                         idx = _ntoa_long(out, buffer, idx, maxlen, value, false, base, spec.precision, spec.width, spec.flags);
                     }
                 }
@@ -382,7 +232,7 @@ int _vsnprintf(out_fct_type out, char* buffer, const size_t maxlen, const char* 
 #ifdef ENABLE_FLOAT
             case 'f':
             case 'F':
-                if (*format == 'F') spec.flags |= KERNAUX_PRINTF_FLAGS_UPPERCASE;
+                if (*format == 'F') spec.flags |= KERNAUX_PRINTF_FMT_FLAGS_UPPERCASE;
                 idx = _ftoa(out, buffer, idx, maxlen, va_arg(va, double), spec.precision, spec.width, spec.flags);
                 format++;
                 break;
@@ -390,8 +240,8 @@ int _vsnprintf(out_fct_type out, char* buffer, const size_t maxlen, const char* 
             case 'E':
             case 'g':
             case 'G':
-                if ((*format == 'g')||(*format == 'G')) spec.flags |= KERNAUX_PRINTF_FLAGS_ADAPT_EXP;
-                if ((*format == 'E')||(*format == 'G')) spec.flags |= KERNAUX_PRINTF_FLAGS_UPPERCASE;
+                if ((*format == 'g')||(*format == 'G')) spec.flags |= KERNAUX_PRINTF_FMT_FLAGS_ADAPT_EXP;
+                if ((*format == 'E')||(*format == 'G')) spec.flags |= KERNAUX_PRINTF_FMT_FLAGS_UPPERCASE;
                 idx = _etoa(out, buffer, idx, maxlen, va_arg(va, double), spec.precision, spec.width, spec.flags);
                 format++;
                 break;
@@ -400,7 +250,7 @@ int _vsnprintf(out_fct_type out, char* buffer, const size_t maxlen, const char* 
             {
                 unsigned int l = 1u;
                 // pre padding
-                if (!(spec.flags & KERNAUX_PRINTF_FLAGS_LEFT)) {
+                if (!(spec.flags & KERNAUX_PRINTF_FMT_FLAGS_LEFT)) {
                     while (l++ < spec.width) {
                         out(' ', buffer, idx++, maxlen);
                     }
@@ -408,7 +258,7 @@ int _vsnprintf(out_fct_type out, char* buffer, const size_t maxlen, const char* 
                 // char output
                 out((char)va_arg(va, int), buffer, idx++, maxlen);
                 // post padding
-                if (spec.flags & KERNAUX_PRINTF_FLAGS_LEFT) {
+                if (spec.flags & KERNAUX_PRINTF_FMT_FLAGS_LEFT) {
                     while (l++ < spec.width) {
                         out(' ', buffer, idx++, maxlen);
                     }
@@ -422,20 +272,20 @@ int _vsnprintf(out_fct_type out, char* buffer, const size_t maxlen, const char* 
                 const char* p = va_arg(va, char*);
                 unsigned int l = strnlen(p, spec.precision ? spec.precision : (size_t)-1);
                 // pre padding
-                if (spec.flags & KERNAUX_PRINTF_FLAGS_PRECISION) {
+                if (spec.flags & KERNAUX_PRINTF_FMT_FLAGS_PRECISION) {
                     l = (l < spec.precision ? l : spec.precision);
                 }
-                if (!(spec.flags & KERNAUX_PRINTF_FLAGS_LEFT)) {
+                if (!(spec.flags & KERNAUX_PRINTF_FMT_FLAGS_LEFT)) {
                     while (l++ < spec.width) {
                         out(' ', buffer, idx++, maxlen);
                     }
                 }
                 // string output
-                while ((*p != 0) && (!(spec.flags & KERNAUX_PRINTF_FLAGS_PRECISION) || spec.precision--)) {
+                while ((*p != 0) && (!(spec.flags & KERNAUX_PRINTF_FMT_FLAGS_PRECISION) || spec.precision--)) {
                     out(*(p++), buffer, idx++, maxlen);
                 }
                 // post padding
-                if (spec.flags & KERNAUX_PRINTF_FLAGS_LEFT) {
+                if (spec.flags & KERNAUX_PRINTF_FMT_FLAGS_LEFT) {
                     while (l++ < spec.width) {
                         out(' ', buffer, idx++, maxlen);
                     }
@@ -446,7 +296,7 @@ int _vsnprintf(out_fct_type out, char* buffer, const size_t maxlen, const char* 
 
 #ifdef ENABLE_BLOAT
             case 'S':
-                if (spec.flags & KERNAUX_PRINTF_FLAGS_CUSTOM) {
+                if (spec.flags & KERNAUX_PRINTF_FMT_FLAGS_CUSTOM) {
                     format++;
                     size_t index = 0;
                     char c;
@@ -460,7 +310,7 @@ int _vsnprintf(out_fct_type out, char* buffer, const size_t maxlen, const char* 
             case 'p':
             {
                 spec.width = sizeof(void*) * 2u;
-                spec.flags |= KERNAUX_PRINTF_FLAGS_ZEROPAD | KERNAUX_PRINTF_FLAGS_UPPERCASE;
+                spec.flags |= KERNAUX_PRINTF_FMT_FLAGS_ZEROPAD | KERNAUX_PRINTF_FMT_FLAGS_UPPERCASE;
                 const bool is_ll = sizeof(uintptr_t) == sizeof(long long);
                 if (is_ll) {
                     idx = _ntoa_long_long(out, buffer, idx, maxlen, (uintptr_t)va_arg(va, void*), false, 16u, spec.precision, spec.width, spec.flags);
@@ -518,21 +368,13 @@ void _out_fct(char character, void* buffer, size_t idx, size_t maxlen)
     }
 }
 
-// internal ASCII string to unsigned int conversion
-unsigned int _atoi(const char** str)
-{
-    const int result = atoi(*str);
-    while (isdigit(**str)) (*str)++;
-    return result;
-}
-
 // output the specified string in reverse, taking care of any zero-padding
 size_t _out_rev(out_fct_type out, char* buffer, size_t idx, size_t maxlen, const char* buf, size_t len, unsigned int width, unsigned int flags)
 {
     const size_t start_idx = idx;
 
     // pad spaces up to given width
-    if (!(flags & KERNAUX_PRINTF_FLAGS_LEFT) && !(flags & KERNAUX_PRINTF_FLAGS_ZEROPAD)) {
+    if (!(flags & KERNAUX_PRINTF_FMT_FLAGS_LEFT) && !(flags & KERNAUX_PRINTF_FMT_FLAGS_ZEROPAD)) {
         for (size_t i = len; i < width; i++) {
             out(' ', buffer, idx++, maxlen);
         }
@@ -544,7 +386,7 @@ size_t _out_rev(out_fct_type out, char* buffer, size_t idx, size_t maxlen, const
     }
 
     // append pad spaces up to given width
-    if (flags & KERNAUX_PRINTF_FLAGS_LEFT) {
+    if (flags & KERNAUX_PRINTF_FMT_FLAGS_LEFT) {
         while (idx - start_idx < width) {
             out(' ', buffer, idx++, maxlen);
         }
@@ -557,29 +399,29 @@ size_t _out_rev(out_fct_type out, char* buffer, size_t idx, size_t maxlen, const
 size_t _ntoa_format(out_fct_type out, char* buffer, size_t idx, size_t maxlen, char* buf, size_t len, bool negative, unsigned int base, unsigned int prec, unsigned int width, unsigned int flags)
 {
     // pad leading zeros
-    if (!(flags & KERNAUX_PRINTF_FLAGS_LEFT)) {
-        if (width && (flags & KERNAUX_PRINTF_FLAGS_ZEROPAD) && (negative || (flags & (KERNAUX_PRINTF_FLAGS_PLUS | KERNAUX_PRINTF_FLAGS_SPACE)))) {
+    if (!(flags & KERNAUX_PRINTF_FMT_FLAGS_LEFT)) {
+        if (width && (flags & KERNAUX_PRINTF_FMT_FLAGS_ZEROPAD) && (negative || (flags & (KERNAUX_PRINTF_FMT_FLAGS_PLUS | KERNAUX_PRINTF_FMT_FLAGS_SPACE)))) {
             width--;
         }
         while ((len < prec) && (len < PRINTF_NTOA_BUFFER_SIZE)) {
             buf[len++] = '0';
         }
-        while ((flags & KERNAUX_PRINTF_FLAGS_ZEROPAD) && (len < width) && (len < PRINTF_NTOA_BUFFER_SIZE)) {
+        while ((flags & KERNAUX_PRINTF_FMT_FLAGS_ZEROPAD) && (len < width) && (len < PRINTF_NTOA_BUFFER_SIZE)) {
             buf[len++] = '0';
         }
     }
 
     // handle hash
-    if (flags & KERNAUX_PRINTF_FLAGS_HASH) {
-        if (!(flags & KERNAUX_PRINTF_FLAGS_PRECISION) && len && ((len == prec) || (len == width))) {
+    if (flags & KERNAUX_PRINTF_FMT_FLAGS_HASH) {
+        if (!(flags & KERNAUX_PRINTF_FMT_FLAGS_PRECISION) && len && ((len == prec) || (len == width))) {
             len--;
             if (len && (base == 16u)) {
                 len--;
             }
         }
-        if ((base == 16u) && !(flags & KERNAUX_PRINTF_FLAGS_UPPERCASE) && (len < PRINTF_NTOA_BUFFER_SIZE)) {
+        if ((base == 16u) && !(flags & KERNAUX_PRINTF_FMT_FLAGS_UPPERCASE) && (len < PRINTF_NTOA_BUFFER_SIZE)) {
             buf[len++] = 'x';
-        } else if ((base == 16u) && (flags & KERNAUX_PRINTF_FLAGS_UPPERCASE) && (len < PRINTF_NTOA_BUFFER_SIZE)) {
+        } else if ((base == 16u) && (flags & KERNAUX_PRINTF_FMT_FLAGS_UPPERCASE) && (len < PRINTF_NTOA_BUFFER_SIZE)) {
             buf[len++] = 'X';
         } else if ((base == 2u) && (len < PRINTF_NTOA_BUFFER_SIZE)) {
             buf[len++] = 'b';
@@ -592,9 +434,9 @@ size_t _ntoa_format(out_fct_type out, char* buffer, size_t idx, size_t maxlen, c
     if (len < PRINTF_NTOA_BUFFER_SIZE) {
         if (negative) {
             buf[len++] = '-';
-        } else if (flags & KERNAUX_PRINTF_FLAGS_PLUS) {
+        } else if (flags & KERNAUX_PRINTF_FMT_FLAGS_PLUS) {
             buf[len++] = '+'; // ignore the space if the '+' exists
-        } else if (flags & KERNAUX_PRINTF_FLAGS_SPACE) {
+        } else if (flags & KERNAUX_PRINTF_FMT_FLAGS_SPACE) {
             buf[len++] = ' ';
         }
     }
@@ -610,14 +452,14 @@ size_t _ntoa_long(out_fct_type out, char* buffer, size_t idx, size_t maxlen, uns
 
     // no hash for 0 values
     if (!value) {
-        flags &= ~KERNAUX_PRINTF_FLAGS_HASH;
+        flags &= ~KERNAUX_PRINTF_FMT_FLAGS_HASH;
     }
 
     // write if precision != 0 and value is != 0
-    if (!(flags & KERNAUX_PRINTF_FLAGS_PRECISION) || value) {
+    if (!(flags & KERNAUX_PRINTF_FMT_FLAGS_PRECISION) || value) {
         do {
             const char digit = (char)(value % base);
-            buf[len++] = digit < 10 ? '0' + digit : (flags & KERNAUX_PRINTF_FLAGS_UPPERCASE ? 'A' : 'a') + digit - 10;
+            buf[len++] = digit < 10 ? '0' + digit : (flags & KERNAUX_PRINTF_FMT_FLAGS_UPPERCASE ? 'A' : 'a') + digit - 10;
             value /= base;
         } while (value && (len < PRINTF_NTOA_BUFFER_SIZE));
     }
@@ -633,14 +475,14 @@ size_t _ntoa_long_long(out_fct_type out, char* buffer, size_t idx, size_t maxlen
 
     // no hash for 0 values
     if (!value) {
-        flags &= ~KERNAUX_PRINTF_FLAGS_HASH;
+        flags &= ~KERNAUX_PRINTF_FMT_FLAGS_HASH;
     }
 
     // write if precision != 0 and value is != 0
-    if (!(flags & KERNAUX_PRINTF_FLAGS_PRECISION) || value) {
+    if (!(flags & KERNAUX_PRINTF_FMT_FLAGS_PRECISION) || value) {
         do {
             const char digit = (char)(value % base);
-            buf[len++] = digit < 10 ? '0' + digit : (flags & KERNAUX_PRINTF_FLAGS_UPPERCASE ? 'A' : 'a') + digit - 10;
+            buf[len++] = digit < 10 ? '0' + digit : (flags & KERNAUX_PRINTF_FMT_FLAGS_UPPERCASE ? 'A' : 'a') + digit - 10;
             value /= base;
         } while (value && (len < PRINTF_NTOA_BUFFER_SIZE));
     }
@@ -715,7 +557,7 @@ size_t _ftoa(out_fct_type out, char* buffer, size_t idx, size_t maxlen, double v
     if (value < -DBL_MAX)
         return _out_rev(out, buffer, idx, maxlen, "fni-", 4, width, flags);
     if (value > DBL_MAX)
-        return _out_rev(out, buffer, idx, maxlen, (flags & KERNAUX_PRINTF_FLAGS_PLUS) ? "fni+" : "fni", (flags & KERNAUX_PRINTF_FLAGS_PLUS) ? 4u : 3u, width, flags);
+        return _out_rev(out, buffer, idx, maxlen, (flags & KERNAUX_PRINTF_FMT_FLAGS_PLUS) ? "fni+" : "fni", (flags & KERNAUX_PRINTF_FMT_FLAGS_PLUS) ? 4u : 3u, width, flags);
 
     // test for very large values
     // standard printf behavior is to print EVERY whole number digit -- which could be 100s of characters overflowing your buffers == bad
@@ -731,7 +573,7 @@ size_t _ftoa(out_fct_type out, char* buffer, size_t idx, size_t maxlen, double v
     }
 
     // set default precision, if not set explicitly
-    if (!(flags & KERNAUX_PRINTF_FLAGS_PRECISION)) {
+    if (!(flags & KERNAUX_PRINTF_FMT_FLAGS_PRECISION)) {
         prec = PRINTF_DEFAULT_FLOAT_PRECISION;
     }
     // limit precision to 9, cause a prec >= 10 can lead to overflow errors
@@ -795,8 +637,8 @@ size_t _ftoa(out_fct_type out, char* buffer, size_t idx, size_t maxlen, double v
     }
 
     // pad leading zeros
-    if (!(flags & KERNAUX_PRINTF_FLAGS_LEFT) && (flags & KERNAUX_PRINTF_FLAGS_ZEROPAD)) {
-        if (width && (negative || (flags & (KERNAUX_PRINTF_FLAGS_PLUS | KERNAUX_PRINTF_FLAGS_SPACE)))) {
+    if (!(flags & KERNAUX_PRINTF_FMT_FLAGS_LEFT) && (flags & KERNAUX_PRINTF_FMT_FLAGS_ZEROPAD)) {
+        if (width && (negative || (flags & (KERNAUX_PRINTF_FMT_FLAGS_PLUS | KERNAUX_PRINTF_FMT_FLAGS_SPACE)))) {
             width--;
         }
         while ((len < width) && (len < PRINTF_FTOA_BUFFER_SIZE)) {
@@ -807,9 +649,9 @@ size_t _ftoa(out_fct_type out, char* buffer, size_t idx, size_t maxlen, double v
     if (len < PRINTF_FTOA_BUFFER_SIZE) {
         if (negative) {
             buf[len++] = '-';
-        } else if (flags & KERNAUX_PRINTF_FLAGS_PLUS) {
+        } else if (flags & KERNAUX_PRINTF_FMT_FLAGS_PLUS) {
             buf[len++] = '+'; // ignore the space if the '+' exists
-        } else if (flags & KERNAUX_PRINTF_FLAGS_SPACE) {
+        } else if (flags & KERNAUX_PRINTF_FMT_FLAGS_SPACE) {
             buf[len++] = ' ';
         }
     }
@@ -832,7 +674,7 @@ size_t _etoa(out_fct_type out, char* buffer, size_t idx, size_t maxlen, double v
     }
 
     // default precision
-    if (!(flags & KERNAUX_PRINTF_FLAGS_PRECISION)) {
+    if (!(flags & KERNAUX_PRINTF_FMT_FLAGS_PRECISION)) {
         prec = PRINTF_DEFAULT_FLOAT_PRECISION;
     }
 
@@ -865,7 +707,7 @@ size_t _etoa(out_fct_type out, char* buffer, size_t idx, size_t maxlen, double v
     unsigned int minwidth = ((expval < 100) && (expval > -100)) ? 4u : 5u;
 
     // in "%g" mode, "prec" is the number of *significant figures* not decimals
-    if (flags & KERNAUX_PRINTF_FLAGS_ADAPT_EXP) {
+    if (flags & KERNAUX_PRINTF_FMT_FLAGS_ADAPT_EXP) {
         // do we want to fall-back to "%f" mode?
         if ((value >= 1e-4) && (value < 1e6)) {
             if ((int)prec > expval) {
@@ -873,13 +715,13 @@ size_t _etoa(out_fct_type out, char* buffer, size_t idx, size_t maxlen, double v
             } else {
                 prec = 0;
             }
-            flags |= KERNAUX_PRINTF_FLAGS_PRECISION; // make sure _ftoa respects precision
+            flags |= KERNAUX_PRINTF_FMT_FLAGS_PRECISION; // make sure _ftoa respects precision
             // no characters in exponent
             minwidth = 0u;
             expval = 0;
         } else {
             // we use one sigfig for the whole part
-            if ((prec > 0) && (flags & KERNAUX_PRINTF_FLAGS_PRECISION)) {
+            if ((prec > 0) && (flags & KERNAUX_PRINTF_FMT_FLAGS_PRECISION)) {
                 --prec;
             }
         }
@@ -894,7 +736,7 @@ size_t _etoa(out_fct_type out, char* buffer, size_t idx, size_t maxlen, double v
         // not enough characters, so go back to default sizing
         fwidth = 0u;
     }
-    if ((flags & KERNAUX_PRINTF_FLAGS_LEFT) && minwidth) {
+    if ((flags & KERNAUX_PRINTF_FMT_FLAGS_LEFT) && minwidth) {
         // if we're padding on the right, DON'T pad the floating part
         fwidth = 0u;
     }
@@ -906,16 +748,16 @@ size_t _etoa(out_fct_type out, char* buffer, size_t idx, size_t maxlen, double v
 
     // output the floating part
     const size_t start_idx = idx;
-    idx = _ftoa(out, buffer, idx, maxlen, negative ? -value : value, prec, fwidth, flags & ~KERNAUX_PRINTF_FLAGS_ADAPT_EXP);
+    idx = _ftoa(out, buffer, idx, maxlen, negative ? -value : value, prec, fwidth, flags & ~KERNAUX_PRINTF_FMT_FLAGS_ADAPT_EXP);
 
     // output the exponent part
     if (minwidth) {
         // output the exponential symbol
-        out((flags & KERNAUX_PRINTF_FLAGS_UPPERCASE) ? 'E' : 'e', buffer, idx++, maxlen);
+        out((flags & KERNAUX_PRINTF_FMT_FLAGS_UPPERCASE) ? 'E' : 'e', buffer, idx++, maxlen);
         // output the exponent value
-        idx = _ntoa_long(out, buffer, idx, maxlen, (expval < 0) ? -expval : expval, expval < 0, 10, 0, minwidth-1, KERNAUX_PRINTF_FLAGS_ZEROPAD | KERNAUX_PRINTF_FLAGS_PLUS);
+        idx = _ntoa_long(out, buffer, idx, maxlen, (expval < 0) ? -expval : expval, expval < 0, 10, 0, minwidth-1, KERNAUX_PRINTF_FMT_FLAGS_ZEROPAD | KERNAUX_PRINTF_FMT_FLAGS_PLUS);
         // might need to right-pad spaces
-        if (flags & KERNAUX_PRINTF_FLAGS_LEFT) {
+        if (flags & KERNAUX_PRINTF_FMT_FLAGS_LEFT) {
             while (idx - start_idx < width) out(' ', buffer, idx++, maxlen);
         }
     }
