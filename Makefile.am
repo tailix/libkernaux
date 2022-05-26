@@ -138,7 +138,7 @@ TESTS += tests/test_printf_gen
 endif
 endif
 
-if WITH_PRINTF
+if WITH_PRINTF_FMT
 libkernaux_a_SOURCES += src/printf_fmt.c
 endif
 
