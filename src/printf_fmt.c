@@ -68,17 +68,17 @@ bool KernAux_PrintfFmt_Spec_eval_width1(struct KernAux_PrintfFmt_Spec *const spe
     }
 }
 
-void KernAux_PrintfFmt_Spec_eval_width2(struct KernAux_PrintfFmt_Spec *const spec, const char **const format, const int w)
+void KernAux_PrintfFmt_Spec_eval_width2(struct KernAux_PrintfFmt_Spec *const spec, const char **const format, const int width)
 {
     KERNAUX_NOTNULL_RETURN(spec);
     KERNAUX_NOTNULL_RETURN(format);
     KERNAUX_NOTNULL_RETURN(*format);
 
-    if (w < 0) {
+    if (width < 0) {
         spec->flags |= KERNAUX_PRINTF_FMT_FLAGS_LEFT; // reverse padding
-        spec->width = (unsigned int)-w;
+        spec->width = (unsigned int)-width;
     } else {
-        spec->width = (unsigned int)w;
+        spec->width = (unsigned int)width;
     }
 
     ++(*format);
@@ -104,13 +104,13 @@ bool KernAux_PrintfFmt_Spec_eval_precision1(struct KernAux_PrintfFmt_Spec *const
     }
 }
 
-void KernAux_PrintfFmt_Spec_eval_precision2(struct KernAux_PrintfFmt_Spec *const spec, const char **const format, const int prec)
+void KernAux_PrintfFmt_Spec_eval_precision2(struct KernAux_PrintfFmt_Spec *const spec, const char **const format, const int precision)
 {
     KERNAUX_NOTNULL_RETURN(spec);
     KERNAUX_NOTNULL_RETURN(format);
     KERNAUX_NOTNULL_RETURN(*format);
 
-    spec->precision = prec > 0 ? (unsigned int)prec : 0u;
+    spec->precision = precision > 0 ? (unsigned int)precision : 0u;
     ++(*format);
 }
 

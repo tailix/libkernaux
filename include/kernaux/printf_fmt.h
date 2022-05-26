@@ -48,9 +48,9 @@ void KernAux_PrintfFmt_Spec_init(struct KernAux_PrintfFmt_Spec *spec);
 
 void KernAux_PrintfFmt_Spec_eval_flags(struct KernAux_PrintfFmt_Spec *spec, const char **format);
 bool KernAux_PrintfFmt_Spec_eval_width1(struct KernAux_PrintfFmt_Spec *spec, const char **format);
-void KernAux_PrintfFmt_Spec_eval_width2(struct KernAux_PrintfFmt_Spec *spec, const char **format, int w);
+void KernAux_PrintfFmt_Spec_eval_width2(struct KernAux_PrintfFmt_Spec *spec, const char **format, int width);
 bool KernAux_PrintfFmt_Spec_eval_precision1(struct KernAux_PrintfFmt_Spec *spec, const char **format);
-void KernAux_PrintfFmt_Spec_eval_precision2(struct KernAux_PrintfFmt_Spec *spec, const char **format, int prec);
+void KernAux_PrintfFmt_Spec_eval_precision2(struct KernAux_PrintfFmt_Spec *spec, const char **format, int precision);
 void KernAux_PrintfFmt_Spec_eval_length(struct KernAux_PrintfFmt_Spec *spec, const char **format);
 void KernAux_PrintfFmt_Spec_eval_type(struct KernAux_PrintfFmt_Spec *spec, const char **format);
 
