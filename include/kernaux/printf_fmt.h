@@ -21,10 +21,26 @@ extern "C" {
 #define KERNAUX_PRINTF_FMT_FLAGS_ADAPT_EXP (1u << 11u)
 #define KERNAUX_PRINTF_FMT_FLAGS_CUSTOM    (1u << 12u)
 
+enum KernAux_PrintfFmt_Type {
+    KERNAUX_PRINTF_FMT_TYPE_NONE,
+    KERNAUX_PRINTF_FMT_TYPE_INT,
+    KERNAUX_PRINTF_FMT_TYPE_UINT,
+    KERNAUX_PRINTF_FMT_TYPE_FLOAT,
+    KERNAUX_PRINTF_FMT_TYPE_EXP,
+    KERNAUX_PRINTF_FMT_TYPE_CHAR,
+    KERNAUX_PRINTF_FMT_TYPE_STR,
+    KERNAUX_PRINTF_FMT_TYPE_CUSTOM,
+    KERNAUX_PRINTF_FMT_TYPE_PTR,
+    KERNAUX_PRINTF_FMT_TYPE_PERCENT,
+};
+
 struct KernAux_PrintfFmt_Spec {
     unsigned int flags;
     unsigned int width;
     unsigned int precision;
+    enum KernAux_PrintfFmt_Type type;
+
+    unsigned int base;
 };
 
 struct KernAux_PrintfFmt_Spec KernAux_PrintfFmt_Spec_create();
@@ -36,6 +52,7 @@ void KernAux_PrintfFmt_Spec_eval_width2(struct KernAux_PrintfFmt_Spec *spec, con
 bool KernAux_PrintfFmt_Spec_eval_precision1(struct KernAux_PrintfFmt_Spec *spec, const char **format);
 void KernAux_PrintfFmt_Spec_eval_precision2(struct KernAux_PrintfFmt_Spec *spec, const char **format, int prec);
 void KernAux_PrintfFmt_Spec_eval_length(struct KernAux_PrintfFmt_Spec *spec, const char **format);
+void KernAux_PrintfFmt_Spec_eval_type(struct KernAux_PrintfFmt_Spec *spec, const char **format);
 
 #ifdef __cplusplus
 }

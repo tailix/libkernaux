@@ -1,6 +1,7 @@
 2022-05-27  Alex Kotov  <kotovalexarian@gmail.com>
 
 	* include/kernaux/printf_fmt.h: Auxiliary API moved to a separate module
+	* include/kernaux/printf_fmt.h: Add function to parse type
 
 2022-05-24  Alex Kotov  <kotovalexarian@gmail.com>
 

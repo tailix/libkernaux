@@ -30,6 +30,9 @@ void KernAux_PrintfFmt_Spec_init(struct KernAux_PrintfFmt_Spec *const spec)
     spec->flags = 0u;
     spec->width = 0u;
     spec->precision = 0u;
+    spec->type = KERNAUX_PRINTF_FMT_TYPE_NONE;
+
+    spec->base = 0;
 }
 
 void KernAux_PrintfFmt_Spec_eval_flags(struct KernAux_PrintfFmt_Spec *const spec, const char **const format)
@@ -157,6 +160,111 @@ void KernAux_PrintfFmt_Spec_eval_length(struct KernAux_PrintfFmt_Spec *const spe
             break;
 #endif // ENABLE_BLOAT
         default:
+            break;
+    }
+}
+
+void KernAux_PrintfFmt_Spec_eval_type(struct KernAux_PrintfFmt_Spec *const spec, const char **const format)
+{
+    KERNAUX_NOTNULL_RETURN(spec);
+    KERNAUX_NOTNULL_RETURN(format);
+    KERNAUX_NOTNULL_RETURN(*format);
+
+    switch (**format) {
+        case 'd':
+        case 'i':
+        case 'u':
+        case 'x':
+        case 'X':
+        case 'o':
+        case 'b':
+            // set the base
+            if (**format == 'x' || **format == 'X') {
+                spec->base = 16u;
+            } else if (**format == 'o') {
+                spec->base = 8u;
+            } else if (**format == 'b') {
+                spec->base = 2u;
+            } else {
+                spec->base = 10u;
+                spec->flags &= ~KERNAUX_PRINTF_FMT_FLAGS_HASH; // no hash for dec format
+            }
+            // uppercase
+            if (**format == 'X') {
+                spec->flags |= KERNAUX_PRINTF_FMT_FLAGS_UPPERCASE;
+            }
+
+            // no plus or space flag for u, x, X, o, b
+            if ((**format != 'i') && (**format != 'd')) {
+                spec->flags &= ~(KERNAUX_PRINTF_FMT_FLAGS_PLUS | KERNAUX_PRINTF_FMT_FLAGS_SPACE);
+            }
+
+            // ignore '0' flag when precision is given
+            if (spec->flags & KERNAUX_PRINTF_FMT_FLAGS_PRECISION) {
+                spec->flags &= ~KERNAUX_PRINTF_FMT_FLAGS_ZEROPAD;
+            }
+
+            // convert the integer
+            if ((**format == 'i') || (**format == 'd')) {
+                spec->type = KERNAUX_PRINTF_FMT_TYPE_INT;
+            } else {
+                spec->type = KERNAUX_PRINTF_FMT_TYPE_UINT;
+            }
+            ++(*format);
+            break;
+
+#ifdef ENABLE_FLOAT
+        case 'f':
+        case 'F':
+            if (**format == 'F') spec->flags |= KERNAUX_PRINTF_FMT_FLAGS_UPPERCASE;
+            spec->type = KERNAUX_PRINTF_FMT_TYPE_FLOAT;
+            ++(*format);
+            break;
+
+        case 'e':
+        case 'E':
+        case 'g':
+        case 'G':
+            if ((**format == 'g')||(**format == 'G')) spec->flags |= KERNAUX_PRINTF_FMT_FLAGS_ADAPT_EXP;
+            if ((**format == 'E')||(**format == 'G')) spec->flags |= KERNAUX_PRINTF_FMT_FLAGS_UPPERCASE;
+            spec->type = KERNAUX_PRINTF_FMT_TYPE_EXP;
+            ++(*format);
+            break;
+#endif // ENABLE_FLOAT
+
+        case 'c':
+            spec->type = KERNAUX_PRINTF_FMT_TYPE_CHAR;
+            ++(*format);
+            break;
+
+        case 's':
+            spec->type = KERNAUX_PRINTF_FMT_TYPE_STR;
+            ++(*format);
+            break;
+
+#ifdef ENABLE_BLOAT
+        case 'S':
+            if (spec->flags & KERNAUX_PRINTF_FMT_FLAGS_CUSTOM) {
+                spec->type = KERNAUX_PRINTF_FMT_TYPE_CUSTOM;
+                ++(*format);
+            }
+            break;
+#endif // ENABLE_BLOAT
+
+        case 'p':
+            spec->width = sizeof(void*) * 2u;
+            spec->flags |= KERNAUX_PRINTF_FMT_FLAGS_ZEROPAD | KERNAUX_PRINTF_FMT_FLAGS_UPPERCASE;
+            spec->type = KERNAUX_PRINTF_FMT_TYPE_PTR;
+            ++(*format);
+            break;
+
+        case '%':
+            spec->type = KERNAUX_PRINTF_FMT_TYPE_PERCENT;
+            ++(*format);
+            break;
+
+        default:
+            spec->type = KERNAUX_PRINTF_FMT_TYPE_NONE;
             break;
     }
 }

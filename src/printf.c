@@ -165,88 +165,45 @@ int _vsnprintf(out_fct_type out, char* buffer, const size_t maxlen, const char* 
 
         KernAux_PrintfFmt_Spec_eval_length(&spec, &format);
 
+        KernAux_PrintfFmt_Spec_eval_type(&spec, &format);
+
         // evaluate specifier
-        switch (*format) {
-            case 'd':
-            case 'i':
-            case 'u':
-            case 'x':
-            case 'X':
-            case 'o':
-            case 'b':
-            {
-                // set the base
-                unsigned int base;
-                if (*format == 'x' || *format == 'X') {
-                    base = 16u;
-                } else if (*format == 'o') {
-                    base = 8u;
-                } else if (*format == 'b') {
-                    base = 2u;
+        switch (spec.type) {
+            case KERNAUX_PRINTF_FMT_TYPE_INT:
+                if (spec.flags & KERNAUX_PRINTF_FMT_FLAGS_LONG_LONG) {
+                    const long long value = va_arg(va, long long);
+                    idx = _ntoa_long_long(out, buffer, idx, maxlen, (unsigned long long)(value > 0 ? value : 0 - value), value < 0, spec.base, spec.precision, spec.width, spec.flags);
+                } else if (spec.flags & KERNAUX_PRINTF_FMT_FLAGS_LONG) {
+                    const long value = va_arg(va, long);
+                    idx = _ntoa_long(out, buffer, idx, maxlen, (unsigned long)(value > 0 ? value : 0 - value), value < 0, spec.base, spec.precision, spec.width, spec.flags);
                 } else {
-                    base = 10u;
-                    spec.flags &= ~KERNAUX_PRINTF_FMT_FLAGS_HASH; // no hash for dec format
+                    const int value = (spec.flags & KERNAUX_PRINTF_FMT_FLAGS_CHAR) ? (char)va_arg(va, int) : (spec.flags & KERNAUX_PRINTF_FMT_FLAGS_SHORT) ? (short int)va_arg(va, int) : va_arg(va, int);
+                    idx = _ntoa_long(out, buffer, idx, maxlen, (unsigned int)(value > 0 ? value : 0 - value), value < 0, spec.base, spec.precision, spec.width, spec.flags);
                 }
-                // uppercase
-                if (*format == 'X') {
-                    spec.flags |= KERNAUX_PRINTF_FMT_FLAGS_UPPERCASE;
-                }
-
-                // no plus or space flag for u, x, X, o, b
-                if ((*format != 'i') && (*format != 'd')) {
-                    spec.flags &= ~(KERNAUX_PRINTF_FMT_FLAGS_PLUS | KERNAUX_PRINTF_FMT_FLAGS_SPACE);
-                }
-
-                // ignore '0' flag when precision is given
-                if (spec.flags & KERNAUX_PRINTF_FMT_FLAGS_PRECISION) {
-                    spec.flags &= ~KERNAUX_PRINTF_FMT_FLAGS_ZEROPAD;
-                }
-
-                // convert the integer
-                if ((*format == 'i') || (*format == 'd')) {
-                    // signed
-                    if (spec.flags & KERNAUX_PRINTF_FMT_FLAGS_LONG_LONG) {
-                        const long long value = va_arg(va, long long);
-                        idx = _ntoa_long_long(out, buffer, idx, maxlen, (unsigned long long)(value > 0 ? value : 0 - value), value < 0, base, spec.precision, spec.width, spec.flags);
-                    } else if (spec.flags & KERNAUX_PRINTF_FMT_FLAGS_LONG) {
-                        const long value = va_arg(va, long);
-                        idx = _ntoa_long(out, buffer, idx, maxlen, (unsigned long)(value > 0 ? value : 0 - value), value < 0, base, spec.precision, spec.width, spec.flags);
-                    } else {
-                        const int value = (spec.flags & KERNAUX_PRINTF_FMT_FLAGS_CHAR) ? (char)va_arg(va, int) : (spec.flags & KERNAUX_PRINTF_FMT_FLAGS_SHORT) ? (short int)va_arg(va, int) : va_arg(va, int);
-                        idx = _ntoa_long(out, buffer, idx, maxlen, (unsigned int)(value > 0 ? value : 0 - value), value < 0, base, spec.precision, spec.width, spec.flags);
-                    }
-                } else {
-                    // unsigned
-                    if (spec.flags & KERNAUX_PRINTF_FMT_FLAGS_LONG_LONG) {
-                        idx = _ntoa_long_long(out, buffer, idx, maxlen, va_arg(va, unsigned long long), false, base, spec.precision, spec.width, spec.flags);
-                    } else if (spec.flags & KERNAUX_PRINTF_FMT_FLAGS_LONG) {
-                        idx = _ntoa_long(out, buffer, idx, maxlen, va_arg(va, unsigned long), false, base, spec.precision, spec.width, spec.flags);
-                    } else {
-                        const unsigned int value = (spec.flags & KERNAUX_PRINTF_FMT_FLAGS_CHAR) ? (unsigned char)va_arg(va, unsigned int) : (spec.flags & KERNAUX_PRINTF_FMT_FLAGS_SHORT) ? (unsigned short int)va_arg(va, unsigned int) : va_arg(va, unsigned int);
-                        idx = _ntoa_long(out, buffer, idx, maxlen, value, false, base, spec.precision, spec.width, spec.flags);
-                    }
-                }
-                format++;
                 break;
-            }
+
+            case KERNAUX_PRINTF_FMT_TYPE_UINT:
+                if (spec.flags & KERNAUX_PRINTF_FMT_FLAGS_LONG_LONG) {
+                    idx = _ntoa_long_long(out, buffer, idx, maxlen, va_arg(va, unsigned long long), false, spec.base, spec.precision, spec.width, spec.flags);
+                } else if (spec.flags & KERNAUX_PRINTF_FMT_FLAGS_LONG) {
+                    idx = _ntoa_long(out, buffer, idx, maxlen, va_arg(va, unsigned long), false, spec.base, spec.precision, spec.width, spec.flags);
+                } else {
+                    const unsigned int value = (spec.flags & KERNAUX_PRINTF_FMT_FLAGS_CHAR) ? (unsigned char)va_arg(va, unsigned int) : (spec.flags & KERNAUX_PRINTF_FMT_FLAGS_SHORT) ? (unsigned short int)va_arg(va, unsigned int) : va_arg(va, unsigned int);
+                    idx = _ntoa_long(out, buffer, idx, maxlen, value, false, spec.base, spec.precision, spec.width, spec.flags);
+                }
+                break;
+
 #ifdef ENABLE_FLOAT
-            case 'f':
-            case 'F':
-                if (*format == 'F') spec.flags |= KERNAUX_PRINTF_FMT_FLAGS_UPPERCASE;
+            case KERNAUX_PRINTF_FMT_TYPE_FLOAT:
                 idx = _ftoa(out, buffer, idx, maxlen, va_arg(va, double), spec.precision, spec.width, spec.flags);
-                format++;
                 break;
-            case 'e':
-            case 'E':
-            case 'g':
-            case 'G':
-                if ((*format == 'g')||(*format == 'G')) spec.flags |= KERNAUX_PRINTF_FMT_FLAGS_ADAPT_EXP;
-                if ((*format == 'E')||(*format == 'G')) spec.flags |= KERNAUX_PRINTF_FMT_FLAGS_UPPERCASE;
+
+            case KERNAUX_PRINTF_FMT_TYPE_EXP:
                 idx = _etoa(out, buffer, idx, maxlen, va_arg(va, double), spec.precision, spec.width, spec.flags);
-                format++;
                 break;
 #endif // ENABLE_FLOAT
-            case 'c':
+
+            case KERNAUX_PRINTF_FMT_TYPE_CHAR:
             {
                 unsigned int l = 1u;
                 // pre padding
@@ -263,11 +220,10 @@ int _vsnprintf(out_fct_type out, char* buffer, const size_t maxlen, const char* 
                         out(' ', buffer, idx++, maxlen);
                     }
                 }
-                format++;
                 break;
             }
 
-            case 's':
+            case KERNAUX_PRINTF_FMT_TYPE_STR:
             {
                 const char* p = va_arg(va, char*);
                 unsigned int l = strnlen(p, spec.precision ? spec.precision : (size_t)-1);
@@ -290,14 +246,12 @@ int _vsnprintf(out_fct_type out, char* buffer, const size_t maxlen, const char* 
                         out(' ', buffer, idx++, maxlen);
                     }
                 }
-                format++;
                 break;
             }
 
 #ifdef ENABLE_BLOAT
-            case 'S':
-                if (spec.flags & KERNAUX_PRINTF_FMT_FLAGS_CUSTOM) {
-                    format++;
+            case KERNAUX_PRINTF_FMT_TYPE_CUSTOM:
+                {
                     size_t index = 0;
                     char c;
                     while ((c = _custom(spec.flags, &index))) {
@@ -307,28 +261,24 @@ int _vsnprintf(out_fct_type out, char* buffer, const size_t maxlen, const char* 
                 break;
 #endif // ENABLE_BLOAT
 
-            case 'p':
+            case KERNAUX_PRINTF_FMT_TYPE_PTR:
             {
-                spec.width = sizeof(void*) * 2u;
-                spec.flags |= KERNAUX_PRINTF_FMT_FLAGS_ZEROPAD | KERNAUX_PRINTF_FMT_FLAGS_UPPERCASE;
                 const bool is_ll = sizeof(uintptr_t) == sizeof(long long);
                 if (is_ll) {
                     idx = _ntoa_long_long(out, buffer, idx, maxlen, (uintptr_t)va_arg(va, void*), false, 16u, spec.precision, spec.width, spec.flags);
                 } else {
                     idx = _ntoa_long(out, buffer, idx, maxlen, (unsigned long)((uintptr_t)va_arg(va, void*)), false, 16u, spec.precision, spec.width, spec.flags);
                 }
-                format++;
                 break;
             }
 
-            case '%':
+            case KERNAUX_PRINTF_FMT_TYPE_PERCENT:
                 out('%', buffer, idx++, maxlen);
-                format++;
                 break;
 
             default:
                 out(*format, buffer, idx++, maxlen);
-                format++;
+                ++format;
                 break;
         }
     }
