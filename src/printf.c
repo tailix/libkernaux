@@ -156,11 +156,11 @@ int _vsnprintf(out_fct_type out, char* buffer, const size_t maxlen, const char* 
         KernAux_PrintfFmt_Spec_eval_flags(&spec, &format);
 
         if (KernAux_PrintfFmt_Spec_eval_width1(&spec, &format)) {
-            KernAux_PrintfFmt_Spec_eval_width2(&spec, &format, va_arg(va, int));
+            KernAux_PrintfFmt_Spec_eval_width2(&spec, va_arg(va, int));
         }
 
         if (KernAux_PrintfFmt_Spec_eval_precision1(&spec, &format)) {
-            KernAux_PrintfFmt_Spec_eval_precision2(&spec, &format, va_arg(va, int));
+            KernAux_PrintfFmt_Spec_eval_precision2(&spec, va_arg(va, int));
         }
 
         KernAux_PrintfFmt_Spec_eval_length(&spec, &format);

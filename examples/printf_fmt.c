@@ -10,10 +10,10 @@ int main()
         struct KernAux_PrintfFmt_Spec spec = KernAux_PrintfFmt_Spec_create();
         KernAux_PrintfFmt_Spec_eval_flags(&spec, &format);
         if (KernAux_PrintfFmt_Spec_eval_width1(&spec, &format)) {
-            KernAux_PrintfFmt_Spec_eval_width2(&spec, &format, 0);
+            KernAux_PrintfFmt_Spec_eval_width2(&spec, 0);
         }
         if (KernAux_PrintfFmt_Spec_eval_precision1(&spec, &format)) {
-            KernAux_PrintfFmt_Spec_eval_precision2(&spec, &format, 0);
+            KernAux_PrintfFmt_Spec_eval_precision2(&spec, 0);
         }
         KernAux_PrintfFmt_Spec_eval_length(&spec, &format);
         KernAux_PrintfFmt_Spec_eval_type(&spec, &format);
@@ -37,10 +37,10 @@ int main()
         struct KernAux_PrintfFmt_Spec spec = KernAux_PrintfFmt_Spec_create();
         KernAux_PrintfFmt_Spec_eval_flags(&spec, &format);
         if (KernAux_PrintfFmt_Spec_eval_width1(&spec, &format)) {
-            KernAux_PrintfFmt_Spec_eval_width2(&spec, &format, 12);
+            KernAux_PrintfFmt_Spec_eval_width2(&spec, 12);
         }
         if (KernAux_PrintfFmt_Spec_eval_precision1(&spec, &format)) {
-            KernAux_PrintfFmt_Spec_eval_precision2(&spec, &format, 34);
+            KernAux_PrintfFmt_Spec_eval_precision2(&spec, 34);
         }
         KernAux_PrintfFmt_Spec_eval_length(&spec, &format);
         KernAux_PrintfFmt_Spec_eval_type(&spec, &format);

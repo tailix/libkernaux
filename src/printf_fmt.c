@@ -63,16 +63,17 @@ bool KernAux_PrintfFmt_Spec_eval_width1(struct KernAux_PrintfFmt_Spec *const spe
     if (isdigit(**format)) {
         spec->width = _atoi(format);
         return false;
+    } else if (**format == '*') {
+        ++(*format);
+        return true;
     } else {
-        return **format == '*';
+        return false;
     }
 }
 
-void KernAux_PrintfFmt_Spec_eval_width2(struct KernAux_PrintfFmt_Spec *const spec, const char **const format, const int width)
+void KernAux_PrintfFmt_Spec_eval_width2(struct KernAux_PrintfFmt_Spec *const spec, const int width)
 {
     KERNAUX_NOTNULL_RETURN(spec);
-    KERNAUX_NOTNULL_RETURN(format);
-    KERNAUX_NOTNULL_RETURN(*format);
 
     if (width < 0) {
         spec->flags |= KERNAUX_PRINTF_FMT_FLAGS_LEFT; // reverse padding
@@ -80,8 +81,6 @@ void KernAux_PrintfFmt_Spec_eval_width2(struct KernAux_PrintfFmt_Spec *const spe
     } else {
         spec->width = (unsigned int)width;
     }
-
-    ++(*format);
 }
 
 bool KernAux_PrintfFmt_Spec_eval_precision1(struct KernAux_PrintfFmt_Spec *const spec, const char **const format)
@@ -96,22 +95,22 @@ bool KernAux_PrintfFmt_Spec_eval_precision1(struct KernAux_PrintfFmt_Spec *const
         if (isdigit(**format)) {
             spec->precision = _atoi(format);
             return false;
+        } else if (**format == '*') {
+            ++(*format);
+            return true;
         } else {
-            return **format == '*';
+            return false;
         }
     } else {
         return false;
     }
 }
 
-void KernAux_PrintfFmt_Spec_eval_precision2(struct KernAux_PrintfFmt_Spec *const spec, const char **const format, const int precision)
+void KernAux_PrintfFmt_Spec_eval_precision2(struct KernAux_PrintfFmt_Spec *const spec, const int precision)
 {
     KERNAUX_NOTNULL_RETURN(spec);
-    KERNAUX_NOTNULL_RETURN(format);
-    KERNAUX_NOTNULL_RETURN(*format);
 
     spec->precision = precision > 0 ? (unsigned int)precision : 0u;
-    ++(*format);
 }
 
 void KernAux_PrintfFmt_Spec_eval_length(struct KernAux_PrintfFmt_Spec *const spec, const char **const format)

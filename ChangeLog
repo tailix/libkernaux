@@ -2,6 +2,7 @@
 
 	* include/kernaux/printf_fmt.h: Auxiliary API moved to a separate module
 	* include/kernaux/printf_fmt.h: Add function to parse type
+	* include/kernaux/printf_fmt.h: Don't pass unnecessary format param
 
 2022-05-24  Alex Kotov  <kotovalexarian@gmail.com>
 
