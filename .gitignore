@@ -118,6 +118,8 @@
 /tests/test_ntoa
 /tests/test_pfa
 /tests/test_pfa_assert
+/tests/test_printf_fmt_gen
+/tests/test_printf_fmt_gen.c
 /tests/test_printf_gen
 /tests/test_printf_gen.c
 /tests/test_units_human

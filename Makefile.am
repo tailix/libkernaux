@@ -17,6 +17,7 @@ libkernaux_a_SOURCES = \
 	src/libc.c
 
 CLEANFILES = \
+	tests/test_printf_fmt_gen.c \
 	tests/test_printf_gen.c
 
 if ASM_I386
@@ -142,6 +143,9 @@ if WITH_PRINTF_FMT
 libkernaux_a_SOURCES += src/printf_fmt.c
 if ENABLE_TESTS
 TESTS += examples/printf_fmt
+endif
+if ENABLE_TESTS_PYTHON
+TESTS += tests/test_printf_fmt_gen
 endif
 endif
 
@@ -278,6 +282,14 @@ tests_test_pfa_assert_SOURCES = \
 	$(libkernaux_a_SOURCES) \
 	tests/test_pfa_assert.c
 
+tests_test_printf_fmt_gen_SOURCES = \
+	$(libkernaux_a_SOURCES) \
+	tests/test_printf_fmt_gen.c \
+	tests/printf_fmt_gen.py \
+	tests/printf_fmt_gen.jinja \
+	common/printf.yml \
+	common/printf_orig.yml
+
 tests_test_printf_gen_SOURCES = \
 	$(libkernaux_a_SOURCES) \
 	tests/test_printf_gen.c \
@@ -289,6 +301,9 @@ tests_test_printf_gen_SOURCES = \
 tests_test_units_human_SOURCES = \
 	$(libkernaux_a_SOURCES) \
 	tests/test_units_human.c
+
+tests/test_printf_fmt_gen.c: tests/printf_fmt_gen.py tests/printf_fmt_gen.jinja common/printf_fmt.yml
+	python3 tests/printf_fmt_gen.py
 
 tests/test_printf_gen.c: tests/printf_gen.py tests/printf_gen.jinja common/printf.yml common/printf_orig.yml
 	python3 tests/printf_gen.py
