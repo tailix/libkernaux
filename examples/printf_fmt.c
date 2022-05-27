@@ -5,14 +5,39 @@
 int main()
 {
     {
+        const char *format = "s";
+
+        struct KernAux_PrintfFmt_Spec spec = KernAux_PrintfFmt_Spec_create();
+        KernAux_PrintfFmt_Spec_eval_flags(&spec, &format);
+        if (KernAux_PrintfFmt_Spec_eval_width1(&spec, &format)) {
+            // Actually this line won't be executed.
+            KernAux_PrintfFmt_Spec_eval_width2(&spec, 0);
+        }
+        if (KernAux_PrintfFmt_Spec_eval_precision1(&spec, &format)) {
+            // Actually this line won't be executed.
+            KernAux_PrintfFmt_Spec_eval_precision2(&spec, 0);
+        }
+        KernAux_PrintfFmt_Spec_eval_length(&spec, &format);
+        KernAux_PrintfFmt_Spec_eval_type(&spec, &format);
+
+        assert(spec.flags == 0);
+        assert(spec.width == 0);
+        assert(spec.precision == 0);
+        assert(spec.type == KERNAUX_PRINTF_FMT_TYPE_STR);
+        assert(spec.base == 0);
+    }
+
+    {
         const char *format = "012.34f";
 
         struct KernAux_PrintfFmt_Spec spec = KernAux_PrintfFmt_Spec_create();
         KernAux_PrintfFmt_Spec_eval_flags(&spec, &format);
         if (KernAux_PrintfFmt_Spec_eval_width1(&spec, &format)) {
+            // Actually this line won't be executed.
             KernAux_PrintfFmt_Spec_eval_width2(&spec, 0);
         }
         if (KernAux_PrintfFmt_Spec_eval_precision1(&spec, &format)) {
+            // Actually this line won't be executed.
             KernAux_PrintfFmt_Spec_eval_precision2(&spec, 0);
         }
         KernAux_PrintfFmt_Spec_eval_length(&spec, &format);
