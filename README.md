@@ -57,7 +57,7 @@ zero). Work-in-progress APIs can change at any time.
   * [ELF](/include/kernaux/elf.h) (*work in progress*)
   * [Master Boot Record](/include/kernaux/mbr.h) (*work in progress*)
   * [Multiboot 2 (GRUB 2)](/include/kernaux/multiboot2.h) (*work in progress*)
-  * [printf format parser](/include/kernaux/printf_fmt.h) (*stable since* **?.?.?**)
+  * [printf format parser](/include/kernaux/printf_fmt.h) (*work in progress*)
     * Code from [https://github.com/mpaland/printf](https://github.com/mpaland/printf). Thank you!
     * [Example](/examples/printf_fmt.c)
   * Stivale 2 (Limine) (*planned*)
@@ -124,7 +124,6 @@ explicitly included, use `--without-all`.
 * `--with[out]-cmdline` - command line parser
 * `--with[out]-ntoa` - itoa/ftoa
 * `--with[out]-printf` - printf
-* `--with[out]-printf-fmt` - printf format parser
 
 
 

@@ -1,16 +1,9 @@
-2022-05-27  Alex Kotov  <kotovalexarian@gmail.com>
-
-	* include/kernaux/printf_fmt.h: Auxiliary API moved to a separate module
-	* include/kernaux/printf_fmt.h: Add function to parse type
-	* include/kernaux/printf_fmt.h: Don't pass unnecessary format param
-
 2022-05-24  Alex Kotov  <kotovalexarian@gmail.com>
 
 	* src/multiboot2/info_is_valid.c: Fix division by zero
 	* configure.ac: Test options made stable
 	* configure.ac: Feature "bloat" made stable
 	* src/: Use assertions everywhere (closes #14)
-	* include/kernaux/printf.h: Add auxiliary API
 
 2022-02-10  Alex Kotov  <kotovalexarian@gmail.com>
 
