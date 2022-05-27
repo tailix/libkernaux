@@ -287,8 +287,7 @@ tests_test_printf_fmt_gen_SOURCES = \
 	tests/test_printf_fmt_gen.c \
 	tests/printf_fmt_gen.py \
 	tests/printf_fmt_gen.jinja \
-	common/printf.yml \
-	common/printf_orig.yml
+	common/printf_fmt.yml
 
 tests_test_printf_gen_SOURCES = \
 	$(libkernaux_a_SOURCES) \
