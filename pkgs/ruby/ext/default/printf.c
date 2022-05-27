@@ -41,84 +41,44 @@ VALUE rb_KernAux_snprintf1(
     while (*fmt && *fmt != '%') ++fmt;
     if (*(fmt++) != '%') rb_raise(rb_eArgError, "invalid format");
 
-    bool has_width = false, has_precision = false;
+    struct KernAux_PrintfFmt_Spec spec = KernAux_PrintfFmt_Spec_create();
+    KernAux_PrintfFmt_Spec_eval_flags(&spec, &fmt);
+    const bool has_width = KernAux_PrintfFmt_Spec_eval_width1(&spec, &fmt);
+    const bool has_precision = KernAux_PrintfFmt_Spec_eval_precision1(&spec, &fmt);
+    KernAux_PrintfFmt_Spec_eval_length(&spec, &fmt);
+    KernAux_PrintfFmt_Spec_eval_type(&spec, &fmt);
 
-    // Mimic printf behavior.
-    {
-        bool flags;
-        do {
-            if (*fmt == '0' || *fmt == '-' || *fmt == '+' || *fmt == ' ' ||
-                *fmt == '#')
-            {
-                ++fmt;
-                flags = true;
-            } else {
-                flags = false;
-            }
-        } while (flags);
-    }
-    if (*fmt >= '0' && *fmt <= '9') {
-        while (*fmt >= '0' && *fmt <= '9') ++fmt;
-    } else if (*fmt == '*') {
-        ++fmt;
-        has_width = true;
-    }
-    if (*fmt == '.') {
-        ++fmt;
-        if (*fmt >= '0' && *fmt <= '9') {
-            while (*fmt >= '0' && *fmt <= '9') ++fmt;
-        } else if (*fmt == '*') {
-            ++fmt;
-            has_precision = true;
-        }
-    }
-    if (*fmt == 'l') {
-        ++fmt;
-        if (*fmt == 'l') ++fmt;
-    } else if (*fmt == 'h') {
-        ++fmt;
-        if (*fmt == 'h') ++fmt;
-    } else if (*fmt == 't' || *fmt == 'j' || *fmt == 'z') {
-        ++fmt;
-    }
-
-    const char c = *fmt;
-
-    if (*fmt == '%') ++fmt;
     while (*fmt) {
         if (*(fmt++) == '%') rb_raise(rb_eArgError, "invalid format");
     }
 
     int arg_index = 2;
-    int width = 0, precision = 0;
     if (has_width && argc > arg_index) {
-        width = NUM2INT(argv_rb[arg_index++]);
+        KernAux_PrintfFmt_Spec_eval_width2(&spec, NUM2INT(argv_rb[arg_index++]));
     }
     if (has_precision && argc > arg_index) {
-        precision = NUM2INT(argv_rb[arg_index++]);
+        KernAux_PrintfFmt_Spec_eval_precision2(&spec, NUM2INT(argv_rb[arg_index++]));
     }
 
     struct DynArg dynarg = DynArg_create();
-
     if (argc > arg_index) {
         VALUE arg_rb = argv_rb[arg_index];
 
-        if (c == 'd' || c == 'i') {
+        if (spec.type == KERNAUX_PRINTF_FMT_TYPE_INT) {
             RB_INTEGER_TYPE_P(arg_rb);
             DynArg_use_long_long(&dynarg, NUM2LL(arg_rb));
-        } else if (c == 'u' || c == 'x' || c == 'X' || c == 'o' || c == 'b') {
+        } else if (spec.type == KERNAUX_PRINTF_FMT_TYPE_UINT) {
             RB_INTEGER_TYPE_P(arg_rb);
             DynArg_use_unsigned_long_long(&dynarg, NUM2ULL(arg_rb));
-        } else if (c == 'f' || c == 'F' ||
-                   c == 'e' || c == 'E' ||
-                   c == 'g' || c == 'G')
+        } else if (spec.type == KERNAUX_PRINTF_FMT_TYPE_FLOAT ||
+                   spec.type == KERNAUX_PRINTF_FMT_TYPE_EXP)
         {
             RB_FLOAT_TYPE_P(arg_rb);
             DynArg_use_double(&dynarg, NUM2DBL(arg_rb));
-        } else if (c == 'c') {
+        } else if (spec.type == KERNAUX_PRINTF_FMT_TYPE_CHAR) {
             Check_Type(arg_rb, T_STRING);
             DynArg_use_char(&dynarg, *StringValuePtr(arg_rb));
-        } else if (c == 's') {
+        } else if (spec.type == KERNAUX_PRINTF_FMT_TYPE_STR) {
             Check_Type(arg_rb, T_STRING);
             DynArg_use_str(&dynarg, StringValueCStr(arg_rb));
         }
@@ -131,18 +91,18 @@ VALUE rb_KernAux_snprintf1(
     if (has_width) {
         if (has_precision) {
             slen = dynarg.use_dbl
-                ? kernaux_snprintf(str, size, format, width, precision, dynarg.dbl)
-                : kernaux_snprintf(str, size, format, width, precision, dynarg.arg);
+                ? kernaux_snprintf(str, size, format, spec.width, spec.precision, dynarg.dbl)
+                : kernaux_snprintf(str, size, format, spec.width, spec.precision, dynarg.arg);
         } else {
             slen = dynarg.use_dbl
-                ? kernaux_snprintf(str, size, format, width, dynarg.dbl)
-                : kernaux_snprintf(str, size, format, width, dynarg.arg);
+                ? kernaux_snprintf(str, size, format, spec.width, dynarg.dbl)
+                : kernaux_snprintf(str, size, format, spec.width, dynarg.arg);
         }
     } else {
         if (has_precision) {
             slen = dynarg.use_dbl
-                ? kernaux_snprintf(str, size, format, precision, dynarg.dbl)
-                : kernaux_snprintf(str, size, format, precision, dynarg.arg);
+                ? kernaux_snprintf(str, size, format, spec.precision, dynarg.dbl)
+                : kernaux_snprintf(str, size, format, spec.precision, dynarg.arg);
         } else {
             slen = dynarg.use_dbl
                 ? kernaux_snprintf(str, size, format, dynarg.dbl)

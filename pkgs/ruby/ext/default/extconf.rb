@@ -20,6 +20,16 @@ have_func 'kernaux_itoa16'
 
 have_func 'kernaux_snprintf'
 
+# TODO: do something if not found?
+have_func 'KernAux_PrintfFmt_Spec_create'
+have_func 'KernAux_PrintfFmt_Spec_eval_flags'
+have_func 'KernAux_PrintfFmt_Spec_eval_width1'
+have_func 'KernAux_PrintfFmt_Spec_eval_width2'
+have_func 'KernAux_PrintfFmt_Spec_eval_precision1'
+have_func 'KernAux_PrintfFmt_Spec_eval_precision2'
+have_func 'KernAux_PrintfFmt_Spec_eval_length'
+have_func 'KernAux_PrintfFmt_Spec_eval_type'
+
 have_func 'kernaux_cmdline'
 
 raise 'can\'t create Makefile' unless create_makefile 'kernaux/default'
