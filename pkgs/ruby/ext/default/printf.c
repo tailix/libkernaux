@@ -26,7 +26,7 @@ VALUE rb_KernAux_snprintf1(
     const VALUE *const argv_rb,
     const VALUE self __attribute__((unused))
 ) {
-    if (argc < 2 || argc > 4) rb_raise(rb_eArgError, "expected 2, 3 or 4 args");
+    if (argc < 2 || argc > 5) rb_raise(rb_eArgError, "expected 2, 3, 4 or 5 args");
 
     const VALUE size_rb = argv_rb[0];
     VALUE format_rb = argv_rb[1];
@@ -41,7 +41,7 @@ VALUE rb_KernAux_snprintf1(
     while (*fmt && *fmt != '%') ++fmt;
     if (*(fmt++) != '%') rb_raise(rb_eArgError, "invalid format");
 
-    bool has_width = false;
+    bool has_width = false, has_precision = false;
 
     // Mimic printf behavior.
     {
@@ -69,6 +69,7 @@ VALUE rb_KernAux_snprintf1(
             while (*fmt >= '0' && *fmt <= '9') ++fmt;
         } else if (*fmt == '*') {
             ++fmt;
+            has_precision = true;
         }
     }
     if (*fmt == 'l') {
@@ -88,13 +89,19 @@ VALUE rb_KernAux_snprintf1(
         if (*(fmt++) == '%') rb_raise(rb_eArgError, "invalid format");
     }
 
-    int width = 0;
-    if (has_width && argc > 2) width = NUM2INT(argv_rb[2]);
+    int arg_index = 2;
+    int width = 0, precision = 0;
+    if (has_width && argc > arg_index) {
+        width = NUM2INT(argv_rb[arg_index++]);
+    }
+    if (has_precision && argc > arg_index) {
+        precision = NUM2INT(argv_rb[arg_index++]);
+    }
 
     struct DynArg dynarg = DynArg_create();
 
-    if (argc == (has_width ? 4 : 3)) {
-        VALUE arg_rb = argv_rb[has_width ? 3 : 2];
+    if (argc > arg_index) {
+        VALUE arg_rb = argv_rb[arg_index];
 
         if (c == 'd' || c == 'i') {
             RB_INTEGER_TYPE_P(arg_rb);
@@ -122,13 +129,25 @@ VALUE rb_KernAux_snprintf1(
 
     int slen;
     if (has_width) {
-        slen = dynarg.use_dbl
-            ? kernaux_snprintf(str, size, format, width, dynarg.dbl)
-            : kernaux_snprintf(str, size, format, width, dynarg.arg);
+        if (has_precision) {
+            slen = dynarg.use_dbl
+                ? kernaux_snprintf(str, size, format, width, precision, dynarg.dbl)
+                : kernaux_snprintf(str, size, format, width, precision, dynarg.arg);
+        } else {
+            slen = dynarg.use_dbl
+                ? kernaux_snprintf(str, size, format, width, dynarg.dbl)
+                : kernaux_snprintf(str, size, format, width, dynarg.arg);
+        }
     } else {
-        slen = dynarg.use_dbl
-            ? kernaux_snprintf(str, size, format, dynarg.dbl)
-            : kernaux_snprintf(str, size, format, dynarg.arg);
+        if (has_precision) {
+            slen = dynarg.use_dbl
+                ? kernaux_snprintf(str, size, format, precision, dynarg.dbl)
+                : kernaux_snprintf(str, size, format, precision, dynarg.arg);
+        } else {
+            slen = dynarg.use_dbl
+                ? kernaux_snprintf(str, size, format, dynarg.dbl)
+                : kernaux_snprintf(str, size, format, dynarg.arg);
+        }
     }
 
     const VALUE output_rb =
