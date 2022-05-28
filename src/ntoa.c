@@ -111,3 +111,8 @@ char *kernaux_itoa16(int64_t value, char *buffer)
 {
     return kernaux_itoa(value, buffer, 'x');
 }
+
+char *kernaux_itoa16x(int64_t value, char *buffer, const char *prefix)
+{
+    return kernaux_itoax(value, buffer, 'x', prefix);
+}

@@ -606,12 +606,30 @@ int main()
             assert(strcmp(buffer, itoa16_cases[index].result) == 0);
             assert(end1 == str_end(buffer));
 
+            const char *const end2 = kernaux_itoa16x(value, buffer, NULL);
+            assert(strcmp(buffer, itoa16_cases[index].result) == 0);
+            assert(end2 == str_end(buffer));
+
+            const char *const end3 = kernaux_itoa16x(value, buffer, "");
+            assert(strcmp(buffer, itoa16_cases[index].result) == 0);
+            assert(end3 == str_end(buffer));
+
             if (value <= 0) continue;
 
-            const char *const end2 = kernaux_itoa16(-value, buffer);
+            const char *const end4 = kernaux_itoa16(-value, buffer);
             assert(buffer[0] == '-');
             assert(strcmp(&buffer[1], itoa16_cases[index].result) == 0);
-            assert(end2 == str_end(buffer));
+            assert(end4 == str_end(buffer));
+
+            const char *const end5 = kernaux_itoa16(-value, buffer);
+            assert(buffer[0] == '-');
+            assert(strcmp(&buffer[1], itoa16_cases[index].result) == 0);
+            assert(end5 == str_end(buffer));
+
+            const char *const end6 = kernaux_itoa16(-value, buffer);
+            assert(buffer[0] == '-');
+            assert(strcmp(&buffer[1], itoa16_cases[index].result) == 0);
+            assert(end6 == str_end(buffer));
         }
     }
 
