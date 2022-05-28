@@ -488,6 +488,16 @@ int main()
             assert(buffer[0] == '-');
             assert(strcmp(&buffer[1], utoa_cases[index].result) == 0);
             assert(end4 == str_end(buffer));
+
+            const char *const end5 = kernaux_itoax(-value, buffer, base, NULL);
+            assert(buffer[0] == '-');
+            assert(strcmp(&buffer[1], utoa_cases[index].result) == 0);
+            assert(end5 == str_end(buffer));
+
+            const char *const end6 = kernaux_itoax(-value, buffer, base, "");
+            assert(buffer[0] == '-');
+            assert(strcmp(&buffer[1], utoa_cases[index].result) == 0);
+            assert(end6 == str_end(buffer));
         }
     }
 
@@ -544,6 +554,16 @@ int main()
             assert(buffer[0] == '-');
             assert(strcmp(&buffer[1], itoa10_cases[index].result) == 0);
             assert(end4 == str_end(buffer));
+
+            const char *const end5 = kernaux_itoa10x(-value, buffer, NULL);
+            assert(buffer[0] == '-');
+            assert(strcmp(&buffer[1], itoa10_cases[index].result) == 0);
+            assert(end5 == str_end(buffer));
+
+            const char *const end6 = kernaux_itoa10x(-value, buffer, "");
+            assert(buffer[0] == '-');
+            assert(strcmp(&buffer[1], itoa10_cases[index].result) == 0);
+            assert(end6 == str_end(buffer));
         }
     }
 
