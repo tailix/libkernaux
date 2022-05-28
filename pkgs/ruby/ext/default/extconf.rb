@@ -22,13 +22,13 @@ have_func 'kernaux_snprintf'
 
 # TODO: do something if not found?
 have_func 'KernAux_PrintfFmt_Spec_create'
-have_func 'KernAux_PrintfFmt_Spec_eval_flags'
-have_func 'KernAux_PrintfFmt_Spec_eval_width1'
-have_func 'KernAux_PrintfFmt_Spec_eval_width2'
-have_func 'KernAux_PrintfFmt_Spec_eval_precision1'
-have_func 'KernAux_PrintfFmt_Spec_eval_precision2'
-have_func 'KernAux_PrintfFmt_Spec_eval_length'
-have_func 'KernAux_PrintfFmt_Spec_eval_type'
+have_func 'KernAux_PrintfFmt_Spec_parse_flags'
+have_func 'KernAux_PrintfFmt_Spec_parse_width'
+have_func 'KernAux_PrintfFmt_Spec_parse_precision'
+have_func 'KernAux_PrintfFmt_Spec_parse_length'
+have_func 'KernAux_PrintfFmt_Spec_parse_type'
+have_func 'KernAux_PrintfFmt_Spec_set_width'
+have_func 'KernAux_PrintfFmt_Spec_set_precision'
 
 have_func 'kernaux_cmdline'
 

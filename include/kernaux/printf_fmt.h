@@ -46,13 +46,14 @@ struct KernAux_PrintfFmt_Spec {
 struct KernAux_PrintfFmt_Spec KernAux_PrintfFmt_Spec_create();
 void KernAux_PrintfFmt_Spec_init(struct KernAux_PrintfFmt_Spec *spec);
 
-void KernAux_PrintfFmt_Spec_eval_flags(struct KernAux_PrintfFmt_Spec *spec, const char **format);
-bool KernAux_PrintfFmt_Spec_eval_width1(struct KernAux_PrintfFmt_Spec *spec, const char **format);
-void KernAux_PrintfFmt_Spec_eval_width2(struct KernAux_PrintfFmt_Spec *spec, int width);
-bool KernAux_PrintfFmt_Spec_eval_precision1(struct KernAux_PrintfFmt_Spec *spec, const char **format);
-void KernAux_PrintfFmt_Spec_eval_precision2(struct KernAux_PrintfFmt_Spec *spec, int precision);
-void KernAux_PrintfFmt_Spec_eval_length(struct KernAux_PrintfFmt_Spec *spec, const char **format);
-void KernAux_PrintfFmt_Spec_eval_type(struct KernAux_PrintfFmt_Spec *spec, const char **format);
+void KernAux_PrintfFmt_Spec_parse_flags(struct KernAux_PrintfFmt_Spec *spec, const char **format);
+bool KernAux_PrintfFmt_Spec_parse_width(struct KernAux_PrintfFmt_Spec *spec, const char **format);
+bool KernAux_PrintfFmt_Spec_parse_precision(struct KernAux_PrintfFmt_Spec *spec, const char **format);
+void KernAux_PrintfFmt_Spec_parse_length(struct KernAux_PrintfFmt_Spec *spec, const char **format);
+void KernAux_PrintfFmt_Spec_parse_type(struct KernAux_PrintfFmt_Spec *spec, const char **format);
+
+void KernAux_PrintfFmt_Spec_set_width(struct KernAux_PrintfFmt_Spec *spec, int width);
+void KernAux_PrintfFmt_Spec_set_precision(struct KernAux_PrintfFmt_Spec *spec, int precision);
 
 #ifdef __cplusplus
 }

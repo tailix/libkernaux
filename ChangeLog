@@ -1,3 +1,7 @@
+2022-05-28  Alex Kotov  <kotovalexarian@gmail.com>
+
+	* include/kernaux/printf_fmt.h: Rename functions
+
 2022-05-24  Alex Kotov  <kotovalexarian@gmail.com>
 
 	* src/multiboot2/info_is_valid.c: Fix division by zero

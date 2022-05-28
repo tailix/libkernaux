@@ -42,11 +42,11 @@ VALUE rb_KernAux_snprintf1(
     if (*(fmt++) != '%') rb_raise(rb_eArgError, "invalid format");
 
     struct KernAux_PrintfFmt_Spec spec = KernAux_PrintfFmt_Spec_create();
-    KernAux_PrintfFmt_Spec_eval_flags(&spec, &fmt);
-    const bool has_width = KernAux_PrintfFmt_Spec_eval_width1(&spec, &fmt);
-    const bool has_precision = KernAux_PrintfFmt_Spec_eval_precision1(&spec, &fmt);
-    KernAux_PrintfFmt_Spec_eval_length(&spec, &fmt);
-    KernAux_PrintfFmt_Spec_eval_type(&spec, &fmt);
+    KernAux_PrintfFmt_Spec_parse_flags(&spec, &fmt);
+    const bool has_width = KernAux_PrintfFmt_Spec_parse_width(&spec, &fmt);
+    const bool has_precision = KernAux_PrintfFmt_Spec_parse_precision(&spec, &fmt);
+    KernAux_PrintfFmt_Spec_parse_length(&spec, &fmt);
+    KernAux_PrintfFmt_Spec_parse_type(&spec, &fmt);
 
     while (*fmt) {
         if (*(fmt++) == '%') rb_raise(rb_eArgError, "invalid format");
@@ -54,10 +54,10 @@ VALUE rb_KernAux_snprintf1(
 
     int arg_index = 2;
     if (has_width && argc > arg_index) {
-        KernAux_PrintfFmt_Spec_eval_width2(&spec, NUM2INT(argv_rb[arg_index++]));
+        KernAux_PrintfFmt_Spec_set_width(&spec, NUM2INT(argv_rb[arg_index++]));
     }
     if (has_precision && argc > arg_index) {
-        KernAux_PrintfFmt_Spec_eval_precision2(&spec, NUM2INT(argv_rb[arg_index++]));
+        KernAux_PrintfFmt_Spec_set_precision(&spec, NUM2INT(argv_rb[arg_index++]));
     }
 
     struct DynArg dynarg = DynArg_create();
