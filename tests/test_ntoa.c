@@ -499,10 +499,20 @@ int main()
             index < sizeof(utoa10_cases) / sizeof(utoa10_cases[0]);
             ++index
         ) {
-            const char *const end =
+            const char *const end1 =
                 kernaux_utoa10(utoa10_cases[index].value, buffer);
             assert(strcmp(buffer, utoa10_cases[index].result) == 0);
-            assert(end == str_end(buffer));
+            assert(end1 == str_end(buffer));
+
+            const char *const end2 =
+                kernaux_utoa10x(utoa10_cases[index].value, buffer, NULL);
+            assert(strcmp(buffer, utoa10_cases[index].result) == 0);
+            assert(end2 == str_end(buffer));
+
+            const char *const end3 =
+                kernaux_utoa10x(utoa10_cases[index].value, buffer, "");
+            assert(strcmp(buffer, utoa10_cases[index].result) == 0);
+            assert(end3 == str_end(buffer));
         }
     }
 
