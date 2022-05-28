@@ -154,18 +154,17 @@ int _vsnprintf(out_fct_type out, char* buffer, const size_t maxlen, const char* 
         struct KernAux_PrintfFmt_Spec spec = KernAux_PrintfFmt_Spec_create();
 
         KernAux_PrintfFmt_Spec_parse_flags(&spec, &format);
+        KernAux_PrintfFmt_Spec_parse_width(&spec, &format);
+        KernAux_PrintfFmt_Spec_parse_precision(&spec, &format);
+        KernAux_PrintfFmt_Spec_parse_length(&spec, &format);
+        KernAux_PrintfFmt_Spec_parse_type(&spec, &format);
 
-        if (KernAux_PrintfFmt_Spec_parse_width(&spec, &format)) {
+        if (spec.set_width) {
             KernAux_PrintfFmt_Spec_set_width(&spec, va_arg(va, int));
         }
-
-        if (KernAux_PrintfFmt_Spec_parse_precision(&spec, &format)) {
+        if (spec.set_precision) {
             KernAux_PrintfFmt_Spec_set_precision(&spec, va_arg(va, int));
         }
-
-        KernAux_PrintfFmt_Spec_parse_length(&spec, &format);
-
-        KernAux_PrintfFmt_Spec_parse_type(&spec, &format);
 
         // evaluate specifier
         switch (spec.type) {

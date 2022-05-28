@@ -13,15 +13,19 @@ int main()
         const char *format = {{ escape_str(case.in.format) }};
 
         struct KernAux_PrintfFmt_Spec spec = KernAux_PrintfFmt_Spec_create();
+
         KernAux_PrintfFmt_Spec_parse_flags(&spec, &format);
-        if (KernAux_PrintfFmt_Spec_parse_width(&spec, &format)) {
-            KernAux_PrintfFmt_Spec_set_width(&spec, {{ none_to_zero(case.in.width) }});
-        }
-        if (KernAux_PrintfFmt_Spec_parse_precision(&spec, &format)) {
-            KernAux_PrintfFmt_Spec_set_precision(&spec, {{ none_to_zero(case.in.precision) }});
-        }
+        KernAux_PrintfFmt_Spec_parse_width(&spec, &format);
+        KernAux_PrintfFmt_Spec_parse_precision(&spec, &format);
         KernAux_PrintfFmt_Spec_parse_length(&spec, &format);
         KernAux_PrintfFmt_Spec_parse_type(&spec, &format);
+
+        if (spec.set_width) {
+            KernAux_PrintfFmt_Spec_set_width(&spec, {{ none_to_zero(case.in.width) }});
+        }
+        if (spec.set_precision) {
+            KernAux_PrintfFmt_Spec_set_precision(&spec, {{ none_to_zero(case.in.precision) }});
+        }
 
         assert(spec.flags == {{ escape_flags(case.out.flags) }});
         assert(spec.width == {{ case.out.width }});

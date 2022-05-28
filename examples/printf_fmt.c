@@ -8,17 +8,21 @@ int main()
         const char *format = "s";
 
         struct KernAux_PrintfFmt_Spec spec = KernAux_PrintfFmt_Spec_create();
+
         KernAux_PrintfFmt_Spec_parse_flags(&spec, &format);
-        if (KernAux_PrintfFmt_Spec_parse_width(&spec, &format)) {
+        KernAux_PrintfFmt_Spec_parse_width(&spec, &format);
+        KernAux_PrintfFmt_Spec_parse_precision(&spec, &format);
+        KernAux_PrintfFmt_Spec_parse_length(&spec, &format);
+        KernAux_PrintfFmt_Spec_parse_type(&spec, &format);
+
+        if (spec.set_width) {
             // Actually this line won't be executed.
             KernAux_PrintfFmt_Spec_set_width(&spec, 0);
         }
-        if (KernAux_PrintfFmt_Spec_parse_precision(&spec, &format)) {
+        if (spec.set_precision) {
             // Actually this line won't be executed.
             KernAux_PrintfFmt_Spec_set_precision(&spec, 0);
         }
-        KernAux_PrintfFmt_Spec_parse_length(&spec, &format);
-        KernAux_PrintfFmt_Spec_parse_type(&spec, &format);
 
         assert(spec.flags == 0);
         assert(spec.width == 0);
@@ -31,17 +35,21 @@ int main()
         const char *format = "012.34f";
 
         struct KernAux_PrintfFmt_Spec spec = KernAux_PrintfFmt_Spec_create();
+
         KernAux_PrintfFmt_Spec_parse_flags(&spec, &format);
-        if (KernAux_PrintfFmt_Spec_parse_width(&spec, &format)) {
+        KernAux_PrintfFmt_Spec_parse_width(&spec, &format);
+        KernAux_PrintfFmt_Spec_parse_precision(&spec, &format);
+        KernAux_PrintfFmt_Spec_parse_length(&spec, &format);
+        KernAux_PrintfFmt_Spec_parse_type(&spec, &format);
+
+        if (spec.set_width) {
             // Actually this line won't be executed.
             KernAux_PrintfFmt_Spec_set_width(&spec, 0);
         }
-        if (KernAux_PrintfFmt_Spec_parse_precision(&spec, &format)) {
+        if (spec.set_precision) {
             // Actually this line won't be executed.
             KernAux_PrintfFmt_Spec_set_precision(&spec, 0);
         }
-        KernAux_PrintfFmt_Spec_parse_length(&spec, &format);
-        KernAux_PrintfFmt_Spec_parse_type(&spec, &format);
 
         assert(
             spec.flags ==
@@ -60,15 +68,19 @@ int main()
         const char *format = " *.*ld";
 
         struct KernAux_PrintfFmt_Spec spec = KernAux_PrintfFmt_Spec_create();
+
         KernAux_PrintfFmt_Spec_parse_flags(&spec, &format);
-        if (KernAux_PrintfFmt_Spec_parse_width(&spec, &format)) {
-            KernAux_PrintfFmt_Spec_set_width(&spec, 12);
-        }
-        if (KernAux_PrintfFmt_Spec_parse_precision(&spec, &format)) {
-            KernAux_PrintfFmt_Spec_set_precision(&spec, 34);
-        }
+        KernAux_PrintfFmt_Spec_parse_width(&spec, &format);
+        KernAux_PrintfFmt_Spec_parse_precision(&spec, &format);
         KernAux_PrintfFmt_Spec_parse_length(&spec, &format);
         KernAux_PrintfFmt_Spec_parse_type(&spec, &format);
+
+        if (spec.set_width) {
+            KernAux_PrintfFmt_Spec_set_width(&spec, 12);
+        }
+        if (spec.set_precision) {
+            KernAux_PrintfFmt_Spec_set_precision(&spec, 34);
+        }
 
         assert(
             spec.flags ==

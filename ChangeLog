@@ -1,6 +1,6 @@
 2022-05-28  Alex Kotov  <kotovalexarian@gmail.com>
 
-	* include/kernaux/printf_fmt.h: Rename functions
+	* include/kernaux/printf_fmt.h: Change API
 
 2022-05-24  Alex Kotov  <kotovalexarian@gmail.com>
 

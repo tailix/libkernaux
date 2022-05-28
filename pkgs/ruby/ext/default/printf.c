@@ -43,8 +43,8 @@ VALUE rb_KernAux_snprintf1(
 
     struct KernAux_PrintfFmt_Spec spec = KernAux_PrintfFmt_Spec_create();
     KernAux_PrintfFmt_Spec_parse_flags(&spec, &fmt);
-    const bool has_width = KernAux_PrintfFmt_Spec_parse_width(&spec, &fmt);
-    const bool has_precision = KernAux_PrintfFmt_Spec_parse_precision(&spec, &fmt);
+    KernAux_PrintfFmt_Spec_parse_width(&spec, &fmt);
+    KernAux_PrintfFmt_Spec_parse_precision(&spec, &fmt);
     KernAux_PrintfFmt_Spec_parse_length(&spec, &fmt);
     KernAux_PrintfFmt_Spec_parse_type(&spec, &fmt);
 
@@ -53,10 +53,10 @@ VALUE rb_KernAux_snprintf1(
     }
 
     int arg_index = 2;
-    if (has_width && argc > arg_index) {
+    if (spec.set_width && argc > arg_index) {
         KernAux_PrintfFmt_Spec_set_width(&spec, NUM2INT(argv_rb[arg_index++]));
     }
-    if (has_precision && argc > arg_index) {
+    if (spec.set_precision && argc > arg_index) {
         KernAux_PrintfFmt_Spec_set_precision(&spec, NUM2INT(argv_rb[arg_index++]));
     }
 
@@ -88,8 +88,8 @@ VALUE rb_KernAux_snprintf1(
     if (!str) rb_raise(rb_eNoMemError, "snprintf1 buffer malloc");
 
     int slen;
-    if (has_width) {
-        if (has_precision) {
+    if (spec.set_width) {
+        if (spec.set_precision) {
             slen = dynarg.use_dbl
                 ? kernaux_snprintf(str, size, format, spec.width, spec.precision, dynarg.dbl)
                 : kernaux_snprintf(str, size, format, spec.width, spec.precision, dynarg.arg);
@@ -99,7 +99,7 @@ VALUE rb_KernAux_snprintf1(
                 : kernaux_snprintf(str, size, format, spec.width, dynarg.arg);
         }
     } else {
-        if (has_precision) {
+        if (spec.set_precision) {
             slen = dynarg.use_dbl
                 ? kernaux_snprintf(str, size, format, spec.precision, dynarg.dbl)
                 : kernaux_snprintf(str, size, format, spec.precision, dynarg.arg);

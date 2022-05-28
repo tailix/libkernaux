@@ -31,8 +31,10 @@ void KernAux_PrintfFmt_Spec_init(struct KernAux_PrintfFmt_Spec *const spec)
     spec->width = 0u;
     spec->precision = 0u;
     spec->type = KERNAUX_PRINTF_FMT_TYPE_NONE;
-
     spec->base = 0;
+
+    spec->set_width = false;
+    spec->set_precision = false;
 }
 
 void KernAux_PrintfFmt_Spec_parse_flags(struct KernAux_PrintfFmt_Spec *const spec, const char **const format)
@@ -54,43 +56,43 @@ void KernAux_PrintfFmt_Spec_parse_flags(struct KernAux_PrintfFmt_Spec *const spe
     } while (running);
 }
 
-bool KernAux_PrintfFmt_Spec_parse_width(struct KernAux_PrintfFmt_Spec *const spec, const char **const format)
+void KernAux_PrintfFmt_Spec_parse_width(struct KernAux_PrintfFmt_Spec *const spec, const char **const format)
 {
-    KERNAUX_NOTNULL_RETVAL(spec, false);
-    KERNAUX_NOTNULL_RETVAL(format, false);
-    KERNAUX_NOTNULL_RETVAL(*format, false);
+    KERNAUX_NOTNULL_RETURN(spec);
+    KERNAUX_NOTNULL_RETURN(format);
+    KERNAUX_NOTNULL_RETURN(*format);
 
     if (isdigit(**format)) {
         spec->width = _atoi(format);
-        return false;
+        spec->set_width = false;
     } else if (**format == '*') {
         ++(*format);
-        return true;
+        spec->set_width = true;
     } else {
-        return false;
+        spec->set_width = false;
     }
 }
 
-bool KernAux_PrintfFmt_Spec_parse_precision(struct KernAux_PrintfFmt_Spec *const spec, const char **const format)
+void KernAux_PrintfFmt_Spec_parse_precision(struct KernAux_PrintfFmt_Spec *const spec, const char **const format)
 {
-    KERNAUX_NOTNULL_RETVAL(spec, false);
-    KERNAUX_NOTNULL_RETVAL(format, false);
-    KERNAUX_NOTNULL_RETVAL(*format, false);
+    KERNAUX_NOTNULL_RETURN(spec);
+    KERNAUX_NOTNULL_RETURN(format);
+    KERNAUX_NOTNULL_RETURN(*format);
 
     if (**format == '.') {
         spec->flags |= KERNAUX_PRINTF_FMT_FLAGS_PRECISION;
         ++(*format);
         if (isdigit(**format)) {
             spec->precision = _atoi(format);
-            return false;
+            spec->set_precision = false;
         } else if (**format == '*') {
             ++(*format);
-            return true;
+            spec->set_precision = true;
         } else {
-            return false;
+            spec->set_precision = false;
         }
     } else {
-        return false;
+        spec->set_precision = false;
     }
 }
 

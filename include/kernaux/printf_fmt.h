@@ -39,16 +39,18 @@ struct KernAux_PrintfFmt_Spec {
     unsigned int width;
     unsigned int precision;
     enum KernAux_PrintfFmt_Type type;
-
     unsigned int base;
+
+    bool set_width;
+    bool set_precision;
 };
 
 struct KernAux_PrintfFmt_Spec KernAux_PrintfFmt_Spec_create();
 void KernAux_PrintfFmt_Spec_init(struct KernAux_PrintfFmt_Spec *spec);
 
 void KernAux_PrintfFmt_Spec_parse_flags(struct KernAux_PrintfFmt_Spec *spec, const char **format);
-bool KernAux_PrintfFmt_Spec_parse_width(struct KernAux_PrintfFmt_Spec *spec, const char **format);
-bool KernAux_PrintfFmt_Spec_parse_precision(struct KernAux_PrintfFmt_Spec *spec, const char **format);
+void KernAux_PrintfFmt_Spec_parse_width(struct KernAux_PrintfFmt_Spec *spec, const char **format);
+void KernAux_PrintfFmt_Spec_parse_precision(struct KernAux_PrintfFmt_Spec *spec, const char **format);
 void KernAux_PrintfFmt_Spec_parse_length(struct KernAux_PrintfFmt_Spec *spec, const char **format);
 void KernAux_PrintfFmt_Spec_parse_type(struct KernAux_PrintfFmt_Spec *spec, const char **format);
 
