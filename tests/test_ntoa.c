@@ -429,13 +429,31 @@ int main()
             index < sizeof(utoa_cases) / sizeof(utoa_cases[0]);
             ++index
         ) {
-            const char *const end = kernaux_utoa(
+            const char *const end1 = kernaux_utoa(
                 utoa_cases[index].value,
                 buffer,
                 utoa_cases[index].base
             );
             assert(strcmp(buffer, utoa_cases[index].result) == 0);
-            assert(end == str_end(buffer));
+            assert(end1 == str_end(buffer));
+
+            const char *const end2 = kernaux_utoax(
+                utoa_cases[index].value,
+                buffer,
+                utoa_cases[index].base,
+                NULL
+            );
+            assert(strcmp(buffer, utoa_cases[index].result) == 0);
+            assert(end2 == str_end(buffer));
+
+            const char *const end3 = kernaux_utoax(
+                utoa_cases[index].value,
+                buffer,
+                utoa_cases[index].base,
+                ""
+            );
+            assert(strcmp(buffer, utoa_cases[index].result) == 0);
+            assert(end3 == str_end(buffer));
         }
     }
 

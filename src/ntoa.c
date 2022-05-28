@@ -9,6 +9,11 @@
 
 char *kernaux_utoa(uint64_t value, char *buffer, int base)
 {
+    return kernaux_utoax(value, buffer, base, NULL);
+}
+
+char *kernaux_utoax(uint64_t value, char *buffer, int base, const char *prefix)
+{
     KERNAUX_NOTNULL_RETVAL(buffer, NULL);
 
     switch (base) {
@@ -28,7 +33,10 @@ char *kernaux_utoa(uint64_t value, char *buffer, int base)
 
     KERNAUX_ASSERT_RETVAL(base >= 2 && base <= 36, NULL);
 
-    // Write to buffer
+    // Write prefix
+    if (prefix) while (*prefix) *(buffer++) = *(prefix++);
+
+    // Write number
     char *pos = buffer;
     if (value == 0) *(pos++) = '0';
     while (value > 0) {
