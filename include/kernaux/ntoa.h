@@ -38,8 +38,9 @@ char *kernaux_utoa10x(uint64_t value, char *buffer, const char *prefix);
 char *kernaux_itoa10(int64_t   value, char *buffer);
 char *kernaux_itoa10x(int64_t  value, char *buffer, const char *prefix);
 
-char *kernaux_utoa16(uint64_t value, char *buffer);
-char *kernaux_itoa16(int64_t  value, char *buffer);
+char *kernaux_utoa16(uint64_t  value, char *buffer);
+char *kernaux_utoa16x(uint64_t value, char *buffer, const char *prefix);
+char *kernaux_itoa16(int64_t   value, char *buffer);
 
 #ifdef __cplusplus
 }
