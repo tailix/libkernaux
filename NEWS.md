@@ -29,7 +29,7 @@ Releases
 
 * Assertions are used more broadly.
 * `<kernaux.h>` - the header is now generated from template depending on
-  configuration options, so you may safely require it when some packages are
+  configuration options, so you may safely include it when some packages are
   missing, it won't cause compilation error.
 * `<kernaux/printf.h>` - a potential buffer overflow is fixed.
 
