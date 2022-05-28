@@ -19,7 +19,8 @@ MRuby::Build.new do |conf|
   # ...
   conf.gem github: 'tailix/libkernaux',
            path: 'pkgs/mruby',
-           branch: 'v0.3.0'
+           branch: 'v0.3.0',
+           checksum_hash: 'bab58f40b53800265084ee7c767916ad0817fe5c'
   # ...
 end
 ```
