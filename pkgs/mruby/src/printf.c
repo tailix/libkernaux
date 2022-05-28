@@ -77,7 +77,7 @@ mrb_value rb_KernAux_snprintf1(mrb_state *const mrb, mrb_value self)
         } else if (spec.type == KERNAUX_PRINTF_FMT_TYPE_FLOAT ||
                    spec.type == KERNAUX_PRINTF_FMT_TYPE_EXP)
         {
-            DynArg_use_double(&dynarg, mrb_float(mrb_ensure_float_type(mrb, arg_rb)));
+            DynArg_use_double(&dynarg, mrb_as_float(mrb, arg_rb));
         } else if (spec.type == KERNAUX_PRINTF_FMT_TYPE_CHAR) {
             DynArg_use_char(&dynarg, *RSTRING_CSTR(mrb, arg_rb));
         } else if (spec.type == KERNAUX_PRINTF_FMT_TYPE_STR) {
