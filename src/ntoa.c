@@ -67,6 +67,16 @@ char *kernaux_itoa(int64_t value, char *buffer, int base)
     }
 }
 
+char *kernaux_itoax(int64_t value, char *buffer, int base, const char *prefix)
+{
+    if (value >= 0) {
+        return kernaux_utoax(value, buffer, base, prefix);
+    } else {
+        *(buffer++) = '-';
+        return kernaux_utoax(-value, buffer, base, prefix);
+    }
+}
+
 char *kernaux_utoa10(uint64_t value, char *buffer)
 {
     return kernaux_utoa(value, buffer, 'd');
