@@ -92,6 +92,11 @@ char *kernaux_itoa10(int64_t value, char *buffer)
     return kernaux_itoa(value, buffer, 'd');
 }
 
+char *kernaux_itoa10x(int64_t value, char *buffer, const char *prefix)
+{
+    return kernaux_itoax(value, buffer, 'd', prefix);
+}
+
 char *kernaux_utoa16(uint64_t value, char *buffer)
 {
     return kernaux_utoa(value, buffer, 'x');
