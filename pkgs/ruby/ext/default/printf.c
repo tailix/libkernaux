@@ -19,7 +19,6 @@ void init_printf()
                                rb_KernAux_snprintf1, -1);
 }
 
-// TODO: is this implementation correct?
 // FIXME: rewrite to ensure no memory leak on exception.
 VALUE rb_KernAux_snprintf1(
     const int argc,
