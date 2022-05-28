@@ -7,11 +7,6 @@
 
 #include <stddef.h>
 
-char *kernaux_utoa(uint64_t value, char *buffer, int base)
-{
-    return kernaux_utoax(value, buffer, base, NULL);
-}
-
 char *kernaux_utoax(uint64_t value, char *buffer, int base, const char *prefix)
 {
     KERNAUX_NOTNULL_RETVAL(buffer, NULL);
@@ -55,6 +50,11 @@ char *kernaux_utoax(uint64_t value, char *buffer, int base, const char *prefix)
     }
 
     return result;
+}
+
+char *kernaux_utoa(uint64_t value, char *buffer, int base)
+{
+    return kernaux_utoax(value, buffer, base, NULL);
 }
 
 char *kernaux_itoa(int64_t value, char *buffer, int base)
