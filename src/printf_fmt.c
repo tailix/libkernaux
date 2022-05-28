@@ -37,6 +37,20 @@ void KernAux_PrintfFmt_Spec_init(struct KernAux_PrintfFmt_Spec *const spec)
     spec->set_precision = false;
 }
 
+const char *KernAux_PrintfFmt_Spec_parse(struct KernAux_PrintfFmt_Spec *spec, const char *format)
+{
+    KERNAUX_NOTNULL_RETVAL(spec, NULL);
+    KERNAUX_NOTNULL_RETVAL(format, NULL);
+
+    KernAux_PrintfFmt_Spec_parse_flags(spec, &format);
+    KernAux_PrintfFmt_Spec_parse_width(spec, &format);
+    KernAux_PrintfFmt_Spec_parse_precision(spec, &format);
+    KernAux_PrintfFmt_Spec_parse_length(spec, &format);
+    KernAux_PrintfFmt_Spec_parse_type(spec, &format);
+
+    return format;
+}
+
 void KernAux_PrintfFmt_Spec_parse_flags(struct KernAux_PrintfFmt_Spec *const spec, const char **const format)
 {
     KERNAUX_NOTNULL_RETURN(spec);

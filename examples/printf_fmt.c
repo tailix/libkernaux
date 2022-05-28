@@ -9,11 +9,7 @@ int main()
 
         struct KernAux_PrintfFmt_Spec spec = KernAux_PrintfFmt_Spec_create();
 
-        KernAux_PrintfFmt_Spec_parse_flags(&spec, &format);
-        KernAux_PrintfFmt_Spec_parse_width(&spec, &format);
-        KernAux_PrintfFmt_Spec_parse_precision(&spec, &format);
-        KernAux_PrintfFmt_Spec_parse_length(&spec, &format);
-        KernAux_PrintfFmt_Spec_parse_type(&spec, &format);
+        format = KernAux_PrintfFmt_Spec_parse(&spec, format);
 
         if (spec.set_width) {
             // Actually this line won't be executed.
@@ -36,6 +32,7 @@ int main()
 
         struct KernAux_PrintfFmt_Spec spec = KernAux_PrintfFmt_Spec_create();
 
+        // Parsing of each part may be done separately.
         KernAux_PrintfFmt_Spec_parse_flags(&spec, &format);
         KernAux_PrintfFmt_Spec_parse_width(&spec, &format);
         KernAux_PrintfFmt_Spec_parse_precision(&spec, &format);
@@ -65,15 +62,12 @@ int main()
     }
 
     {
-        const char *format = " *.*ld";
+        const char *const format = " *.*ld";
 
         struct KernAux_PrintfFmt_Spec spec = KernAux_PrintfFmt_Spec_create();
 
-        KernAux_PrintfFmt_Spec_parse_flags(&spec, &format);
-        KernAux_PrintfFmt_Spec_parse_width(&spec, &format);
-        KernAux_PrintfFmt_Spec_parse_precision(&spec, &format);
-        KernAux_PrintfFmt_Spec_parse_length(&spec, &format);
-        KernAux_PrintfFmt_Spec_parse_type(&spec, &format);
+        // Returning value may be ignored.
+        KernAux_PrintfFmt_Spec_parse(&spec, format);
 
         if (spec.set_width) {
             KernAux_PrintfFmt_Spec_set_width(&spec, 12);

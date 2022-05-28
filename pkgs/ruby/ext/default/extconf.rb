@@ -22,11 +22,7 @@ have_func 'kernaux_snprintf'
 
 # TODO: do something if not found?
 have_func 'KernAux_PrintfFmt_Spec_create'
-have_func 'KernAux_PrintfFmt_Spec_parse_flags'
-have_func 'KernAux_PrintfFmt_Spec_parse_width'
-have_func 'KernAux_PrintfFmt_Spec_parse_precision'
-have_func 'KernAux_PrintfFmt_Spec_parse_length'
-have_func 'KernAux_PrintfFmt_Spec_parse_type'
+have_func 'KernAux_PrintfFmt_Spec_parse'
 have_func 'KernAux_PrintfFmt_Spec_set_width'
 have_func 'KernAux_PrintfFmt_Spec_set_precision'
 

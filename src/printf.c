@@ -153,11 +153,7 @@ int _vsnprintf(out_fct_type out, char* buffer, const size_t maxlen, const char* 
 
         struct KernAux_PrintfFmt_Spec spec = KernAux_PrintfFmt_Spec_create();
 
-        KernAux_PrintfFmt_Spec_parse_flags(&spec, &format);
-        KernAux_PrintfFmt_Spec_parse_width(&spec, &format);
-        KernAux_PrintfFmt_Spec_parse_precision(&spec, &format);
-        KernAux_PrintfFmt_Spec_parse_length(&spec, &format);
-        KernAux_PrintfFmt_Spec_parse_type(&spec, &format);
+        format = KernAux_PrintfFmt_Spec_parse(&spec, format);
 
         if (spec.set_width) {
             KernAux_PrintfFmt_Spec_set_width(&spec, va_arg(va, int));

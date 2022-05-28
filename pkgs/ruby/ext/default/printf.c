@@ -42,11 +42,8 @@ VALUE rb_KernAux_snprintf1(
     if (*(fmt++) != '%') rb_raise(rb_eArgError, "invalid format");
 
     struct KernAux_PrintfFmt_Spec spec = KernAux_PrintfFmt_Spec_create();
-    KernAux_PrintfFmt_Spec_parse_flags(&spec, &fmt);
-    KernAux_PrintfFmt_Spec_parse_width(&spec, &fmt);
-    KernAux_PrintfFmt_Spec_parse_precision(&spec, &fmt);
-    KernAux_PrintfFmt_Spec_parse_length(&spec, &fmt);
-    KernAux_PrintfFmt_Spec_parse_type(&spec, &fmt);
+
+    fmt = KernAux_PrintfFmt_Spec_parse(&spec, fmt);
 
     while (*fmt) {
         if (*(fmt++) == '%') rb_raise(rb_eArgError, "invalid format");
