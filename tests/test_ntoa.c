@@ -483,8 +483,15 @@ int main()
             index < sizeof(utoa10_cases) / sizeof(utoa10_cases[0]);
             ++index
         ) {
-            kernaux_utoa10(utoa10_cases[index].value, buffer);
+            const char *const end =
+                kernaux_utoa10(utoa10_cases[index].value, buffer);
             assert(strcmp(buffer, utoa10_cases[index].result) == 0);
+            for (const char *pos = buffer;; ++pos) {
+                if (*pos == '\0') {
+                    assert(end == pos);
+                    break;
+                }
+            }
         }
     }
 
@@ -498,14 +505,26 @@ int main()
         ) {
             const int64_t value = itoa10_cases[index].value;
 
-            kernaux_itoa10(value, buffer);
+            const char *const end1 = kernaux_itoa10(value, buffer);
             assert(strcmp(buffer, itoa10_cases[index].result) == 0);
+            for (const char *pos = buffer;; ++pos) {
+                if (*pos == '\0') {
+                    assert(end1 == pos);
+                    break;
+                }
+            }
 
             if (value <= 0) continue;
 
-            kernaux_itoa10(-value, buffer);
+            const char *const end2 = kernaux_itoa10(-value, buffer);
             assert(buffer[0] == '-');
             assert(strcmp(&buffer[1], itoa10_cases[index].result) == 0);
+            for (const char *pos = buffer;; ++pos) {
+                if (*pos == '\0') {
+                    assert(end2 == pos);
+                    break;
+                }
+            }
         }
     }
 
@@ -517,8 +536,15 @@ int main()
             index < sizeof(utoa16_cases) / sizeof(utoa16_cases[0]);
             ++index
         ) {
-            kernaux_utoa16(utoa16_cases[index].value, buffer);
+            const char *const end =
+                kernaux_utoa16(utoa16_cases[index].value, buffer);
             assert(strcmp(buffer, utoa16_cases[index].result) == 0);
+            for (const char *pos = buffer;; ++pos) {
+                if (*pos == '\0') {
+                    assert(end == pos);
+                    break;
+                }
+            }
         }
     }
 
@@ -532,14 +558,26 @@ int main()
         ) {
             const int64_t value = itoa16_cases[index].value;
 
-            kernaux_itoa16(value, buffer);
+            const char *const end1 = kernaux_itoa16(value, buffer);
             assert(strcmp(buffer, itoa16_cases[index].result) == 0);
+            for (const char *pos = buffer;; ++pos) {
+                if (*pos == '\0') {
+                    assert(end1 == pos);
+                    break;
+                }
+            }
 
             if (value <= 0) continue;
 
-            kernaux_itoa16(-value, buffer);
+            const char *const end2 = kernaux_itoa16(-value, buffer);
             assert(buffer[0] == '-');
             assert(strcmp(&buffer[1], itoa16_cases[index].result) == 0);
+            for (const char *pos = buffer;; ++pos) {
+                if (*pos == '\0') {
+                    assert(end2 == pos);
+                    break;
+                }
+            }
         }
     }
 

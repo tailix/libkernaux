@@ -59,22 +59,22 @@ char *kernaux_itoa(int64_t value, char *buffer, int base)
     }
 }
 
-void kernaux_utoa10(uint64_t value, char *buffer)
+char *kernaux_utoa10(uint64_t value, char *buffer)
 {
-    kernaux_utoa(value, buffer, 'd');
+    return kernaux_utoa(value, buffer, 'd');
 }
 
-void kernaux_itoa10(int64_t value, char *buffer)
+char *kernaux_itoa10(int64_t value, char *buffer)
 {
-    kernaux_itoa(value, buffer, 'd');
+    return kernaux_itoa(value, buffer, 'd');
 }
 
-void kernaux_utoa16(uint64_t value, char *buffer)
+char *kernaux_utoa16(uint64_t value, char *buffer)
 {
-    kernaux_utoa(value, buffer, 'x');
+    return kernaux_utoa(value, buffer, 'x');
 }
 
-void kernaux_itoa16(int64_t value, char *buffer)
+char *kernaux_itoa16(int64_t value, char *buffer)
 {
-    kernaux_itoa(value, buffer, 'x');
+    return kernaux_itoa(value, buffer, 'x');
 }
