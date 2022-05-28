@@ -1,5 +1,5 @@
 MRuby::Gem::Specification.new 'mruby-kernaux' do |spec|
-  spec.version = '0.0.0'
+  spec.version = '0.3.0'
   spec.license = 'MIT'
   spec.homepage = 'https://github.com/tailix/libkernaux/tree/master/pkgs/ruby'
   spec.author = 'Alex Kotov'

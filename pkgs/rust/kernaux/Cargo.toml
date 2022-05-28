@@ -1,6 +1,6 @@
 [package]
 name = "kernaux"
-version = "0.2.0"
+version = "0.3.0"
 authors = ["Alex Kotov <kotovalexarian@gmail.com>"]
 edition = "2021"
 description = "Safe binding to libkernaux - auxiliary library for kernel development"
@@ -13,5 +13,5 @@ categories = ["api-bindings", "embedded", "parsing"]
 publish = true
 
 [dependencies.kernaux-sys]
-version = "0.2.0"
+version = "0.3.0"
 path = "../kernaux-sys"
