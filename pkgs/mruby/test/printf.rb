@@ -8,7 +8,7 @@ assert 'KernAux.sprintf' do
   ].each do |(suffix, description)|
     assert description do
       printf_yml =
-        File.expand_path("../../../../tests/printf#{suffix}.yml", __FILE__)
+        File.expand_path("../../../../common/printf#{suffix}.yml", __FILE__)
 
       YAML.load(File.read(printf_yml)).each do |test|
         expected = test['result']
