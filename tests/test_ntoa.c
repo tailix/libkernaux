@@ -547,7 +547,7 @@ int main()
     kernaux_assert_cb = assert_cb;
 
     {
-        char buffer[KERNAUX_UTOA_BUFFER_SIZE];
+        char buffer[KERNAUX_UTOA_MIN_BUFFER_SIZE];
 
         test_utoa_assert(NULL, 'd');
         test_utoa_assert(buffer, 0);
@@ -558,7 +558,7 @@ int main()
     }
 
     {
-        char buffer[KERNAUX_ITOA_BUFFER_SIZE];
+        char buffer[KERNAUX_ITOA_MIN_BUFFER_SIZE];
 
         test_itoa_assert(NULL, 'd');
         test_itoa_assert(buffer, 0);
@@ -569,7 +569,7 @@ int main()
     }
 
     {
-        char buffer[KERNAUX_UTOA_BUFFER_SIZE];
+        char buffer[KERNAUX_UTOA_MIN_BUFFER_SIZE];
 
         for (
             size_t index = 0;
@@ -597,7 +597,7 @@ int main()
     }
 
     {
-        char buffer[KERNAUX_ITOA_BUFFER_SIZE];
+        char buffer[KERNAUX_ITOA_MIN_BUFFER_SIZE];
 
         for (
             size_t index = 0;
@@ -632,7 +632,7 @@ int main()
     }
 
     {
-        char buffer[KERNAUX_UTOA2_BUFFER_SIZE];
+        char buffer[KERNAUX_UTOA2_MIN_BUFFER_SIZE];
 
         for (
             size_t index = 0;
@@ -657,7 +657,7 @@ int main()
     }
 
     {
-        char buffer[KERNAUX_ITOA2_BUFFER_SIZE];
+        char buffer[KERNAUX_ITOA2_MIN_BUFFER_SIZE];
 
         for (
             size_t index = 0;
@@ -698,7 +698,7 @@ int main()
     }
 
     {
-        char buffer[KERNAUX_UTOA8_BUFFER_SIZE];
+        char buffer[KERNAUX_UTOA8_MIN_BUFFER_SIZE];
 
         for (
             size_t index = 0;
@@ -723,7 +723,7 @@ int main()
     }
 
     {
-        char buffer[KERNAUX_ITOA8_BUFFER_SIZE];
+        char buffer[KERNAUX_ITOA8_MIN_BUFFER_SIZE];
 
         for (
             size_t index = 0;
@@ -764,7 +764,7 @@ int main()
     }
 
     {
-        char buffer[KERNAUX_UTOA10_BUFFER_SIZE];
+        char buffer[KERNAUX_UTOA10_MIN_BUFFER_SIZE];
 
         for (
             size_t index = 0;
@@ -789,7 +789,7 @@ int main()
     }
 
     {
-        char buffer[KERNAUX_ITOA10_BUFFER_SIZE];
+        char buffer[KERNAUX_ITOA10_MIN_BUFFER_SIZE];
 
         for (
             size_t index = 0;
@@ -830,7 +830,7 @@ int main()
     }
 
     {
-        char buffer[KERNAUX_UTOA16_BUFFER_SIZE];
+        char buffer[KERNAUX_UTOA16_MIN_BUFFER_SIZE];
 
         for (
             size_t index = 0;
@@ -855,7 +855,7 @@ int main()
     }
 
     {
-        char buffer[KERNAUX_ITOA16_BUFFER_SIZE];
+        char buffer[KERNAUX_ITOA16_MIN_BUFFER_SIZE];
 
         for (
             size_t index = 0;

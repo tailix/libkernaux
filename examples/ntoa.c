@@ -13,7 +13,7 @@ int main()
 {
     // kernaux_utoa - common func, unsigned, with prefix.
     {
-        char buffer[KERNAUX_UTOA_BUFFER_SIZE + 3]; // more space for prefix
+        char buffer[KERNAUX_UTOA_MIN_BUFFER_SIZE + 3]; // more space for prefix
         const char *end;
 
         // decimal: 10
