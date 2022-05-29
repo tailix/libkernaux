@@ -78,6 +78,28 @@ char *kernaux_itoax(int64_t value, char *buffer, int base, const char *prefix)
     }
 }
 
+char *kernaux_utoa2(uint64_t value, char *buffer)
+{
+    return kernaux_utoa(value, buffer, 'b');
+}
+
+char *kernaux_utoa2x(uint64_t value, char *buffer, const char *prefix)
+{
+    if (!prefix) prefix = "";
+    return kernaux_utoax(value, buffer, 'b', prefix);
+}
+
+char *kernaux_itoa2(int64_t value, char *buffer)
+{
+    return kernaux_itoa(value, buffer, 'b');
+}
+
+char *kernaux_itoa2x(int64_t value, char *buffer, const char *prefix)
+{
+    if (!prefix) prefix = "";
+    return kernaux_itoax(value, buffer, 'b', prefix);
+}
+
 char *kernaux_utoa8(uint64_t value, char *buffer)
 {
     return kernaux_utoa(value, buffer, 'o');

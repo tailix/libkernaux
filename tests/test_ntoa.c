@@ -130,6 +130,65 @@ static const struct {
 static const struct {
     uint64_t value;
     const char *result;
+} utoa2_cases[] = {
+    { 0,                        "0"                                 },
+    { 1,                        "1"                                 },
+    { 2,                        "10"                                },
+    { 3,                        "11"                                },
+    { 4,                        "100"                               },
+    { 5,                        "101"                               },
+    { 6,                        "110"                               },
+    { 7,                        "111"                               },
+    { 8,                        "1000"                              },
+    { UINT16_MAX,               "1111111111111111"                  },
+    { UINT16_MAX + 1,           "10000000000000000"                 },
+    { UINT32_MAX,               "11111111111111111111111111111111"  },
+    { (uint64_t)UINT32_MAX + 1, "100000000000000000000000000000000" },
+    { UINT64_MAX - 6,           "1111111111111111111111111111111111111111111111111111111111111001" },
+    { UINT64_MAX - 5,           "1111111111111111111111111111111111111111111111111111111111111010" },
+    { UINT64_MAX - 1,           "1111111111111111111111111111111111111111111111111111111111111110" },
+    { UINT64_MAX,               "1111111111111111111111111111111111111111111111111111111111111111" },
+};
+
+static const struct {
+    int64_t value;
+    const char *result;
+} itoa2_cases[] = {
+    { 0,                       "0"                                 },
+    { 1,                       "1"                                 },
+    { -1,                      "-1"                                },
+    { 2,                       "10"                                },
+    { -2,                      "-10"                               },
+    { 3,                       "11"                                },
+    { -3,                      "-11"                               },
+    { 4,                       "100"                               },
+    { -4,                      "-100"                              },
+    { 5,                       "101"                               },
+    { -5,                      "-101"                              },
+    { 6,                       "110"                               },
+    { -6,                      "-110"                              },
+    { 7,                       "111"                               },
+    { -7,                      "-111"                              },
+    { 8,                       "1000"                              },
+    { -8,                      "-1000"                             },
+    { UINT16_MAX,              "1111111111111111"                  },
+    { UINT16_MAX + 1,          "10000000000000000"                 },
+    { UINT32_MAX,              "11111111111111111111111111111111"  },
+    { (int64_t)UINT32_MAX + 1, "100000000000000000000000000000000" },
+    { INT64_MAX - 6,           "111111111111111111111111111111111111111111111111111111111111001"   },
+    { INT64_MIN + 7,           "-111111111111111111111111111111111111111111111111111111111111001"  },
+    { INT64_MAX - 5,           "111111111111111111111111111111111111111111111111111111111111010"   },
+    { INT64_MIN + 6,           "-111111111111111111111111111111111111111111111111111111111111010"  },
+    { INT64_MAX - 1,           "111111111111111111111111111111111111111111111111111111111111110"   },
+    { INT64_MIN + 2,           "-111111111111111111111111111111111111111111111111111111111111110"  },
+    { INT64_MAX,               "111111111111111111111111111111111111111111111111111111111111111"   },
+    { INT64_MIN + 1,           "-111111111111111111111111111111111111111111111111111111111111111"  },
+    { INT64_MIN,               "-1000000000000000000000000000000000000000000000000000000000000000" },
+};
+
+static const struct {
+    uint64_t value;
+    const char *result;
 } utoa8_cases[] = {
     { 00,                       "0"                      },
     { 01,                       "1"                      },
@@ -568,6 +627,72 @@ int main()
             assert(buffer[0] == '-');
             assert(strcmp(&buffer[1], utoa_cases[index].result) == 0);
             assert(end4 == str_end(buffer));
+        }
+    }
+
+    {
+        char buffer[KERNAUX_UTOA2_BUFFER_SIZE];
+
+        for (
+            size_t index = 0;
+            index < sizeof(utoa2_cases) / sizeof(utoa2_cases[0]);
+            ++index
+        ) {
+            const char *const end1 =
+                kernaux_utoa2(utoa2_cases[index].value, buffer);
+            assert(strcmp(buffer, utoa2_cases[index].result) == 0);
+            assert(end1 == str_end(buffer));
+
+            const char *const end2 =
+                kernaux_utoa2x(utoa2_cases[index].value, buffer, NULL);
+            assert(strcmp(buffer, utoa2_cases[index].result) == 0);
+            assert(end2 == str_end(buffer));
+
+            const char *const end3 =
+                kernaux_utoa2x(utoa2_cases[index].value, buffer, "");
+            assert(strcmp(buffer, utoa2_cases[index].result) == 0);
+            assert(end3 == str_end(buffer));
+        }
+    }
+
+    {
+        char buffer[KERNAUX_ITOA2_BUFFER_SIZE];
+
+        for (
+            size_t index = 0;
+            index < sizeof(itoa2_cases) / sizeof(itoa2_cases[0]);
+            ++index
+        ) {
+            const int64_t value = itoa2_cases[index].value;
+
+            const char *const end1 = kernaux_itoa2(value, buffer);
+            assert(strcmp(buffer, itoa2_cases[index].result) == 0);
+            assert(end1 == str_end(buffer));
+
+            const char *const end2 = kernaux_itoa2x(value, buffer, NULL);
+            assert(strcmp(buffer, itoa2_cases[index].result) == 0);
+            assert(end2 == str_end(buffer));
+
+            const char *const end3 = kernaux_itoa2x(value, buffer, "");
+            assert(strcmp(buffer, itoa2_cases[index].result) == 0);
+            assert(end3 == str_end(buffer));
+
+            if (value <= 0) continue;
+
+            const char *const end4 = kernaux_itoa2(-value, buffer);
+            assert(buffer[0] == '-');
+            assert(strcmp(&buffer[1], itoa2_cases[index].result) == 0);
+            assert(end4 == str_end(buffer));
+
+            const char *const end5 = kernaux_itoa2x(-value, buffer, NULL);
+            assert(buffer[0] == '-');
+            assert(strcmp(&buffer[1], itoa2_cases[index].result) == 0);
+            assert(end5 == str_end(buffer));
+
+            const char *const end6 = kernaux_itoa2x(-value, buffer, "");
+            assert(buffer[0] == '-');
+            assert(strcmp(&buffer[1], itoa2_cases[index].result) == 0);
+            assert(end6 == str_end(buffer));
         }
     }
 
