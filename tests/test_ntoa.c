@@ -588,10 +588,19 @@ int main()
                 utoa_cases[index].value,
                 buffer,
                 utoa_cases[index].base,
-                ""
+                NULL
             );
             assert(strcmp(buffer, utoa_cases[index].result) == 0);
             assert(end2 == str_end(buffer));
+
+            const char *const end3 = kernaux_utoax(
+                utoa_cases[index].value,
+                buffer,
+                utoa_cases[index].base,
+                ""
+            );
+            assert(strcmp(buffer, utoa_cases[index].result) == 0);
+            assert(end3 == str_end(buffer));
         }
     }
 
@@ -612,21 +621,30 @@ int main()
             assert(strcmp(buffer, utoa_cases[index].result) == 0);
             assert(end1 == str_end(buffer));
 
-            const char *const end2 = kernaux_itoax(value, buffer, base, "");
+            const char *const end2 = kernaux_itoax(value, buffer, base, NULL);
             assert(strcmp(buffer, utoa_cases[index].result) == 0);
             assert(end2 == str_end(buffer));
 
-            if (value <= 0 || base < 2 || base > 36) continue;
-
-            const char *const end3 = kernaux_itoa(-value, buffer, base);
-            assert(buffer[0] == '-');
-            assert(strcmp(&buffer[1], utoa_cases[index].result) == 0);
+            const char *const end3 = kernaux_itoax(value, buffer, base, "");
+            assert(strcmp(buffer, utoa_cases[index].result) == 0);
             assert(end3 == str_end(buffer));
 
-            const char *const end4 = kernaux_itoax(-value, buffer, base, "");
+            if (value <= 0 || base < 2 || base > 36) continue;
+
+            const char *const end4 = kernaux_itoa(-value, buffer, base);
             assert(buffer[0] == '-');
             assert(strcmp(&buffer[1], utoa_cases[index].result) == 0);
             assert(end4 == str_end(buffer));
+
+            const char *const end5 = kernaux_itoax(-value, buffer, base, NULL);
+            assert(buffer[0] == '-');
+            assert(strcmp(&buffer[1], utoa_cases[index].result) == 0);
+            assert(end5 == str_end(buffer));
+
+            const char *const end6 = kernaux_itoax(-value, buffer, base, "");
+            assert(buffer[0] == '-');
+            assert(strcmp(&buffer[1], utoa_cases[index].result) == 0);
+            assert(end6 == str_end(buffer));
         }
     }
 

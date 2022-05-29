@@ -10,7 +10,6 @@
 char *kernaux_utoax(uint64_t value, char *buffer, int base, const char *prefix)
 {
     KERNAUX_NOTNULL_RETVAL(buffer, NULL);
-    KERNAUX_NOTNULL_RETVAL(prefix, NULL);
 
     switch (base) {
     case 'b': case 'B': base = 2;   break;
@@ -30,7 +29,7 @@ char *kernaux_utoax(uint64_t value, char *buffer, int base, const char *prefix)
     KERNAUX_ASSERT_RETVAL(base >= 2 && base <= 36, NULL);
 
     // Write prefix
-    while (*prefix) *(buffer++) = *(prefix++);
+    if (prefix) while (*prefix) *(buffer++) = *(prefix++);
 
     // Write number
     char *pos = buffer;
@@ -55,7 +54,7 @@ char *kernaux_utoax(uint64_t value, char *buffer, int base, const char *prefix)
 
 char *kernaux_utoa(uint64_t value, char *buffer, int base)
 {
-    return kernaux_utoax(value, buffer, base, "");
+    return kernaux_utoax(value, buffer, base, NULL);
 }
 
 char *kernaux_itoa(int64_t value, char *buffer, int base)
@@ -85,7 +84,6 @@ char *kernaux_utoa2(uint64_t value, char *buffer)
 
 char *kernaux_utoa2x(uint64_t value, char *buffer, const char *prefix)
 {
-    if (!prefix) prefix = "";
     return kernaux_utoax(value, buffer, 'b', prefix);
 }
 
@@ -96,7 +94,6 @@ char *kernaux_itoa2(int64_t value, char *buffer)
 
 char *kernaux_itoa2x(int64_t value, char *buffer, const char *prefix)
 {
-    if (!prefix) prefix = "";
     return kernaux_itoax(value, buffer, 'b', prefix);
 }
 
@@ -107,7 +104,6 @@ char *kernaux_utoa8(uint64_t value, char *buffer)
 
 char *kernaux_utoa8x(uint64_t value, char *buffer, const char *prefix)
 {
-    if (!prefix) prefix = "";
     return kernaux_utoax(value, buffer, 'o', prefix);
 }
 
@@ -118,7 +114,6 @@ char *kernaux_itoa8(int64_t value, char *buffer)
 
 char *kernaux_itoa8x(int64_t value, char *buffer, const char *prefix)
 {
-    if (!prefix) prefix = "";
     return kernaux_itoax(value, buffer, 'o', prefix);
 }
 
@@ -129,7 +124,6 @@ char *kernaux_utoa10(uint64_t value, char *buffer)
 
 char *kernaux_utoa10x(uint64_t value, char *buffer, const char *prefix)
 {
-    if (!prefix) prefix = "";
     return kernaux_utoax(value, buffer, 'd', prefix);
 }
 
@@ -140,7 +134,6 @@ char *kernaux_itoa10(int64_t value, char *buffer)
 
 char *kernaux_itoa10x(int64_t value, char *buffer, const char *prefix)
 {
-    if (!prefix) prefix = "";
     return kernaux_itoax(value, buffer, 'd', prefix);
 }
 
@@ -151,7 +144,6 @@ char *kernaux_utoa16(uint64_t value, char *buffer)
 
 char *kernaux_utoa16x(uint64_t value, char *buffer, const char *prefix)
 {
-    if (!prefix) prefix = "";
     return kernaux_utoax(value, buffer, 'x', prefix);
 }
 
@@ -162,6 +154,5 @@ char *kernaux_itoa16(int64_t value, char *buffer)
 
 char *kernaux_itoa16x(int64_t value, char *buffer, const char *prefix)
 {
-    if (!prefix) prefix = "";
     return kernaux_itoax(value, buffer, 'x', prefix);
 }
