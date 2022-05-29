@@ -38,10 +38,8 @@ extern "C" {
 // "-8000000000000000"
 #define KERNAUX_ITOA16_BUFFER_SIZE 18
 
-char *kernaux_utoa(uint64_t  value, char *buffer, int base);
-char *kernaux_utoax(uint64_t value, char *buffer, int base, const char *prefix);
-char *kernaux_itoa(int64_t   value, char *buffer, int base);
-char *kernaux_itoax(int64_t  value, char *buffer, int base, const char *prefix);
+char *kernaux_utoa(uint64_t value, char *buffer, int base, const char *prefix);
+char *kernaux_itoa(int64_t  value, char *buffer, int base, const char *prefix);
 
 char *kernaux_utoa2(uint64_t  value, char *buffer);
 char *kernaux_utoa2x(uint64_t value, char *buffer, const char *prefix);
