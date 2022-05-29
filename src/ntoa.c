@@ -64,7 +64,7 @@ char *kernaux_itoa(int64_t value, char *buffer, int base, const char *prefix)
 
 char *kernaux_utoa2(uint64_t value, char *buffer)
 {
-    return kernaux_utoa(value, buffer, 'b', NULL);
+    return kernaux_utoa(value, buffer, 'b', KERNAUX_NTOA_DEFAULT_PREFIX_2);
 }
 
 char *kernaux_utoa2x(uint64_t value, char *buffer, const char *prefix)
@@ -74,7 +74,7 @@ char *kernaux_utoa2x(uint64_t value, char *buffer, const char *prefix)
 
 char *kernaux_itoa2(int64_t value, char *buffer)
 {
-    return kernaux_itoa(value, buffer, 'b', NULL);
+    return kernaux_itoa(value, buffer, 'b', KERNAUX_NTOA_DEFAULT_PREFIX_2);
 }
 
 char *kernaux_itoa2x(int64_t value, char *buffer, const char *prefix)
@@ -84,7 +84,7 @@ char *kernaux_itoa2x(int64_t value, char *buffer, const char *prefix)
 
 char *kernaux_utoa8(uint64_t value, char *buffer)
 {
-    return kernaux_utoa(value, buffer, 'o', NULL);
+    return kernaux_utoa(value, buffer, 'o', KERNAUX_NTOA_DEFAULT_PREFIX_8);
 }
 
 char *kernaux_utoa8x(uint64_t value, char *buffer, const char *prefix)
@@ -94,7 +94,7 @@ char *kernaux_utoa8x(uint64_t value, char *buffer, const char *prefix)
 
 char *kernaux_itoa8(int64_t value, char *buffer)
 {
-    return kernaux_itoa(value, buffer, 'o', NULL);
+    return kernaux_itoa(value, buffer, 'o', KERNAUX_NTOA_DEFAULT_PREFIX_8);
 }
 
 char *kernaux_itoa8x(int64_t value, char *buffer, const char *prefix)
@@ -124,7 +124,7 @@ char *kernaux_itoa10x(int64_t value, char *buffer, const char *prefix)
 
 char *kernaux_utoa16(uint64_t value, char *buffer)
 {
-    return kernaux_utoa(value, buffer, 'x', NULL);
+    return kernaux_utoa(value, buffer, 'x', KERNAUX_NTOA_DEFAULT_PREFIX_16);
 }
 
 char *kernaux_utoa16x(uint64_t value, char *buffer, const char *prefix)
@@ -134,7 +134,7 @@ char *kernaux_utoa16x(uint64_t value, char *buffer, const char *prefix)
 
 char *kernaux_itoa16(int64_t value, char *buffer)
 {
-    return kernaux_itoa(value, buffer, 'x', NULL);
+    return kernaux_itoa(value, buffer, 'x', KERNAUX_NTOA_DEFAULT_PREFIX_16);
 }
 
 char *kernaux_itoa16x(int64_t value, char *buffer, const char *prefix)
