@@ -6,6 +6,8 @@ Releases
 0.3.0 (2022-05-28)
 ------------------
 
+134 files changed, 6149 insertions(+), 1770 deletions(-)
+
 ### Breaking changes
 
 * `<kernaux/assert.h>` - a semicolon is required after macros.
