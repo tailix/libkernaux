@@ -169,6 +169,14 @@ RSpec.describe KernAux, '.itoa' do
       end
     end
 
+    context 'when no prefix is given' do
+      subject(:itoa) { described_class.itoa number, base }
+
+      it { is_expected.to be_instance_of String }
+      it { is_expected.to be_frozen }
+      it { is_expected.to eq number.to_s base }
+    end
+
     context 'when prefix is nil' do
       let(:prefix) { nil }
 

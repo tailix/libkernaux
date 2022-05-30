@@ -4,10 +4,10 @@
 #define MAX_PREFIX_LEN 100
 
 #ifdef HAVE_KERNAUX_UTOA
-static VALUE rb_KernAux_utoa(VALUE self, VALUE number, VALUE base, VALUE prefix);
+static VALUE rb_KernAux_utoa(int argc, const VALUE *argv, VALUE self);
 #endif
 #ifdef HAVE_KERNAUX_ITOA
-static VALUE rb_KernAux_itoa(VALUE self, VALUE number, VALUE base, VALUE prefix);
+static VALUE rb_KernAux_itoa(int argc, const VALUE *argv, VALUE self);
 #endif
 #ifdef HAVE_KERNAUX_UTOA10
 static VALUE rb_KernAux_utoa10(VALUE self, VALUE number);
@@ -70,10 +70,10 @@ void init_ntoa()
                               rb_KernAux_Error));
 
 #ifdef HAVE_KERNAUX_UTOA
-    rb_define_singleton_method(rb_KernAux, "utoa", rb_KernAux_utoa, 3);
+    rb_define_singleton_method(rb_KernAux, "utoa", rb_KernAux_utoa, -1);
 #endif
 #ifdef HAVE_KERNAUX_ITOA
-    rb_define_singleton_method(rb_KernAux, "itoa", rb_KernAux_itoa, 3);
+    rb_define_singleton_method(rb_KernAux, "itoa", rb_KernAux_itoa, -1);
 #endif
 #ifdef HAVE_KERNAUX_UTOA10
     rb_define_singleton_method(rb_KernAux, "utoa10", rb_KernAux_utoa10, 1);
@@ -90,12 +90,20 @@ void init_ntoa()
 }
 
 #ifdef HAVE_KERNAUX_UTOA
-VALUE rb_KernAux_utoa(
-    const VALUE self_rb __attribute__((unused)),
-    const VALUE number_rb,
-    const VALUE base_rb,
-    VALUE prefix_rb
-) {
+VALUE rb_KernAux_utoa(const int argc, const VALUE *argv, const VALUE self)
+{
+    if (argc < 2 || argc > 3) {
+        rb_raise(
+            rb_eArgError,
+            "wrong number of arguments (given %d, expected 2..3)",
+            argc
+        );
+    }
+
+    VALUE number_rb = argv[0];
+    VALUE base_rb   = argv[1];
+    VALUE prefix_rb = argc == 3 ? argv[2] : Qnil;
+
     RB_INTEGER_TYPE_P(number_rb);
     if (rb_funcall(number_rb, rb_intern_LESS, 1, INT2FIX(0))) {
         rb_raise(rb_eRangeError, "can't convert negative number to uint64_t");
@@ -123,12 +131,20 @@ VALUE rb_KernAux_utoa(
 #endif
 
 #ifdef HAVE_KERNAUX_ITOA
-VALUE rb_KernAux_itoa(
-    const VALUE self_rb __attribute__((unused)),
-    const VALUE number_rb,
-    const VALUE base_rb,
-    VALUE prefix_rb
-) {
+VALUE rb_KernAux_itoa(const int argc, const VALUE *argv, const VALUE self)
+{
+    if (argc < 2 || argc > 3) {
+        rb_raise(
+            rb_eArgError,
+            "wrong number of arguments (given %d, expected 2..3)",
+            argc
+        );
+    }
+
+    VALUE number_rb = argv[0];
+    VALUE base_rb   = argv[1];
+    VALUE prefix_rb = argc == 3 ? argv[2] : Qnil;
+
     RB_INTEGER_TYPE_P(number_rb);
 
     const char *prefix = NULL;
