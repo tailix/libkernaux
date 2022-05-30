@@ -62,6 +62,16 @@ char *kernaux_itoa(int64_t value, char *buffer, int base, const char *const pref
     }
 }
 
+char *kernaux_utoa2(uint64_t value, char *buffer)
+{
+    return kernaux_utoa(value, buffer, 'b', KERNAUX_NTOA_DEFAULT_PREFIX_2);
+}
+
+char *kernaux_itoa2(int64_t value, char *buffer)
+{
+    return kernaux_itoa(value, buffer, 'b', KERNAUX_NTOA_DEFAULT_PREFIX_2);
+}
+
 char *kernaux_utoa8(uint64_t value, char *buffer)
 {
     return kernaux_utoa(value, buffer, 'o', KERNAUX_NTOA_DEFAULT_PREFIX_8);

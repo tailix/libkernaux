@@ -1,13 +1,34 @@
 use std::ffi::CStr;
 
 use kernaux_sys::{
-    itoa10 as kernaux_itoa10, itoa16 as kernaux_itoa16, itoa8 as kernaux_itoa8,
-    utoa10 as kernaux_utoa10, utoa16 as kernaux_utoa16, utoa8 as kernaux_utoa8,
+    itoa10 as kernaux_itoa10, itoa16 as kernaux_itoa16,
+    utoa10 as kernaux_utoa10, utoa16 as kernaux_utoa16,
 };
 use kernaux_sys::{
-    ITOA10_BUFFER_SIZE, ITOA16_BUFFER_SIZE, ITOA8_BUFFER_SIZE,
-    UTOA10_BUFFER_SIZE, UTOA16_BUFFER_SIZE, UTOA8_BUFFER_SIZE,
+    itoa2 as kernaux_itoa2, itoa8 as kernaux_itoa8, utoa2 as kernaux_utoa2,
+    utoa8 as kernaux_utoa8,
 };
+use kernaux_sys::{
+    ITOA10_BUFFER_SIZE, ITOA16_BUFFER_SIZE, UTOA10_BUFFER_SIZE,
+    UTOA16_BUFFER_SIZE,
+};
+use kernaux_sys::{
+    ITOA2_BUFFER_SIZE, ITOA8_BUFFER_SIZE, UTOA2_BUFFER_SIZE, UTOA8_BUFFER_SIZE,
+};
+
+pub fn utoa2(value: u64) -> String {
+    let mut buffer: [i8; UTOA2_BUFFER_SIZE] = [0; UTOA2_BUFFER_SIZE];
+    unsafe { kernaux_utoa2(value, buffer.as_mut_ptr()) };
+    let result = unsafe { CStr::from_ptr(buffer.as_ptr()) }.to_str().unwrap();
+    String::from(result)
+}
+
+pub fn itoa2(value: i64) -> String {
+    let mut buffer: [i8; ITOA2_BUFFER_SIZE] = [0; ITOA2_BUFFER_SIZE];
+    unsafe { kernaux_itoa2(value, buffer.as_mut_ptr()) };
+    let result = unsafe { CStr::from_ptr(buffer.as_ptr()) }.to_str().unwrap();
+    String::from(result)
+}
 
 pub fn utoa8(value: u64) -> String {
     let mut buffer: [i8; UTOA8_BUFFER_SIZE] = [0; UTOA8_BUFFER_SIZE];
@@ -54,6 +75,34 @@ pub fn itoa16(value: i64) -> String {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn test_utoa2() {
+        assert_eq!(utoa2(0), "0b0");
+        assert_eq!(utoa2(1), "0b1");
+        assert_eq!(utoa2(123), "0b1111011");
+        assert_eq!(
+            utoa2(u64::MAX),
+            "0b1111111111111111111111111111111111111111111111111111111111111111",
+        );
+    }
+
+    #[test]
+    fn test_itoa2() {
+        assert_eq!(itoa2(0), "0b0");
+        assert_eq!(itoa2(1), "0b1");
+        assert_eq!(itoa2(-1), "-0b1");
+        assert_eq!(itoa2(123), "0b1111011");
+        assert_eq!(itoa2(-123), "-0b1111011");
+        assert_eq!(
+            itoa2(i64::MAX),
+            "0b111111111111111111111111111111111111111111111111111111111111111",
+        );
+        assert_eq!(
+            itoa2(i64::MIN),
+            "-0b1000000000000000000000000000000000000000000000000000000000000000",
+        );
+    }
 
     #[test]
     fn test_utoa8() {

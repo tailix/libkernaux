@@ -14,6 +14,9 @@
 static mrb_value rb_KernAux_utoa(mrb_state *mrb, mrb_value self);
 static mrb_value rb_KernAux_itoa(mrb_state *mrb, mrb_value self);
 
+static mrb_value rb_KernAux_utoa2(mrb_state *mrb, mrb_value self);
+static mrb_value rb_KernAux_itoa2(mrb_state *mrb, mrb_value self);
+
 static mrb_value rb_KernAux_utoa8(mrb_state *mrb, mrb_value self);
 static mrb_value rb_KernAux_itoa8(mrb_state *mrb, mrb_value self);
 
@@ -40,6 +43,11 @@ void init_ntoa(mrb_state *const mrb)
                             rb_KernAux_utoa, MRB_ARGS_REQ(2) | MRB_ARGS_OPT(1));
     mrb_define_class_method(mrb, rb_KernAux, "itoa",
                             rb_KernAux_itoa, MRB_ARGS_REQ(2) | MRB_ARGS_OPT(1));
+
+    mrb_define_class_method(mrb, rb_KernAux, "utoa2",
+                            rb_KernAux_utoa2, MRB_ARGS_REQ(1));
+    mrb_define_class_method(mrb, rb_KernAux, "itoa2",
+                            rb_KernAux_itoa2, MRB_ARGS_REQ(1));
 
     mrb_define_class_method(mrb, rb_KernAux, "utoa8",
                             rb_KernAux_utoa8, MRB_ARGS_REQ(1));
@@ -116,6 +124,41 @@ mrb_value rb_KernAux_itoa(mrb_state *mrb, mrb_value self)
     char buffer[KERNAUX_ITOA_MIN_BUFFER_SIZE + prefix_len];
     current_mrb_start(mrb);
     kernaux_itoa(value, buffer, convert_base(mrb, base), prefix);
+    current_mrb_finish(mrb);
+
+    mrb_value result = mrb_str_new_lit(mrb, "");
+    result = mrb_str_cat_cstr(mrb, result, buffer);
+    return mrb_obj_freeze(mrb, result);
+}
+
+mrb_value rb_KernAux_utoa2(mrb_state *mrb, mrb_value self)
+{
+    mrb_int value = 0;
+    mrb_get_args(mrb, "i", &value);
+
+    if (value < 0) {
+        mrb_raise(mrb, E_RANGE_ERROR,
+                  "can't convert negative number to uint64_t");
+    }
+
+    char buffer[KERNAUX_UTOA2_BUFFER_SIZE];
+    current_mrb_start(mrb);
+    kernaux_utoa2(value, buffer);
+    current_mrb_finish(mrb);
+
+    mrb_value result = mrb_str_new_lit(mrb, "");
+    result = mrb_str_cat_cstr(mrb, result, buffer);
+    return mrb_obj_freeze(mrb, result);
+}
+
+mrb_value rb_KernAux_itoa2(mrb_state *mrb, mrb_value self)
+{
+    mrb_int value = 0;
+    mrb_get_args(mrb, "i", &value);
+
+    char buffer[KERNAUX_ITOA2_BUFFER_SIZE];
+    current_mrb_start(mrb);
+    kernaux_itoa2(value, buffer);
     current_mrb_finish(mrb);
 
     mrb_value result = mrb_str_new_lit(mrb, "");

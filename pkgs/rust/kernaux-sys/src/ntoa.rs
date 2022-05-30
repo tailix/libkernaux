@@ -3,6 +3,8 @@ use libc::{c_char, c_int};
 pub const UTOA_MIN_BUFFER_SIZE: usize = 64 + 1;
 pub const ITOA_MIN_BUFFER_SIZE: usize = 65 + 1;
 
+pub const UTOA2_BUFFER_SIZE: usize = 64 + 2 + 1;
+pub const ITOA2_BUFFER_SIZE: usize = 65 + 2 + 1;
 pub const UTOA8_BUFFER_SIZE: usize = 21 + 2 + 1;
 pub const ITOA8_BUFFER_SIZE: usize = 22 + 2 + 1;
 pub const UTOA10_BUFFER_SIZE: usize = 20 + 1;
@@ -27,6 +29,10 @@ extern "C" {
         prefix: *const c_char,
     ) -> *mut c_char;
 
+    #[link_name = "kernaux_utoa2"]
+    pub fn utoa2(value: u64, buffer: *mut c_char) -> *mut c_char;
+    #[link_name = "kernaux_itoa2"]
+    pub fn itoa2(value: i64, buffer: *mut c_char) -> *mut c_char;
     #[link_name = "kernaux_utoa8"]
     pub fn utoa8(value: u64, buffer: *mut c_char) -> *mut c_char;
     #[link_name = "kernaux_itoa8"]
@@ -146,6 +152,33 @@ mod tests {
             unsafe { CStr::from_ptr(buffer.as_ptr()) }.to_str().unwrap();
         assert_eq!(result, "-foo123");
         assert_eq!(end, unsafe { buffer.as_mut_ptr().offset(7) });
+    }
+
+    #[test]
+    fn test_utoa2() {
+        let mut buffer: [i8; UTOA2_BUFFER_SIZE] = [0; UTOA2_BUFFER_SIZE];
+        let end: *mut c_char = unsafe { utoa2(123, buffer.as_mut_ptr()) };
+        let result =
+            unsafe { CStr::from_ptr(buffer.as_ptr()) }.to_str().unwrap();
+        assert_eq!(result, "0b1111011");
+        assert_eq!(end, unsafe { buffer.as_mut_ptr().offset(9) });
+    }
+
+    #[test]
+    fn test_itoa2() {
+        let mut buffer: [i8; ITOA2_BUFFER_SIZE] = [0; ITOA2_BUFFER_SIZE];
+        let end: *mut c_char = unsafe { itoa2(123, buffer.as_mut_ptr()) };
+        let result =
+            unsafe { CStr::from_ptr(buffer.as_ptr()) }.to_str().unwrap();
+        assert_eq!(result, "0b1111011");
+        assert_eq!(end, unsafe { buffer.as_mut_ptr().offset(9) });
+
+        let mut buffer: [i8; ITOA2_BUFFER_SIZE] = [0; ITOA2_BUFFER_SIZE];
+        let end: *mut c_char = unsafe { itoa2(-123, buffer.as_mut_ptr()) };
+        let result =
+            unsafe { CStr::from_ptr(buffer.as_ptr()) }.to_str().unwrap();
+        assert_eq!(result, "-0b1111011");
+        assert_eq!(end, unsafe { buffer.as_mut_ptr().offset(10) });
     }
 
     #[test]
