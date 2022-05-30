@@ -400,7 +400,7 @@ int main()
     kernaux_assert_cb = assert_cb;
 
     {
-        char buffer[KERNAUX_UTOA_BUFFER_SIZE];
+        char buffer[KERNAUX_UTOA_MIN_BUFFER_SIZE];
 
         test_utoa_assert(NULL, 'd');
         test_utoa_assert(buffer, 0);
@@ -411,7 +411,7 @@ int main()
     }
 
     {
-        char buffer[KERNAUX_ITOA_BUFFER_SIZE];
+        char buffer[KERNAUX_ITOA_MIN_BUFFER_SIZE];
 
         test_itoa_assert(NULL, 'd');
         test_itoa_assert(buffer, 0);
@@ -422,7 +422,7 @@ int main()
     }
 
     {
-        char buffer[KERNAUX_UTOA_BUFFER_SIZE + 3];
+        char buffer[KERNAUX_UTOA_MIN_BUFFER_SIZE + 3];
 
         for (
             size_t index = 0;
@@ -460,7 +460,7 @@ int main()
     }
 
     {
-        char buffer[KERNAUX_ITOA_BUFFER_SIZE + 3];
+        char buffer[KERNAUX_ITOA_MIN_BUFFER_SIZE + 3];
 
         for (
             size_t index = 0;

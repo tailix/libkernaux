@@ -74,7 +74,7 @@ mrb_value rb_KernAux_utoa(mrb_state *mrb, mrb_value self)
                    "prefix length %d is too long", prefix_len);
     }
 
-    char buffer[KERNAUX_UTOA_BUFFER_SIZE + prefix_len];
+    char buffer[KERNAUX_UTOA_MIN_BUFFER_SIZE + prefix_len];
     current_mrb_start(mrb);
     kernaux_utoa(value, buffer, convert_base(mrb, base), prefix);
     current_mrb_finish(mrb);
@@ -105,7 +105,7 @@ mrb_value rb_KernAux_itoa(mrb_state *mrb, mrb_value self)
                    "prefix length %d is too long", prefix_len);
     }
 
-    char buffer[KERNAUX_ITOA_BUFFER_SIZE + prefix_len];
+    char buffer[KERNAUX_ITOA_MIN_BUFFER_SIZE + prefix_len];
     current_mrb_start(mrb);
     kernaux_itoa(value, buffer, convert_base(mrb, base), prefix);
     current_mrb_finish(mrb);
