@@ -689,10 +689,10 @@ int main()
 
             if (value <= 0) continue;
 
-            const char *const end4 = kernaux_itoa2(-value, buffer);
+            const char *const end2 = kernaux_itoa2(-value, buffer);
             assert(strncmp(buffer, "-0b", 3) == 0);
             assert(strcmp(&buffer[3], itoa2_cases[index].result) == 0);
-            assert(end4 == str_end(buffer));
+            assert(end2 == str_end(buffer));
         }
     }
 
@@ -734,10 +734,10 @@ int main()
 
             if (value <= 0) continue;
 
-            const char *const end4 = kernaux_itoa8(-value, buffer);
+            const char *const end2 = kernaux_itoa8(-value, buffer);
             assert(strncmp(buffer, "-0o", 3) == 0);
             assert(strcmp(&buffer[3], itoa8_cases[index].result) == 0);
-            assert(end4 == str_end(buffer));
+            assert(end2 == str_end(buffer));
         }
     }
 
@@ -772,10 +772,10 @@ int main()
 
             if (value <= 0) continue;
 
-            const char *const end4 = kernaux_itoa10(-value, buffer);
+            const char *const end2 = kernaux_itoa10(-value, buffer);
             assert(buffer[0] == '-');
             assert(strcmp(&buffer[1], itoa10_cases[index].result) == 0);
-            assert(end4 == str_end(buffer));
+            assert(end2 == str_end(buffer));
         }
     }
 
@@ -817,10 +817,10 @@ int main()
 
             if (value <= 0) continue;
 
-            const char *const end4 = kernaux_itoa16(-value, buffer);
+            const char *const end2 = kernaux_itoa16(-value, buffer);
             assert(strncmp(buffer, "-0x", 3) == 0);
             assert(strcmp(&buffer[3], itoa16_cases[index].result) == 0);
-            assert(end4 == str_end(buffer));
+            assert(end2 == str_end(buffer));
         }
     }
 
