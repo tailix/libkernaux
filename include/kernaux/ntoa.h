@@ -31,11 +31,11 @@ extern "C" {
 char *kernaux_utoa(uint64_t value, char *buffer, int base, const char *prefix);
 char *kernaux_itoa(int64_t  value, char *buffer, int base, const char *prefix);
 
-void kernaux_utoa10(uint64_t value, char *buffer);
-void kernaux_itoa10(int64_t  value, char *buffer);
+char *kernaux_utoa10(uint64_t value, char *buffer);
+char *kernaux_itoa10(int64_t  value, char *buffer);
 
-void kernaux_utoa16(uint64_t value, char *buffer);
-void kernaux_itoa16(int64_t  value, char *buffer);
+char *kernaux_utoa16(uint64_t value, char *buffer);
+char *kernaux_itoa16(int64_t  value, char *buffer);
 
 #ifdef __cplusplus
 }

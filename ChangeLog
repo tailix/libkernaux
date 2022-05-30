@@ -5,6 +5,8 @@
 	* include/kernaux/ntoa.h: Constant "KERNAUX_UTOA_BUFFER_SIZE" renamed to
 	"KERNAUX_UTOA_MIN_BUFFER_SIZE", "KERNAUX_ITOA_BUFFER_SIZE" to
 	"KERNAUX_ITOA_MIN_BUFFER_SIZE"
+	* include/kernaux/ntoa.h: Functions "kernaux_[u|i]toa[10|16]" return the end
+	of a buffer
 
 2022-05-28  Alex Kotov  <kotovalexarian@gmail.com>
 
