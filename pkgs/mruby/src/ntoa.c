@@ -16,6 +16,7 @@ static mrb_value rb_KernAux_itoa(mrb_state *mrb, mrb_value self);
 
 static mrb_value rb_KernAux_utoa10(mrb_state *mrb, mrb_value self);
 static mrb_value rb_KernAux_itoa10(mrb_state *mrb, mrb_value self);
+
 static mrb_value rb_KernAux_utoa16(mrb_state *mrb, mrb_value self);
 static mrb_value rb_KernAux_itoa16(mrb_state *mrb, mrb_value self);
 
@@ -29,6 +30,8 @@ void init_ntoa(mrb_state *const mrb)
 
     mrb_define_class_under_id(mrb, rb_KernAux, MRB_SYM(InvalidNtoaBaseError),
                               rb_KernAux_Error);
+    mrb_define_class_under_id(mrb, rb_KernAux, MRB_SYM(TooLongNtoaPrefixError),
+                              rb_KernAux_Error);
 
     mrb_define_class_method(mrb, rb_KernAux, "utoa",
                             rb_KernAux_utoa, MRB_ARGS_REQ(2) | MRB_ARGS_OPT(1));
@@ -39,6 +42,7 @@ void init_ntoa(mrb_state *const mrb)
                             rb_KernAux_utoa10, MRB_ARGS_REQ(1));
     mrb_define_class_method(mrb, rb_KernAux, "itoa10",
                             rb_KernAux_itoa10, MRB_ARGS_REQ(1));
+
     mrb_define_class_method(mrb, rb_KernAux, "utoa16",
                             rb_KernAux_utoa16, MRB_ARGS_REQ(1));
     mrb_define_class_method(mrb, rb_KernAux, "itoa16",
@@ -58,7 +62,15 @@ mrb_value rb_KernAux_utoa(mrb_state *mrb, mrb_value self)
                   "can't convert negative number to uint64_t");
     }
     if (prefix_len > MAX_PREFIX_LEN || prefix_len < 0) {
-        mrb_raisef(mrb, E_ARGUMENT_ERROR,
+        struct RClass *const rb_KernAux =
+            mrb_module_get_id(mrb, MRB_SYM(KernAux));
+        struct RClass *const rb_KernAux_TooLongNtoaPrefixError =
+            mrb_class_get_under_id(
+                mrb,
+                rb_KernAux,
+                MRB_SYM(TooLongNtoaPrefixError)
+            );
+        mrb_raisef(mrb, rb_KernAux_TooLongNtoaPrefixError,
                    "prefix length %d is too long", prefix_len);
     }
 
@@ -81,7 +93,15 @@ mrb_value rb_KernAux_itoa(mrb_state *mrb, mrb_value self)
     mrb_get_args(mrb, "io|s!", &value, &base, &prefix, &prefix_len);
 
     if (prefix_len > MAX_PREFIX_LEN || prefix_len < 0) {
-        mrb_raisef(mrb, E_ARGUMENT_ERROR,
+        struct RClass *const rb_KernAux =
+            mrb_module_get_id(mrb, MRB_SYM(KernAux));
+        struct RClass *const rb_KernAux_TooLongNtoaPrefixError =
+            mrb_class_get_under_id(
+                mrb,
+                rb_KernAux,
+                MRB_SYM(TooLongNtoaPrefixError)
+            );
+        mrb_raisef(mrb, rb_KernAux_TooLongNtoaPrefixError,
                    "prefix length %d is too long", prefix_len);
     }
 

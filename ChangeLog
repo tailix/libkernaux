@@ -1,6 +1,7 @@
 2022-05-30  Alex Kotov  <kotovalexarian@gmail.com>
 
-	* include/ntoa.h: Functions "kernaux_utoa" and "kernaux_itoa" receive prefix
+	* include/kernaux/ntoa.h: Functions "kernaux_utoa" and "kernaux_itoa"
+	receive prefix
 
 2022-05-28  Alex Kotov  <kotovalexarian@gmail.com>
 
