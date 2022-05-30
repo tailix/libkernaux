@@ -255,5 +255,29 @@ int main()
         assert(end == str_end(buffer));
     }
 
+    // kernaux_utoa16
+    {
+        char buffer[KERNAUX_UTOA16_BUFFER_SIZE];
+        const char *end;
+
+        end = kernaux_utoa16(0x123, buffer);
+        assert(strcmp(buffer, "0x123") == 0);
+        assert(end == str_end(buffer));
+    }
+
+    // kernaux_itoa16
+    {
+        char buffer[KERNAUX_ITOA16_BUFFER_SIZE];
+        const char *end;
+
+        end = kernaux_itoa16(0x123, buffer);
+        assert(strcmp(buffer, "0x123") == 0);
+        assert(end == str_end(buffer));
+
+        end = kernaux_itoa16(-0x123, buffer);
+        assert(strcmp(buffer, "-0x123") == 0);
+        assert(end == str_end(buffer));
+    }
+
     return 0;
 }
