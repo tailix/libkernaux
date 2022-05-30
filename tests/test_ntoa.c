@@ -552,7 +552,8 @@ int main()
         ) {
             const char *const end1 =
                 kernaux_utoa16(utoa16_cases[index].value, buffer);
-            assert(strcmp(buffer, utoa16_cases[index].result) == 0);
+            assert(strncmp(buffer, "0x", 2) == 0);
+            assert(strcmp(&buffer[2], utoa16_cases[index].result) == 0);
             assert(end1 == str_end(buffer));
         }
     }
@@ -568,14 +569,20 @@ int main()
             const int64_t value = itoa16_cases[index].value;
 
             const char *const end1 = kernaux_itoa16(value, buffer);
-            assert(strcmp(buffer, itoa16_cases[index].result) == 0);
+            if (value >= 0) {
+                assert(strncmp(buffer, "0x", 2) == 0);
+                assert(strcmp(&buffer[2], itoa16_cases[index].result) == 0);
+            } else {
+                assert(strncmp(buffer, "-0x", 3) == 0);
+                assert(strcmp(&buffer[3], &itoa16_cases[index].result[1]) == 0);
+            }
             assert(end1 == str_end(buffer));
 
             if (value <= 0) continue;
 
             const char *const end2 = kernaux_itoa16(-value, buffer);
-            assert(buffer[0] == '-');
-            assert(strcmp(&buffer[1], itoa16_cases[index].result) == 0);
+            assert(strncmp(buffer, "-0x", 3) == 0);
+            assert(strcmp(&buffer[3], itoa16_cases[index].result) == 0);
             assert(end2 == str_end(buffer));
         }
     }

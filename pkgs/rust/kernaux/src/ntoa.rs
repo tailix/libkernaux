@@ -62,20 +62,20 @@ mod tests {
 
     #[test]
     fn test_utoa16() {
-        assert_eq!(utoa16(0), "0");
-        assert_eq!(utoa16(1), "1");
-        assert_eq!(utoa16(0x123), "123");
-        assert_eq!(utoa16(u64::MAX), "ffffffffffffffff");
+        assert_eq!(utoa16(0), "0x0");
+        assert_eq!(utoa16(1), "0x1");
+        assert_eq!(utoa16(0x123), "0x123");
+        assert_eq!(utoa16(u64::MAX), "0xffffffffffffffff");
     }
 
     #[test]
     fn test_itoa16() {
-        assert_eq!(itoa16(0), "0");
-        assert_eq!(itoa16(1), "1");
-        assert_eq!(itoa16(-1), "-1");
-        assert_eq!(itoa16(0x123), "123");
-        assert_eq!(itoa16(-0x123), "-123");
-        assert_eq!(itoa16(i64::MAX), "7fffffffffffffff");
-        assert_eq!(itoa16(i64::MIN), "-8000000000000000");
+        assert_eq!(itoa16(0), "0x0");
+        assert_eq!(itoa16(1), "0x1");
+        assert_eq!(itoa16(-1), "-0x1");
+        assert_eq!(itoa16(0x123), "0x123");
+        assert_eq!(itoa16(-0x123), "-0x123");
+        assert_eq!(itoa16(i64::MAX), "0x7fffffffffffffff");
+        assert_eq!(itoa16(i64::MIN), "-0x8000000000000000");
     }
 }

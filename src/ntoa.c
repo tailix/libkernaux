@@ -74,10 +74,10 @@ char *kernaux_itoa10(int64_t value, char *buffer)
 
 char *kernaux_utoa16(uint64_t value, char *buffer)
 {
-    return kernaux_utoa(value, buffer, 'x', NULL);
+    return kernaux_utoa(value, buffer, 'x', KERNAUX_NTOA_DEFAULT_PREFIX_16);
 }
 
 char *kernaux_itoa16(int64_t value, char *buffer)
 {
-    return kernaux_itoa(value, buffer, 'x', NULL);
+    return kernaux_itoa(value, buffer, 'x', KERNAUX_NTOA_DEFAULT_PREFIX_16);
 }

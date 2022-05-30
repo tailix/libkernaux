@@ -10,7 +10,7 @@ mod tests {
     fn test_ntoa() {
         assert_eq!(utoa10(123), "123");
         assert_eq!(itoa10(123), "123");
-        assert_eq!(utoa16(0x123), "123");
-        assert_eq!(itoa16(0x123), "123");
+        assert_eq!(utoa16(0x123), "0x123");
+        assert_eq!(itoa16(0x123), "0x123");
     }
 }

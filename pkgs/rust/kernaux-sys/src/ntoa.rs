@@ -5,8 +5,8 @@ pub const ITOA_MIN_BUFFER_SIZE: usize = 65 + 1;
 
 pub const UTOA10_BUFFER_SIZE: usize = 20 + 1;
 pub const ITOA10_BUFFER_SIZE: usize = 20 + 1;
-pub const UTOA16_BUFFER_SIZE: usize = 16 + 1;
-pub const ITOA16_BUFFER_SIZE: usize = 17 + 1;
+pub const UTOA16_BUFFER_SIZE: usize = 16 + 2 + 1;
+pub const ITOA16_BUFFER_SIZE: usize = 17 + 2 + 1;
 
 #[link(name = "kernaux")]
 extern "C" {
@@ -172,7 +172,7 @@ mod tests {
         unsafe { utoa16(0x123, buffer.as_mut_ptr()) };
         let result =
             unsafe { CStr::from_ptr(buffer.as_ptr()) }.to_str().unwrap();
-        assert_eq!(result, "123");
+        assert_eq!(result, "0x123");
     }
 
     #[test]
@@ -181,12 +181,12 @@ mod tests {
         unsafe { itoa16(0x123, buffer.as_mut_ptr()) };
         let result =
             unsafe { CStr::from_ptr(buffer.as_ptr()) }.to_str().unwrap();
-        assert_eq!(result, "123");
+        assert_eq!(result, "0x123");
 
         let mut buffer: [i8; ITOA16_BUFFER_SIZE] = [0; ITOA16_BUFFER_SIZE];
         unsafe { itoa16(-0x123, buffer.as_mut_ptr()) };
         let result =
             unsafe { CStr::from_ptr(buffer.as_ptr()) }.to_str().unwrap();
-        assert_eq!(result, "-123");
+        assert_eq!(result, "-0x123");
     }
 }
