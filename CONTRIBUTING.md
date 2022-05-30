@@ -21,7 +21,7 @@ See [pkgs/ruby/.rubocop.yml](/pkgs/ruby/.rubocop.yml)
 
 ### mruby
 
-See [pkgs/mruby/.rubocop.yml](/pkgs/ruby/.rubocop.yml)
+See [pkgs/mruby/.rubocop.yml](/pkgs/mruby/.rubocop.yml)
 
 
 
