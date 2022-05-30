@@ -9,7 +9,6 @@ static VALUE rb_KernAux_utoa(VALUE self, VALUE number, VALUE base, VALUE prefix)
 #ifdef HAVE_KERNAUX_ITOA
 static VALUE rb_KernAux_itoa(VALUE self, VALUE number, VALUE base, VALUE prefix);
 #endif
-
 #ifdef HAVE_KERNAUX_UTOA10
 static VALUE rb_KernAux_utoa10(VALUE self, VALUE number);
 #endif
@@ -39,6 +38,7 @@ static ID rb_intern_X = Qnil;
 static VALUE rb_KernAux = Qnil;
 static VALUE rb_KernAux_Error = Qnil;
 static VALUE rb_KernAux_InvalidNtoaBaseError = Qnil;
+static VALUE rb_KernAux_TooLongNtoaPrefixError = Qnil;
 
 #if defined(HAVE_KERNAUX_UTOA) || defined(HAVE_KERNAUX_ITOA)
 static int convert_base(VALUE base);
@@ -65,6 +65,9 @@ void init_ntoa()
     rb_gc_register_mark_object(rb_KernAux_InvalidNtoaBaseError =
         rb_define_class_under(rb_KernAux, "InvalidNtoaBaseError",
                               rb_KernAux_Error));
+    rb_gc_register_mark_object(rb_KernAux_TooLongNtoaPrefixError =
+        rb_define_class_under(rb_KernAux, "TooLongNtoaPrefixError",
+                              rb_KernAux_Error));
 
 #ifdef HAVE_KERNAUX_UTOA
     rb_define_singleton_method(rb_KernAux, "utoa", rb_KernAux_utoa, 3);
@@ -72,7 +75,6 @@ void init_ntoa()
 #ifdef HAVE_KERNAUX_ITOA
     rb_define_singleton_method(rb_KernAux, "itoa", rb_KernAux_itoa, 3);
 #endif
-
 #ifdef HAVE_KERNAUX_UTOA10
     rb_define_singleton_method(rb_KernAux, "utoa10", rb_KernAux_utoa10, 1);
 #endif
@@ -107,7 +109,7 @@ VALUE rb_KernAux_utoa(
 
         if (prefix_len > MAX_PREFIX_LEN || prefix_len < 0) {
             rb_raise(
-                rb_eArgError,
+                rb_KernAux_TooLongNtoaPrefixError,
                 "prefix length %ld is too long",
                 prefix_len
             );
@@ -137,7 +139,7 @@ VALUE rb_KernAux_itoa(
 
         if (prefix_len > MAX_PREFIX_LEN || prefix_len < 0) {
             rb_raise(
-                rb_eArgError,
+                rb_KernAux_TooLongNtoaPrefixError,
                 "prefix length %ld is too long",
                 prefix_len
             );

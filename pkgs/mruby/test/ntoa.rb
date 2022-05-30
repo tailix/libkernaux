@@ -52,8 +52,8 @@ assert 'KernAux.utoa' do
   base = 2 + Random.rand(36 - 2)
   test_utoa number, base, number.to_s(base)
 
-  base = 2 + Random.rand(36 - 2)
   assert_raise RangeError, 'can\'t convert negative number to uint64_t' do
+    base = 2 + Random.rand(36 - 2)
     KernAux.utoa(-1, base)
   end
 
@@ -101,7 +101,10 @@ assert 'KernAux.utoa' do
   prefix = 'a' * 100
   test_utoax number, base, prefix, "#{prefix}#{number.abs.to_s(base)}"
 
-  assert_raise ArgumentError, 'prefix length 101 is too long' do
+  assert_raise(
+    KernAux::TooLongNtoaPrefixError,
+    'prefix length 101 is too long',
+  ) do
     number = Random.rand(2**32 - 1)
     base = 2 + Random.rand(36 - 2)
     prefix = 'a' * 101
@@ -181,7 +184,10 @@ assert 'KernAux.itoa' do
   sign = number < 0 ? '-' : ''
   test_itoax number, base, prefix, "#{sign}#{prefix}#{number.abs.to_s(base)}"
 
-  assert_raise ArgumentError, 'prefix length 101 is too long' do
+  assert_raise(
+    KernAux::TooLongNtoaPrefixError,
+    'prefix length 101 is too long',
+  ) do
     number = Random.rand(2**31 - 1) * [1, -1].sample
     base = 2 + Random.rand(36 - 2)
     prefix = 'a' * 101

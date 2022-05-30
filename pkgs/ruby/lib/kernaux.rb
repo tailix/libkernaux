@@ -127,7 +127,7 @@ module KernAux
   # @!parse [ruby]
 
   ##
-  # @!method utoa(number, base)
+  # @!method utoa(number, base, prefix)
   # Convert `uint64_t` to a string in multiple numeral systems.
   #
   # Base can be a positive or negative integer between 2 and 36, or a symbol
@@ -139,16 +139,18 @@ module KernAux
   #
   # @param number [Integer] a number between 0 and `UINT64_MAX`
   # @param base [Integer, Symbol] base of a numeral system
+  # @param prefix [nil, String] string to put before a number
   # @return [String]
   #
   # @raise [RangeError] number is out of range
   # @raise [InvalidNtoaBaseError] base is invalid
+  # @raise [TooLongNtoaPrefixError] prefix is too long
   #
   # @see .itoa Convert signed integers
   ##
 
   ##
-  # @!method itoa(number, base)
+  # @!method itoa(number, base, prefix)
   # Convert `int64_t` to a string in multiple numeral systems.
   #
   # Base can be a positive or negative integer between 2 and 36, or a symbol
@@ -160,10 +162,12 @@ module KernAux
   #
   # @param number [Integer] a number between `INT64_MIN` and `INT64_MAX`
   # @param base [Integer, Symbol] base of a numeral system
+  # @param prefix [nil, String] string to put between a sign and a number
   # @return [String]
   #
   # @raise [RangeError] number is out of range
   # @raise [InvalidNtoaBaseError] base is invalid
+  # @raise [TooLongNtoaPrefixError] prefix is too long
   #
   # @see .utoa Convert unsigned integers
   ##
@@ -235,4 +239,12 @@ module KernAux
   # @see .itoa
   #
   class InvalidNtoaBaseError < Error; end
+
+  ##
+  # Raised when prefix is too long.
+  #
+  # @see .utoa
+  # @see .itoa
+  #
+  class TooLongNtoaPrefixError < Error; end
 end

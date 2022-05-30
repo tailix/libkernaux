@@ -221,7 +221,7 @@ RSpec.describe KernAux, '.itoa' do
 
       specify do
         expect { itoa }.to raise_error(
-          ArgumentError,
+          described_class::TooLongNtoaPrefixError,
           "prefix length #{prefix.length} is too long",
         )
       end
