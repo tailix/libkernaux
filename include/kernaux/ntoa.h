@@ -40,11 +40,11 @@ extern "C" {
 #define KERNAUX_ITOA10_BUFFER_SIZE (20 + 1)
 
 // "0xffffffffffffffff"
-#define KERNAUX_UTOA16_BUFFER_SIZE (16 + 1 + 2)
+#define KERNAUX_UTOA16_BUFFER_SIZE (16 + 2 + 1)
 
 // "0x7fffffffffffffff"
 // "-0x8000000000000000"
-#define KERNAUX_ITOA16_BUFFER_SIZE (17 + 1 + 2)
+#define KERNAUX_ITOA16_BUFFER_SIZE (17 + 2 + 1)
 
 char *kernaux_utoa(uint64_t value, char *buffer, int base, const char *prefix);
 char *kernaux_itoa(int64_t  value, char *buffer, int base, const char *prefix);
