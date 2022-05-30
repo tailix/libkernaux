@@ -173,6 +173,26 @@ module KernAux
   ##
 
   ##
+  # @!method utoa8(number)
+  # Convert `uint64_t` to a octal string.
+  #
+  # @param number [Integer] a number between 0 and `UINT64_MAX`
+  # @return [String]
+  #
+  # @raise [RangeError] number is out of range
+  ##
+
+  ##
+  # @!method itoa8(number)
+  # Convert `int64_t` to a octal string.
+  #
+  # @param number [Integer] a number between `INT64_MIN` and `INT64_MAX`
+  # @return [String]
+  #
+  # @raise [RangeError] number is out of range
+  ##
+
+  ##
   # @!method utoa10(number)
   # Convert `uint64_t` to a decimal string.
   #

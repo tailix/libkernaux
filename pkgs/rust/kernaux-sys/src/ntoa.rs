@@ -3,6 +3,8 @@ use libc::{c_char, c_int};
 pub const UTOA_MIN_BUFFER_SIZE: usize = 64 + 1;
 pub const ITOA_MIN_BUFFER_SIZE: usize = 65 + 1;
 
+pub const UTOA8_BUFFER_SIZE: usize = 21 + 2 + 1;
+pub const ITOA8_BUFFER_SIZE: usize = 22 + 2 + 1;
 pub const UTOA10_BUFFER_SIZE: usize = 20 + 1;
 pub const ITOA10_BUFFER_SIZE: usize = 20 + 1;
 pub const UTOA16_BUFFER_SIZE: usize = 16 + 2 + 1;
@@ -25,6 +27,10 @@ extern "C" {
         prefix: *const c_char,
     ) -> *mut c_char;
 
+    #[link_name = "kernaux_utoa8"]
+    pub fn utoa8(value: u64, buffer: *mut c_char) -> *mut c_char;
+    #[link_name = "kernaux_itoa8"]
+    pub fn itoa8(value: i64, buffer: *mut c_char) -> *mut c_char;
     #[link_name = "kernaux_utoa10"]
     pub fn utoa10(value: u64, buffer: *mut c_char) -> *mut c_char;
     #[link_name = "kernaux_itoa10"]
@@ -140,6 +146,33 @@ mod tests {
             unsafe { CStr::from_ptr(buffer.as_ptr()) }.to_str().unwrap();
         assert_eq!(result, "-foo123");
         assert_eq!(end, unsafe { buffer.as_mut_ptr().offset(7) });
+    }
+
+    #[test]
+    fn test_utoa8() {
+        let mut buffer: [i8; UTOA8_BUFFER_SIZE] = [0; UTOA8_BUFFER_SIZE];
+        let end: *mut c_char = unsafe { utoa8(0o123, buffer.as_mut_ptr()) };
+        let result =
+            unsafe { CStr::from_ptr(buffer.as_ptr()) }.to_str().unwrap();
+        assert_eq!(result, "0o123");
+        assert_eq!(end, unsafe { buffer.as_mut_ptr().offset(5) });
+    }
+
+    #[test]
+    fn test_itoa8() {
+        let mut buffer: [i8; ITOA8_BUFFER_SIZE] = [0; ITOA8_BUFFER_SIZE];
+        let end: *mut c_char = unsafe { itoa8(0o123, buffer.as_mut_ptr()) };
+        let result =
+            unsafe { CStr::from_ptr(buffer.as_ptr()) }.to_str().unwrap();
+        assert_eq!(result, "0o123");
+        assert_eq!(end, unsafe { buffer.as_mut_ptr().offset(5) });
+
+        let mut buffer: [i8; ITOA8_BUFFER_SIZE] = [0; ITOA8_BUFFER_SIZE];
+        let end: *mut c_char = unsafe { itoa8(-0o123, buffer.as_mut_ptr()) };
+        let result =
+            unsafe { CStr::from_ptr(buffer.as_ptr()) }.to_str().unwrap();
+        assert_eq!(result, "-0o123");
+        assert_eq!(end, unsafe { buffer.as_mut_ptr().offset(6) });
     }
 
     #[test]
