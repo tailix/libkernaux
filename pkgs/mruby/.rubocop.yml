@@ -45,6 +45,10 @@ Style/FrozenStringLiteralComment:
 Style/HashAsLastArrayItem:
   Enabled: false
 
+Style/NumericPredicate:
+  # Numeric#negative? is not available in mruby
+  Enabled: false
+
 Style/PerlBackrefs:
   Enabled: false
 

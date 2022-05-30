@@ -1,89 +1,43 @@
+def common_assert(expected, result)
+  assert_true result.instance_of? String
+  assert_true result.frozen?
+  assert_equal expected, result
+end
+
 def test_utoa(number, base, expected)
-  result = KernAux.utoa(number, base)
-
-  assert_true result.instance_of? String
-  assert_true result.frozen?
-  assert_equal expected, result
-
-  result = KernAux.utoa(number, base, nil)
-
-  assert_true result.instance_of? String
-  assert_true result.frozen?
-  assert_equal expected, result
-
-  result = KernAux.utoa(number, base, '')
-
-  assert_true result.instance_of? String
-  assert_true result.frozen?
-  assert_equal expected, result
+  common_assert expected, KernAux.utoa(number, base)
+  common_assert expected, KernAux.utoa(number, base, nil)
+  common_assert expected, KernAux.utoa(number, base, '')
 end
 
 def test_itoa(number, base, expected)
-  result = KernAux.itoa(number, base)
-
-  assert_true result.instance_of? String
-  assert_true result.frozen?
-  assert_equal expected, result
-
-  result = KernAux.itoa(number, base, nil)
-
-  assert_true result.instance_of? String
-  assert_true result.frozen?
-  assert_equal expected, result
-
-  result = KernAux.itoa(number, base, '')
-
-  assert_true result.instance_of? String
-  assert_true result.frozen?
-  assert_equal expected, result
+  common_assert expected, KernAux.itoa(number, base)
+  common_assert expected, KernAux.itoa(number, base, nil)
+  common_assert expected, KernAux.itoa(number, base, '')
 end
 
 def test_utoax(number, base, prefix, expected)
-  result = KernAux.utoa(number, base, prefix)
-
-  assert_true result.instance_of? String
-  assert_true result.frozen?
-  assert_equal expected, result
+  common_assert expected, KernAux.utoa(number, base, prefix)
 end
 
 def test_itoax(number, base, prefix, expected)
-  result = KernAux.itoa(number, base, prefix)
-
-  assert_true result.instance_of? String
-  assert_true result.frozen?
-  assert_equal expected, result
+  common_assert expected, KernAux.itoa(number, base, prefix)
 end
 
 def test_utoa10(number, expected)
-  result = KernAux.utoa10(number)
-
-  assert_true result.instance_of? String
-  assert_true result.frozen?
-  assert_equal expected, result
+  common_assert expected, KernAux.utoa10(number)
 end
 
 def test_itoa10(number, expected)
-  result = KernAux.itoa10(number)
-
-  assert_true result.instance_of? String
-  assert_true result.frozen?
-  assert_equal expected, result
+  common_assert expected, KernAux.itoa10(number)
 end
 
 def test_utoa16(number, expected)
-  result = KernAux.utoa16(number)
-
-  assert_true result.instance_of? String
-  assert_true result.frozen?
-  assert_equal expected, result
+  common_assert expected, KernAux.utoa16(number)
 end
 
 def test_itoa16(number, expected)
-  result = KernAux.itoa16(number)
-
-  assert_true result.instance_of? String
-  assert_true result.frozen?
-  assert_equal expected, result
+  common_assert expected, KernAux.itoa16(number)
 end
 
 assert 'KernAux.utoa' do
