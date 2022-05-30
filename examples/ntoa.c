@@ -149,5 +149,39 @@ int main()
         assert(end == str_end(buffer));
     }
 
+    // kernaux_itoa - similar to kernaux_utoa
+    {
+        char buffer[KERNAUX_ITOA_MIN_BUFFER_SIZE + 3]; // more space for prefix
+        const char *end;
+
+        // sign: +
+        // decimal: 10
+        // no prefix (NULL)
+        end = kernaux_itoa(123, buffer, 10, NULL);
+        assert(strcmp(buffer, "123") == 0);
+        assert(end == str_end(buffer));
+
+        // sign: -
+        // decimal: 10
+        // no prefix (NULL)
+        end = kernaux_itoa(-123, buffer, 10, NULL);
+        assert(strcmp(buffer, "-123") == 0);
+        assert(end == str_end(buffer));
+
+        // sign: +
+        // decimal: 10
+        // with prefix ("foo")
+        end = kernaux_itoa(123, buffer, 10, "foo");
+        assert(strcmp(buffer, "foo123") == 0);
+        assert(end == str_end(buffer));
+
+        // sign: -
+        // decimal: 10
+        // with prefix ("foo")
+        end = kernaux_itoa(-123, buffer, 10, "foo");
+        assert(strcmp(buffer, "-foo123") == 0);
+        assert(end == str_end(buffer));
+    }
+
     return 0;
 }
