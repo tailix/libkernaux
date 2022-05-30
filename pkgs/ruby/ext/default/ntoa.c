@@ -124,7 +124,7 @@ VALUE rb_KernAux_utoa(const int argc, const VALUE *argv, const VALUE self)
         }
     }
 
-    char buffer[KERNAUX_UTOA_BUFFER_SIZE + prefix_len];
+    char buffer[KERNAUX_UTOA_MIN_BUFFER_SIZE + prefix_len];
     kernaux_utoa(NUM2ULL(number_rb), buffer, convert_base(base_rb), prefix);
     return rb_funcall(rb_str_new2(buffer), rb_intern_freeze, 0);
 }
@@ -162,7 +162,7 @@ VALUE rb_KernAux_itoa(const int argc, const VALUE *argv, const VALUE self)
         }
     }
 
-    char buffer[KERNAUX_ITOA_BUFFER_SIZE + prefix_len];
+    char buffer[KERNAUX_ITOA_MIN_BUFFER_SIZE + prefix_len];
     kernaux_itoa(NUM2LL(number_rb), buffer, convert_base(base_rb), prefix);
     return rb_funcall(rb_str_new2(buffer), rb_intern_freeze, 0);
 }

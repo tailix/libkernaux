@@ -1,7 +1,8 @@
 use libc::{c_char, c_int};
 
-pub const UTOA_BUFFER_SIZE: usize = 64 + 1;
-pub const ITOA_BUFFER_SIZE: usize = 65 + 1;
+pub const UTOA_MIN_BUFFER_SIZE: usize = 64 + 1;
+pub const ITOA_MIN_BUFFER_SIZE: usize = 65 + 1;
+
 pub const UTOA10_BUFFER_SIZE: usize = 20 + 1;
 pub const ITOA10_BUFFER_SIZE: usize = 20 + 1;
 pub const UTOA16_BUFFER_SIZE: usize = 16 + 1;
@@ -51,7 +52,8 @@ mod tests {
 
     #[test]
     fn test_utoa() {
-        let mut buffer: [i8; UTOA_BUFFER_SIZE + 3] = [0; UTOA_BUFFER_SIZE + 3];
+        let mut buffer: [i8; UTOA_MIN_BUFFER_SIZE + 3] =
+            [0; UTOA_MIN_BUFFER_SIZE + 3];
 
         let empty_pfx = empty_prefix();
         let foo_pfx = foo_prefix();
@@ -82,7 +84,8 @@ mod tests {
 
     #[test]
     fn test_itoa() {
-        let mut buffer: [i8; ITOA_BUFFER_SIZE + 3] = [0; ITOA_BUFFER_SIZE + 3];
+        let mut buffer: [i8; ITOA_MIN_BUFFER_SIZE + 3] =
+            [0; ITOA_MIN_BUFFER_SIZE + 3];
 
         let empty_pfx = empty_prefix();
         let foo_pfx = foo_prefix();
