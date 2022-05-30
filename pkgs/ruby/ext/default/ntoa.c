@@ -9,6 +9,12 @@ static VALUE rb_KernAux_utoa(int argc, const VALUE *argv, VALUE self);
 #ifdef HAVE_KERNAUX_ITOA
 static VALUE rb_KernAux_itoa(int argc, const VALUE *argv, VALUE self);
 #endif
+#ifdef HAVE_KERNAUX_UTOA2
+static VALUE rb_KernAux_utoa2(VALUE self, VALUE number);
+#endif
+#ifdef HAVE_KERNAUX_ITOA2
+static VALUE rb_KernAux_itoa2(VALUE self, VALUE number);
+#endif
 #ifdef HAVE_KERNAUX_UTOA8
 static VALUE rb_KernAux_utoa8(VALUE self, VALUE number);
 #endif
@@ -80,6 +86,12 @@ void init_ntoa()
 #endif
 #ifdef HAVE_KERNAUX_ITOA
     rb_define_singleton_method(rb_KernAux, "itoa", rb_KernAux_itoa, -1);
+#endif
+#ifdef HAVE_KERNAUX_UTOA2
+    rb_define_singleton_method(rb_KernAux, "utoa2", rb_KernAux_utoa2, 1);
+#endif
+#ifdef HAVE_KERNAUX_ITOA2
+    rb_define_singleton_method(rb_KernAux, "itoa2", rb_KernAux_itoa2, 1);
 #endif
 #ifdef HAVE_KERNAUX_UTOA8
     rb_define_singleton_method(rb_KernAux, "utoa8", rb_KernAux_utoa8, 1);
@@ -176,6 +188,33 @@ VALUE rb_KernAux_itoa(const int argc, const VALUE *argv, const VALUE self)
 
     char buffer[KERNAUX_ITOA_MIN_BUFFER_SIZE + prefix_len];
     kernaux_itoa(NUM2LL(number_rb), buffer, convert_base(base_rb), prefix);
+    return rb_funcall(rb_str_new2(buffer), rb_intern_freeze, 0);
+}
+#endif
+
+#ifdef HAVE_KERNAUX_UTOA2
+VALUE rb_KernAux_utoa2(
+    const VALUE self_rb __attribute__((unused)),
+    const VALUE number_rb
+) {
+    RB_INTEGER_TYPE_P(number_rb);
+    if (rb_funcall(number_rb, rb_intern_LESS, 1, INT2FIX(0))) {
+        rb_raise(rb_eRangeError, "can't convert negative number to uint64_t");
+    }
+    char buffer[KERNAUX_UTOA2_BUFFER_SIZE];
+    kernaux_utoa2(NUM2ULL(number_rb), buffer);
+    return rb_funcall(rb_str_new2(buffer), rb_intern_freeze, 0);
+}
+#endif
+
+#ifdef HAVE_KERNAUX_ITOA2
+VALUE rb_KernAux_itoa2(
+    const VALUE self_rb __attribute__((unused)),
+    const VALUE number_rb
+) {
+    RB_INTEGER_TYPE_P(number_rb);
+    char buffer[KERNAUX_ITOA2_BUFFER_SIZE];
+    kernaux_itoa2(NUM2LL(number_rb), buffer);
     return rb_funcall(rb_str_new2(buffer), rb_intern_freeze, 0);
 }
 #endif

@@ -13,6 +13,8 @@ end
 
 have_func 'kernaux_utoa'
 have_func 'kernaux_itoa'
+have_func 'kernaux_utoa2'
+have_func 'kernaux_itoa2'
 have_func 'kernaux_utoa8'
 have_func 'kernaux_itoa8'
 have_func 'kernaux_utoa10'

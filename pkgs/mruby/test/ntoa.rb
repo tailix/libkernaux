@@ -24,6 +24,14 @@ def test_itoax(number, base, prefix, expected)
   common_assert expected, KernAux.itoa(number, base, prefix)
 end
 
+def test_utoa2(number, expected)
+  common_assert expected, KernAux.utoa2(number)
+end
+
+def test_itoa2(number, expected)
+  common_assert expected, KernAux.itoa2(number)
+end
+
 def test_utoa8(number, expected)
   common_assert expected, KernAux.utoa8(number)
 end
@@ -201,6 +209,27 @@ assert 'KernAux.itoa' do
     prefix = 'a' * 101
     KernAux.itoa(number, base, prefix)
   end
+end
+
+assert 'KernAux.utoa2' do
+  test_utoa2 0, '0b0'
+  test_utoa2 1, '0b1'
+  test_utoa2 123, '0b1111011'
+  test_utoa2 2**32 - 1, "0b#{(2**32 - 1).to_s(2)}"
+
+  assert_raise RangeError, 'can\'t convert negative number to uint64_t' do
+    KernAux.utoa2(-1)
+  end
+end
+
+assert 'KernAux.itoa2' do
+  test_itoa2 0, '0b0'
+  test_itoa2 1, '0b1'
+  test_itoa2(-1, '-0b1')
+  test_itoa2 123, '0b1111011'
+  test_itoa2(-123, '-0b1111011')
+  test_itoa2 2**31 - 1, "0b#{(2**31 - 1).to_s(2)}"
+  test_itoa2(-2**31, "-0b#{(2**31).to_s(2)}")
 end
 
 assert 'KernAux.utoa8' do

@@ -9,6 +9,7 @@
 	of a buffer
 	* include/kernaux/ntoa.h: Functions "kernaux_[u|i]toa16" put default prefix
 	* include/kernaux/ntoa.h: Add octal functions "kernaux_[u|i]toa8"
+	* include/kernaux/ntoa.h: Add binary functions "kernaux_[u|i]toa2"
 
 2022-05-28  Alex Kotov  <kotovalexarian@gmail.com>
 
