@@ -26,13 +26,13 @@ extern "C" {
     ) -> *mut c_char;
 
     #[link_name = "kernaux_utoa10"]
-    pub fn utoa10(value: u64, buffer: *mut c_char);
+    pub fn utoa10(value: u64, buffer: *mut c_char) -> *mut c_char;
     #[link_name = "kernaux_itoa10"]
-    pub fn itoa10(value: i64, buffer: *mut c_char);
+    pub fn itoa10(value: i64, buffer: *mut c_char) -> *mut c_char;
     #[link_name = "kernaux_utoa16"]
-    pub fn utoa16(value: u64, buffer: *mut c_char);
+    pub fn utoa16(value: u64, buffer: *mut c_char) -> *mut c_char;
     #[link_name = "kernaux_itoa16"]
-    pub fn itoa16(value: i64, buffer: *mut c_char);
+    pub fn itoa16(value: i64, buffer: *mut c_char) -> *mut c_char;
 }
 
 #[cfg(test)]
@@ -145,48 +145,54 @@ mod tests {
     #[test]
     fn test_utoa10() {
         let mut buffer: [i8; UTOA10_BUFFER_SIZE] = [0; UTOA10_BUFFER_SIZE];
-        unsafe { utoa10(123, buffer.as_mut_ptr()) };
+        let end: *mut c_char = unsafe { utoa10(123, buffer.as_mut_ptr()) };
         let result =
             unsafe { CStr::from_ptr(buffer.as_ptr()) }.to_str().unwrap();
         assert_eq!(result, "123");
+        assert_eq!(end, unsafe { buffer.as_mut_ptr().offset(3) });
     }
 
     #[test]
     fn test_itoa10() {
         let mut buffer: [i8; ITOA10_BUFFER_SIZE] = [0; ITOA10_BUFFER_SIZE];
-        unsafe { itoa10(123, buffer.as_mut_ptr()) };
+        let end: *mut c_char = unsafe { itoa10(123, buffer.as_mut_ptr()) };
         let result =
             unsafe { CStr::from_ptr(buffer.as_ptr()) }.to_str().unwrap();
         assert_eq!(result, "123");
+        assert_eq!(end, unsafe { buffer.as_mut_ptr().offset(3) });
 
         let mut buffer: [i8; ITOA10_BUFFER_SIZE] = [0; ITOA10_BUFFER_SIZE];
-        unsafe { itoa10(-123, buffer.as_mut_ptr()) };
+        let end: *mut c_char = unsafe { itoa10(-123, buffer.as_mut_ptr()) };
         let result =
             unsafe { CStr::from_ptr(buffer.as_ptr()) }.to_str().unwrap();
         assert_eq!(result, "-123");
+        assert_eq!(end, unsafe { buffer.as_mut_ptr().offset(4) });
     }
 
     #[test]
     fn test_utoa16() {
         let mut buffer: [i8; UTOA16_BUFFER_SIZE] = [0; UTOA16_BUFFER_SIZE];
-        unsafe { utoa16(0x123, buffer.as_mut_ptr()) };
+        let end: *mut c_char = unsafe { utoa16(0x123, buffer.as_mut_ptr()) };
         let result =
             unsafe { CStr::from_ptr(buffer.as_ptr()) }.to_str().unwrap();
         assert_eq!(result, "0x123");
+        assert_eq!(end, unsafe { buffer.as_mut_ptr().offset(5) });
     }
 
     #[test]
     fn test_itoa16() {
         let mut buffer: [i8; ITOA16_BUFFER_SIZE] = [0; ITOA16_BUFFER_SIZE];
-        unsafe { itoa16(0x123, buffer.as_mut_ptr()) };
+        let end: *mut c_char = unsafe { itoa16(0x123, buffer.as_mut_ptr()) };
         let result =
             unsafe { CStr::from_ptr(buffer.as_ptr()) }.to_str().unwrap();
         assert_eq!(result, "0x123");
+        assert_eq!(end, unsafe { buffer.as_mut_ptr().offset(5) });
 
         let mut buffer: [i8; ITOA16_BUFFER_SIZE] = [0; ITOA16_BUFFER_SIZE];
-        unsafe { itoa16(-0x123, buffer.as_mut_ptr()) };
+        let end: *mut c_char = unsafe { itoa16(-0x123, buffer.as_mut_ptr()) };
         let result =
             unsafe { CStr::from_ptr(buffer.as_ptr()) }.to_str().unwrap();
         assert_eq!(result, "-0x123");
+        assert_eq!(end, unsafe { buffer.as_mut_ptr().offset(6) });
     }
 }
