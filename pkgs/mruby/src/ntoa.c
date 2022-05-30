@@ -9,8 +9,11 @@
 #include <mruby/presym.h>
 #include <mruby/string.h>
 
+#define MAX_PREFIX_LEN 100
+
 static mrb_value rb_KernAux_utoa(mrb_state *mrb, mrb_value self);
 static mrb_value rb_KernAux_itoa(mrb_state *mrb, mrb_value self);
+
 static mrb_value rb_KernAux_utoa10(mrb_state *mrb, mrb_value self);
 static mrb_value rb_KernAux_itoa10(mrb_state *mrb, mrb_value self);
 static mrb_value rb_KernAux_utoa16(mrb_state *mrb, mrb_value self);
@@ -28,9 +31,10 @@ void init_ntoa(mrb_state *const mrb)
                               rb_KernAux_Error);
 
     mrb_define_class_method(mrb, rb_KernAux, "utoa",
-                            rb_KernAux_utoa, MRB_ARGS_REQ(2));
+                            rb_KernAux_utoa, MRB_ARGS_REQ(2) | MRB_ARGS_OPT(1));
     mrb_define_class_method(mrb, rb_KernAux, "itoa",
-                            rb_KernAux_itoa, MRB_ARGS_REQ(2));
+                            rb_KernAux_itoa, MRB_ARGS_REQ(2) | MRB_ARGS_OPT(1));
+
     mrb_define_class_method(mrb, rb_KernAux, "utoa10",
                             rb_KernAux_utoa10, MRB_ARGS_REQ(1));
     mrb_define_class_method(mrb, rb_KernAux, "itoa10",
@@ -45,16 +49,22 @@ mrb_value rb_KernAux_utoa(mrb_state *mrb, mrb_value self)
 {
     mrb_int value = 0;
     mrb_value base;
-    mrb_get_args(mrb, "io", &value, &base);
+    const char *prefix = NULL;
+    mrb_int prefix_len = 0;
+    mrb_get_args(mrb, "io|s!", &value, &base, &prefix, &prefix_len);
 
     if (value < 0) {
         mrb_raise(mrb, E_RANGE_ERROR,
                   "can't convert negative number to uint64_t");
     }
+    if (prefix_len > MAX_PREFIX_LEN || prefix_len < 0) {
+        mrb_raisef(mrb, E_ARGUMENT_ERROR,
+                   "prefix length %d is too long", prefix_len);
+    }
 
-    char buffer[KERNAUX_UTOA_BUFFER_SIZE];
+    char buffer[KERNAUX_UTOA_BUFFER_SIZE + prefix_len];
     current_mrb_start(mrb);
-    kernaux_utoa(value, buffer, convert_base(mrb, base));
+    kernaux_utoa(value, buffer, convert_base(mrb, base), prefix);
     current_mrb_finish(mrb);
 
     mrb_value result = mrb_str_new_lit(mrb, "");
@@ -66,11 +76,18 @@ mrb_value rb_KernAux_itoa(mrb_state *mrb, mrb_value self)
 {
     mrb_int value = 0;
     mrb_value base;
-    mrb_get_args(mrb, "io", &value, &base);
+    const char *prefix = NULL;
+    mrb_int prefix_len = 0;
+    mrb_get_args(mrb, "io|s!", &value, &base, &prefix, &prefix_len);
 
-    char buffer[KERNAUX_ITOA_BUFFER_SIZE];
+    if (prefix_len > MAX_PREFIX_LEN || prefix_len < 0) {
+        mrb_raisef(mrb, E_ARGUMENT_ERROR,
+                   "prefix length %d is too long", prefix_len);
+    }
+
+    char buffer[KERNAUX_ITOA_BUFFER_SIZE + prefix_len];
     current_mrb_start(mrb);
-    kernaux_itoa(value, buffer, convert_base(mrb, base));
+    kernaux_itoa(value, buffer, convert_base(mrb, base), prefix);
     current_mrb_finish(mrb);
 
     mrb_value result = mrb_str_new_lit(mrb, "");

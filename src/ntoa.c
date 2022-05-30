@@ -7,7 +7,7 @@
 
 #include <stddef.h>
 
-char *kernaux_utoa(uint64_t value, char *buffer, int base)
+char *kernaux_utoa(uint64_t value, char *buffer, int base, const char *prefix)
 {
     KERNAUX_NOTNULL_RETVAL(buffer, NULL);
 
@@ -28,7 +28,10 @@ char *kernaux_utoa(uint64_t value, char *buffer, int base)
 
     KERNAUX_ASSERT_RETVAL(base >= 2 && base <= 36, NULL);
 
-    // Write to buffer
+    // Write prefix
+    if (prefix) while (*prefix) *(buffer++) = *(prefix++);
+
+    // Write number
     char *pos = buffer;
     if (value == 0) *(pos++) = '0';
     while (value > 0) {
@@ -39,7 +42,7 @@ char *kernaux_utoa(uint64_t value, char *buffer, int base)
     char *const result = pos;
     *(pos--) = '\0';
 
-    // Reverse buffer
+    // Reverse number
     while (buffer < pos) {
         const char tmp = *buffer;
         *(buffer++) = *pos;
@@ -49,32 +52,32 @@ char *kernaux_utoa(uint64_t value, char *buffer, int base)
     return result;
 }
 
-char *kernaux_itoa(int64_t value, char *buffer, int base)
+char *kernaux_itoa(int64_t value, char *buffer, int base, const char *const prefix)
 {
     if (value >= 0) {
-        return kernaux_utoa(value, buffer, base);
+        return kernaux_utoa(value, buffer, base, prefix);
     } else {
         *(buffer++) = '-';
-        return kernaux_utoa(-value, buffer, base);
+        return kernaux_utoa(-value, buffer, base, prefix);
     }
 }
 
 void kernaux_utoa10(uint64_t value, char *buffer)
 {
-    kernaux_utoa(value, buffer, 'd');
+    kernaux_utoa(value, buffer, 'd', NULL);
 }
 
 void kernaux_itoa10(int64_t value, char *buffer)
 {
-    kernaux_itoa(value, buffer, 'd');
+    kernaux_itoa(value, buffer, 'd', NULL);
 }
 
 void kernaux_utoa16(uint64_t value, char *buffer)
 {
-    kernaux_utoa(value, buffer, 'x');
+    kernaux_utoa(value, buffer, 'x', NULL);
 }
 
 void kernaux_itoa16(int64_t value, char *buffer)
 {
-    kernaux_itoa(value, buffer, 'x');
+    kernaux_itoa(value, buffer, 'x', NULL);
 }

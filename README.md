@@ -66,7 +66,7 @@ zero). Work-in-progress APIs can change at any time.
     * [To human](/examples/units_human.c)
 * Usual functions
   * [libc replacement](/include/kernaux/libc.h) (*stable since* **0.1.0**)
-  * [itoa/ftoa replacement](/include/kernaux/ntoa.h) (*stable since* **0.1.0**, *non-breaking since* **0.3.0**)
+  * [itoa/ftoa replacement](/include/kernaux/ntoa.h) (*stable since* **0.1.0**, *non-breaking since* **?.?.?**)
   * [printf replacement](/include/kernaux/printf.h) (*stable since* **0.1.0**)
     * Code from [https://github.com/mpaland/printf](https://github.com/mpaland/printf). Thank you!
     * [printf](/examples/printf.c)

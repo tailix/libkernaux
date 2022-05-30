@@ -378,14 +378,14 @@ static void assert_cb(
 
 static void test_utoa_assert(char *const buffer, const int base)
 {
-    assert(kernaux_utoa(0, buffer, base) == NULL);
+    assert(kernaux_utoa(0, buffer, base, NULL) == NULL);
     assert(assert_count_ctr == ++assert_count_exp);
     assert(strstr(assert_last_file, "src/ntoa.c") != NULL);
 }
 
 static void test_itoa_assert(char *const buffer, const int base)
 {
-    assert(kernaux_itoa(0, buffer, base) == NULL);
+    assert(kernaux_itoa(0, buffer, base, NULL) == NULL);
     assert(assert_count_ctr == ++assert_count_exp);
     assert(strstr(assert_last_file, "src/ntoa.c") != NULL);
 }
@@ -422,25 +422,45 @@ int main()
     }
 
     {
-        char buffer[KERNAUX_UTOA_BUFFER_SIZE];
+        char buffer[KERNAUX_UTOA_BUFFER_SIZE + 3];
 
         for (
             size_t index = 0;
             index < sizeof(utoa_cases) / sizeof(utoa_cases[0]);
             ++index
         ) {
-            const char *const end = kernaux_utoa(
+            const char *const end1 = kernaux_utoa(
                 utoa_cases[index].value,
                 buffer,
-                utoa_cases[index].base
+                utoa_cases[index].base,
+                NULL
             );
             assert(strcmp(buffer, utoa_cases[index].result) == 0);
-            assert(end == str_end(buffer));
+            assert(end1 == str_end(buffer));
+
+            const char *const end2 = kernaux_utoa(
+                utoa_cases[index].value,
+                buffer,
+                utoa_cases[index].base,
+                ""
+            );
+            assert(strcmp(buffer, utoa_cases[index].result) == 0);
+            assert(end2 == str_end(buffer));
+
+            const char *const end3 = kernaux_utoa(
+                utoa_cases[index].value,
+                buffer,
+                utoa_cases[index].base,
+                "foo"
+            );
+            assert(strncmp(buffer, "foo", 3) == 0);
+            assert(strcmp(&buffer[3], utoa_cases[index].result) == 0);
+            assert(end3 == str_end(buffer));
         }
     }
 
     {
-        char buffer[KERNAUX_ITOA_BUFFER_SIZE];
+        char buffer[KERNAUX_ITOA_BUFFER_SIZE + 3];
 
         for (
             size_t index = 0;
@@ -452,16 +472,35 @@ int main()
             const int64_t value = utoa_cases[index].value;
             const int base = utoa_cases[index].base;
 
-            const char *const end1 = kernaux_itoa(value, buffer, base);
+            const char *const end1 = kernaux_itoa(value, buffer, base, NULL);
             assert(strcmp(buffer, utoa_cases[index].result) == 0);
             assert(end1 == str_end(buffer));
 
+            const char *const end2 = kernaux_itoa(value, buffer, base, "");
+            assert(strcmp(buffer, utoa_cases[index].result) == 0);
+            assert(end2 == str_end(buffer));
+
+            const char *const end3 = kernaux_itoa(value, buffer, base, "foo");
+            assert(strncmp(buffer, "foo", 3) == 0);
+            assert(strcmp(&buffer[3], utoa_cases[index].result) == 0);
+            assert(end3 == str_end(buffer));
+
             if (value <= 0 || base < 2 || base > 36) continue;
 
-            const char *const end2 = kernaux_itoa(-value, buffer, base);
+            const char *const end4 = kernaux_itoa(-value, buffer, base, NULL);
             assert(buffer[0] == '-');
             assert(strcmp(&buffer[1], utoa_cases[index].result) == 0);
-            assert(end2 == str_end(buffer));
+            assert(end4 == str_end(buffer));
+
+            const char *const end5 = kernaux_itoa(-value, buffer, base, "");
+            assert(buffer[0] == '-');
+            assert(strcmp(&buffer[1], utoa_cases[index].result) == 0);
+            assert(end5 == str_end(buffer));
+
+            const char *const end6 = kernaux_itoa(-value, buffer, base, "foo");
+            assert(strncmp(buffer, "-foo", 4) == 0);
+            assert(strcmp(&buffer[4], utoa_cases[index].result) == 0);
+            assert(end6 == str_end(buffer));
         }
     }
 

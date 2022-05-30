@@ -4,10 +4,11 @@ require 'spec_helper'
 
 RSpec.describe KernAux, '.itoa' do
   if described_class.singleton_class.method_defined? :itoa
-    subject(:itoa) { described_class.itoa number, base }
+    subject(:itoa) { described_class.itoa number, base, prefix }
 
     let(:number) { rand((-2**63)..(2**63 - 1)) }
     let(:base) { rand 2..36 }
+    let(:prefix) { [nil, ''].sample }
 
     it { is_expected.to be_instance_of String }
     it { is_expected.to be_frozen }
@@ -165,6 +166,64 @@ RSpec.describe KernAux, '.itoa' do
       specify do
         expect { itoa }.to \
           raise_error described_class::InvalidNtoaBaseError, 'invalid base'
+      end
+    end
+
+    context 'when prefix is nil' do
+      let(:prefix) { nil }
+
+      it { is_expected.to be_instance_of String }
+      it { is_expected.to be_frozen }
+      it { is_expected.to eq number.to_s base }
+    end
+
+    context 'when prefix is empty' do
+      let(:prefix) { '' }
+
+      it { is_expected.to be_instance_of String }
+      it { is_expected.to be_frozen }
+      it { is_expected.to eq number.to_s base }
+    end
+
+    context 'when prefix is present' do
+      let(:prefix) { 'foo' }
+
+      def sign = number < 0 ? '-' : ''
+
+      it { is_expected.to be_instance_of String }
+      it { is_expected.to be_frozen }
+      it { is_expected.to eq "#{sign}foo#{number.abs.to_s(base)}" }
+    end
+
+    context 'when prefix is not a string' do
+      let(:prefix) { 123 }
+
+      specify do
+        expect { itoa }.to raise_error(
+          TypeError,
+          "no implicit conversion of #{prefix.class} into String",
+        )
+      end
+    end
+
+    context 'when prefix has max length' do
+      let(:prefix) { 'a' * 100 }
+
+      def sign = number < 0 ? '-' : ''
+
+      it { is_expected.to be_instance_of String }
+      it { is_expected.to be_frozen }
+      it { is_expected.to eq "#{sign}#{prefix}#{number.abs.to_s(base)}" }
+    end
+
+    context 'when prefix is too long' do
+      let(:prefix) { 'a' * 101 }
+
+      specify do
+        expect { itoa }.to raise_error(
+          ArgumentError,
+          "prefix length #{prefix.length} is too long",
+        )
       end
     end
   end

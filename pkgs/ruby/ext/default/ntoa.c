@@ -1,12 +1,15 @@
 #include <kernaux.h>
 #include <ruby.h>
 
+#define MAX_PREFIX_LEN 100
+
 #ifdef HAVE_KERNAUX_UTOA
-static VALUE rb_KernAux_utoa(VALUE self, VALUE number, VALUE base);
+static VALUE rb_KernAux_utoa(VALUE self, VALUE number, VALUE base, VALUE prefix);
 #endif
 #ifdef HAVE_KERNAUX_ITOA
-static VALUE rb_KernAux_itoa(VALUE self, VALUE number, VALUE base);
+static VALUE rb_KernAux_itoa(VALUE self, VALUE number, VALUE base, VALUE prefix);
 #endif
+
 #ifdef HAVE_KERNAUX_UTOA10
 static VALUE rb_KernAux_utoa10(VALUE self, VALUE number);
 #endif
@@ -64,11 +67,12 @@ void init_ntoa()
                               rb_KernAux_Error));
 
 #ifdef HAVE_KERNAUX_UTOA
-    rb_define_singleton_method(rb_KernAux, "utoa", rb_KernAux_utoa, 2);
+    rb_define_singleton_method(rb_KernAux, "utoa", rb_KernAux_utoa, 3);
 #endif
 #ifdef HAVE_KERNAUX_ITOA
-    rb_define_singleton_method(rb_KernAux, "itoa", rb_KernAux_itoa, 2);
+    rb_define_singleton_method(rb_KernAux, "itoa", rb_KernAux_itoa, 3);
 #endif
+
 #ifdef HAVE_KERNAUX_UTOA10
     rb_define_singleton_method(rb_KernAux, "utoa10", rb_KernAux_utoa10, 1);
 #endif
@@ -87,14 +91,31 @@ void init_ntoa()
 VALUE rb_KernAux_utoa(
     const VALUE self_rb __attribute__((unused)),
     const VALUE number_rb,
-    const VALUE base_rb
+    const VALUE base_rb,
+    VALUE prefix_rb
 ) {
     RB_INTEGER_TYPE_P(number_rb);
     if (rb_funcall(number_rb, rb_intern_LESS, 1, INT2FIX(0))) {
         rb_raise(rb_eRangeError, "can't convert negative number to uint64_t");
     }
-    char buffer[KERNAUX_UTOA_BUFFER_SIZE];
-    kernaux_utoa(NUM2ULL(number_rb), buffer, convert_base(base_rb));
+
+    const char *prefix = NULL;
+    long prefix_len = 0;
+    if (!NIL_P(prefix_rb)) {
+        prefix = StringValueCStr(prefix_rb);
+        prefix_len = RSTRING_LEN(prefix_rb);
+
+        if (prefix_len > MAX_PREFIX_LEN || prefix_len < 0) {
+            rb_raise(
+                rb_eArgError,
+                "prefix length %ld is too long",
+                prefix_len
+            );
+        }
+    }
+
+    char buffer[KERNAUX_UTOA_BUFFER_SIZE + prefix_len];
+    kernaux_utoa(NUM2ULL(number_rb), buffer, convert_base(base_rb), prefix);
     return rb_funcall(rb_str_new2(buffer), rb_intern_freeze, 0);
 }
 #endif
@@ -103,11 +124,28 @@ VALUE rb_KernAux_utoa(
 VALUE rb_KernAux_itoa(
     const VALUE self_rb __attribute__((unused)),
     const VALUE number_rb,
-    const VALUE base_rb
+    const VALUE base_rb,
+    VALUE prefix_rb
 ) {
     RB_INTEGER_TYPE_P(number_rb);
-    char buffer[KERNAUX_ITOA_BUFFER_SIZE];
-    kernaux_itoa(NUM2LL(number_rb), buffer, convert_base(base_rb));
+
+    const char *prefix = NULL;
+    long prefix_len = 0;
+    if (!NIL_P(prefix_rb)) {
+        prefix = StringValueCStr(prefix_rb);
+        prefix_len = RSTRING_LEN(prefix_rb);
+
+        if (prefix_len > MAX_PREFIX_LEN || prefix_len < 0) {
+            rb_raise(
+                rb_eArgError,
+                "prefix length %ld is too long",
+                prefix_len
+            );
+        }
+    }
+
+    char buffer[KERNAUX_ITOA_BUFFER_SIZE + prefix_len];
+    kernaux_itoa(NUM2LL(number_rb), buffer, convert_base(base_rb), prefix);
     return rb_funcall(rb_str_new2(buffer), rb_intern_freeze, 0);
 }
 #endif
