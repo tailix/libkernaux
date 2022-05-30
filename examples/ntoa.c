@@ -231,5 +231,29 @@ int main()
         assert(end == str_end(buffer));
     }
 
+    // kernaux_utoa10
+    {
+        char buffer[KERNAUX_UTOA10_BUFFER_SIZE];
+        const char *end;
+
+        end = kernaux_utoa10(123, buffer);
+        assert(strcmp(buffer, "123") == 0);
+        assert(end == str_end(buffer));
+    }
+
+    // kernaux_itoa10
+    {
+        char buffer[KERNAUX_ITOA10_BUFFER_SIZE];
+        const char *end;
+
+        end = kernaux_itoa10(123, buffer);
+        assert(strcmp(buffer, "123") == 0);
+        assert(end == str_end(buffer));
+
+        end = kernaux_itoa10(-123, buffer);
+        assert(strcmp(buffer, "-123") == 0);
+        assert(end == str_end(buffer));
+    }
+
     return 0;
 }
