@@ -7,6 +7,7 @@
 	"KERNAUX_ITOA_MIN_BUFFER_SIZE"
 	* include/kernaux/ntoa.h: Functions "kernaux_[u|i]toa[10|16]" return the end
 	of a buffer
+	* include/kernaux/ntoa.h: functions "kernaux_[u|i]toa16" put default prefix
 
 2022-05-28  Alex Kotov  <kotovalexarian@gmail.com>
 

@@ -217,10 +217,10 @@ assert 'KernAux.itoa10' do
 end
 
 assert 'KernAux.utoa16' do
-  test_utoa16 0, '0'
-  test_utoa16 1, '1'
-  test_utoa16 0x123, '123'
-  test_utoa16 2**32 - 1, (2**32 - 1).to_s(16)
+  test_utoa16 0, '0x0'
+  test_utoa16 1, '0x1'
+  test_utoa16 0x123, '0x123'
+  test_utoa16 2**32 - 1, "0x#{(2**32 - 1).to_s(16)}"
 
   assert_raise RangeError, 'can\'t convert negative number to uint64_t' do
     KernAux.utoa16(-1)
@@ -228,11 +228,11 @@ assert 'KernAux.utoa16' do
 end
 
 assert 'KernAux.itoa16' do
-  test_itoa16 0, '0'
-  test_itoa16 1, '1'
-  test_itoa16(-1, '-1')
-  test_itoa16 0x123, '123'
-  test_itoa16(-0x123, '-123')
-  test_itoa16 2**31 - 1, (2**31 - 1).to_s(16)
-  test_itoa16(-2**31, (-2**31).to_s(16))
+  test_itoa16 0, '0x0'
+  test_itoa16 1, '0x1'
+  test_itoa16(-1, '-0x1')
+  test_itoa16 0x123, '0x123'
+  test_itoa16(-0x123, '-0x123')
+  test_itoa16 2**31 - 1, "0x#{(2**31 - 1).to_s(16)}"
+  test_itoa16(-2**31, "-0x#{(2**31).to_s(16)}")
 end

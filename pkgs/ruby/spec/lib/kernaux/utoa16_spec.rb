@@ -10,18 +10,18 @@ RSpec.describe KernAux, '.utoa16' do
 
     it { is_expected.to be_instance_of String }
     it { is_expected.to be_frozen }
-    it { is_expected.to eq number.to_s 16 }
+    it { is_expected.to eq "0x#{number.to_s(16)}" }
 
     context 'when number is 0' do
       let(:number) { 0 }
 
-      it { is_expected.to eq '0' }
+      it { is_expected.to eq '0x0' }
     end
 
     context 'when number is max uint64_t' do
       let(:number) { 2**64 - 1 }
 
-      it { is_expected.to eq number.to_s 16 }
+      it { is_expected.to eq "0x#{number.to_s(16)}" }
     end
 
     context 'when number is -1' do
