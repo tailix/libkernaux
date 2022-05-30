@@ -11,6 +11,9 @@ char *kernaux_utoa(uint64_t value, char *buffer, int base, const char *prefix)
 {
     KERNAUX_NOTNULL_RETVAL(buffer, NULL);
 
+    // Protect caller from invalid state in case of future assertions
+    *buffer = '\0';
+
     switch (base) {
     case 'b': case 'B': base = 2;   break;
     case 'o': case 'O': base = 8;   break;
