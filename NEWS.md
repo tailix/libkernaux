@@ -38,6 +38,8 @@ Releases
 0.2.0 (2022-01-22)
 ------------------
 
+51 files changed, 1647 insertions(+), 501 deletions(-)
+
 ### Breaking changes
 
 * `./configure` - removed options to disable panic calls and returns in
