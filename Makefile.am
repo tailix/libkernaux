@@ -111,7 +111,9 @@ endif
 if WITH_NTOA
 libkernaux_a_SOURCES += src/ntoa.c
 if ENABLE_TESTS
-TESTS += tests/test_ntoa
+TESTS += \
+	examples/ntoa \
+	tests/test_ntoa
 endif
 endif
 
@@ -169,6 +171,10 @@ examples_assert_simple_SOURCES = \
 examples_cmdline_SOURCES = \
 	$(libkernaux_a_SOURCES) \
 	examples/cmdline.c
+
+examples_ntoa_SOURCES = \
+	$(libkernaux_a_SOURCES) \
+	examples/ntoa.c
 
 examples_panic_guards_SOURCES = \
 	$(libkernaux_a_SOURCES) \
