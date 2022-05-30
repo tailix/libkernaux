@@ -207,5 +207,29 @@ int main()
         assert(end == str_end(buffer));
     }
 
+    // kernaux_utoa8
+    {
+        char buffer[KERNAUX_UTOA8_BUFFER_SIZE];
+        const char *end;
+
+        end = kernaux_utoa8(0123, buffer);
+        assert(strcmp(buffer, "0o123") == 0);
+        assert(end == str_end(buffer));
+    }
+
+    // kernaux_itoa8
+    {
+        char buffer[KERNAUX_ITOA8_BUFFER_SIZE];
+        const char *end;
+
+        end = kernaux_itoa8(0123, buffer);
+        assert(strcmp(buffer, "0o123") == 0);
+        assert(end == str_end(buffer));
+
+        end = kernaux_itoa8(-0123, buffer);
+        assert(strcmp(buffer, "-0o123") == 0);
+        assert(end == str_end(buffer));
+    }
+
     return 0;
 }
