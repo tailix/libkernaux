@@ -390,6 +390,11 @@ static void test_itoa_assert(char *const buffer, const int base)
     assert(strstr(assert_last_file, "src/ntoa.c") != NULL);
 }
 
+static const char *str_end(const char *str)
+{
+    for (;; ++str) if (*str == '\0') return str;
+}
+
 int main()
 {
     kernaux_assert_cb = assert_cb;
@@ -430,12 +435,7 @@ int main()
                 utoa_cases[index].base
             );
             assert(strcmp(buffer, utoa_cases[index].result) == 0);
-            for (const char *pos = buffer;; ++pos) {
-                if (*pos == '\0') {
-                    assert(end == pos);
-                    break;
-                }
-            }
+            assert(end == str_end(buffer));
         }
     }
 
@@ -454,24 +454,14 @@ int main()
 
             const char *const end1 = kernaux_itoa(value, buffer, base);
             assert(strcmp(buffer, utoa_cases[index].result) == 0);
-            for (const char *pos = buffer;; ++pos) {
-                if (*pos == '\0') {
-                    assert(end1 == pos);
-                    break;
-                }
-            }
+            assert(end1 == str_end(buffer));
 
             if (value <= 0 || base < 2 || base > 36) continue;
 
             const char *const end2 = kernaux_itoa(-value, buffer, base);
             assert(buffer[0] == '-');
             assert(strcmp(&buffer[1], utoa_cases[index].result) == 0);
-            for (const char *pos = buffer;; ++pos) {
-                if (*pos == '\0') {
-                    assert(end2 == pos);
-                    break;
-                }
-            }
+            assert(end2 == str_end(buffer));
         }
     }
 
