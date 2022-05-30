@@ -67,19 +67,9 @@ char *kernaux_utoa2(uint64_t value, char *buffer)
     return kernaux_utoa(value, buffer, 'b', KERNAUX_NTOA_DEFAULT_PREFIX_2);
 }
 
-char *kernaux_utoa2x(uint64_t value, char *buffer, const char *prefix)
-{
-    return kernaux_utoa(value, buffer, 'b', prefix);
-}
-
 char *kernaux_itoa2(int64_t value, char *buffer)
 {
     return kernaux_itoa(value, buffer, 'b', KERNAUX_NTOA_DEFAULT_PREFIX_2);
-}
-
-char *kernaux_itoa2x(int64_t value, char *buffer, const char *prefix)
-{
-    return kernaux_itoa(value, buffer, 'b', prefix);
 }
 
 char *kernaux_utoa8(uint64_t value, char *buffer)
@@ -87,19 +77,9 @@ char *kernaux_utoa8(uint64_t value, char *buffer)
     return kernaux_utoa(value, buffer, 'o', KERNAUX_NTOA_DEFAULT_PREFIX_8);
 }
 
-char *kernaux_utoa8x(uint64_t value, char *buffer, const char *prefix)
-{
-    return kernaux_utoa(value, buffer, 'o', prefix);
-}
-
 char *kernaux_itoa8(int64_t value, char *buffer)
 {
     return kernaux_itoa(value, buffer, 'o', KERNAUX_NTOA_DEFAULT_PREFIX_8);
-}
-
-char *kernaux_itoa8x(int64_t value, char *buffer, const char *prefix)
-{
-    return kernaux_itoa(value, buffer, 'o', prefix);
 }
 
 char *kernaux_utoa10(uint64_t value, char *buffer)
@@ -107,19 +87,9 @@ char *kernaux_utoa10(uint64_t value, char *buffer)
     return kernaux_utoa(value, buffer, 'd', NULL);
 }
 
-char *kernaux_utoa10x(uint64_t value, char *buffer, const char *prefix)
-{
-    return kernaux_utoa(value, buffer, 'd', prefix);
-}
-
 char *kernaux_itoa10(int64_t value, char *buffer)
 {
     return kernaux_itoa(value, buffer, 'd', NULL);
-}
-
-char *kernaux_itoa10x(int64_t value, char *buffer, const char *prefix)
-{
-    return kernaux_itoa(value, buffer, 'd', prefix);
 }
 
 char *kernaux_utoa16(uint64_t value, char *buffer)
@@ -127,17 +97,7 @@ char *kernaux_utoa16(uint64_t value, char *buffer)
     return kernaux_utoa(value, buffer, 'x', KERNAUX_NTOA_DEFAULT_PREFIX_16);
 }
 
-char *kernaux_utoa16x(uint64_t value, char *buffer, const char *prefix)
-{
-    return kernaux_utoa(value, buffer, 'x', prefix);
-}
-
 char *kernaux_itoa16(int64_t value, char *buffer)
 {
     return kernaux_itoa(value, buffer, 'x', KERNAUX_NTOA_DEFAULT_PREFIX_16);
-}
-
-char *kernaux_itoa16x(int64_t value, char *buffer, const char *prefix)
-{
-    return kernaux_itoa(value, buffer, 'x', prefix);
 }
