@@ -1,11 +1,11 @@
 use libc::{c_char, c_int};
 
-pub const UTOA_BUFFER_SIZE: usize = 65;
-pub const ITOA_BUFFER_SIZE: usize = 66;
-pub const UTOA10_BUFFER_SIZE: usize = 21;
-pub const ITOA10_BUFFER_SIZE: usize = 21;
-pub const UTOA16_BUFFER_SIZE: usize = 17;
-pub const ITOA16_BUFFER_SIZE: usize = 18;
+pub const UTOA_BUFFER_SIZE: usize = 64 + 1;
+pub const ITOA_BUFFER_SIZE: usize = 65 + 1;
+pub const UTOA10_BUFFER_SIZE: usize = 20 + 1;
+pub const ITOA10_BUFFER_SIZE: usize = 20 + 1;
+pub const UTOA16_BUFFER_SIZE: usize = 16 + 1;
+pub const ITOA16_BUFFER_SIZE: usize = 17 + 1;
 
 #[link(name = "kernaux")]
 extern "C" {
