@@ -4,10 +4,50 @@ def test_utoa(number, base, expected)
   assert_true result.instance_of? String
   assert_true result.frozen?
   assert_equal expected, result
+
+  result = KernAux.utoa(number, base, nil)
+
+  assert_true result.instance_of? String
+  assert_true result.frozen?
+  assert_equal expected, result
+
+  result = KernAux.utoa(number, base, '')
+
+  assert_true result.instance_of? String
+  assert_true result.frozen?
+  assert_equal expected, result
 end
 
 def test_itoa(number, base, expected)
   result = KernAux.itoa(number, base)
+
+  assert_true result.instance_of? String
+  assert_true result.frozen?
+  assert_equal expected, result
+
+  result = KernAux.itoa(number, base, nil)
+
+  assert_true result.instance_of? String
+  assert_true result.frozen?
+  assert_equal expected, result
+
+  result = KernAux.itoa(number, base, '')
+
+  assert_true result.instance_of? String
+  assert_true result.frozen?
+  assert_equal expected, result
+end
+
+def test_utoax(number, base, prefix, expected)
+  result = KernAux.utoa(number, base, prefix)
+
+  assert_true result.instance_of? String
+  assert_true result.frozen?
+  assert_equal expected, result
+end
+
+def test_itoax(number, base, prefix, expected)
+  result = KernAux.itoa(number, base, prefix)
 
   assert_true result.instance_of? String
   assert_true result.frozen?
@@ -96,6 +136,23 @@ assert 'KernAux.utoa' do
 
   number = Random.rand(2**32 - 1)
   test_utoa number, :X, number.to_s(16).upcase
+
+  number = Random.rand(2**32 - 1)
+  base = 2 + Random.rand(36 - 2)
+  prefix = 'foo'
+  test_utoax number, base, prefix, "#{prefix}#{number.abs.to_s(base)}"
+
+  number = Random.rand(2**32 - 1)
+  base = 2 + Random.rand(36 - 2)
+  prefix = 'a' * 100
+  test_utoax number, base, prefix, "#{prefix}#{number.abs.to_s(base)}"
+
+  assert_raise ArgumentError, 'prefix length 101 is too long' do
+    number = Random.rand(2**32 - 1)
+    base = 2 + Random.rand(36 - 2)
+    prefix = 'a' * 101
+    KernAux.utoa(number, base, prefix)
+  end
 end
 
 assert 'KernAux.itoa' do
@@ -157,6 +214,25 @@ assert 'KernAux.itoa' do
 
   number = Random.rand(2**31 - 1) * [1, -1].sample
   test_itoa number, :X, number.to_s(16).upcase
+
+  number = Random.rand(2**31 - 1) * [1, -1].sample
+  base = 2 + Random.rand(36 - 2)
+  prefix = 'foo'
+  sign = number < 0 ? '-' : ''
+  test_itoax number, base, prefix, "#{sign}#{prefix}#{number.abs.to_s(base)}"
+
+  number = Random.rand(2**31 - 1) * [1, -1].sample
+  base = 2 + Random.rand(36 - 2)
+  prefix = 'a' * 100
+  sign = number < 0 ? '-' : ''
+  test_itoax number, base, prefix, "#{sign}#{prefix}#{number.abs.to_s(base)}"
+
+  assert_raise ArgumentError, 'prefix length 101 is too long' do
+    number = Random.rand(2**31 - 1) * [1, -1].sample
+    base = 2 + Random.rand(36 - 2)
+    prefix = 'a' * 101
+    KernAux.itoa(number, base, prefix)
+  end
 end
 
 assert 'KernAux.utoa10' do

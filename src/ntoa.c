@@ -42,7 +42,7 @@ char *kernaux_utoa(uint64_t value, char *buffer, int base, const char *prefix)
     char *const result = pos;
     *(pos--) = '\0';
 
-    // Reverse buffer
+    // Reverse number
     while (buffer < pos) {
         const char tmp = *buffer;
         *(buffer++) = *pos;
@@ -52,7 +52,7 @@ char *kernaux_utoa(uint64_t value, char *buffer, int base, const char *prefix)
     return result;
 }
 
-char *kernaux_itoa(int64_t value, char *buffer, int base, const char *prefix)
+char *kernaux_itoa(int64_t value, char *buffer, int base, const char *const prefix)
 {
     if (value >= 0) {
         return kernaux_utoa(value, buffer, base, prefix);
