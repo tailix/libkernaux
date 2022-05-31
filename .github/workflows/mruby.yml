@@ -9,6 +9,8 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    env:
+      MRUBY_YAML_USE_SYSTEM_LIBRARY: x
     steps:
       - uses: actions/checkout@v2
         with:
