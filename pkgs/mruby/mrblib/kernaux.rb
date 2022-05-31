@@ -25,4 +25,7 @@ module KernAux
 
   class Error < RuntimeError; end
   class AssertError < Error; end
+  class CmdlineError < Error; end
+  class InvalidNtoaBaseError < Error; end
+  class TooLongNtoaPrefixError < Error; end
 end
