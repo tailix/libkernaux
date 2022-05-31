@@ -1,5 +1,5 @@
-mod assert;
-mod ntoa;
+pub mod assert;
+pub mod ntoa;
 
 pub use ntoa::*;
 
