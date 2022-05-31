@@ -1,5 +1,11 @@
 use std::ffi::CStr;
+use std::ptr::null;
+use std::str::Utf8Error;
 
+use libc::c_int;
+
+use kernaux_sys::utoa as kernaux_utoa;
+use kernaux_sys::UTOA_MIN_BUFFER_SIZE;
 use kernaux_sys::{
     itoa10 as kernaux_itoa10, itoa16 as kernaux_itoa16,
     utoa10 as kernaux_utoa10, utoa16 as kernaux_utoa16,
@@ -20,6 +26,41 @@ use kernaux_sys::{
 pub struct Config {
     base: u8,
     uppercase: bool,
+}
+
+#[derive(Clone, Debug, Eq, PartialEq)]
+pub enum Error {
+    PrefixTooLong,
+    Utf8(Utf8Error),
+}
+
+pub fn utoa(
+    value: u64,
+    config: Config,
+    prefix: Option<&str>,
+) -> Result<String, Error> {
+    if let Some(prefix) = prefix {
+        if prefix.len() > 100 {
+            return Err(Error::PrefixTooLong);
+        }
+    }
+
+    let mut buffer: [i8; UTOA_MIN_BUFFER_SIZE + 100] =
+        [0; UTOA_MIN_BUFFER_SIZE + 100];
+
+    unsafe {
+        kernaux_utoa(
+            value,
+            buffer.as_mut_ptr(),
+            config.to_c_int(),
+            prefix
+                .map(|prefix| prefix.as_ptr() as *const i8)
+                .unwrap_or(null()),
+        );
+    };
+
+    let result = unsafe { CStr::from_ptr(buffer.as_ptr()) }.to_str()?;
+    Ok(String::from(result))
 }
 
 pub fn utoa2(value: u64) -> String {
@@ -94,6 +135,20 @@ impl Config {
 
     pub fn uppercase(&self) -> bool {
         self.uppercase
+    }
+
+    fn to_c_int(self) -> c_int {
+        if self.uppercase {
+            (-(self.base as i8)).into()
+        } else {
+            self.base.into()
+        }
+    }
+}
+
+impl From<Utf8Error> for Error {
+    fn from(utf8_error: Utf8Error) -> Self {
+        Self::Utf8(utf8_error)
     }
 }
 
@@ -198,6 +253,80 @@ impl TryFrom<i8> for Config {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn test_utoa() {
+        // binary
+        assert_eq!(
+            utoa(0b10110, 'b'.try_into().unwrap(), None),
+            Ok("10110".into()),
+        );
+        assert_eq!(
+            utoa(0b10110, 'B'.try_into().unwrap(), None),
+            Ok("10110".into()),
+        );
+        assert_eq!(
+            utoa(0b10110, 2.try_into().unwrap(), None),
+            Ok("10110".into()),
+        );
+        assert_eq!(
+            utoa(0b10110, (-2).try_into().unwrap(), None),
+            Ok("10110".into()),
+        );
+
+        // octal
+        assert_eq!(
+            utoa(0o123, 'o'.try_into().unwrap(), None),
+            Ok("123".into()),
+        );
+        assert_eq!(
+            utoa(0o123, 'O'.try_into().unwrap(), None),
+            Ok("123".into()),
+        );
+        assert_eq!(utoa(0o123, 8.try_into().unwrap(), None), Ok("123".into()));
+        assert_eq!(
+            utoa(0o123, (-8).try_into().unwrap(), None),
+            Ok("123".into()),
+        );
+
+        // decimal
+        assert_eq!(utoa(123, Default::default(), None), Ok("123".into()));
+        assert_eq!(utoa(123, 'd'.try_into().unwrap(), None), Ok("123".into()));
+        assert_eq!(utoa(123, 'D'.try_into().unwrap(), None), Ok("123".into()));
+        assert_eq!(utoa(123, 10.try_into().unwrap(), None), Ok("123".into()));
+        assert_eq!(
+            utoa(123, (-10).try_into().unwrap(), None),
+            Ok("123".into()),
+        );
+
+        // hexadecimal
+        assert_eq!(
+            utoa(0x123cafe, 'x'.try_into().unwrap(), None),
+            Ok("123cafe".into()),
+        );
+        assert_eq!(
+            utoa(0x123cafe, 16.try_into().unwrap(), None),
+            Ok("123cafe".into()),
+        );
+        assert_eq!(
+            utoa(0x123cafe, 'X'.try_into().unwrap(), None),
+            Ok("123CAFE".into()),
+        );
+        assert_eq!(
+            utoa(0x123cafe, (-16).try_into().unwrap(), None),
+            Ok("123CAFE".into()),
+        );
+
+        // random base: 14
+        assert_eq!(
+            utoa(123456, 14.try_into().unwrap(), None),
+            Ok("32dc4".into()),
+        );
+        assert_eq!(
+            utoa(123456, (-14).try_into().unwrap(), None),
+            Ok("32DC4".into()),
+        );
+    }
 
     #[test]
     fn test_utoa2() {
