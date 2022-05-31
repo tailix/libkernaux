@@ -1,3 +1,4 @@
+mod assert;
 mod ntoa;
 
 pub use ntoa::*;

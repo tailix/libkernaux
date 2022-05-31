@@ -12,6 +12,13 @@ keywords = ["ffi", "embedded", "bindings"]
 categories = ["api-bindings", "embedded", "parsing"]
 publish = true
 
+[dependencies]
+ctor = "0.1.22"
+
 [dependencies.kernaux-sys]
 version = "0.3.0"
 path = "../kernaux-sys"
+
+[dependencies.libc]
+version = "0.2.113"
+default-features = false
