@@ -1,26 +1,17 @@
+use kernaux_sys::{
+    itoa10 as kernaux_itoa10, itoa16 as kernaux_itoa16, itoa2 as kernaux_itoa2,
+    itoa8 as kernaux_itoa8, utoa as kernaux_utoa, utoa10 as kernaux_utoa10,
+    utoa16 as kernaux_utoa16, utoa2 as kernaux_utoa2, utoa8 as kernaux_utoa8,
+    ITOA10_BUFFER_SIZE, ITOA16_BUFFER_SIZE, ITOA2_BUFFER_SIZE,
+    ITOA8_BUFFER_SIZE, UTOA10_BUFFER_SIZE, UTOA16_BUFFER_SIZE,
+    UTOA2_BUFFER_SIZE, UTOA8_BUFFER_SIZE, UTOA_MIN_BUFFER_SIZE,
+};
+
 use std::ffi::CStr;
 use std::ptr::null;
 use std::str::Utf8Error;
 
 use libc::c_int;
-
-use kernaux_sys::utoa as kernaux_utoa;
-use kernaux_sys::UTOA_MIN_BUFFER_SIZE;
-use kernaux_sys::{
-    itoa10 as kernaux_itoa10, itoa16 as kernaux_itoa16,
-    utoa10 as kernaux_utoa10, utoa16 as kernaux_utoa16,
-};
-use kernaux_sys::{
-    itoa2 as kernaux_itoa2, itoa8 as kernaux_itoa8, utoa2 as kernaux_utoa2,
-    utoa8 as kernaux_utoa8,
-};
-use kernaux_sys::{
-    ITOA10_BUFFER_SIZE, ITOA16_BUFFER_SIZE, UTOA10_BUFFER_SIZE,
-    UTOA16_BUFFER_SIZE,
-};
-use kernaux_sys::{
-    ITOA2_BUFFER_SIZE, ITOA8_BUFFER_SIZE, UTOA2_BUFFER_SIZE, UTOA8_BUFFER_SIZE,
-};
 
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 pub struct Config {
