@@ -16,6 +16,12 @@ use kernaux_sys::{
     ITOA2_BUFFER_SIZE, ITOA8_BUFFER_SIZE, UTOA2_BUFFER_SIZE, UTOA8_BUFFER_SIZE,
 };
 
+#[derive(Clone, Copy, Debug, Eq, PartialEq)]
+pub struct Config {
+    base: u8,
+    uppercase: bool,
+}
+
 pub fn utoa2(value: u64) -> String {
     let mut buffer: [i8; UTOA2_BUFFER_SIZE] = [0; UTOA2_BUFFER_SIZE];
     unsafe { kernaux_utoa2(value, buffer.as_mut_ptr()) };
@@ -70,6 +76,123 @@ pub fn itoa16(value: i64) -> String {
     unsafe { kernaux_itoa16(value, buffer.as_mut_ptr()) };
     let result = unsafe { CStr::from_ptr(buffer.as_ptr()) }.to_str().unwrap();
     String::from(result)
+}
+
+impl Default for Config {
+    fn default() -> Self {
+        Self {
+            base: 10,
+            uppercase: false,
+        }
+    }
+}
+
+impl Config {
+    pub fn base(&self) -> u8 {
+        self.base
+    }
+
+    pub fn uppercase(&self) -> bool {
+        self.uppercase
+    }
+}
+
+impl TryFrom<char> for Config {
+    type Error = ();
+
+    fn try_from(value: char) -> Result<Self, Self::Error> {
+        let base: i64 = match value {
+            'b' | 'B' => 2,
+            'o' | 'O' => 8,
+            'd' | 'D' => 10,
+            'h' | 'x' => 16,
+            'H' | 'X' => -16,
+            _ => return Err(()),
+        };
+
+        base.try_into()
+    }
+}
+
+impl TryFrom<u64> for Config {
+    type Error = ();
+
+    fn try_from(value: u64) -> Result<Self, Self::Error> {
+        if (2..=36).contains(&value) {
+            Ok(Self {
+                base: value as u8,
+                uppercase: false,
+            })
+        } else {
+            Err(())
+        }
+    }
+}
+
+impl TryFrom<i64> for Config {
+    type Error = ();
+
+    fn try_from(value: i64) -> Result<Self, Self::Error> {
+        let uppercase = value < 0;
+        let value = if value < 0 { -value } else { value };
+
+        if (2..=36).contains(&value) {
+            Ok(Self {
+                base: value as u8,
+                uppercase,
+            })
+        } else {
+            Err(())
+        }
+    }
+}
+
+impl TryFrom<u32> for Config {
+    type Error = ();
+
+    fn try_from(value: u32) -> Result<Self, Self::Error> {
+        Self::try_from(value as u64)
+    }
+}
+
+impl TryFrom<i32> for Config {
+    type Error = ();
+
+    fn try_from(value: i32) -> Result<Self, Self::Error> {
+        Self::try_from(value as i64)
+    }
+}
+
+impl TryFrom<u16> for Config {
+    type Error = ();
+
+    fn try_from(value: u16) -> Result<Self, Self::Error> {
+        Self::try_from(value as u64)
+    }
+}
+
+impl TryFrom<i16> for Config {
+    type Error = ();
+
+    fn try_from(value: i16) -> Result<Self, Self::Error> {
+        Self::try_from(value as i64)
+    }
+}
+
+impl TryFrom<u8> for Config {
+    type Error = ();
+
+    fn try_from(value: u8) -> Result<Self, Self::Error> {
+        Self::try_from(value as u64)
+    }
+}
+
+impl TryFrom<i8> for Config {
+    type Error = ();
+
+    fn try_from(value: i8) -> Result<Self, Self::Error> {
+        Self::try_from(value as i64)
+    }
 }
 
 #[cfg(test)]
@@ -159,5 +282,183 @@ mod tests {
         assert_eq!(itoa16(-0x123), "-0x123");
         assert_eq!(itoa16(i64::MAX), "0x7fffffffffffffff");
         assert_eq!(itoa16(i64::MIN), "-0x8000000000000000");
+    }
+
+    #[test]
+    fn test_config_default() {
+        assert_eq!(
+            Config::default(),
+            Config {
+                base: 10,
+                uppercase: false,
+            },
+        );
+    }
+
+    #[test]
+    fn test_try_config_from_unsigned() {
+        assert_eq!(Config::try_from(12u8), Config::try_from(12u64));
+        assert_eq!(Config::try_from(12i8), Config::try_from(12i64));
+        assert_eq!(Config::try_from(12u16), Config::try_from(12u64));
+        assert_eq!(Config::try_from(12i16), Config::try_from(12i64));
+        assert_eq!(Config::try_from(12u32), Config::try_from(12u64));
+        assert_eq!(Config::try_from(12i32), Config::try_from(12i64));
+    }
+
+    #[test]
+    fn test_try_config_from_u64() {
+        assert_eq!(Config::try_from(0u64), Err(()));
+        assert_eq!(Config::try_from(1u64), Err(()));
+        assert_eq!(Config::try_from(37u64), Err(()));
+        assert_eq!(
+            Config::try_from(2u64),
+            Ok(Config {
+                base: 2,
+                uppercase: false,
+            }),
+        );
+        assert_eq!(
+            Config::try_from(10u64),
+            Ok(Config {
+                base: 10,
+                uppercase: false,
+            }),
+        );
+        assert_eq!(
+            Config::try_from(36u64),
+            Ok(Config {
+                base: 36,
+                uppercase: false,
+            }),
+        );
+    }
+
+    #[test]
+    fn test_try_config_from_i64() {
+        assert_eq!(Config::try_from(0i64), Err(()));
+        assert_eq!(Config::try_from(1i64), Err(()));
+        assert_eq!(Config::try_from(-1i64), Err(()));
+        assert_eq!(Config::try_from(37i64), Err(()));
+        assert_eq!(Config::try_from(-37i64), Err(()));
+        assert_eq!(
+            Config::try_from(2i64),
+            Ok(Config {
+                base: 2,
+                uppercase: false,
+            }),
+        );
+        assert_eq!(
+            Config::try_from(-2i64),
+            Ok(Config {
+                base: 2,
+                uppercase: true,
+            }),
+        );
+        assert_eq!(
+            Config::try_from(10i64),
+            Ok(Config {
+                base: 10,
+                uppercase: false,
+            }),
+        );
+        assert_eq!(
+            Config::try_from(-10i64),
+            Ok(Config {
+                base: 10,
+                uppercase: true,
+            }),
+        );
+        assert_eq!(
+            Config::try_from(36i64),
+            Ok(Config {
+                base: 36,
+                uppercase: false,
+            }),
+        );
+        assert_eq!(
+            Config::try_from(-36i64),
+            Ok(Config {
+                base: 36,
+                uppercase: true,
+            }),
+        );
+    }
+
+    #[test]
+    fn test_try_config_from_char() {
+        assert_eq!(Config::try_from('a'), Err(()));
+        assert_eq!(Config::try_from('A'), Err(()));
+        assert_eq!(Config::try_from('z'), Err(()));
+        assert_eq!(Config::try_from('Z'), Err(()));
+        assert_eq!(
+            Config::try_from('b'),
+            Ok(Config {
+                base: 2,
+                uppercase: false,
+            }),
+        );
+        assert_eq!(
+            Config::try_from('B'),
+            Ok(Config {
+                base: 2,
+                uppercase: false,
+            }),
+        );
+        assert_eq!(
+            Config::try_from('o'),
+            Ok(Config {
+                base: 8,
+                uppercase: false,
+            }),
+        );
+        assert_eq!(
+            Config::try_from('O'),
+            Ok(Config {
+                base: 8,
+                uppercase: false,
+            }),
+        );
+        assert_eq!(
+            Config::try_from('d'),
+            Ok(Config {
+                base: 10,
+                uppercase: false,
+            }),
+        );
+        assert_eq!(
+            Config::try_from('D'),
+            Ok(Config {
+                base: 10,
+                uppercase: false,
+            }),
+        );
+        assert_eq!(
+            Config::try_from('h'),
+            Ok(Config {
+                base: 16,
+                uppercase: false,
+            }),
+        );
+        assert_eq!(
+            Config::try_from('H'),
+            Ok(Config {
+                base: 16,
+                uppercase: true,
+            }),
+        );
+        assert_eq!(
+            Config::try_from('x'),
+            Ok(Config {
+                base: 16,
+                uppercase: false,
+            }),
+        );
+        assert_eq!(
+            Config::try_from('X'),
+            Ok(Config {
+                base: 16,
+                uppercase: true,
+            }),
+        );
     }
 }
