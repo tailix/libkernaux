@@ -1,10 +1,11 @@
 use kernaux_sys::{
-    itoa10 as kernaux_itoa10, itoa16 as kernaux_itoa16, itoa2 as kernaux_itoa2,
-    itoa8 as kernaux_itoa8, utoa as kernaux_utoa, utoa10 as kernaux_utoa10,
-    utoa16 as kernaux_utoa16, utoa2 as kernaux_utoa2, utoa8 as kernaux_utoa8,
-    ITOA10_BUFFER_SIZE, ITOA16_BUFFER_SIZE, ITOA2_BUFFER_SIZE,
-    ITOA8_BUFFER_SIZE, UTOA10_BUFFER_SIZE, UTOA16_BUFFER_SIZE,
-    UTOA2_BUFFER_SIZE, UTOA8_BUFFER_SIZE, UTOA_MIN_BUFFER_SIZE,
+    itoa as kernaux_itoa, itoa10 as kernaux_itoa10, itoa16 as kernaux_itoa16,
+    itoa2 as kernaux_itoa2, itoa8 as kernaux_itoa8, utoa as kernaux_utoa,
+    utoa10 as kernaux_utoa10, utoa16 as kernaux_utoa16, utoa2 as kernaux_utoa2,
+    utoa8 as kernaux_utoa8, ITOA10_BUFFER_SIZE, ITOA16_BUFFER_SIZE,
+    ITOA2_BUFFER_SIZE, ITOA8_BUFFER_SIZE, ITOA_MIN_BUFFER_SIZE,
+    UTOA10_BUFFER_SIZE, UTOA16_BUFFER_SIZE, UTOA2_BUFFER_SIZE,
+    UTOA8_BUFFER_SIZE, UTOA_MIN_BUFFER_SIZE,
 };
 
 use std::ffi::CStr;
@@ -41,6 +42,35 @@ pub fn utoa(
 
     unsafe {
         kernaux_utoa(
+            value,
+            buffer.as_mut_ptr(),
+            config.to_c_int(),
+            prefix
+                .map(|prefix| prefix.as_ptr() as *const i8)
+                .unwrap_or(null()),
+        );
+    };
+
+    let result = unsafe { CStr::from_ptr(buffer.as_ptr()) }.to_str()?;
+    Ok(String::from(result))
+}
+
+pub fn itoa(
+    value: i64,
+    config: Config,
+    prefix: Option<&str>,
+) -> Result<String, Error> {
+    if let Some(prefix) = prefix {
+        if prefix.len() > 100 {
+            return Err(Error::PrefixTooLong);
+        }
+    }
+
+    let mut buffer: [i8; ITOA_MIN_BUFFER_SIZE + 100] =
+        [0; ITOA_MIN_BUFFER_SIZE + 100];
+
+    unsafe {
+        kernaux_itoa(
             value,
             buffer.as_mut_ptr(),
             config.to_c_int(),
@@ -315,6 +345,94 @@ mod tests {
         );
         assert_eq!(
             utoa(123456, (-14).try_into().unwrap(), None),
+            Ok("32DC4".into()),
+        );
+    }
+
+    #[test]
+    fn test_itoa() {
+        // binary
+        assert_eq!(
+            itoa(0b10110, 'b'.try_into().unwrap(), None),
+            Ok("10110".into()),
+        );
+        assert_eq!(
+            itoa(-0b10110, 'B'.try_into().unwrap(), None),
+            Ok("-10110".into()),
+        );
+        assert_eq!(
+            itoa(-0b10110, 2.try_into().unwrap(), None),
+            Ok("-10110".into()),
+        );
+        assert_eq!(
+            itoa(0b10110, (-2).try_into().unwrap(), None),
+            Ok("10110".into()),
+        );
+
+        // octal
+        assert_eq!(
+            itoa(-0o123, 'o'.try_into().unwrap(), None),
+            Ok("-123".into()),
+        );
+        assert_eq!(
+            itoa(0o123, 'O'.try_into().unwrap(), None),
+            Ok("123".into()),
+        );
+        assert_eq!(itoa(0o123, 8.try_into().unwrap(), None), Ok("123".into()));
+        assert_eq!(
+            itoa(-0o123, (-8).try_into().unwrap(), None),
+            Ok("-123".into()),
+        );
+
+        // decimal
+        assert_eq!(itoa(123, Default::default(), None), Ok("123".into()));
+        assert_eq!(
+            itoa(-123, 'd'.try_into().unwrap(), None),
+            Ok("-123".into()),
+        );
+        assert_eq!(
+            itoa(-123, 'D'.try_into().unwrap(), None),
+            Ok("-123".into()),
+        );
+        assert_eq!(itoa(123, 10.try_into().unwrap(), None), Ok("123".into()));
+        assert_eq!(
+            itoa(123, (-10).try_into().unwrap(), None),
+            Ok("123".into()),
+        );
+
+        // hexadecimal
+        assert_eq!(
+            itoa(-0x123cafe, 'x'.try_into().unwrap(), None),
+            Ok("-123cafe".into()),
+        );
+        assert_eq!(
+            itoa(0x123cafe, 16.try_into().unwrap(), None),
+            Ok("123cafe".into()),
+        );
+        assert_eq!(
+            itoa(0x123cafe, 'X'.try_into().unwrap(), None),
+            Ok("123CAFE".into()),
+        );
+        assert_eq!(
+            itoa(-0x123cafe, (-16).try_into().unwrap(), None),
+            Ok("-123CAFE".into()),
+        );
+
+        // random base: 14
+        assert_eq!(
+            itoa(123456, 14.try_into().unwrap(), None),
+            Ok("32dc4".into()),
+        );
+        assert_eq!(
+            itoa(-123456, (-14).try_into().unwrap(), None),
+            Ok("-32DC4".into()),
+        );
+        assert_eq!(
+            itoa(-123456, 14.try_into().unwrap(), None),
+            Ok("-32dc4".into()),
+        );
+        assert_eq!(
+            itoa(123456, (-14).try_into().unwrap(), None),
             Ok("32DC4".into()),
         );
     }

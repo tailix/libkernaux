@@ -2,7 +2,7 @@ pub mod assert;
 pub mod ntoa;
 
 pub use ntoa::{
-    itoa10, itoa16, itoa2, itoa8, utoa, utoa10, utoa16, utoa2, utoa8,
+    itoa, itoa10, itoa16, itoa2, itoa8, utoa, utoa10, utoa16, utoa2, utoa8,
     Config as NtoaConfig,
 };
 
@@ -18,6 +18,8 @@ mod tests {
         assert_eq!(NtoaConfig::try_from('X'), NtoaConfig::try_from(-16));
 
         assert_eq!(utoa(123, Default::default(), None), Ok("123".into()));
+        assert_eq!(itoa(123, Default::default(), None), Ok("123".into()));
+        assert_eq!(itoa(-123, Default::default(), None), Ok("-123".into()));
 
         assert_eq!(utoa2(123), "0b1111011");
         assert_eq!(itoa2(123), "0b1111011");
