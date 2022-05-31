@@ -19,7 +19,7 @@ jobs:
         with:
           ruby-version: 3.0
       - name: dependencies
-        run: sudo apt-get --yes install cppcheck rake
+        run: sudo apt-get --yes install cppcheck libyaml-dev rake
       - name: autogen
         run: ./autogen.sh
       - name: configure
