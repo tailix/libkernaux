@@ -6,6 +6,7 @@ Gem::Specification.new do |spec|
   repo = 'https://github.com/tailix/libkernaux'
   home = "#{repo}/tree/master/pkgs/ruby"
   bugs = "#{repo}/issues"
+  docs = "https://www.rubydoc.info/gems/kernaux/#{KernAux::VERSION}"
 
   spec.name     = 'kernaux'
   spec.version  = KernAux::VERSION
@@ -25,10 +26,11 @@ Gem::Specification.new do |spec|
     Binding to libkernaux - auxiliary library for kernel development.
   DESCRIPTION
 
+  spec.metadata['rubygems_mfa_required'] = 'true'
   spec.metadata['homepage_uri']          = home
   spec.metadata['source_code_uri']       = home
   spec.metadata['bug_tracker_uri']       = bugs
-  spec.metadata['rubygems_mfa_required'] = 'true'
+  spec.metadata['documentation_uri']     = docs
 
   spec.bindir        = 'exe'
   spec.require_paths = ['lib']
