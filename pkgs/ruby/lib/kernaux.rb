@@ -26,6 +26,8 @@ module KernAux
   # @!attribute [rw] assert_cb
   # Panic callback.
   #
+  # @api unsafe
+  #
   # @see .panic
   # @see .assert_do
   ##
