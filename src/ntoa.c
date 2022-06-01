@@ -32,7 +32,16 @@ char *kernaux_utoa(uint64_t value, char *buffer, int base, const char *prefix)
     KERNAUX_ASSERT_RETVAL(base >= 2 && base <= 36, NULL);
 
     // Write prefix
-    if (prefix) while (*prefix) *(buffer++) = *(prefix++);
+    if (prefix) {
+        for (size_t prefix_len = 1; *prefix; ++prefix_len) {
+            if (prefix_len > KERNAUX_NTOA_MAX_PREFIX_LEN) {
+                // Protect caller from invalid state
+                *buffer = '\0';
+                KERNAUX_PANIC_RETVAL(prefix is too long, NULL);
+            }
+            *(buffer++) = *(prefix++);
+        }
+    }
 
     // Write number
     char *pos = buffer;

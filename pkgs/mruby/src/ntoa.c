@@ -9,8 +9,6 @@
 #include <mruby/presym.h>
 #include <mruby/string.h>
 
-#define MAX_PREFIX_LEN 100
-
 static mrb_value rb_KernAux_utoa(mrb_state *mrb, mrb_value self);
 static mrb_value rb_KernAux_itoa(mrb_state *mrb, mrb_value self);
 
@@ -77,7 +75,7 @@ mrb_value rb_KernAux_utoa(mrb_state *mrb, mrb_value self)
         mrb_raise(mrb, E_RANGE_ERROR,
                   "can't convert negative number to uint64_t");
     }
-    if (prefix_len > MAX_PREFIX_LEN || prefix_len < 0) {
+    if (prefix_len > KERNAUX_NTOA_MAX_PREFIX_LEN || prefix_len < 0) {
         struct RClass *const rb_KernAux =
             mrb_module_get_id(mrb, MRB_SYM(KernAux));
         struct RClass *const rb_KernAux_TooLongNtoaPrefixError =
@@ -108,7 +106,7 @@ mrb_value rb_KernAux_itoa(mrb_state *mrb, mrb_value self)
     mrb_int prefix_len = 0;
     mrb_get_args(mrb, "io|s!", &value, &base, &prefix, &prefix_len);
 
-    if (prefix_len > MAX_PREFIX_LEN || prefix_len < 0) {
+    if (prefix_len > KERNAUX_NTOA_MAX_PREFIX_LEN || prefix_len < 0) {
         struct RClass *const rb_KernAux =
             mrb_module_get_id(mrb, MRB_SYM(KernAux));
         struct RClass *const rb_KernAux_TooLongNtoaPrefixError =

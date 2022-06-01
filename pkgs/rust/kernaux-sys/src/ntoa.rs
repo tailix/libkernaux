@@ -1,5 +1,7 @@
 use libc::{c_char, c_int};
 
+pub const MAX_PREFIX_LEN: usize = 100;
+
 pub const UTOA_MIN_BUFFER_SIZE: usize = 64 + 1;
 pub const ITOA_MIN_BUFFER_SIZE: usize = 65 + 1;
 

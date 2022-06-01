@@ -1,8 +1,6 @@
 #include <kernaux.h>
 #include <ruby.h>
 
-#define MAX_PREFIX_LEN 100
-
 #ifdef HAVE_KERNAUX_UTOA
 static VALUE rb_KernAux_utoa(int argc, const VALUE *argv, VALUE self);
 #endif
@@ -139,7 +137,7 @@ VALUE rb_KernAux_utoa(const int argc, const VALUE *argv, const VALUE self)
         prefix = StringValueCStr(prefix_rb);
         prefix_len = RSTRING_LEN(prefix_rb);
 
-        if (prefix_len > MAX_PREFIX_LEN || prefix_len < 0) {
+        if (prefix_len > KERNAUX_NTOA_MAX_PREFIX_LEN || prefix_len < 0) {
             rb_raise(
                 rb_KernAux_TooLongNtoaPrefixError,
                 "prefix length %ld is too long",
@@ -177,7 +175,7 @@ VALUE rb_KernAux_itoa(const int argc, const VALUE *argv, const VALUE self)
         prefix = StringValueCStr(prefix_rb);
         prefix_len = RSTRING_LEN(prefix_rb);
 
-        if (prefix_len > MAX_PREFIX_LEN || prefix_len < 0) {
+        if (prefix_len > KERNAUX_NTOA_MAX_PREFIX_LEN || prefix_len < 0) {
             rb_raise(
                 rb_KernAux_TooLongNtoaPrefixError,
                 "prefix length %ld is too long",

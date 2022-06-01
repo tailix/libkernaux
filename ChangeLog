@@ -1,3 +1,7 @@
+2022-06-31  Alex Kotov  <kotovalexarian@gmail.com>
+
+	* include/kernaux/ntoa.h: Protect from too long prefix
+
 2022-05-30  Alex Kotov  <kotovalexarian@gmail.com>
 
 	* include/kernaux/ntoa.h: Functions "kernaux_utoa" and "kernaux_itoa"

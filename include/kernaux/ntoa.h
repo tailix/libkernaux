@@ -7,6 +7,8 @@ extern "C" {
 
 #include <stdint.h>
 
+#define KERNAUX_NTOA_MAX_PREFIX_LEN 100
+
 #define KERNAUX_NTOA_DEFAULT_PREFIX_2  "0b"
 #define KERNAUX_NTOA_DEFAULT_PREFIX_8  "0o"
 #define KERNAUX_NTOA_DEFAULT_PREFIX_16 "0x"

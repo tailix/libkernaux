@@ -1,9 +1,9 @@
-use kernaux_sys::{
+use kernaux_sys::ntoa::{
     itoa as kernaux_itoa, itoa10 as kernaux_itoa10, itoa16 as kernaux_itoa16,
     itoa2 as kernaux_itoa2, itoa8 as kernaux_itoa8, utoa as kernaux_utoa,
     utoa10 as kernaux_utoa10, utoa16 as kernaux_utoa16, utoa2 as kernaux_utoa2,
     utoa8 as kernaux_utoa8, ITOA10_BUFFER_SIZE, ITOA16_BUFFER_SIZE,
-    ITOA2_BUFFER_SIZE, ITOA8_BUFFER_SIZE, ITOA_MIN_BUFFER_SIZE,
+    ITOA2_BUFFER_SIZE, ITOA8_BUFFER_SIZE, ITOA_MIN_BUFFER_SIZE, MAX_PREFIX_LEN,
     UTOA10_BUFFER_SIZE, UTOA16_BUFFER_SIZE, UTOA2_BUFFER_SIZE,
     UTOA8_BUFFER_SIZE, UTOA_MIN_BUFFER_SIZE,
 };
@@ -33,13 +33,13 @@ pub fn utoa(
     prefix: Option<&str>,
 ) -> Result<String, Error> {
     if let Some(prefix) = prefix {
-        if prefix.len() > 100 {
+        if prefix.len() > MAX_PREFIX_LEN {
             return Err(Error::PrefixTooLong(prefix.len()));
         }
     }
 
-    let mut buffer: [i8; UTOA_MIN_BUFFER_SIZE + 100] =
-        [0; UTOA_MIN_BUFFER_SIZE + 100];
+    let mut buffer: [i8; UTOA_MIN_BUFFER_SIZE + MAX_PREFIX_LEN] =
+        [0; UTOA_MIN_BUFFER_SIZE + MAX_PREFIX_LEN];
 
     let prefix = if let Some(prefix) = prefix {
         Some(CString::new(prefix)?)
@@ -66,13 +66,13 @@ pub fn itoa(
     prefix: Option<&str>,
 ) -> Result<String, Error> {
     if let Some(prefix) = prefix {
-        if prefix.len() > 100 {
+        if prefix.len() > MAX_PREFIX_LEN {
             return Err(Error::PrefixTooLong(prefix.len()));
         }
     }
 
-    let mut buffer: [i8; ITOA_MIN_BUFFER_SIZE + 100] =
-        [0; ITOA_MIN_BUFFER_SIZE + 100];
+    let mut buffer: [i8; ITOA_MIN_BUFFER_SIZE + MAX_PREFIX_LEN] =
+        [0; ITOA_MIN_BUFFER_SIZE + MAX_PREFIX_LEN];
 
     let prefix = if let Some(prefix) = prefix {
         Some(CString::new(prefix)?)
