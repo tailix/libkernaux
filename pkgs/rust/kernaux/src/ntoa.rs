@@ -87,60 +87,60 @@ pub fn itoa(value: i64, config: Config, prefix: Option<&str>) -> Result {
     Ok(String::from(result))
 }
 
-pub fn utoa2(value: u64) -> String {
+pub fn utoa2(value: u64) -> Result {
     let mut buffer: [i8; UTOA2_BUFFER_SIZE] = [0; UTOA2_BUFFER_SIZE];
     unsafe { kernaux_utoa2(value, buffer.as_mut_ptr()) };
-    let result = unsafe { CStr::from_ptr(buffer.as_ptr()) }.to_str().unwrap();
-    String::from(result)
+    let result = unsafe { CStr::from_ptr(buffer.as_ptr()) }.to_str()?;
+    Ok(String::from(result))
 }
 
-pub fn itoa2(value: i64) -> String {
+pub fn itoa2(value: i64) -> Result {
     let mut buffer: [i8; ITOA2_BUFFER_SIZE] = [0; ITOA2_BUFFER_SIZE];
     unsafe { kernaux_itoa2(value, buffer.as_mut_ptr()) };
-    let result = unsafe { CStr::from_ptr(buffer.as_ptr()) }.to_str().unwrap();
-    String::from(result)
+    let result = unsafe { CStr::from_ptr(buffer.as_ptr()) }.to_str()?;
+    Ok(String::from(result))
 }
 
-pub fn utoa8(value: u64) -> String {
+pub fn utoa8(value: u64) -> Result {
     let mut buffer: [i8; UTOA8_BUFFER_SIZE] = [0; UTOA8_BUFFER_SIZE];
     unsafe { kernaux_utoa8(value, buffer.as_mut_ptr()) };
-    let result = unsafe { CStr::from_ptr(buffer.as_ptr()) }.to_str().unwrap();
-    String::from(result)
+    let result = unsafe { CStr::from_ptr(buffer.as_ptr()) }.to_str()?;
+    Ok(String::from(result))
 }
 
-pub fn itoa8(value: i64) -> String {
+pub fn itoa8(value: i64) -> Result {
     let mut buffer: [i8; ITOA8_BUFFER_SIZE] = [0; ITOA8_BUFFER_SIZE];
     unsafe { kernaux_itoa8(value, buffer.as_mut_ptr()) };
-    let result = unsafe { CStr::from_ptr(buffer.as_ptr()) }.to_str().unwrap();
-    String::from(result)
+    let result = unsafe { CStr::from_ptr(buffer.as_ptr()) }.to_str()?;
+    Ok(String::from(result))
 }
 
-pub fn utoa10(value: u64) -> String {
+pub fn utoa10(value: u64) -> Result {
     let mut buffer: [i8; UTOA10_BUFFER_SIZE] = [0; UTOA10_BUFFER_SIZE];
     unsafe { kernaux_utoa10(value, buffer.as_mut_ptr()) };
-    let result = unsafe { CStr::from_ptr(buffer.as_ptr()) }.to_str().unwrap();
-    String::from(result)
+    let result = unsafe { CStr::from_ptr(buffer.as_ptr()) }.to_str()?;
+    Ok(String::from(result))
 }
 
-pub fn itoa10(value: i64) -> String {
+pub fn itoa10(value: i64) -> Result {
     let mut buffer: [i8; ITOA10_BUFFER_SIZE] = [0; ITOA10_BUFFER_SIZE];
     unsafe { kernaux_itoa10(value, buffer.as_mut_ptr()) };
-    let result = unsafe { CStr::from_ptr(buffer.as_ptr()) }.to_str().unwrap();
-    String::from(result)
+    let result = unsafe { CStr::from_ptr(buffer.as_ptr()) }.to_str()?;
+    Ok(String::from(result))
 }
 
-pub fn utoa16(value: u64) -> String {
+pub fn utoa16(value: u64) -> Result {
     let mut buffer: [i8; UTOA16_BUFFER_SIZE] = [0; UTOA16_BUFFER_SIZE];
     unsafe { kernaux_utoa16(value, buffer.as_mut_ptr()) };
-    let result = unsafe { CStr::from_ptr(buffer.as_ptr()) }.to_str().unwrap();
-    String::from(result)
+    let result = unsafe { CStr::from_ptr(buffer.as_ptr()) }.to_str()?;
+    Ok(String::from(result))
 }
 
-pub fn itoa16(value: i64) -> String {
+pub fn itoa16(value: i64) -> Result {
     let mut buffer: [i8; ITOA16_BUFFER_SIZE] = [0; ITOA16_BUFFER_SIZE];
     unsafe { kernaux_itoa16(value, buffer.as_mut_ptr()) };
-    let result = unsafe { CStr::from_ptr(buffer.as_ptr()) }.to_str().unwrap();
-    String::from(result)
+    let result = unsafe { CStr::from_ptr(buffer.as_ptr()) }.to_str()?;
+    Ok(String::from(result))
 }
 
 impl Default for Config {
@@ -503,87 +503,87 @@ mod tests {
 
     #[test]
     fn test_utoa2() {
-        assert_eq!(utoa2(0), "0b0");
-        assert_eq!(utoa2(1), "0b1");
-        assert_eq!(utoa2(123), "0b1111011");
+        assert_eq!(utoa2(0), Ok("0b0".into()));
+        assert_eq!(utoa2(1), Ok("0b1".into()));
+        assert_eq!(utoa2(123), Ok("0b1111011".into()));
         assert_eq!(
             utoa2(u64::MAX),
-            "0b1111111111111111111111111111111111111111111111111111111111111111",
+            Ok("0b1111111111111111111111111111111111111111111111111111111111111111".into()),
         );
     }
 
     #[test]
     fn test_itoa2() {
-        assert_eq!(itoa2(0), "0b0");
-        assert_eq!(itoa2(1), "0b1");
-        assert_eq!(itoa2(-1), "-0b1");
-        assert_eq!(itoa2(123), "0b1111011");
-        assert_eq!(itoa2(-123), "-0b1111011");
+        assert_eq!(itoa2(0), Ok("0b0".into()));
+        assert_eq!(itoa2(1), Ok("0b1".into()));
+        assert_eq!(itoa2(-1), Ok("-0b1".into()));
+        assert_eq!(itoa2(123), Ok("0b1111011".into()));
+        assert_eq!(itoa2(-123), Ok("-0b1111011".into()));
         assert_eq!(
             itoa2(i64::MAX),
-            "0b111111111111111111111111111111111111111111111111111111111111111",
+            Ok("0b111111111111111111111111111111111111111111111111111111111111111".into()),
         );
         assert_eq!(
             itoa2(i64::MIN),
-            "-0b1000000000000000000000000000000000000000000000000000000000000000",
+            Ok("-0b1000000000000000000000000000000000000000000000000000000000000000".into()),
         );
     }
 
     #[test]
     fn test_utoa8() {
-        assert_eq!(utoa8(0), "0o0");
-        assert_eq!(utoa8(1), "0o1");
-        assert_eq!(utoa8(0o123), "0o123");
-        assert_eq!(utoa8(u64::MAX), "0o1777777777777777777777");
+        assert_eq!(utoa8(0), Ok("0o0".into()));
+        assert_eq!(utoa8(1), Ok("0o1".into()));
+        assert_eq!(utoa8(0o123), Ok("0o123".into()));
+        assert_eq!(utoa8(u64::MAX), Ok("0o1777777777777777777777".into()));
     }
 
     #[test]
     fn test_itoa8() {
-        assert_eq!(itoa8(0), "0o0");
-        assert_eq!(itoa8(1), "0o1");
-        assert_eq!(itoa8(-1), "-0o1");
-        assert_eq!(itoa8(0o123), "0o123");
-        assert_eq!(itoa8(-0o123), "-0o123");
-        assert_eq!(itoa8(i64::MAX), "0o777777777777777777777");
-        assert_eq!(itoa8(i64::MIN), "-0o1000000000000000000000");
+        assert_eq!(itoa8(0), Ok("0o0".into()));
+        assert_eq!(itoa8(1), Ok("0o1".into()));
+        assert_eq!(itoa8(-1), Ok("-0o1".into()));
+        assert_eq!(itoa8(0o123), Ok("0o123".into()));
+        assert_eq!(itoa8(-0o123), Ok("-0o123".into()));
+        assert_eq!(itoa8(i64::MAX), Ok("0o777777777777777777777".into()));
+        assert_eq!(itoa8(i64::MIN), Ok("-0o1000000000000000000000".into()));
     }
 
     #[test]
     fn test_utoa10() {
-        assert_eq!(utoa10(0), "0");
-        assert_eq!(utoa10(1), "1");
-        assert_eq!(utoa10(123), "123");
-        assert_eq!(utoa10(u64::MAX), "18446744073709551615");
+        assert_eq!(utoa10(0), Ok("0".into()));
+        assert_eq!(utoa10(1), Ok("1".into()));
+        assert_eq!(utoa10(123), Ok("123".into()));
+        assert_eq!(utoa10(u64::MAX), Ok("18446744073709551615".into()));
     }
 
     #[test]
     fn test_itoa10() {
-        assert_eq!(itoa10(0), "0");
-        assert_eq!(itoa10(1), "1");
-        assert_eq!(itoa10(-1), "-1");
-        assert_eq!(itoa10(123), "123");
-        assert_eq!(itoa10(-123), "-123");
-        assert_eq!(itoa10(i64::MAX), "9223372036854775807");
-        assert_eq!(itoa10(i64::MIN), "-9223372036854775808");
+        assert_eq!(itoa10(0), Ok("0".into()));
+        assert_eq!(itoa10(1), Ok("1".into()));
+        assert_eq!(itoa10(-1), Ok("-1".into()));
+        assert_eq!(itoa10(123), Ok("123".into()));
+        assert_eq!(itoa10(-123), Ok("-123".into()));
+        assert_eq!(itoa10(i64::MAX), Ok("9223372036854775807".into()));
+        assert_eq!(itoa10(i64::MIN), Ok("-9223372036854775808".into()));
     }
 
     #[test]
     fn test_utoa16() {
-        assert_eq!(utoa16(0), "0x0");
-        assert_eq!(utoa16(1), "0x1");
-        assert_eq!(utoa16(0x123), "0x123");
-        assert_eq!(utoa16(u64::MAX), "0xffffffffffffffff");
+        assert_eq!(utoa16(0), Ok("0x0".into()));
+        assert_eq!(utoa16(1), Ok("0x1".into()));
+        assert_eq!(utoa16(0x123), Ok("0x123".into()));
+        assert_eq!(utoa16(u64::MAX), Ok("0xffffffffffffffff".into()));
     }
 
     #[test]
     fn test_itoa16() {
-        assert_eq!(itoa16(0), "0x0");
-        assert_eq!(itoa16(1), "0x1");
-        assert_eq!(itoa16(-1), "-0x1");
-        assert_eq!(itoa16(0x123), "0x123");
-        assert_eq!(itoa16(-0x123), "-0x123");
-        assert_eq!(itoa16(i64::MAX), "0x7fffffffffffffff");
-        assert_eq!(itoa16(i64::MIN), "-0x8000000000000000");
+        assert_eq!(itoa16(0), Ok("0x0".into()));
+        assert_eq!(itoa16(1), Ok("0x1".into()));
+        assert_eq!(itoa16(-1), Ok("-0x1".into()));
+        assert_eq!(itoa16(0x123), Ok("0x123".into()));
+        assert_eq!(itoa16(-0x123), Ok("-0x123".into()));
+        assert_eq!(itoa16(i64::MAX), Ok("0x7fffffffffffffff".into()));
+        assert_eq!(itoa16(i64::MIN), Ok("-0x8000000000000000".into()));
     }
 
     #[test]
