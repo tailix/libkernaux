@@ -3,7 +3,7 @@ pub mod ntoa;
 
 pub use ntoa::{
     itoa, itoa10, itoa16, itoa2, itoa8, utoa, utoa10, utoa16, utoa2, utoa8,
-    Config as NtoaConfig,
+    Config as NtoaConfig, Error as NtoaError, Result as NtoaResult,
 };
 
 #[cfg(test)]

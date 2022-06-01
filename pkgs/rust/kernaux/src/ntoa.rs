@@ -20,6 +20,8 @@ pub struct Config {
     uppercase: bool,
 }
 
+pub type Result = std::result::Result<String, Error>;
+
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum Error {
     PrefixTooLong(usize),
@@ -27,11 +29,7 @@ pub enum Error {
     Utf8(Utf8Error),
 }
 
-pub fn utoa(
-    value: u64,
-    config: Config,
-    prefix: Option<&str>,
-) -> Result<String, Error> {
+pub fn utoa(value: u64, config: Config, prefix: Option<&str>) -> Result {
     if let Some(prefix) = prefix {
         if prefix.len() > MAX_PREFIX_LEN {
             return Err(Error::PrefixTooLong(prefix.len()));
@@ -60,11 +58,7 @@ pub fn utoa(
     Ok(String::from(result))
 }
 
-pub fn itoa(
-    value: i64,
-    config: Config,
-    prefix: Option<&str>,
-) -> Result<String, Error> {
+pub fn itoa(value: i64, config: Config, prefix: Option<&str>) -> Result {
     if let Some(prefix) = prefix {
         if prefix.len() > MAX_PREFIX_LEN {
             return Err(Error::PrefixTooLong(prefix.len()));
@@ -191,7 +185,7 @@ impl From<Utf8Error> for Error {
 impl TryFrom<char> for Config {
     type Error = ();
 
-    fn try_from(value: char) -> Result<Self, Self::Error> {
+    fn try_from(value: char) -> std::result::Result<Self, Self::Error> {
         let base: i64 = match value {
             'b' | 'B' => 2,
             'o' | 'O' => 8,
@@ -208,7 +202,7 @@ impl TryFrom<char> for Config {
 impl TryFrom<u64> for Config {
     type Error = ();
 
-    fn try_from(value: u64) -> Result<Self, Self::Error> {
+    fn try_from(value: u64) -> std::result::Result<Self, Self::Error> {
         if (2..=36).contains(&value) {
             Ok(Self {
                 base: value as u8,
@@ -223,7 +217,7 @@ impl TryFrom<u64> for Config {
 impl TryFrom<i64> for Config {
     type Error = ();
 
-    fn try_from(value: i64) -> Result<Self, Self::Error> {
+    fn try_from(value: i64) -> std::result::Result<Self, Self::Error> {
         let uppercase = value < 0;
         let value = if value < 0 { -value } else { value };
 
@@ -241,7 +235,7 @@ impl TryFrom<i64> for Config {
 impl TryFrom<u32> for Config {
     type Error = ();
 
-    fn try_from(value: u32) -> Result<Self, Self::Error> {
+    fn try_from(value: u32) -> std::result::Result<Self, Self::Error> {
         Self::try_from(value as u64)
     }
 }
@@ -249,7 +243,7 @@ impl TryFrom<u32> for Config {
 impl TryFrom<i32> for Config {
     type Error = ();
 
-    fn try_from(value: i32) -> Result<Self, Self::Error> {
+    fn try_from(value: i32) -> std::result::Result<Self, Self::Error> {
         Self::try_from(value as i64)
     }
 }
@@ -257,7 +251,7 @@ impl TryFrom<i32> for Config {
 impl TryFrom<u16> for Config {
     type Error = ();
 
-    fn try_from(value: u16) -> Result<Self, Self::Error> {
+    fn try_from(value: u16) -> std::result::Result<Self, Self::Error> {
         Self::try_from(value as u64)
     }
 }
@@ -265,7 +259,7 @@ impl TryFrom<u16> for Config {
 impl TryFrom<i16> for Config {
     type Error = ();
 
-    fn try_from(value: i16) -> Result<Self, Self::Error> {
+    fn try_from(value: i16) -> std::result::Result<Self, Self::Error> {
         Self::try_from(value as i64)
     }
 }
@@ -273,7 +267,7 @@ impl TryFrom<i16> for Config {
 impl TryFrom<u8> for Config {
     type Error = ();
 
-    fn try_from(value: u8) -> Result<Self, Self::Error> {
+    fn try_from(value: u8) -> std::result::Result<Self, Self::Error> {
         Self::try_from(value as u64)
     }
 }
@@ -281,7 +275,7 @@ impl TryFrom<u8> for Config {
 impl TryFrom<i8> for Config {
     type Error = ();
 
-    fn try_from(value: i8) -> Result<Self, Self::Error> {
+    fn try_from(value: i8) -> std::result::Result<Self, Self::Error> {
         Self::try_from(value as i64)
     }
 }
