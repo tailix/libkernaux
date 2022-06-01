@@ -4,7 +4,9 @@ require 'spec_helper'
 
 RSpec.describe KernAux, '.sprintf' do
   if described_class.singleton_class.method_defined? :sprintf
-    subject(:sprintf) { described_class.sprintf 'Hello, ', ['%s', 'World'], '!' }
+    subject :sprintf do
+      described_class.sprintf 'Hello, ', ['%s', 'World'], '!'
+    end
 
     it { is_expected.to be_instance_of String }
     it { is_expected.to be_frozen }
@@ -21,8 +23,10 @@ RSpec.describe KernAux, '.sprintf' do
       ['_orig', 'using original tests'],
     ].each do |(suffix, description)|
       context description do
-        printf_yml =
-          File.expand_path("../../../../../common/printf#{suffix}.yml", __dir__)
+        printf_yml = File.expand_path(
+          "../../../../../../common/printf#{suffix}.yml",
+          __dir__,
+        )
 
         YAML.safe_load_file(printf_yml).each do |test|
           expected = test['result']
