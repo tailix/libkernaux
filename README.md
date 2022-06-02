@@ -38,7 +38,7 @@ zero). Work-in-progress APIs can change at any time.
   * Architecture-specific code (*work in progress*)
     * [Declarations](/include/kernaux/arch/)
     * [Functions](/include/kernaux/asm/)
-  * [Assertions](/include/kernaux/assert.h) (*stable since* **0.1.0**, *non-breaking since* **0.3.0**)
+  * [Assertions](/include/kernaux/assert.h) (*stable since* **0.1.0**, *non-breaking since* **?.?.?**)
     * [Assert: simple](/examples/assert_simple.c)
     * [Assert: guards](/examples/assert_guards.c)
     * [Panic: simple](/examples/panic_simple.c)
