@@ -30,16 +30,13 @@ pub enum Error {
 }
 
 pub fn utoa(value: u64, config: Config, prefix: Option<&str>) -> Result {
-    if let Some(prefix) = prefix {
-        if prefix.len() > MAX_PREFIX_LEN {
-            return Err(Error::PrefixTooLong(prefix.len()));
-        }
-    }
-
     let mut buffer: [i8; UTOA_MIN_BUFFER_SIZE + MAX_PREFIX_LEN] =
         [0; UTOA_MIN_BUFFER_SIZE + MAX_PREFIX_LEN];
 
     let prefix = if let Some(prefix) = prefix {
+        if prefix.len() > MAX_PREFIX_LEN {
+            return Err(Error::PrefixTooLong(prefix.len()));
+        }
         Some(CString::new(prefix)?)
     } else {
         None
@@ -50,7 +47,10 @@ pub fn utoa(value: u64, config: Config, prefix: Option<&str>) -> Result {
             value,
             buffer.as_mut_ptr(),
             config.to_c_int(),
-            prefix.map(|prefix| prefix.as_ptr()).unwrap_or(null()),
+            prefix
+                .as_ref()
+                .map(|prefix| prefix.as_ptr())
+                .unwrap_or(null()),
         );
     };
 
@@ -59,16 +59,13 @@ pub fn utoa(value: u64, config: Config, prefix: Option<&str>) -> Result {
 }
 
 pub fn itoa(value: i64, config: Config, prefix: Option<&str>) -> Result {
-    if let Some(prefix) = prefix {
-        if prefix.len() > MAX_PREFIX_LEN {
-            return Err(Error::PrefixTooLong(prefix.len()));
-        }
-    }
-
     let mut buffer: [i8; ITOA_MIN_BUFFER_SIZE + MAX_PREFIX_LEN] =
         [0; ITOA_MIN_BUFFER_SIZE + MAX_PREFIX_LEN];
 
     let prefix = if let Some(prefix) = prefix {
+        if prefix.len() > MAX_PREFIX_LEN {
+            return Err(Error::PrefixTooLong(prefix.len()));
+        }
         Some(CString::new(prefix)?)
     } else {
         None
@@ -79,7 +76,10 @@ pub fn itoa(value: i64, config: Config, prefix: Option<&str>) -> Result {
             value,
             buffer.as_mut_ptr(),
             config.to_c_int(),
-            prefix.map(|prefix| prefix.as_ptr()).unwrap_or(null()),
+            prefix
+                .as_ref()
+                .map(|prefix| prefix.as_ptr())
+                .unwrap_or(null()),
         );
     };
 
@@ -284,60 +284,57 @@ impl TryFrom<i8> for Config {
 mod tests {
     use super::*;
 
-    // FIXME: segfault
-    /*
-        #[test]
-        fn test_utoa_prefix() {
-            assert_eq!(
-                utoa(123, Default::default(), Some("foo")),
-                Ok("foo123".into()),
-            );
-            assert_eq!(
-                utoa(
-                    123,
-                    Default::default(),
-                    Some("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"),
-                ),
-                Ok("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa123".into()),
-            );
-            assert_eq!(
-                utoa(
-                    123,
-                    Default::default(),
-                    Some("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"),
-                ),
-                Err(Error::PrefixTooLong(101)),
-            );
-        }
+    #[test]
+    fn test_utoa_prefix() {
+        assert_eq!(
+            utoa(123, Default::default(), Some("foo")),
+            Ok("foo123".into()),
+        );
+        assert_eq!(
+            utoa(
+                123,
+                Default::default(),
+                Some("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"),
+            ),
+            Ok("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa123".into()),
+        );
+        assert_eq!(
+            utoa(
+                123,
+                Default::default(),
+                Some("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"),
+            ),
+            Err(Error::PrefixTooLong(101)),
+        );
+    }
 
-        #[test]
-        fn test_itoa_prefix() {
-            assert_eq!(
-                itoa(123, Default::default(), Some("foo")),
-                Ok("foo123".into()),
-            );
-            assert_eq!(
-                itoa(-123, Default::default(), Some("foo")),
-                Ok("-foo123".into()),
-            );
-            assert_eq!(
-                itoa(
-                    123,
-                    Default::default(),
-                    Some("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"),
-                ),
-                Ok("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa123".into()),
-            );
-            assert_eq!(
-                itoa(
-                    123,
-                    Default::default(),
-                    Some("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"),
-                ),
-                Err(Error::PrefixTooLong(101)),
-            );
-        }
-    */
+    #[test]
+    fn test_itoa_prefix() {
+        assert_eq!(
+            itoa(123, Default::default(), Some("foo")),
+            Ok("foo123".into()),
+        );
+        assert_eq!(
+            itoa(-123, Default::default(), Some("foo")),
+            Ok("-foo123".into()),
+        );
+        assert_eq!(
+            itoa(
+                123,
+                Default::default(),
+                Some("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"),
+            ),
+            Ok("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa123".into()),
+        );
+        assert_eq!(
+            itoa(
+                123,
+                Default::default(),
+                Some("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"),
+            ),
+            Err(Error::PrefixTooLong(101)),
+        );
+    }
 
     #[test]
     fn test_utoa() {
