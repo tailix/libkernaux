@@ -21,6 +21,19 @@ mod tests {
         assert_eq!(itoa(123, Default::default(), None), Ok("123".into()));
         assert_eq!(itoa(-123, Default::default(), None), Ok("-123".into()));
 
+        assert_eq!(
+            utoa(123, Default::default(), Some("foo")),
+            Ok("foo123".into()),
+        );
+        assert_eq!(
+            itoa(123, Default::default(), Some("foo")),
+            Ok("foo123".into()),
+        );
+        assert_eq!(
+            itoa(-123, Default::default(), Some("foo")),
+            Ok("-foo123".into()),
+        );
+
         assert_eq!(utoa2(123), "0b1111011");
         assert_eq!(itoa2(123), "0b1111011");
         assert_eq!(utoa8(0o123), "0o123");
