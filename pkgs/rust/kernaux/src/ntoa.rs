@@ -30,9 +30,6 @@ pub enum Error {
 }
 
 pub fn utoa(value: u64, config: Config, prefix: Option<&str>) -> Result {
-    let mut buffer: [i8; UTOA_MIN_BUFFER_SIZE + MAX_PREFIX_LEN] =
-        [0; UTOA_MIN_BUFFER_SIZE + MAX_PREFIX_LEN];
-
     let prefix = if let Some(prefix) = prefix {
         if prefix.len() > MAX_PREFIX_LEN {
             return Err(Error::PrefixTooLong(prefix.len()));
@@ -41,6 +38,26 @@ pub fn utoa(value: u64, config: Config, prefix: Option<&str>) -> Result {
     } else {
         None
     };
+
+    utoac(value, config, prefix)
+}
+
+pub fn itoa(value: i64, config: Config, prefix: Option<&str>) -> Result {
+    let prefix = if let Some(prefix) = prefix {
+        if prefix.len() > MAX_PREFIX_LEN {
+            return Err(Error::PrefixTooLong(prefix.len()));
+        }
+        Some(CString::new(prefix)?)
+    } else {
+        None
+    };
+
+    itoac(value, config, prefix)
+}
+
+fn utoac(value: u64, config: Config, prefix: Option<CString>) -> Result {
+    let mut buffer: [i8; UTOA_MIN_BUFFER_SIZE + MAX_PREFIX_LEN] =
+        [0; UTOA_MIN_BUFFER_SIZE + MAX_PREFIX_LEN];
 
     unsafe {
         kernaux_utoa(
@@ -58,18 +75,9 @@ pub fn utoa(value: u64, config: Config, prefix: Option<&str>) -> Result {
     Ok(String::from(result))
 }
 
-pub fn itoa(value: i64, config: Config, prefix: Option<&str>) -> Result {
+fn itoac(value: i64, config: Config, prefix: Option<CString>) -> Result {
     let mut buffer: [i8; ITOA_MIN_BUFFER_SIZE + MAX_PREFIX_LEN] =
         [0; ITOA_MIN_BUFFER_SIZE + MAX_PREFIX_LEN];
-
-    let prefix = if let Some(prefix) = prefix {
-        if prefix.len() > MAX_PREFIX_LEN {
-            return Err(Error::PrefixTooLong(prefix.len()));
-        }
-        Some(CString::new(prefix)?)
-    } else {
-        None
-    };
 
     unsafe {
         kernaux_itoa(
