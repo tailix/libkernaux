@@ -31,6 +31,8 @@
 /missing
 /test-driver
 
+# Custom
+
 /Makefile.in
 /include/Makefile.in
 
@@ -79,15 +81,17 @@
 /stamp-h1
 /test-suite.log
 
-/Makefile
-/include/Makefile
-/include/kernaux.h
-/include/kernaux/console.h
-
 /examples/*.log
 /examples/*.trs
 /tests/test*.log
 /tests/test*.trs
+
+# Custom
+
+/Makefile
+/include/Makefile
+/include/kernaux.h
+/include/kernaux/console.h
 
 /examples/assert_guards
 /examples/assert_simple
