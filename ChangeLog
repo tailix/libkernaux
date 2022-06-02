@@ -1,4 +1,8 @@
-2022-06-31  Alex Kotov  <kotovalexarian@gmail.com>
+2022-06-02  Alex Kotov  <kotovalexarian@gmail.com>
+
+	* include/kernaux/assert.h: Macro "KERNAUX_PANIC" receives string
+
+2022-06-01  Alex Kotov  <kotovalexarian@gmail.com>
 
 	* include/kernaux/ntoa.h: Protect from too long prefix
 

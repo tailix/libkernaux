@@ -37,7 +37,7 @@ char *kernaux_utoa(uint64_t value, char *buffer, int base, const char *prefix)
             if (prefix_len > KERNAUX_NTOA_MAX_PREFIX_LEN) {
                 // Protect caller from invalid state
                 *buffer = '\0';
-                KERNAUX_PANIC_RETVAL(prefix is too long, NULL);
+                KERNAUX_PANIC_RETVAL("prefix is too long", NULL);
             }
             *(buffer++) = *(prefix++);
         }
