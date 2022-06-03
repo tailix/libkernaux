@@ -154,6 +154,7 @@ AS_IF([test "$enable_tests"           = yes -a "$host_cpu" != "$build_cpu"], AC_
 AS_IF([test "$with_printf"            = yes -a "$with_ntoa"       = no    ], AC_MSG_ERROR([package `printf' requires package `ntoa']))
 AS_IF([test "$with_printf"            = yes -a "$with_printf_fmt" = no    ], AC_MSG_ERROR([package `printf' requires package `printf-fmt']))
 AS_IF([test "$with_units"             = yes -a "$with_ntoa"       = no    ], AC_MSG_ERROR([package `units' requires package `ntoa']))
+AS_IF([test "$with_tester_multiboot2" = yes -a "$with_multiboot2" = no    ], AC_MSG_ERROR([package `tester-multiboot2' requires package `multiboot2']))
 
 
 
