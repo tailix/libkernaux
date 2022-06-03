@@ -340,6 +340,9 @@ endif
 if ENABLE_TESTS
 if WITH_MULTIBOOT2
 TESTS += tests/test_multiboot2_header_print
+tests_test_multiboot2_header_print_DEPENDENCIES = \
+	tests/multiboot2_header_print1 \
+	tests/multiboot2_header_print2
 tests_test_multiboot2_header_print_LDADD = libkernaux.a
 tests_test_multiboot2_header_print_SOURCES = \
 	tests/test_multiboot2_header_print.c
@@ -383,6 +386,9 @@ endif
 if ENABLE_TESTS
 if WITH_MULTIBOOT2
 TESTS += tests/test_multiboot2_info_print
+tests_test_multiboot2_info_print_DEPENDENCIES = \
+	tests/multiboot2_info_print1 \
+	tests/multiboot2_info_print2
 tests_test_multiboot2_info_print_LDADD = libkernaux.a
 tests_test_multiboot2_info_print_SOURCES = \
 	tests/test_multiboot2_info_print.c
