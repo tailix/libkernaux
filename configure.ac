@@ -150,10 +150,10 @@ AS_IF([test "$with_tester_multiboot2" = yes], [with_tester_multiboot2=yes], [wit
 # Test args #
 #############
 
-AS_IF([test "$enable_tests" = yes -a "$host_cpu" != "$build_cpu"], AC_MSG_ERROR([can not build cross-platform tests]))
-AS_IF([test "$with_printf"  = yes -a "$with_ntoa"       = no    ], AC_MSG_ERROR([package `printf' requires package `ntoa']))
-AS_IF([test "$with_printf"  = yes -a "$with_printf_fmt" = no    ], AC_MSG_ERROR([package `printf' requires package `printf-fmt']))
-AS_IF([test "$with_units"   = yes -a "$with_ntoa"       = no    ], AC_MSG_ERROR([package `units' requires package `ntoa']))
+AS_IF([test "$enable_tests"           = yes -a "$host_cpu" != "$build_cpu"], AC_MSG_ERROR([can not build cross-platform tests]))
+AS_IF([test "$with_printf"            = yes -a "$with_ntoa"       = no    ], AC_MSG_ERROR([package `printf' requires package `ntoa']))
+AS_IF([test "$with_printf"            = yes -a "$with_printf_fmt" = no    ], AC_MSG_ERROR([package `printf' requires package `printf-fmt']))
+AS_IF([test "$with_units"             = yes -a "$with_ntoa"       = no    ], AC_MSG_ERROR([package `units' requires package `ntoa']))
 
 
 
