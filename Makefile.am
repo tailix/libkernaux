@@ -6,8 +6,6 @@ SUBDIRS = include
 
 CLEANFILES =
 TESTS =
-lib_LIBRARIES = libkernaux.a
-noinst_PROGRAMS = $(TESTS)
 
 AM_CFLAGS = \
 	-std=c99 \
@@ -27,6 +25,13 @@ AM_CFLAGS += -fpic
 else
 AM_CFLAGS += -fno-pic
 endif
+
+#######
+# all #
+#######
+
+lib_LIBRARIES = libkernaux.a
+noinst_PROGRAMS = $(TESTS)
 
 ################
 # libkernaux.a #
