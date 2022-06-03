@@ -2,6 +2,7 @@
 #include "config.h"
 #endif
 
+#include <kernaux/assert.h>
 #include <kernaux/console.h>
 #include <kernaux/libc.h>
 
@@ -38,6 +39,8 @@ void kernaux_console_putc(const char c __attribute__((unused)))
 
 void kernaux_console_print(const char *const s)
 {
+    KERNAUX_NOTNULL_RETURN(s);
+
     for (const char *c = s; *c; ++c) {
         kernaux_console_putc(*c);
     }
@@ -46,6 +49,8 @@ void kernaux_console_print(const char *const s)
 #ifdef WITH_PRINTF
 void kernaux_console_printf(const char *format, ...)
 {
+    KERNAUX_NOTNULL_RETURN(format);
+
     va_list va;
     va_start(va, format);
     kernaux_vprintf(kernaux_console_printf_putc, NULL, format, va);
@@ -55,12 +60,16 @@ void kernaux_console_printf(const char *format, ...)
 
 void kernaux_console_puts(const char *const s)
 {
+    KERNAUX_NOTNULL_RETURN(s);
+
     kernaux_console_print(s);
     kernaux_console_putc('\n');
 }
 
 void kernaux_console_write(const char *const data, const size_t size)
 {
+    KERNAUX_NOTNULL_RETURN(data);
+
     for (size_t i = 0; i < size; i++) {
         kernaux_console_putc(data[i]);
     }

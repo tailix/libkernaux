@@ -1,6 +1,8 @@
 #include <kernaux.h>
 #include <ruby.h>
 
+#include "dynarg.h"
+
 #ifdef HAVE_KERNAUX_SNPRINTF
 
 static VALUE rb_KernAux_snprintf1(int argc, const VALUE *argv, VALUE self);
@@ -17,14 +19,13 @@ void init_printf()
                                rb_KernAux_snprintf1, -1);
 }
 
-// TODO: is this implementation correct?
 // FIXME: rewrite to ensure no memory leak on exception.
 VALUE rb_KernAux_snprintf1(
     const int argc,
     const VALUE *const argv_rb,
     const VALUE self __attribute__((unused))
 ) {
-    if (argc < 2 || argc > 4) rb_raise(rb_eArgError, "expected 2, 3 or 4 args");
+    if (argc < 2 || argc > 5) rb_raise(rb_eArgError, "expected 2, 3, 4 or 5 args");
 
     const VALUE size_rb = argv_rb[0];
     VALUE format_rb = argv_rb[1];
@@ -39,87 +40,43 @@ VALUE rb_KernAux_snprintf1(
     while (*fmt && *fmt != '%') ++fmt;
     if (*(fmt++) != '%') rb_raise(rb_eArgError, "invalid format");
 
-    bool has_width = false;
+    struct KernAux_PrintfFmt_Spec spec = KernAux_PrintfFmt_Spec_create();
 
-    // Mimic printf behavior.
-    {
-        bool flags;
-        do {
-            if (*fmt == '0' || *fmt == '-' || *fmt == '+' || *fmt == ' ' ||
-                *fmt == '#')
-            {
-                ++fmt;
-                flags = true;
-            } else {
-                flags = false;
-            }
-        } while (flags);
-    }
-    if (*fmt >= '0' && *fmt <= '9') {
-        while (*fmt >= '0' && *fmt <= '9') ++fmt;
-    } else if (*fmt == '*') {
-        ++fmt;
-        has_width = true;
-    }
-    if (*fmt == '.') {
-        ++fmt;
-        if (*fmt >= '0' && *fmt <= '9') {
-            while (*fmt >= '0' && *fmt <= '9') ++fmt;
-        } else if (*fmt == '*') {
-            ++fmt;
-        }
-    }
-    if (*fmt == 'l') {
-        ++fmt;
-        if (*fmt == 'l') ++fmt;
-    } else if (*fmt == 'h') {
-        ++fmt;
-        if (*fmt == 'h') ++fmt;
-    } else if (*fmt == 't' || *fmt == 'j' || *fmt == 'z') {
-        ++fmt;
-    }
+    fmt = KernAux_PrintfFmt_Spec_parse(&spec, fmt);
 
-    const char c = *fmt;
-
-    if (*fmt == '%') ++fmt;
     while (*fmt) {
         if (*(fmt++) == '%') rb_raise(rb_eArgError, "invalid format");
     }
 
-    int width = 0;
-    if (has_width && argc > 2) width = NUM2INT(argv_rb[2]);
+    int arg_index = 2;
+    if (spec.set_width && argc > arg_index) {
+        KernAux_PrintfFmt_Spec_set_width(&spec, NUM2INT(argv_rb[arg_index++]));
+    }
+    if (spec.set_precision && argc > arg_index) {
+        KernAux_PrintfFmt_Spec_set_precision(&spec, NUM2INT(argv_rb[arg_index++]));
+    }
 
-    bool use_dbl = false;
-    double dbl;
-    union {
-        const char *str;
-        long long ll;
-        unsigned long long ull;
-        char chr;
-    } __attribute__((packed)) arg = { .str = "" };
+    struct DynArg dynarg = DynArg_create();
+    if (argc > arg_index) {
+        VALUE arg_rb = argv_rb[arg_index];
 
-    if (argc == (has_width ? 4 : 3)) {
-        VALUE arg_rb = argv_rb[has_width ? 3 : 2];
-
-        if (c == 'd' || c == 'i') {
+        if (spec.type == KERNAUX_PRINTF_FMT_TYPE_INT) {
             RB_INTEGER_TYPE_P(arg_rb);
-            arg.ll = NUM2LL(arg_rb);
-        } else if (c == 'u' || c == 'x' || c == 'X' || c == 'o' || c == 'b') {
+            DynArg_use_long_long(&dynarg, NUM2LL(arg_rb));
+        } else if (spec.type == KERNAUX_PRINTF_FMT_TYPE_UINT) {
             RB_INTEGER_TYPE_P(arg_rb);
-            arg.ull = NUM2ULL(arg_rb);
-        } else if (c == 'f' || c == 'F' ||
-                   c == 'e' || c == 'E' ||
-                   c == 'g' || c == 'G')
+            DynArg_use_unsigned_long_long(&dynarg, NUM2ULL(arg_rb));
+        } else if (spec.type == KERNAUX_PRINTF_FMT_TYPE_FLOAT ||
+                   spec.type == KERNAUX_PRINTF_FMT_TYPE_EXP)
         {
             RB_FLOAT_TYPE_P(arg_rb);
-            use_dbl = true;
-            dbl = NUM2DBL(arg_rb);
-        } else if (c == 'c') {
+            DynArg_use_double(&dynarg, NUM2DBL(arg_rb));
+        } else if (spec.type == KERNAUX_PRINTF_FMT_TYPE_CHAR) {
             Check_Type(arg_rb, T_STRING);
-            arg.chr = *StringValuePtr(arg_rb);
-        } else if (c == 's') {
+            DynArg_use_char(&dynarg, *StringValuePtr(arg_rb));
+        } else if (spec.type == KERNAUX_PRINTF_FMT_TYPE_STR) {
             Check_Type(arg_rb, T_STRING);
-            arg.str = StringValueCStr(arg_rb);
+            DynArg_use_str(&dynarg, StringValueCStr(arg_rb));
         }
     }
 
@@ -127,14 +84,26 @@ VALUE rb_KernAux_snprintf1(
     if (!str) rb_raise(rb_eNoMemError, "snprintf1 buffer malloc");
 
     int slen;
-    if (has_width) {
-        slen = use_dbl
-            ? kernaux_snprintf(str, size, format, width, dbl)
-            : kernaux_snprintf(str, size, format, width, arg);
+    if (spec.set_width) {
+        if (spec.set_precision) {
+            slen = dynarg.use_dbl
+                ? kernaux_snprintf(str, size, format, spec.width, spec.precision, dynarg.dbl)
+                : kernaux_snprintf(str, size, format, spec.width, spec.precision, dynarg.arg);
+        } else {
+            slen = dynarg.use_dbl
+                ? kernaux_snprintf(str, size, format, spec.width, dynarg.dbl)
+                : kernaux_snprintf(str, size, format, spec.width, dynarg.arg);
+        }
     } else {
-        slen = use_dbl
-            ? kernaux_snprintf(str, size, format, dbl)
-            : kernaux_snprintf(str, size, format, arg);
+        if (spec.set_precision) {
+            slen = dynarg.use_dbl
+                ? kernaux_snprintf(str, size, format, spec.precision, dynarg.dbl)
+                : kernaux_snprintf(str, size, format, spec.precision, dynarg.arg);
+        } else {
+            slen = dynarg.use_dbl
+                ? kernaux_snprintf(str, size, format, dynarg.dbl)
+                : kernaux_snprintf(str, size, format, dynarg.arg);
+        }
     }
 
     const VALUE output_rb =

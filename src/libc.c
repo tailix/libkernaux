@@ -12,7 +12,7 @@ int atoi(const char *str)
     while (isspace(*str)) ++str;
     bool is_negative = false;
     switch (*str) {
-    case '-': is_negative = true;
+    case '-': is_negative = true; // fall through
     case '+': ++str;
     }
     int result = 0;

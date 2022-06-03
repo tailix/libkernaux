@@ -2,12 +2,13 @@
 
 require 'spec_helper'
 
-RSpec.describe KernAux, '.utoa' do
-  if described_class.singleton_class.method_defined? :utoa
-    subject(:utoa) { described_class.utoa number, base }
+RSpec.describe KernAux, '.itoa' do
+  if described_class.singleton_class.method_defined? :itoa
+    subject(:itoa) { described_class.itoa number, base, prefix }
 
-    let(:number) { rand 0..(2**64 - 1) }
+    let(:number) { rand((-2**63)..(2**63 - 1)) }
     let(:base) { rand 2..36 }
+    let(:prefix) { [nil, ''].sample }
 
     it { is_expected.to be_instance_of String }
     it { is_expected.to be_frozen }
@@ -21,29 +22,53 @@ RSpec.describe KernAux, '.utoa' do
       it { is_expected.to eq '0' }
     end
 
-    context 'when number is max uint64_t' do
-      let(:number) { 2**64 - 1 }
+    context 'when number is 1' do
+      let(:number) { 1 }
+
+      it { is_expected.to be_instance_of String }
+      it { is_expected.to be_frozen }
+      it { is_expected.to eq '1' }
+    end
+
+    context 'when number is -1' do
+      let(:number) { -1 }
+
+      it { is_expected.to be_instance_of String }
+      it { is_expected.to be_frozen }
+      it { is_expected.to eq '-1' }
+    end
+
+    context 'when number is min int64_t' do
+      let(:number) { -2**63 }
 
       it { is_expected.to be_instance_of String }
       it { is_expected.to be_frozen }
       it { is_expected.to eq number.to_s base }
     end
 
-    context 'when number is -1' do
-      let(:number) { -1 }
+    context 'when number is max int64_t' do
+      let(:number) { 2**63 - 1 }
+
+      it { is_expected.to be_instance_of String }
+      it { is_expected.to be_frozen }
+      it { is_expected.to eq number.to_s base }
+    end
+
+    context 'when number is lesser than min uint64_t' do
+      let(:number) { -2**63 - 1 }
 
       specify do
-        expect { utoa }.to \
-          raise_error RangeError, 'can\'t convert negative number to uint64_t'
+        expect { itoa }.to raise_error \
+          RangeError, 'bignum too big to convert into `long long\''
       end
     end
 
     context 'when number is greater than max uint64_t' do
-      let(:number) { 2**64 }
+      let(:number) { 2**63 }
 
       specify do
-        expect { utoa }.to raise_error \
-          RangeError, 'bignum too big to convert into `unsigned long long\''
+        expect { itoa }.to raise_error \
+          RangeError, 'bignum too big to convert into `long long\''
       end
     end
 
@@ -139,8 +164,74 @@ RSpec.describe KernAux, '.utoa' do
       let(:base) { :foo }
 
       specify do
-        expect { utoa }.to \
+        expect { itoa }.to \
           raise_error described_class::InvalidNtoaBaseError, 'invalid base'
+      end
+    end
+
+    context 'when no prefix is given' do
+      subject(:itoa) { described_class.itoa number, base }
+
+      it { is_expected.to be_instance_of String }
+      it { is_expected.to be_frozen }
+      it { is_expected.to eq number.to_s base }
+    end
+
+    context 'when prefix is nil' do
+      let(:prefix) { nil }
+
+      it { is_expected.to be_instance_of String }
+      it { is_expected.to be_frozen }
+      it { is_expected.to eq number.to_s base }
+    end
+
+    context 'when prefix is empty' do
+      let(:prefix) { '' }
+
+      it { is_expected.to be_instance_of String }
+      it { is_expected.to be_frozen }
+      it { is_expected.to eq number.to_s base }
+    end
+
+    context 'when prefix is present' do
+      let(:prefix) { 'foo' }
+
+      def sign = number < 0 ? '-' : ''
+
+      it { is_expected.to be_instance_of String }
+      it { is_expected.to be_frozen }
+      it { is_expected.to eq "#{sign}foo#{number.abs.to_s(base)}" }
+    end
+
+    context 'when prefix is not a string' do
+      let(:prefix) { 123 }
+
+      specify do
+        expect { itoa }.to raise_error(
+          TypeError,
+          "no implicit conversion of #{prefix.class} into String",
+        )
+      end
+    end
+
+    context 'when prefix has max length' do
+      let(:prefix) { 'a' * 100 }
+
+      def sign = number < 0 ? '-' : ''
+
+      it { is_expected.to be_instance_of String }
+      it { is_expected.to be_frozen }
+      it { is_expected.to eq "#{sign}#{prefix}#{number.abs.to_s(base)}" }
+    end
+
+    context 'when prefix is too long' do
+      let(:prefix) { 'a' * 101 }
+
+      specify do
+        expect { itoa }.to raise_error(
+          described_class::TooLongNtoaPrefixError,
+          "prefix length #{prefix.length} is too long",
+        )
       end
     end
   end

@@ -1,0 +1,86 @@
+# We use Cirrus CI to test on FreeBSD.
+# For GNU/Linux CI see GitHub Actions.
+
+freebsd_instance:
+  image_family: freebsd-13-0
+
+main_freebsd_task:
+  name: Main (FreeBSD)
+  dependencies_script:
+    - pkg install --yes autoconf automake
+  main_build_script:
+    - ./autogen.sh
+    - ./configure --enable-tests CFLAGS='-O3'
+    - make
+    - sudo make install
+  main_test_script:
+    - make check
+
+mruby_freebsd_task:
+  name: mruby (FreeBSD)
+  env:
+    # FIXME: temporary hack to fix FreeBSD build
+    CPATH: '/usr/local/include'
+    LIBRARY_PATH: '/usr/local/lib'
+    MRUBY_YAML_USE_SYSTEM_LIBRARY: x
+  dependencies_script:
+    - pkg install --yes autoconf automake git rubygem-rake wget
+  dependencies_mruby_script:
+    - wget https://github.com/mruby/mruby/archive/3.1.0.zip -O mruby-3.1.0.zip
+    - unzip mruby-3.1.0.zip
+  main_build_script:
+    - ./autogen.sh
+    - ./configure CFLAGS='-O3'
+    - make
+    - sudo make install
+  mruby_test_script:
+    - cd mruby-3.1.0
+    - MRUBY_CONFIG=../pkgs/mruby/build_config.rb rake test
+
+ruby_freebsd_task:
+  name: Ruby (FreeBSD)
+  env:
+    # FIXME: temporary hack to fix FreeBSD build
+    CPATH: '/usr/local/include'
+    LIBRARY_PATH: '/usr/local/lib'
+  dependencies_script:
+    - pkg install --yes autoconf automake git wget
+  dependencies_ruby_script:
+    - wget https://cache.ruby-lang.org/pub/ruby/3.0/ruby-3.0.3.tar.gz
+    - tar -xzf ruby-3.0.3.tar.gz
+    - cd ruby-3.0.3
+    - ./configure --disable-install-doc
+    - make
+    - sudo make install
+  main_build_script:
+    - ./autogen.sh
+    - ./configure CFLAGS='-O3'
+    - make
+    - sudo make install
+  ruby_build_script:
+    - cd pkgs/ruby
+    - ./bin/setup
+    - bundle exec rake compile
+  ruby_test_script:
+    - cd pkgs/ruby
+    - bundle exec rake
+
+rust_freebsd_task:
+  name: Rust (FreeBSD)
+  env:
+    # FIXME: temporary hack to fix FreeBSD build
+    RUSTFLAGS: '-L /usr/local/lib'
+  dependencies_script:
+    - pkg install --yes autoconf automake
+  dependencies_rust_script:
+    - curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+  main_build_script:
+    - ./autogen.sh
+    - ./configure CFLAGS='-O3'
+    - make
+    - sudo make install
+  rust_test_script:
+    - cd pkgs/rust
+    - ~/.cargo/bin/cargo test
+    - ~/.cargo/bin/cargo clippy
+    - ~/.cargo/bin/cargo fmt --check

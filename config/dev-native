@@ -1,12 +1,10 @@
 #!/bin/sh
 
-set -e
+set -eux
 
 REPO="$(realpath "$(dirname "$(realpath "$0")")/..")"
 if [ -f "$REPO/Makefile" ]; then make -C "$REPO" distclean; fi
 
 PREFIX="$REPO/dest/dev-native"
 
-export CFLAGS='-fPIC'
-
-"$REPO/configure" --prefix="$PREFIX" --enable-tests
+"$REPO/configure" --prefix="$PREFIX" --enable-tests-all

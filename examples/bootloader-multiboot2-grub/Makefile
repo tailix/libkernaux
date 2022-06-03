@@ -5,6 +5,7 @@ CCPREFIX = ../../vendor/cross/root/bin/i386-elf-
 AS = $(CCPREFIX)as
 CC = $(CCPREFIX)gcc
 
+LIBKERNAUX_SRC   = ../..
 LIBKERNAUX_BUILD = ../../build/dev-cross-i386
 LIBKERNAUX_DEST  = ../../dest/dev-cross-i386
 
@@ -23,15 +24,15 @@ GRUBCFG = $(ROOTFS)/boot/grub/grub.cfg
 KERNEL  = $(ROOTFS)/boot/kernel
 
 CFLAGS = \
-	-std=c99             \
-	-pedantic            \
-	-Wall                \
-	-Wextra              \
-	-Werror              \
-	-ffreestanding       \
-	-fno-builtin         \
-	-fno-stack-protector \
-	-I../../include
+	-std=c99                      \
+	-pedantic                     \
+	-Wall                         \
+	-Wextra                       \
+	-Werror                       \
+	-ffreestanding                \
+	-fno-stack-protector          \
+	-I$(LIBKERNAUX_SRC)/include   \
+	-I$(LIBKERNAUX_BUILD)/include
 
 OBJS = main.c.o multiboot2.c.o start.S.o
 
@@ -47,7 +48,7 @@ clean:
 $(IMAGE): $(GRUBCFG) $(KERNEL)
 	$(GRUB_MKRESCUE) $(ROOTFS) -o $@
 
-$(KERNEL): $(LINKERSCR) $(OBJS) build-libkernaux.a
+$(KERNEL): $(LINKERSCR) build-libkernaux.a $(OBJS)
 	$(CC) -T $(LINKERSCR) -o $@ $(OBJS) -ffreestanding -nostdlib -lkernaux -lgcc -Wl,-L$(LIBKERNAUX_DEST)/lib
 	$(GRUB_FILE) --is-x86-multiboot2 $@
 

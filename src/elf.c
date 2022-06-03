@@ -2,11 +2,14 @@
 #include "config.h"
 #endif
 
+#include <kernaux/assert.h>
 #include <kernaux/elf.h>
 
 bool KernAux_ELF_Header_is_valid(
     const struct KernAux_ELF_Header *const header
 ) {
+    KERNAUX_NOTNULL_RETVAL(header, false);
+
     if (!(
         header->magic_0x7f     == 0x7f &&
         header->magic_E        == 'E'  &&

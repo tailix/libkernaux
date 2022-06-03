@@ -2,33 +2,33 @@
 
 require 'spec_helper'
 
-RSpec.describe KernAux, '.utoa16' do
-  if described_class.singleton_class.method_defined? :utoa16
-    subject(:utoa16) { described_class.utoa16 number }
+RSpec.describe KernAux, '.utoa2' do
+  if described_class.singleton_class.method_defined? :utoa2
+    subject(:utoa2) { described_class.utoa2 number }
 
     let(:number) { rand 0..(2**64 - 1) }
 
     it { is_expected.to be_instance_of String }
     it { is_expected.to be_frozen }
-    it { is_expected.to eq number.to_s 16 }
+    it { is_expected.to eq "0b#{number.to_s(2)}" }
 
     context 'when number is 0' do
       let(:number) { 0 }
 
-      it { is_expected.to eq '0' }
+      it { is_expected.to eq '0b0' }
     end
 
     context 'when number is max uint64_t' do
       let(:number) { 2**64 - 1 }
 
-      it { is_expected.to eq number.to_s 16 }
+      it { is_expected.to eq "0b#{number.to_s(2)}" }
     end
 
     context 'when number is -1' do
       let(:number) { -1 }
 
       specify do
-        expect { utoa16 }.to \
+        expect { utoa2 }.to \
           raise_error RangeError, 'can\'t convert negative number to uint64_t'
       end
     end
@@ -37,7 +37,7 @@ RSpec.describe KernAux, '.utoa16' do
       let(:number) { 2**64 }
 
       specify do
-        expect { utoa16 }.to raise_error \
+        expect { utoa2 }.to raise_error \
           RangeError, 'bignum too big to convert into `unsigned long long\''
       end
     end

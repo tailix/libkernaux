@@ -7,9 +7,12 @@
 
 #include <stddef.h>
 
-char *kernaux_utoa(uint64_t value, char *buffer, int base)
+char *kernaux_utoa(uint64_t value, char *buffer, int base, const char *prefix)
 {
     KERNAUX_NOTNULL_RETVAL(buffer, NULL);
+
+    // Protect caller from invalid state in case of future assertions
+    *buffer = '\0';
 
     switch (base) {
     case 'b': case 'B': base = 2;   break;
@@ -28,7 +31,19 @@ char *kernaux_utoa(uint64_t value, char *buffer, int base)
 
     KERNAUX_ASSERT_RETVAL(base >= 2 && base <= 36, NULL);
 
-    // Write to buffer
+    // Write prefix
+    if (prefix) {
+        for (size_t prefix_len = 1; *prefix; ++prefix_len) {
+            if (prefix_len > KERNAUX_NTOA_MAX_PREFIX_LEN) {
+                // Protect caller from invalid state
+                *buffer = '\0';
+                KERNAUX_PANIC_RETVAL("prefix is too long", NULL);
+            }
+            *(buffer++) = *(prefix++);
+        }
+    }
+
+    // Write number
     char *pos = buffer;
     if (value == 0) *(pos++) = '0';
     while (value > 0) {
@@ -39,7 +54,7 @@ char *kernaux_utoa(uint64_t value, char *buffer, int base)
     char *const result = pos;
     *(pos--) = '\0';
 
-    // Reverse buffer
+    // Reverse number
     while (buffer < pos) {
         const char tmp = *buffer;
         *(buffer++) = *pos;
@@ -49,32 +64,52 @@ char *kernaux_utoa(uint64_t value, char *buffer, int base)
     return result;
 }
 
-char *kernaux_itoa(int64_t value, char *buffer, int base)
+char *kernaux_itoa(int64_t value, char *buffer, int base, const char *const prefix)
 {
     if (value >= 0) {
-        return kernaux_utoa(value, buffer, base);
+        return kernaux_utoa(value, buffer, base, prefix);
     } else {
         *(buffer++) = '-';
-        return kernaux_utoa(-value, buffer, base);
+        return kernaux_utoa(-value, buffer, base, prefix);
     }
 }
 
-void kernaux_utoa10(uint64_t value, char *buffer)
+char *kernaux_utoa2(uint64_t value, char *buffer)
 {
-    kernaux_utoa(value, buffer, 'd');
+    return kernaux_utoa(value, buffer, 'b', KERNAUX_NTOA_DEFAULT_PREFIX_2);
 }
 
-void kernaux_itoa10(int64_t value, char *buffer)
+char *kernaux_itoa2(int64_t value, char *buffer)
 {
-    kernaux_itoa(value, buffer, 'd');
+    return kernaux_itoa(value, buffer, 'b', KERNAUX_NTOA_DEFAULT_PREFIX_2);
 }
 
-void kernaux_utoa16(uint64_t value, char *buffer)
+char *kernaux_utoa8(uint64_t value, char *buffer)
 {
-    kernaux_utoa(value, buffer, 'x');
+    return kernaux_utoa(value, buffer, 'o', KERNAUX_NTOA_DEFAULT_PREFIX_8);
 }
 
-void kernaux_itoa16(int64_t value, char *buffer)
+char *kernaux_itoa8(int64_t value, char *buffer)
 {
-    kernaux_itoa(value, buffer, 'x');
+    return kernaux_itoa(value, buffer, 'o', KERNAUX_NTOA_DEFAULT_PREFIX_8);
+}
+
+char *kernaux_utoa10(uint64_t value, char *buffer)
+{
+    return kernaux_utoa(value, buffer, 'd', NULL);
+}
+
+char *kernaux_itoa10(int64_t value, char *buffer)
+{
+    return kernaux_itoa(value, buffer, 'd', NULL);
+}
+
+char *kernaux_utoa16(uint64_t value, char *buffer)
+{
+    return kernaux_utoa(value, buffer, 'x', KERNAUX_NTOA_DEFAULT_PREFIX_16);
+}
+
+char *kernaux_itoa16(int64_t value, char *buffer)
+{
+    return kernaux_itoa(value, buffer, 'x', KERNAUX_NTOA_DEFAULT_PREFIX_16);
 }

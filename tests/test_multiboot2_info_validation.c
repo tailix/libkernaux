@@ -522,6 +522,22 @@ tag_vbe_info_invalid_size = {
     .vbe_mode_info = {0, 0, 0},
 };
 
+/******************
+ * Tag_ELFSymbols *
+ ******************/
+
+static const struct KernAux_Multiboot2_ITag_ELFSymbols
+tag_elf_symbols_with_zero_ent_size_valid = {
+    .base = {
+        .type = KERNAUX_MULTIBOOT2_ITAG_ELF_SYMBOLS,
+        .size = 16,
+    },
+    .num = 0,
+    .ent_size = 0,
+    .shndx = 0,
+    .reserved1 = 0,
+};
+
 /**************
  * Multiboot2 *
  **************/
@@ -933,6 +949,10 @@ int main()
         &tag_vbe_info_invalid_size.base
     ));
 
+    assert(KernAux_Multiboot2_ITagBase_is_valid(
+        &tag_elf_symbols_with_zero_ent_size_valid.base
+    ));
+
     // Tag_None
 
     assert(KernAux_Multiboot2_ITag_None_is_valid(&tag_none_valid));
@@ -1093,6 +1113,13 @@ int main()
 
     assert(!KernAux_Multiboot2_ITag_VBEInfo_is_valid(
         &tag_vbe_info_invalid_size
+    ));
+
+    // Tag_ELFSymbols
+
+
+    assert(KernAux_Multiboot2_ITag_ELFSymbols_is_valid(
+        &tag_elf_symbols_with_zero_ent_size_valid
     ));
 
     return 0;

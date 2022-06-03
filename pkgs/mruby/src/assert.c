@@ -41,12 +41,12 @@ void assert_cb(const char *const file, const int line, const char *const msg)
     if (mrb_nil_p(assert_cb_rb)) return;
 
     mrb_value file_rb = mrb_str_new_lit(mrb, "");
-    file_rb = mrb_str_cat(mrb, file_rb, file, strlen(file));
+    file_rb = mrb_str_cat_cstr(mrb, file_rb, file);
 
     mrb_value line_rb = mrb_fixnum_value(line);
 
     mrb_value msg_rb = mrb_str_new_lit(mrb, "");
-    msg_rb = mrb_str_cat(mrb, msg_rb, msg, strlen(msg));
+    msg_rb = mrb_str_cat_cstr(mrb, msg_rb, msg);
 
     mrb_funcall_id(
         mrb, assert_cb_rb, MRB_SYM(call), 3, file_rb, line_rb, msg_rb);

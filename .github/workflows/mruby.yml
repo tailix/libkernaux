@@ -1,0 +1,42 @@
+name: mruby
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    env:
+      MRUBY_YAML_USE_SYSTEM_LIBRARY: x
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: true
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.0
+      - name: dependencies
+        run: sudo apt-get --yes install cppcheck libyaml-dev rake
+      - name: autogen
+        run: ./autogen.sh
+      - name: configure
+        run: ./configure CFLAGS='-O3'
+      - name: make
+        run: make
+      - name: install
+        run: sudo make install
+      - working-directory: vendor/mruby
+        name: test
+        run: MRUBY_CONFIG=../../pkgs/mruby/build_config.rb rake test
+      - working-directory: pkgs/mruby
+        name: setup
+        run: ./bin/setup
+      - working-directory: pkgs/mruby
+        name: lint
+        run: rake
+      - working-directory: pkgs/mruby
+        name: cppcheck
+        run: cppcheck --quiet --error-exitcode=1 --std=c99 --enable=warning,style,performance,portability .

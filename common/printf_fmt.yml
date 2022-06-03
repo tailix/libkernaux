@@ -1,0 +1,340 @@
+- in:
+    format: 's'
+    width: null
+    precision: null
+  out:
+    flags: []
+    width: 0
+    precision: 0
+    type: str
+    base: 0
+
+- in:
+    format: '-s'
+    width: null
+    precision: null
+  out:
+    flags: [left]
+    width: 0
+    precision: 0
+    type: str
+    base: 0
+
+- in:
+    format: '+s'
+    width: null
+    precision: null
+  out:
+    flags: [plus]
+    width: 0
+    precision: 0
+    type: str
+    base: 0
+
+- in:
+    format: ' s'
+    width: null
+    precision: null
+  out:
+    flags: [space]
+    width: 0
+    precision: 0
+    type: str
+    base: 0
+
+- in:
+    format: '#s'
+    width: null
+    precision: null
+  out:
+    flags: [hash]
+    width: 0
+    precision: 0
+    type: str
+    base: 0
+
+- in:
+    format: '0s'
+    width: null
+    precision: null
+  out:
+    flags: [zeropad]
+    width: 0
+    precision: 0
+    type: str
+    base: 0
+
+- in:
+    format: '123s'
+    width: null
+    precision: null
+  out:
+    flags: []
+    width: 123
+    precision: 0
+    type: str
+    base: 0
+
+- in:
+    format: '*s'
+    width: 123
+    precision: null
+  out:
+    flags: []
+    width: 123
+    precision: 0
+    type: str
+    base: 0
+
+- in:
+    format: '.123s'
+    width: null
+    precision: null
+  out:
+    flags: [precision]
+    width: 0
+    precision: 123
+    type: str
+    base: 0
+
+- in:
+    format: '.*s'
+    width: null
+    precision: 123
+  out:
+    flags: [precision]
+    width: 0
+    precision: 123
+    type: str
+    base: 0
+
+- in:
+    format: 'ls'
+    width: null
+    precision: null
+  out:
+    flags: [long]
+    width: 0
+    precision: 0
+    type: str
+    base: 0
+
+- in:
+    format: 'lls'
+    width: null
+    precision: null
+  out:
+    flags: [long, long_long]
+    width: 0
+    precision: 0
+    type: str
+    base: 0
+
+- in:
+    format: 'hs'
+    width: null
+    precision: null
+  out:
+    flags: [short]
+    width: 0
+    precision: 0
+    type: str
+    base: 0
+
+- in:
+    format: 'hhs'
+    width: null
+    precision: null
+  out:
+    flags: [short, char]
+    width: 0
+    precision: 0
+    type: str
+    base: 0
+
+- in:
+    format: 'd'
+    width: null
+    precision: null
+  out:
+    flags: []
+    width: 0
+    precision: 0
+    type: int
+    base: 10
+
+- in:
+    format: 'i'
+    width: null
+    precision: null
+  out:
+    flags: []
+    width: 0
+    precision: 0
+    type: int
+    base: 10
+
+- in:
+    format: 'u'
+    width: null
+    precision: null
+  out:
+    flags: []
+    width: 0
+    precision: 0
+    type: uint
+    base: 10
+
+- in:
+    format: 'x'
+    width: null
+    precision: null
+  out:
+    flags: []
+    width: 0
+    precision: 0
+    type: uint
+    base: 16
+
+- in:
+    format: 'X'
+    width: null
+    precision: null
+  out:
+    flags: [uppercase]
+    width: 0
+    precision: 0
+    type: uint
+    base: 16
+
+- in:
+    format: 'o'
+    width: null
+    precision: null
+  out:
+    flags: []
+    width: 0
+    precision: 0
+    type: uint
+    base: 8
+
+- in:
+    format: 'b'
+    width: null
+    precision: null
+  out:
+    flags: []
+    width: 0
+    precision: 0
+    type: uint
+    base: 2
+
+- in:
+    format: 'f'
+    width: null
+    precision: null
+  out:
+    flags: []
+    width: 0
+    precision: 0
+    type: float
+    base: 0
+
+- in:
+    format: 'F'
+    width: null
+    precision: null
+  out:
+    flags: [uppercase]
+    width: 0
+    precision: 0
+    type: float
+    base: 0
+
+- in:
+    format: 'e'
+    width: null
+    precision: null
+  out:
+    flags: []
+    width: 0
+    precision: 0
+    type: exp
+    base: 0
+
+- in:
+    format: 'E'
+    width: null
+    precision: null
+  out:
+    flags: [uppercase]
+    width: 0
+    precision: 0
+    type: exp
+    base: 0
+
+- in:
+    format: 'g'
+    width: null
+    precision: null
+  out:
+    flags: [adapt_exp]
+    width: 0
+    precision: 0
+    type: exp
+    base: 0
+
+- in:
+    format: 'G'
+    width: null
+    precision: null
+  out:
+    flags: [adapt_exp, uppercase]
+    width: 0
+    precision: 0
+    type: exp
+    base: 0
+
+- in:
+    format: 'c'
+    width: null
+    precision: null
+  out:
+    flags: []
+    width: 0
+    precision: 0
+    type: char
+    base: 0
+
+- in:
+    format: 's'
+    width: null
+    precision: null
+  out:
+    flags: []
+    width: 0
+    precision: 0
+    type: str
+    base: 0
+
+- in:
+    format: '%'
+    width: null
+    precision: null
+  out:
+    flags: []
+    width: 0
+    precision: 0
+    type: percent
+    base: 0
+
+- in:
+    format: '_'
+    width: null
+    precision: null
+  out:
+    flags: []
+    width: 0
+    precision: 0
+    type: none
+    base: 0

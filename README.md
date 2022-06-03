@@ -1,7 +1,8 @@
 libkernaux
 ==========
 
-[![Test](https://github.com/tailix/libkernaux/actions/workflows/test.yml/badge.svg)](https://github.com/tailix/libkernaux/actions/workflows/test.yml)
+[![Build status](https://github.com/tailix/libkernaux/actions/workflows/main.yml/badge.svg)](https://github.com/tailix/libkernaux/actions/workflows/main.yml)
+[![Build status (FreeBSD)](https://api.cirrus-ci.com/github/tailix/libkernaux.svg?task=Main%20(FreeBSD))](https://cirrus-ci.com/github/tailix/libkernaux)
 
 Auxiliary library for kernel development.
 
@@ -23,7 +24,6 @@ Table of contents
   * [Development](#development)
   * [Cross](#cross)
 * [Architectures](#architectures)
-* [Portability](#portability)
 
 
 
@@ -38,7 +38,7 @@ zero). Work-in-progress APIs can change at any time.
   * Architecture-specific code (*work in progress*)
     * [Declarations](/include/kernaux/arch/)
     * [Functions](/include/kernaux/asm/)
-  * [Assertions](/include/kernaux/assert.h) (*stable since* **0.1.0**, *non-breaking since* **0.2.0**)
+  * [Assertions](/include/kernaux/assert.h) (*stable since* **0.1.0**, *non-breaking since* **?.?.?**)
     * [Assert: simple](/examples/assert_simple.c)
     * [Assert: guards](/examples/assert_guards.c)
     * [Panic: simple](/examples/panic_simple.c)
@@ -57,13 +57,17 @@ zero). Work-in-progress APIs can change at any time.
   * [ELF](/include/kernaux/elf.h) (*work in progress*)
   * [Master Boot Record](/include/kernaux/mbr.h) (*work in progress*)
   * [Multiboot 2 (GRUB 2)](/include/kernaux/multiboot2.h) (*work in progress*)
+  * [printf format parser](/include/kernaux/printf_fmt.h) (*work in progress*)
+    * Code from [https://github.com/mpaland/printf](https://github.com/mpaland/printf). Thank you!
+    * [Example](/examples/printf_fmt.c)
   * [Stivale 2 (Limine) information parser](/include/kernaux/stivale2.h) (*work in progress*)
 * Utilities
   * [Measurement units utils](/include/kernaux/units.h) (*work in progress*)
     * [To human](/examples/units_human.c)
 * Usual functions
   * [libc replacement](/include/kernaux/libc.h) (*stable since* **0.1.0**)
-  * [itoa/ftoa replacement](/include/kernaux/ntoa.h) (*stable since* **0.1.0**)
+  * [itoa/ftoa replacement](/include/kernaux/ntoa.h) (*stable since* **0.1.0**, *non-breaking since* **?.?.?**)
+    * [Example](/examples/ntoa.c)
   * [printf replacement](/include/kernaux/printf.h) (*stable since* **0.1.0**)
     * Code from [https://github.com/mpaland/printf](https://github.com/mpaland/printf). Thank you!
     * [printf](/examples/printf.c)
@@ -84,6 +88,13 @@ stable options.
 
 ### Non-default options
 
+#### Features
+
+* `--enable-tests` - enable usual tests and examples
+* `--enable-tests-all` - enable all tests
+* `--enable-tests-python` - enable tests that require Python 3 with YAML and
+  Jinja2
+
 #### Packages
 
 * `--with-libc` - provides the replacement for some standard C functions. Useful
@@ -101,16 +112,19 @@ stable options.
 
 #### Features
 
-* `--enable-bloat`, disable with `--disable-bloat`
-* `--enable-float`, disable with `--disable-float`
+* `--(enable|disable)-bloat` - heavy binary data
+* `--(enable|disable)-float` - floating-point arithmetic
+* `--(enable|disable)-pic` - generate position-independent code
+* `--(enable|disable)-werror` - fail on warning (`CFLAGS+='-Werror'`)
 
 #### Packages
 
-All packages all included by default. To exclude all packages except those
+All packages are included by default. To exclude all packages except those
 explicitly included, use `--without-all`.
 
-* `--with[out]-ntoa`
-* `--with[out]-printf`
+* `--with[out]-cmdline` - command line parser
+* `--with[out]-ntoa` - itoa/ftoa
+* `--with[out]-printf` - printf
 
 
 
@@ -120,8 +134,8 @@ Tips
 ### Installation
 
 ```
-./autogen.sh
-./configure CFLAGS='-fPIC'
+./autogen.sh # if present
+./configure
 make
 sudo make install
 ```
@@ -132,8 +146,8 @@ environment.
 ### Development
 
 ```
-./autogen.sh
-./configure --enable-tests CFLAGS='-fPIC'
+./autogen.sh # if present
+./configure --enable-tests # or --enable-tests-all, but see prerequisites
 make
 ```
 
@@ -141,7 +155,7 @@ You can test with `make check`.
 
 ### Cross
 
-Create configuration script with `./autogen.sh`.
+Create configuration script with `./autogen.sh` (if present).
 
 Let's assume that your target triplet is `i386-elf`. Configure with
 [cross-compiler](https://wiki.osdev.org/GCC_Cross-Compiler) in `$PATH` to make
@@ -150,11 +164,12 @@ without it in `$PATH`:
 ```
 ./configure \
   --host='i386-elf' \
+  --disable-pic \
   --with-libc \
   AR="$(which i386-elf-ar)" \
   CC="$(which i386-elf-gcc)" \
   RANLIB="$(which i386-elf-ranlib)" \
-  CFLAGS='-ffreestanding -nostdlib -fno-builtin -fno-stack-protector'
+  CFLAGS='-ffreestanding -nostdlib -fno-stack-protector'
 ```
 
 You can see the following messages. It's
@@ -240,18 +255,3 @@ may change in future:
   * `armel`
   * `armhf`
   * `arm64`
-
-
-
-Portability
------------
-
-Except GNU/Linux, the library is periodically successfully built (starting with
-`./autogen.sh`) and tested with **autoconf**, **automake**, **binutils** and
-**gcc**/**clang** (depending on what is present) on the following operating
-systems:
-
-* FreeBSD 13.0
-* Minix 3.3.0
-* NetBSD 9.2
-* OpenBSD 7.0

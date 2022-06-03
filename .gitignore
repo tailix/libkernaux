@@ -31,6 +31,8 @@
 /missing
 /test-driver
 
+# Custom
+
 /Makefile.in
 /include/Makefile.in
 
@@ -79,21 +81,27 @@
 /stamp-h1
 /test-suite.log
 
-/Makefile
-/include/Makefile
-
 /examples/*.log
 /examples/*.trs
 /tests/test*.log
 /tests/test*.trs
 
+# Custom
+
+/Makefile
+/include/Makefile
+/include/kernaux.h
+/include/kernaux/console.h
+
 /examples/assert_guards
 /examples/assert_simple
 /examples/cmdline
+/examples/ntoa
 /examples/panic_guards
 /examples/panic_simple
 /examples/pfa
 /examples/printf
+/examples/printf_fmt
 /examples/printf_va
 /examples/snprintf
 /examples/snprintf_va
@@ -115,5 +123,8 @@
 /tests/test_ntoa
 /tests/test_pfa
 /tests/test_pfa_assert
-/tests/test_printf
+/tests/test_printf_fmt_gen
+/tests/test_printf_fmt_gen.c
+/tests/test_printf_gen
+/tests/test_printf_gen.c
 /tests/test_units_human

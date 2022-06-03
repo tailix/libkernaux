@@ -2,6 +2,7 @@
 #include "config.h"
 #endif
 
+#include <kernaux/assert.h>
 #include <kernaux/multiboot2.h>
 
 #include <stddef.h>
@@ -11,6 +12,9 @@ void KernAux_Multiboot2_Header_print(
     const struct KernAux_Multiboot2_Header *const multiboot2_header,
     void (*const printf)(const char *format, ...)
 ) {
+    KERNAUX_NOTNULL_RETURN(multiboot2_header);
+    KERNAUX_NOTNULL_RETURN(printf);
+
     printf("Multiboot 2 header\n");
     printf("  magic: %u\n", multiboot2_header->magic);
     printf(
@@ -41,6 +45,9 @@ void KernAux_Multiboot2_HTagBase_print(
     const struct KernAux_Multiboot2_HTagBase *const tag_base,
     void (*const printf)(const char *format, ...)
 ) {
+    KERNAUX_NOTNULL_RETURN(tag_base);
+    KERNAUX_NOTNULL_RETURN(printf);
+
     if (!KernAux_Multiboot2_HTagBase_is_valid(tag_base)) return;
 
     printf("Multiboot 2 header tag\n");

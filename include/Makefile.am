@@ -1,6 +1,3 @@
-## TODO: <kernaux.h> is partially conditional because other files are
-## TODO: <kernaux/libc.h> and <kernaux/console.h> are partially conditional
-
 nobase_include_HEADERS = \
 	kernaux.h \
 	kernaux/arch/i386.h \
@@ -45,6 +42,9 @@ nobase_include_HEADERS += kernaux/pfa.h
 endif
 if WITH_PRINTF
 nobase_include_HEADERS += kernaux/printf.h
+endif
+if WITH_PRINTF_FMT
+nobase_include_HEADERS += kernaux/printf_fmt.h
 endif
 if WITH_UNITS
 nobase_include_HEADERS += kernaux/units.h

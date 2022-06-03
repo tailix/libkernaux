@@ -1,0 +1,85 @@
+name: Main
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        # TODO: something is wrong with TCC, Multiboot 2 info tag struct size
+        #cc: ['gcc', 'clang', 'tcc']
+        cc: ['gcc', 'clang']
+        opt: ['', '-O0', '-O3']
+    steps:
+      - uses: actions/checkout@v2
+      - name: dependencies
+        run: sudo apt-get --yes install clang tcc
+      - name: autogen
+        run: ./autogen.sh
+      - name: configure
+        run: ./configure --enable-tests --enable-tests-python CC='${{matrix.cc}}' CFLAGS='${{matrix.opt}}'
+      - name: make
+        run: make
+      - name: check
+        run: make check || (cat test-suite.log && false)
+      - name: install
+        run: sudo make install
+
+  dist:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: autogen
+        run: ./autogen.sh
+      - name: configure dist
+        run: ./configure
+      - name: dist
+        run: make dist
+      - name: extract
+        run: tar -xzf libkernaux-0.3.0.tar.gz
+      - working-directory: libkernaux-0.3.0
+        name: configure
+        run: ./configure --enable-tests --enable-tests-python
+      - working-directory: libkernaux-0.3.0
+        name: make
+        run: make
+      - working-directory: libkernaux-0.3.0
+        name: check
+        run: make check || (cat test-suite.log && false)
+      - working-directory: libkernaux-0.3.0
+        name: install
+        run: sudo make install
+
+  cppcheck:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: dependencies
+        run: sudo apt-get --yes install cppcheck
+      - name: cppcheck source code
+        # TODO: don't suppress "src/printf.c"
+        run: cppcheck --quiet --error-exitcode=1 --std=c99 --enable=warning,style,performance,portability --suppress='*:src/printf.c' include/ src/
+      - name: cppcheck examples
+        run: cppcheck --quiet --error-exitcode=1 --std=c99 --enable=warning,style,performance,portability --suppress=duplicateExpression --suppress=staticStringCompare examples/
+      - name: cppcheck tests
+        run: cppcheck --quiet --error-exitcode=1 --std=c99 --enable=warning,style,performance,portability --suppress=unusedStructMember tests/
+
+  cond:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: autogen
+        run: ./autogen.sh
+      - name: configure
+        run: ./configure --without-all --enable-tests --enable-tests-python
+      - name: make
+        run: make
+      - name: check
+        run: make check || (cat test-suite.log && false)
+      - name: install
+        run: sudo make install
