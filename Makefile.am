@@ -8,6 +8,9 @@ AM_CFLAGS = \
 	-I$(top_builddir)/include \
 	-I$(top_srcdir)/include
 
+CLEANFILES =
+TESTS =
+
 lib_LIBRARIES = libkernaux.a
 
 noinst_PROGRAMS = $(TESTS)
@@ -15,10 +18,6 @@ noinst_PROGRAMS = $(TESTS)
 libkernaux_a_SOURCES = \
 	src/assert.c \
 	src/libc.c
-
-CLEANFILES = \
-	tests/test_printf_fmt_gen.c \
-	tests/test_printf_gen.c
 
 if ASM_I386
 libkernaux_a_SOURCES += src/asm/i386.S
@@ -31,8 +30,6 @@ endif
 if ASM_X86_64
 libkernaux_a_SOURCES += src/asm/x86_64.S
 endif
-
-TESTS =
 
 if ENABLE_TESTS
 TESTS += \
@@ -137,6 +134,7 @@ TESTS += \
 	examples/snprintf_va
 endif
 if ENABLE_TESTS_PYTHON
+CLEANFILES += tests/test_printf_gen.c
 TESTS += tests/test_printf_gen
 endif
 endif
@@ -147,6 +145,7 @@ if ENABLE_TESTS
 TESTS += examples/printf_fmt
 endif
 if ENABLE_TESTS_PYTHON
+CLEANFILES += tests/test_printf_fmt_gen.c
 TESTS += tests/test_printf_fmt_gen
 endif
 endif
