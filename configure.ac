@@ -24,6 +24,7 @@ AC_ARG_ENABLE([pic],               AS_HELP_STRING([--disable-pic],            [d
 AC_ARG_ENABLE([werror],            AS_HELP_STRING([--disable-werror],         [disable -Werror]))
 
 dnl Features (disabled by default)
+AC_ARG_ENABLE([foobar],            AS_HELP_STRING([--enable-foobar],          [foobar]))
 AC_ARG_ENABLE([tests],             AS_HELP_STRING([--enable-tests],           [enable usual tests and examples]))
 AC_ARG_ENABLE([tests-all],         AS_HELP_STRING([--enable-tests-all],       [enable all tests]))
 AC_ARG_ENABLE([tests-python],      AS_HELP_STRING([--enable-tests-python],    [enable tests that require Python 3 with YAML and Jinja2]))
@@ -114,6 +115,7 @@ AS_IF([test "$enable_pic"             = no ], [enable_pic=no],              [ena
 AS_IF([test "$enable_werror"          = no ], [enable_werror=no],           [enable_werror=yes])
 
 dnl Features (disabled by default)
+AS_IF([test "$enable_foobar"          = yes], [enable_foobar=yes],          [enable_foobar=no])
 AS_IF([test "$enable_tests"           = yes], [enable_tests=yes],           [enable_tests=no])
 AS_IF([test "$enable_tests_all"       = yes], [enable_tests_all=yes],       [enable_tests_all=no])
 AS_IF([test "$enable_tests_python"    = yes], [enable_tests_python=yes],    [enable_tests_python=no])
@@ -154,6 +156,7 @@ AS_IF([test "$enable_tests"           = yes -a "$host_cpu" != "$build_cpu"], AC_
 AS_IF([test "$with_printf"            = yes -a "$with_ntoa"       = no    ], AC_MSG_ERROR([package `printf' requires package `ntoa']))
 AS_IF([test "$with_printf"            = yes -a "$with_printf_fmt" = no    ], AC_MSG_ERROR([package `printf' requires package `printf-fmt']))
 AS_IF([test "$with_units"             = yes -a "$with_ntoa"       = no    ], AC_MSG_ERROR([package `units' requires package `ntoa']))
+AS_IF([test "$with_tester_multiboot2" = yes -a "$enable_foobar"   = no    ], AC_MSG_ERROR([package `tester-multiboot2' requires feature `foobar']))
 AS_IF([test "$with_tester_multiboot2" = yes -a "$with_multiboot2" = no    ], AC_MSG_ERROR([package `tester-multiboot2' requires package `multiboot2']))
 
 
@@ -174,6 +177,7 @@ AM_CONDITIONAL([ENABLE_PIC],             [test "$enable_pic"             = yes])
 AM_CONDITIONAL([ENABLE_WERROR],          [test "$enable_werror"          = yes])
 
 dnl Features (disabled by default)
+AM_CONDITIONAL([ENABLE_FOOBAR],          [test "$enable_foobar"          = yes])
 AM_CONDITIONAL([ENABLE_TESTS],           [test "$enable_tests"           = yes])
 AM_CONDITIONAL([ENABLE_TESTS_PYTHON],    [test "$enable_tests_python"    = yes])
 
@@ -218,6 +222,7 @@ AS_IF([test "$enable_pic"             = yes], [AC_DEFINE([ENABLE_PIC],          
 AS_IF([test "$enable_werror"          = yes], [AC_DEFINE([ENABLE_WERROR],          [1], [enabled -Werror])])
 
 dnl Features (disabled by default)
+AS_IF([test "$enable_foobar"          = yes], [AC_DEFINE([ENABLE_FOOBAR],          [1], [foobar])])
 AS_IF([test "$enable_tests"           = yes], [AC_DEFINE([ENABLE_TESTS],           [1], [enabled usual tests and examples])])
 AS_IF([test "$enable_tests_python"    = yes], [AC_DEFINE([ENABLE_TESTS_PYTHON],    [1], [enabled tests that require Python 3 with YAML and Jinja2])])
 
