@@ -91,6 +91,17 @@ if WITH_UNITS
 libkernaux_a_SOURCES += src/units.c
 endif
 
+#############################
+# kernaux-tester-multiboot2 #
+#############################
+
+if WITH_TESTER_MULTIBOOT2
+libexec_PROGRAMS = kernaux-tester-multiboot2
+kernaux_tester_multiboot2_LDADD = libkernaux.a
+kernaux_tester_multiboot2_SOURCES = \
+	src/testers/multiboot2/main.c
+endif
+
 ##########################
 # examples/assert_guards #
 ##########################
