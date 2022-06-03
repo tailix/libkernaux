@@ -97,9 +97,9 @@ stable options.
 
 #### Packages
 
-* `--with-libc` - provides the replacement for some standard C functions. Useful
-  in freestanding environment, where no libc is present. You can also separately
-  include or exclude components:
+* `--with-libc-all` - provides the replacement for some standard C functions.
+  Useful in freestanding environment, where no libc is present. You can also
+  separately include or exclude components:
   * `--with[out]-libc-atoi`
   * `--with[out]-libc-isdigit`
   * `--with[out]-libc-isspace`
@@ -165,7 +165,7 @@ without it in `$PATH`:
 ./configure \
   --host='i386-elf' \
   --disable-pic \
-  --with-libc \
+  --with-libc-all \
   AR="$(which i386-elf-ar)" \
   CC="$(which i386-elf-gcc)" \
   RANLIB="$(which i386-elf-ranlib)" \

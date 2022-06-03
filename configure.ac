@@ -43,7 +43,7 @@ AC_ARG_WITH(  [printf-fmt],   AS_HELP_STRING([--without-printf-fmt],  [without p
 AC_ARG_WITH(  [units],        AS_HELP_STRING([--without-units],       [without measurement units utils]))
 
 dnl Packages (disabled by default)
-AC_ARG_WITH(  [libc],         AS_HELP_STRING([--with-libc],           [with libc replacement]))
+AC_ARG_WITH(  [libc-all],     AS_HELP_STRING([--with-libc-all],       [with libc replacement]))
 AC_ARG_WITH(  [libc-atoi],    AS_HELP_STRING([--with-libc-atoi],      [with atoi replacement]))
 AC_ARG_WITH(  [libc-isdigit], AS_HELP_STRING([--with-libc-isdigit],   [with isdigit replacement]))
 AC_ARG_WITH(  [libc-isspace], AS_HELP_STRING([--with-libc-isspace],   [with isspace replacement]))
@@ -81,7 +81,7 @@ if test -z "$with_units";       then with_units=no;       fi
 ])
 AS_IF([test "$with_all" = no], do_without_all)
 
-AC_DEFUN([do_with_libc],
+AC_DEFUN([do_with_libc_all],
 [
 if test -z "$with_libc_atoi";    then with_libc_atoi=yes;    fi
 if test -z "$with_libc_isdigit"; then with_libc_isdigit=yes; fi
@@ -91,7 +91,7 @@ if test -z "$with_libc_strcpy";  then with_libc_strcpy=yes;  fi
 if test -z "$with_libc_strlen";  then with_libc_strlen=yes;  fi
 if test -z "$with_libc_strnlen"; then with_libc_strnlen=yes; fi
 ])
-AS_IF([test "$with_libc" = yes], do_with_libc)
+AS_IF([test "$with_libc_all" = yes], do_with_libc_all)
 
 
 
@@ -125,7 +125,7 @@ AS_IF([test "$with_printf_fmt"     = no ], [with_printf_fmt=no],      [with_prin
 AS_IF([test "$with_units"          = no ], [with_units=no],           [with_units=yes])
 
 dnl Packages (disabled by default)
-AS_IF([test "$with_libc"           = yes], [with_libc=yes],           [with_libc=no])
+AS_IF([test "$with_libc_all"       = yes], [with_libc_all=yes],       [with_libc_all=no])
 AS_IF([test "$with_libc_atoi"      = yes], [with_libc_atoi=yes],      [with_libc_atoi=no])
 AS_IF([test "$with_libc_isdigit"   = yes], [with_libc_isdigit=yes],   [with_libc_isdigit=no])
 AS_IF([test "$with_libc_isspace"   = yes], [with_libc_isspace=yes],   [with_libc_isspace=no])

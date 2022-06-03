@@ -16,4 +16,4 @@ export RANLIB="$CROSS-ranlib"
 
 export CFLAGS='-ffreestanding -nostdlib -fno-stack-protector'
 
-"$REPO/configure" --host="$HOST" --prefix="$PREFIX" --disable-pic --with-libc
+"$REPO/configure" --host="$HOST" --prefix="$PREFIX" --disable-pic --with-libc-all

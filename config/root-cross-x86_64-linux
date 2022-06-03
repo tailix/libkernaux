@@ -16,4 +16,4 @@ export RANLIB="$TARGET-ranlib"
 
 export CFLAGS='-ffreestanding -nostdlib -fno-stack-protector -mabi=sysv -mcmodel=kernel -mno-80387 -mno-red-zone'
 
-"$REPO/configure" --host="$HOST" --prefix="$PREFIX" --disable-pic --with-libc
+"$REPO/configure" --host="$HOST" --prefix="$PREFIX" --disable-pic --with-libc-all
