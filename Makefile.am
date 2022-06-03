@@ -451,6 +451,7 @@ endif
 #############################
 
 if ENABLE_TESTS_PYTHON
+if WITH_PRINTF_FMT
 TESTS += tests/test_printf_fmt_gen
 tests_test_printf_fmt_gen_LDADD = libkernaux.a
 tests_test_printf_fmt_gen_SOURCES = \
@@ -458,6 +459,7 @@ tests_test_printf_fmt_gen_SOURCES = \
 	tests/printf_fmt_gen.py \
 	tests/printf_fmt_gen.jinja \
 	common/printf_fmt.yml
+endif
 endif
 
 CLEANFILES += tests/test_printf_fmt_gen.c
@@ -470,6 +472,7 @@ tests/test_printf_fmt_gen.c: tests/printf_fmt_gen.py tests/printf_fmt_gen.jinja 
 #########################
 
 if ENABLE_TESTS_PYTHON
+if WITH_PRINTF
 TESTS += tests/test_printf_gen
 tests_test_printf_gen_LDADD = libkernaux.a
 tests_test_printf_gen_SOURCES = \
@@ -478,6 +481,7 @@ tests_test_printf_gen_SOURCES = \
 	tests/printf_gen.jinja \
 	common/printf.yml \
 	common/printf_orig.yml
+endif
 endif
 
 CLEANFILES += tests/test_printf_gen.c
@@ -490,7 +494,7 @@ tests/test_printf_gen.c: tests/printf_gen.py tests/printf_gen.jinja common/print
 ##########################
 
 if ENABLE_TESTS
-if ENABLE_TESTS
+if WITH_UNITS
 TESTS += tests/test_units_human
 tests_test_units_human_LDADD = libkernaux.a
 tests_test_units_human_SOURCES = tests/test_units_human.c
