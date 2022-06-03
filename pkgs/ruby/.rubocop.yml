@@ -13,8 +13,6 @@ Layout/AccessModifierIndentation:
 
 Layout/LineLength:
   Max: 80
-  Exclude:
-    - 'spec/lib/kernaux/sprintf_spec.rb'
 
 Lint/AmbiguousOperatorPrecedence:
   Enabled: false

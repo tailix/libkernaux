@@ -5,8 +5,8 @@
 extern "C" {
 #endif
 
-#define KERNAUX_PANIC(msg) (kernaux_assert_do(__FILE__, __LINE__, #msg))
-#define KERNAUX_ASSERT(cond) ((cond) ? (void)0 : KERNAUX_PANIC(cond))
+#define KERNAUX_PANIC(msg) (kernaux_assert_do(__FILE__, __LINE__, msg))
+#define KERNAUX_ASSERT(cond) ((cond) ? (void)0 : KERNAUX_PANIC(#cond))
 
 #define KERNAUX_PANIC_RETURN(msg)         do { KERNAUX_PANIC(msg);                return;       } while (0)
 #define KERNAUX_PANIC_RETVAL(msg, val)    do { KERNAUX_PANIC(msg);                return (val); } while (0)

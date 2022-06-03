@@ -1,0 +1,67 @@
+name: Ruby
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.0
+      - name: dependencies
+        run: sudo apt-get --yes install cppcheck
+      - name: autogen
+        run: ./autogen.sh
+      - name: configure
+        run: ./configure CFLAGS='-O3'
+      - name: make
+        run: make
+      - name: install
+        run: sudo make install
+      - working-directory: pkgs/ruby
+        name: setup
+        run: ./bin/setup
+      - working-directory: pkgs/ruby
+        name: compile
+        run: rake compile
+      - working-directory: pkgs/ruby
+        name: test & lint
+        run: rake
+      - working-directory: pkgs/ruby
+        name: cppcheck
+        run: cppcheck --quiet --error-exitcode=1 --std=c99 --enable=warning,style,performance,portability .
+
+  cond:
+    runs-on: ubuntu-latest
+    env:
+      SKIP_COVERAGE: x
+    steps:
+      - uses: actions/checkout@v2
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.0
+      - name: dependencies
+        run: sudo apt-get --yes install
+      - name: autogen
+        run: ./autogen.sh
+      - name: configure
+        run: ./configure --without-all CFLAGS='-O3'
+      - name: make
+        run: make
+      - name: install
+        run: sudo make install
+      - working-directory: pkgs/ruby
+        name: setup
+        run: ./bin/setup
+      - working-directory: pkgs/ruby
+        name: compile
+        run: rake compile
+      - working-directory: pkgs/ruby
+        name: test & lint
+        run: rake

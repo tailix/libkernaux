@@ -24,7 +24,7 @@ Multiboot 2 info tag
 Multiboot 2 info tag
   type: 2 (boot loader name)
   size: 31
-  name: GRUB 2.04-1ubuntu26.13
+  name: GRUB 2.04-1ubuntu26.15
 Multiboot 2 info tag
   type: 10 (APM table)
   size: 28

@@ -9,6 +9,9 @@
 #include <stddef.h>
 #include <string.h>
 
+#define VALID_LONG_PREFIX "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+#define TOO_LONG_PREFIX   "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+
 static const struct {
     const char *result;
     int base;
@@ -125,6 +128,153 @@ static const struct {
     { "an3",            34, 12345 }, { "AN3",            -34, 12345 },
     { "a2p",            35, 12345 }, { "A2P",            -35, 12345 },
     { "9ix",            36, 12345 }, { "9IX",            -36, 12345 },
+};
+
+static const struct {
+    uint64_t value;
+    const char *result;
+} utoa2_cases[] = {
+    { 0,                        "0"                                 },
+    { 1,                        "1"                                 },
+    { 2,                        "10"                                },
+    { 3,                        "11"                                },
+    { 4,                        "100"                               },
+    { 5,                        "101"                               },
+    { 6,                        "110"                               },
+    { 7,                        "111"                               },
+    { 8,                        "1000"                              },
+    { UINT16_MAX,               "1111111111111111"                  },
+    { UINT16_MAX + 1,           "10000000000000000"                 },
+    { UINT32_MAX,               "11111111111111111111111111111111"  },
+    { (uint64_t)UINT32_MAX + 1, "100000000000000000000000000000000" },
+    { UINT64_MAX - 6,           "1111111111111111111111111111111111111111111111111111111111111001" },
+    { UINT64_MAX - 5,           "1111111111111111111111111111111111111111111111111111111111111010" },
+    { UINT64_MAX - 1,           "1111111111111111111111111111111111111111111111111111111111111110" },
+    { UINT64_MAX,               "1111111111111111111111111111111111111111111111111111111111111111" },
+};
+
+static const struct {
+    int64_t value;
+    const char *result;
+} itoa2_cases[] = {
+    { 0,                       "0"                                 },
+    { 1,                       "1"                                 },
+    { -1,                      "-1"                                },
+    { 2,                       "10"                                },
+    { -2,                      "-10"                               },
+    { 3,                       "11"                                },
+    { -3,                      "-11"                               },
+    { 4,                       "100"                               },
+    { -4,                      "-100"                              },
+    { 5,                       "101"                               },
+    { -5,                      "-101"                              },
+    { 6,                       "110"                               },
+    { -6,                      "-110"                              },
+    { 7,                       "111"                               },
+    { -7,                      "-111"                              },
+    { 8,                       "1000"                              },
+    { -8,                      "-1000"                             },
+    { UINT16_MAX,              "1111111111111111"                  },
+    { UINT16_MAX + 1,          "10000000000000000"                 },
+    { UINT32_MAX,              "11111111111111111111111111111111"  },
+    { (int64_t)UINT32_MAX + 1, "100000000000000000000000000000000" },
+    { INT64_MAX - 6,           "111111111111111111111111111111111111111111111111111111111111001"   },
+    { INT64_MIN + 7,           "-111111111111111111111111111111111111111111111111111111111111001"  },
+    { INT64_MAX - 5,           "111111111111111111111111111111111111111111111111111111111111010"   },
+    { INT64_MIN + 6,           "-111111111111111111111111111111111111111111111111111111111111010"  },
+    { INT64_MAX - 1,           "111111111111111111111111111111111111111111111111111111111111110"   },
+    { INT64_MIN + 2,           "-111111111111111111111111111111111111111111111111111111111111110"  },
+    { INT64_MAX,               "111111111111111111111111111111111111111111111111111111111111111"   },
+    { INT64_MIN + 1,           "-111111111111111111111111111111111111111111111111111111111111111"  },
+    { INT64_MIN,               "-1000000000000000000000000000000000000000000000000000000000000000" },
+};
+
+static const struct {
+    uint64_t value;
+    const char *result;
+} utoa8_cases[] = {
+    { 00,                       "0"                      },
+    { 01,                       "1"                      },
+    { 02,                       "2"                      },
+    { 07,                       "7"                      },
+    { 010,                      "10"                     },
+    { 011,                      "11"                     },
+    { 012,                      "12"                     },
+    { 017,                      "17"                     },
+    { 020,                      "20"                     },
+    { 021,                      "21"                     },
+    { 077,                      "77"                     },
+    { 0100,                     "100"                    },
+    { 0101,                     "101"                    },
+    { 0177,                     "177"                    },
+    { 0200,                     "200"                    },
+    { 0201,                     "201"                    },
+    { 0777,                     "777"                    },
+    { 01000,                    "1000"                   },
+    { 01001,                    "1001"                   },
+    { 01777,                    "1777"                   },
+    { 02000,                    "2000"                   },
+    { 02001,                    "2001"                   },
+    { 07777,                    "7777"                   },
+    { 010000,                   "10000"                  },
+    { 010001,                   "10001"                  },
+    { UINT16_MAX,               "177777"                 },
+    { UINT16_MAX + 1,           "200000"                 },
+    { UINT32_MAX,               "37777777777"            },
+    { (uint64_t)UINT32_MAX + 1, "40000000000"            },
+    { UINT64_MAX - 6,           "1777777777777777777771" },
+    { UINT64_MAX - 5,           "1777777777777777777772" },
+    { UINT64_MAX - 1,           "1777777777777777777776" },
+    { UINT64_MAX,               "1777777777777777777777" },
+};
+
+static const struct {
+    int64_t value;
+    const char *result;
+} itoa8_cases[] = {
+    { 00,                       "0"                       },
+    { 01,                       "1"                       },
+    { -01,                      "-1"                      },
+    { 02,                       "2"                       },
+    { -02,                      "-2"                      },
+    { 07,                       "7"                       },
+    { -07,                      "-7"                      },
+    { 010,                      "10"                      },
+    { -010,                     "-10"                     },
+    { 011,                      "11"                      },
+    { -011,                     "-11"                     },
+    { 012,                      "12"                      },
+    { 017,                      "17"                      },
+    { 020,                      "20"                      },
+    { 021,                      "21"                      },
+    { 077,                      "77"                      },
+    { 0100,                     "100"                     },
+    { 0101,                     "101"                     },
+    { 0177,                     "177"                     },
+    { 0200,                     "200"                     },
+    { 0201,                     "201"                     },
+    { 0777,                     "777"                     },
+    { 01000,                    "1000"                    },
+    { 01001,                    "1001"                    },
+    { 01777,                    "1777"                    },
+    { 02000,                    "2000"                    },
+    { 02001,                    "2001"                    },
+    { 07777,                    "7777"                    },
+    { 010000,                   "10000"                   },
+    { 010001,                   "10001"                   },
+    { UINT16_MAX,               "177777"                  },
+    { UINT16_MAX + 1,           "200000"                  },
+    { UINT32_MAX,               "37777777777"             },
+    { (uint64_t)UINT32_MAX + 1, "40000000000"             },
+    { INT64_MAX - 6,            "777777777777777777771"   },
+    { INT64_MIN + 7,            "-777777777777777777771"  },
+    { INT64_MAX - 5,            "777777777777777777772"   },
+    { INT64_MIN + 6,            "-777777777777777777772"  },
+    { INT64_MAX - 1,            "777777777777777777776"   },
+    { INT64_MIN + 2,            "-777777777777777777776"  },
+    { INT64_MAX,                "777777777777777777777"   },
+    { INT64_MIN + 1,            "-777777777777777777777"  },
+    { INT64_MIN,                "-1000000000000000000000" },
 };
 
 static const struct {
@@ -365,29 +515,52 @@ static const struct {
 
 static unsigned int assert_count_exp = 0;
 static unsigned int assert_count_ctr = 0;
+
 static const char *assert_last_file = NULL;
+static int assert_last_line = 0;
+static const char *assert_last_msg = NULL;
 
 static void assert_cb(
     const char *const file,
-    const int line __attribute__((unused)),
-    const char *const msg __attribute__((unused))
+    const int line,
+    const char *const msg
 ) {
     ++assert_count_ctr;
+
     assert_last_file = file;
+    assert_last_line = line;
+    assert_last_msg = msg;
 }
 
 static void test_utoa_assert(char *const buffer, const int base)
 {
-    assert(kernaux_utoa(0, buffer, base) == NULL);
+    assert(kernaux_utoa(0, buffer, base, NULL) == NULL);
     assert(assert_count_ctr == ++assert_count_exp);
     assert(strstr(assert_last_file, "src/ntoa.c") != NULL);
+    assert(assert_last_line != 0);
+    assert(assert_last_msg != NULL);
+
+    assert_last_file = NULL;
+    assert_last_line = 0;
+    assert_last_msg = NULL;
 }
 
 static void test_itoa_assert(char *const buffer, const int base)
 {
-    assert(kernaux_itoa(0, buffer, base) == NULL);
+    assert(kernaux_itoa(0, buffer, base, NULL) == NULL);
     assert(assert_count_ctr == ++assert_count_exp);
     assert(strstr(assert_last_file, "src/ntoa.c") != NULL);
+    assert(assert_last_line != 0);
+    assert(assert_last_msg != NULL);
+
+    assert_last_file = NULL;
+    assert_last_line = 0;
+    assert_last_msg = NULL;
+}
+
+static const char *str_end(const char *str)
+{
+    for (;; ++str) if (*str == '\0') return str;
 }
 
 int main()
@@ -395,7 +568,28 @@ int main()
     kernaux_assert_cb = assert_cb;
 
     {
-        char buffer[KERNAUX_UTOA_BUFFER_SIZE];
+        char buffer[KERNAUX_UTOA_MIN_BUFFER_SIZE + KERNAUX_NTOA_MAX_PREFIX_LEN];
+
+        const char *const end1 =
+            kernaux_utoa(123, buffer, 'd', VALID_LONG_PREFIX);
+        assert(strcmp(buffer, VALID_LONG_PREFIX"123") == 0);
+        assert(end1 == str_end(buffer));
+        assert(assert_count_ctr == assert_count_exp);
+        assert(assert_last_file == NULL);
+        assert(assert_last_line == 0);
+        assert(assert_last_msg == NULL);
+
+        const char *const end2 =
+            kernaux_utoa(123, buffer, 'd', TOO_LONG_PREFIX);
+        assert(strcmp(buffer, VALID_LONG_PREFIX) == 0);
+        assert(end2 == NULL);
+        assert(assert_count_ctr == ++assert_count_exp);
+        assert(strstr(assert_last_file, "src/ntoa.c") != NULL);
+        assert(assert_last_line != 0);
+        assert(strcmp(assert_last_msg, "prefix is too long") == 0);
+        assert_last_file = NULL;
+        assert_last_line = 0;
+        assert_last_msg = NULL;
 
         test_utoa_assert(NULL, 'd');
         test_utoa_assert(buffer, 0);
@@ -406,7 +600,28 @@ int main()
     }
 
     {
-        char buffer[KERNAUX_ITOA_BUFFER_SIZE];
+        char buffer[KERNAUX_ITOA_MIN_BUFFER_SIZE + KERNAUX_NTOA_MAX_PREFIX_LEN];
+
+        const char *const end1 =
+            kernaux_itoa(123, buffer, 'd', VALID_LONG_PREFIX);
+        assert(strcmp(buffer, VALID_LONG_PREFIX"123") == 0);
+        assert(end1 == str_end(buffer));
+        assert(assert_count_ctr == assert_count_exp);
+        assert(assert_last_file == NULL);
+        assert(assert_last_line == 0);
+        assert(assert_last_msg == NULL);
+
+        const char *const end2 =
+            kernaux_itoa(123, buffer, 'd', TOO_LONG_PREFIX);
+        assert(strcmp(buffer, VALID_LONG_PREFIX) == 0);
+        assert(end2 == NULL);
+        assert(assert_count_ctr == ++assert_count_exp);
+        assert(strstr(assert_last_file, "src/ntoa.c") != NULL);
+        assert(assert_last_line != 0);
+        assert(strcmp(assert_last_msg, "prefix is too long") == 0);
+        assert_last_file = NULL;
+        assert_last_line = 0;
+        assert_last_msg = NULL;
 
         test_itoa_assert(NULL, 'd');
         test_itoa_assert(buffer, 0);
@@ -417,30 +632,45 @@ int main()
     }
 
     {
-        char buffer[KERNAUX_UTOA_BUFFER_SIZE];
+        char buffer[KERNAUX_UTOA_MIN_BUFFER_SIZE + 3];
 
         for (
             size_t index = 0;
             index < sizeof(utoa_cases) / sizeof(utoa_cases[0]);
             ++index
         ) {
-            const char *const end = kernaux_utoa(
+            const char *const end1 = kernaux_utoa(
                 utoa_cases[index].value,
                 buffer,
-                utoa_cases[index].base
+                utoa_cases[index].base,
+                NULL
             );
             assert(strcmp(buffer, utoa_cases[index].result) == 0);
-            for (const char *pos = buffer;; ++pos) {
-                if (*pos == '\0') {
-                    assert(end == pos);
-                    break;
-                }
-            }
+            assert(end1 == str_end(buffer));
+
+            const char *const end2 = kernaux_utoa(
+                utoa_cases[index].value,
+                buffer,
+                utoa_cases[index].base,
+                ""
+            );
+            assert(strcmp(buffer, utoa_cases[index].result) == 0);
+            assert(end2 == str_end(buffer));
+
+            const char *const end3 = kernaux_utoa(
+                utoa_cases[index].value,
+                buffer,
+                utoa_cases[index].base,
+                "foo"
+            );
+            assert(strncmp(buffer, "foo", 3) == 0);
+            assert(strcmp(&buffer[3], utoa_cases[index].result) == 0);
+            assert(end3 == str_end(buffer));
         }
     }
 
     {
-        char buffer[KERNAUX_ITOA_BUFFER_SIZE];
+        char buffer[KERNAUX_ITOA_MIN_BUFFER_SIZE + 3];
 
         for (
             size_t index = 0;
@@ -452,26 +682,125 @@ int main()
             const int64_t value = utoa_cases[index].value;
             const int base = utoa_cases[index].base;
 
-            const char *const end1 = kernaux_itoa(value, buffer, base);
+            const char *const end1 = kernaux_itoa(value, buffer, base, NULL);
             assert(strcmp(buffer, utoa_cases[index].result) == 0);
-            for (const char *pos = buffer;; ++pos) {
-                if (*pos == '\0') {
-                    assert(end1 == pos);
-                    break;
-                }
-            }
+            assert(end1 == str_end(buffer));
+
+            const char *const end2 = kernaux_itoa(value, buffer, base, "");
+            assert(strcmp(buffer, utoa_cases[index].result) == 0);
+            assert(end2 == str_end(buffer));
+
+            const char *const end3 = kernaux_itoa(value, buffer, base, "foo");
+            assert(strncmp(buffer, "foo", 3) == 0);
+            assert(strcmp(&buffer[3], utoa_cases[index].result) == 0);
+            assert(end3 == str_end(buffer));
 
             if (value <= 0 || base < 2 || base > 36) continue;
 
-            const char *const end2 = kernaux_itoa(-value, buffer, base);
+            const char *const end4 = kernaux_itoa(-value, buffer, base, NULL);
             assert(buffer[0] == '-');
             assert(strcmp(&buffer[1], utoa_cases[index].result) == 0);
-            for (const char *pos = buffer;; ++pos) {
-                if (*pos == '\0') {
-                    assert(end2 == pos);
-                    break;
-                }
+            assert(end4 == str_end(buffer));
+
+            const char *const end5 = kernaux_itoa(-value, buffer, base, "");
+            assert(buffer[0] == '-');
+            assert(strcmp(&buffer[1], utoa_cases[index].result) == 0);
+            assert(end5 == str_end(buffer));
+
+            const char *const end6 = kernaux_itoa(-value, buffer, base, "foo");
+            assert(strncmp(buffer, "-foo", 4) == 0);
+            assert(strcmp(&buffer[4], utoa_cases[index].result) == 0);
+            assert(end6 == str_end(buffer));
+        }
+    }
+
+    {
+        char buffer[KERNAUX_UTOA2_BUFFER_SIZE];
+
+        for (
+            size_t index = 0;
+            index < sizeof(utoa2_cases) / sizeof(utoa2_cases[0]);
+            ++index
+        ) {
+            const char *const end1 =
+                kernaux_utoa2(utoa2_cases[index].value, buffer);
+            assert(strncmp(buffer, "0b", 2) == 0);
+            assert(strcmp(&buffer[2], utoa2_cases[index].result) == 0);
+            assert(end1 == str_end(buffer));
+        }
+    }
+
+    {
+        char buffer[KERNAUX_ITOA2_BUFFER_SIZE];
+
+        for (
+            size_t index = 0;
+            index < sizeof(itoa2_cases) / sizeof(itoa2_cases[0]);
+            ++index
+        ) {
+            const int64_t value = itoa2_cases[index].value;
+
+            const char *const end1 = kernaux_itoa2(value, buffer);
+            if (value >= 0) {
+                assert(strncmp(buffer, "0b", 2) == 0);
+                assert(strcmp(&buffer[2], itoa2_cases[index].result) == 0);
+            } else {
+                assert(strncmp(buffer, "-0b", 3) == 0);
+                assert(strcmp(&buffer[3], &itoa2_cases[index].result[1]) == 0);
             }
+            assert(end1 == str_end(buffer));
+
+            if (value <= 0) continue;
+
+            const char *const end2 = kernaux_itoa2(-value, buffer);
+            assert(strncmp(buffer, "-0b", 3) == 0);
+            assert(strcmp(&buffer[3], itoa2_cases[index].result) == 0);
+            assert(end2 == str_end(buffer));
+        }
+    }
+
+    {
+        char buffer[KERNAUX_UTOA8_BUFFER_SIZE];
+
+        for (
+            size_t index = 0;
+            index < sizeof(utoa8_cases) / sizeof(utoa8_cases[0]);
+            ++index
+        ) {
+            const char *const end1 =
+                kernaux_utoa8(utoa8_cases[index].value, buffer);
+            assert(strncmp(buffer, "0o", 2) == 0);
+            assert(strcmp(&buffer[2], utoa8_cases[index].result) == 0);
+            assert(end1 == str_end(buffer));
+        }
+    }
+
+    {
+        char buffer[KERNAUX_ITOA8_BUFFER_SIZE];
+
+        for (
+            size_t index = 0;
+            index < sizeof(itoa8_cases) / sizeof(itoa8_cases[0]);
+            ++index
+        ) {
+            const int64_t value = itoa8_cases[index].value;
+
+            const char *const end1 = kernaux_itoa8(value, buffer);
+            if (value >= 0) {
+                assert(strncmp(buffer, "0o", 2) == 0);
+                assert(strcmp(&buffer[2], itoa8_cases[index].result) == 0);
+            } else {
+                assert(strncmp(buffer, "-0o", 3) == 0);
+                assert(strcmp(&buffer[3], &itoa8_cases[index].result[1]) == 0);
+            }
+            assert(end1 == str_end(buffer));
+
+            if (value <= 0) continue;
+
+            const char *const end2 = kernaux_itoa8(-value, buffer);
+            assert(strncmp(buffer, "-0o", 3) == 0);
+            assert(strcmp(&buffer[3], itoa8_cases[index].result) == 0);
+            assert(end2 == str_end(buffer));
         }
     }
 
@@ -483,8 +812,10 @@ int main()
             index < sizeof(utoa10_cases) / sizeof(utoa10_cases[0]);
             ++index
         ) {
-            kernaux_utoa10(utoa10_cases[index].value, buffer);
+            const char *const end1 =
+                kernaux_utoa10(utoa10_cases[index].value, buffer);
             assert(strcmp(buffer, utoa10_cases[index].result) == 0);
+            assert(end1 == str_end(buffer));
         }
     }
 
@@ -498,14 +829,16 @@ int main()
         ) {
             const int64_t value = itoa10_cases[index].value;
 
-            kernaux_itoa10(value, buffer);
+            const char *const end1 = kernaux_itoa10(value, buffer);
             assert(strcmp(buffer, itoa10_cases[index].result) == 0);
+            assert(end1 == str_end(buffer));
 
             if (value <= 0) continue;
 
-            kernaux_itoa10(-value, buffer);
+            const char *const end2 = kernaux_itoa10(-value, buffer);
             assert(buffer[0] == '-');
             assert(strcmp(&buffer[1], itoa10_cases[index].result) == 0);
+            assert(end2 == str_end(buffer));
         }
     }
 
@@ -517,8 +850,11 @@ int main()
             index < sizeof(utoa16_cases) / sizeof(utoa16_cases[0]);
             ++index
         ) {
-            kernaux_utoa16(utoa16_cases[index].value, buffer);
-            assert(strcmp(buffer, utoa16_cases[index].result) == 0);
+            const char *const end1 =
+                kernaux_utoa16(utoa16_cases[index].value, buffer);
+            assert(strncmp(buffer, "0x", 2) == 0);
+            assert(strcmp(&buffer[2], utoa16_cases[index].result) == 0);
+            assert(end1 == str_end(buffer));
         }
     }
 
@@ -532,14 +868,22 @@ int main()
         ) {
             const int64_t value = itoa16_cases[index].value;
 
-            kernaux_itoa16(value, buffer);
-            assert(strcmp(buffer, itoa16_cases[index].result) == 0);
+            const char *const end1 = kernaux_itoa16(value, buffer);
+            if (value >= 0) {
+                assert(strncmp(buffer, "0x", 2) == 0);
+                assert(strcmp(&buffer[2], itoa16_cases[index].result) == 0);
+            } else {
+                assert(strncmp(buffer, "-0x", 3) == 0);
+                assert(strcmp(&buffer[3], &itoa16_cases[index].result[1]) == 0);
+            }
+            assert(end1 == str_end(buffer));
 
             if (value <= 0) continue;
 
-            kernaux_itoa16(-value, buffer);
-            assert(buffer[0] == '-');
-            assert(strcmp(&buffer[1], itoa16_cases[index].result) == 0);
+            const char *const end2 = kernaux_itoa16(-value, buffer);
+            assert(strncmp(buffer, "-0x", 3) == 0);
+            assert(strcmp(&buffer[3], itoa16_cases[index].result) == 0);
+            assert(end2 == str_end(buffer));
         }
     }
 

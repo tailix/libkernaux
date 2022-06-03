@@ -1,0 +1,95 @@
+- result: ''
+  args: []
+- result: ''
+  args: ['']
+- result: ''
+  args: ['', '']
+
+- result: 'Hello, World!'
+  args: ['Hello, World!']
+- result: 'Hello, Alex!'
+  args: ['Hello, ', ['%s', 'Alex'], '!']
+- result: 'Hello, Alex!'
+  args: ['Hello, ', ['%c', ['A']], ['%c', ['l']], ['%c', ['e']], ['%c', ['x']], '!']
+
+- result: '%'
+  args: [['%%']]
+- result: '%%'
+  args: [['%%'], ['%%']]
+- result: '%%%'
+  args: [['%%'], ['%%'], ['%%']]
+
+- result: '%'
+  args: [['%*%', 20]]
+
+- result: '123'
+  args: [['%u', 123]]
+- result: '123456'
+  args: [['%u', 123], ['%u', 456]]
+- result: 'foo'
+  args: [['%s', 'foo']]
+- result: 'foobar'
+  args: [['%s', 'foo'], ['%s', 'bar']]
+- result: 'a'
+  args: [['%c', ['a']]]
+- result: 'ab'
+  args: [['%c', ['a']], ['%c', ['b']]]
+- result: 'abc'
+  args: [['%c', ['a']], ['%c', ['b']], ['%c', ['c']]]
+
+- result: '%123fooa'
+  args: [['%%'], ['%u', 123], ['%s', 'foo'], ['%c', ['a']]]
+- result: '%123afoo'
+  args: [['%%'], ['%u', 123], ['%c', ['a']], ['%s', 'foo']]
+- result: '%a123foo'
+  args: [['%%'], ['%c', ['a']], ['%u', 123], ['%s', 'foo']]
+- result: '%afoo123'
+  args: [['%%'], ['%c', ['a']], ['%s', 'foo'], ['%u', 123]]
+- result: '%foo123a'
+  args: [['%%'], ['%s', 'foo'], ['%u', 123], ['%c', ['a']]]
+- result: '%fooa123'
+  args: [['%%'], ['%s', 'foo'], ['%c', ['a']], ['%u', 123]]
+- result: '123%fooa'
+  args: [['%u', 123], ['%%'], ['%s', 'foo'], ['%c', ['a']]]
+- result: '123%afoo'
+  args: [['%u', 123], ['%%'], ['%c', ['a']], ['%s', 'foo']]
+- result: 'a%123foo'
+  args: [['%c', ['a']], ['%%'], ['%u', 123], ['%s', 'foo']]
+- result: 'a%foo123'
+  args: [['%c', ['a']], ['%%'], ['%s', 'foo'], ['%u', 123]]
+- result: 'foo%123a'
+  args: [['%s', 'foo'], ['%%'], ['%u', 123], ['%c', ['a']]]
+- result: 'foo%a123'
+  args: [['%s', 'foo'], ['%%'], ['%c', ['a']], ['%u', 123]]
+- result: '123foo%a'
+  args: [['%u', 123], ['%s', 'foo'], ['%%'], ['%c', ['a']]]
+- result: '123a%foo'
+  args: [['%u', 123], ['%c', ['a']], ['%%'], ['%s', 'foo']]
+- result: 'a123%foo'
+  args: [['%c', ['a']], ['%u', 123], ['%%'], ['%s', 'foo']]
+- result: 'afoo%123'
+  args: [['%c', ['a']], ['%s', 'foo'], ['%%'], ['%u', 123]]
+- result: 'foo123%a'
+  args: [['%s', 'foo'], ['%u', 123], ['%%'], ['%c', ['a']]]
+- result: 'fooa%123'
+  args: [['%s', 'foo'], ['%c', ['a']], ['%%'], ['%u', 123]]
+- result: '123fooa%'
+  args: [['%u', 123], ['%s', 'foo'], ['%c', ['a']], ['%%']]
+- result: '123afoo%'
+  args: [['%u', 123], ['%c', ['a']], ['%s', 'foo'], ['%%']]
+- result: 'a123foo%'
+  args: [['%c', ['a']], ['%u', 123], ['%s', 'foo'], ['%%']]
+- result: 'afoo123%'
+  args: [['%c', ['a']], ['%s', 'foo'], ['%u', 123], ['%%']]
+- result: 'foo123a%'
+  args: [['%s', 'foo'], ['%u', 123], ['%c', ['a']], ['%%']]
+- result: 'fooa123%'
+  args: [['%s', 'foo'], ['%c', ['a']], ['%u', 123], ['%%']]
+
+- result: '1.200000'
+  args: [['%f', 1.2]]
+  float: true
+
+- result: '123.456789'
+  args: [['%f', 123.456789]]
+  float: true

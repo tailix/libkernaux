@@ -61,7 +61,7 @@ int main()
     assert(count == 1);
     assert(strcmp(last_file, __FILE__) == 0);
     assert(last_line == 28);
-    assert(strcmp(last_str, "\"foo\"") == 0);
+    assert(strcmp(last_str, "foo") == 0);
     assert(noreturn_count == 2);
 
     assert(!test_panic_retval(true));
@@ -69,6 +69,6 @@ int main()
     assert(count == 2);
     assert(strcmp(last_file, __FILE__) == 0);
     assert(last_line == 34);
-    assert(strcmp(last_str, "\"bar\"") == 0);
+    assert(strcmp(last_str, "bar") == 0);
     assert(noreturn_count == 2);
 }

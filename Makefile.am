@@ -5,7 +5,7 @@ AM_CFLAGS = \
 	-pedantic \
 	-Wall \
 	-Wextra \
-	-Wno-cast-function-type \
+	-I$(top_builddir)/include \
 	-I$(top_srcdir)/include
 
 lib_LIBRARIES = libkernaux.a
@@ -16,13 +16,9 @@ libkernaux_a_SOURCES = \
 	src/assert.c \
 	src/libc.c
 
-if ENABLE_TESTS
-TESTS = \
-	examples/assert_guards \
-	examples/assert_simple \
-	examples/panic_guards \
-	examples/panic_simple
-endif
+CLEANFILES = \
+	tests/test_printf_fmt_gen.c \
+	tests/test_printf_gen.c
 
 if ASM_I386
 libkernaux_a_SOURCES += src/asm/i386.S
@@ -34,6 +30,26 @@ endif
 
 if ASM_X86_64
 libkernaux_a_SOURCES += src/asm/x86_64.S
+endif
+
+TESTS =
+
+if ENABLE_TESTS
+TESTS += \
+	examples/assert_guards \
+	examples/assert_simple \
+	examples/panic_guards \
+	examples/panic_simple
+endif
+
+if ENABLE_PIC
+AM_CFLAGS += -fpic
+else
+AM_CFLAGS += -fno-pic
+endif
+
+if ENABLE_WERROR
+AM_CFLAGS += -Werror
 endif
 
 if WITH_CMDLINE
@@ -95,7 +111,9 @@ endif
 if WITH_NTOA
 libkernaux_a_SOURCES += src/ntoa.c
 if ENABLE_TESTS
-TESTS += tests/test_ntoa
+TESTS += \
+	examples/ntoa \
+	tests/test_ntoa
 endif
 endif
 
@@ -116,8 +134,20 @@ TESTS += \
 	examples/printf \
 	examples/printf_va \
 	examples/snprintf \
-	examples/snprintf_va \
-	tests/test_printf
+	examples/snprintf_va
+endif
+if ENABLE_TESTS_PYTHON
+TESTS += tests/test_printf_gen
+endif
+endif
+
+if WITH_PRINTF_FMT
+libkernaux_a_SOURCES += src/printf_fmt.c
+if ENABLE_TESTS
+TESTS += examples/printf_fmt
+endif
+if ENABLE_TESTS_PYTHON
+TESTS += tests/test_printf_fmt_gen
 endif
 endif
 
@@ -142,6 +172,10 @@ examples_cmdline_SOURCES = \
 	$(libkernaux_a_SOURCES) \
 	examples/cmdline.c
 
+examples_ntoa_SOURCES = \
+	$(libkernaux_a_SOURCES) \
+	examples/ntoa.c
+
 examples_panic_guards_SOURCES = \
 	$(libkernaux_a_SOURCES) \
 	examples/panic_guards.c
@@ -157,6 +191,10 @@ examples_pfa_SOURCES = \
 examples_printf_SOURCES = \
 	$(libkernaux_a_SOURCES) \
 	examples/printf.c
+
+examples_printf_fmt_SOURCES = \
+	$(libkernaux_a_SOURCES) \
+	examples/printf_fmt.c
 
 examples_printf_va_SOURCES = \
 	$(libkernaux_a_SOURCES) \
@@ -250,10 +288,27 @@ tests_test_pfa_assert_SOURCES = \
 	$(libkernaux_a_SOURCES) \
 	tests/test_pfa_assert.c
 
-tests_test_printf_SOURCES = \
+tests_test_printf_fmt_gen_SOURCES = \
 	$(libkernaux_a_SOURCES) \
-	tests/test_printf.c
+	tests/test_printf_fmt_gen.c \
+	tests/printf_fmt_gen.py \
+	tests/printf_fmt_gen.jinja \
+	common/printf_fmt.yml
+
+tests_test_printf_gen_SOURCES = \
+	$(libkernaux_a_SOURCES) \
+	tests/test_printf_gen.c \
+	tests/printf_gen.py \
+	tests/printf_gen.jinja \
+	common/printf.yml \
+	common/printf_orig.yml
 
 tests_test_units_human_SOURCES = \
 	$(libkernaux_a_SOURCES) \
 	tests/test_units_human.c
+
+tests/test_printf_fmt_gen.c: tests/printf_fmt_gen.py tests/printf_fmt_gen.jinja common/printf_fmt.yml
+	python3 tests/printf_fmt_gen.py
+
+tests/test_printf_gen.c: tests/printf_gen.py tests/printf_gen.jinja common/printf.yml common/printf_orig.yml
+	python3 tests/printf_gen.py

@@ -5,9 +5,18 @@
 #include <kernaux/multiboot2.h>
 
 #include <assert.h>
+#include <stdarg.h>
 #include <stdio.h>
 
 #include "multiboot2_info_example2.h"
+
+static void my_printf(const char *format, ...)
+{
+    va_list va;
+    va_start(va, format);
+    vprintf(format, va);
+    va_end(va);
+}
 
 int main()
 {
@@ -17,7 +26,7 @@ int main()
 
     KernAux_Multiboot2_Info_print(
         &multiboot2_info_example2.multiboot2_info,
-        (void (*)(const char *format, ...))printf
+        my_printf
     );
 
     return 0;

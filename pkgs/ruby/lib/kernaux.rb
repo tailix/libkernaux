@@ -6,7 +6,8 @@ require_relative 'kernaux/version'
 require_relative 'kernaux/default'
 
 ##
-# Binding to libkernaux - auxiliary library for kernel development.
+# Binding to [libkernaux](https://github.com/tailix/libkernaux) - auxiliary
+# library for kernel development.
 #
 module KernAux
   # Default callback for assertions.
@@ -24,6 +25,8 @@ module KernAux
   ##
   # @!attribute [rw] assert_cb
   # Panic callback.
+  #
+  # @api unsafe
   #
   # @see .panic
   # @see .assert_do
@@ -64,7 +67,9 @@ module KernAux
     ##
     # Typical `printf`.
     #
-    # @param args [Array<String, Array<(String, Object)>>]
+    # @param args [Array<String,
+    #              Array<(String, Object)>,
+    #              Array<(String, Integer, Object)>>]
     # @return [String] formatted output
     #
     # @example
@@ -106,7 +111,7 @@ module KernAux
     # @param buffer_size [Integer] buffer size (including terminating null
     #   character)
     # @param format [String] formatting string
-    # @return [String] formatted output
+    # @return [Array<(String, Integer)>] formatted output and it's size
     #
     # @see .sprintf1 Automatic buffer size
     ##
@@ -124,7 +129,7 @@ module KernAux
   # @!parse [ruby]
 
   ##
-  # @!method utoa(number, base)
+  # @!method utoa(number, base, prefix)
   # Convert `uint64_t` to a string in multiple numeral systems.
   #
   # Base can be a positive or negative integer between 2 and 36, or a symbol
@@ -136,16 +141,18 @@ module KernAux
   #
   # @param number [Integer] a number between 0 and `UINT64_MAX`
   # @param base [Integer, Symbol] base of a numeral system
+  # @param prefix [nil, String] string to put before a number
   # @return [String]
   #
   # @raise [RangeError] number is out of range
   # @raise [InvalidNtoaBaseError] base is invalid
+  # @raise [TooLongNtoaPrefixError] prefix is too long
   #
   # @see .itoa Convert signed integers
   ##
 
   ##
-  # @!method itoa(number, base)
+  # @!method itoa(number, base, prefix)
   # Convert `int64_t` to a string in multiple numeral systems.
   #
   # Base can be a positive or negative integer between 2 and 36, or a symbol
@@ -157,12 +164,54 @@ module KernAux
   #
   # @param number [Integer] a number between `INT64_MIN` and `INT64_MAX`
   # @param base [Integer, Symbol] base of a numeral system
+  # @param prefix [nil, String] string to put between a sign and a number
   # @return [String]
   #
   # @raise [RangeError] number is out of range
   # @raise [InvalidNtoaBaseError] base is invalid
+  # @raise [TooLongNtoaPrefixError] prefix is too long
   #
   # @see .utoa Convert unsigned integers
+  ##
+
+  ##
+  # @!method utoa2(number)
+  # Convert `uint64_t` to a binary string.
+  #
+  # @param number [Integer] a number between 0 and `UINT64_MAX`
+  # @return [String]
+  #
+  # @raise [RangeError] number is out of range
+  ##
+
+  ##
+  # @!method itoa2(number)
+  # Convert `int64_t` to a binary string.
+  #
+  # @param number [Integer] a number between `INT64_MIN` and `INT64_MAX`
+  # @return [String]
+  #
+  # @raise [RangeError] number is out of range
+  ##
+
+  ##
+  # @!method utoa8(number)
+  # Convert `uint64_t` to a octal string.
+  #
+  # @param number [Integer] a number between 0 and `UINT64_MAX`
+  # @return [String]
+  #
+  # @raise [RangeError] number is out of range
+  ##
+
+  ##
+  # @!method itoa8(number)
+  # Convert `int64_t` to a octal string.
+  #
+  # @param number [Integer] a number between `INT64_MIN` and `INT64_MAX`
+  # @return [String]
+  #
+  # @raise [RangeError] number is out of range
   ##
 
   ##
@@ -232,4 +281,12 @@ module KernAux
   # @see .itoa
   #
   class InvalidNtoaBaseError < Error; end
+
+  ##
+  # Raised when prefix is too long.
+  #
+  # @see .utoa
+  # @see .itoa
+  #
+  class TooLongNtoaPrefixError < Error; end
 end

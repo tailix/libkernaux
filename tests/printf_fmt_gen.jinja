@@ -1,0 +1,35 @@
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
+
+#include <kernaux/printf_fmt.h>
+
+#include <assert.h>
+
+int main()
+{
+    {% for case in cases %}
+    {
+        const char *const format = {{ escape_str(case.in.format) }};
+
+        struct KernAux_PrintfFmt_Spec spec = KernAux_PrintfFmt_Spec_create();
+
+        KernAux_PrintfFmt_Spec_parse(&spec, format);
+
+        if (spec.set_width) {
+            KernAux_PrintfFmt_Spec_set_width(&spec, {{ none_to_zero(case.in.width) }});
+        }
+        if (spec.set_precision) {
+            KernAux_PrintfFmt_Spec_set_precision(&spec, {{ none_to_zero(case.in.precision) }});
+        }
+
+        assert(spec.flags == {{ escape_flags(case.out.flags) }});
+        assert(spec.width == {{ case.out.width }});
+        assert(spec.precision == {{ case.out.precision }});
+        assert(spec.type == {{ escape_type(case.out.type) }});
+        assert(spec.base == {{ case.out.base }});
+    }
+    {% endfor %}
+
+    return 0;
+}

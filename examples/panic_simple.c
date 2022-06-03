@@ -36,12 +36,12 @@ int main()
     assert(count == 1);
     assert(strcmp(last_file, __FILE__) == 0);
     assert(last_line == __LINE__ - 4);
-    assert(strcmp(last_str, "\"bar\"") == 0);
+    assert(strcmp(last_str, "bar") == 0);
 
     KERNAUX_PANIC("car");
 
     assert(count == 2);
     assert(strcmp(last_file, __FILE__) == 0);
     assert(last_line == __LINE__ - 4);
-    assert(strcmp(last_str, "\"car\"") == 0);
+    assert(strcmp(last_str, "car") == 0);
 }
