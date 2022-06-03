@@ -6,7 +6,7 @@ freebsd_instance:
 
 main_freebsd_task:
   name: Main (FreeBSD)
-  only_if: $CIRRUS_BASE_BRANCH == 'master'
+  only_if: $CIRRUS_BRANCH == 'master' || $CIRRUS_BASE_BRANCH == 'master'
   dependencies_script:
     - pkg install --yes autoconf automake
   main_build_script:
@@ -19,7 +19,7 @@ main_freebsd_task:
 
 mruby_freebsd_task:
   name: mruby (FreeBSD)
-  only_if: $CIRRUS_BASE_BRANCH == 'master'
+  only_if: $CIRRUS_BRANCH == 'master' || $CIRRUS_BASE_BRANCH == 'master'
   env:
     # FIXME: temporary hack to fix FreeBSD build
     CPATH: '/usr/local/include'
@@ -41,7 +41,7 @@ mruby_freebsd_task:
 
 ruby_freebsd_task:
   name: Ruby (FreeBSD)
-  only_if: $CIRRUS_BASE_BRANCH == 'master'
+  only_if: $CIRRUS_BRANCH == 'master' || $CIRRUS_BASE_BRANCH == 'master'
   env:
     # FIXME: temporary hack to fix FreeBSD build
     CPATH: '/usr/local/include'
@@ -70,7 +70,7 @@ ruby_freebsd_task:
 
 rust_freebsd_task:
   name: Rust (FreeBSD)
-  only_if: $CIRRUS_BASE_BRANCH == 'master'
+  only_if: $CIRRUS_BRANCH == 'master' || $CIRRUS_BASE_BRANCH == 'master'
   env:
     # FIXME: temporary hack to fix FreeBSD build
     RUSTFLAGS: '-L /usr/local/lib'
