@@ -159,152 +159,132 @@ TESTS += \
 endif
 endif
 
-examples_assert_guards_SOURCES = \
-	$(libkernaux_a_SOURCES) \
-	examples/assert_guards.c
+examples_assert_guards_LDADD = libkernaux.a
+examples_assert_guards_SOURCES = examples/assert_guards.c
 
-examples_assert_simple_SOURCES = \
-	$(libkernaux_a_SOURCES) \
-	examples/assert_simple.c
+examples_assert_simple_LDADD = libkernaux.a
+examples_assert_simple_SOURCES = examples/assert_simple.c
 
-examples_cmdline_SOURCES = \
-	$(libkernaux_a_SOURCES) \
-	examples/cmdline.c
+examples_cmdline_LDADD = libkernaux.a
+examples_cmdline_SOURCES = examples/cmdline.c
 
-examples_ntoa_SOURCES = \
-	$(libkernaux_a_SOURCES) \
-	examples/ntoa.c
+examples_ntoa_LDADD = libkernaux.a
+examples_ntoa_SOURCES = examples/ntoa.c
 
-examples_panic_guards_SOURCES = \
-	$(libkernaux_a_SOURCES) \
-	examples/panic_guards.c
+examples_panic_guards_LDADD = libkernaux.a
+examples_panic_guards_SOURCES = examples/panic_guards.c
 
-examples_panic_simple_SOURCES = \
-	$(libkernaux_a_SOURCES) \
-	examples/panic_simple.c
+examples_panic_simple_LDADD = libkernaux.a
+examples_panic_simple_SOURCES = examples/panic_simple.c
 
-examples_pfa_SOURCES = \
-	$(libkernaux_a_SOURCES) \
-	examples/pfa.c
+examples_pfa_LDADD = libkernaux.a
+examples_pfa_SOURCES = examples/pfa.c
 
-examples_printf_SOURCES = \
-	$(libkernaux_a_SOURCES) \
-	examples/printf.c
+examples_printf_LDADD = libkernaux.a
+examples_printf_SOURCES = examples/printf.c
 
-examples_printf_fmt_SOURCES = \
-	$(libkernaux_a_SOURCES) \
-	examples/printf_fmt.c
+examples_printf_fmt_LDADD = libkernaux.a
+examples_printf_fmt_SOURCES = examples/printf_fmt.c
 
-examples_printf_va_SOURCES = \
-	$(libkernaux_a_SOURCES) \
-	examples/printf_va.c
+examples_printf_va_LDADD = libkernaux.a
+examples_printf_va_SOURCES = examples/printf_va.c
 
-examples_snprintf_SOURCES = \
-	$(libkernaux_a_SOURCES) \
-	examples/snprintf.c
+examples_snprintf_LDADD = libkernaux.a
+examples_snprintf_SOURCES = examples/snprintf.c
 
-examples_snprintf_va_SOURCES = \
-	$(libkernaux_a_SOURCES) \
-	examples/snprintf_va.c
+examples_snprintf_va_LDADD = libkernaux.a
+examples_snprintf_va_SOURCES = examples/snprintf_va.c
 
-examples_units_human_SOURCES = \
-	$(libkernaux_a_SOURCES) \
-	examples/units_human.c
+examples_units_human_LDADD = libkernaux.a
+examples_units_human_SOURCES = examples/units_human.c
 
+tests_multiboot2_header_print1_LDADD = libkernaux.a
 tests_multiboot2_header_print1_SOURCES = \
-	$(libkernaux_a_SOURCES) \
 	tests/multiboot2_header_print1.c \
 	tests/multiboot2_header_example1.h
 
+tests_multiboot2_header_print2_LDADD = libkernaux.a
 tests_multiboot2_header_print2_SOURCES = \
-	$(libkernaux_a_SOURCES) \
 	tests/multiboot2_header_print2.c \
 	tests/multiboot2_header_example2.h
 
+tests_multiboot2_info_print1_LDADD = libkernaux.a
 tests_multiboot2_info_print1_SOURCES = \
-	$(libkernaux_a_SOURCES) \
 	tests/multiboot2_info_print1.c \
 	tests/multiboot2_info_example1.h
 
+tests_multiboot2_info_print2_LDADD = libkernaux.a
 tests_multiboot2_info_print2_SOURCES = \
-	$(libkernaux_a_SOURCES) \
 	tests/multiboot2_info_print2.c \
 	tests/multiboot2_info_example2.h
 
-tests_test_cmdline_SOURCES = \
-	$(libkernaux_a_SOURCES) \
-	tests/test_cmdline.c
+tests_test_cmdline_LDADD = libkernaux.a
+tests_test_cmdline_SOURCES = tests/test_cmdline.c
 
-tests_test_elf_SOURCES = \
-	$(libkernaux_a_SOURCES) \
-	tests/test_elf.c
+tests_test_elf_LDADD = libkernaux.a
+tests_test_elf_SOURCES = tests/test_elf.c
 
-tests_test_mbr_SOURCES = \
-	$(libkernaux_a_SOURCES) \
-	tests/test_mbr.c
+tests_test_mbr_LDADD = libkernaux.a
+tests_test_mbr_SOURCES = tests/test_mbr.c
 
+tests_test_multiboot2_header_helpers_LDADD = libkernaux.a
 tests_test_multiboot2_header_helpers_SOURCES = \
-	$(libkernaux_a_SOURCES) \
 	tests/test_multiboot2_header_helpers.c \
 	tests/multiboot2_header_example1.h \
 	tests/multiboot2_header_example2.h
 
+tests_test_multiboot2_header_print_LDADD = libkernaux.a
 tests_test_multiboot2_header_print_SOURCES = \
-	$(libkernaux_a_SOURCES) \
 	tests/test_multiboot2_header_print.c
 
+tests_test_multiboot2_header_validation_LDADD = libkernaux.a
 tests_test_multiboot2_header_validation_SOURCES = \
-	$(libkernaux_a_SOURCES) \
 	tests/test_multiboot2_header_validation.c \
 	tests/multiboot2_header_example1.h \
 	tests/multiboot2_header_example2.h
 
+tests_test_multiboot2_info_helpers_LDADD = libkernaux.a
 tests_test_multiboot2_info_helpers_SOURCES = \
-	$(libkernaux_a_SOURCES) \
 	tests/test_multiboot2_info_helpers.c \
 	tests/multiboot2_info_example1.h \
 	tests/multiboot2_info_example2.h
 
+tests_test_multiboot2_info_print_LDADD = libkernaux.a
 tests_test_multiboot2_info_print_SOURCES = \
-	$(libkernaux_a_SOURCES) \
 	tests/test_multiboot2_info_print.c
 
+tests_test_multiboot2_info_validation_LDADD = libkernaux.a
 tests_test_multiboot2_info_validation_SOURCES = \
-	$(libkernaux_a_SOURCES) \
 	tests/test_multiboot2_info_validation.c \
 	tests/multiboot2_info_example1.h \
 	tests/multiboot2_info_example2.h
 
-tests_test_ntoa_SOURCES = \
-	$(libkernaux_a_SOURCES) \
-	tests/test_ntoa.c
+tests_test_ntoa_LDADD = libkernaux.a
+tests_test_ntoa_SOURCES = tests/test_ntoa.c
 
-tests_test_pfa_SOURCES = \
-	$(libkernaux_a_SOURCES) \
-	tests/test_pfa.c
+tests_test_pfa_LDADD = libkernaux.a
+tests_test_pfa_SOURCES = tests/test_pfa.c
 
-tests_test_pfa_assert_SOURCES = \
-	$(libkernaux_a_SOURCES) \
-	tests/test_pfa_assert.c
+tests_test_pfa_assert_LDADD = libkernaux.a
+tests_test_pfa_assert_SOURCES = tests/test_pfa_assert.c
 
+tests_test_printf_fmt_gen_LDADD = libkernaux.a
 tests_test_printf_fmt_gen_SOURCES = \
-	$(libkernaux_a_SOURCES) \
 	tests/test_printf_fmt_gen.c \
 	tests/printf_fmt_gen.py \
 	tests/printf_fmt_gen.jinja \
 	common/printf_fmt.yml
 
+tests_test_printf_gen_LDADD = libkernaux.a
 tests_test_printf_gen_SOURCES = \
-	$(libkernaux_a_SOURCES) \
 	tests/test_printf_gen.c \
 	tests/printf_gen.py \
 	tests/printf_gen.jinja \
 	common/printf.yml \
 	common/printf_orig.yml
 
-tests_test_units_human_SOURCES = \
-	$(libkernaux_a_SOURCES) \
-	tests/test_units_human.c
+tests_test_units_human_LDADD = libkernaux.a
+tests_test_units_human_SOURCES = tests/test_units_human.c
 
 tests/test_printf_fmt_gen.c: tests/printf_fmt_gen.py tests/printf_fmt_gen.jinja common/printf_fmt.yml
 	python3 tests/printf_fmt_gen.py
