@@ -51,6 +51,8 @@ AC_ARG_WITH(  [libc-memset],       AS_HELP_STRING([--with-libc-memset],       [w
 AC_ARG_WITH(  [libc-strcpy],       AS_HELP_STRING([--with-libc-strcpy],       [with strcpy replacement]))
 AC_ARG_WITH(  [libc-strlen],       AS_HELP_STRING([--with-libc-strlen],       [with strlen replacement]))
 AC_ARG_WITH(  [libc-strnlen],      AS_HELP_STRING([--with-libc-strnlen],      [with strnlen replacement]))
+AC_ARG_WITH(  [tester-all],        AS_HELP_STRING([--with-tester-all],        [with all testers]))
+AC_ARG_WITH(  [tester-multiboot2], AS_HELP_STRING([--with-tester-multiboot2], [with Multiboot 2 tester]))
 
 
 
@@ -93,6 +95,12 @@ if test -z "$with_libc_strnlen"; then with_libc_strnlen=yes; fi
 ])
 AS_IF([test "$with_libc_all" = yes], do_with_libc_all)
 
+AC_DEFUN([do_with_tester_all],
+[
+if test -z "$with_tester_multiboot2"; then with_tester_multiboot2=yes; fi
+])
+AS_IF([test "$with_tester_all" = yes], do_with_tester_all)
+
 
 
 ##################
@@ -133,6 +141,8 @@ AS_IF([test "$with_libc_memset"       = yes], [with_libc_memset=yes],       [wit
 AS_IF([test "$with_libc_strcpy"       = yes], [with_libc_strcpy=yes],       [with_libc_strcpy=no])
 AS_IF([test "$with_libc_strlen"       = yes], [with_libc_strlen=yes],       [with_libc_strlen=no])
 AS_IF([test "$with_libc_strnlen"      = yes], [with_libc_strnlen=yes],      [with_libc_strnlen=no])
+AS_IF([test "$with_tester_all"        = yes], [with_tester_all=yes],        [with_tester_all=no])
+AS_IF([test "$with_tester_multiboot2" = yes], [with_tester_multiboot2=yes], [with_tester_multiboot2=no])
 
 
 
@@ -187,6 +197,7 @@ AM_CONDITIONAL([WITH_LIBC_MEMSET],       [test "$with_libc_memset"       = yes])
 AM_CONDITIONAL([WITH_LIBC_STRCPY],       [test "$with_libc_strcpy"       = yes])
 AM_CONDITIONAL([WITH_LIBC_STRLEN],       [test "$with_libc_strlen"       = yes])
 AM_CONDITIONAL([WITH_LIBC_STRNLEN],      [test "$with_libc_strnlen"      = yes])
+AM_CONDITIONAL([WITH_TESTER_MULTIBOOT2], [test "$with_tester_multiboot2" = yes])
 
 
 
@@ -230,6 +241,7 @@ AS_IF([test "$with_libc_memset"       = yes], [AC_DEFINE([WITH_LIBC_MEMSET],    
 AS_IF([test "$with_libc_strcpy"       = yes], [AC_DEFINE([WITH_LIBC_STRCPY],       [1], [with strcpy replacement])])
 AS_IF([test "$with_libc_strlen"       = yes], [AC_DEFINE([WITH_LIBC_STRLEN],       [1], [with strlen replacement])])
 AS_IF([test "$with_libc_strnlen"      = yes], [AC_DEFINE([WITH_LIBC_STRNLEN],      [1], [with strnlen replacement])])
+AS_IF([test "$with_tester_multiboot2" = yes], [AC_DEFINE([WITH_TESTER_MULTIBOOT2], [1], [with Multiboot 2 tester])])
 
 
 
@@ -263,6 +275,7 @@ AS_IF([test "$with_libc_memset"       = no], [AC_SUBST([comment_line_libc_memset
 AS_IF([test "$with_libc_strcpy"       = no], [AC_SUBST([comment_line_libc_strcpy],       [//])])
 AS_IF([test "$with_libc_strlen"       = no], [AC_SUBST([comment_line_libc_strlen],       [//])])
 AS_IF([test "$with_libc_strnlen"      = no], [AC_SUBST([comment_line_libc_strnlen],      [//])])
+AS_IF([test "$with_tester_multiboot2" = no], [AC_SUBST([comment_line_tester_multiboot2], [//])])
 
 
 
