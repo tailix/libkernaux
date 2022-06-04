@@ -243,6 +243,7 @@ endif
 # tests/multiboot2_header_print1 #
 ##################################
 
+if ENABLE_TESTS
 if WITH_MULTIBOOT2
 noinst_PROGRAMS += tests/multiboot2_header_print1
 tests_multiboot2_header_print1_LDADD = libkernaux.a
@@ -250,11 +251,13 @@ tests_multiboot2_header_print1_SOURCES = \
 	tests/multiboot2_header_print1.c \
 	tests/multiboot2_header_example1.h
 endif
+endif
 
 ##################################
 # tests/multiboot2_header_print2 #
 ##################################
 
+if ENABLE_TESTS
 if WITH_MULTIBOOT2
 noinst_PROGRAMS += tests/multiboot2_header_print2
 tests_multiboot2_header_print2_LDADD = libkernaux.a
@@ -262,11 +265,13 @@ tests_multiboot2_header_print2_SOURCES = \
 	tests/multiboot2_header_print2.c \
 	tests/multiboot2_header_example2.h
 endif
+endif
 
 ################################
 # tests/multiboot2_info_print1 #
 ################################
 
+if ENABLE_TESTS
 if WITH_MULTIBOOT2
 noinst_PROGRAMS += tests/multiboot2_info_print1
 tests_multiboot2_info_print1_LDADD = libkernaux.a
@@ -274,17 +279,20 @@ tests_multiboot2_info_print1_SOURCES = \
 	tests/multiboot2_info_print1.c \
 	tests/multiboot2_info_example1.h
 endif
+endif
 
 ################################
 # tests/multiboot2_info_print2 #
 ################################
 
+if ENABLE_TESTS
 if WITH_MULTIBOOT2
 noinst_PROGRAMS += tests/multiboot2_info_print2
 tests_multiboot2_info_print2_LDADD = libkernaux.a
 tests_multiboot2_info_print2_SOURCES = \
 	tests/multiboot2_info_print2.c \
 	tests/multiboot2_info_example2.h
+endif
 endif
 
 ######################
