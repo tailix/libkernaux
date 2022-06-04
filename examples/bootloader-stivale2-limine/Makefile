@@ -1,13 +1,6 @@
 all: test
 
-CCPREFIX = ../../vendor/cross/root/bin/x86_64-elf-
-
-AS = $(CCPREFIX)as
-CC = $(CCPREFIX)gcc
-
-LIBKERNAUX_SRC   = ../..
-LIBKERNAUX_BUILD = ../../build/dev-cross-x86_64
-LIBKERNAUX_DEST  = ../../dest/dev-cross-x86_64
+TESTER = ../../kernaux-tester-stivale2
 
 DIFF = diff
 LIMINE = ../../vendor/limine/build/bin
@@ -16,7 +9,6 @@ XORRISO = xorriso
 
 EXPECTED = expected.txt
 IMAGE = image.iso
-LINKERSCR = linker.ld
 OUTPUT = output.txt
 ROOTFS = rootfs
 
@@ -37,25 +29,6 @@ FULL_LIMINE_CFG      = $(ROOTFS)/$(REL_LIMINE_CFG)
 FULL_LIMINE_ELTORITO = $(ROOTFS)/$(REL_LIMINE_ELTORITO)
 FULL_LIMINE_SYS      = $(ROOTFS)/$(REL_LIMINE_SYS)
 
-CFLAGS = \
-	-std=c99                      \
-	-Wall                         \
-	-Wextra                       \
-	-Werror                       \
-	-ffreestanding                \
-	-fno-stack-protector          \
-	-fno-pic                      \
-	-I$(LIBKERNAUX_SRC)/include   \
-	-I$(LIBKERNAUX_BUILD)/include \
-	-mabi=sysv                    \
-	-mcmodel=kernel               \
-	-mno-80387                    \
-	-mno-red-zone                 \
-	-MMD
-	# -pedantic                     \
-
-OBJS = main.c.o stivale2.c.o
-
 test: run
 	$(DIFF) -a -Z $(EXPECTED) $(OUTPUT)
 
@@ -63,14 +36,14 @@ run: $(IMAGE)
 	$(QEMU) -cdrom $< | tee $(OUTPUT)
 
 clean:
-	rm -f $(OUTPUT) $(IMAGE) $(FULL_KERNEL) $(FULL_LIMINE_CD) $(FULL_LIMINE_ELTORITO) $(FULL_LIMINE_SYS) $(OBJS)
+	rm -f $(OUTPUT) $(IMAGE) $(FULL_KERNEL) $(FULL_LIMINE_CD) $(FULL_LIMINE_ELTORITO) $(FULL_LIMINE_SYS)
 
 $(IMAGE): $(FULL_KERNEL) $(FULL_LIMINE_CD) $(FULL_LIMINE_ELTORITO) $(FULL_LIMINE_SYS)
 	$(XORRISO) -as mkisofs -b $(REL_LIMINE_CD) -no-emul-boot -boot-load-size 4 -boot-info-table --efi-boot $(REL_LIMINE_ELTORITO) -efi-boot-part --efi-boot-image --protective-msdos-label $(ROOTFS) -o $@
 	$(LIMINE_INSTALL) $@
 
-$(FULL_KERNEL): $(LINKERSCR) build-libkernaux.a $(OBJS)
-	$(CC) -T $(LINKERSCR) -o $@ $(OBJS) -ffreestanding -nostdlib -zmax-page-size=0x1000 -static -lkernaux -lgcc -Wl,-L$(LIBKERNAUX_DEST)/lib
+$(FULL_KERNEL):
+	cp $(TESTER) $@
 
 $(FULL_LIMINE_CD):
 	cp -f $(LIMINE_CD) $(FULL_LIMINE_CD)
@@ -80,14 +53,3 @@ $(FULL_LIMINE_ELTORITO):
 
 $(FULL_LIMINE_SYS):
 	cp -f $(LIMINE_SYS) $(FULL_LIMINE_SYS)
-
-build-libkernaux.a:
-	cd $(LIBKERNAUX_BUILD) && ./config
-	cd $(LIBKERNAUX_BUILD) && make libkernaux.a
-	cd $(LIBKERNAUX_BUILD) && make install-data install-exec
-
-%.c.o: %.c
-	$(CC) -c $< -o $@ $(CFLAGS)
-
-%.S.o: %.S
-	$(AS) $< -o $@
