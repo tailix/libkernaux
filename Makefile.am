@@ -104,7 +104,9 @@ kernaux_tester_multiboot2_LDFLAGS = \
 kernaux_tester_multiboot2_CFLAGS = \
 	$(AM_CFLAGS) -ffreestanding -fno-stack-protector
 kernaux_tester_multiboot2_SOURCES = \
-	src/testers/multiboot2/main.c
+	src/testers/multiboot2/main.c \
+	src/testers/multiboot2/multiboot2.c \
+	src/testers/multiboot2/start.S
 endif
 
 ##########################
