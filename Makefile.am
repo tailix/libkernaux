@@ -7,7 +7,6 @@ SUBDIRS = include
 CLEANFILES =
 TESTS =
 
-AM_LDFLAGS =
 AM_CFLAGS = \
 	-std=c99 \
 	-pedantic \
