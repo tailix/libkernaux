@@ -53,6 +53,7 @@ AC_ARG_WITH(  [libc-strlen],       AS_HELP_STRING([--with-libc-strlen],       [w
 AC_ARG_WITH(  [libc-strnlen],      AS_HELP_STRING([--with-libc-strnlen],      [with strnlen replacement]))
 AC_ARG_WITH(  [tester-all],        AS_HELP_STRING([--with-tester-all],        [with all testers]))
 AC_ARG_WITH(  [tester-multiboot2], AS_HELP_STRING([--with-tester-multiboot2], [with Multiboot 2 tester]))
+AC_ARG_WITH(  [tester-stivale2],   AS_HELP_STRING([--with-tester-stivale2],   [with Stivale 2 tester]))
 
 
 
@@ -98,6 +99,7 @@ AS_IF([test "$with_libc_all" = yes], do_with_libc_all)
 AC_DEFUN([do_with_tester_all],
 [
 if test -z "$with_tester_multiboot2"; then with_tester_multiboot2=yes; fi
+if test -z "$with_tester_stivale2";   then with_tester_stivale2=yes;   fi
 ])
 AS_IF([test "$with_tester_all" = yes], do_with_tester_all)
 
@@ -143,6 +145,7 @@ AS_IF([test "$with_libc_strlen"       = yes], [with_libc_strlen=yes],       [wit
 AS_IF([test "$with_libc_strnlen"      = yes], [with_libc_strnlen=yes],      [with_libc_strnlen=no])
 AS_IF([test "$with_tester_all"        = yes], [with_tester_all=yes],        [with_tester_all=no])
 AS_IF([test "$with_tester_multiboot2" = yes], [with_tester_multiboot2=yes], [with_tester_multiboot2=no])
+AS_IF([test "$with_tester_stivale2"   = yes], [with_tester_stivale2=yes],   [with_tester_stivale2=no])
 
 
 
@@ -157,6 +160,8 @@ AS_IF([test "$with_units"             = yes -a "$with_ntoa"       = no    ], AC_
 AS_IF([test "$with_tester_multiboot2" = yes -a "$with_console"    = no    ], AC_MSG_ERROR([package `tester-multiboot2' requires package `console']))
 AS_IF([test "$with_tester_multiboot2" = yes -a "$with_multiboot2" = no    ], AC_MSG_ERROR([package `tester-multiboot2' requires package `multiboot2']))
 AS_IF([test "$with_tester_multiboot2" = yes -a "$with_printf"     = no    ], AC_MSG_ERROR([package `tester-multiboot2' requires package `printf']))
+AS_IF([test "$with_tester_stivale2"   = yes -a "$with_console"    = no    ], AC_MSG_ERROR([package `tester-stivale2' requires package `console']))
+AS_IF([test "$with_tester_stivale2"   = yes -a "$with_printf"     = no    ], AC_MSG_ERROR([package `tester-stivale2' requires package `printf']))
 
 
 
@@ -201,6 +206,7 @@ AM_CONDITIONAL([WITH_LIBC_STRCPY],       [test "$with_libc_strcpy"       = yes])
 AM_CONDITIONAL([WITH_LIBC_STRLEN],       [test "$with_libc_strlen"       = yes])
 AM_CONDITIONAL([WITH_LIBC_STRNLEN],      [test "$with_libc_strnlen"      = yes])
 AM_CONDITIONAL([WITH_TESTER_MULTIBOOT2], [test "$with_tester_multiboot2" = yes])
+AM_CONDITIONAL([WITH_TESTER_STIVALE2],   [test "$with_tester_stivale2"   = yes])
 
 
 
@@ -245,6 +251,7 @@ AS_IF([test "$with_libc_strcpy"       = yes], [AC_DEFINE([WITH_LIBC_STRCPY],    
 AS_IF([test "$with_libc_strlen"       = yes], [AC_DEFINE([WITH_LIBC_STRLEN],       [1], [with strlen replacement])])
 AS_IF([test "$with_libc_strnlen"      = yes], [AC_DEFINE([WITH_LIBC_STRNLEN],      [1], [with strnlen replacement])])
 AS_IF([test "$with_tester_multiboot2" = yes], [AC_DEFINE([WITH_TESTER_MULTIBOOT2], [1], [with Multiboot 2 tester])])
+AS_IF([test "$with_tester_stivale2"   = yes], [AC_DEFINE([WITH_TESTER_STIVALE2],   [1], [with Stivale 2 tester])])
 
 
 
@@ -279,6 +286,7 @@ AS_IF([test "$with_libc_strcpy"       = no], [AC_SUBST([comment_line_libc_strcpy
 AS_IF([test "$with_libc_strlen"       = no], [AC_SUBST([comment_line_libc_strlen],       [//])])
 AS_IF([test "$with_libc_strnlen"      = no], [AC_SUBST([comment_line_libc_strnlen],      [//])])
 AS_IF([test "$with_tester_multiboot2" = no], [AC_SUBST([comment_line_tester_multiboot2], [//])])
+AS_IF([test "$with_tester_stivale2"   = no], [AC_SUBST([comment_line_tester_stivale2],   [//])])
 
 
 
