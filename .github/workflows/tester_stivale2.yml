@@ -12,7 +12,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: dependencies
-        run: sudo apt-get --yes install crossbuild-essential-x86_64
+        run: sudo apt-get --yes install crossbuild-essential-i386
       - name: autogen
         run: ./autogen.sh
       - name: configure
