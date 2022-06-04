@@ -27,11 +27,6 @@ else
 AM_CFLAGS += -fno-pic
 endif
 
-if ENABLE_FOOBAR
-AM_LDFLAGS += -ffreestanding -nostdlib
-AM_CFLAGS += -ffreestanding -fno-stack-protector
-endif
-
 #######
 # all #
 #######
@@ -105,7 +100,10 @@ endif
 if WITH_TESTER_MULTIBOOT2
 libexec_PROGRAMS += kernaux-tester-multiboot2
 kernaux_tester_multiboot2_LDADD = libkernaux.a
-kernaux_tester_multiboot2_LDFLAGS = $(AM_LDFLAGS) -lgcc
+kernaux_tester_multiboot2_LDFLAGS = \
+	$(AM_LDFLAGS) -ffreestanding -nostdlib -lgcc
+kernaux_tester_multiboot2_CFLAGS = \
+	$(AM_CFLAGS) -ffreestanding -fno-stack-protector
 kernaux_tester_multiboot2_SOURCES = \
 	src/testers/multiboot2/main.c
 endif
