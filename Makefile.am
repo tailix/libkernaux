@@ -109,6 +109,23 @@ kernaux_tester_multiboot2_SOURCES = \
 	src/testers/multiboot2/start.S
 endif
 
+#############################
+# kernaux-tester-stivale2 #
+#############################
+
+if WITH_TESTER_STIVALE2
+libexec_PROGRAMS += kernaux-tester-stivale2
+kernaux_tester_stivale2_DEPENDENCIES = libkernaux.a
+kernaux_tester_stivale2_LDADD = -lkernaux -lgcc
+kernaux_tester_stivale2_LDFLAGS = \
+	$(AM_LDFLAGS) -T src/testers/stivale2/linker.ld -Wl,-L.
+kernaux_tester_stivale2_SOURCES = \
+	src/testers/stivale2/linker.ld \
+	src/testers/stivale2/main.c \
+	src/testers/stivale2/stivale2.h \
+	src/testers/stivale2/stivale2.c
+endif
+
 ##########################
 # examples/assert_guards #
 ##########################

@@ -94,6 +94,7 @@
 /include/kernaux/console.h
 
 /kernaux-tester-multiboot2
+/kernaux-tester-stivale2
 
 /examples/assert_guards
 /examples/assert_simple
