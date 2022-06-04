@@ -7,6 +7,7 @@ SUBDIRS = include
 CLEANFILES =
 TESTS =
 
+AM_LDFLAGS =
 AM_CFLAGS = \
 	-std=c99 \
 	-pedantic \
@@ -24,6 +25,11 @@ if ENABLE_PIC
 AM_CFLAGS += -fpic
 else
 AM_CFLAGS += -fno-pic
+endif
+
+if ENABLE_FOOBAR
+AM_LDFLAGS += -ffreestanding -nostdlib
+AM_CFLAGS += -ffreestanding -fno-stack-protector
 endif
 
 #######
@@ -99,6 +105,7 @@ endif
 if WITH_TESTER_MULTIBOOT2
 libexec_PROGRAMS += kernaux-tester-multiboot2
 kernaux_tester_multiboot2_LDADD = libkernaux.a
+kernaux_tester_multiboot2_LDFLAGS = -lgcc
 kernaux_tester_multiboot2_SOURCES = \
 	src/testers/multiboot2/main.c
 endif
