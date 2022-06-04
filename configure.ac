@@ -156,6 +156,7 @@ AS_IF([test "$with_printf"            = yes -a "$with_printf_fmt" = no    ], AC_
 AS_IF([test "$with_units"             = yes -a "$with_ntoa"       = no    ], AC_MSG_ERROR([package `units' requires package `ntoa']))
 AS_IF([test "$with_tester_multiboot2" = yes -a "$with_console"    = no    ], AC_MSG_ERROR([package `tester-multiboot2' requires package `console']))
 AS_IF([test "$with_tester_multiboot2" = yes -a "$with_multiboot2" = no    ], AC_MSG_ERROR([package `tester-multiboot2' requires package `multiboot2']))
+AS_IF([test "$with_tester_multiboot2" = yes -a "$with_printf"     = no    ], AC_MSG_ERROR([package `tester-multiboot2' requires package `printf']))
 
 
 
