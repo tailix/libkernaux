@@ -12,10 +12,10 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: dependencies
-        run: sudo apt-get --yes install crossbuild-essential-i386
+        run: sudo apt-get --yes install crossbuild-essential-x86_64
       - name: autogen
         run: ./autogen.sh
       - name: configure
-        run: ./configure --host='i386-elf' --enable-freestanding --with-libc-all --with-tester-stivale2 AR="$(which i686-linux-gnu-gcc)" CC="$(which i686-linux-gnu-gcc)" RANLIB="$(which i686-linux-gnu-ranlib)" CFLAGS='-mabi=sysv -mcmodel=kernel -mno-80387 -mno-red-zone'
+        run: ./configure --host='x86_64-elf' --enable-freestanding --with-libc-all --with-tester-stivale2 AR="$(which x86_64-linux-gnu-gcc)" CC="$(which x86_64-linux-gnu-gcc)" RANLIB="$(which x86_64-linux-gnu-ranlib)" CFLAGS='-mabi=sysv -mcmodel=kernel -mno-80387 -mno-red-zone'
       - name: make
         run: make
