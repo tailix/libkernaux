@@ -1,0 +1,21 @@
+name: Multiboot 2 tester
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+jobs:
+  default:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: dependencies
+        run: sudo apt-get --yes install crossbuild-essential-i386
+      - name: autogen
+        run: ./autogen.sh
+      - name: configure
+        run: ./configure --host='i386-elf' --enable-freestanding --with-libc-all --with-tester-multiboot2 AR="$(which i686-linux-gnu-gcc)" CC="$(which i686-linux-gnu-gcc)" RANLIB="$(which i686-linux-gnu-ranlib)"
+      - name: make
+        run: make
