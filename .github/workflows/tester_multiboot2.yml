@@ -16,6 +16,6 @@ jobs:
       - name: autogen
         run: ./autogen.sh
       - name: configure
-        run: ./configure --host='i386-elf' --enable-freestanding --with-libc-all --with-tester-multiboot2 AR="$(which i686-linux-gnu-gcc)" CC="$(which i686-linux-gnu-gcc)" RANLIB="$(which i686-linux-gnu-ranlib)"
+        run: ./configure --host='i386-elf' --enable-freestanding --with-libc-all --with-tester-multiboot2 AR="$(which i686-linux-gnu-ar)" CC="$(which i686-linux-gnu-gcc)" RANLIB="$(which i686-linux-gnu-ranlib)"
       - name: make
         run: make
