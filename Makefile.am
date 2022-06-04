@@ -19,13 +19,6 @@ if ENABLE_WERROR
 AM_CFLAGS += -Werror
 endif
 
-# TODO: only for specific targets
-if ENABLE_PIC
-AM_CFLAGS += -fpic
-else
-AM_CFLAGS += -fno-pic
-endif
-
 #######
 # all #
 #######

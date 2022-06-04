@@ -20,7 +20,6 @@ AC_CANONICAL_HOST
 dnl Features (enabled by default)
 AC_ARG_ENABLE([bloat],        AS_HELP_STRING([--disable-bloat],       [disable unnecessary heavy binary data]))
 AC_ARG_ENABLE([float],        AS_HELP_STRING([--disable-float],       [disable floating-point arithmetic]))
-AC_ARG_ENABLE([pic],          AS_HELP_STRING([--disable-pic],         [do not generate position-independent code]))
 AC_ARG_ENABLE([werror],       AS_HELP_STRING([--disable-werror],      [disable -Werror]))
 
 dnl Features (disabled by default)
@@ -102,7 +101,6 @@ AS_IF([test "$with_libc_all" = yes], do_with_libc_all)
 dnl Features (enabled by default)
 AS_IF([test "$enable_bloat"        = no ], [enable_bloat=no],         [enable_bloat=yes])
 AS_IF([test "$enable_float"        = no ], [enable_float=no],         [enable_float=yes])
-AS_IF([test "$enable_pic"          = no ], [enable_pic=no],           [enable_pic=yes])
 AS_IF([test "$enable_werror"       = no ], [enable_werror=no],        [enable_werror=yes])
 
 dnl Features (disabled by default)
@@ -159,7 +157,6 @@ AM_CONDITIONAL([ASM_X86_64],          [test "$host_cpu" = x86_64])
 dnl Features (enabled by default)
 AM_CONDITIONAL([ENABLE_BLOAT],        [test "$enable_bloat"        = yes])
 AM_CONDITIONAL([ENABLE_FLOAT],        [test "$enable_float"        = yes])
-AM_CONDITIONAL([ENABLE_PIC],          [test "$enable_pic"          = yes])
 AM_CONDITIONAL([ENABLE_WERROR],       [test "$enable_werror"       = yes])
 
 dnl Features (disabled by default)
@@ -202,7 +199,6 @@ AS_IF([test "$host_cpu" = x86_64],         [AC_DEFINE([ASM_X86_64],          [1]
 dnl Features (enabled by default)
 AS_IF([test "$enable_bloat"        = yes], [AC_DEFINE([ENABLE_BLOAT],        [1], [enabled unnecessary heavy binary data])])
 AS_IF([test "$enable_float"        = yes], [AC_DEFINE([ENABLE_FLOAT],        [1], [enabled floating-point arithmetic])])
-AS_IF([test "$enable_pic"          = yes], [AC_DEFINE([ENABLE_PIC],          [1], [generate position-independent code])])
 AS_IF([test "$enable_werror"       = yes], [AC_DEFINE([ENABLE_WERROR],       [1], [enabled -Werror])])
 
 dnl Features (disabled by default)
@@ -263,12 +259,6 @@ AS_IF([test "$with_libc_memset"  = no], [AC_SUBST([comment_line_libc_memset],  [
 AS_IF([test "$with_libc_strcpy"  = no], [AC_SUBST([comment_line_libc_strcpy],  [//])])
 AS_IF([test "$with_libc_strlen"  = no], [AC_SUBST([comment_line_libc_strlen],  [//])])
 AS_IF([test "$with_libc_strnlen" = no], [AC_SUBST([comment_line_libc_strnlen], [//])])
-
-
-
-AC_DEFUN([do_enable_pic],  [CFLAGS+=' -fpic '])
-AC_DEFUN([do_disable_pic], [CFLAGS+=' -fno-pic '])
-AS_IF([test "$enable_pic" = yes], do_enable_pic, do_disable_pic)
 
 
 

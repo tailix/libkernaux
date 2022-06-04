@@ -114,7 +114,6 @@ stable options.
 
 * `--(enable|disable)-bloat` - heavy binary data
 * `--(enable|disable)-float` - floating-point arithmetic
-* `--(enable|disable)-pic` - generate position-independent code
 * `--(enable|disable)-werror` - fail on warning (`CFLAGS+='-Werror'`)
 
 #### Packages
@@ -164,12 +163,11 @@ without it in `$PATH`:
 ```
 ./configure \
   --host='i386-elf' \
-  --disable-pic \
   --with-libc-all \
   AR="$(which i386-elf-ar)" \
   CC="$(which i386-elf-gcc)" \
   RANLIB="$(which i386-elf-ranlib)" \
-  CFLAGS='-ffreestanding -nostdlib -fno-stack-protector'
+  CFLAGS='-fno-pic -ffreestanding -nostdlib -fno-stack-protector'
 ```
 
 You can see the following messages. It's
