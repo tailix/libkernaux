@@ -101,9 +101,7 @@ libexec_PROGRAMS += kernaux-tester-multiboot2
 kernaux_tester_multiboot2_DEPENDENCIES = libkernaux.a
 kernaux_tester_multiboot2_LDADD = -lkernaux -lgcc
 kernaux_tester_multiboot2_LDFLAGS = \
-	$(AM_LDFLAGS) -T src/testers/multiboot2/linker.ld -ffreestanding -nostdlib -Wl,-L.
-kernaux_tester_multiboot2_CFLAGS = \
-	$(AM_CFLAGS) -ffreestanding -fno-stack-protector
+	$(AM_LDFLAGS) -T src/testers/multiboot2/linker.ld -Wl,-L.
 kernaux_tester_multiboot2_SOURCES = \
 	src/testers/multiboot2/linker.ld \
 	src/testers/multiboot2/main.c \
