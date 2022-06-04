@@ -99,8 +99,9 @@ endif
 if WITH_TESTER_MULTIBOOT2
 libexec_PROGRAMS += kernaux-tester-multiboot2
 kernaux_tester_multiboot2_DEPENDENCIES = libkernaux.a
+kernaux_tester_multiboot2_LDADD = -lkernaux -lgcc
 kernaux_tester_multiboot2_LDFLAGS = \
-	$(AM_LDFLAGS) -ffreestanding -nostdlib -lkernaux -lgcc -Wl,-L.
+	$(AM_LDFLAGS) -ffreestanding -nostdlib -Wl,-L.
 kernaux_tester_multiboot2_CFLAGS = \
 	$(AM_CFLAGS) -ffreestanding -fno-stack-protector
 kernaux_tester_multiboot2_SOURCES = \
