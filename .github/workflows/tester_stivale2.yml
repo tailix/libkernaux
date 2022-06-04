@@ -1,4 +1,4 @@
-name: Stivale 2 tester
+name: Tester for Stivale 2
 
 on:
   push:

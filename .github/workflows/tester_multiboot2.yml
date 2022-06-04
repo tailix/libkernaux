@@ -1,4 +1,4 @@
-name: Multiboot 2 tester
+name: Tester for Multiboot 2
 
 on:
   push:
