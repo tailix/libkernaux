@@ -90,6 +90,7 @@ stable options.
 
 #### Features
 
+* `--enable-freestanding` - build for freestanding environment
 * `--enable-tests` - enable usual tests and examples
 * `--enable-tests-all` - enable all tests
 * `--enable-tests-python` - enable tests that require Python 3 with YAML and
@@ -163,11 +164,11 @@ without it in `$PATH`:
 ```
 ./configure \
   --host='i386-elf' \
+  --enable-freestanding \
   --with-libc-all \
   AR="$(which i386-elf-ar)" \
   CC="$(which i386-elf-gcc)" \
-  RANLIB="$(which i386-elf-ranlib)" \
-  CFLAGS='-fno-pic -ffreestanding -nostdlib -fno-stack-protector'
+  RANLIB="$(which i386-elf-ranlib)"
 ```
 
 You can see the following messages. It's

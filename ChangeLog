@@ -1,6 +1,7 @@
 2022-06-04  Alex Kotov  <kotovalexarian@gmail.com>
 
 	* configure.ac: Remove feature "pic"
+	* configure.ac: Add feature "freestanding"
 
 2022-06-03  Alex Kotov  <kotovalexarian@gmail.com>
 

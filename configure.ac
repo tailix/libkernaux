@@ -23,6 +23,7 @@ AC_ARG_ENABLE([float],        AS_HELP_STRING([--disable-float],       [disable f
 AC_ARG_ENABLE([werror],       AS_HELP_STRING([--disable-werror],      [disable -Werror]))
 
 dnl Features (disabled by default)
+AC_ARG_ENABLE([freestanding], AS_HELP_STRING([--enable-freestanding], [build for freestanding environment]))
 AC_ARG_ENABLE([tests],        AS_HELP_STRING([--enable-tests],        [enable usual tests and examples]))
 AC_ARG_ENABLE([tests-all],    AS_HELP_STRING([--enable-tests-all],    [enable all tests]))
 AC_ARG_ENABLE([tests-python], AS_HELP_STRING([--enable-tests-python], [enable tests that require Python 3 with YAML and Jinja2]))
@@ -104,6 +105,7 @@ AS_IF([test "$enable_float"        = no ], [enable_float=no],         [enable_fl
 AS_IF([test "$enable_werror"       = no ], [enable_werror=no],        [enable_werror=yes])
 
 dnl Features (disabled by default)
+AS_IF([test "$enable_freestanding" = yes], [enable_freestanding=yes], [enable_freestanding=no])
 AS_IF([test "$enable_tests"        = yes], [enable_tests=yes],        [enable_tests=no])
 AS_IF([test "$enable_tests_all"    = yes], [enable_tests_all=yes],    [enable_tests_all=no])
 AS_IF([test "$enable_tests_python" = yes], [enable_tests_python=yes], [enable_tests_python=no])
@@ -160,6 +162,7 @@ AM_CONDITIONAL([ENABLE_FLOAT],        [test "$enable_float"        = yes])
 AM_CONDITIONAL([ENABLE_WERROR],       [test "$enable_werror"       = yes])
 
 dnl Features (disabled by default)
+AM_CONDITIONAL([ENABLE_FREESTANDING], [test "$enable_freestanding" = yes])
 AM_CONDITIONAL([ENABLE_TESTS],        [test "$enable_tests"        = yes])
 AM_CONDITIONAL([ENABLE_TESTS_PYTHON], [test "$enable_tests_python" = yes])
 
@@ -202,6 +205,7 @@ AS_IF([test "$enable_float"        = yes], [AC_DEFINE([ENABLE_FLOAT],        [1]
 AS_IF([test "$enable_werror"       = yes], [AC_DEFINE([ENABLE_WERROR],       [1], [enabled -Werror])])
 
 dnl Features (disabled by default)
+AS_IF([test "$enable_freestanding" = yes], [AC_DEFINE([ENABLE_FREESTANDING], [1], [build for freestanding environment])])
 AS_IF([test "$enable_tests"        = yes], [AC_DEFINE([ENABLE_TESTS],        [1], [enabled usual tests and examples])])
 AS_IF([test "$enable_tests_python" = yes], [AC_DEFINE([ENABLE_TESTS_PYTHON], [1], [enabled tests that require Python 3 with YAML and Jinja2])])
 
@@ -259,6 +263,12 @@ AS_IF([test "$with_libc_memset"  = no], [AC_SUBST([comment_line_libc_memset],  [
 AS_IF([test "$with_libc_strcpy"  = no], [AC_SUBST([comment_line_libc_strcpy],  [//])])
 AS_IF([test "$with_libc_strlen"  = no], [AC_SUBST([comment_line_libc_strlen],  [//])])
 AS_IF([test "$with_libc_strnlen" = no], [AC_SUBST([comment_line_libc_strnlen], [//])])
+
+
+
+AC_DEFUN([do_disable_freestanding], [CFLAGS+=' -fpic '])
+AC_DEFUN([do_enable_freestanding],  [CFLAGS+=' -nostdlib -ffreestanding -fno-pic -fno-stack-protector '])
+AS_IF([test "$enable_freestanding" = yes], do_enable_freestanding, do_disable_freestanding)
 
 
 

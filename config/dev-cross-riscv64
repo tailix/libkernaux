@@ -14,6 +14,4 @@ export     AR="$CROSS-ar"
 export     CC="$CROSS-gcc"
 export RANLIB="$CROSS-ranlib"
 
-export CFLAGS='-fno-pic -ffreestanding -nostdlib -fno-stack-protector'
-
-"$REPO/configure" --host="$HOST" --prefix="$PREFIX" --with-libc-all
+"$REPO/configure" --host="$HOST" --prefix="$PREFIX" --enable-freestanding --with-libc-all

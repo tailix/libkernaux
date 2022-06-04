@@ -14,6 +14,6 @@ export     AR="$TARGET-ar"
 export     CC="$TARGET-gcc"
 export RANLIB="$TARGET-ranlib"
 
-export CFLAGS='-fno-pic -ffreestanding -nostdlib -fno-stack-protector -mabi=sysv -mcmodel=kernel -mno-80387 -mno-red-zone'
+export CFLAGS='-mabi=sysv -mcmodel=kernel -mno-80387 -mno-red-zone'
 
-"$REPO/configure" --host="$HOST" --prefix="$PREFIX" --with-libc-all
+"$REPO/configure" --host="$HOST" --prefix="$PREFIX" --enable-freestanding --with-libc-all
