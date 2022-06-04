@@ -20,10 +20,10 @@ AM_CFLAGS += -Werror
 endif
 
 # TODO: only for specific targets
-if ENABLE_PIC
-AM_CFLAGS += -fpic
+if ENABLE_FREESTANDING
+AM_CFLAGS += -nostdlib -ffreestanding -fno-pic -fno-stack-protector
 else
-AM_CFLAGS += -fno-pic
+AM_CFLAGS += -fpic
 endif
 
 #######

@@ -20,10 +20,10 @@ AC_CANONICAL_HOST
 dnl Features (enabled by default)
 AC_ARG_ENABLE([bloat],             AS_HELP_STRING([--disable-bloat],          [disable unnecessary heavy binary data]))
 AC_ARG_ENABLE([float],             AS_HELP_STRING([--disable-float],          [disable floating-point arithmetic]))
-AC_ARG_ENABLE([pic],               AS_HELP_STRING([--disable-pic],            [do not generate position-independent code]))
 AC_ARG_ENABLE([werror],            AS_HELP_STRING([--disable-werror],         [disable -Werror]))
 
 dnl Features (disabled by default)
+AC_ARG_ENABLE([freestanding],      AS_HELP_STRING([--enable-freestanding],    [build for freestanding environment]))
 AC_ARG_ENABLE([tests],             AS_HELP_STRING([--enable-tests],           [enable usual tests and examples]))
 AC_ARG_ENABLE([tests-all],         AS_HELP_STRING([--enable-tests-all],       [enable all tests]))
 AC_ARG_ENABLE([tests-python],      AS_HELP_STRING([--enable-tests-python],    [enable tests that require Python 3 with YAML and Jinja2]))
@@ -110,10 +110,10 @@ AS_IF([test "$with_tester_all" = yes], do_with_tester_all)
 dnl Features (enabled by default)
 AS_IF([test "$enable_bloat"           = no ], [enable_bloat=no],            [enable_bloat=yes])
 AS_IF([test "$enable_float"           = no ], [enable_float=no],            [enable_float=yes])
-AS_IF([test "$enable_pic"             = no ], [enable_pic=no],              [enable_pic=yes])
 AS_IF([test "$enable_werror"          = no ], [enable_werror=no],           [enable_werror=yes])
 
 dnl Features (disabled by default)
+AS_IF([test "$enable_freestanding"    = yes], [enable_freestanding=yes],    [enable_freestanding=no])
 AS_IF([test "$enable_tests"           = yes], [enable_tests=yes],           [enable_tests=no])
 AS_IF([test "$enable_tests_all"       = yes], [enable_tests_all=yes],       [enable_tests_all=no])
 AS_IF([test "$enable_tests_python"    = yes], [enable_tests_python=yes],    [enable_tests_python=no])
@@ -172,10 +172,10 @@ AM_CONDITIONAL([ASM_X86_64],  [test "$host_cpu" = x86_64])
 dnl Features (enabled by default)
 AM_CONDITIONAL([ENABLE_BLOAT],           [test "$enable_bloat"           = yes])
 AM_CONDITIONAL([ENABLE_FLOAT],           [test "$enable_float"           = yes])
-AM_CONDITIONAL([ENABLE_PIC],             [test "$enable_pic"             = yes])
 AM_CONDITIONAL([ENABLE_WERROR],          [test "$enable_werror"          = yes])
 
 dnl Features (disabled by default)
+AM_CONDITIONAL([ENABLE_FREESTANDING],    [test "$enable_freestanding"    = yes])
 AM_CONDITIONAL([ENABLE_TESTS],           [test "$enable_tests"           = yes])
 AM_CONDITIONAL([ENABLE_TESTS_PYTHON],    [test "$enable_tests_python"    = yes])
 
@@ -216,10 +216,10 @@ AS_IF([test "$host_cpu" = x86_64],            [AC_DEFINE([ASM_X86_64],          
 dnl Features (enabled by default)
 AS_IF([test "$enable_bloat"           = yes], [AC_DEFINE([ENABLE_BLOAT],           [1], [enabled unnecessary heavy binary data])])
 AS_IF([test "$enable_float"           = yes], [AC_DEFINE([ENABLE_FLOAT],           [1], [enabled floating-point arithmetic])])
-AS_IF([test "$enable_pic"             = yes], [AC_DEFINE([ENABLE_PIC],             [1], [generate position-independent code])])
 AS_IF([test "$enable_werror"          = yes], [AC_DEFINE([ENABLE_WERROR],          [1], [enabled -Werror])])
 
 dnl Features (disabled by default)
+AS_IF([test "$enable_freestanding"    = yes], [AC_DEFINE([ENABLE_FREESTANDING],    [1], [build for freestanding environment])])
 AS_IF([test "$enable_tests"           = yes], [AC_DEFINE([ENABLE_TESTS],           [1], [enabled usual tests and examples])])
 AS_IF([test "$enable_tests_python"    = yes], [AC_DEFINE([ENABLE_TESTS_PYTHON],    [1], [enabled tests that require Python 3 with YAML and Jinja2])])
 
@@ -282,9 +282,9 @@ AS_IF([test "$with_tester_multiboot2" = no], [AC_SUBST([comment_line_tester_mult
 
 
 
-AC_DEFUN([do_enable_pic],  [CFLAGS+=' -fpic '])
-AC_DEFUN([do_disable_pic], [CFLAGS+=' -fno-pic '])
-AS_IF([test "$enable_pic" = yes], do_enable_pic, do_disable_pic)
+AC_DEFUN([do_enable_freestanding],  [CFLAGS+=' -nostdlib -ffreestanding -fno-pic -fno-stack-protector '])
+AC_DEFUN([do_disable_freestanding], [CFLAGS+=' -fpic '])
+AS_IF([test "$enable_freestanding" = yes], do_enable_freestanding, do_disable_freestanding)
 
 
 
