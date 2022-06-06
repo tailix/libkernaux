@@ -19,6 +19,13 @@ if ENABLE_WERROR
 AM_CFLAGS += -Werror
 endif
 
+# TODO: DRY (configure.ac)
+if ENABLE_FREESTANDING
+AM_CFLAGS += -nostdlib -ffreestanding -fno-pic -fno-stack-protector
+else
+AM_CFLAGS += -fpic
+endif
+
 #######
 # all #
 #######
