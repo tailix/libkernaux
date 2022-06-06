@@ -104,10 +104,16 @@ stable options.
   * `--with[out]-libc-atoi`
   * `--with[out]-libc-isdigit`
   * `--with[out]-libc-isspace`
+  * `--with[out]-libc-memcpy`
+  * `--with[out]-libc-memmove`
   * `--with[out]-libc-memset`
+  * `--with[out]-libc-strcmp`
   * `--with[out]-libc-strcpy`
   * `--with[out]-libc-strlen`
+  * `--with[out]-libc-strncmp`
+  * `--with[out]-libc-strncpy`
   * `--with[out]-libc-strnlen`
+  * `--with[out]-libc-strstr`
 
 ### Default options
 
