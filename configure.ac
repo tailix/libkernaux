@@ -18,7 +18,6 @@ AC_CANONICAL_HOST
 ###############
 
 dnl Features (enabled by default)
-AC_ARG_ENABLE([bloat],        AS_HELP_STRING([--disable-bloat],       [disable unnecessary heavy binary data]))
 AC_ARG_ENABLE([float],        AS_HELP_STRING([--disable-float],       [disable floating-point arithmetic]))
 AC_ARG_ENABLE([werror],       AS_HELP_STRING([--disable-werror],      [disable -Werror]))
 
@@ -106,7 +105,6 @@ AS_IF([test "$with_libc_all" = yes], do_with_libc_all)
 ##################
 
 dnl Features (enabled by default)
-AS_IF([test "$enable_bloat"        = no ], [enable_bloat=no],         [enable_bloat=yes])
 AS_IF([test "$enable_float"        = no ], [enable_float=no],         [enable_float=yes])
 AS_IF([test "$enable_werror"       = no ], [enable_werror=no],        [enable_werror=yes])
 
@@ -167,7 +165,6 @@ AM_CONDITIONAL([ASM_RISCV64],         [test "$host_cpu" = riscv64])
 AM_CONDITIONAL([ASM_X86_64],          [test "$host_cpu" = x86_64])
 
 dnl Features (enabled by default)
-AM_CONDITIONAL([ENABLE_BLOAT],        [test "$enable_bloat"        = yes])
 AM_CONDITIONAL([ENABLE_FLOAT],        [test "$enable_float"        = yes])
 AM_CONDITIONAL([ENABLE_WERROR],       [test "$enable_werror"       = yes])
 
@@ -210,7 +207,6 @@ AS_IF([test "$host_cpu" = riscv64],        [AC_DEFINE([ASM_RISCV64],         [1]
 AS_IF([test "$host_cpu" = x86_64],         [AC_DEFINE([ASM_X86_64],          [1], [architecture is x86_64])])
 
 dnl Features (enabled by default)
-AS_IF([test "$enable_bloat"        = yes], [AC_DEFINE([ENABLE_BLOAT],        [1], [enabled unnecessary heavy binary data])])
 AS_IF([test "$enable_float"        = yes], [AC_DEFINE([ENABLE_FLOAT],        [1], [enabled floating-point arithmetic])])
 AS_IF([test "$enable_werror"       = yes], [AC_DEFINE([ENABLE_WERROR],       [1], [enabled -Werror])])
 
