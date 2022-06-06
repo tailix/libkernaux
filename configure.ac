@@ -256,11 +256,6 @@ AS_IF([test "$with_tester_stivale2"   = yes], [AC_DEFINE([WITH_TESTER_STIVALE2],
 # Autoconf substitutions #
 ##########################
 
-dnl Architecture
-AS_IF([test "$host_cpu" != i386],            [AC_SUBST([comment_line_asm_i386],          [//])])
-AS_IF([test "$host_cpu" != riscv64],         [AC_SUBST([comment_line_asm_riscv64],       [//])])
-AS_IF([test "$host_cpu" != x86_64],          [AC_SUBST([comment_line_asm_x86_64],        [//])])
-
 dnl Packages (enabled by default)
 AS_IF([test "$with_cmdline"           = no], [AC_SUBST([comment_line_cmdline],           [//])])
 AS_IF([test "$with_console"           = no], [AC_SUBST([comment_line_console],           [//])])
@@ -273,17 +268,6 @@ AS_IF([test "$with_pfa"               = no], [AC_SUBST([comment_line_pfa],      
 AS_IF([test "$with_printf"            = no], [AC_SUBST([comment_line_printf],            [//])])
 AS_IF([test "$with_printf_fmt"        = no], [AC_SUBST([comment_line_printf_fmt],        [//])])
 AS_IF([test "$with_units"             = no], [AC_SUBST([comment_line_units],             [//])])
-
-dnl Packages (disabled by default)
-AS_IF([test "$with_libc_atoi"         = no], [AC_SUBST([comment_line_libc_atoi],         [//])])
-AS_IF([test "$with_libc_isdigit"      = no], [AC_SUBST([comment_line_libc_isdigit],      [//])])
-AS_IF([test "$with_libc_isspace"      = no], [AC_SUBST([comment_line_libc_isspace],      [//])])
-AS_IF([test "$with_libc_memset"       = no], [AC_SUBST([comment_line_libc_memset],       [//])])
-AS_IF([test "$with_libc_strcpy"       = no], [AC_SUBST([comment_line_libc_strcpy],       [//])])
-AS_IF([test "$with_libc_strlen"       = no], [AC_SUBST([comment_line_libc_strlen],       [//])])
-AS_IF([test "$with_libc_strnlen"      = no], [AC_SUBST([comment_line_libc_strnlen],      [//])])
-AS_IF([test "$with_tester_multiboot2" = no], [AC_SUBST([comment_line_tester_multiboot2], [//])])
-AS_IF([test "$with_tester_stivale2"   = no], [AC_SUBST([comment_line_tester_stivale2],   [//])])
 
 
 
