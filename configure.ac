@@ -91,10 +91,16 @@ AC_DEFUN([do_with_libc_all],
 if test -z "$with_libc_atoi";    then with_libc_atoi=yes;    fi
 if test -z "$with_libc_isdigit"; then with_libc_isdigit=yes; fi
 if test -z "$with_libc_isspace"; then with_libc_isspace=yes; fi
+if test -z "$with_libc_memcpy";  then with_libc_memcpy=yes;  fi
+if test -z "$with_libc_memmove"; then with_libc_memmove=yes; fi
 if test -z "$with_libc_memset";  then with_libc_memset=yes;  fi
+if test -z "$with_libc_strcmp";  then with_libc_strcmp=yes;  fi
 if test -z "$with_libc_strcpy";  then with_libc_strcpy=yes;  fi
 if test -z "$with_libc_strlen";  then with_libc_strlen=yes;  fi
+if test -z "$with_libc_strncmp"; then with_libc_strncmp=yes; fi
+if test -z "$with_libc_strncpy"; then with_libc_strncpy=yes; fi
 if test -z "$with_libc_strnlen"; then with_libc_strnlen=yes; fi
+if test -z "$with_libc_strstr";  then with_libc_strstr=yes;  fi
 ])
 AS_IF([test "$with_libc_all" = yes], do_with_libc_all)
 
@@ -133,10 +139,16 @@ AS_IF([test "$with_libc_all"       = yes], [with_libc_all=yes],       [with_libc
 AS_IF([test "$with_libc_atoi"      = yes], [with_libc_atoi=yes],      [with_libc_atoi=no])
 AS_IF([test "$with_libc_isdigit"   = yes], [with_libc_isdigit=yes],   [with_libc_isdigit=no])
 AS_IF([test "$with_libc_isspace"   = yes], [with_libc_isspace=yes],   [with_libc_isspace=no])
+AS_IF([test "$with_libc_memcpy"    = yes], [with_libc_memcpy=yes],    [with_libc_memcpy=no])
+AS_IF([test "$with_libc_memmove"   = yes], [with_libc_memmove=yes],   [with_libc_memmove=no])
 AS_IF([test "$with_libc_memset"    = yes], [with_libc_memset=yes],    [with_libc_memset=no])
+AS_IF([test "$with_libc_strcmp"    = yes], [with_libc_strcmp=yes],    [with_libc_strcmp=no])
 AS_IF([test "$with_libc_strcpy"    = yes], [with_libc_strcpy=yes],    [with_libc_strcpy=no])
 AS_IF([test "$with_libc_strlen"    = yes], [with_libc_strlen=yes],    [with_libc_strlen=no])
+AS_IF([test "$with_libc_strncmp"   = yes], [with_libc_strncmp=yes],   [with_libc_strncmp=no])
+AS_IF([test "$with_libc_strncpy"   = yes], [with_libc_strncpy=yes],   [with_libc_strncpy=no])
 AS_IF([test "$with_libc_strnlen"   = yes], [with_libc_strnlen=yes],   [with_libc_strnlen=no])
+AS_IF([test "$with_libc_strstr"    = yes], [with_libc_strstr=yes],    [with_libc_strstr=no])
 
 
 
@@ -190,10 +202,16 @@ dnl Packages (disabled by default)
 AM_CONDITIONAL([WITH_LIBC_ATOI],      [test "$with_libc_atoi"      = yes])
 AM_CONDITIONAL([WITH_LIBC_ISDIGIT],   [test "$with_libc_isdigit"   = yes])
 AM_CONDITIONAL([WITH_LIBC_ISSPACE],   [test "$with_libc_isspace"   = yes])
+AM_CONDITIONAL([WITH_LIBC_MEMCPY],    [test "$with_libc_memcpy"    = yes])
+AM_CONDITIONAL([WITH_LIBC_MEMMOVE],   [test "$with_libc_memmove"   = yes])
 AM_CONDITIONAL([WITH_LIBC_MEMSET],    [test "$with_libc_memset"    = yes])
+AM_CONDITIONAL([WITH_LIBC_STRCMP],    [test "$with_libc_strcmp"    = yes])
 AM_CONDITIONAL([WITH_LIBC_STRCPY],    [test "$with_libc_strcpy"    = yes])
 AM_CONDITIONAL([WITH_LIBC_STRLEN],    [test "$with_libc_strlen"    = yes])
+AM_CONDITIONAL([WITH_LIBC_STRNCMP],   [test "$with_libc_strncmp"   = yes])
+AM_CONDITIONAL([WITH_LIBC_STRNCPY],   [test "$with_libc_strncpy"   = yes])
 AM_CONDITIONAL([WITH_LIBC_STRNLEN],   [test "$with_libc_strnlen"   = yes])
+AM_CONDITIONAL([WITH_LIBC_STRSTR],    [test "$with_libc_strstr"    = yes])
 
 
 
@@ -232,10 +250,16 @@ dnl Packages (disabled by default)
 AS_IF([test "$with_libc_atoi"      = yes], [AC_DEFINE([WITH_LIBC_ATOI],      [1], [with atoi replacement])])
 AS_IF([test "$with_libc_isdigit"   = yes], [AC_DEFINE([WITH_LIBC_ISDIGIT],   [1], [with isdigit replacement])])
 AS_IF([test "$with_libc_isspace"   = yes], [AC_DEFINE([WITH_LIBC_ISSPACE],   [1], [with isspace replacement])])
+AS_IF([test "$with_libc_memcpy"    = yes], [AC_DEFINE([WITH_LIBC_MEMCPY],    [1], [with memcpy replacement])])
+AS_IF([test "$with_libc_memmove"   = yes], [AC_DEFINE([WITH_LIBC_MEMMOVE],   [1], [with memmove replacement])])
 AS_IF([test "$with_libc_memset"    = yes], [AC_DEFINE([WITH_LIBC_MEMSET],    [1], [with memset replacement])])
+AS_IF([test "$with_libc_strcmp"    = yes], [AC_DEFINE([WITH_LIBC_STRCMP],    [1], [with strcmp replacement])])
 AS_IF([test "$with_libc_strcpy"    = yes], [AC_DEFINE([WITH_LIBC_STRCPY],    [1], [with strcpy replacement])])
 AS_IF([test "$with_libc_strlen"    = yes], [AC_DEFINE([WITH_LIBC_STRLEN],    [1], [with strlen replacement])])
+AS_IF([test "$with_libc_strncmp"   = yes], [AC_DEFINE([WITH_LIBC_STRNCMP],   [1], [with strncmp replacement])])
+AS_IF([test "$with_libc_strncpy"   = yes], [AC_DEFINE([WITH_LIBC_STRNCPY],   [1], [with strncpy replacement])])
 AS_IF([test "$with_libc_strnlen"   = yes], [AC_DEFINE([WITH_LIBC_STRNLEN],   [1], [with strnlen replacement])])
+AS_IF([test "$with_libc_strstr"    = yes], [AC_DEFINE([WITH_LIBC_STRSTR],    [1], [with strstr replacement])])
 
 
 
