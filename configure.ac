@@ -47,10 +47,16 @@ AC_ARG_WITH(  [libc-all],     AS_HELP_STRING([--with-libc-all],       [with libc
 AC_ARG_WITH(  [libc-atoi],    AS_HELP_STRING([--with-libc-atoi],      [with atoi replacement]))
 AC_ARG_WITH(  [libc-isdigit], AS_HELP_STRING([--with-libc-isdigit],   [with isdigit replacement]))
 AC_ARG_WITH(  [libc-isspace], AS_HELP_STRING([--with-libc-isspace],   [with isspace replacement]))
+AC_ARG_WITH(  [libc-memcpy],  AS_HELP_STRING([--with-libc-memcpy],    [with memcpy replacement]))
+AC_ARG_WITH(  [libc-memmove], AS_HELP_STRING([--with-libc-memmove],   [with memmove replacement]))
 AC_ARG_WITH(  [libc-memset],  AS_HELP_STRING([--with-libc-memset],    [with memset replacement]))
+AC_ARG_WITH(  [libc-strcmp],  AS_HELP_STRING([--with-libc-strcmp],    [with strcmp replacement]))
 AC_ARG_WITH(  [libc-strcpy],  AS_HELP_STRING([--with-libc-strcpy],    [with strcpy replacement]))
 AC_ARG_WITH(  [libc-strlen],  AS_HELP_STRING([--with-libc-strlen],    [with strlen replacement]))
+AC_ARG_WITH(  [libc-strncmp], AS_HELP_STRING([--with-libc-strncmp],   [with strncmp replacement]))
+AC_ARG_WITH(  [libc-strncpy], AS_HELP_STRING([--with-libc-strncpy],   [with strncpy replacement]))
 AC_ARG_WITH(  [libc-strnlen], AS_HELP_STRING([--with-libc-strnlen],   [with strnlen replacement]))
+AC_ARG_WITH(  [libc-strstr],  AS_HELP_STRING([--with-libc-strstr],    [with strstr replacement]))
 
 
 
