@@ -19,13 +19,6 @@ if ENABLE_WERROR
 AM_CFLAGS += -Werror
 endif
 
-# TODO: only for specific targets
-if ENABLE_FREESTANDING
-AM_CFLAGS += -nostdlib -ffreestanding -fno-pic -fno-stack-protector
-else
-AM_CFLAGS += -fpic
-endif
-
 #######
 # all #
 #######
