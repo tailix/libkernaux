@@ -1,6 +1,7 @@
 2022-06-06  Alex Kotov  <kotovalexarian@gmail.com>
 
 	* include/kernaux/libc.h: Add more functions
+	* include/kernaux/print.h: Remove Easter egg
 
 2022-06-04  Alex Kotov  <kotovalexarian@gmail.com>
 

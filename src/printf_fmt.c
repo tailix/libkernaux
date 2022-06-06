@@ -145,16 +145,6 @@ void KernAux_PrintfFmt_Spec_parse_length(struct KernAux_PrintfFmt_Spec *const sp
             spec->flags |= (sizeof(size_t) == sizeof(long) ? KERNAUX_PRINTF_FMT_FLAGS_LONG : KERNAUX_PRINTF_FMT_FLAGS_LONG_LONG);
             ++(*format);
             break;
-#ifdef ENABLE_BLOAT
-        case 'S':
-            if (*(++(*format)) == 'U') {
-                spec->flags |= KERNAUX_PRINTF_FMT_FLAGS_CUSTOM;
-                ++(*format);
-            } else {
-                --(*format);
-            }
-            break;
-#endif // ENABLE_BLOAT
         default:
             break;
     }
@@ -237,15 +227,6 @@ void KernAux_PrintfFmt_Spec_parse_type(struct KernAux_PrintfFmt_Spec *const spec
             spec->type = KERNAUX_PRINTF_FMT_TYPE_STR;
             ++(*format);
             break;
-
-#ifdef ENABLE_BLOAT
-        case 'S':
-            if (spec->flags & KERNAUX_PRINTF_FMT_FLAGS_CUSTOM) {
-                spec->type = KERNAUX_PRINTF_FMT_TYPE_CUSTOM;
-                ++(*format);
-            }
-            break;
-#endif // ENABLE_BLOAT
 
         case 'p':
             spec->width = sizeof(void*) * 2u;

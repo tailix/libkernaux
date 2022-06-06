@@ -119,7 +119,6 @@ stable options.
 
 #### Features
 
-* `--(enable|disable)-bloat` - heavy binary data
 * `--(enable|disable)-float` - floating-point arithmetic
 * `--(enable|disable)-werror` - fail on warning (`CFLAGS+='-Werror'`)
 
