@@ -12,8 +12,11 @@ jobs:
     strategy:
       matrix:
         # TODO: something is wrong with TCC, Multiboot 2 info tag struct size
-        #cc: ['gcc', 'clang', 'tcc']
-        cc: ['gcc', 'clang']
+        cc:
+          - exe: 'gcc'
+          - exe: 'clang'
+          - exe: 'tcc'
+            flags: '--without-multiboot2'
         opt: ['', '-O0', '-O3']
     steps:
       - uses: actions/checkout@v2
@@ -22,7 +25,7 @@ jobs:
       - name: autogen
         run: ./autogen.sh
       - name: configure
-        run: ./configure --enable-tests --enable-tests-python CC='${{matrix.cc}}' CFLAGS='${{matrix.opt}}'
+        run: ./configure --enable-tests --enable-tests-python ${{matrix.cc.flags}} CC='${{matrix.cc.exe}}' CFLAGS='${{matrix.opt}}'
       - name: make
         run: make
       - name: check

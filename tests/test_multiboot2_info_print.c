@@ -4,7 +4,9 @@
 
 #include <assert.h>
 
+#ifndef __USE_POSIX2
 #define __USE_POSIX2
+#endif
 #include <stdio.h>
 
 static const char output1[] =
