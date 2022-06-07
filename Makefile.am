@@ -63,6 +63,9 @@ endif
 if WITH_ELF
 libkernaux_a_SOURCES += src/elf.c
 endif
+if WITH_FILE
+libkernaux_a_SOURCES += src/file.c
+endif
 if WITH_FRAMEBUFFER
 libkernaux_a_SOURCES += src/framebuffer.c
 endif
@@ -130,27 +133,31 @@ examples_cmdline_SOURCES = examples/cmdline.c
 endif
 endif
 
-###################
+####################
 # examples/fprintf #
-###################
+####################
 
 if ENABLE_TESTS
 if WITH_PRINTF
+if WITH_FILE
 TESTS += examples/fprintf
 examples_fprintf_LDADD = libkernaux.a
 examples_fprintf_SOURCES = examples/fprintf.c
 endif
 endif
+endif
 
-######################
+#######################
 # examples/fprintf_va #
-######################
+#######################
 
 if ENABLE_TESTS
 if WITH_PRINTF
+if WITH_FILE
 TESTS += examples/fprintf_va
 examples_fprintf_va_LDADD = libkernaux.a
 examples_fprintf_va_SOURCES = examples/fprintf_va.c
+endif
 endif
 endif
 

@@ -1,3 +1,4 @@
+#include <kernaux/file.h>
 #include <kernaux/printf.h>
 
 #include <assert.h>
@@ -23,7 +24,8 @@ static int my_printf(const char *const format, ...)
 {
     va_list va;
     va_start(va, format);
-    const int result = kernaux_vfprintf(my_putchar, (char*)data, format, va);
+    struct KernAux_File file = KernAux_File_create(my_putchar);
+    const int result = kernaux_vfprintf(&file, (char*)data, format, va);
     va_end(va);
     return result;
 }

@@ -1,3 +1,4 @@
+#include <kernaux/file.h>
 #include <kernaux/printf.h>
 
 #include <assert.h>
@@ -21,8 +22,9 @@ static void my_putchar(const char chr, void *arg)
 
 int main()
 {
+    struct KernAux_File file = KernAux_File_create(my_putchar);
     const int result = kernaux_fprintf(
-        my_putchar,
+        &file,
         (char*)data,
         "Hello, %s! Session ID: %u.",
         "Alex",

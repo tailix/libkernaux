@@ -13,13 +13,17 @@
 #ifdef ASM_X86_64
 #include <kernaux/asm/x86_64.h>
 #endif
+
+#ifdef WITH_FILE
+#include <kernaux/file.h>
+#endif
 #ifdef WITH_PRINTF
 #include <kernaux/printf.h>
 #endif
 
 #include <stddef.h>
 
-#ifdef WITH_PRINTF
+#if defined(WITH_FILE) && defined(WITH_PRINTF)
 static void kernaux_console_printf_putc(
     const char c,
     void *const arg __attribute__((unused))
@@ -47,14 +51,15 @@ void kernaux_console_print(const char *const s)
     }
 }
 
-#ifdef WITH_PRINTF
+#if defined(WITH_FILE) && defined(WITH_PRINTF)
 void kernaux_console_printf(const char *format, ...)
 {
     KERNAUX_NOTNULL_RETURN(format);
 
     va_list va;
     va_start(va, format);
-    kernaux_vfprintf(kernaux_console_printf_putc, NULL, format, va);
+    struct KernAux_File file = KernAux_File_create(kernaux_console_printf_putc);
+    kernaux_vfprintf(&file, NULL, format, va);
     va_end(va);
 }
 #endif

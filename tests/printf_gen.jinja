@@ -4,6 +4,10 @@
 
 #include <kernaux/printf.h>
 
+#ifdef WITH_FILE
+#include <kernaux/file.h>
+#endif
+
 #include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -11,10 +15,12 @@
 
 #define BUFFER_SIZE 1024
 
-static const char *const data = "foobar";
-
 static char buffer[BUFFER_SIZE];
 static size_t buffer_index;
+
+#ifdef WITH_FILE
+
+static const char *const data = "foobar";
 
 static void test_putchar(const char chr, void *const arg)
 {
@@ -28,18 +34,23 @@ static void test_putchar(const char chr, void *const arg)
     buffer[buffer_index++] = chr;
 }
 
+#endif // WITH_FILE
+
 static void test(const char *const expected, const char *const format, ...)
 {
     va_list va;
     int result;
 
+#ifdef WITH_FILE
     memset(buffer, '\0', sizeof(buffer));
     buffer_index = 0;
     va_start(va, format);
-    result = kernaux_vfprintf(test_putchar, (char*)data, format, va);
+    struct KernAux_File file = KernAux_File_create(test_putchar);
+    result = kernaux_vfprintf(&file, (char*)data, format, va);
     va_end(va);
     assert((size_t)result == strlen(expected));
     assert(strcmp(expected, buffer) == 0);
+#endif
 
     memset(buffer, '\0', sizeof(buffer));
     buffer_index = 0;
@@ -52,10 +63,13 @@ static void test(const char *const expected, const char *const format, ...)
 
 int main()
 {
+#ifdef WITH_FILE
     memset(buffer, '\0', sizeof(buffer));
     buffer_index = 0;
-    kernaux_fprintf(test_putchar, (char*)data, "Hello, World!");
+    struct KernAux_File file = KernAux_File_create(test_putchar);
+    kernaux_fprintf(&file, (char*)data, "Hello, World!");
     assert(strcmp("Hello, World!", buffer) == 0);
+#endif
 
     {% for case in cases %}
     {% if case.float %}

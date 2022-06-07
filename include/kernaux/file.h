@@ -7,6 +7,13 @@ extern "C" {
 
 typedef void (*KernAux_File_Out)(char c, void *arg);
 
+typedef struct KernAux_File {
+    KernAux_File_Out out;
+} *KernAux_File;
+
+struct KernAux_File KernAux_File_create(KernAux_File_Out out);
+void KernAux_File_init(KernAux_File file, KernAux_File_Out out);
+
 #ifdef __cplusplus
 }
 #endif
