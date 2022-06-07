@@ -54,7 +54,7 @@ void kernaux_console_printf(const char *format, ...)
 
     va_list va;
     va_start(va, format);
-    kernaux_vprintf(kernaux_console_printf_putc, NULL, format, va);
+    kernaux_vfprintf(kernaux_console_printf_putc, NULL, format, va);
     va_end(va);
 }
 #endif

@@ -99,13 +99,13 @@
 /examples/assert_guards
 /examples/assert_simple
 /examples/cmdline
+/examples/fprintf
+/examples/fprintf_va
 /examples/ntoa
 /examples/panic_guards
 /examples/panic_simple
 /examples/pfa
-/examples/printf
 /examples/printf_fmt
-/examples/printf_va
 /examples/snprintf
 /examples/snprintf_va
 /examples/units_human

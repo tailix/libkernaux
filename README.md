@@ -69,8 +69,8 @@ zero). Work-in-progress APIs can change at any time.
     * [Example](/examples/ntoa.c)
   * [printf replacement](/include/kernaux/printf.h) (*stable since* **0.1.0**)
     * Code from [https://github.com/mpaland/printf](https://github.com/mpaland/printf). Thank you!
-    * [printf](/examples/printf.c)
-    * [vprintf](/examples/printf_va.c)
+    * [fprintf](/examples/fprintf.c)
+    * [vfprintf](/examples/fprintf_va.c)
     * [snprintf](/examples/snprintf.c)
     * [vsnprintf](/examples/snprintf_va.c)
 * libc replacement

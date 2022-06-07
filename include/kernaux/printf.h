@@ -9,18 +9,18 @@ extern "C" {
 #include <stddef.h>
 
 /**
- * Tiny printf/vprintf implementation
+ * Tiny [v]fprintf implementation
  * \param out An output function which takes one character and an argument pointer
  * \param arg An argument pointer for user data passed to output function
  * \param format A string that specifies the format of the output
  * \param va A value identifying a variable arguments list
  * \return The number of characters that are sent to the output function, not counting the terminating null character
  */
-int  kernaux_printf(void (*out)(char character, void* arg), void* arg, const char* format, ...);
-int kernaux_vprintf(void (*out)(char character, void* arg), void* arg, const char* format, va_list va);
+int  kernaux_fprintf(void (*out)(char character, void* arg), void* arg, const char* format, ...);
+int kernaux_vfprintf(void (*out)(char character, void* arg), void* arg, const char* format, va_list va);
 
 /**
- * Tiny snprintf/vsnprintf implementation
+ * Tiny [v]snprintf implementation
  * \param buffer A pointer to the buffer where to store the formatted string
  * \param count The maximum number of characters to store in the buffer, including a terminating null character
  * \param format A string that specifies the format of the output

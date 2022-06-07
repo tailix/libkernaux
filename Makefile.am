@@ -130,6 +130,30 @@ examples_cmdline_SOURCES = examples/cmdline.c
 endif
 endif
 
+###################
+# examples/fprintf #
+###################
+
+if ENABLE_TESTS
+if WITH_PRINTF
+TESTS += examples/fprintf
+examples_fprintf_LDADD = libkernaux.a
+examples_fprintf_SOURCES = examples/fprintf.c
+endif
+endif
+
+######################
+# examples/fprintf_va #
+######################
+
+if ENABLE_TESTS
+if WITH_PRINTF
+TESTS += examples/fprintf_va
+examples_fprintf_va_LDADD = libkernaux.a
+examples_fprintf_va_SOURCES = examples/fprintf_va.c
+endif
+endif
+
 #################
 # examples/ntoa #
 #################
@@ -174,18 +198,6 @@ examples_pfa_SOURCES = examples/pfa.c
 endif
 endif
 
-###################
-# examples/printf #
-###################
-
-if ENABLE_TESTS
-if WITH_PRINTF
-TESTS += examples/printf
-examples_printf_LDADD = libkernaux.a
-examples_printf_SOURCES = examples/printf.c
-endif
-endif
-
 #######################
 # examples/printf_fmt #
 #######################
@@ -195,18 +207,6 @@ if WITH_PRINTF_FMT
 TESTS += examples/printf_fmt
 examples_printf_fmt_LDADD = libkernaux.a
 examples_printf_fmt_SOURCES = examples/printf_fmt.c
-endif
-endif
-
-######################
-# examples/printf_va #
-######################
-
-if ENABLE_TESTS
-if WITH_PRINTF
-TESTS += examples/printf_va
-examples_printf_va_LDADD = libkernaux.a
-examples_printf_va_SOURCES = examples/printf_va.c
 endif
 endif
 

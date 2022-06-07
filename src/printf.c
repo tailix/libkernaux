@@ -1,8 +1,8 @@
 /**
  * Copyright (c) 2014-2019 Marco Paland <info@paland.com>
  *
- * Tiny printf, sprintf and (v)snprintf implementation, optimized for speed on
- * embedded systems with a very limited resources. These routines are thread
+ * Tiny [v]fprintf, sfprintf and [v]snprintf implementation, optimized for speed
+ * on embedded systems with a very limited resources. These routines are thread
  * safe and reentrant!
  */
 
@@ -66,7 +66,7 @@ static size_t _etoa(out_fct_type out, char* buffer, size_t idx, size_t maxlen, d
  * Implementations: main API *
  *****************************/
 
-int kernaux_printf(void (*out)(char character, void* arg), void* arg, const char* format, ...)
+int kernaux_fprintf(void (*out)(char character, void* arg), void* arg, const char* format, ...)
 {
     KERNAUX_NOTNULL_RETVAL(out, 0);
     KERNAUX_NOTNULL_RETVAL(format, 0);
@@ -79,7 +79,7 @@ int kernaux_printf(void (*out)(char character, void* arg), void* arg, const char
     return ret;
 }
 
-int kernaux_vprintf(void (*out)(char character, void* arg), void* arg, const char* format, va_list va)
+int kernaux_vfprintf(void (*out)(char character, void* arg), void* arg, const char* format, va_list va)
 {
     KERNAUX_NOTNULL_RETVAL(out, 0);
     KERNAUX_NOTNULL_RETVAL(format, 0);

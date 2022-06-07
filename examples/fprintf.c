@@ -21,7 +21,7 @@ static void my_putchar(const char chr, void *arg)
 
 int main()
 {
-    const int result = kernaux_printf(
+    const int result = kernaux_fprintf(
         my_putchar,
         (char*)data,
         "Hello, %s! Session ID: %u.",

@@ -36,7 +36,7 @@ static void test(const char *const expected, const char *const format, ...)
     memset(buffer, '\0', sizeof(buffer));
     buffer_index = 0;
     va_start(va, format);
-    result = kernaux_vprintf(test_putchar, (char*)data, format, va);
+    result = kernaux_vfprintf(test_putchar, (char*)data, format, va);
     va_end(va);
     assert((size_t)result == strlen(expected));
     assert(strcmp(expected, buffer) == 0);
@@ -54,7 +54,7 @@ int main()
 {
     memset(buffer, '\0', sizeof(buffer));
     buffer_index = 0;
-    kernaux_printf(test_putchar, (char*)data, "Hello, World!");
+    kernaux_fprintf(test_putchar, (char*)data, "Hello, World!");
     assert(strcmp("Hello, World!", buffer) == 0);
 
     {% for case in cases %}

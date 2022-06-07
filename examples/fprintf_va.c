@@ -23,7 +23,7 @@ static int my_printf(const char *const format, ...)
 {
     va_list va;
     va_start(va, format);
-    const int result = kernaux_vprintf(my_putchar, (char*)data, format, va);
+    const int result = kernaux_vfprintf(my_putchar, (char*)data, format, va);
     va_end(va);
     return result;
 }
