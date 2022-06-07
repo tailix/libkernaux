@@ -29,10 +29,18 @@ int isspace(const int c)
     return c == ' ' || (unsigned)c - '\t' < 5;
 }
 
+int memcmp(const void *s1, const void *s2, size_t n)
+{
+    for (const unsigned char *p1 = s1, *p2 = s2; n--; ++p1, ++p2) {
+        if (*p1 != *p2) return *p1 - *p2;
+    }
+    return 0;
+}
+
 void *memcpy(void *dest, const void *src, size_t n)
 {
     char *dest_cell = dest;
-    char *src_cell = src;
+    char *src_cell = (char*)src;
     while (n--) *dest_cell++ = *src_cell++;
     return dest;
 }
@@ -40,7 +48,7 @@ void *memcpy(void *dest, const void *src, size_t n)
 void *memmove(void *dest, const void *src, size_t n)
 {
     char *dest_cell = dest;
-    char *src_cell = src;
+    char *src_cell = (char*)src;
     if (dest_cell <= src_cell) {
         while (n--) *dest_cell++ = *src_cell++;
     } else {

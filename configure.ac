@@ -113,9 +113,11 @@ AS_IF([test "$with_libc"           = yes], [with_libc=yes],           [with_libc
 #############
 
 AS_IF([test "$enable_tests"        = yes -a "$host_cpu" != "$build_cpu" ], AC_MSG_ERROR([can not build cross-platform tests]))
-AS_IF([test "$enable_tests"        = yes -a "$enable_freestanding" = yes], AC_MSG_ERROR([can not build freestanding tests]))
 AS_IF([test "$enable_tests_python" = yes -a "$host_cpu" != "$build_cpu" ], AC_MSG_ERROR([can not build cross-platform tests]))
+AS_IF([test "$enable_tests"        = yes -a "$enable_freestanding" = yes], AC_MSG_ERROR([can not build freestanding tests]))
 AS_IF([test "$enable_tests_python" = yes -a "$enable_freestanding" = yes], AC_MSG_ERROR([can not build freestanding tests]))
+AS_IF([test "$enable_tests"        = yes -a "$with_libc"           = yes], AC_MSG_ERROR([can not use package `libc' with tests]))
+AS_IF([test "$enable_tests_python" = yes -a "$with_libc"           = yes], AC_MSG_ERROR([can not use package `libc' with tests]))
 
 AS_IF([test "$with_printf" = yes -a "$with_ntoa"       = no], AC_MSG_ERROR([package `printf' requires package `ntoa']))
 AS_IF([test "$with_printf" = yes -a "$with_printf_fmt" = no], AC_MSG_ERROR([package `printf' requires package `printf-fmt']))
