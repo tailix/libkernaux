@@ -21,7 +21,6 @@ mruby_freebsd_task:
   name: mruby (FreeBSD)
   only_if: $CIRRUS_BRANCH == 'master' || $CIRRUS_BASE_BRANCH == 'master'
   env:
-    # FIXME: temporary hack to fix FreeBSD build
     CPATH: '/usr/local/include'
     LIBRARY_PATH: '/usr/local/lib'
     MRUBY_YAML_USE_SYSTEM_LIBRARY: x
@@ -43,7 +42,6 @@ ruby_freebsd_task:
   name: Ruby (FreeBSD)
   only_if: $CIRRUS_BRANCH == 'master' || $CIRRUS_BASE_BRANCH == 'master'
   env:
-    # FIXME: temporary hack to fix FreeBSD build
     CPATH: '/usr/local/include'
     LIBRARY_PATH: '/usr/local/lib'
   dependencies_script:
@@ -72,7 +70,6 @@ rust_freebsd_task:
   name: Rust (FreeBSD)
   only_if: $CIRRUS_BRANCH == 'master' || $CIRRUS_BASE_BRANCH == 'master'
   env:
-    # FIXME: temporary hack to fix FreeBSD build
     RUSTFLAGS: '-L /usr/local/lib'
   dependencies_script:
     - pkg install --yes autoconf automake
