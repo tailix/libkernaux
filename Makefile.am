@@ -37,7 +37,10 @@ noinst_PROGRAMS = $(TESTS)
 # libkernaux.a #
 ################
 
-libkernaux_a_SOURCES = src/assert.c
+libkernaux_a_SOURCES = \
+	src/assert.c \
+	src/libc.c
+
 if ASM_I386
 libkernaux_a_SOURCES += src/asm/i386.S
 endif

@@ -4,8 +4,7 @@
 
 #include <kernaux/assert.h>
 #include <kernaux/cmdline.h>
-
-#include "libc.h"
+#include <kernaux/libc.h>
 
 enum State {
     INITIAL,

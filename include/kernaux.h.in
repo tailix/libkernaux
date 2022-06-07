@@ -1,6 +1,9 @@
 /*
     We don't include <kernaux/asm/*.h> because they
     contain architecture-specific assembly functions.
+
+    We don't include <kernaux/libc.h> because it may
+    conflict with actual freestanding or hosted libc.
 */
 
 #include <kernaux/assert.h>

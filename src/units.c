@@ -3,10 +3,9 @@
 #endif
 
 #include <kernaux/assert.h>
+#include <kernaux/libc.h>
 #include <kernaux/ntoa.h>
 #include <kernaux/units.h>
-
-#include "libc.h"
 
 #define TMP_BUFFER_SIZE (64)
 

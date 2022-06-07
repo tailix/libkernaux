@@ -7,9 +7,8 @@
 #endif
 
 #include <kernaux/assert.h>
+#include <kernaux/libc.h>
 #include <kernaux/printf_fmt.h>
-
-#include "libc.h"
 
 #include <stdbool.h>
 #include <stddef.h>
