@@ -42,6 +42,10 @@ RSpec/FilePath:
 RSpec/ExampleLength:
   CountAsOne: ['array', 'hash', 'heredoc']
 
+Security/Eval:
+  Exclude:
+    - 'spec/**/*_spec.rb'
+
 Style/AndOr:
   EnforcedStyle: conditionals
 
