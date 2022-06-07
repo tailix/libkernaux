@@ -25,8 +25,8 @@ void mrb_mruby_kernaux_gem_init(mrb_state *const mrb)
     mrb_define_class_under_id(mrb, rb_KernAux, MRB_SYM(Error), E_RUNTIME_ERROR);
 
     init_assert(mrb);
-    init_ntoa(mrb);
     init_cmdline(mrb);
+    init_ntoa(mrb);
     init_printf(mrb);
 }
 
