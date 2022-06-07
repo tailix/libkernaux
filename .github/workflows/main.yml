@@ -33,6 +33,29 @@ jobs:
       - name: install
         run: sudo make install
 
+  cond:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        pkg:
+          - main: 'all'
+          - main: 'file'
+          - main: 'ntoa'
+            other: '--without-printf --without-units'
+          - main: 'printf'
+    steps:
+      - uses: actions/checkout@v2
+      - name: autogen
+        run: ./autogen.sh
+      - name: configure
+        run: ./configure --without-${{matrix.pkg.main}} ${{matrix.pkg.other}} --enable-tests --enable-tests-python
+      - name: make
+        run: make
+      - name: check
+        run: make check || (cat test-suite.log && false)
+      - name: install
+        run: sudo make install
+
   dist:
     runs-on: ubuntu-latest
     steps:
@@ -71,18 +94,3 @@ jobs:
         run: cppcheck --quiet --error-exitcode=1 --std=c99 --enable=warning,style,performance,portability --suppress=duplicateExpression --suppress=staticStringCompare examples/
       - name: cppcheck tests
         run: cppcheck --quiet --error-exitcode=1 --std=c99 --enable=warning,style,performance,portability --suppress=unusedStructMember tests/
-
-  cond:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: autogen
-        run: ./autogen.sh
-      - name: configure
-        run: ./configure --without-all --enable-tests --enable-tests-python
-      - name: make
-        run: make
-      - name: check
-        run: make check || (cat test-suite.log && false)
-      - name: install
-        run: sudo make install
