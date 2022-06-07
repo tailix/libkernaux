@@ -2,18 +2,20 @@
 
 # rubocop:disable Lint/EmptyClass
 
-module KernAux
-  ##
-  # File simulator.
-  #
-  class File
+if defined? KernAux::File
+  module KernAux
     ##
-    # @!method initialize(out)
-    # Create a file.
+    # File simulator.
     #
-    # @param out [Proc] writing method
+    class File
+      ##
+      # @!method initialize(out)
+      # Create a file.
+      #
+      # @param out [Proc] writing method
 
-    # @!parse [ruby]
+      # @!parse [ruby]
+    end
   end
 end
 
