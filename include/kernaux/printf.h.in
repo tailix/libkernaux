@@ -8,6 +8,8 @@ extern "C" {
 #include <stdarg.h>
 #include <stddef.h>
 
+@comment_line_file@#include <kernaux/file.h>
+
 /**
  * Tiny [v]fprintf implementation
  * \param out An output function which takes one character and an argument pointer
@@ -16,8 +18,8 @@ extern "C" {
  * \param va A value identifying a variable arguments list
  * \return The number of characters that are sent to the output function, not counting the terminating null character
  */
-int  kernaux_fprintf(void (*out)(char character, void* arg), void* arg, const char* format, ...);
-int kernaux_vfprintf(void (*out)(char character, void* arg), void* arg, const char* format, va_list va);
+@comment_line_file@int  kernaux_fprintf(KernAux_File_Out out, void* arg, const char* format, ...);
+@comment_line_file@int kernaux_vfprintf(KernAux_File_Out out, void* arg, const char* format, va_list va);
 
 /**
  * Tiny [v]snprintf implementation

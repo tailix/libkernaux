@@ -44,6 +44,7 @@ zero). Work-in-progress APIs can change at any time.
     * [Panic: simple](/examples/panic_simple.c)
     * [Panic: guards](/examples/panic_guards.c)
   * Stack trace *(planned)*
+  * [File simulator](/include/kernaux/file.h) (*work in progress*)
 * Device drivers (for debugging only)
   * [Serial console](/include/kernaux/console.h) (*work in progress*)
   * [Framebuffer](/include/kernaux/framebuffer.h) (*planned*)
@@ -67,7 +68,7 @@ zero). Work-in-progress APIs can change at any time.
 * Usual functions
   * [itoa/ftoa replacement](/include/kernaux/ntoa.h) (*stable since* **0.1.0**, *non-breaking since* **?.?.?**)
     * [Example](/examples/ntoa.c)
-  * [printf replacement](/include/kernaux/printf.h) (*stable since* **0.1.0**)
+  * [printf replacement](/include/kernaux/printf.h.in) (*stable since* **0.1.0**, *non-breaking since* **?.?.?**)
     * Code from [https://github.com/mpaland/printf](https://github.com/mpaland/printf). Thank you!
     * [fprintf](/examples/fprintf.c)
     * [vfprintf](/examples/fprintf_va.c)
@@ -117,6 +118,7 @@ All packages are included by default. To exclude all packages except those
 explicitly included, use `--without-all`.
 
 * `--with[out]-cmdline` - command line parser
+* `--with[out]-file` - file simulator
 * `--with[out]-ntoa` - itoa/ftoa
 * `--with[out]-printf` - printf
 

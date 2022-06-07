@@ -32,6 +32,7 @@ AC_ARG_WITH(  [all],          AS_HELP_STRING([--without-all],         [without a
 AC_ARG_WITH(  [cmdline],      AS_HELP_STRING([--without-cmdline],     [without command line parser]))
 AC_ARG_WITH(  [console],      AS_HELP_STRING([--without-console],     [without serial console]))
 AC_ARG_WITH(  [elf],          AS_HELP_STRING([--without-elf],         [without ELF utils]))
+AC_ARG_WITH(  [file],         AS_HELP_STRING([--without-file],        [without file simulator]))
 AC_ARG_WITH(  [framebuffer],  AS_HELP_STRING([--without-framebuffer], [without framebuffer]))
 AC_ARG_WITH(  [mbr],          AS_HELP_STRING([--without-mbr],         [without Master Boot Record]))
 AC_ARG_WITH(  [multiboot2],   AS_HELP_STRING([--without-multiboot2],  [without Multiboot 2 information parser]))
@@ -62,6 +63,7 @@ AC_DEFUN([do_without_all],
 if test -z "$with_cmdline";     then with_cmdline=no;     fi
 if test -z "$with_console";     then with_console=no;     fi
 if test -z "$with_elf";         then with_elf=no;         fi
+if test -z "$with_file";        then with_file=no;        fi
 if test -z "$with_framebuffer"; then with_framebuffer=no; fi
 if test -z "$with_mbr";         then with_mbr=no;         fi
 if test -z "$with_multiboot2";  then with_multiboot2=no;  fi
@@ -94,6 +96,7 @@ AS_IF([test "$with_all"            = no ], [with_all=no],             [with_all=
 AS_IF([test "$with_cmdline"        = no ], [with_cmdline=no],         [with_cmdline=yes])
 AS_IF([test "$with_console"        = no ], [with_console=no],         [with_console=yes])
 AS_IF([test "$with_elf"            = no ], [with_elf=no],             [with_elf=yes])
+AS_IF([test "$with_file"           = no ], [with_file=no],            [with_file=yes])
 AS_IF([test "$with_framebuffer"    = no ], [with_framebuffer=no],     [with_framebuffer=yes])
 AS_IF([test "$with_mbr"            = no ], [with_mbr=no],             [with_mbr=yes])
 AS_IF([test "$with_multiboot2"     = no ], [with_multiboot2=no],      [with_multiboot2=yes])
@@ -147,6 +150,7 @@ dnl Packages (enabled by default)
 AM_CONDITIONAL([WITH_CMDLINE],        [test "$with_cmdline"        = yes])
 AM_CONDITIONAL([WITH_CONSOLE],        [test "$with_console"        = yes])
 AM_CONDITIONAL([WITH_ELF],            [test "$with_elf"            = yes])
+AM_CONDITIONAL([WITH_FILE],           [test "$with_file"           = yes])
 AM_CONDITIONAL([WITH_FRAMEBUFFER],    [test "$with_framebuffer"    = yes])
 AM_CONDITIONAL([WITH_MBR],            [test "$with_mbr"            = yes])
 AM_CONDITIONAL([WITH_MULTIBOOT2],     [test "$with_multiboot2"     = yes])
@@ -183,6 +187,7 @@ dnl Packages (enabled by default)
 AS_IF([test "$with_cmdline"        = yes], [AC_DEFINE([WITH_CMDLINE],        [1], [with command line parser])])
 AS_IF([test "$with_console"        = yes], [AC_DEFINE([WITH_CONSOLE],        [1], [with serial console])])
 AS_IF([test "$with_elf"            = yes], [AC_DEFINE([WITH_ELF],            [1], [with ELF utils])])
+AS_IF([test "$with_file"           = yes], [AC_DEFINE([WITH_FILE],           [1], [with file simulator])])
 AS_IF([test "$with_framebuffer"    = yes], [AC_DEFINE([WITH_FRAMEBUFFER],    [1], [with framebuffer])])
 AS_IF([test "$with_mbr"            = yes], [AC_DEFINE([WITH_MBR],            [1], [with Master Boot Record])])
 AS_IF([test "$with_multiboot2"     = yes], [AC_DEFINE([WITH_MULTIBOOT2],     [1], [with Multiboot 2 information parser])])
@@ -205,6 +210,7 @@ dnl Packages (enabled by default)
 AS_IF([test "$with_cmdline"      = no], [AC_SUBST([comment_line_cmdline],      [//])])
 AS_IF([test "$with_console"      = no], [AC_SUBST([comment_line_console],      [//])])
 AS_IF([test "$with_elf"          = no], [AC_SUBST([comment_line_elf],          [//])])
+AS_IF([test "$with_file"         = no], [AC_SUBST([comment_line_file],         [//])])
 AS_IF([test "$with_framebuffer"  = no], [AC_SUBST([comment_line_framebuffer],  [//])])
 AS_IF([test "$with_mbr"          = no], [AC_SUBST([comment_line_mbr],          [//])])
 AS_IF([test "$with_multiboot2"   = no], [AC_SUBST([comment_line_multiboot2],   [//])])
@@ -230,6 +236,7 @@ AC_CONFIG_FILES([
   libc/Makefile
   include/kernaux.h
   include/kernaux/console.h
+  include/kernaux/printf.h
 ])
 
 AC_LANG([C])

@@ -95,6 +95,7 @@
 
 /include/kernaux.h
 /include/kernaux/console.h
+/include/kernaux/printf.h
 
 /examples/assert_guards
 /examples/assert_simple
