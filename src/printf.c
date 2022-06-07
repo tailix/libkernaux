@@ -1,8 +1,8 @@
 /**
  * Copyright (c) 2014-2019 Marco Paland <info@paland.com>
  *
- * Tiny printf, sprintf and (v)snprintf implementation, optimized for speed on
- * embedded systems with a very limited resources. These routines are thread
+ * Tiny [v]fprintf, sfprintf and [v]snprintf implementation, optimized for speed
+ * on embedded systems with a very limited resources. These routines are thread
  * safe and reentrant!
  */
 
@@ -66,27 +66,31 @@ static size_t _etoa(out_fct_type out, char* buffer, size_t idx, size_t maxlen, d
  * Implementations: main API *
  *****************************/
 
-int kernaux_printf(void (*out)(char character, void* arg), void* arg, const char* format, ...)
+#ifdef WITH_FILE
+
+int kernaux_fprintf(const KernAux_File file, void* arg, const char* format, ...)
 {
-    KERNAUX_NOTNULL_RETVAL(out, 0);
+    KERNAUX_NOTNULL_RETVAL(file, 0);
     KERNAUX_NOTNULL_RETVAL(format, 0);
 
     va_list va;
     va_start(va, format);
-    const out_fct_wrap_type out_fct_wrap = { out, arg };
+    const out_fct_wrap_type out_fct_wrap = { file->out, arg };
     const int ret = _vsnprintf(_out_fct, (char*)(uintptr_t)&out_fct_wrap, (size_t)-1, format, va);
     va_end(va);
     return ret;
 }
 
-int kernaux_vprintf(void (*out)(char character, void* arg), void* arg, const char* format, va_list va)
+int kernaux_vfprintf(const KernAux_File file, void* arg, const char* format, va_list va)
 {
-    KERNAUX_NOTNULL_RETVAL(out, 0);
+    KERNAUX_NOTNULL_RETVAL(file, 0);
     KERNAUX_NOTNULL_RETVAL(format, 0);
 
-    const out_fct_wrap_type out_fct_wrap = { out, arg };
+    const out_fct_wrap_type out_fct_wrap = { file->out, arg };
     return _vsnprintf(_out_fct, (char*)(uintptr_t)&out_fct_wrap, (size_t)-1, format, va);
 }
+
+#endif // WITH_FILE
 
 int kernaux_snprintf(char* buffer, size_t count, const char* format, ...)
 {

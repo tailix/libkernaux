@@ -1,3 +1,4 @@
+#include <kernaux/file.h>
 #include <kernaux/printf.h>
 
 #include <assert.h>
@@ -19,15 +20,19 @@ static void my_putchar(const char chr, void *arg)
     buffer[buffer_index++] = chr;
 }
 
+static int my_printf(const char *const format, ...)
+{
+    va_list va;
+    va_start(va, format);
+    struct KernAux_File file = KernAux_File_create(my_putchar);
+    const int result = kernaux_vfprintf(&file, (char*)data, format, va);
+    va_end(va);
+    return result;
+}
+
 int main()
 {
-    const int result = kernaux_printf(
-        my_putchar,
-        (char*)data,
-        "Hello, %s! Session ID: %u.",
-        "Alex",
-        123
-    );
+    const int result = my_printf("Hello, %s! Session ID: %u.", "Alex", 123);
     assert((size_t)result == strlen(buffer));
     assert(strcmp(buffer, "Hello, Alex! Session ID: 123.") == 0);
     return 0;
