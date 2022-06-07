@@ -14,6 +14,9 @@ end
 # Package "cmdline"
 have_func 'kernaux_cmdline'
 
+# Package "file"
+have_func 'KernAux_File_create'
+
 # Package "ntoa"
 have_func 'kernaux_utoa'
 have_func 'kernaux_itoa'

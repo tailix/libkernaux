@@ -5,6 +5,8 @@ require_relative 'kernaux/version'
 # Native extensions
 require_relative 'kernaux/default'
 
+require_relative 'kernaux/file'
+
 ##
 # Binding to [libkernaux](https://github.com/tailix/libkernaux) - auxiliary
 # library for kernel development.
