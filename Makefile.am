@@ -321,6 +321,27 @@ tests_test_cmdline_SOURCES = tests/test_cmdline.c
 endif
 endif
 
+##########################
+# tests/test_cmdline_gen #
+##########################
+
+if ENABLE_TESTS_PYTHON
+if WITH_CMDLINE
+TESTS += tests/test_cmdline_gen
+tests_test_cmdline_gen_LDADD = libkernaux.a
+tests_test_cmdline_gen_SOURCES = \
+	tests/test_cmdline_gen.c \
+	tests/cmdline_gen.py \
+	tests/cmdline_gen.jinja \
+	common/cmdline.yml
+endif
+endif
+
+CLEANFILES += tests/test_cmdline_gen.c
+
+tests/test_cmdline_gen.c: tests/cmdline_gen.py tests/cmdline_gen.jinja common/cmdline.yml
+	python3 tests/cmdline_gen.py
+
 ##################
 # tests/test_elf #
 ##################
