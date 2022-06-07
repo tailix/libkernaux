@@ -3,8 +3,9 @@
 #endif
 
 #include <kernaux/assert.h>
-#include <kernaux/libc.h>
 #include <kernaux/pfa.h>
+
+#include "libc.h"
 
 #define PAGE_INDEX(page_addr) ((page_addr) / KERNAUX_PFA_PAGE_SIZE)
 

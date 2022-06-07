@@ -1,5 +1,5 @@
-#ifndef KERNAUX_INCLUDED_LIBC
-#define KERNAUX_INCLUDED_LIBC
+#ifndef _STRING_H
+#define _STRING_H 1
 
 #ifdef __cplusplus
 extern "C" {
@@ -7,14 +7,6 @@ extern "C" {
 
 #include <stddef.h>
 
-// <ctype.h>
-int isdigit(int c);
-int isspace(int c);
-
-// <stdlib.h>
-int atoi(const char *str);
-
-// <string.h>
 void *memcpy(void *dest, const void *src, size_t n);
 void *memmove(void *dest, const void *src, size_t n);
 void *memset(void *s, int c, size_t n);

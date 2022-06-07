@@ -2,7 +2,7 @@
 # Common #
 ##########
 
-SUBDIRS = include
+SUBDIRS = include libc
 
 CLEANFILES =
 TESTS =
@@ -13,7 +13,14 @@ AM_CFLAGS = \
 	-Wall \
 	-Wextra \
 	-I$(top_builddir)/include \
-	-I$(top_srcdir)/include
+	-I$(top_srcdir)/include \
+	-D_POSIX_C_SOURCE=200809L
+
+if WITH_LIBC
+AM_CFLAGS += \
+	-I$(top_builddir)/libc \
+	-I$(top_srcdir)/libc
+endif
 
 if ENABLE_WERROR
 AM_CFLAGS += -Werror
@@ -37,10 +44,7 @@ noinst_PROGRAMS = $(TESTS)
 # libkernaux.a #
 ################
 
-libkernaux_a_SOURCES = \
-	src/assert.c \
-	src/libc.c
-
+libkernaux_a_SOURCES = src/libc.h src/assert.c
 if ASM_I386
 libkernaux_a_SOURCES += src/asm/i386.S
 endif
@@ -61,6 +65,9 @@ libkernaux_a_SOURCES += src/elf.c
 endif
 if WITH_FRAMEBUFFER
 libkernaux_a_SOURCES += src/framebuffer.c
+endif
+if WITH_LIBC
+libkernaux_a_SOURCES += src/libc.c
 endif
 if WITH_MBR
 libkernaux_a_SOURCES += src/mbr.c
