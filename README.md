@@ -22,7 +22,7 @@ Table of contents
 * [Tips](#tips)
   * [Installation](#installation)
   * [Development](#development)
-  * [Cross](#cross)
+  * [Freestanding](#freestanding)
 * [Architectures](#architectures)
 
 
@@ -65,7 +65,6 @@ zero). Work-in-progress APIs can change at any time.
     * Code from [https://github.com/mpaland/printf](https://github.com/mpaland/printf). Thank you!
     * [Example](/examples/printf_fmt.c)
 * Usual functions
-  * [libc replacement](/include/kernaux/libc.h) (*stable since* **0.1.0**)
   * [itoa/ftoa replacement](/include/kernaux/ntoa.h) (*stable since* **0.1.0**, *non-breaking since* **?.?.?**)
     * [Example](/examples/ntoa.c)
   * [printf replacement](/include/kernaux/printf.h) (*stable since* **0.1.0**)
@@ -95,25 +94,6 @@ stable options.
 * `--enable-tests-all` - enable all tests
 * `--enable-tests-python` - enable tests that require Python 3 with YAML and
   Jinja2
-
-#### Packages
-
-* `--with-libc-all` - provides the replacement for some standard C functions.
-  Useful in freestanding environment, where no libc is present. You can also
-  separately include or exclude components:
-  * `--with[out]-libc-atoi`
-  * `--with[out]-libc-isdigit`
-  * `--with[out]-libc-isspace`
-  * `--with[out]-libc-memcpy`
-  * `--with[out]-libc-memmove`
-  * `--with[out]-libc-memset`
-  * `--with[out]-libc-strcmp`
-  * `--with[out]-libc-strcpy`
-  * `--with[out]-libc-strlen`
-  * `--with[out]-libc-strncmp`
-  * `--with[out]-libc-strncpy`
-  * `--with[out]-libc-strnlen`
-  * `--with[out]-libc-strstr`
 
 ### Default options
 
@@ -158,7 +138,9 @@ make
 
 You can test with `make check`.
 
-### Cross
+### Freestanding
+
+Some libc functions are needed. Use [libfsc](https://github.com/tailix/libfsc).
 
 Create configuration script with `./autogen.sh` (if present).
 
@@ -170,7 +152,6 @@ without it in `$PATH`:
 ./configure \
   --host='i386-elf' \
   --enable-freestanding \
-  --with-libc-all \
   AR="$(which i386-elf-ar)" \
   CC="$(which i386-elf-gcc)" \
   RANLIB="$(which i386-elf-ranlib)"

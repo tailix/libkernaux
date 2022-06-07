@@ -14,4 +14,4 @@ export     AR="$CROSS-ar"
 export     CC="$CROSS-gcc"
 export RANLIB="$CROSS-ranlib"
 
-"$REPO/configure" --host="$HOST" --prefix="$PREFIX" --enable-freestanding --with-libc-all
+"$REPO/configure" --host="$HOST" --prefix="$PREFIX" --enable-freestanding

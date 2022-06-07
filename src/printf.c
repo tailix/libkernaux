@@ -11,9 +11,10 @@
 #endif
 
 #include <kernaux/assert.h>
-#include <kernaux/libc.h>
 #include <kernaux/printf.h>
 #include <kernaux/printf_fmt.h>
+
+#include "libc.h"
 
 #include <stdbool.h>
 #include <stdint.h>
