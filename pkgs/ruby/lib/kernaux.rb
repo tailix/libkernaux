@@ -65,7 +65,7 @@ module KernAux
 
   # @!parse [ruby]
 
-  if singleton_class.method_defined? :snprintf1
+  if Version.supports_printf?
     ##
     # Typical `printf`.
     #
@@ -127,8 +127,7 @@ module KernAux
   # @return [Array<String>] command line arguments
   #
   # @raise [CmdlineError] syntax is invalid
-
-  # @!parse [ruby]
+  ##
 
   ##
   # @!method utoa(number, base, prefix)
