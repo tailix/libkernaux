@@ -4,7 +4,8 @@
 
 #include <kernaux/assert.h>
 #include <kernaux/console.h>
-#include <kernaux/libc.h>
+
+#include "libc.h"
 
 #ifdef ASM_I386
 #include <kernaux/asm/i386.h>
