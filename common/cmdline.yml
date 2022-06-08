@@ -1,91 +1,64 @@
 # TODO: move here test cases from tests/test_cmdline.c
 
 - cmdline: ''
-  count: 0
   result: []
 - cmdline: '   '
-  count: 0
   result: []
 - cmdline: 'foo'
-  count: 1
   result: ['foo']
 - cmdline: 'foo bar'
-  count: 2
   result: ['foo', 'bar']
 - cmdline: 'foo bar '
-  count: 2
   result: ['foo', 'bar']
 - cmdline: ' foo bar '
-  count: 2
   result: ['foo', 'bar']
 - cmdline: 'foo  bar'
-  count: 2
   result: ['foo', 'bar']
 - cmdline: '  foo  bar'
-  count: 2
   result: ['foo', 'bar']
 - cmdline: 'foo  bar  '
-  count: 2
   result: ['foo', 'bar']
 - cmdline: '  foo  bar  '
-  count: 2
   result: ['foo', 'bar']
 - cmdline: 'foo bar car'
-  count: 3
   result: ['foo', 'bar', 'car']
 
 - cmdline: '\"\"'
-  count: 1
   result: ['']
 - cmdline: '\"\" \"\"'
-  count: 2
   result: ['', '']
 - cmdline: '\"\" \"\" \"\"'
-  count: 3
   result: ['', '', '']
 - cmdline: '\"foo\"'
-  count: 1
   result: ['foo']
 - cmdline: '\"foo\" \"bar\"'
-  count: 2
   result: ['foo', 'bar']
 - cmdline: ' \"foo\" \"bar\"'
-  count: 2
   result: ['foo', 'bar']
 - cmdline: '\"foo\" \"bar\" '
-  count: 2
   result: ['foo', 'bar']
 - cmdline: ' \"foo\" \"bar\" '
-  count: 2
   result: ['foo', 'bar']
 - cmdline: '\"foo\"  \"bar\"'
-  count: 2
   result: ['foo', 'bar']
 - cmdline: '\"foo\"  \"bar\"  '
-  count: 2
   result: ['foo', 'bar']
 - cmdline: '  \"foo\"  \"bar\"'
-  count: 2
   result: ['foo', 'bar']
 - cmdline: '  \"foo\"  \"bar\"  '
-  count: 2
   result: ['foo', 'bar']
 - cmdline: '\"foo\" \"bar\" \"car\"'
-  count: 3
   result: ['foo', 'bar', 'car']
 
 - cmdline: 'foo bar car'
   argv_count_max: 3
-  count: 3
   result: ['foo', 'bar', 'car']
 - cmdline: 'foo bar car'
   buffer_size: 12
-  count: 3
   result: ['foo', 'bar', 'car']
 - cmdline: 'foo bar car'
   argv_count_max: 3
   buffer_size: 12
-  count: 3
   result: ['foo', 'bar', 'car']
 
 - cmdline: 'foo bar car'
@@ -101,16 +74,13 @@
 
 - cmdline: '\"foo\" \"bar\" \"car\"'
   argv_count_max: 3
-  count: 3
   result: ['foo', 'bar', 'car']
 - cmdline: '\"foo\" \"bar\" \"car\"'
   buffer_size: 12
-  count: 3
   result: ['foo', 'bar', 'car']
 - cmdline: '\"foo\" \"bar\" \"car\"'
   argv_count_max: 3
   buffer_size: 12
-  count: 3
   result: ['foo', 'bar', 'car']
 
 - cmdline: '\"foo\" \"bar\" \"car\"'

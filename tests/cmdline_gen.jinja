@@ -47,7 +47,7 @@ int main()
             {% if not case.error %}
                 true,
                 "",
-                {{ escape_int(case.count) }},
+                {{ escape_int(len(case.result)) }},
                 expected_argv
             {% else %}
                 false,
