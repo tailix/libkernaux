@@ -2,7 +2,7 @@
 # Common #
 ##########
 
-SUBDIRS = include libc
+SUBDIRS = include libc/include
 
 CLEANFILES =
 TESTS =
@@ -18,8 +18,8 @@ AM_CFLAGS = \
 
 if WITH_LIBC
 AM_CFLAGS += \
-	-I$(top_builddir)/libc \
-	-I$(top_srcdir)/libc
+	-I$(top_builddir)/libc/include \
+	-I$(top_srcdir)/libc/include
 endif
 
 if ENABLE_WERROR
@@ -70,7 +70,7 @@ if WITH_FRAMEBUFFER
 libkernaux_a_SOURCES += src/framebuffer.c
 endif
 if WITH_LIBC
-libkernaux_a_SOURCES += src/libc.c
+libkernaux_a_SOURCES += libc/src/main.c
 endif
 if WITH_MBR
 libkernaux_a_SOURCES += src/mbr.c

@@ -2,9 +2,10 @@
 #include "config.h"
 #endif
 
-#include "libc.h"
-
+#include <ctype.h>
 #include <stdbool.h>
+#include <stdlib.h>
+#include <string.h>
 
 int atoi(const char *str)
 {

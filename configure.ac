@@ -233,7 +233,7 @@ AM_INIT_AUTOMAKE([1.9 subdir-objects])
 AC_CONFIG_FILES([
   Makefile
   include/Makefile
-  libc/Makefile
+  libc/include/Makefile
   include/kernaux.h
   include/kernaux/console.h
   include/kernaux/printf.h
