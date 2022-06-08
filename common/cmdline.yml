@@ -226,3 +226,16 @@
   result: ['foo', '\"bar\"']
 - cmdline: 'foo \"\\\"bar\\\"\"'
   result: ['foo', '\"bar\"']
+
+- cmdline: 'foo\\ bar car'
+  result: ["foo bar", "car"]
+- cmdline: '\"foo bar\" car'
+  result: ["foo bar", "car"]
+- cmdline: '\"foo bar\" \"car\"'
+  result: ["foo bar", "car"]
+- cmdline: 'foo bar\\ car'
+  result: ['foo', 'bar car']
+- cmdline: 'foo \"bar car\"'
+  result: ['foo', 'bar car']
+- cmdline: '\"foo\" \"bar car\"'
+  result: ['foo', 'bar car']

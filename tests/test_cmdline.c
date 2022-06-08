@@ -28,9 +28,6 @@ static const char *const argv_spaceX3_X3[] = {"   ", "   ", "   "};
 static const char *const argv_backslashX3_X3[] = {"\\\\\\", "\\\\\\", "\\\\\\"};
 static const char *const argv_quotmarkX3_X3[] = {"\"\"\"", "\"\"\"", "\"\"\""};
 
-static const char *const argv_foospacebar_car[] = {"foo bar", "car"};
-static const char *const argv_foo_barspacecar[] = {"foo", "bar car"};
-
 static const char *const argv_aX50[] = {
     "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
 };
@@ -44,13 +41,6 @@ static const char *const argv_a_X6[] = { "a", "a", "a", "a", "a", "a" };
 
 int main()
 {
-    test("foo\\ bar car",       0, 0, true, "", 2, argv_foospacebar_car);
-    test("\"foo bar\" car",     0, 0, true, "", 2, argv_foospacebar_car);
-    test("\"foo bar\" \"car\"", 0, 0, true, "", 2, argv_foospacebar_car);
-    test("foo bar\\ car",       0, 0, true, "", 2, argv_foo_barspacecar);
-    test("foo \"bar car\"",     0, 0, true, "", 2, argv_foo_barspacecar);
-    test("\"foo\" \"bar car\"", 0, 0, true, "", 2, argv_foo_barspacecar);
-
     test("\\ \\ \\  \\ \\ \\  \\ \\ \\ ",          3, 0,  true, "", 3, argv_spaceX3_X3);
     test("\\\\\\\\\\\\ \\\\\\\\\\\\ \\\\\\\\\\\\", 3, 0,  true, "", 3, argv_backslashX3_X3);
     test("\\\"\\\"\\\" \\\"\\\"\\\" \\\"\\\"\\\"", 3, 0,  true, "", 3, argv_quotmarkX3_X3);
