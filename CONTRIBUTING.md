@@ -1,3 +1,12 @@
+Common
+------
+
+* Add your name to [COPYING](/COPYING).
+* If you change the behavior (even just fix a bug) of **core** or of
+  [libc](/libc), add a record to [ChangeLog](/ChangeLog). 
+
+
+
 C language
 ----------
 
