@@ -28,15 +28,11 @@ int main()
 {
     {% for case in cases %}
     {
-        {% if not case.error %}
-            const char *const expected_argv[{{ escape_int(len(case.result) or 1) }}] = {
-            {% if len(case.result) %}
+        {% if not case.error and len(case.result) %}
+            const char *const expected_argv[] = {
                 {% for item in case.result %}
                     {{ escape_str(item) }},
                 {% endfor %}
-            {% else %}
-                NULL,
-            {% endif %}
             };
         {% endif %}
 
@@ -48,7 +44,11 @@ int main()
                 true,
                 "",
                 {{ escape_int(len(case.result)) }},
-                expected_argv
+                {% if len(case.result) %}
+                    expected_argv
+                {% else %}
+                    NULL
+                {% endif %}
             {% else %}
                 false,
                 {{ escape_str(case.error) }},
