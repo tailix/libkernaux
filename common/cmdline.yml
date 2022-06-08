@@ -93,3 +93,136 @@
   argv_count_max: 2
   buffer_size: 11
   error: 'too many args'
+
+- cmdline: '\\ '
+  result: [' ']
+- cmdline: '\"\\ \"'
+  result: [' ']
+- cmdline: '\\\\'
+  result: ['\\']
+- cmdline: '\"\\\\\"'
+  result: ['\\']
+- cmdline: '\\\"'
+  result: ['\"']
+- cmdline: '\"\\\"\"'
+  result: ['\"']
+- cmdline: 'foo\\ '
+  result: ['foo ']
+- cmdline: '\"foo\\ \"'
+  result: ['foo ']
+- cmdline: 'foo\\\\'
+  result: ['foo\\']
+- cmdline: '\"foo\\\\\"'
+  result: ['foo\\']
+- cmdline: 'foo\\\"'
+  result: ['foo\"']
+- cmdline: '\"foo\\\"\"'
+  result: ['foo\"']
+- cmdline: '\\ foo'
+  result: [' foo']
+- cmdline: '\"\\ foo\"'
+  result: [' foo']
+- cmdline: '\\\\foo'
+  result: ['\\foo']
+- cmdline: '\"\\\\foo\"'
+  result: ['\\foo']
+- cmdline: '\\\"foo'
+  result: ['\"foo']
+- cmdline: '\"\\\"foo\"'
+  result: ['\"foo']
+- cmdline: '\\ foo\\ '
+  result: [' foo ']
+- cmdline: '\"\\ foo\\ \"'
+  result: [' foo ']
+- cmdline: '\\\\foo\\\\'
+  result: ['\\foo\\']
+- cmdline: '\"\\\\foo\\\\\"'
+  result: ['\\foo\\']
+- cmdline: '\\\"foo\\\"'
+  result: ['\"foo\"']
+- cmdline: '\"\\\"foo\\\"\"'
+  result: ['\"foo\"']
+- cmdline: 'foo\\ bar'
+  result: ['foo bar']
+- cmdline: '\"foo\\ bar\"'
+  result: ['foo bar']
+- cmdline: 'foo\\\\bar'
+  result: ['foo\\bar']
+- cmdline: '\"foo\\\\bar\"'
+  result: ['foo\\bar']
+- cmdline: 'foo\\\"bar'
+  result: ['foo\"bar']
+- cmdline: '\"foo\\\"bar\"'
+  result: ['foo\"bar']
+- cmdline: '\\ foo bar'
+  result: [' foo', 'bar']
+- cmdline: '\"\\ foo\" bar'
+  result: [' foo', 'bar']
+- cmdline: '\\\\foo bar'
+  result: ['\\foo', 'bar']
+- cmdline: '\"\\\\foo\" bar'
+  result: ['\\foo', 'bar']
+- cmdline: '\\\"foo bar'
+  result: ['\"foo', 'bar']
+- cmdline: '\"\\\"foo\" bar'
+  result: ['\"foo', 'bar']
+- cmdline: 'foo\\  bar'
+  result: ['foo ', 'bar']
+- cmdline: '\"foo\\ \" bar'
+  result: ['foo ', 'bar']
+- cmdline: 'foo\\\\ bar'
+  result: ['foo\\', 'bar']
+- cmdline: '\"foo\\\\\" bar'
+  result: ['foo\\', 'bar']
+- cmdline: 'foo\\\" bar'
+  result: ['foo\"', 'bar']
+- cmdline: '\"foo\\\"\" bar'
+  result: ['foo\"', 'bar']
+- cmdline: '\\ foo\\  bar'
+  result: [' foo ', 'bar']
+- cmdline: '\"\\ foo\\ \" bar'
+  result: [' foo ', 'bar']
+- cmdline: '\\\\foo\\\\ bar'
+  result: ['\\foo\\', 'bar']
+- cmdline: '\"\\\\foo\\\\\" bar'
+  result: ['\\foo\\', 'bar']
+- cmdline: '\\\"foo\\\" bar'
+  result: ['\"foo\"', 'bar']
+- cmdline: '\"\\\"foo\\\"\" bar'
+  result: ['\"foo\"', 'bar']
+- cmdline: 'foo \\ bar'
+  result: ['foo', ' bar']
+- cmdline: 'foo \"\\ bar\"'
+  result: ['foo', ' bar']
+- cmdline: 'foo \\\\bar'
+  result: ['foo', '\\bar']
+- cmdline: 'foo \"\\\\bar\"'
+  result: ['foo', '\\bar']
+- cmdline: 'foo \\\"bar'
+  result: ['foo', '\"bar']
+- cmdline: 'foo \"\\\"bar\"'
+  result: ['foo', '\"bar']
+- cmdline: 'foo bar\\ '
+  result: ['foo', 'bar ']
+- cmdline: 'foo \"bar\\ \"'
+  result: ['foo', 'bar ']
+- cmdline: 'foo bar\\\\'
+  result: ['foo', 'bar\\']
+- cmdline: 'foo \"bar\\\\\"'
+  result: ['foo', 'bar\\']
+- cmdline: 'foo bar\\\"'
+  result: ['foo', 'bar\"']
+- cmdline: 'foo \"bar\\\"\"'
+  result: ['foo', 'bar\"']
+- cmdline: 'foo \\ bar\\ '
+  result: ['foo', ' bar ']
+- cmdline: 'foo \"\\ bar\\ \"'
+  result: ['foo', ' bar ']
+- cmdline: 'foo \\\\bar\\\\'
+  result: ['foo', '\\bar\\']
+- cmdline: 'foo \"\\\\bar\\\\\"'
+  result: ['foo', '\\bar\\']
+- cmdline: 'foo \\\"bar\\\"'
+  result: ['foo', '\"bar\"']
+- cmdline: 'foo \"\\\"bar\\\"\"'
+  result: ['foo', '\"bar\"']
