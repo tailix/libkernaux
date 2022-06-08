@@ -2,33 +2,8 @@
 #include "config.h"
 #endif
 
-#include <ctype.h>
-#include <stdbool.h>
-#include <stdlib.h>
+#include <stddef.h>
 #include <string.h>
-
-int atoi(const char *str)
-{
-    while (isspace(*str)) ++str;
-    bool is_negative = false;
-    switch (*str) {
-    case '-': is_negative = true; // fall through
-    case '+': ++str;
-    }
-    int result = 0;
-    while (isdigit(*str)) result = 10 * result - (*str++ - '0');
-    return is_negative ? result : -result;
-}
-
-int isdigit(const int c)
-{
-    return (unsigned)c - '0' < 10;
-}
-
-int isspace(const int c)
-{
-    return c == ' ' || (unsigned)c - '\t' < 5;
-}
 
 int memcmp(const void *s1, const void *s2, size_t n)
 {

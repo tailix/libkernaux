@@ -70,7 +70,10 @@ if WITH_FRAMEBUFFER
 libkernaux_a_SOURCES += src/framebuffer.c
 endif
 if WITH_LIBC
-libkernaux_a_SOURCES += libc/src/main.c
+libkernaux_a_SOURCES += \
+	libc/src/ctype.c \
+	libc/src/stdlib.c \
+	libc/src/string.c
 endif
 if WITH_MBR
 libkernaux_a_SOURCES += src/mbr.c
