@@ -95,14 +95,16 @@ KernAux::Version.supports_cmdline? and RSpec.describe KernAux, '.cmdline' do
     cmdline_yml = File.expand_path('../../../../../common/cmdline.yml', __dir__)
 
     YAML.safe_load_file(cmdline_yml).each do |test|
-      next unless test['argv_count_max'].nil? && test['buffer_size'].nil?
-
       escape_str = lambda do |str|
         eval "\"#{str}\"", binding, __FILE__, __LINE__ # "str"
       end
 
       cmdline = escape_str.call test['cmdline']
-      result  = test['result'].map(&escape_str)
+      argv_count_max = test['argv_count_max']
+      buffer_size = test['buffer_size']
+      result = test['result']&.map(&escape_str)
+
+      next unless argv_count_max.nil? && buffer_size.nil? && !result.nil?
 
       it "transforms #{cmdline.inspect} to #{result.inspect}" do
         expect(described_class.cmdline(cmdline)).to eq result
