@@ -36,7 +36,7 @@ mruby_freebsd_task:
     - sudo make install
   mruby_test_script:
     - cd mruby-3.1.0
-    - MRUBY_CONFIG=../pkgs/mruby/build_config.rb rake test
+    - MRUBY_CONFIG=../bindings/mruby/build_config.rb rake test
 
 ruby_freebsd_task:
   name: Ruby (FreeBSD)
@@ -59,11 +59,11 @@ ruby_freebsd_task:
     - make
     - sudo make install
   ruby_build_script:
-    - cd pkgs/ruby
+    - cd bindings/ruby
     - ./bin/setup
     - bundle exec rake compile
   ruby_test_script:
-    - cd pkgs/ruby
+    - cd bindings/ruby
     - bundle exec rake
 
 rust_freebsd_task:
@@ -81,7 +81,7 @@ rust_freebsd_task:
     - make
     - sudo make install
   rust_test_script:
-    - cd pkgs/rust
+    - cd bindings/rust
     - ~/.cargo/bin/cargo test
     - ~/.cargo/bin/cargo clippy
     - ~/.cargo/bin/cargo fmt --check

@@ -24,16 +24,16 @@ jobs:
         run: make
       - name: install
         run: sudo make install
-      - working-directory: pkgs/ruby
+      - working-directory: bindings/ruby
         name: setup
         run: ./bin/setup
-      - working-directory: pkgs/ruby
+      - working-directory: bindings/ruby
         name: compile
         run: rake compile
-      - working-directory: pkgs/ruby
+      - working-directory: bindings/ruby
         name: test & lint
         run: rake
-      - working-directory: pkgs/ruby
+      - working-directory: bindings/ruby
         name: cppcheck
         run: cppcheck --quiet --error-exitcode=1 --std=c99 --enable=warning,style,performance,portability .
 
@@ -56,12 +56,12 @@ jobs:
         run: make
       - name: install
         run: sudo make install
-      - working-directory: pkgs/ruby
+      - working-directory: bindings/ruby
         name: setup
         run: ./bin/setup
-      - working-directory: pkgs/ruby
+      - working-directory: bindings/ruby
         name: compile
         run: rake compile
-      - working-directory: pkgs/ruby
+      - working-directory: bindings/ruby
         name: test & lint
         run: rake
