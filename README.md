@@ -104,6 +104,8 @@ stable options.
 
 * `--with-libc` - provides the replacement for some standard C functions.
   Useful in freestanding environment, where no libc is present.
+* `--with-libm` - provides the replacement for C functions from `<math.h>`,
+  Useful in freestanding environment, where no libm is present.
 
 ### Default options
 
@@ -162,6 +164,7 @@ without it in `$PATH`:
   --host='i386-elf' \
   --enable-freestanding \
   --with-libc \
+  --with-libm \
   AR="$(which i386-elf-ar)" \
   CC="$(which i386-elf-gcc)" \
   RANLIB="$(which i386-elf-ranlib)"
