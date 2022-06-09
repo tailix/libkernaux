@@ -38,6 +38,14 @@ AC_CONFIG_FILES([
 
 
 
+######################
+# Configure Automake #
+######################
+
+AM_INIT_AUTOMAKE([1.16 subdir-objects])
+
+
+
 ###############
 # Define args #
 ###############
@@ -263,7 +271,9 @@ AS_IF([test "$enable_freestanding" = yes], do_enable_freestanding, do_disable_fr
 
 
 
-AM_INIT_AUTOMAKE([1.16 subdir-objects])
+##############
+# Run checks #
+##############
 
 AC_LANG([C])
 
@@ -277,5 +287,9 @@ AC_CHECK_HEADER_STDBOOL
 AC_CHECK_HEADERS([stdarg.h stddef.h stdint.h])
 
 
+
+##########
+# Finish #
+##########
 
 AC_OUTPUT
