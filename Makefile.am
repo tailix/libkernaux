@@ -19,6 +19,7 @@ SUBDIRS += examples tests
 endif
 
 # TODO: learn if recursive targets can be created automatically
+# FIXME: dependencies are not built automatically with --enable-split-all
 libc/libc.la:
 	$(MAKE) $(AM_MAKEFLAGS) -C $(top_builddir)/libc libc.la
 libm/libm.la:
