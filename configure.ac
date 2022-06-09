@@ -7,9 +7,9 @@ LT_PREREQ([2.4.6])
 
 
 
-######################
-# Configure Autoconf #
-######################
+#######################
+# Initialize Autoconf #
+#######################
 
 AC_INIT([libkernaux],
   [0.3.0],
@@ -264,9 +264,9 @@ AS_IF([test "$enable_freestanding" = yes], do_enable_freestanding, do_disable_fr
 
 
 
-######################
-# Configure Automake #
-######################
+#######################
+# Initialize Automake #
+#######################
 
 AM_INIT_AUTOMAKE([1.16 subdir-objects])
 
@@ -288,9 +288,9 @@ AC_CHECK_HEADERS([stdarg.h stddef.h stdint.h])
 
 
 
-#####################
-# Configure Libtool #
-#####################
+######################
+# Initialize Libtool #
+######################
 
 LT_INIT([disable-shared])
 
