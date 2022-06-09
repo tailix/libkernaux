@@ -1,5 +1,15 @@
+############################
+# Specify program versions #
+############################
+
 AC_PREREQ([2.68])
 LT_PREREQ([2.4.6])
+
+
+
+######################
+# Configure Autoconf #
+######################
 
 AC_INIT([libkernaux],
   [0.3.0],
@@ -7,11 +17,24 @@ AC_INIT([libkernaux],
   [libkernaux],
   [https://github.com/tailix/libkernaux])
 
-AC_CONFIG_HEADERS([config.h])
-AC_CONFIG_SRCDIR([src/assert.c])
-
 AC_CANONICAL_BUILD
 AC_CANONICAL_HOST
+
+AC_CONFIG_HEADERS([config.h])
+AC_CONFIG_SRCDIR([src/assert.c])
+AC_CONFIG_FILES([
+  Makefile
+  examples/Makefile
+  include/Makefile
+  libc/Makefile
+  libc/include/Makefile
+  libm/Makefile
+  libm/include/Makefile
+  include/kernaux.h
+  include/kernaux/console.h
+  include/kernaux/printf.h
+  tests/Makefile
+])
 
 
 
@@ -230,6 +253,10 @@ AS_IF([test "$with_units"        = no], [AC_SUBST([comment_line_units],        [
 
 
 
+###################
+# Set build flags #
+###################
+
 AC_DEFUN([do_enable_freestanding],  [CFLAGS+=' -nostdlib -ffreestanding -fno-pic -fno-stack-protector '])
 AC_DEFUN([do_disable_freestanding], [CFLAGS+=' -fpic '])
 AS_IF([test "$enable_freestanding" = yes], do_enable_freestanding, do_disable_freestanding)
@@ -237,20 +264,6 @@ AS_IF([test "$enable_freestanding" = yes], do_enable_freestanding, do_disable_fr
 
 
 AM_INIT_AUTOMAKE([1.16 subdir-objects])
-
-AC_CONFIG_FILES([
-  Makefile
-  examples/Makefile
-  include/Makefile
-  libc/Makefile
-  libc/include/Makefile
-  libm/Makefile
-  libm/include/Makefile
-  include/kernaux.h
-  include/kernaux/console.h
-  include/kernaux/printf.h
-  tests/Makefile
-])
 
 AC_LANG([C])
 
@@ -262,5 +275,7 @@ AC_PROG_RANLIB
 AC_C_INLINE
 AC_CHECK_HEADER_STDBOOL
 AC_CHECK_HEADERS([stdarg.h stddef.h stdint.h])
+
+
 
 AC_OUTPUT
