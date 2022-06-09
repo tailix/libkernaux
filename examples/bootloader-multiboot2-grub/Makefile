@@ -12,6 +12,7 @@ LIBKERNAUX_DEST  = ../../dest/dev-cross-i386
 DIFF = diff
 GRUB_FILE = grub-file
 GRUB_MKRESCUE = grub-mkrescue
+LIBTOOL = libtool
 QEMU = qemu-system-i386 -serial stdio -display none
 
 EXPECTED = expected.txt
@@ -49,7 +50,7 @@ $(IMAGE): $(GRUBCFG) $(KERNEL)
 	$(GRUB_MKRESCUE) $(ROOTFS) -o $@
 
 $(KERNEL): $(LINKERSCR) build-libkernaux.a $(OBJS)
-	$(CC) -T $(LINKERSCR) -o $@ $(OBJS) -ffreestanding -nostdlib -lkernaux -lgcc -Wl,-L$(LIBKERNAUX_DEST)/lib
+	$(LIBTOOL) --mode=link --tag=CC $(CC) -T $(LINKERSCR) -o $@ $(OBJS) -ffreestanding -nostdlib $(LIBKERNAUX_DEST)/lib/libkernaux.la -lgcc
 	$(GRUB_FILE) --is-x86-multiboot2 $@
 
 build-libkernaux.a:

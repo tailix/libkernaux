@@ -8,6 +8,7 @@ CC = $(CCPREFIX)gcc
 LIBKERNAUX_BUILD = ../../build/dev-cross-riscv64
 LIBKERNAUX_DEST  = ../../dest/dev-cross-riscv64
 
+LIBTOOL = libtool
 QEMU = qemu-system-riscv64 -serial stdio -display none
 
 KERNEL = kernel.elf
@@ -31,7 +32,7 @@ clean:
 	rm -f $(KERNEL) $(OBJS)
 
 $(KERNEL): $(LINKERSCR) $(OBJS) build-libkernaux.a
-	$(CC) -T $(LINKERSCR) -o $@ $(OBJS) -nostdlib -lkernaux -lgcc -Wl,-L$(LIBKERNAUX_DEST)/lib
+	$(LIBTOOL) --mode=link --tag=CC $(CC) -T $(LINKERSCR) -o $@ $(OBJS) -nostdlib $(LIBKERNAUX_DEST)/lib/libkernaux.la -lgcc
 
 build-libkernaux.a:
 	cd $(LIBKERNAUX_BUILD) && ./config && make install
