@@ -247,6 +247,7 @@ AC_CONFIG_FILES([
   include/kernaux.h
   include/kernaux/console.h
   include/kernaux/printf.h
+  tests/Makefile
 ])
 
 AC_LANG([C])
