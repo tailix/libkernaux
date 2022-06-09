@@ -7,6 +7,8 @@ AM_CFLAGS = \
 	-pedantic \
 	-Wall \
 	-Wextra \
+	-I$(top_builddir)/include \
+	-I$(top_srcdir)/include \
 	-I$(top_builddir)/libc/include \
 	-I$(top_srcdir)/libc/include \
 	-I$(top_builddir)/libm/include \
