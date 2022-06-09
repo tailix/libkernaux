@@ -31,7 +31,6 @@
 /configure~
 /depcomp
 /install-sh
-/libtool
 /ltmain.sh
 /missing
 /test-driver
@@ -86,6 +85,7 @@
 /config.h
 /config.log
 /config.status
+/libtool
 /stamp-h1
 /test-suite.log
 
