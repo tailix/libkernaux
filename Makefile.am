@@ -18,6 +18,12 @@ if ENABLE_TESTS
 SUBDIRS += examples tests
 endif
 
+# TODO: learn if recursive targets can be created automatically
+libc/libc.la:
+	$(MAKE) $(AM_MAKEFLAGS) -C $(top_builddir)/libc libc.la
+libm/libm.la:
+	$(MAKE) $(AM_MAKEFLAGS) -C $(top_builddir)/libm libm.la
+
 lib_LTLIBRARIES = libkernaux.la
 
 libkernaux_la_SOURCES = src/libc.h src/assert.c
