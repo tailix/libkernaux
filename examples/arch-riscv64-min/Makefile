@@ -34,9 +34,7 @@ $(KERNEL): $(LINKERSCR) $(OBJS) build-libkernaux.a
 	$(CC) -T $(LINKERSCR) -o $@ $(OBJS) -nostdlib -lkernaux -lgcc -Wl,-L$(LIBKERNAUX_DEST)/lib
 
 build-libkernaux.a:
-	cd $(LIBKERNAUX_BUILD) && ./config
-	cd $(LIBKERNAUX_BUILD) && make libkernaux.a
-	cd $(LIBKERNAUX_BUILD) && make install-data install-exec
+	cd $(LIBKERNAUX_BUILD) && ./config && make install
 
 %.c.o: %.c
 	$(CC) -c $< -o $@ $(CFLAGS)
