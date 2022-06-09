@@ -2,6 +2,8 @@
 # Common #
 ##########
 
+include $(top_srcdir)/shared.am
+
 SUBDIRS = include
 if WITH_LIBC
 SUBDIRS += libc
@@ -12,38 +14,6 @@ endif
 
 CLEANFILES =
 TESTS =
-
-AM_CFLAGS = \
-	-std=c99 \
-	-pedantic \
-	-Wall \
-	-Wextra \
-	-I$(top_builddir)/include \
-	-I$(top_srcdir)/include \
-	-D_POSIX_C_SOURCE=200809L
-
-if WITH_LIBC
-AM_CFLAGS += \
-	-I$(top_builddir)/libc/include \
-	-I$(top_srcdir)/libc/include
-endif
-
-if WITH_LIBM
-AM_CFLAGS += \
-	-I$(top_builddir)/libm/include \
-	-I$(top_srcdir)/libm/include
-endif
-
-if ENABLE_WERROR
-AM_CFLAGS += -Werror
-endif
-
-# TODO: DRY (configure.ac)
-if ENABLE_FREESTANDING
-AM_CFLAGS += -nostdlib -ffreestanding -fno-pic -fno-stack-protector
-else
-AM_CFLAGS += -fpic
-endif
 
 #######
 # all #
