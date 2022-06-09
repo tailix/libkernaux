@@ -6,6 +6,9 @@ SUBDIRS = include
 if WITH_LIBC
 SUBDIRS += libc
 endif
+if WITH_LIBM
+SUBDIRS += libm
+endif
 
 CLEANFILES =
 TESTS =
@@ -23,6 +26,12 @@ if WITH_LIBC
 AM_CFLAGS += \
 	-I$(top_builddir)/libc/include \
 	-I$(top_srcdir)/libc/include
+endif
+
+if WITH_LIBM
+AM_CFLAGS += \
+	-I$(top_builddir)/libm/include \
+	-I$(top_srcdir)/libm/include
 endif
 
 if ENABLE_WERROR
@@ -76,6 +85,9 @@ libkernaux_a_SOURCES += src/framebuffer.c
 endif
 if WITH_LIBC
 libkernaux_a_LIBADD += libc/libc.a
+endif
+if WITH_LIBM
+libkernaux_a_LIBADD += libm/libm.a
 endif
 if WITH_MBR
 libkernaux_a_SOURCES += src/mbr.c

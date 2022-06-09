@@ -35,8 +35,6 @@
 
 /Makefile.in
 /include/Makefile.in
-/libc/Makefile.in
-/libc/include/Makefile.in
 
 ########################
 # To build out of root #
@@ -92,8 +90,6 @@
 
 /Makefile
 /include/Makefile
-/libc/Makefile
-/libc/include/Makefile
 
 /include/kernaux.h
 /include/kernaux/console.h

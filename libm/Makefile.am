@@ -1,6 +1,6 @@
 SUBDIRS = include
 
-lib_LIBRARIES = libc.a
+lib_LIBRARIES = libm.a
 
 AM_CFLAGS = \
 	-std=c99 \
@@ -12,7 +12,4 @@ AM_CFLAGS = \
 	-I$(top_builddir)/libm/include \
 	-I$(top_srcdir)/libm/include
 
-libc_a_SOURCES = \
-	src/ctype.c \
-	src/stdlib.c \
-	src/string.c
+libm_a_SOURCES = src/main.c

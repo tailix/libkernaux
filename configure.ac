@@ -44,6 +44,7 @@ AC_ARG_WITH(  [units],        AS_HELP_STRING([--without-units],       [without m
 
 dnl Packages (disabled by default)
 AC_ARG_WITH(  [libc],         AS_HELP_STRING([--with-libc],           [with libc replacement]))
+AC_ARG_WITH(  [libm],         AS_HELP_STRING([--with-libm],           [with libm replacement]))
 
 
 
@@ -108,6 +109,7 @@ AS_IF([test "$with_units"          = no ], [with_units=no],           [with_unit
 
 dnl Packages (disabled by default)
 AS_IF([test "$with_libc"           = yes], [with_libc=yes],           [with_libc=no])
+AS_IF([test "$with_libm"           = yes], [with_libm=yes],           [with_libm=no])
 
 
 
@@ -121,6 +123,8 @@ AS_IF([test "$enable_tests"        = yes -a "$enable_freestanding" = yes], AC_MS
 AS_IF([test "$enable_tests_python" = yes -a "$enable_freestanding" = yes], AC_MSG_ERROR([can not build freestanding tests]))
 AS_IF([test "$enable_tests"        = yes -a "$with_libc"           = yes], AC_MSG_ERROR([can not use package `libc' with tests]))
 AS_IF([test "$enable_tests_python" = yes -a "$with_libc"           = yes], AC_MSG_ERROR([can not use package `libc' with tests]))
+AS_IF([test "$enable_tests"        = yes -a "$with_libm"           = yes], AC_MSG_ERROR([can not use package `libm' with tests]))
+AS_IF([test "$enable_tests_python" = yes -a "$with_libm"           = yes], AC_MSG_ERROR([can not use package `libm' with tests]))
 
 AS_IF([test "$with_printf" = yes -a "$with_ntoa"       = no], AC_MSG_ERROR([package `printf' requires package `ntoa']))
 AS_IF([test "$with_printf" = yes -a "$with_printf_fmt" = no], AC_MSG_ERROR([package `printf' requires package `printf-fmt']))
@@ -162,6 +166,7 @@ AM_CONDITIONAL([WITH_UNITS],          [test "$with_units"          = yes])
 
 dnl Packages (disabled by default)
 AM_CONDITIONAL([WITH_LIBC],           [test "$with_libc"           = yes])
+AM_CONDITIONAL([WITH_LIBM],           [test "$with_libm"           = yes])
 
 
 
@@ -198,7 +203,8 @@ AS_IF([test "$with_printf_fmt"     = yes], [AC_DEFINE([WITH_PRINTF_FMT],     [1]
 AS_IF([test "$with_units",         = yes], [AC_DEFINE([WITH_UNITS],          [1], [with measurement units utils])])
 
 dnl Packages (disabled by default)
-AS_IF([test "$with_libc"           = yes], [AC_DEFINE([WITH_LIBC],           [1], [with atoi replacement])])
+AS_IF([test "$with_libc"           = yes], [AC_DEFINE([WITH_LIBC],           [1], [with libc replacement])])
+AS_IF([test "$with_libm"           = yes], [AC_DEFINE([WITH_LIBM],           [1], [with libm replacement])])
 
 
 
@@ -235,6 +241,8 @@ AC_CONFIG_FILES([
   include/Makefile
   libc/Makefile
   libc/include/Makefile
+  libm/Makefile
+  libm/include/Makefile
   include/kernaux.h
   include/kernaux/console.h
   include/kernaux/printf.h
