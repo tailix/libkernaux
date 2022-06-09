@@ -11,7 +11,6 @@ LIBKERNAUX_DEST  = ../../dest/dev-cross-i386
 
 DIFF = diff
 GRUB_FILE = grub-file
-LIBTOOL = libtool
 LIMINE = ../../vendor/limine/build/bin
 QEMU = qemu-system-x86_64 -serial stdio -display none
 XORRISO = xorriso
@@ -66,7 +65,7 @@ $(IMAGE): $(FULL_KERNEL) $(FULL_LIMINE_CD) $(FULL_LIMINE_ELTORITO) $(FULL_LIMINE
 	$(LIMINE_INSTALL) $@
 
 $(FULL_KERNEL): $(LINKERSCR) build-libkernaux.a $(OBJS)
-	$(LIBTOOL) --mode=link --tag=CC $(CC) -T $(LINKERSCR) -o $@ $(OBJS) -ffreestanding -nostdlib $(LIBKERNAUX_DEST)/lib/libkernaux.la -lgcc
+	$(CC) -T $(LINKERSCR) -o $@ $(OBJS) -ffreestanding -nostdlib -lkernaux -lgcc -Wl,-L$(LIBKERNAUX_DEST)/lib
 	$(GRUB_FILE) --is-x86-multiboot2 $@
 
 $(FULL_LIMINE_CD):

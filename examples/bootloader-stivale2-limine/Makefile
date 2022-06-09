@@ -10,7 +10,6 @@ LIBKERNAUX_BUILD = ../../build/dev-cross-x86_64
 LIBKERNAUX_DEST  = ../../dest/dev-cross-x86_64
 
 DIFF = diff
-LIBTOOL = libtool
 LIMINE = ../../vendor/limine/build/bin
 QEMU = qemu-system-x86_64 -serial stdio -display none
 XORRISO = xorriso
@@ -71,7 +70,7 @@ $(IMAGE): $(FULL_KERNEL) $(FULL_LIMINE_CD) $(FULL_LIMINE_ELTORITO) $(FULL_LIMINE
 	$(LIMINE_INSTALL) $@
 
 $(FULL_KERNEL): $(LINKERSCR) build-libkernaux.a $(OBJS)
-	$(LIBTOOL) --mode=link --tag=CC $(CC) -T $(LINKERSCR) -o $@ $(OBJS) -ffreestanding -nostdlib -zmax-page-size=0x1000 -static $(LIBKERNAUX_DEST)/lib/libkernaux.la -lgcc
+	$(CC) -T $(LINKERSCR) -o $@ $(OBJS) -ffreestanding -nostdlib -zmax-page-size=0x1000 -static -lkernaux -lgcc -Wl,-L$(LIBKERNAUX_DEST)/lib
 
 $(FULL_LIMINE_CD):
 	cp -f $(LIMINE_CD) $(FULL_LIMINE_CD)
