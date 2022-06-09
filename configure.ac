@@ -20,6 +20,7 @@ AC_INIT([libkernaux],
 AC_CANONICAL_BUILD
 AC_CANONICAL_HOST
 
+AC_CONFIG_MACRO_DIRS([m4])
 AC_CONFIG_HEADERS([config.h])
 AC_CONFIG_SRCDIR([src/assert.c])
 AC_CONFIG_FILES([
@@ -35,14 +36,6 @@ AC_CONFIG_FILES([
   include/kernaux/printf.h
   tests/Makefile
 ])
-
-
-
-######################
-# Configure Automake #
-######################
-
-AM_INIT_AUTOMAKE([1.16 subdir-objects])
 
 
 
@@ -271,6 +264,14 @@ AS_IF([test "$enable_freestanding" = yes], do_enable_freestanding, do_disable_fr
 
 
 
+######################
+# Configure Automake #
+######################
+
+AM_INIT_AUTOMAKE([1.16 subdir-objects])
+
+
+
 ##############
 # Run checks #
 ##############
@@ -281,10 +282,17 @@ AM_PROG_AR
 AM_PROG_AS
 AC_PROG_CC
 AC_PROG_CC_C99
-AC_PROG_RANLIB
 AC_C_INLINE
 AC_CHECK_HEADER_STDBOOL
 AC_CHECK_HEADERS([stdarg.h stddef.h stdint.h])
+
+
+
+#####################
+# Configure Libtool #
+#####################
+
+LT_INIT([disable-shared])
 
 
 

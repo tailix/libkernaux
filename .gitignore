@@ -28,8 +28,13 @@
 /configure~
 /depcomp
 /install-sh
+/libtool
+/ltmain.sh
 /missing
 /test-driver
+
+/m4/*
+!/m4/.keep
 
 # Custom
 
