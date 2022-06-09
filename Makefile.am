@@ -1,14 +1,18 @@
 include $(top_srcdir)/shared.am
 
-SUBDIRS = . include
-if ENABLE_TESTS
-SUBDIRS += examples tests
-endif
+SUBDIRS = include
+
 if WITH_LIBC
 SUBDIRS += libc
 endif
 if WITH_LIBM
 SUBDIRS += libm
+endif
+
+SUBDIRS += .
+
+if ENABLE_TESTS
+SUBDIRS += examples tests
 endif
 
 lib_LIBRARIES = libkernaux.a
