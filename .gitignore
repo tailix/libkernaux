@@ -35,6 +35,7 @@
 
 /Makefile.in
 /include/Makefile.in
+/libc/Makefile.in
 /libc/include/Makefile.in
 
 ########################
@@ -91,6 +92,7 @@
 
 /Makefile
 /include/Makefile
+/libc/Makefile
 /libc/include/Makefile
 
 /include/kernaux.h

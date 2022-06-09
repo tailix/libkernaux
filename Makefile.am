@@ -2,7 +2,10 @@
 # Common #
 ##########
 
-SUBDIRS = include libc/include
+SUBDIRS = include
+if WITH_LIBC
+SUBDIRS += libc
+endif
 
 CLEANFILES =
 TESTS =
@@ -45,6 +48,8 @@ noinst_PROGRAMS = $(TESTS)
 ################
 
 libkernaux_a_SOURCES = src/libc.h src/assert.c
+libkernaux_a_LIBADD =
+
 if ASM_I386
 libkernaux_a_SOURCES += src/asm/i386.S
 endif
@@ -70,10 +75,7 @@ if WITH_FRAMEBUFFER
 libkernaux_a_SOURCES += src/framebuffer.c
 endif
 if WITH_LIBC
-libkernaux_a_SOURCES += \
-	libc/src/ctype.c \
-	libc/src/stdlib.c \
-	libc/src/string.c
+libkernaux_a_LIBADD += libc/libc.a
 endif
 if WITH_MBR
 libkernaux_a_SOURCES += src/mbr.c
