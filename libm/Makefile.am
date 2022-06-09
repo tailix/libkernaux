@@ -2,6 +2,6 @@ include $(top_srcdir)/shared.am
 
 SUBDIRS = include
 
-lib_LIBRARIES = libm.a
+lib_LTLIBRARIES = libm.la
 
-libm_a_SOURCES = src/main.c
+libm_la_SOURCES = src/main.c

@@ -8,7 +8,7 @@ noinst_PROGRAMS = $(TESTS)
 #################
 
 TESTS += assert_guards
-assert_guards_LDADD = $(top_builddir)/libkernaux.a
+assert_guards_LDADD = $(top_builddir)/libkernaux.la
 assert_guards_SOURCES = assert_guards.c
 
 #################
@@ -16,7 +16,7 @@ assert_guards_SOURCES = assert_guards.c
 #################
 
 TESTS += assert_simple
-assert_simple_LDADD = $(top_builddir)/libkernaux.a
+assert_simple_LDADD = $(top_builddir)/libkernaux.la
 assert_simple_SOURCES = assert_simple.c
 
 ###########
@@ -25,7 +25,7 @@ assert_simple_SOURCES = assert_simple.c
 
 if WITH_CMDLINE
 TESTS += cmdline
-cmdline_LDADD = $(top_builddir)/libkernaux.a
+cmdline_LDADD = $(top_builddir)/libkernaux.la
 cmdline_SOURCES = cmdline.c
 endif
 
@@ -36,7 +36,7 @@ endif
 if WITH_PRINTF
 if WITH_FILE
 TESTS += fprintf
-fprintf_LDADD = $(top_builddir)/libkernaux.a
+fprintf_LDADD = $(top_builddir)/libkernaux.la
 fprintf_SOURCES = fprintf.c
 endif
 endif
@@ -48,7 +48,7 @@ endif
 if WITH_PRINTF
 if WITH_FILE
 TESTS += fprintf_va
-fprintf_va_LDADD = $(top_builddir)/libkernaux.a
+fprintf_va_LDADD = $(top_builddir)/libkernaux.la
 fprintf_va_SOURCES = fprintf_va.c
 endif
 endif
@@ -59,7 +59,7 @@ endif
 
 if WITH_NTOA
 TESTS += ntoa
-ntoa_LDADD = $(top_builddir)/libkernaux.a
+ntoa_LDADD = $(top_builddir)/libkernaux.la
 ntoa_SOURCES = ntoa.c
 endif
 
@@ -68,7 +68,7 @@ endif
 ################
 
 TESTS += panic_guards
-panic_guards_LDADD = $(top_builddir)/libkernaux.a
+panic_guards_LDADD = $(top_builddir)/libkernaux.la
 panic_guards_SOURCES = panic_guards.c
 
 ################
@@ -76,7 +76,7 @@ panic_guards_SOURCES = panic_guards.c
 ################
 
 TESTS += panic_simple
-panic_simple_LDADD = $(top_builddir)/libkernaux.a
+panic_simple_LDADD = $(top_builddir)/libkernaux.la
 panic_simple_SOURCES = panic_simple.c
 
 #######
@@ -85,7 +85,7 @@ panic_simple_SOURCES = panic_simple.c
 
 if WITH_PFA
 TESTS += pfa
-pfa_LDADD = $(top_builddir)/libkernaux.a
+pfa_LDADD = $(top_builddir)/libkernaux.la
 pfa_SOURCES = pfa.c
 endif
 
@@ -95,7 +95,7 @@ endif
 
 if WITH_PRINTF_FMT
 TESTS += printf_fmt
-printf_fmt_LDADD = $(top_builddir)/libkernaux.a
+printf_fmt_LDADD = $(top_builddir)/libkernaux.la
 printf_fmt_SOURCES = printf_fmt.c
 endif
 
@@ -105,7 +105,7 @@ endif
 
 if WITH_PRINTF
 TESTS += snprintf
-snprintf_LDADD = $(top_builddir)/libkernaux.a
+snprintf_LDADD = $(top_builddir)/libkernaux.la
 snprintf_SOURCES = snprintf.c
 endif
 
@@ -115,7 +115,7 @@ endif
 
 if WITH_PRINTF
 TESTS += snprintf_va
-snprintf_va_LDADD = $(top_builddir)/libkernaux.a
+snprintf_va_LDADD = $(top_builddir)/libkernaux.la
 snprintf_va_SOURCES = snprintf_va.c
 endif
 
@@ -125,6 +125,6 @@ endif
 
 if WITH_UNITS
 TESTS += units_human
-units_human_LDADD = $(top_builddir)/libkernaux.a
+units_human_LDADD = $(top_builddir)/libkernaux.la
 units_human_SOURCES = units_human.c
 endif

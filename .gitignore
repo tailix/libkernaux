@@ -4,10 +4,13 @@
 
 *.a
 *.c.d
+*.la
+*.lo
 *.o
 
 .deps/
 .dirstamp
+.libs/
 
 ############################
 # Always generated in root #

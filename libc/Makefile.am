@@ -2,9 +2,9 @@ include $(top_srcdir)/shared.am
 
 SUBDIRS = include
 
-lib_LIBRARIES = libc.a
+lib_LTLIBRARIES = libc.la
 
-libc_a_SOURCES = \
+libc_la_SOURCES = \
 	src/ctype.c \
 	src/stdlib.c \
 	src/string.c
