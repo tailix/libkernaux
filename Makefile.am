@@ -4,7 +4,10 @@
 
 include $(top_srcdir)/shared.am
 
-SUBDIRS = include
+SUBDIRS = . include
+if ENABLE_TESTS
+SUBDIRS += examples
+endif
 if WITH_LIBC
 SUBDIRS += libc
 endif
@@ -86,158 +89,6 @@ libkernaux_a_SOURCES += src/printf_fmt.c
 endif
 if WITH_UNITS
 libkernaux_a_SOURCES += src/units.c
-endif
-
-##########################
-# examples/assert_guards #
-##########################
-
-if ENABLE_TESTS
-TESTS += examples/assert_guards
-examples_assert_guards_LDADD = libkernaux.a
-examples_assert_guards_SOURCES = examples/assert_guards.c
-endif
-
-##########################
-# examples/assert_simple #
-##########################
-
-if ENABLE_TESTS
-TESTS += examples/assert_simple
-examples_assert_simple_LDADD = libkernaux.a
-examples_assert_simple_SOURCES = examples/assert_simple.c
-endif
-
-####################
-# examples/cmdline #
-####################
-
-if ENABLE_TESTS
-if WITH_CMDLINE
-TESTS += examples/cmdline
-examples_cmdline_LDADD = libkernaux.a
-examples_cmdline_SOURCES = examples/cmdline.c
-endif
-endif
-
-####################
-# examples/fprintf #
-####################
-
-if ENABLE_TESTS
-if WITH_PRINTF
-if WITH_FILE
-TESTS += examples/fprintf
-examples_fprintf_LDADD = libkernaux.a
-examples_fprintf_SOURCES = examples/fprintf.c
-endif
-endif
-endif
-
-#######################
-# examples/fprintf_va #
-#######################
-
-if ENABLE_TESTS
-if WITH_PRINTF
-if WITH_FILE
-TESTS += examples/fprintf_va
-examples_fprintf_va_LDADD = libkernaux.a
-examples_fprintf_va_SOURCES = examples/fprintf_va.c
-endif
-endif
-endif
-
-#################
-# examples/ntoa #
-#################
-
-if ENABLE_TESTS
-if WITH_NTOA
-TESTS += examples/ntoa
-examples_ntoa_LDADD = libkernaux.a
-examples_ntoa_SOURCES = examples/ntoa.c
-endif
-endif
-
-#########################
-# examples/panic_guards #
-#########################
-
-if ENABLE_TESTS
-TESTS += examples/panic_guards
-examples_panic_guards_LDADD = libkernaux.a
-examples_panic_guards_SOURCES = examples/panic_guards.c
-endif
-
-#########################
-# examples/panic_simple #
-#########################
-
-if ENABLE_TESTS
-TESTS += examples/panic_simple
-examples_panic_simple_LDADD = libkernaux.a
-examples_panic_simple_SOURCES = examples/panic_simple.c
-endif
-
-################
-# examples/pfa #
-################
-
-if ENABLE_TESTS
-if WITH_PFA
-TESTS += examples/pfa
-examples_pfa_LDADD = libkernaux.a
-examples_pfa_SOURCES = examples/pfa.c
-endif
-endif
-
-#######################
-# examples/printf_fmt #
-#######################
-
-if ENABLE_TESTS
-if WITH_PRINTF_FMT
-TESTS += examples/printf_fmt
-examples_printf_fmt_LDADD = libkernaux.a
-examples_printf_fmt_SOURCES = examples/printf_fmt.c
-endif
-endif
-
-#####################
-# examples/snprintf #
-#####################
-
-if ENABLE_TESTS
-if WITH_PRINTF
-TESTS += examples/snprintf
-examples_snprintf_LDADD = libkernaux.a
-examples_snprintf_SOURCES = examples/snprintf.c
-endif
-endif
-
-########################
-# examples/snprintf_va #
-########################
-
-if ENABLE_TESTS
-if WITH_PRINTF
-TESTS += examples/snprintf_va
-examples_snprintf_va_LDADD = libkernaux.a
-examples_snprintf_va_SOURCES = examples/snprintf_va.c
-endif
-endif
-
-########################
-# examples/units_human #
-########################
-
-if ENABLE_TESTS
-if WITH_UNITS
-TESTS += examples/units_human
-examples_units_human_LDADD = libkernaux.a
-examples_units_human_SOURCES = examples/units_human.c
-endif
 endif
 
 ##################################

@@ -238,6 +238,7 @@ AM_INIT_AUTOMAKE([1.16 subdir-objects])
 
 AC_CONFIG_FILES([
   Makefile
+  examples/Makefile
   include/Makefile
   libc/Makefile
   libc/include/Makefile
