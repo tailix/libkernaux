@@ -2,4 +2,4 @@
 
 set -eux
 
-exec autoreconf -isf
+exec autoreconf -isf -Wall

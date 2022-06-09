@@ -75,9 +75,9 @@ zero). Work-in-progress APIs can change at any time.
     * [snprintf](/examples/snprintf.c)
     * [vsnprintf](/examples/snprintf_va.c)
 * libc replacement
-  * [ctype.h](/libc/ctype.h)
-  * [stdlib.h](/libc/stdlib.h)
-  * [string.h](/libc/string.h)
+  * [ctype.h](/libc/include/ctype.h)
+  * [stdlib.h](/libc/include/stdlib.h)
+  * [string.h](/libc/include/string.h)
 
 
 

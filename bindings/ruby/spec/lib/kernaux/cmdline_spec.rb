@@ -90,4 +90,25 @@ KernAux::Version.supports_cmdline? and RSpec.describe KernAux, '.cmdline' do
         raise_error described_class::CmdlineError, 'buffer overflow'
     end
   end
+
+  context 'using common tests' do
+    cmdline_yml = File.expand_path('../../../../../common/cmdline.yml', __dir__)
+
+    YAML.safe_load_file(cmdline_yml).each do |test|
+      escape_str = lambda do |str|
+        eval "\"#{str}\"", binding, __FILE__, __LINE__ # "str"
+      end
+
+      cmdline = escape_str.call test['cmdline']
+      argv_count_max = test['argv_count_max']
+      buffer_size = test['buffer_size']
+      result = test['result']&.map(&escape_str)
+
+      next unless argv_count_max.nil? && buffer_size.nil? && !result.nil?
+
+      it "transforms #{cmdline.inspect} to #{result.inspect}" do
+        expect(described_class.cmdline(cmdline)).to eq result
+      end
+    end
+  end
 end

@@ -241,12 +241,12 @@ AS_IF([test "$enable_freestanding" = yes], do_enable_freestanding, do_disable_fr
 
 
 
-AM_INIT_AUTOMAKE([1.9 subdir-objects])
+AM_INIT_AUTOMAKE([1.16 subdir-objects])
 
 AC_CONFIG_FILES([
   Makefile
   include/Makefile
-  libc/Makefile
+  libc/include/Makefile
   include/kernaux.h
   include/kernaux/console.h
   include/kernaux/printf.h

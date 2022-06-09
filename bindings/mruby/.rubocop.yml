@@ -25,6 +25,10 @@ Metrics/BlockLength:
     - 'Rakefile'
     - 'test/**/*.rb'
 
+Security/Eval:
+  Exclude:
+    - 'test/**/*.rb'
+
 Security/YAMLLoad:
   Exclude:
     - 'test/**/*.rb'
@@ -37,6 +41,10 @@ Style/Documentation:
     - 'Rakefile'
 
 Style/DoubleNegation:
+  Enabled: false
+
+Style/ExpandPathArguments:
+  # __dir__ is not available in mruby
   Enabled: false
 
 Style/FrozenStringLiteralComment:

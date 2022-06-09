@@ -4,7 +4,7 @@ require_relative 'lib/kernaux/version'
 
 Gem::Specification.new do |spec|
   repo = 'https://github.com/tailix/libkernaux'
-  home = "#{repo}/tree/master/pkgs/ruby"
+  home = "#{repo}/tree/master/bindings/ruby"
   bugs = "#{repo}/issues"
   docs = "https://www.rubydoc.info/gems/kernaux/#{KernAux::VERSION}"
 

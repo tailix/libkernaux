@@ -35,7 +35,7 @@
 
 /Makefile.in
 /include/Makefile.in
-/libc/Makefile.in
+/libc/include/Makefile.in
 
 ########################
 # To build out of root #
@@ -91,7 +91,7 @@
 
 /Makefile
 /include/Makefile
-/libc/Makefile
+/libc/include/Makefile
 
 /include/kernaux.h
 /include/kernaux/console.h
@@ -119,6 +119,8 @@
 /tests/multiboot2_info_print1
 /tests/multiboot2_info_print2
 /tests/test_cmdline
+/tests/test_cmdline_gen
+/tests/test_cmdline_gen.c
 /tests/test_elf
 /tests/test_mbr
 /tests/test_multiboot2_header_helpers

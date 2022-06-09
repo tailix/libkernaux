@@ -2,7 +2,7 @@
 # Common #
 ##########
 
-SUBDIRS = include libc
+SUBDIRS = include libc/include
 
 CLEANFILES =
 TESTS =
@@ -18,8 +18,8 @@ AM_CFLAGS = \
 
 if WITH_LIBC
 AM_CFLAGS += \
-	-I$(top_builddir)/libc \
-	-I$(top_srcdir)/libc
+	-I$(top_builddir)/libc/include \
+	-I$(top_srcdir)/libc/include
 endif
 
 if ENABLE_WERROR
@@ -71,7 +71,10 @@ if WITH_FRAMEBUFFER
 libkernaux_a_SOURCES += src/framebuffer.c
 endif
 if WITH_LIBC
-libkernaux_a_SOURCES += src/libc.c
+libkernaux_a_SOURCES += \
+	libc/src/ctype.c \
+	libc/src/stdlib.c \
+	libc/src/string.c
 endif
 if WITH_MBR
 libkernaux_a_SOURCES += src/mbr.c
@@ -355,6 +358,27 @@ tests_test_cmdline_LDADD = libkernaux.a
 tests_test_cmdline_SOURCES = tests/test_cmdline.c
 endif
 endif
+
+##########################
+# tests/test_cmdline_gen #
+##########################
+
+if ENABLE_TESTS_PYTHON
+if WITH_CMDLINE
+TESTS += tests/test_cmdline_gen
+tests_test_cmdline_gen_LDADD = libkernaux.a
+tests_test_cmdline_gen_SOURCES = \
+	tests/test_cmdline_gen.c \
+	tests/cmdline_gen.py \
+	tests/cmdline_gen.jinja \
+	common/cmdline.yml
+endif
+endif
+
+CLEANFILES += tests/test_cmdline_gen.c
+
+tests/test_cmdline_gen.c: tests/cmdline_gen.py tests/cmdline_gen.jinja common/cmdline.yml
+	python3 tests/cmdline_gen.py
 
 ##################
 # tests/test_elf #

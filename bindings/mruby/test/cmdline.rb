@@ -68,3 +68,24 @@ assert 'when args cause buffer overflow' do
     KernAux.cmdline 'a' * 4096
   end
 end
+
+assert 'usign common tests' do
+  cmdline_yml = File.expand_path('../../../../common/cmdline.yml', __FILE__)
+
+  YAML.load(File.read(cmdline_yml)).each do |test|
+    escape_str = lambda do |str|
+      eval "\"#{str}\"", nil, __FILE__, __LINE__ # "str"
+    end
+
+    cmdline = escape_str.call test['cmdline']
+    argv_count_max = test['argv_count_max']
+    buffer_size = test['buffer_size']
+    result = test['result']&.map(&escape_str)
+
+    next unless argv_count_max.nil? && buffer_size.nil? && !result.nil?
+
+    assert "transforms #{cmdline.inspect} to #{result.inspect}" do
+      assert_equal KernAux.cmdline(cmdline), result
+    end
+  end
+end
