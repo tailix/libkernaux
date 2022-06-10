@@ -53,9 +53,7 @@ $(KERNEL): $(LINKERSCR) build-libkernaux.a $(OBJS)
 	$(GRUB_FILE) --is-x86-multiboot2 $@
 
 build-libkernaux.a:
-	cd $(LIBKERNAUX_BUILD) && ./config
-	cd $(LIBKERNAUX_BUILD) && make libkernaux.a
-	cd $(LIBKERNAUX_BUILD) && make install-data install-exec
+	cd $(LIBKERNAUX_BUILD) && ./config && make install
 
 %.c.o: %.c
 	$(CC) -c $< -o $@ $(CFLAGS)
