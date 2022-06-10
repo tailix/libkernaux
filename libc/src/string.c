@@ -50,6 +50,14 @@ void *memset(void *s, int c, size_t n)
     return s;
 }
 
+char *strcat(char *dest, const char *src)
+{
+    char *const dest_start = dest;
+    while (*dest++);
+    while ((*dest++ = *src++));
+    return dest_start;
+}
+
 int strcmp(const char *s1, const char *s2)
 {
     for (; *s1; ++s1, ++s2) if (*s1 != *s2) return *s1 < *s2 ? -1 : 1;
