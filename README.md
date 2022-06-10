@@ -76,6 +76,7 @@ zero). Work-in-progress APIs can change at any time.
     * [vsnprintf](/examples/snprintf_va.c)
 * libc replacement
   * [ctype.h](/libc/include/ctype.h)
+  * [math.h](/libm/include/math.h)
   * [stdlib.h](/libc/include/stdlib.h)
   * [string.h](/libc/include/string.h)
 
@@ -95,6 +96,9 @@ stable options.
 #### Features
 
 * `--enable-freestanding` - build for freestanding environment
+* `--enable-split-all` - split off all libraries
+* `--enable-split-libc` - split off libc
+* `--enable-split-libm` - split off libm
 * `--enable-tests` - enable usual tests and examples
 * `--enable-tests-all` - enable all tests
 * `--enable-tests-python` - enable tests that require Python 3 with YAML and
