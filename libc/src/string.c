@@ -53,7 +53,7 @@ void *memset(void *s, int c, size_t n)
 char *strcat(char *dest, const char *src)
 {
     char *const dest_start = dest;
-    while (*dest++);
+    while (*dest) ++dest;
     while ((*dest++ = *src++));
     return dest_start;
 }
@@ -82,7 +82,7 @@ char *strncat(char *dest, const char *src, size_t n)
 {
     char *const dest_start = dest;
     if (n) {
-        while (*dest++);
+        while (*dest) ++dest;
         while ((*dest++ = *src++)) {
             if (--n == 0) {
                 *dest = '\0';
