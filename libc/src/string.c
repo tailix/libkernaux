@@ -78,6 +78,21 @@ size_t strlen(const char *s)
     return ss - s;
 }
 
+char *strncat(char *dest, const char *src, size_t n)
+{
+    char *const dest_start = dest;
+    if (n) {
+        while (*dest++);
+        while ((*dest++ = *src++)) {
+            if (--n == 0) {
+                *dest = '\0';
+                break;
+            }
+        }
+    }
+    return dest_start;
+}
+
 int strncmp(const char *s1, const char *s2, size_t n)
 {
     for (; *s1 && n; ++s1, ++s2, --n) if (*s1 != *s2) return *s1 < *s2 ? -1 : 1;
