@@ -35,6 +35,14 @@ void *memmove(void *dest, const void *src, size_t n)
     return dest;
 }
 
+void *memchr(const void *s, int c, size_t n)
+{
+    for (const unsigned char *p = s; n--; ++p) {
+        if ((unsigned char)c == *p) return (void*)p;
+    }
+    return NULL;
+}
+
 void *memset(void *s, int c, size_t n)
 {
     char *ss = s;
