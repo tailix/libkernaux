@@ -1,3 +1,5 @@
+# FIXME: dependencies are not built automatically with --enable-split-*
+
 include $(top_srcdir)/shared.am
 
 ACLOCAL_AMFLAGS = -I m4
@@ -17,13 +19,6 @@ SUBDIRS += .
 if ENABLE_TESTS
 SUBDIRS += examples tests
 endif
-
-# TODO: learn if recursive targets can be created automatically
-# FIXME: dependencies are not built automatically with --enable-split-all
-libc/libc.la:
-	$(MAKE) $(AM_MAKEFLAGS) -C $(top_builddir)/libc libc.la
-libm/libm.la:
-	$(MAKE) $(AM_MAKEFLAGS) -C $(top_builddir)/libm libm.la
 
 lib_LTLIBRARIES = libkernaux.la
 
