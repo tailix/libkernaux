@@ -58,6 +58,12 @@ char *strcat(char *dest, const char *src)
     return dest_start;
 }
 
+char *strchr(const char *s, int c)
+{
+    for (; *s != (char)c; ++s) if (*s == '\0') return NULL;
+    return (char*)s;
+}
+
 int strcmp(const char *s1, const char *s2)
 {
     for (; *s1; ++s1, ++s2) if (*s1 != *s2) return *s1 < *s2 ? -1 : 1;
