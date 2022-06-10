@@ -8,7 +8,7 @@ main_freebsd_task:
   name: Main (FreeBSD)
   only_if: $CIRRUS_BRANCH == 'master' || $CIRRUS_BASE_BRANCH == 'master'
   dependencies_script:
-    - pkg install --yes autoconf automake
+    - pkg install --yes autoconf automake libtool
   main_build_script:
     - ./autogen.sh
     - ./configure --enable-tests CFLAGS='-O3'
@@ -25,7 +25,7 @@ mruby_freebsd_task:
     LIBRARY_PATH: '/usr/local/lib'
     MRUBY_YAML_USE_SYSTEM_LIBRARY: x
   dependencies_script:
-    - pkg install --yes autoconf automake git rubygem-rake wget
+    - pkg install --yes autoconf automake git libtool rubygem-rake wget
   dependencies_mruby_script:
     - wget https://github.com/mruby/mruby/archive/3.1.0.zip -O mruby-3.1.0.zip
     - unzip mruby-3.1.0.zip
@@ -45,7 +45,7 @@ ruby_freebsd_task:
     CPATH: '/usr/local/include'
     LIBRARY_PATH: '/usr/local/lib'
   dependencies_script:
-    - pkg install --yes autoconf automake git wget
+    - pkg install --yes autoconf automake git libtool wget
   dependencies_ruby_script:
     - wget https://cache.ruby-lang.org/pub/ruby/3.0/ruby-3.0.3.tar.gz
     - tar -xzf ruby-3.0.3.tar.gz
@@ -72,7 +72,7 @@ rust_freebsd_task:
   env:
     RUSTFLAGS: '-L /usr/local/lib'
   dependencies_script:
-    - pkg install --yes autoconf automake
+    - pkg install --yes autoconf automake libtool
   dependencies_rust_script:
     - curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
   main_build_script:
