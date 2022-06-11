@@ -112,7 +112,8 @@ TESTS += test_multiboot2_common_packing
 test_multiboot2_common_packing_LDADD = $(top_builddir)/libkernaux.la
 test_multiboot2_common_packing_SOURCES = \
 	test_multiboot2_common_packing.c \
-	multiboot2_common_example2.h
+	multiboot2_header_example2.h \
+	multiboot2_info_example2.h
 endif
 
 ##################################
