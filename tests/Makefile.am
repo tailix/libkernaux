@@ -104,6 +104,18 @@ test_mbr_SOURCES = test_mbr.c
 endif
 
 ##################################
+# test_multiboot2_common_packing #
+##################################
+
+if WITH_MULTIBOOT2
+TESTS += test_multiboot2_common_packing
+test_multiboot2_common_packing_LDADD = $(top_builddir)/libkernaux.la
+test_multiboot2_common_packing_SOURCES = \
+	test_multiboot2_common_packing.c \
+	multiboot2_common_example2.h
+endif
+
+##################################
 # test_multiboot2_header_helpers #
 ##################################
 
@@ -113,18 +125,6 @@ test_multiboot2_header_helpers_LDADD = $(top_builddir)/libkernaux.la
 test_multiboot2_header_helpers_SOURCES = \
 	test_multiboot2_header_helpers.c \
 	multiboot2_header_example1.h \
-	multiboot2_header_example2.h
-endif
-
-##################################
-# test_multiboot2_header_packing #
-##################################
-
-if WITH_MULTIBOOT2
-TESTS += test_multiboot2_header_packing
-test_multiboot2_header_packing_LDADD = $(top_builddir)/libkernaux.la
-test_multiboot2_header_packing_SOURCES = \
-	test_multiboot2_header_packing.c \
 	multiboot2_header_example2.h
 endif
 
@@ -164,18 +164,6 @@ test_multiboot2_info_helpers_LDADD = $(top_builddir)/libkernaux.la
 test_multiboot2_info_helpers_SOURCES = \
 	test_multiboot2_info_helpers.c \
 	multiboot2_info_example1.h \
-	multiboot2_info_example2.h
-endif
-
-################################
-# test_multiboot2_info_packing #
-################################
-
-if WITH_MULTIBOOT2
-TESTS += test_multiboot2_info_packing
-test_multiboot2_info_packing_LDADD = $(top_builddir)/libkernaux.la
-test_multiboot2_info_packing_SOURCES = \
-	test_multiboot2_info_packing.c \
 	multiboot2_info_example2.h
 endif
 

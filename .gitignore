@@ -126,12 +126,11 @@
 /tests/test_cmdline_gen.c
 /tests/test_elf
 /tests/test_mbr
+/tests/test_multiboot2_common_packing
 /tests/test_multiboot2_header_helpers
-/tests/test_multiboot2_header_packing
 /tests/test_multiboot2_header_print
 /tests/test_multiboot2_header_validation
 /tests/test_multiboot2_info_helpers
-/tests/test_multiboot2_info_packing
 /tests/test_multiboot2_info_print
 /tests/test_multiboot2_info_validation
 /tests/test_ntoa
