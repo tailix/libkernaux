@@ -155,6 +155,18 @@ test_multiboot2_info_helpers_SOURCES = \
 	multiboot2_info_example2.h
 endif
 
+################################
+# test_multiboot2_info_packing #
+################################
+
+if WITH_MULTIBOOT2
+TESTS += test_multiboot2_info_packing
+test_multiboot2_info_packing_LDADD = $(top_builddir)/libkernaux.la
+test_multiboot2_info_packing_SOURCES = \
+	test_multiboot2_info_packing.c \
+	multiboot2_info_example2.h
+endif
+
 ##############################
 # test_multiboot2_info_print #
 ##############################
