@@ -35,11 +35,33 @@ void *memmove(void *dest, const void *src, size_t n)
     return dest;
 }
 
+void *memchr(const void *s, int c, size_t n)
+{
+    for (const unsigned char *p = s; n--; ++p) {
+        if ((unsigned char)c == *p) return (void*)p;
+    }
+    return NULL;
+}
+
 void *memset(void *s, int c, size_t n)
 {
     char *ss = s;
     while (n--) *ss++ = c;
     return s;
+}
+
+char *strcat(char *dest, const char *src)
+{
+    char *const dest_start = dest;
+    while (*dest) ++dest;
+    while ((*dest++ = *src++));
+    return dest_start;
+}
+
+char *strchr(const char *s, int c)
+{
+    for (; *s != (char)c; ++s) if (*s == '\0') return NULL;
+    return (char*)s;
 }
 
 int strcmp(const char *s1, const char *s2)
@@ -60,6 +82,21 @@ size_t strlen(const char *s)
     const char *ss = s;
     while (*ss != '\0') ++ss;
     return ss - s;
+}
+
+char *strncat(char *dest, const char *src, size_t n)
+{
+    char *const dest_start = dest;
+    if (n) {
+        while (*dest) ++dest;
+        while ((*dest++ = *src++)) {
+            if (--n == 0) {
+                *dest = '\0';
+                break;
+            }
+        }
+    }
+    return dest_start;
 }
 
 int strncmp(const char *s1, const char *s2, size_t n)
