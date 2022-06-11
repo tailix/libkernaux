@@ -116,6 +116,18 @@ test_multiboot2_header_helpers_SOURCES = \
 	multiboot2_header_example2.h
 endif
 
+##################################
+# test_multiboot2_header_packing #
+##################################
+
+if WITH_MULTIBOOT2
+TESTS += test_multiboot2_header_packing
+test_multiboot2_header_packing_LDADD = $(top_builddir)/libkernaux.la
+test_multiboot2_header_packing_SOURCES = \
+	test_multiboot2_header_packing.c \
+	multiboot2_header_example2.h
+endif
+
 ################################
 # test_multiboot2_header_print #
 ################################

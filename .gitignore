@@ -127,6 +127,7 @@
 /tests/test_elf
 /tests/test_mbr
 /tests/test_multiboot2_header_helpers
+/tests/test_multiboot2_header_packing
 /tests/test_multiboot2_header_print
 /tests/test_multiboot2_header_validation
 /tests/test_multiboot2_info_helpers
