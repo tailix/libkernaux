@@ -2,8 +2,8 @@ Common
 ------
 
 * Add your name to [COPYING](/COPYING).
-* If you change the behavior (even just fix a bug) of **libkernaux** (stable),
-  [libc](/libc) or [libm](/libm), add a record to [ChangeLog](/ChangeLog).
+* If you change the behavior (even just fix a bug) of **libkernaux** (stable) or
+  [libc](/libc), add a record to [ChangeLog](/ChangeLog).
 
 
 

@@ -14,4 +14,4 @@ export     AR="$TARGET-ar"
 export     CC="$TARGET-gcc"
 export RANLIB="$TARGET-ranlib"
 
-"$REPO/configure" --host="$HOST" --prefix="$PREFIX" --enable-freestanding --with-libc --with-libm
+"$REPO/configure" --host="$HOST" --prefix="$PREFIX" --enable-freestanding --with-libc

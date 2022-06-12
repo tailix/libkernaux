@@ -5,7 +5,18 @@
 extern "C" {
 #endif
 
+#include <stddef.h>
+
+#define EXIT_SUCCESS 0
+#define EXIT_FAILURE 1
+
 int atoi(const char *str);
+
+void abort();
+void exit(int status);
+
+void free(void *ptr);
+void *realloc(void *ptr, size_t size);
 
 #ifdef __cplusplus
 }

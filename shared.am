@@ -15,12 +15,6 @@ AM_CFLAGS += \
 	-I$(top_srcdir)/libc/include
 endif
 
-if WITH_LIBM
-AM_CFLAGS += \
-	-I$(top_builddir)/libm/include \
-	-I$(top_srcdir)/libm/include
-endif
-
 if ENABLE_WERROR
 AM_CFLAGS += -Werror
 endif
