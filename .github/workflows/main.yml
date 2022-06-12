@@ -24,7 +24,7 @@ jobs:
       - name: make
         run: make
       - name: check
-        run: make check || (cat test-suite.log && false)
+        run: make check || (./test-suite-log && false)
       - name: install
         run: sudo make install
 
@@ -47,7 +47,7 @@ jobs:
       - name: make
         run: make
       - name: check
-        run: make check || (cat test-suite.log && false)
+        run: make check || (./test-suite-log && false)
       - name: install
         run: sudo make install
 
@@ -71,7 +71,7 @@ jobs:
         run: make
       - working-directory: libkernaux-0.3.0
         name: check
-        run: make check || (cat test-suite.log && false)
+        run: make check || (./test-suite-log && false)
       - working-directory: libkernaux-0.3.0
         name: install
         run: sudo make install
