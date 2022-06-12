@@ -1,3 +1,10 @@
+2022-06-10  Alex Kotov  <kotovalexarian@gmail.com>
+
+	* libc/include/string.h: Add funcs "memchr", "strcat", "strncat", "strchr"
+	* libc/include/inttypes.h: Added
+	* libc/include/sys/types.h: Added
+	* libm/include/math.h: Added
+
 2022-06-07  Alex Kotov  <kotovalexarian@gmail.com>
 
 	* include/kernaux/libc.h: Has been split into separate headers
