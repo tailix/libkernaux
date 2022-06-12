@@ -1,7 +1,3 @@
-2022-06-12  Alex Kotov  <kotovalexarian@gmail.com>
-
-	* include/kernaux/multiboot2.h: Fix on Tiny C Compiler
-
 2022-06-07  Alex Kotov  <kotovalexarian@gmail.com>
 
 	* include/kernaux/libc.h: Has been split into separate headers
