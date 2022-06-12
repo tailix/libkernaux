@@ -104,6 +104,19 @@ test_mbr_SOURCES = test_mbr.c
 endif
 
 ##################################
+# test_multiboot2_common_packing #
+##################################
+
+if WITH_MULTIBOOT2
+TESTS += test_multiboot2_common_packing
+test_multiboot2_common_packing_LDADD = $(top_builddir)/libkernaux.la
+test_multiboot2_common_packing_SOURCES = \
+	test_multiboot2_common_packing.c \
+	multiboot2_header_example2.h \
+	multiboot2_info_example2.h
+endif
+
+##################################
 # test_multiboot2_header_helpers #
 ##################################
 

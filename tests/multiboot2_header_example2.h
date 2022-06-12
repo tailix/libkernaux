@@ -1,3 +1,7 @@
+#ifdef __TINYC__
+#pragma pack(push, 1)
+#endif
+
 static const struct {
     struct KernAux_Multiboot2_Header multiboot2_header;
 
@@ -163,3 +167,7 @@ static const struct {
         },
     },
 };
+
+#ifdef __TINYC__
+#pragma pack(pop)
+#endif
