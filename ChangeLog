@@ -24,10 +24,6 @@
 	* configure.ac: Remove feature "pic"
 	* configure.ac: Add feature "freestanding"
 
-2022-06-03  Alex Kotov  <kotovalexarian@gmail.com>
-
-	* configure.ac: Option "--with-libc" renamed to "--with-libc-all"
-
 2022-06-02  Alex Kotov  <kotovalexarian@gmail.com>
 
 	* include/kernaux/assert.h: Macro "KERNAUX_PANIC" receives string
