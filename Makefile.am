@@ -1,5 +1,3 @@
-# FIXME: dependencies are not built automatically without --enable-split-*
-
 include $(top_srcdir)/shared.am
 
 ACLOCAL_AMFLAGS = -I m4
@@ -19,6 +17,11 @@ SUBDIRS += .
 if ENABLE_TESTS
 SUBDIRS += examples tests
 endif
+
+libc/libc.la:
+	$(MAKE) $(AM_MAKEFLAGS) -C $(top_builddir)/libc libc.la
+libm/libm.la:
+	$(MAKE) $(AM_MAKEFLAGS) -C $(top_builddir)/libm libm.la
 
 lib_LTLIBRARIES = libkernaux.la
 libexec_PROGRAMS =
