@@ -255,21 +255,21 @@ __attribute__((packed));
 
 struct KernAux_Multiboot2_ITag_BootCmdLine {
     // type = 1
-    // size = ?
+    // size > 8
     struct KernAux_Multiboot2_ITagBase base;
 }
 __attribute__((packed));
 
 struct KernAux_Multiboot2_ITag_BootLoaderName {
     // type = 2
-    // size = ?
+    // size > 8
     struct KernAux_Multiboot2_ITagBase base;
 }
 __attribute__((packed));
 
 struct KernAux_Multiboot2_ITag_Module {
     // type = 3
-    // size = ?
+    // size > 16
     struct KernAux_Multiboot2_ITagBase base;
 
     unsigned mod_start : 32;
@@ -300,7 +300,7 @@ __attribute__((packed));
 
 struct KernAux_Multiboot2_ITag_MemoryMap {
     // type = 6
-    // size = ?
+    // size > 16
     struct KernAux_Multiboot2_ITagBase base;
 
     unsigned entry_size    : 32;
@@ -324,7 +324,7 @@ __attribute__((packed));
 
 struct KernAux_Multiboot2_ITag_FramebufferInfo {
     // type = 8
-    // size = ?
+    // size > 31
     struct KernAux_Multiboot2_ITagBase base;
 
     unsigned long long framebuffer_addr : 64;
@@ -339,7 +339,7 @@ __attribute__((packed));
 
 struct KernAux_Multiboot2_ITag_ELFSymbols {
     // type = 9
-    // size = ?
+    // size > 16
     struct KernAux_Multiboot2_ITagBase base;
 
     unsigned num       : 16;
@@ -386,7 +386,7 @@ __attribute__((packed));
 
 struct KernAux_Multiboot2_ITag_SMBIOSTables {
     // type = 13
-    // size = ?
+    // size > 16
     struct KernAux_Multiboot2_ITagBase base;
 
     unsigned major : 8;
@@ -397,28 +397,28 @@ __attribute__((packed));
 
 struct KernAux_Multiboot2_ITag_ACPIOldRSDP {
     // type = 14
-    // size = ?
+    // size > 8
     struct KernAux_Multiboot2_ITagBase base;
 }
 __attribute__((packed));
 
 struct KernAux_Multiboot2_ITag_ACPINewRSDP {
     // type = 15
-    // size = ?
+    // size > 8
     struct KernAux_Multiboot2_ITagBase base;
 }
 __attribute__((packed));
 
 struct KernAux_Multiboot2_ITag_NetworkingInfo {
     // type = 16
-    // size = ?
+    // size > 8
     struct KernAux_Multiboot2_ITagBase base;
 }
 __attribute__((packed));
 
 struct KernAux_Multiboot2_ITag_EFIMemoryMap {
     // type = 17
-    // size = ?
+    // size > 16
     struct KernAux_Multiboot2_ITagBase base;
 
     unsigned descriptor_size    : 32;

@@ -10,6 +10,9 @@
 #include "multiboot2_header_example2.h"
 #include "multiboot2_info_example2.h"
 
+#define SIZEOF(name, size) \
+    assert(sizeof(struct KernAux_Multiboot2_##name) == (size))
+
 // For flag tags that don't include any data
 #define HEAD0(name)                                                         \
     do {                                                                    \
@@ -50,6 +53,47 @@
 
 int main()
 {
+    SIZEOF(Header, 16);
+    SIZEOF(Info,   8);
+
+    SIZEOF(HTagBase, 8);
+    SIZEOF(ITagBase, 8);
+
+    SIZEOF(HTag_None,                         8);
+    SIZEOF(HTag_InfoReq,                      8);
+    SIZEOF(HTag_Addr,                         24);
+    SIZEOF(HTag_EntryAddr,                    12);
+    SIZEOF(HTag_Flags,                        12);
+    SIZEOF(HTag_Framebuffer,                  20);
+    SIZEOF(HTag_ModuleAlign,                  8);
+    SIZEOF(HTag_EFIBootServices,              8);
+    SIZEOF(HTag_EFII386EntryAddr,             12);
+    SIZEOF(HTag_EFIAmd64EntryAddr,            12);
+    SIZEOF(HTag_RelocatableHeader,            24);
+
+    SIZEOF(ITag_None,                         8);
+    SIZEOF(ITag_BootCmdLine,                  8);
+    SIZEOF(ITag_BootLoaderName,               8);
+    SIZEOF(ITag_Module,                       16);
+    SIZEOF(ITag_BasicMemoryInfo,              16);
+    SIZEOF(ITag_BIOSBootDevice,               20);
+    SIZEOF(ITag_MemoryMap,                    16);
+    SIZEOF(ITag_VBEInfo,                      784);
+    SIZEOF(ITag_FramebufferInfo,              31);
+    SIZEOF(ITag_ELFSymbols,                   16);
+    SIZEOF(ITag_APMTable,                     28);
+    SIZEOF(ITag_EFI32bitSystemTablePtr,       12);
+    SIZEOF(ITag_EFI64bitSystemTablePtr,       16);
+    SIZEOF(ITag_SMBIOSTables,                 16);
+    SIZEOF(ITag_ACPIOldRSDP,                  8);
+    SIZEOF(ITag_ACPINewRSDP,                  8);
+    SIZEOF(ITag_NetworkingInfo,               8);
+    SIZEOF(ITag_EFIMemoryMap,                 16);
+    SIZEOF(ITag_EFIBootServicesNotTerminated, 8);
+    SIZEOF(ITag_EFI32bitImageHandlePtr,       12);
+    SIZEOF(ITag_EFI64bitImageHandlePtr,       16);
+    SIZEOF(ITag_ImageLoadBasePhysAddr,        12);
+
     const uint8_t *head = ((const uint8_t*)&multiboot2_header_example2) + 16;
     const uint8_t *info = ((const uint8_t*)&multiboot2_info_example2) + 8;
 
