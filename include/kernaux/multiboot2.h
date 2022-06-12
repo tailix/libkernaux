@@ -38,13 +38,13 @@ extern "C" {
 #define KERNAUX_MULTIBOOT2_HTAG_FLAGS_REQUIRE_CONSOLE (1 << 0)
 #define KERNAUX_MULTIBOOT2_HTAG_FLAGS_EGA_SUPPORT     (1 << 1)
 
-/***********************
- * Header common types *
- ***********************/
-
 #ifdef __TINYC__
 #pragma pack(push, 1)
 #endif
+
+/***********************
+ * Header common types *
+ ***********************/
 
 enum KernAux_Multiboot2_Header_Arch {
     KERNAUX_MULTIBOOT2_HEADER_ARCH_I386   = 0,
