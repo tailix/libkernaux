@@ -87,12 +87,13 @@
 /config.status
 /libtool
 /stamp-h1
-/test-suite.log
 
+/examples/test-suite.log
 /examples/*.log
 /examples/*.trs
-/tests/test*.log
-/tests/test*.trs
+/tests/test-suite.log
+/tests/test_*.log
+/tests/test_*.trs
 
 # Custom
 
