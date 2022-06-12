@@ -91,7 +91,7 @@ endif
 
 if WITH_TESTER_MULTIBOOT2
 libexec_PROGRAMS += kernaux-tester-multiboot2
-kernaux_tester_multiboot2_DEPENDENCIES = libkernaux.a
+kernaux_tester_multiboot2_DEPENDENCIES = libkernaux.la
 kernaux_tester_multiboot2_LDADD = -lkernaux -lgcc
 kernaux_tester_multiboot2_LDFLAGS = \
 	$(AM_LDFLAGS) -T src/testers/multiboot2/linker.ld -Wl,-L.
@@ -108,7 +108,7 @@ endif
 
 if WITH_TESTER_STIVALE2
 libexec_PROGRAMS += kernaux-tester-stivale2
-kernaux_tester_stivale2_DEPENDENCIES = libkernaux.a
+kernaux_tester_stivale2_DEPENDENCIES = libkernaux.la
 kernaux_tester_stivale2_LDADD = -lkernaux -lgcc
 kernaux_tester_stivale2_LDFLAGS = \
 	$(AM_LDFLAGS) -T src/testers/stivale2/linker.ld -Wl,-L.
