@@ -26,15 +26,16 @@ Ruby
 
 ### Matz's Ruby interpreter
 
-See [bindings/ruby/.rubocop.yml](/bindings/ruby/.rubocop.yml)
+Use **RuboCop**. See [bindings/ruby/.rubocop.yml](/bindings/ruby/.rubocop.yml)
 
 ### mruby
 
-See [bindings/mruby/.rubocop.yml](/bindings/mruby/.rubocop.yml)
+Use **RuboCop**. See [bindings/mruby/.rubocop.yml](/bindings/mruby/.rubocop.yml)
 
 
 
 Rust
 ----
 
+Use **rustfmt** and **Clippy**.
 See [bindings/rust/rustfmt.toml](/bindings/rust/rustfmt.toml)
