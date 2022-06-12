@@ -1,90 +1,65 @@
+# FIXME: dependencies are not built automatically without --enable-split-*
+
+include $(top_srcdir)/shared.am
+
+ACLOCAL_AMFLAGS = -I m4
+EXTRA_DIST = autogen.sh CONTRIBUTING.md sha256sums.txt
+
 SUBDIRS = include
 
-AM_CFLAGS = \
-	-std=c99 \
-	-pedantic \
-	-Wall \
-	-Wextra \
-	-I$(top_builddir)/include \
-	-I$(top_srcdir)/include
+if WITH_LIBC
+SUBDIRS += libc
+endif
+if WITH_LIBM
+SUBDIRS += libm
+endif
 
-lib_LIBRARIES = libkernaux.a
+SUBDIRS += .
 
-noinst_PROGRAMS = $(TESTS)
+if ENABLE_TESTS
+SUBDIRS += examples tests
+endif
 
-libkernaux_a_SOURCES = \
-	src/assert.c \
-	src/libc.c
+lib_LTLIBRARIES = libkernaux.la
 
-CLEANFILES = \
-	tests/test_printf_fmt_gen.c \
-	tests/test_printf_gen.c
+libkernaux_la_SOURCES = src/libc.h src/assert.c
+libkernaux_la_LIBADD =
 
 if ASM_I386
-libkernaux_a_SOURCES += src/asm/i386.S
+libkernaux_la_SOURCES += src/asm/i386.S
 endif
-
 if ASM_RISCV64
-libkernaux_a_SOURCES += src/asm/riscv64.S
+libkernaux_la_SOURCES += src/asm/riscv64.S
 endif
-
 if ASM_X86_64
-libkernaux_a_SOURCES += src/asm/x86_64.S
+libkernaux_la_SOURCES += src/asm/x86_64.S
 endif
-
-TESTS =
-
-if ENABLE_TESTS
-TESTS += \
-	examples/assert_guards \
-	examples/assert_simple \
-	examples/panic_guards \
-	examples/panic_simple
-endif
-
-if ENABLE_PIC
-AM_CFLAGS += -fpic
-else
-AM_CFLAGS += -fno-pic
-endif
-
-if ENABLE_WERROR
-AM_CFLAGS += -Werror
-endif
-
 if WITH_CMDLINE
-libkernaux_a_SOURCES += src/cmdline.c
-if ENABLE_TESTS
-TESTS += \
-	examples/cmdline \
-	tests/test_cmdline
+libkernaux_la_SOURCES += src/cmdline.c
 endif
-endif
-
 if WITH_CONSOLE
-libkernaux_a_SOURCES += src/console.c
+libkernaux_la_SOURCES += src/console.c
 endif
-
 if WITH_ELF
-libkernaux_a_SOURCES += src/elf.c
-if ENABLE_TESTS
-TESTS += tests/test_elf
+libkernaux_la_SOURCES += src/elf.c
 endif
+if WITH_FILE
+libkernaux_la_SOURCES += src/file.c
 endif
-
 if WITH_FRAMEBUFFER
-libkernaux_a_SOURCES += src/framebuffer.c
+libkernaux_la_SOURCES += src/framebuffer.c
 endif
-
+if WITH_LIBC
+libkernaux_la_LIBADD += libc/libc.la
+endif
+if WITH_LIBM
+libkernaux_la_LIBADD += libm/libm.la
+endif
 if WITH_MBR
-libkernaux_a_SOURCES += src/mbr.c
-if ENABLE_TESTS
-TESTS += tests/test_mbr
+libkernaux_la_SOURCES += src/mbr.c
 endif
-endif
-
 if WITH_MULTIBOOT2
-libkernaux_a_SOURCES += \
+libkernaux_la_SOURCES += \
 	src/multiboot2/enums_to_str.c \
 	src/multiboot2/header_helpers.c \
 	src/multiboot2/header_is_valid.c \
@@ -92,223 +67,19 @@ libkernaux_a_SOURCES += \
 	src/multiboot2/info_helpers.c \
 	src/multiboot2/info_is_valid.c \
 	src/multiboot2/info_print.c
-if ENABLE_TESTS
-TESTS += \
-	tests/test_multiboot2_header_helpers \
-	tests/test_multiboot2_header_print \
-	tests/test_multiboot2_header_validation \
-	tests/test_multiboot2_info_helpers \
-	tests/test_multiboot2_info_print \
-	tests/test_multiboot2_info_validation
-noinst_PROGRAMS += \
-	tests/multiboot2_header_print1 \
-	tests/multiboot2_header_print2 \
-	tests/multiboot2_info_print1 \
-	tests/multiboot2_info_print2
 endif
-endif
-
 if WITH_NTOA
-libkernaux_a_SOURCES += src/ntoa.c
-if ENABLE_TESTS
-TESTS += \
-	examples/ntoa \
-	tests/test_ntoa
+libkernaux_la_SOURCES += src/ntoa.c
 endif
-endif
-
 if WITH_PFA
-libkernaux_a_SOURCES += src/pfa.c
-if ENABLE_TESTS
-TESTS += \
-	examples/pfa \
-	tests/test_pfa \
-	tests/test_pfa_assert
+libkernaux_la_SOURCES += src/pfa.c
 endif
-endif
-
 if WITH_PRINTF
-libkernaux_a_SOURCES += src/printf.c
-if ENABLE_TESTS
-TESTS += \
-	examples/printf \
-	examples/printf_va \
-	examples/snprintf \
-	examples/snprintf_va
+libkernaux_la_SOURCES += src/printf.c
 endif
-if ENABLE_TESTS_PYTHON
-TESTS += tests/test_printf_gen
-endif
-endif
-
 if WITH_PRINTF_FMT
-libkernaux_a_SOURCES += src/printf_fmt.c
-if ENABLE_TESTS
-TESTS += examples/printf_fmt
+libkernaux_la_SOURCES += src/printf_fmt.c
 endif
-if ENABLE_TESTS_PYTHON
-TESTS += tests/test_printf_fmt_gen
-endif
-endif
-
 if WITH_UNITS
-libkernaux_a_SOURCES += src/units.c
-if ENABLE_TESTS
-TESTS += \
-	examples/units_human \
-	tests/test_units_human
+libkernaux_la_SOURCES += src/units.c
 endif
-endif
-
-examples_assert_guards_SOURCES = \
-	$(libkernaux_a_SOURCES) \
-	examples/assert_guards.c
-
-examples_assert_simple_SOURCES = \
-	$(libkernaux_a_SOURCES) \
-	examples/assert_simple.c
-
-examples_cmdline_SOURCES = \
-	$(libkernaux_a_SOURCES) \
-	examples/cmdline.c
-
-examples_ntoa_SOURCES = \
-	$(libkernaux_a_SOURCES) \
-	examples/ntoa.c
-
-examples_panic_guards_SOURCES = \
-	$(libkernaux_a_SOURCES) \
-	examples/panic_guards.c
-
-examples_panic_simple_SOURCES = \
-	$(libkernaux_a_SOURCES) \
-	examples/panic_simple.c
-
-examples_pfa_SOURCES = \
-	$(libkernaux_a_SOURCES) \
-	examples/pfa.c
-
-examples_printf_SOURCES = \
-	$(libkernaux_a_SOURCES) \
-	examples/printf.c
-
-examples_printf_fmt_SOURCES = \
-	$(libkernaux_a_SOURCES) \
-	examples/printf_fmt.c
-
-examples_printf_va_SOURCES = \
-	$(libkernaux_a_SOURCES) \
-	examples/printf_va.c
-
-examples_snprintf_SOURCES = \
-	$(libkernaux_a_SOURCES) \
-	examples/snprintf.c
-
-examples_snprintf_va_SOURCES = \
-	$(libkernaux_a_SOURCES) \
-	examples/snprintf_va.c
-
-examples_units_human_SOURCES = \
-	$(libkernaux_a_SOURCES) \
-	examples/units_human.c
-
-tests_multiboot2_header_print1_SOURCES = \
-	$(libkernaux_a_SOURCES) \
-	tests/multiboot2_header_print1.c \
-	tests/multiboot2_header_example1.h
-
-tests_multiboot2_header_print2_SOURCES = \
-	$(libkernaux_a_SOURCES) \
-	tests/multiboot2_header_print2.c \
-	tests/multiboot2_header_example2.h
-
-tests_multiboot2_info_print1_SOURCES = \
-	$(libkernaux_a_SOURCES) \
-	tests/multiboot2_info_print1.c \
-	tests/multiboot2_info_example1.h
-
-tests_multiboot2_info_print2_SOURCES = \
-	$(libkernaux_a_SOURCES) \
-	tests/multiboot2_info_print2.c \
-	tests/multiboot2_info_example2.h
-
-tests_test_cmdline_SOURCES = \
-	$(libkernaux_a_SOURCES) \
-	tests/test_cmdline.c
-
-tests_test_elf_SOURCES = \
-	$(libkernaux_a_SOURCES) \
-	tests/test_elf.c
-
-tests_test_mbr_SOURCES = \
-	$(libkernaux_a_SOURCES) \
-	tests/test_mbr.c
-
-tests_test_multiboot2_header_helpers_SOURCES = \
-	$(libkernaux_a_SOURCES) \
-	tests/test_multiboot2_header_helpers.c \
-	tests/multiboot2_header_example1.h \
-	tests/multiboot2_header_example2.h
-
-tests_test_multiboot2_header_print_SOURCES = \
-	$(libkernaux_a_SOURCES) \
-	tests/test_multiboot2_header_print.c
-
-tests_test_multiboot2_header_validation_SOURCES = \
-	$(libkernaux_a_SOURCES) \
-	tests/test_multiboot2_header_validation.c \
-	tests/multiboot2_header_example1.h \
-	tests/multiboot2_header_example2.h
-
-tests_test_multiboot2_info_helpers_SOURCES = \
-	$(libkernaux_a_SOURCES) \
-	tests/test_multiboot2_info_helpers.c \
-	tests/multiboot2_info_example1.h \
-	tests/multiboot2_info_example2.h
-
-tests_test_multiboot2_info_print_SOURCES = \
-	$(libkernaux_a_SOURCES) \
-	tests/test_multiboot2_info_print.c
-
-tests_test_multiboot2_info_validation_SOURCES = \
-	$(libkernaux_a_SOURCES) \
-	tests/test_multiboot2_info_validation.c \
-	tests/multiboot2_info_example1.h \
-	tests/multiboot2_info_example2.h
-
-tests_test_ntoa_SOURCES = \
-	$(libkernaux_a_SOURCES) \
-	tests/test_ntoa.c
-
-tests_test_pfa_SOURCES = \
-	$(libkernaux_a_SOURCES) \
-	tests/test_pfa.c
-
-tests_test_pfa_assert_SOURCES = \
-	$(libkernaux_a_SOURCES) \
-	tests/test_pfa_assert.c
-
-tests_test_printf_fmt_gen_SOURCES = \
-	$(libkernaux_a_SOURCES) \
-	tests/test_printf_fmt_gen.c \
-	tests/printf_fmt_gen.py \
-	tests/printf_fmt_gen.jinja \
-	common/printf_fmt.yml
-
-tests_test_printf_gen_SOURCES = \
-	$(libkernaux_a_SOURCES) \
-	tests/test_printf_gen.c \
-	tests/printf_gen.py \
-	tests/printf_gen.jinja \
-	common/printf.yml \
-	common/printf_orig.yml
-
-tests_test_units_human_SOURCES = \
-	$(libkernaux_a_SOURCES) \
-	tests/test_units_human.c
-
-tests/test_printf_fmt_gen.c: tests/printf_fmt_gen.py tests/printf_fmt_gen.jinja common/printf_fmt.yml
-	python3 tests/printf_fmt_gen.py
-
-tests/test_printf_gen.c: tests/printf_gen.py tests/printf_gen.jinja common/printf.yml common/printf_orig.yml
-	python3 tests/printf_gen.py

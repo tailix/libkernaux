@@ -3,8 +3,7 @@ nobase_include_HEADERS = \
 	kernaux/arch/i386.h \
 	kernaux/arch/riscv64.h \
 	kernaux/arch/x86_64.h \
-	kernaux/assert.h \
-	kernaux/libc.h
+	kernaux/assert.h
 
 if ASM_I386
 nobase_include_HEADERS += kernaux/asm/i386.h
@@ -24,6 +23,9 @@ nobase_include_HEADERS += kernaux/console.h
 endif
 if WITH_ELF
 nobase_include_HEADERS += kernaux/elf.h
+endif
+if WITH_FILE
+nobase_include_HEADERS += kernaux/file.h
 endif
 if WITH_FRAMEBUFFER
 nobase_include_HEADERS += kernaux/framebuffer.h

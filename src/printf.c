@@ -1,8 +1,8 @@
 /**
  * Copyright (c) 2014-2019 Marco Paland <info@paland.com>
  *
- * Tiny printf, sprintf and (v)snprintf implementation, optimized for speed on
- * embedded systems with a very limited resources. These routines are thread
+ * Tiny [v]fprintf, sfprintf and [v]snprintf implementation, optimized for speed
+ * on embedded systems with a very limited resources. These routines are thread
  * safe and reentrant!
  */
 
@@ -11,9 +11,10 @@
 #endif
 
 #include <kernaux/assert.h>
-#include <kernaux/libc.h>
 #include <kernaux/printf.h>
 #include <kernaux/printf_fmt.h>
+
+#include "libc.h"
 
 #include <stdbool.h>
 #include <stdint.h>
@@ -56,10 +57,6 @@ static size_t _ntoa_format(out_fct_type out, char* buffer, size_t idx, size_t ma
 static size_t _ntoa_long(out_fct_type out, char* buffer, size_t idx, size_t maxlen, unsigned long value, bool negative, unsigned long base, unsigned int prec, unsigned int width, unsigned int flags);
 static size_t _ntoa_long_long(out_fct_type out, char* buffer, size_t idx, size_t maxlen, unsigned long long value, bool negative, unsigned long long base, unsigned int prec, unsigned int width, unsigned int flags);
 
-#ifdef ENABLE_BLOAT
-static char _custom(unsigned int flags, size_t *index);
-#endif // ENABLE_BLOAT
-
 #ifdef ENABLE_FLOAT
 static size_t _ftoa(out_fct_type out, char* buffer, size_t idx, size_t maxlen, double value, unsigned int prec, unsigned int width, unsigned int flags);
 static size_t _etoa(out_fct_type out, char* buffer, size_t idx, size_t maxlen, double value, unsigned int prec, unsigned int width, unsigned int flags);
@@ -69,27 +66,31 @@ static size_t _etoa(out_fct_type out, char* buffer, size_t idx, size_t maxlen, d
  * Implementations: main API *
  *****************************/
 
-int kernaux_printf(void (*out)(char character, void* arg), void* arg, const char* format, ...)
+#ifdef WITH_FILE
+
+int kernaux_fprintf(const KernAux_File file, void* arg, const char* format, ...)
 {
-    KERNAUX_NOTNULL_RETVAL(out, 0);
+    KERNAUX_NOTNULL_RETVAL(file, 0);
     KERNAUX_NOTNULL_RETVAL(format, 0);
 
     va_list va;
     va_start(va, format);
-    const out_fct_wrap_type out_fct_wrap = { out, arg };
+    const out_fct_wrap_type out_fct_wrap = { file->out, arg };
     const int ret = _vsnprintf(_out_fct, (char*)(uintptr_t)&out_fct_wrap, (size_t)-1, format, va);
     va_end(va);
     return ret;
 }
 
-int kernaux_vprintf(void (*out)(char character, void* arg), void* arg, const char* format, va_list va)
+int kernaux_vfprintf(const KernAux_File file, void* arg, const char* format, va_list va)
 {
-    KERNAUX_NOTNULL_RETVAL(out, 0);
+    KERNAUX_NOTNULL_RETVAL(file, 0);
     KERNAUX_NOTNULL_RETVAL(format, 0);
 
-    const out_fct_wrap_type out_fct_wrap = { out, arg };
+    const out_fct_wrap_type out_fct_wrap = { file->out, arg };
     return _vsnprintf(_out_fct, (char*)(uintptr_t)&out_fct_wrap, (size_t)-1, format, va);
 }
+
+#endif // WITH_FILE
 
 int kernaux_snprintf(char* buffer, size_t count, const char* format, ...)
 {
@@ -243,18 +244,6 @@ int _vsnprintf(out_fct_type out, char* buffer, const size_t maxlen, const char* 
                 }
                 break;
             }
-
-#ifdef ENABLE_BLOAT
-            case KERNAUX_PRINTF_FMT_TYPE_CUSTOM:
-                {
-                    size_t index = 0;
-                    char c;
-                    while ((c = _custom(spec.flags, &index))) {
-                        out(c, buffer, idx++, maxlen);
-                    }
-                }
-                break;
-#endif // ENABLE_BLOAT
 
             case KERNAUX_PRINTF_FMT_TYPE_PTR:
             {
@@ -434,56 +423,6 @@ size_t _ntoa_long_long(out_fct_type out, char* buffer, size_t idx, size_t maxlen
 
     return _ntoa_format(out, buffer, idx, maxlen, buf, len, negative, (unsigned int)base, prec, width, flags);
 }
-
-#ifdef ENABLE_BLOAT
-/**
- * Idea: superleaf1995
- * Implementation: smwmaster
- */
-static const size_t map_size = 630;
-static const char *const map =
-    "\xD3\xF9\xF9\xF9\xF9\xF9\xF9\xF9\xF9\xF9\xF9\xF9\xF9\xF9\xF9\xF9\xF9\xF9"
-    "\xF9\xF9\xF9\xF9\xF9\xF9\xF9\xF9\xF9\xF9\xF9\xF9\xF9\xF9\xF9\xD3\xF9\xF9"
-    "\xF9\xF9\xF9\xF9\xF9\xF9\xF9\xF9\xF9\xF9\xF9\xF9\xF7\xFE\xF7\xF7\xF9\xF7"
-    "\xFE\xF5\xF5\xF9\xF7\xF9\xF9\xF9\xF9\xF9\xF9\xF9\xD3\xF9\xF9\xF9\xF9\xF9"
-    "\xF9\xF9\xF9\xF9\xF9\xF9\xF9\xF9\xF7\xE2\xA1\x96\x96\x96\x96\x96\xB2\xBD"
-    "\xB6\xE3\xF5\xFE\xF9\xF9\xF9\xF9\xF9\xD3\xF9\xF9\xF9\xF9\xF9\xF9\xF9\xF9"
-    "\xF9\xF9\xF9\xF9\xF7\xE2\x81\x81\x92\xE9\x96\x96\xE9\xE9\x92\x97\x97\x96"
-    "\xFE\xFE\xF7\xF9\xF9\xF9\xD3\xF9\xF9\xF9\xF9\xF9\xF9\xF9\xF9\xF9\xF9\xF9"
-    "\xF7\xF7\xE9\xB5\xF7\xE2\xB5\xB6\xA1\xA1\xA1\xB5\xE2\xE3\x81\x92\xF5\xF7"
-    "\xF9\xF9\xF9\xD3\xF9\xF9\xF9\xF9\xF9\xF9\xF9\xF9\xF9\xF9\xF9\xF7\xB2\x97"
-    "\xB2\xF7\xF7\xE2\xBA\xBA\xE3\xE2\xF5\xFE\xE2\x81\x97\xE9\xF7\xF7\xF9\xF9"
-    "\xD3\xF9\xF9\xF9\xF9\xF9\xF9\xF9\xF9\xF9\xF9\xF9\xBA\x81\x97\x97\x97\x96"
-    "\xA1\xBD\xBD\xA1\xB2\xE9\x97\x97\x97\x97\x97\xB5\xF7\xF9\xF9\xD3\xF9\xF9"
-    "\xF9\xF9\xF9\xF9\xF9\xF9\xF9\xF9\xF7\x92\x97\x97\x97\x97\x97\x97\x97\x97"
-    "\x97\x97\x97\x97\x97\x97\x97\x97\xA1\xF7\xF9\xF9\xD3\xF9\xF9\xF9\xF9\xF9"
-    "\xF9\xF9\xF9\xF9\xF9\xBA\x97\x97\x97\x97\x97\x97\x97\x97\x97\x97\x97\x97"
-    "\x97\x97\x97\x97\x97\xE9\xF7\xF9\xF9\xD3\xF9\xF9\xF9\xF9\xF9\xF9\xF9\xF9"
-    "\xF9\xF9\x96\x97\x97\x97\x97\x97\x97\x97\x97\x97\x97\x97\x97\x97\x97\x97"
-    "\x97\x97\x92\xF7\xF9\xF9\xD3\xF9\xF9\xF9\xF9\xF9\xF9\xF9\xF9\xF9\xFE\x81"
-    "\x97\x97\x97\x97\x97\x97\x97\x97\x97\x97\x97\x97\x97\x97\x97\x97\x97\x81"
-    "\xFE\xF9\xF9\xD3\xF9\xF9\xF9\xF9\xF9\xF9\xF9\xF9\xF9\xB5\x97\x97\x97\x97"
-    "\x97\x97\x97\x97\x97\x97\x97\x97\x97\x97\x97\x97\x97\x97\x97\xF5\xF9\xF9"
-    "\xD3\xF9\xF9\xF9\xF9\xF9\xF9\xF9\xF9\xF7\x96\x97\x97\x97\xA1\xF5\xF9\xF9"
-    "\xF9\xF9\xF9\xF9\xFE\x96\x97\x97\x97\x97\x97\x97\xE3\xF9\xF9\xD3\xF9\xF9"
-    "\xF9\xF9\xF9\xF9\xF9\xF7\xF5\x81\x97\x97\x92\xF7\xF9\xF9\xF9\xF9\xF9\xF9"
-    "\xF9\xF9\xFE\x81\x97\x97\x97\x97\x97\xBA\xF9\xF9\xD3\xF9\xF9\xF7\xE2\xBA"
-    "\xBA\xBA\xF5\xB2\x97\x97\x97\x97\xE3\xF9\xF9\xF9\xF9\xF9\xF9\xF9\xF9\xF5"
-    "\x81\x97\x97\x97\x97\x97\xE3\xF9\xF9\xD3\xF9\xF9\xFE\xE9\x81\x97\x97\x97"
-    "\x97\x97\x81\x92\xB2\xF7\xF9\xF9\xF9\xF9\xF9\xF7\xF7\xF7\xB6\x97\x97\x97"
-    "\x97\x97\x97\xE2\xF9\xF9\xD3\xF9\xF9\xF9\xF9\xF9\xF9\xF9\xF9\xF9\xF9\xF9"
-    "\xF9\xF9\xF9\xF9\xF9\xF7\xFE\xB2\x92\x81\x81\x97\x97\x97\x97\x97\x97\xE9"
-    "\xF7\xF9\xF9\xD3\xF9\xF9\xF9\xF9\xF9\xF9\xF9\xF9\xF9\xF9\xF9\xF9\xF9\xF9"
-    "\xF9\xF9\xF9\xF9\xF5\xB2\x96\xE9\xE9\x96\xA1\xBD\xF5\xF9\xF9\xF9\xF9\xF9"
-    "\xD3\xF9\xF9\xF9\xF9\xF9\xF9\xF9\xF9\xF9\xF9\xF9\xF9\xF9\xF9\xF9\xF9\xF9"
-    "\xF9\xF9\xF9\xF9\xF9\xF9\xF9\xF9\xF9\xF9\xF9\xF9\xF9\xF9\xF9\xD3\xD3\xD9";
-
-char _custom(const unsigned int flags, size_t *const index)
-{
-    if (*index >= map_size) return '\0';
-    return map[(*index)++] ^ (73 + ((flags >> 8) | 128));
-}
-#endif // ENABLE_BLOAT
 
 #ifdef ENABLE_FLOAT
 // internal ftoa for fixed decimal floating point

@@ -4,10 +4,13 @@
 
 *.a
 *.c.d
+*.la
+*.lo
 *.o
 
 .deps/
 .dirstamp
+.libs/
 
 ############################
 # Always generated in root #
@@ -28,8 +31,12 @@
 /configure~
 /depcomp
 /install-sh
+/ltmain.sh
 /missing
 /test-driver
+
+/m4/*
+!/m4/.keep
 
 # Custom
 
@@ -78,31 +85,35 @@
 /config.h
 /config.log
 /config.status
+/libtool
 /stamp-h1
-/test-suite.log
 
+/examples/test-suite.log
 /examples/*.log
 /examples/*.trs
-/tests/test*.log
-/tests/test*.trs
+/tests/test-suite.log
+/tests/test_*.log
+/tests/test_*.trs
 
 # Custom
 
 /Makefile
 /include/Makefile
+
 /include/kernaux.h
 /include/kernaux/console.h
+/include/kernaux/printf.h
 
 /examples/assert_guards
 /examples/assert_simple
 /examples/cmdline
+/examples/fprintf
+/examples/fprintf_va
 /examples/ntoa
 /examples/panic_guards
 /examples/panic_simple
 /examples/pfa
-/examples/printf
 /examples/printf_fmt
-/examples/printf_va
 /examples/snprintf
 /examples/snprintf_va
 /examples/units_human
@@ -112,8 +123,11 @@
 /tests/multiboot2_info_print1
 /tests/multiboot2_info_print2
 /tests/test_cmdline
+/tests/test_cmdline_gen
+/tests/test_cmdline_gen.c
 /tests/test_elf
 /tests/test_mbr
+/tests/test_multiboot2_common_packing
 /tests/test_multiboot2_header_helpers
 /tests/test_multiboot2_header_print
 /tests/test_multiboot2_header_validation

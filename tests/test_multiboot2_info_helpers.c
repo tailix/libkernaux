@@ -9,6 +9,10 @@
 #include "multiboot2_info_example1.h"
 #include "multiboot2_info_example2.h"
 
+#ifdef __TINYC__
+#pragma pack(push, 1)
+#endif
+
 static const struct {
     struct KernAux_Multiboot2_Info multiboot2_info;
     struct KernAux_Multiboot2_ITag_None tag_none;
@@ -112,6 +116,10 @@ static const struct {
         },
     },
 };
+
+#ifdef __TINYC__
+#pragma pack(pop)
+#endif
 
 int main()
 {

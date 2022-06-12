@@ -44,6 +44,7 @@ zero). Work-in-progress APIs can change at any time.
     * [Panic: simple](/examples/panic_simple.c)
     * [Panic: guards](/examples/panic_guards.c)
   * Stack trace *(planned)*
+  * [File simulator](/include/kernaux/file.h) (*work in progress*)
 * Device drivers (for debugging only)
   * [Serial console](/include/kernaux/console.h) (*work in progress*)
   * [Framebuffer](/include/kernaux/framebuffer.h) (*planned*)
@@ -57,23 +58,27 @@ zero). Work-in-progress APIs can change at any time.
   * [ELF](/include/kernaux/elf.h) (*work in progress*)
   * [Master Boot Record](/include/kernaux/mbr.h) (*work in progress*)
   * [Multiboot 2 (GRUB 2)](/include/kernaux/multiboot2.h) (*work in progress*)
-  * [printf format parser](/include/kernaux/printf_fmt.h) (*work in progress*)
-    * Code from [https://github.com/mpaland/printf](https://github.com/mpaland/printf). Thank you!
-    * [Example](/examples/printf_fmt.c)
   * [Stivale 2 (Limine) information parser](/include/kernaux/stivale2.h) (*work in progress*)
 * Utilities
   * [Measurement units utils](/include/kernaux/units.h) (*work in progress*)
     * [To human](/examples/units_human.c)
+  * [printf format parser](/include/kernaux/printf_fmt.h) (*work in progress*)
+    * Code from [https://github.com/mpaland/printf](https://github.com/mpaland/printf). Thank you!
+    * [Example](/examples/printf_fmt.c)
 * Usual functions
-  * [libc replacement](/include/kernaux/libc.h) (*stable since* **0.1.0**)
   * [itoa/ftoa replacement](/include/kernaux/ntoa.h) (*stable since* **0.1.0**, *non-breaking since* **?.?.?**)
     * [Example](/examples/ntoa.c)
-  * [printf replacement](/include/kernaux/printf.h) (*stable since* **0.1.0**)
+  * [printf replacement](/include/kernaux/printf.h.in) (*stable since* **0.1.0**, *non-breaking since* **?.?.?**)
     * Code from [https://github.com/mpaland/printf](https://github.com/mpaland/printf). Thank you!
-    * [printf](/examples/printf.c)
-    * [vprintf](/examples/printf_va.c)
+    * [fprintf](/examples/fprintf.c)
+    * [vfprintf](/examples/fprintf_va.c)
     * [snprintf](/examples/snprintf.c)
     * [vsnprintf](/examples/snprintf_va.c)
+* libc replacement
+  * [ctype.h](/libc/include/ctype.h)
+  * [math.h](/libm/include/math.h)
+  * [stdlib.h](/libc/include/stdlib.h)
+  * [string.h](/libc/include/string.h)
 
 
 
@@ -90,6 +95,10 @@ stable options.
 
 #### Features
 
+* `--enable-freestanding` - build for freestanding environment
+* `--enable-split-all` - split off all libraries
+* `--enable-split-libc` - split off libc
+* `--enable-split-libm` - split off libm
 * `--enable-tests` - enable usual tests and examples
 * `--enable-tests-all` - enable all tests
 * `--enable-tests-python` - enable tests that require Python 3 with YAML and
@@ -97,24 +106,16 @@ stable options.
 
 #### Packages
 
-* `--with-libc` - provides the replacement for some standard C functions. Useful
-  in freestanding environment, where no libc is present. You can also separately
-  include or exclude components:
-  * `--with[out]-libc-atoi`
-  * `--with[out]-libc-isdigit`
-  * `--with[out]-libc-isspace`
-  * `--with[out]-libc-memset`
-  * `--with[out]-libc-strcpy`
-  * `--with[out]-libc-strlen`
-  * `--with[out]-libc-strnlen`
+* `--with-libc` - provides the replacement for some standard C functions.
+  Useful in freestanding environment, where no libc is present.
+* `--with-libm` - provides the replacement for C functions from `<math.h>`,
+  Useful in freestanding environment, where no libm is present.
 
 ### Default options
 
 #### Features
 
-* `--(enable|disable)-bloat` - heavy binary data
 * `--(enable|disable)-float` - floating-point arithmetic
-* `--(enable|disable)-pic` - generate position-independent code
 * `--(enable|disable)-werror` - fail on warning (`CFLAGS+='-Werror'`)
 
 #### Packages
@@ -123,6 +124,7 @@ All packages are included by default. To exclude all packages except those
 explicitly included, use `--without-all`.
 
 * `--with[out]-cmdline` - command line parser
+* `--with[out]-file` - file simulator
 * `--with[out]-ntoa` - itoa/ftoa
 * `--with[out]-printf` - printf
 
@@ -164,12 +166,12 @@ without it in `$PATH`:
 ```
 ./configure \
   --host='i386-elf' \
-  --disable-pic \
+  --enable-freestanding \
   --with-libc \
+  --with-libm \
   AR="$(which i386-elf-ar)" \
   CC="$(which i386-elf-gcc)" \
-  RANLIB="$(which i386-elf-ranlib)" \
-  CFLAGS='-ffreestanding -nostdlib -fno-stack-protector'
+  RANLIB="$(which i386-elf-ranlib)"
 ```
 
 You can see the following messages. It's
