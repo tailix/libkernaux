@@ -8,9 +8,6 @@ SUBDIRS = include
 if WITH_LIBC
 SUBDIRS += libc
 endif
-if WITH_LIBM
-SUBDIRS += libm
-endif
 
 SUBDIRS += .
 
@@ -20,8 +17,6 @@ endif
 
 libc/libc.la:
 	$(MAKE) $(AM_MAKEFLAGS) -C $(top_builddir)/libc libc.la
-libm/libm.la:
-	$(MAKE) $(AM_MAKEFLAGS) -C $(top_builddir)/libm libm.la
 
 lib_LTLIBRARIES = libkernaux.la
 
@@ -54,9 +49,6 @@ libkernaux_la_SOURCES += src/framebuffer.c
 endif
 if WITH_LIBC
 libkernaux_la_LIBADD += libc/libc.la
-endif
-if WITH_LIBM
-libkernaux_la_LIBADD += libm/libm.la
 endif
 if WITH_MBR
 libkernaux_la_SOURCES += src/mbr.c

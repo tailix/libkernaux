@@ -29,8 +29,6 @@ AC_CONFIG_FILES([
   include/Makefile
   libc/Makefile
   libc/include/Makefile
-  libm/Makefile
-  libm/include/Makefile
   include/kernaux.h
   include/kernaux/console.h
   include/kernaux/printf.h
@@ -49,9 +47,7 @@ AC_ARG_ENABLE([werror],       AS_HELP_STRING([--disable-werror],      [disable -
 
 dnl Features (disabled by default)
 AC_ARG_ENABLE([freestanding], AS_HELP_STRING([--enable-freestanding], [build for freestanding environment]))
-AC_ARG_ENABLE([split-all],    AS_HELP_STRING([--enable-split-all],    [split off all libraries]))
 AC_ARG_ENABLE([split-libc],   AS_HELP_STRING([--enable-split-libc],   [split off libc]))
-AC_ARG_ENABLE([split-libm],   AS_HELP_STRING([--enable-split-libm],   [split off libm]))
 AC_ARG_ENABLE([tests],        AS_HELP_STRING([--enable-tests],        [enable usual tests and examples]))
 AC_ARG_ENABLE([tests-all],    AS_HELP_STRING([--enable-tests-all],    [enable all tests]))
 AC_ARG_ENABLE([tests-python], AS_HELP_STRING([--enable-tests-python], [enable tests that require Python 3 with YAML and Jinja2]))
@@ -73,20 +69,12 @@ AC_ARG_WITH(  [units],        AS_HELP_STRING([--without-units],       [without m
 
 dnl Packages (disabled by default)
 AC_ARG_WITH(  [libc],         AS_HELP_STRING([--with-libc],           [with libc replacement]))
-AC_ARG_WITH(  [libm],         AS_HELP_STRING([--with-libm],           [with libm replacement]))
 
 
 
 ################
 # Default args #
 ################
-
-AC_DEFUN([do_enable_split_all],
-[
-if test -z "$enable_split_libc"; then enable_split_libc=yes; fi
-if test -z "$enable_split_libm"; then enable_split_libm=yes; fi
-])
-AS_IF([test "$enable_split_all" = yes], do_enable_split_all)
 
 AC_DEFUN([do_enable_tests_all],
 [
@@ -124,9 +112,7 @@ AS_IF([test "$enable_werror"       = no ], [enable_werror=no],        [enable_we
 
 dnl Features (disabled by default)
 AS_IF([test "$enable_freestanding" = yes], [enable_freestanding=yes], [enable_freestanding=no])
-AS_IF([test "$enable_split_all"    = yes], [enable_split_all=yes],    [enable_split_all=no])
 AS_IF([test "$enable_split_libc"   = yes], [enable_split_libc=yes],   [enable_split_libc=no])
-AS_IF([test "$enable_split_libm"   = yes], [enable_split_libm=yes],   [enable_split_libm=no])
 AS_IF([test "$enable_tests"        = yes], [enable_tests=yes],        [enable_tests=no])
 AS_IF([test "$enable_tests_all"    = yes], [enable_tests_all=yes],    [enable_tests_all=no])
 AS_IF([test "$enable_tests_python" = yes], [enable_tests_python=yes], [enable_tests_python=no])
@@ -148,7 +134,6 @@ AS_IF([test "$with_units"          = no ], [with_units=no],           [with_unit
 
 dnl Packages (disabled by default)
 AS_IF([test "$with_libc"           = yes], [with_libc=yes],           [with_libc=no])
-AS_IF([test "$with_libm"           = yes], [with_libm=yes],           [with_libm=no])
 
 
 
@@ -162,8 +147,6 @@ AS_IF([test "$enable_tests"        = yes -a "$enable_freestanding" = yes], AC_MS
 AS_IF([test "$enable_tests_python" = yes -a "$enable_freestanding" = yes], AC_MSG_ERROR([can not build freestanding tests]))
 AS_IF([test "$enable_tests"        = yes -a "$with_libc"           = yes], AC_MSG_ERROR([can not use package `libc' with tests]))
 AS_IF([test "$enable_tests_python" = yes -a "$with_libc"           = yes], AC_MSG_ERROR([can not use package `libc' with tests]))
-AS_IF([test "$enable_tests"        = yes -a "$with_libm"           = yes], AC_MSG_ERROR([can not use package `libm' with tests]))
-AS_IF([test "$enable_tests_python" = yes -a "$with_libm"           = yes], AC_MSG_ERROR([can not use package `libm' with tests]))
 
 AS_IF([test "$with_printf" = yes -a "$with_ntoa"       = no], AC_MSG_ERROR([package `printf' requires package `ntoa']))
 AS_IF([test "$with_printf" = yes -a "$with_printf_fmt" = no], AC_MSG_ERROR([package `printf' requires package `printf-fmt']))
@@ -187,7 +170,6 @@ AM_CONDITIONAL([ENABLE_WERROR],       [test "$enable_werror"       = yes])
 dnl Features (disabled by default)
 AM_CONDITIONAL([ENABLE_FREESTANDING], [test "$enable_freestanding" = yes])
 AM_CONDITIONAL([ENABLE_SPLIT_LIBC],   [test "$enable_split_libc"   = yes])
-AM_CONDITIONAL([ENABLE_SPLIT_LIBM],   [test "$enable_split_libm"   = yes])
 AM_CONDITIONAL([ENABLE_TESTS],        [test "$enable_tests"        = yes])
 AM_CONDITIONAL([ENABLE_TESTS_PYTHON], [test "$enable_tests_python" = yes])
 
@@ -207,7 +189,6 @@ AM_CONDITIONAL([WITH_UNITS],          [test "$with_units"          = yes])
 
 dnl Packages (disabled by default)
 AM_CONDITIONAL([WITH_LIBC],           [test "$with_libc"           = yes])
-AM_CONDITIONAL([WITH_LIBM],           [test "$with_libm"           = yes])
 
 
 
@@ -226,7 +207,6 @@ AS_IF([test "$enable_werror"       = yes], [AC_DEFINE([ENABLE_WERROR],       [1]
 
 dnl Features (disabled by default)
 AS_IF([test "$enable_split_libc"   = yes], [AC_DEFINE([ENABLE_SPLIT_LIBC],   [1], [split off libc])])
-AS_IF([test "$enable_split_libm"   = yes], [AC_DEFINE([ENABLE_SPLIT_LIBM],   [1], [split off libm])])
 AS_IF([test "$enable_freestanding" = yes], [AC_DEFINE([ENABLE_FREESTANDING], [1], [build for freestanding environment])])
 AS_IF([test "$enable_tests"        = yes], [AC_DEFINE([ENABLE_TESTS],        [1], [enabled usual tests and examples])])
 AS_IF([test "$enable_tests_python" = yes], [AC_DEFINE([ENABLE_TESTS_PYTHON], [1], [enabled tests that require Python 3 with YAML and Jinja2])])
@@ -247,7 +227,6 @@ AS_IF([test "$with_units",         = yes], [AC_DEFINE([WITH_UNITS],          [1]
 
 dnl Packages (disabled by default)
 AS_IF([test "$with_libc"           = yes], [AC_DEFINE([WITH_LIBC],           [1], [with libc replacement])])
-AS_IF([test "$with_libm"           = yes], [AC_DEFINE([WITH_LIBM],           [1], [with libm replacement])])
 
 
 
