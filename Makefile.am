@@ -1,4 +1,4 @@
-# FIXME: dependencies are not built automatically with --enable-split-*
+# FIXME: dependencies are not built automatically without --enable-split-*
 
 include $(top_srcdir)/shared.am
 
