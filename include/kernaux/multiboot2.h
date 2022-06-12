@@ -42,6 +42,10 @@ extern "C" {
  * Header common types *
  ***********************/
 
+#ifdef __TINYC__
+#pragma pack(push, 1)
+#endif
+
 enum KernAux_Multiboot2_Header_Arch {
     KERNAUX_MULTIBOOT2_HEADER_ARCH_I386   = 0,
     KERNAUX_MULTIBOOT2_HEADER_ARCH_MIPS32 = 4,
@@ -459,6 +463,10 @@ struct KernAux_Multiboot2_ITag_ImageLoadBasePhysAddr {
     unsigned load_base_addr : 32;
 }
 __attribute__((packed));
+
+#ifdef __TINYC__
+#pragma pack(pop)
+#endif
 
 /********************
  * String functions *
