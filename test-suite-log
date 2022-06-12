@@ -1,0 +1,6 @@
+#!/bin/sh
+
+set -eux
+
+test -f examples/test-suite.log && cat examples/test-suite.log || true
+test -f tests/test-suite.log    && cat tests/test-suite.log    || true

@@ -30,13 +30,13 @@ jobs:
         run: sudo make install
       - working-directory: vendor/mruby
         name: test
-        run: MRUBY_CONFIG=../../pkgs/mruby/build_config.rb rake test
-      - working-directory: pkgs/mruby
+        run: MRUBY_CONFIG=../../bindings/mruby/build_config.rb rake test
+      - working-directory: bindings/mruby
         name: setup
         run: ./bin/setup
-      - working-directory: pkgs/mruby
+      - working-directory: bindings/mruby
         name: lint
         run: rake
-      - working-directory: pkgs/mruby
+      - working-directory: bindings/mruby
         name: cppcheck
         run: cppcheck --quiet --error-exitcode=1 --std=c99 --enable=warning,style,performance,portability .

@@ -6,8 +6,9 @@ freebsd_instance:
 
 main_freebsd_task:
   name: Main (FreeBSD)
+  only_if: $CIRRUS_BRANCH == 'master' || $CIRRUS_BASE_BRANCH == 'master'
   dependencies_script:
-    - pkg install --yes autoconf automake
+    - pkg install --yes autoconf automake libtool
   main_build_script:
     - ./autogen.sh
     - ./configure --enable-tests CFLAGS='-O3'
@@ -18,13 +19,13 @@ main_freebsd_task:
 
 mruby_freebsd_task:
   name: mruby (FreeBSD)
+  only_if: $CIRRUS_BRANCH == 'master' || $CIRRUS_BASE_BRANCH == 'master'
   env:
-    # FIXME: temporary hack to fix FreeBSD build
     CPATH: '/usr/local/include'
     LIBRARY_PATH: '/usr/local/lib'
     MRUBY_YAML_USE_SYSTEM_LIBRARY: x
   dependencies_script:
-    - pkg install --yes autoconf automake git rubygem-rake wget
+    - pkg install --yes autoconf automake git libtool rubygem-rake wget
   dependencies_mruby_script:
     - wget https://github.com/mruby/mruby/archive/3.1.0.zip -O mruby-3.1.0.zip
     - unzip mruby-3.1.0.zip
@@ -35,16 +36,16 @@ mruby_freebsd_task:
     - sudo make install
   mruby_test_script:
     - cd mruby-3.1.0
-    - MRUBY_CONFIG=../pkgs/mruby/build_config.rb rake test
+    - MRUBY_CONFIG=../bindings/mruby/build_config.rb rake test
 
 ruby_freebsd_task:
   name: Ruby (FreeBSD)
+  only_if: $CIRRUS_BRANCH == 'master' || $CIRRUS_BASE_BRANCH == 'master'
   env:
-    # FIXME: temporary hack to fix FreeBSD build
     CPATH: '/usr/local/include'
     LIBRARY_PATH: '/usr/local/lib'
   dependencies_script:
-    - pkg install --yes autoconf automake git wget
+    - pkg install --yes autoconf automake git libtool wget
   dependencies_ruby_script:
     - wget https://cache.ruby-lang.org/pub/ruby/3.0/ruby-3.0.3.tar.gz
     - tar -xzf ruby-3.0.3.tar.gz
@@ -58,20 +59,20 @@ ruby_freebsd_task:
     - make
     - sudo make install
   ruby_build_script:
-    - cd pkgs/ruby
+    - cd bindings/ruby
     - ./bin/setup
     - bundle exec rake compile
   ruby_test_script:
-    - cd pkgs/ruby
+    - cd bindings/ruby
     - bundle exec rake
 
 rust_freebsd_task:
   name: Rust (FreeBSD)
+  only_if: $CIRRUS_BRANCH == 'master' || $CIRRUS_BASE_BRANCH == 'master'
   env:
-    # FIXME: temporary hack to fix FreeBSD build
     RUSTFLAGS: '-L /usr/local/lib'
   dependencies_script:
-    - pkg install --yes autoconf automake
+    - pkg install --yes autoconf automake libtool
   dependencies_rust_script:
     - curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
   main_build_script:
@@ -80,7 +81,7 @@ rust_freebsd_task:
     - make
     - sudo make install
   rust_test_script:
-    - cd pkgs/rust
+    - cd bindings/rust
     - ~/.cargo/bin/cargo test
     - ~/.cargo/bin/cargo clippy
     - ~/.cargo/bin/cargo fmt --check

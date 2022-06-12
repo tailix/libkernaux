@@ -23,12 +23,12 @@ jobs:
         run: make
       - name: install
         run: sudo make install
-      - working-directory: pkgs/rust
+      - working-directory: bindings/rust
         name: test
         run: cargo test
-      - working-directory: pkgs/rust
+      - working-directory: bindings/rust
         name: clippy
         run: cargo clippy
-      - working-directory: pkgs/rust
+      - working-directory: bindings/rust
         name: fmt
         run: cargo fmt --check

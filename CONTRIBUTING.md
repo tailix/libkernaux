@@ -1,3 +1,12 @@
+Common
+------
+
+* Add your name to [COPYING](/COPYING).
+* If you change the behavior (even just fix a bug) of **libkernaux** (stable),
+  [libc](/libc) or [libm](/libm), add a record to [ChangeLog](/ChangeLog).
+
+
+
 C language
 ----------
 
@@ -17,15 +26,16 @@ Ruby
 
 ### Matz's Ruby interpreter
 
-See [pkgs/ruby/.rubocop.yml](/pkgs/ruby/.rubocop.yml)
+Use **RuboCop**. See [bindings/ruby/.rubocop.yml](/bindings/ruby/.rubocop.yml)
 
 ### mruby
 
-See [pkgs/mruby/.rubocop.yml](/pkgs/mruby/.rubocop.yml)
+Use **RuboCop**. See [bindings/mruby/.rubocop.yml](/bindings/mruby/.rubocop.yml)
 
 
 
 Rust
 ----
 
-See [pkgs/rust/rustfmt.toml](/pkgs/rust/rustfmt.toml)
+Use **rustfmt** and **Clippy**.
+See [bindings/rust/rustfmt.toml](/bindings/rust/rustfmt.toml)

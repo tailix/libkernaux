@@ -4,7 +4,9 @@
 
 #include <assert.h>
 
+#ifndef __USE_POSIX2
 #define __USE_POSIX2
+#endif
 #include <stdio.h>
 
 static const char output1[] =
@@ -72,7 +74,7 @@ static const char output2[] =
 int main()
 {
     {
-        FILE *const fd = popen("tests/multiboot2_header_print1", "r");
+        FILE *const fd = popen("./multiboot2_header_print1", "r");
         assert(fd != NULL);
 
         for (const char *ch = output1; *ch; ++ch) {
@@ -84,7 +86,7 @@ int main()
     }
 
     {
-        FILE *const fd = popen("tests/multiboot2_header_print2", "r");
+        FILE *const fd = popen("./multiboot2_header_print2", "r");
         assert(fd != NULL);
 
         for (const char *ch = output2; *ch; ++ch) {
