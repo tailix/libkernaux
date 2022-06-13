@@ -1,8 +1,6 @@
 #ifndef KERNAUX_INCLUDED_VERSION
 #define KERNAUX_INCLUDED_VERSION
 
-@comment_line_enable_debug@#define KERNAUX_VERSION_ENABLE_DEBUG
-
 @comment_line_cmdline@#define KERNAUX_VERSION_SUPPORTS_CMDLINE
 @comment_line_console@#define KERNAUX_VERSION_SUPPORTS_CONSOLE
 @comment_line_elf@#define KERNAUX_VERSION_SUPPORTS_ELF

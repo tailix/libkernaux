@@ -1,6 +1,5 @@
 #include "main.h"
 
-static VALUE rb_KernAux_Version_enable_debugQN(VALUE self);
 static VALUE rb_KernAux_Version_supports_cmdlineQN(VALUE self);
 static VALUE rb_KernAux_Version_supports_fileQN(VALUE self);
 static VALUE rb_KernAux_Version_supports_ntoaQN(VALUE self);
@@ -15,8 +14,6 @@ void init_version()
     rb_gc_register_mark_object(rb_KernAux_Version =
         rb_define_module_under(rb_KernAux, "Version"));
 
-    rb_define_singleton_method(rb_KernAux_Version, "enable_debug?",
-                               rb_KernAux_Version_enable_debugQN, 0);
     rb_define_singleton_method(rb_KernAux_Version, "supports_cmdline?",
                                rb_KernAux_Version_supports_cmdlineQN, 0);
     rb_define_singleton_method(rb_KernAux_Version, "supports_file?",
@@ -25,15 +22,6 @@ void init_version()
                                rb_KernAux_Version_supports_ntoaQN, 0);
     rb_define_singleton_method(rb_KernAux_Version, "supports_printf?",
                                rb_KernAux_Version_supports_printfQN, 0);
-}
-
-VALUE rb_KernAux_Version_enable_debugQN(VALUE self)
-{
-#ifdef KERNAUX_VERSION_ENABLE_DEBUG
-    return Qtrue;
-#else
-    return Qfalse;
-#endif
 }
 
 VALUE rb_KernAux_Version_supports_cmdlineQN(VALUE self)
