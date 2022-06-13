@@ -233,6 +233,9 @@ AS_IF([test "$with_units",         = yes], [AC_DEFINE([WITH_UNITS],          [1]
 dnl Packages (disabled by default)
 AS_IF([test "$with_libc"           = yes], [AC_DEFINE([WITH_LIBC],           [1], [with libc replacement])])
 
+dnl Additional
+AS_IF([test "$enable_debug"        = yes], [AC_DEFINE([KERNAUX_DEBUG],       [1], [enabled debugging])])
+
 
 
 ##########################
