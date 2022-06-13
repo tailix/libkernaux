@@ -11,7 +11,10 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        packages: ['', '--without-all']
+        packages:
+          - {}
+          - configure: '--without-all'
+            skip_coverage: 'x'
     steps:
       - uses: actions/checkout@v2
       - uses: ruby/setup-ruby@v1
@@ -22,7 +25,7 @@ jobs:
       - name: autogen
         run: ./autogen.sh
       - name: configure
-        run: ./configure ${{matrix.packages}} CFLAGS='-O3'
+        run: ./configure ${{matrix.packages.configure}} CFLAGS='-O3'
       - name: make
         run: make
       - name: install
@@ -35,7 +38,7 @@ jobs:
         run: rake compile
       - working-directory: bindings/ruby
         name: test & lint
-        run: rake
+        run: SKIP_COVERAGE='${{matrix.packages.skip_coverage}}' rake
       - working-directory: bindings/ruby
         name: cppcheck
         run: cppcheck --quiet --error-exitcode=1 --std=c99 --enable=warning,style,performance,portability .

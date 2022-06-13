@@ -31,10 +31,7 @@ jobs:
         run: sudo make install
       - working-directory: bindings/rust
         name: test
-        run: cargo build ${{matrix.packages.cargo}}
-      - working-directory: bindings/rust
-        name: test
-        run: cargo test
+        run: cargo test ${{matrix.packages.cargo}}
       - working-directory: bindings/rust
         name: clippy
         run: cargo clippy
