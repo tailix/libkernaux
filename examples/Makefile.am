@@ -3,21 +3,13 @@ include $(top_srcdir)/shared.am
 TESTS =
 noinst_PROGRAMS = $(TESTS)
 
-#################
-# assert_guards #
-#################
+##########
+# assert #
+##########
 
-TESTS += assert_guards
-assert_guards_LDADD = $(top_builddir)/libkernaux.la
-assert_guards_SOURCES = assert_guards.c
-
-#################
-# assert_simple #
-#################
-
-TESTS += assert_simple
-assert_simple_LDADD = $(top_builddir)/libkernaux.la
-assert_simple_SOURCES = assert_simple.c
+TESTS += assert
+assert_LDADD = $(top_builddir)/libkernaux.la
+assert_SOURCES = assert.c
 
 ###########
 # cmdline #
@@ -63,21 +55,13 @@ ntoa_LDADD = $(top_builddir)/libkernaux.la
 ntoa_SOURCES = ntoa.c
 endif
 
-################
-# panic_guards #
-################
+#########
+# panic #
+#########
 
-TESTS += panic_guards
-panic_guards_LDADD = $(top_builddir)/libkernaux.la
-panic_guards_SOURCES = panic_guards.c
-
-################
-# panic_simple #
-################
-
-TESTS += panic_simple
-panic_simple_LDADD = $(top_builddir)/libkernaux.la
-panic_simple_SOURCES = panic_simple.c
+TESTS += panic
+panic_LDADD = $(top_builddir)/libkernaux.la
+panic_SOURCES = panic.c
 
 #######
 # pfa #

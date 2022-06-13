@@ -1,3 +1,4 @@
+#define KERNAUX_DEBUG
 #include <kernaux/assert.h>
 
 #include <assert.h>
@@ -22,26 +23,28 @@ static void assert_cb(
 
 int main()
 {
-    KERNAUX_PANIC("foo");
+    kernaux_assert_cb = assert_cb;
+
+    KERNAUX_ASSERT(1 == 1);
 
     assert(count == 0);
     assert(last_file == NULL);
     assert(last_line == 0);
     assert(last_str == NULL);
 
-    kernaux_assert_cb = assert_cb;
-
-    KERNAUX_PANIC("bar");
+    KERNAUX_ASSERT(1 != 1);
 
     assert(count == 1);
     assert(strcmp(last_file, __FILE__) == 0);
     assert(last_line == __LINE__ - 4);
-    assert(strcmp(last_str, "bar") == 0);
+    assert(strcmp(last_str, "1 != 1") == 0);
 
-    KERNAUX_PANIC("car");
+    KERNAUX_ASSERT(strcmp("qwe", "rty") == 0);
 
     assert(count == 2);
     assert(strcmp(last_file, __FILE__) == 0);
     assert(last_line == __LINE__ - 4);
-    assert(strcmp(last_str, "car") == 0);
+    assert(strcmp(last_str, "strcmp(\"qwe\", \"rty\") == 0") == 0);
+
+    return 0;
 }

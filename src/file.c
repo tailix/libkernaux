@@ -16,8 +16,8 @@ struct KernAux_File KernAux_File_create(const KernAux_File_Out out)
 
 void KernAux_File_init(const KernAux_File file, const KernAux_File_Out out)
 {
-    KERNAUX_NOTNULL_RETURN(file);
-    KERNAUX_NOTNULL_RETURN(out);
+    KERNAUX_ASSERT(file);
+    KERNAUX_ASSERT(out);
 
     file->out = out;
 }

@@ -6,11 +6,12 @@
 #include <kernaux/pfa.h>
 
 #include <assert.h>
+#include <setjmp.h>
 #include <stddef.h>
+#include <stdlib.h>
 
 static unsigned int count = 0;
-
-static void test();
+static jmp_buf jmpbuf;
 
 static void assert_cb(
     __attribute__((unused))
@@ -21,53 +22,82 @@ static void assert_cb(
     const char *const str
 ) {
     ++count;
+    longjmp(jmpbuf, 1);
 }
 
 int main()
 {
-    kernaux_assert_cb = NULL;
-    test();
+    if (setjmp(jmpbuf) != 0) abort();
 
     kernaux_assert_cb = assert_cb;
-    test();
-
-    return 0;
-}
-
-void test()
-{
-    unsigned int acc = 0;
 
     struct KernAux_PFA pfa;
-    KernAux_PFA_initialize(&pfa);
 
-    KernAux_PFA_initialize(NULL);
-    if (kernaux_assert_cb) assert(count == ++acc);
+    if (setjmp(jmpbuf) == 0) {
+        KernAux_PFA_initialize(&pfa);
+    } else {
+        assert(count == 0);
+    }
 
-    assert(!KernAux_PFA_is_available(NULL, KERNAUX_PFA_PAGE_SIZE));
-    if (kernaux_assert_cb) assert(count == ++acc);
+    if (setjmp(jmpbuf) == 0) {
+        KernAux_PFA_initialize(NULL);
+    } else {
+        assert(count == 1);
+    }
 
-    assert(!KernAux_PFA_is_available(&pfa, 123));
-    if (kernaux_assert_cb) assert(count == ++acc);
+    if (setjmp(jmpbuf) == 0) {
+        assert(!KernAux_PFA_is_available(NULL, KERNAUX_PFA_PAGE_SIZE));
+    } else {
+        assert(count == 2);
+    }
 
-    KernAux_PFA_mark_available(NULL, 0, KERNAUX_PFA_PAGE_SIZE);
-    if (kernaux_assert_cb) assert(count == ++acc);
+    if (setjmp(jmpbuf) == 0) {
+        assert(!KernAux_PFA_is_available(&pfa, 123));
+    } else {
+        assert(count == 3);
+    }
 
-    KernAux_PFA_mark_available(&pfa, KERNAUX_PFA_PAGE_SIZE, 0);
-    if (kernaux_assert_cb) assert(count == ++acc);
+    if (setjmp(jmpbuf) == 0) {
+        KernAux_PFA_mark_available(NULL, 0, KERNAUX_PFA_PAGE_SIZE);
+    } else {
+        assert(count == 4);
+    }
 
-    KernAux_PFA_mark_unavailable(NULL, 0, KERNAUX_PFA_PAGE_SIZE);
-    if (kernaux_assert_cb) assert(count == ++acc);
+    if (setjmp(jmpbuf) == 0) {
+        KernAux_PFA_mark_available(&pfa, KERNAUX_PFA_PAGE_SIZE, 0);
+    } else {
+        assert(count == 5);
+    }
 
-    KernAux_PFA_mark_unavailable(&pfa, KERNAUX_PFA_PAGE_SIZE, 0);
-    if (kernaux_assert_cb) assert(count == ++acc);
+    if (setjmp(jmpbuf) == 0) {
+        KernAux_PFA_mark_unavailable(NULL, 0, KERNAUX_PFA_PAGE_SIZE);
+    } else {
+        assert(count == 6);
+    }
 
-    assert(KernAux_PFA_alloc_pages(NULL, KERNAUX_PFA_PAGE_SIZE) == 0);
-    if (kernaux_assert_cb) assert(count == ++acc);
+    if (setjmp(jmpbuf) == 0) {
+        KernAux_PFA_mark_unavailable(&pfa, KERNAUX_PFA_PAGE_SIZE, 0);
+    } else {
+        assert(count == 7);
+    }
 
-    KernAux_PFA_free_pages(NULL, KERNAUX_PFA_PAGE_SIZE, KERNAUX_PFA_PAGE_SIZE);
-    if (kernaux_assert_cb) assert(count == ++acc);
+    if (setjmp(jmpbuf) == 0) {
+        assert(KernAux_PFA_alloc_pages(NULL, KERNAUX_PFA_PAGE_SIZE) == 0);
+    } else {
+        assert(count == 8);
+    }
 
-    KernAux_PFA_free_pages(&pfa, 123, KERNAUX_PFA_PAGE_SIZE);
-    if (kernaux_assert_cb) assert(count == ++acc);
+    if (setjmp(jmpbuf) == 0) {
+        KernAux_PFA_free_pages(NULL, KERNAUX_PFA_PAGE_SIZE, KERNAUX_PFA_PAGE_SIZE);
+    } else {
+        assert(count == 9);
+    }
+
+    if (setjmp(jmpbuf) == 0) {
+        KernAux_PFA_free_pages(&pfa, 123, KERNAUX_PFA_PAGE_SIZE);
+    } else {
+        assert(count == 10);
+    }
+
+    return 0;
 }

@@ -43,6 +43,7 @@ AC_CONFIG_FILES([
 ###############
 
 dnl Features (enabled by default)
+AC_ARG_ENABLE([debug],             AS_HELP_STRING([--disable-debug],          [disable debugging]))
 AC_ARG_ENABLE([float],             AS_HELP_STRING([--disable-float],          [disable floating-point arithmetic]))
 AC_ARG_ENABLE([werror],            AS_HELP_STRING([--disable-werror],         [disable -Werror]))
 
@@ -110,6 +111,7 @@ AS_IF([test "$with_all" = no], do_without_all)
 ##################
 
 dnl Features (enabled by default)
+AS_IF([test "$enable_debug"           = no ], [enable_debug=no],            [enable_debug=yes])
 AS_IF([test "$enable_float"           = no ], [enable_float=no],            [enable_float=yes])
 AS_IF([test "$enable_werror"          = no ], [enable_werror=no],           [enable_werror=yes])
 
@@ -174,6 +176,7 @@ AM_CONDITIONAL([ASM_RISCV64], [test "$host_cpu" = riscv64])
 AM_CONDITIONAL([ASM_X86_64],  [test "$host_cpu" = x86_64])
 
 dnl Features (enabled by default)
+AM_CONDITIONAL([ENABLE_DEBUG],           [test "$enable_debug"           = yes])
 AM_CONDITIONAL([ENABLE_FLOAT],           [test "$enable_float"           = yes])
 AM_CONDITIONAL([ENABLE_WERROR],          [test "$enable_werror"          = yes])
 
@@ -214,6 +217,7 @@ AS_IF([test "$host_cpu" = riscv64],           [AC_DEFINE([ASM_RISCV64],         
 AS_IF([test "$host_cpu" = x86_64],            [AC_DEFINE([ASM_X86_64],             [1], [architecture is x86_64])])
 
 dnl Features (enabled by default)
+AS_IF([test "$enable_debug"           = yes], [AC_DEFINE([ENABLE_DEBUG],           [1], [enabled debugging])])
 AS_IF([test "$enable_float"           = yes], [AC_DEFINE([ENABLE_FLOAT],           [1], [enabled floating-point arithmetic])])
 AS_IF([test "$enable_werror"          = yes], [AC_DEFINE([ENABLE_WERROR],          [1], [enabled -Werror])])
 
@@ -241,6 +245,9 @@ dnl Packages (disabled by default)
 AS_IF([test "$with_libc"              = yes], [AC_DEFINE([WITH_LIBC],              [1], [with libc replacement])])
 AS_IF([test "$with_tester_multiboot2" = yes], [AC_DEFINE([WITH_TESTER_MULTIBOOT2], [1], [with Multiboot 2 tester])])
 AS_IF([test "$with_tester_stivale2"   = yes], [AC_DEFINE([WITH_TESTER_STIVALE2],   [1], [with Stivale 2 tester])])
+
+dnl Additional
+AS_IF([test "$enable_debug"           = yes], [AC_DEFINE([KERNAUX_DEBUG],          [1], [enabled debugging])])
 
 
 

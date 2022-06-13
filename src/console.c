@@ -44,7 +44,7 @@ void kernaux_console_putc(const char c __attribute__((unused)))
 
 void kernaux_console_print(const char *const s)
 {
-    KERNAUX_NOTNULL_RETURN(s);
+    KERNAUX_ASSERT(s);
 
     for (const char *c = s; *c; ++c) {
         kernaux_console_putc(*c);
@@ -54,7 +54,7 @@ void kernaux_console_print(const char *const s)
 #if defined(WITH_FILE) && defined(WITH_PRINTF)
 void kernaux_console_printf(const char *format, ...)
 {
-    KERNAUX_NOTNULL_RETURN(format);
+    KERNAUX_ASSERT(format);
 
     va_list va;
     va_start(va, format);
@@ -66,7 +66,7 @@ void kernaux_console_printf(const char *format, ...)
 
 void kernaux_console_puts(const char *const s)
 {
-    KERNAUX_NOTNULL_RETURN(s);
+    KERNAUX_ASSERT(s);
 
     kernaux_console_print(s);
     kernaux_console_putc('\n');
@@ -74,7 +74,7 @@ void kernaux_console_puts(const char *const s)
 
 void kernaux_console_write(const char *const data, const size_t size)
 {
-    KERNAUX_NOTNULL_RETURN(data);
+    KERNAUX_ASSERT(data);
 
     for (size_t i = 0; i < size; i++) {
         kernaux_console_putc(data[i]);
