@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-KernAux::Version.supports_printf? and RSpec.describe KernAux, '.sprintf1' do
+KernAux::Version.with_printf? and RSpec.describe KernAux, '.sprintf1' do
   context 'with 1 argument' do
     subject(:sprintf1) { described_class.sprintf1 format }
 

@@ -11,7 +11,7 @@ def test_cmdline(str, expected)
   assert_equal result, expected
 end
 
-if KernAux::Version.supports_cmdline?
+if KernAux::Version.with_cmdline?
   assert 'default' do
     test_cmdline 'foo bar\\ baz "car cdr"', ['foo', 'bar baz', 'car cdr']
   end

@@ -1,7 +1,7 @@
 # TODO: implement this
 # rubocop:disable Style/BlockComments
 =begin
-if KernAux::Version.supports_printf?
+if KernAux::Version.with_printf?
   assert 'KernAux.sprintf' do
     [
       ['',      'using regular tests'],
