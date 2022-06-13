@@ -12,7 +12,7 @@ LT_PREREQ([2.4.6])
 #######################
 
 AC_INIT([libkernaux],
-  [0.3.0],
+  m4_normalize(m4_include([VERSION])),
   [https://github.com/tailix/libkernaux/issues],
   [libkernaux],
   [https://github.com/tailix/libkernaux])
