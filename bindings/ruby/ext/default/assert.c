@@ -1,5 +1,4 @@
-#include <kernaux.h>
-#include <ruby.h>
+#include "main.h"
 
 static void assert_cb(const char *file, int line, const char *msg);
 

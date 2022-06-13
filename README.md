@@ -35,9 +35,7 @@ can only change when major version number is increased (or minor while major is
 zero). Work-in-progress APIs can change at any time.
 
 * Runtime environment
-  * Architecture-specific code (*work in progress*)
-    * [Declarations](/include/kernaux/arch/)
-    * [Functions](/include/kernaux/asm/)
+  * [Feature macros](/include/kernaux/version.h.in) (*stable since* **?.?.?**)
   * [Assertions](/include/kernaux/assert.h) (*stable since* **0.1.0**, *non-breaking since* **?.?.?**)
     * [Assert: simple](/examples/assert_simple.c)
     * [Assert: guards](/examples/assert_guards.c)
@@ -45,6 +43,9 @@ zero). Work-in-progress APIs can change at any time.
     * [Panic: guards](/examples/panic_guards.c)
   * Stack trace *(planned)*
   * [File simulator](/include/kernaux/file.h) (*work in progress*)
+  * Architecture-specific code (*work in progress*)
+    * [Declarations](/include/kernaux/arch/)
+    * [Functions](/include/kernaux/asm/)
 * Device drivers (for debugging only)
   * [Serial console](/include/kernaux/console.h) (*work in progress*)
   * [Framebuffer](/include/kernaux/framebuffer.h) (*planned*)
@@ -74,10 +75,14 @@ zero). Work-in-progress APIs can change at any time.
     * [vfprintf](/examples/fprintf_va.c)
     * [snprintf](/examples/snprintf.c)
     * [vsnprintf](/examples/snprintf_va.c)
-* libc replacement
+* libc replacement (*work in progress*)
   * [ctype.h](/libc/include/ctype.h)
+  * [errno.h](/libc/include/errno.h)
+  * [inttypes.h](/libc/include/inttypes.h)
+  * [setjmo.h](/libc/include/setjmo.h)
   * [stdlib.h](/libc/include/stdlib.h)
   * [string.h](/libc/include/string.h)
+  * [sys/types.h](/libc/include/sys/types.h)
 
 
 

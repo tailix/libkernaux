@@ -3,6 +3,8 @@
     contain architecture-specific assembly functions.
 */
 
+#include <kernaux/version.h>
+
 #include <kernaux/assert.h>
 
 @comment_line_cmdline@#include <kernaux/cmdline.h>

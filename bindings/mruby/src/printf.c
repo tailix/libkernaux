@@ -1,14 +1,14 @@
-#include "dynarg.h"
 #include "main.h"
 
-#include <kernaux.h>
+#include "dynarg.h"
 
-#include <mruby.h>
+#include <stdlib.h>
+
 #include <mruby/array.h>
 #include <mruby/presym.h>
 #include <mruby/string.h>
 
-#include <stdlib.h>
+#ifdef KERNAUX_VERSION_SUPPORTS_PRINTF
 
 static mrb_value rb_KernAux_snprintf1(mrb_state *mrb, mrb_value self);
 
@@ -120,3 +120,5 @@ mrb_value rb_KernAux_snprintf1(mrb_state *const mrb, mrb_value self)
     values[1] = mrb_fixnum_value(slen);
     return mrb_obj_freeze(mrb, mrb_ary_new_from_values(mrb, 2, values));
 }
+
+#endif // KERNAUX_VERSION_SUPPORTS_PRINTF

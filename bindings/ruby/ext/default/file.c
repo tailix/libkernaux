@@ -1,7 +1,6 @@
-#include <kernaux.h>
-#include <ruby.h>
+#include "main.h"
 
-#ifdef HAVE_KERNAUX_FILE_CREATE
+#ifdef KERNAUX_VERSION_SUPPORTS_FILE
 
 static VALUE rb_KernAux_File_initialize(VALUE self, VALUE out);
 
@@ -27,4 +26,4 @@ VALUE rb_KernAux_File_initialize(VALUE self, VALUE out)
     return Qnil;
 }
 
-#endif // HAVE_KERNAUX_FILE_CREATE
+#endif // KERNAUX_VERSION_SUPPORTS_FILE

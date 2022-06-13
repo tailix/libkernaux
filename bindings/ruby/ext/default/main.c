@@ -1,34 +1,20 @@
-#include <stdbool.h>
-#include <stddef.h>
-#include <stdint.h>
-#include <stdlib.h>
-
-#include <kernaux.h>
-#include <ruby.h>
-
-void init_assert();
-void init_ntoa();
-#ifdef HAVE_KERNAUX_CMDLINE
-void init_cmdline();
-#endif // HAVE_KERNAUX_CMDLINE
-#ifdef HAVE_KERNAUX_FILE_CREATE
-void init_file();
-#endif // HAVE_KERNAUX_FILE_CREATE
-#ifdef HAVE_KERNAUX_SNPRINTF
-void init_printf();
-#endif // HAVE_KERNAUX_SNPRINTF
+#include "main.h"
 
 void Init_default()
 {
+    init_version();
     init_assert();
-    init_ntoa();
-#ifdef HAVE_KERNAUX_CMDLINE
+
+#ifdef KERNAUX_VERSION_SUPPORTS_CMDLINE
     init_cmdline();
-#endif // HAVE_KERNAUX_CMDLINE
-#ifdef HAVE_KERNAUX_FILE_CREATE
+#endif // KERNAUX_VERSION_SUPPORTS_CMDLINE
+#ifdef KERNAUX_VERSION_SUPPORTS_FILE
     init_file();
-#endif // HAVE_KERNAUX_FILE_CREATE
-#ifdef HAVE_KERNAUX_SNPRINTF
+#endif // KERNAUX_VERSION_SUPPORTS_FILE
+#ifdef KERNAUX_VERSION_SUPPORTS_NTOA
+    init_ntoa();
+#endif // KERNAUX_VERSION_SUPPORTS_NTOA
+#ifdef KERNAUX_VERSION_SUPPORTS_PRINTF
     init_printf();
-#endif // HAVE_KERNAUX_SNPRINTF
+#endif // KERNAUX_VERSION_SUPPORTS_PRINTF
 }

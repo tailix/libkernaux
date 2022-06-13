@@ -1,9 +1,8 @@
-#include <kernaux.h>
-#include <ruby.h>
+#include "main.h"
 
 #include "dynarg.h"
 
-#ifdef HAVE_KERNAUX_SNPRINTF
+#ifdef KERNAUX_VERSION_SUPPORTS_PRINTF
 
 static VALUE rb_KernAux_snprintf1(int argc, const VALUE *argv, VALUE self);
 
@@ -116,4 +115,4 @@ VALUE rb_KernAux_snprintf1(
     return rb_funcall(result_rb, rb_intern_freeze, 0);
 }
 
-#endif // HAVE_KERNAUX_SNPRINTF
+#endif // KERNAUX_VERSION_SUPPORTS_PRINTF

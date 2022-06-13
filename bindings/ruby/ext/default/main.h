@@ -2,23 +2,22 @@
 #define __MAIN_H__
 
 #include <kernaux.h>
-#include <mruby.h>
+#include <ruby.h>
 
-void current_mrb_start(mrb_state *mrb);
-void current_mrb_finish(mrb_state *mrb);
-mrb_state *current_mrb_get();
-
-void init_assert(mrb_state *mrb);
-void init_version(mrb_state *mrb);
+void init_version();
+void init_assert();
 
 #ifdef KERNAUX_VERSION_SUPPORTS_CMDLINE
-void init_cmdline(mrb_state *mrb);
+void init_cmdline();
 #endif // KERNAUX_VERSION_SUPPORTS_CMDLINE
+#ifdef KERNAUX_VERSION_SUPPORTS_FILE
+void init_file();
+#endif // KERNAUX_VERSION_SUPPORTS_FILE
 #ifdef KERNAUX_VERSION_SUPPORTS_NTOA
-void init_ntoa(mrb_state *mrb);
+void init_ntoa();
 #endif // KERNAUX_VERSION_SUPPORTS_NTOA
 #ifdef KERNAUX_VERSION_SUPPORTS_PRINTF
-void init_printf(mrb_state *mrb);
+void init_printf();
 #endif // KERNAUX_VERSION_SUPPORTS_PRINTF
 
 #endif

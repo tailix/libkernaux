@@ -1,0 +1,17 @@
+#ifndef KERNAUX_INCLUDED_VERSION
+#define KERNAUX_INCLUDED_VERSION
+
+@comment_line_cmdline@#define KERNAUX_VERSION_SUPPORTS_CMDLINE
+@comment_line_console@#define KERNAUX_VERSION_SUPPORTS_CONSOLE
+@comment_line_elf@#define KERNAUX_VERSION_SUPPORTS_ELF
+@comment_line_file@#define KERNAUX_VERSION_SUPPORTS_FILE
+@comment_line_framebuffer@#define KERNAUX_VERSION_SUPPORTS_FRAMEBUFFER
+@comment_line_mbr@#define KERNAUX_VERSION_SUPPORTS_MBR
+@comment_line_multiboot2@#define KERNAUX_VERSION_SUPPORTS_MULTIBOOT2
+@comment_line_ntoa@#define KERNAUX_VERSION_SUPPORTS_NTOA
+@comment_line_pfa@#define KERNAUX_VERSION_SUPPORTS_PFA
+@comment_line_printf@#define KERNAUX_VERSION_SUPPORTS_PRINTF
+@comment_line_printf_fmt@#define KERNAUX_VERSION_SUPPORTS_PRINTF_FMT
+@comment_line_units@#define KERNAUX_VERSION_SUPPORTS_UNITS
+
+#endif

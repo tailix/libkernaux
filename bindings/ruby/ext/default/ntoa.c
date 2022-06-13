@@ -1,36 +1,17 @@
-#include <kernaux.h>
-#include <ruby.h>
+#include "main.h"
 
-#ifdef HAVE_KERNAUX_UTOA
+#ifdef KERNAUX_VERSION_SUPPORTS_NTOA
+
 static VALUE rb_KernAux_utoa(int argc, const VALUE *argv, VALUE self);
-#endif
-#ifdef HAVE_KERNAUX_ITOA
 static VALUE rb_KernAux_itoa(int argc, const VALUE *argv, VALUE self);
-#endif
-#ifdef HAVE_KERNAUX_UTOA2
 static VALUE rb_KernAux_utoa2(VALUE self, VALUE number);
-#endif
-#ifdef HAVE_KERNAUX_ITOA2
 static VALUE rb_KernAux_itoa2(VALUE self, VALUE number);
-#endif
-#ifdef HAVE_KERNAUX_UTOA8
 static VALUE rb_KernAux_utoa8(VALUE self, VALUE number);
-#endif
-#ifdef HAVE_KERNAUX_ITOA8
 static VALUE rb_KernAux_itoa8(VALUE self, VALUE number);
-#endif
-#ifdef HAVE_KERNAUX_UTOA10
 static VALUE rb_KernAux_utoa10(VALUE self, VALUE number);
-#endif
-#ifdef HAVE_KERNAUX_ITOA10
 static VALUE rb_KernAux_itoa10(VALUE self, VALUE number);
-#endif
-#ifdef HAVE_KERNAUX_UTOA16
 static VALUE rb_KernAux_utoa16(VALUE self, VALUE number);
-#endif
-#ifdef HAVE_KERNAUX_ITOA16
 static VALUE rb_KernAux_itoa16(VALUE self, VALUE number);
-#endif
 
 static ID rb_intern_LESS = Qnil;
 static ID rb_intern_b = Qnil;
@@ -50,9 +31,7 @@ static VALUE rb_KernAux_Error = Qnil;
 static VALUE rb_KernAux_InvalidNtoaBaseError = Qnil;
 static VALUE rb_KernAux_TooLongNtoaPrefixError = Qnil;
 
-#if defined(HAVE_KERNAUX_UTOA) || defined(HAVE_KERNAUX_ITOA)
 static int convert_base(VALUE base);
-#endif
 
 void init_ntoa()
 {
@@ -79,39 +58,18 @@ void init_ntoa()
         rb_define_class_under(rb_KernAux, "TooLongNtoaPrefixError",
                               rb_KernAux_Error));
 
-#ifdef HAVE_KERNAUX_UTOA
     rb_define_singleton_method(rb_KernAux, "utoa", rb_KernAux_utoa, -1);
-#endif
-#ifdef HAVE_KERNAUX_ITOA
     rb_define_singleton_method(rb_KernAux, "itoa", rb_KernAux_itoa, -1);
-#endif
-#ifdef HAVE_KERNAUX_UTOA2
     rb_define_singleton_method(rb_KernAux, "utoa2", rb_KernAux_utoa2, 1);
-#endif
-#ifdef HAVE_KERNAUX_ITOA2
     rb_define_singleton_method(rb_KernAux, "itoa2", rb_KernAux_itoa2, 1);
-#endif
-#ifdef HAVE_KERNAUX_UTOA8
     rb_define_singleton_method(rb_KernAux, "utoa8", rb_KernAux_utoa8, 1);
-#endif
-#ifdef HAVE_KERNAUX_ITOA8
     rb_define_singleton_method(rb_KernAux, "itoa8", rb_KernAux_itoa8, 1);
-#endif
-#ifdef HAVE_KERNAUX_UTOA10
     rb_define_singleton_method(rb_KernAux, "utoa10", rb_KernAux_utoa10, 1);
-#endif
-#ifdef HAVE_KERNAUX_ITOA10
     rb_define_singleton_method(rb_KernAux, "itoa10", rb_KernAux_itoa10, 1);
-#endif
-#ifdef HAVE_KERNAUX_UTOA16
     rb_define_singleton_method(rb_KernAux, "utoa16", rb_KernAux_utoa16, 1);
-#endif
-#ifdef HAVE_KERNAUX_ITOA16
     rb_define_singleton_method(rb_KernAux, "itoa16", rb_KernAux_itoa16, 1);
-#endif
 }
 
-#ifdef HAVE_KERNAUX_UTOA
 VALUE rb_KernAux_utoa(const int argc, const VALUE *argv, const VALUE self)
 {
     if (argc < 2 || argc > 3) {
@@ -150,9 +108,7 @@ VALUE rb_KernAux_utoa(const int argc, const VALUE *argv, const VALUE self)
     kernaux_utoa(NUM2ULL(number_rb), buffer, convert_base(base_rb), prefix);
     return rb_funcall(rb_str_new2(buffer), rb_intern_freeze, 0);
 }
-#endif
 
-#ifdef HAVE_KERNAUX_ITOA
 VALUE rb_KernAux_itoa(const int argc, const VALUE *argv, const VALUE self)
 {
     if (argc < 2 || argc > 3) {
@@ -188,9 +144,7 @@ VALUE rb_KernAux_itoa(const int argc, const VALUE *argv, const VALUE self)
     kernaux_itoa(NUM2LL(number_rb), buffer, convert_base(base_rb), prefix);
     return rb_funcall(rb_str_new2(buffer), rb_intern_freeze, 0);
 }
-#endif
 
-#ifdef HAVE_KERNAUX_UTOA2
 VALUE rb_KernAux_utoa2(
     const VALUE self_rb __attribute__((unused)),
     const VALUE number_rb
@@ -203,9 +157,7 @@ VALUE rb_KernAux_utoa2(
     kernaux_utoa2(NUM2ULL(number_rb), buffer);
     return rb_funcall(rb_str_new2(buffer), rb_intern_freeze, 0);
 }
-#endif
 
-#ifdef HAVE_KERNAUX_ITOA2
 VALUE rb_KernAux_itoa2(
     const VALUE self_rb __attribute__((unused)),
     const VALUE number_rb
@@ -215,9 +167,7 @@ VALUE rb_KernAux_itoa2(
     kernaux_itoa2(NUM2LL(number_rb), buffer);
     return rb_funcall(rb_str_new2(buffer), rb_intern_freeze, 0);
 }
-#endif
 
-#ifdef HAVE_KERNAUX_UTOA8
 VALUE rb_KernAux_utoa8(
     const VALUE self_rb __attribute__((unused)),
     const VALUE number_rb
@@ -230,9 +180,7 @@ VALUE rb_KernAux_utoa8(
     kernaux_utoa8(NUM2ULL(number_rb), buffer);
     return rb_funcall(rb_str_new2(buffer), rb_intern_freeze, 0);
 }
-#endif
 
-#ifdef HAVE_KERNAUX_ITOA8
 VALUE rb_KernAux_itoa8(
     const VALUE self_rb __attribute__((unused)),
     const VALUE number_rb
@@ -242,9 +190,7 @@ VALUE rb_KernAux_itoa8(
     kernaux_itoa8(NUM2LL(number_rb), buffer);
     return rb_funcall(rb_str_new2(buffer), rb_intern_freeze, 0);
 }
-#endif
 
-#ifdef HAVE_KERNAUX_UTOA10
 VALUE rb_KernAux_utoa10(
     const VALUE self_rb __attribute__((unused)),
     const VALUE number_rb
@@ -257,9 +203,7 @@ VALUE rb_KernAux_utoa10(
     kernaux_utoa10(NUM2ULL(number_rb), buffer);
     return rb_funcall(rb_str_new2(buffer), rb_intern_freeze, 0);
 }
-#endif
 
-#ifdef HAVE_KERNAUX_ITOA10
 VALUE rb_KernAux_itoa10(
     const VALUE self_rb __attribute__((unused)),
     const VALUE number_rb
@@ -269,9 +213,7 @@ VALUE rb_KernAux_itoa10(
     kernaux_itoa10(NUM2LL(number_rb), buffer);
     return rb_funcall(rb_str_new2(buffer), rb_intern_freeze, 0);
 }
-#endif
 
-#ifdef HAVE_KERNAUX_UTOA16
 VALUE rb_KernAux_utoa16(
     const VALUE self_rb __attribute__((unused)),
     const VALUE number_rb
@@ -284,9 +226,7 @@ VALUE rb_KernAux_utoa16(
     kernaux_utoa16(NUM2ULL(number_rb), buffer);
     return rb_funcall(rb_str_new2(buffer), rb_intern_freeze, 0);
 }
-#endif
 
-#ifdef HAVE_KERNAUX_ITOA16
 VALUE rb_KernAux_itoa16(
     const VALUE self_rb __attribute__((unused)),
     const VALUE number_rb
@@ -296,9 +236,7 @@ VALUE rb_KernAux_itoa16(
     kernaux_itoa16(NUM2LL(number_rb), buffer);
     return rb_funcall(rb_str_new2(buffer), rb_intern_freeze, 0);
 }
-#endif
 
-#if defined(HAVE_KERNAUX_UTOA) || defined(HAVE_KERNAUX_ITOA)
 int convert_base(const VALUE base_rb)
 {
     if (TYPE(base_rb) == T_SYMBOL) {
@@ -320,4 +258,5 @@ int convert_base(const VALUE base_rb)
         return NUM2INT(base_rb);
     }
 }
-#endif
+
+#endif // KERNAUX_VERSION_SUPPORTS_NTOA

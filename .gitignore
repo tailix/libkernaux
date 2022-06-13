@@ -103,6 +103,7 @@
 /include/kernaux.h
 /include/kernaux/console.h
 /include/kernaux/printf.h
+/include/kernaux/version.h
 
 /kernaux-tester-multiboot2
 /kernaux-tester-stivale2

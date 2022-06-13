@@ -2,12 +2,11 @@
 
 #include <stdint.h>
 
-#include <kernaux.h>
-
-#include <mruby.h>
 #include <mruby/numeric.h>
 #include <mruby/presym.h>
 #include <mruby/string.h>
+
+#ifdef KERNAUX_VERSION_SUPPORTS_NTOA
 
 static mrb_value rb_KernAux_utoa(mrb_state *mrb, mrb_value self);
 static mrb_value rb_KernAux_itoa(mrb_state *mrb, mrb_value self);
@@ -297,3 +296,5 @@ int convert_base(mrb_state *mrb, mrb_value base_rb)
         return mrb_integer(base_rb);
     }
 }
+
+#endif // KERNAUX_VERSION_SUPPORTS_NTOA
