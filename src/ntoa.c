@@ -9,7 +9,7 @@
 
 char *kernaux_utoa(uint64_t value, char *buffer, int base, const char *prefix)
 {
-    KERNAUX_NOTNULL_RETVAL(buffer, NULL);
+    KERNAUX_ASSERT(buffer);
 
     // Protect caller from invalid state in case of future assertions
     *buffer = '\0';
@@ -29,7 +29,7 @@ char *kernaux_utoa(uint64_t value, char *buffer, int base, const char *prefix)
         base = -base;
     }
 
-    KERNAUX_ASSERT_RETVAL(base >= 2 && base <= 36, NULL);
+    KERNAUX_ASSERT(base >= 2 && base <= 36);
 
     // Write prefix
     if (prefix) {
@@ -37,7 +37,7 @@ char *kernaux_utoa(uint64_t value, char *buffer, int base, const char *prefix)
             if (prefix_len > KERNAUX_NTOA_MAX_PREFIX_LEN) {
                 // Protect caller from invalid state
                 *buffer = '\0';
-                KERNAUX_PANIC_RETVAL("prefix is too long", NULL);
+                KERNAUX_PANIC("prefix is too long");
             }
             *(buffer++) = *(prefix++);
         }

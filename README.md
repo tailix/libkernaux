@@ -37,10 +37,8 @@ zero). Work-in-progress APIs can change at any time.
 * Runtime environment
   * [Feature macros](/include/kernaux/version.h.in) (*stable since* **?.?.?**)
   * [Assertions](/include/kernaux/assert.h) (*stable since* **0.1.0**, *non-breaking since* **?.?.?**)
-    * [Assert: simple](/examples/assert_simple.c)
-    * [Assert: guards](/examples/assert_guards.c)
-    * [Panic: simple](/examples/panic_simple.c)
-    * [Panic: guards](/examples/panic_guards.c)
+    * [Assert](/examples/assert.c)
+    * [Panic](/examples/panic.c)
   * Stack trace *(planned)*
   * [File simulator](/include/kernaux/file.h) (*work in progress*)
   * Architecture-specific code (*work in progress*)

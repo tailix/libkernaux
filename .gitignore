@@ -105,14 +105,12 @@
 /include/kernaux/printf.h
 /include/kernaux/version.h
 
-/examples/assert_guards
-/examples/assert_simple
+/examples/assert
 /examples/cmdline
 /examples/fprintf
 /examples/fprintf_va
 /examples/ntoa
-/examples/panic_guards
-/examples/panic_simple
+/examples/panic
 /examples/pfa
 /examples/printf_fmt
 /examples/snprintf

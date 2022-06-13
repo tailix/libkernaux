@@ -6,7 +6,9 @@
 #include <kernaux/ntoa.h>
 
 #include <assert.h>
+#include <setjmp.h>
 #include <stddef.h>
+#include <stdlib.h>
 #include <string.h>
 
 #define VALID_LONG_PREFIX "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
@@ -513,6 +515,8 @@ static const struct {
     { INT64_MIN,                "-8000000000000000" },
 };
 
+static jmp_buf jmpbuf;
+
 static unsigned int assert_count_exp = 0;
 static unsigned int assert_count_ctr = 0;
 
@@ -530,32 +534,40 @@ static void assert_cb(
     assert_last_file = file;
     assert_last_line = line;
     assert_last_msg = msg;
+
+    longjmp(jmpbuf, 1);
 }
 
 static void test_utoa_assert(char *const buffer, const int base)
 {
-    assert(kernaux_utoa(0, buffer, base, NULL) == NULL);
-    assert(assert_count_ctr == ++assert_count_exp);
-    assert(strstr(assert_last_file, "src/ntoa.c") != NULL);
-    assert(assert_last_line != 0);
-    assert(assert_last_msg != NULL);
+    if (setjmp(jmpbuf) == 0) {
+        kernaux_utoa(0, buffer, base, NULL);
+    } else {
+        assert(assert_count_ctr == ++assert_count_exp);
+        assert(strstr(assert_last_file, "src/ntoa.c") != NULL);
+        assert(assert_last_line != 0);
+        assert(assert_last_msg != NULL);
 
-    assert_last_file = NULL;
-    assert_last_line = 0;
-    assert_last_msg = NULL;
+        assert_last_file = NULL;
+        assert_last_line = 0;
+        assert_last_msg = NULL;
+    }
 }
 
 static void test_itoa_assert(char *const buffer, const int base)
 {
-    assert(kernaux_itoa(0, buffer, base, NULL) == NULL);
-    assert(assert_count_ctr == ++assert_count_exp);
-    assert(strstr(assert_last_file, "src/ntoa.c") != NULL);
-    assert(assert_last_line != 0);
-    assert(assert_last_msg != NULL);
+    if (setjmp(jmpbuf) == 0) {
+        kernaux_itoa(0, buffer, base, NULL);
+    } else {
+        assert(assert_count_ctr == ++assert_count_exp);
+        assert(strstr(assert_last_file, "src/ntoa.c") != NULL);
+        assert(assert_last_line != 0);
+        assert(assert_last_msg != NULL);
 
-    assert_last_file = NULL;
-    assert_last_line = 0;
-    assert_last_msg = NULL;
+        assert_last_file = NULL;
+        assert_last_line = 0;
+        assert_last_msg = NULL;
+    }
 }
 
 static const char *str_end(const char *str)
@@ -566,6 +578,8 @@ static const char *str_end(const char *str)
 int main()
 {
     kernaux_assert_cb = assert_cb;
+
+    if (setjmp(jmpbuf) != 0) abort();
 
     {
         char buffer[KERNAUX_UTOA_MIN_BUFFER_SIZE + KERNAUX_NTOA_MAX_PREFIX_LEN];
@@ -579,17 +593,18 @@ int main()
         assert(assert_last_line == 0);
         assert(assert_last_msg == NULL);
 
-        const char *const end2 =
+        if (setjmp(jmpbuf) == 0) {
             kernaux_utoa(123, buffer, 'd', TOO_LONG_PREFIX);
-        assert(strcmp(buffer, VALID_LONG_PREFIX) == 0);
-        assert(end2 == NULL);
-        assert(assert_count_ctr == ++assert_count_exp);
-        assert(strstr(assert_last_file, "src/ntoa.c") != NULL);
-        assert(assert_last_line != 0);
-        assert(strcmp(assert_last_msg, "prefix is too long") == 0);
-        assert_last_file = NULL;
-        assert_last_line = 0;
-        assert_last_msg = NULL;
+        } else {
+            assert(strcmp(buffer, VALID_LONG_PREFIX) == 0);
+            assert(assert_count_ctr == ++assert_count_exp);
+            assert(strstr(assert_last_file, "src/ntoa.c") != NULL);
+            assert(assert_last_line != 0);
+            assert(strcmp(assert_last_msg, "prefix is too long") == 0);
+            assert_last_file = NULL;
+            assert_last_line = 0;
+            assert_last_msg = NULL;
+        }
 
         test_utoa_assert(NULL, 'd');
         test_utoa_assert(buffer, 0);
@@ -598,6 +613,8 @@ int main()
         test_utoa_assert(buffer, 37);
         test_utoa_assert(buffer, -37);
     }
+
+    if (setjmp(jmpbuf) != 0) abort();
 
     {
         char buffer[KERNAUX_ITOA_MIN_BUFFER_SIZE + KERNAUX_NTOA_MAX_PREFIX_LEN];
@@ -611,17 +628,18 @@ int main()
         assert(assert_last_line == 0);
         assert(assert_last_msg == NULL);
 
-        const char *const end2 =
+        if (setjmp(jmpbuf) == 0) {
             kernaux_itoa(123, buffer, 'd', TOO_LONG_PREFIX);
-        assert(strcmp(buffer, VALID_LONG_PREFIX) == 0);
-        assert(end2 == NULL);
-        assert(assert_count_ctr == ++assert_count_exp);
-        assert(strstr(assert_last_file, "src/ntoa.c") != NULL);
-        assert(assert_last_line != 0);
-        assert(strcmp(assert_last_msg, "prefix is too long") == 0);
-        assert_last_file = NULL;
-        assert_last_line = 0;
-        assert_last_msg = NULL;
+        } else {
+            assert(strcmp(buffer, VALID_LONG_PREFIX) == 0);
+            assert(assert_count_ctr == ++assert_count_exp);
+            assert(strstr(assert_last_file, "src/ntoa.c") != NULL);
+            assert(assert_last_line != 0);
+            assert(strcmp(assert_last_msg, "prefix is too long") == 0);
+            assert_last_file = NULL;
+            assert_last_line = 0;
+            assert_last_msg = NULL;
+        }
 
         test_itoa_assert(NULL, 'd');
         test_itoa_assert(buffer, 0);
