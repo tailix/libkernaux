@@ -204,6 +204,18 @@ test_ntoa_LDADD = $(top_builddir)/libkernaux.la
 test_ntoa_SOURCES = test_ntoa.c
 endif
 
+####################
+# test_ntoa_assert #
+####################
+
+if ENABLE_DEBUG
+if WITH_NTOA
+TESTS += test_ntoa_assert
+test_ntoa_assert_LDADD = $(top_builddir)/libkernaux.la
+test_ntoa_assert_SOURCES = test_ntoa_assert.c
+endif
+endif
+
 ############
 # test_pfa #
 ############

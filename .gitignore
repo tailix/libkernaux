@@ -134,6 +134,7 @@
 /tests/test_multiboot2_info_print
 /tests/test_multiboot2_info_validation
 /tests/test_ntoa
+/tests/test_ntoa_assert
 /tests/test_pfa
 /tests/test_pfa_assert
 /tests/test_printf_fmt_gen
