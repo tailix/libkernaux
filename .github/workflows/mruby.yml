@@ -13,7 +13,10 @@ jobs:
       MRUBY_YAML_USE_SYSTEM_LIBRARY: x
     strategy:
       matrix:
-        packages: ['', '--without-all']
+        packages:
+          - configure: ''
+          - configure: '--without-all'
+          - configure: '--without-all --with-ntoa'
     steps:
       - uses: actions/checkout@v2
         with:
@@ -26,7 +29,7 @@ jobs:
       - name: autogen
         run: ./autogen.sh
       - name: configure
-        run: ./configure ${{matrix.packages}} CFLAGS='-O3'
+        run: ./configure ${{matrix.packages.configure}} CFLAGS='-O3'
       - name: make
         run: make
       - name: install

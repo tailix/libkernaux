@@ -12,8 +12,10 @@ jobs:
     strategy:
       matrix:
         packages:
-          - {}
+          - configure: ''
           - configure: '--without-all'
+            skip_coverage: 'x'
+          - configure: '--without-all --with-ntoa'
             skip_coverage: 'x'
     steps:
       - uses: actions/checkout@v2
