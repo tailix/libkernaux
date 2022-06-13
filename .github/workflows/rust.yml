@@ -9,6 +9,12 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        packages:
+          - {}
+          - configure: '--without-all'
+            cargo: '--no-default-features'
     steps:
       - uses: actions/checkout@v2
       - uses: actions-rs/toolchain@v1
@@ -18,11 +24,14 @@ jobs:
       - name: autogen
         run: ./autogen.sh
       - name: configure
-        run: ./configure CFLAGS='-O3'
+        run: ./configure ${{matrix.packages.configure}} CFLAGS='-O3'
       - name: make
         run: make
       - name: install
         run: sudo make install
+      - working-directory: bindings/rust
+        name: test
+        run: cargo build ${{matrix.packages.cargo}}
       - working-directory: bindings/rust
         name: test
         run: cargo test

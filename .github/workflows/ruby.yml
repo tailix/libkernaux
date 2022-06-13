@@ -9,6 +9,9 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        packages: ['', '--without-all']
     steps:
       - uses: actions/checkout@v2
       - uses: ruby/setup-ruby@v1
@@ -19,7 +22,7 @@ jobs:
       - name: autogen
         run: ./autogen.sh
       - name: configure
-        run: ./configure CFLAGS='-O3'
+        run: ./configure ${{matrix.packages}} CFLAGS='-O3'
       - name: make
         run: make
       - name: install
@@ -36,32 +39,3 @@ jobs:
       - working-directory: bindings/ruby
         name: cppcheck
         run: cppcheck --quiet --error-exitcode=1 --std=c99 --enable=warning,style,performance,portability .
-
-  cond:
-    runs-on: ubuntu-latest
-    env:
-      SKIP_COVERAGE: x
-    steps:
-      - uses: actions/checkout@v2
-      - uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: 3.0
-      - name: dependencies
-        run: sudo apt-get --yes install
-      - name: autogen
-        run: ./autogen.sh
-      - name: configure
-        run: ./configure --without-all CFLAGS='-O3'
-      - name: make
-        run: make
-      - name: install
-        run: sudo make install
-      - working-directory: bindings/ruby
-        name: setup
-        run: ./bin/setup
-      - working-directory: bindings/ruby
-        name: compile
-        run: rake compile
-      - working-directory: bindings/ruby
-        name: test & lint
-        run: rake

@@ -3,9 +3,6 @@
 #include <stddef.h>
 #include <string.h>
 
-#include <kernaux.h>
-
-#include <mruby.h>
 #include <mruby/presym.h>
 #include <mruby/string.h>
 #include <mruby/variable.h>

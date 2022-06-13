@@ -11,6 +11,9 @@ jobs:
     runs-on: ubuntu-latest
     env:
       MRUBY_YAML_USE_SYSTEM_LIBRARY: x
+    strategy:
+      matrix:
+        packages: ['', '--without-all']
     steps:
       - uses: actions/checkout@v2
         with:
@@ -23,7 +26,7 @@ jobs:
       - name: autogen
         run: ./autogen.sh
       - name: configure
-        run: ./configure CFLAGS='-O3'
+        run: ./configure ${{matrix.packages}} CFLAGS='-O3'
       - name: make
         run: make
       - name: install

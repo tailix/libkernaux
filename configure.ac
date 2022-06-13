@@ -32,6 +32,7 @@ AC_CONFIG_FILES([
   include/kernaux.h
   include/kernaux/console.h
   include/kernaux/printf.h
+  include/kernaux/version.h
   tests/Makefile
 ])
 

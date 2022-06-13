@@ -12,6 +12,11 @@ keywords = ["ffi", "no_std", "no-std", "embedded", "bindings"]
 categories = ["embedded", "external-ffi-bindings", "no-std", "parsing"]
 publish = true
 
+[features]
+default = ["cmdline", "ntoa"]
+cmdline = []
+ntoa = []
+
 [dependencies.libc]
 version = "0.2.113"
 default-features = false

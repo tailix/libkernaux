@@ -9,18 +9,20 @@ module KernAux
 
   SPRINTF1_BUFFER_SIZE = 10_000
 
-  def self.sprintf(*args)
-    args.map do |arg|
-      if arg.is_a? Array
-        sprintf1(*arg)
-      else
-        arg
-      end
-    end.join.freeze
-  end
+  if Version.supports_printf?
+    def self.sprintf(*args)
+      args.map do |arg|
+        if arg.is_a? Array
+          sprintf1(*arg)
+        else
+          arg
+        end
+      end.join.freeze
+    end
 
-  def self.sprintf1(format, *args)
-    snprintf1(SPRINTF1_BUFFER_SIZE, format, *args).first
+    def self.sprintf1(format, *args)
+      snprintf1(SPRINTF1_BUFFER_SIZE, format, *args).first
+    end
   end
 
   class Error < RuntimeError; end
