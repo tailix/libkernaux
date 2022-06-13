@@ -13,7 +13,8 @@ categories = ["api-bindings", "embedded", "parsing"]
 publish = true
 
 [features]
-default = ["cmdline", "ntoa"]
+default = ["debug", "cmdline", "ntoa"]
+debug = ["kernaux-sys/debug"]
 cmdline = ["kernaux-sys/cmdline"]
 ntoa = ["kernaux-sys/ntoa"]
 

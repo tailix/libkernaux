@@ -13,7 +13,8 @@ categories = ["embedded", "external-ffi-bindings", "no-std", "parsing"]
 publish = true
 
 [features]
-default = ["cmdline", "ntoa"]
+default = ["debug", "cmdline", "ntoa"]
+debug = []
 cmdline = []
 ntoa = []
 
