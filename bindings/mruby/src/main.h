@@ -11,14 +11,14 @@ mrb_state *current_mrb_get();
 void init_assert(mrb_state *mrb);
 void init_version(mrb_state *mrb);
 
-#ifdef KERNAUX_VERSION_SUPPORTS_CMDLINE
+#ifdef KERNAUX_VERSION_WITH_CMDLINE
 void init_cmdline(mrb_state *mrb);
-#endif // KERNAUX_VERSION_SUPPORTS_CMDLINE
-#ifdef KERNAUX_VERSION_SUPPORTS_NTOA
+#endif // KERNAUX_VERSION_WITH_CMDLINE
+#ifdef KERNAUX_VERSION_WITH_NTOA
 void init_ntoa(mrb_state *mrb);
-#endif // KERNAUX_VERSION_SUPPORTS_NTOA
-#ifdef KERNAUX_VERSION_SUPPORTS_PRINTF
+#endif // KERNAUX_VERSION_WITH_NTOA
+#ifdef KERNAUX_VERSION_WITH_PRINTF
 void init_printf(mrb_state *mrb);
-#endif // KERNAUX_VERSION_SUPPORTS_PRINTF
+#endif // KERNAUX_VERSION_WITH_PRINTF
 
 #endif

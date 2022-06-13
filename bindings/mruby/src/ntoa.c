@@ -6,7 +6,7 @@
 #include <mruby/presym.h>
 #include <mruby/string.h>
 
-#ifdef KERNAUX_VERSION_SUPPORTS_NTOA
+#ifdef KERNAUX_VERSION_WITH_NTOA
 
 static mrb_value rb_KernAux_utoa(mrb_state *mrb, mrb_value self);
 static mrb_value rb_KernAux_itoa(mrb_state *mrb, mrb_value self);
@@ -297,4 +297,4 @@ int convert_base(mrb_state *mrb, mrb_value base_rb)
     }
 }
 
-#endif // KERNAUX_VERSION_SUPPORTS_NTOA
+#endif // KERNAUX_VERSION_WITH_NTOA

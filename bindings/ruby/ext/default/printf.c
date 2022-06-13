@@ -2,7 +2,7 @@
 
 #include "dynarg.h"
 
-#ifdef KERNAUX_VERSION_SUPPORTS_PRINTF
+#ifdef KERNAUX_VERSION_WITH_PRINTF
 
 static VALUE rb_KernAux_snprintf1(int argc, const VALUE *argv, VALUE self);
 
@@ -115,4 +115,4 @@ VALUE rb_KernAux_snprintf1(
     return rb_funcall(result_rb, rb_intern_freeze, 0);
 }
 
-#endif // KERNAUX_VERSION_SUPPORTS_PRINTF
+#endif // KERNAUX_VERSION_WITH_PRINTF

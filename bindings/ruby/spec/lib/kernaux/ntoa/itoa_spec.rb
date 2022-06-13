@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-KernAux::Version.supports_ntoa? and RSpec.describe KernAux, '.itoa' do
+KernAux::Version.with_ntoa? and RSpec.describe KernAux, '.itoa' do
   subject(:itoa) { described_class.itoa number, base, prefix }
 
   let(:number) { rand((-2**63)..(2**63 - 1)) }

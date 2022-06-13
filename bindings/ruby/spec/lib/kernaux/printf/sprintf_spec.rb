@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-KernAux::Version.supports_printf? and RSpec.describe KernAux, '.sprintf' do
+KernAux::Version.with_printf? and RSpec.describe KernAux, '.sprintf' do
   subject :sprintf do
     described_class.sprintf 'Hello, ', ['%s', 'World'], '!'
   end
