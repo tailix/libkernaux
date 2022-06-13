@@ -12,8 +12,8 @@ void KernAux_Multiboot2_Header_print(
     const struct KernAux_Multiboot2_Header *const multiboot2_header,
     void (*const printf)(const char *format, ...)
 ) {
-    KERNAUX_NOTNULL_RETURN(multiboot2_header);
-    KERNAUX_NOTNULL_RETURN(printf);
+    KERNAUX_ASSERT(multiboot2_header);
+    KERNAUX_ASSERT(printf);
 
     printf("Multiboot 2 header\n");
     printf("  magic: %u\n", multiboot2_header->magic);
@@ -45,8 +45,8 @@ void KernAux_Multiboot2_HTagBase_print(
     const struct KernAux_Multiboot2_HTagBase *const tag_base,
     void (*const printf)(const char *format, ...)
 ) {
-    KERNAUX_NOTNULL_RETURN(tag_base);
-    KERNAUX_NOTNULL_RETURN(printf);
+    KERNAUX_ASSERT(tag_base);
+    KERNAUX_ASSERT(printf);
 
     if (!KernAux_Multiboot2_HTagBase_is_valid(tag_base)) return;
 

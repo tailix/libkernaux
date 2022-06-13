@@ -26,12 +26,12 @@ bool kernaux_cmdline(
     const size_t argv_count_max,
     const size_t buffer_size
 ) {
-    KERNAUX_NOTNULL_RETVAL(cmdline, false);
-    KERNAUX_NOTNULL_RETVAL(error_msg, false);
-    KERNAUX_NOTNULL_RETVAL(argc, false);
-    KERNAUX_NOTNULL_RETVAL(argv, false);
-    KERNAUX_ASSERT_RETVAL(argv_count_max > 0, false);
-    KERNAUX_ASSERT_RETVAL(buffer_size > 0, false);
+    KERNAUX_ASSERT(cmdline);
+    KERNAUX_ASSERT(error_msg);
+    KERNAUX_ASSERT(argc);
+    KERNAUX_ASSERT(argv);
+    KERNAUX_ASSERT(argv_count_max > 0);
+    KERNAUX_ASSERT(buffer_size > 0);
 
     memset(error_msg, '\0', KERNAUX_CMDLINE_ERROR_MSG_SIZE_MAX);
     *argc = 0;

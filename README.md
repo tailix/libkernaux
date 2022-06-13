@@ -16,6 +16,8 @@ Table of contents
 * [Overview](#libkernaux)
 * [Table of contents](#table-of-contents)
 * [API](#api)
+  * [Definitions](#definitions)
+  * [Global variables](#global-variables)
 * [Configuration](#configuration)
   * [Non-default options](#non-default-options)
   * [Default options](#default-options)
@@ -37,10 +39,8 @@ zero). Work-in-progress APIs can change at any time.
 * Runtime environment
   * [Feature macros](/include/kernaux/version.h.in) (*stable since* **?.?.?**)
   * [Assertions](/include/kernaux/assert.h) (*stable since* **0.1.0**, *non-breaking since* **?.?.?**)
-    * [Assert: simple](/examples/assert_simple.c)
-    * [Assert: guards](/examples/assert_guards.c)
-    * [Panic: simple](/examples/panic_simple.c)
-    * [Panic: guards](/examples/panic_guards.c)
+    * [Assert](/examples/assert.c)
+    * [Panic](/examples/panic.c)
   * Stack trace *(planned)*
   * [File simulator](/include/kernaux/file.h) (*work in progress*)
   * Architecture-specific code (*work in progress*)
@@ -84,6 +84,27 @@ zero). Work-in-progress APIs can change at any time.
   * [string.h](/libc/include/string.h)
   * [sys/types.h](/libc/include/sys/types.h)
 
+### Definitions
+
+Define the following C preprocessor macros before including `<kernaux.h>` and
+`<kernaux/*.h>` files. They have effect on your code, not the library code.
+
+* `KERNAUX_DEBUG` - enable assertions
+
+### Global variables
+
+```c
+// in <kernaux/assert.h>
+void (*kernaux_assert_cb)(const char *file, int line, const char *msg)
+```
+
+Assertion callback. It's better to always set it to some function which always
+interrupts the execution, even when debugging is disabled. It may for example
+call `abort()` in hosted environment, raise an exception in Ruby, panic in Rust
+or power off the machine in freestanding environment. It may also log the error
+location and message.
+
+
 
 
 Configuration
@@ -115,6 +136,7 @@ stable options.
 
 #### Features
 
+* `--(enable|disable)-debug` - debugging
 * `--(enable|disable)-float` - floating-point arithmetic
 * `--(enable|disable)-werror` - fail on warning (`CFLAGS+='-Werror'`)
 
