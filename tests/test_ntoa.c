@@ -515,6 +515,7 @@ static const struct {
     { INT64_MIN,                "-8000000000000000" },
 };
 
+#ifdef ENABLE_DEBUG
 static jmp_buf jmpbuf;
 
 static unsigned int assert_count_exp = 0;
@@ -569,6 +570,7 @@ static void test_itoa_assert(char *const buffer, const int base)
         assert_last_msg = NULL;
     }
 }
+#endif // ENABLE_DEBUG
 
 static const char *str_end(const char *str)
 {
@@ -577,6 +579,7 @@ static const char *str_end(const char *str)
 
 int main()
 {
+#ifdef ENABLE_DEBUG
     kernaux_assert_cb = assert_cb;
 
     if (setjmp(jmpbuf) != 0) abort();
@@ -648,6 +651,7 @@ int main()
         test_itoa_assert(buffer, 37);
         test_itoa_assert(buffer, -37);
     }
+#endif // ENABLE_DEBUG
 
     {
         char buffer[KERNAUX_UTOA_MIN_BUFFER_SIZE + 3];

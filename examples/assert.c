@@ -1,3 +1,4 @@
+#define KERNAUX_DEBUG
 #include <kernaux/assert.h>
 
 #include <assert.h>

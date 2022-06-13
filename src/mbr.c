@@ -35,5 +35,6 @@ bool KernAux_Mbr_Entry_is_valid(const struct KernAux_Mbr_Entry *const mbr_entry)
     KERNAUX_ASSERT(mbr_entry);
 
     // TODO: implement this
+    (void)mbr_entry;
     return true;
 }

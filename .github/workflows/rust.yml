@@ -26,7 +26,7 @@ jobs:
       - name: autogen
         run: ./autogen.sh
       - name: configure
-        run: ./configure ${{matrix.packages.configure}} CFLAGS='-O3'
+        run: ./configure --enable-debug ${{matrix.packages.configure}} CFLAGS='-O3'
       - name: make
         run: make
       - name: install

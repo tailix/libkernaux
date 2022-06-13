@@ -11,6 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
+        debug: ['--disable-debug', '--enable-debug']
         cc: ['gcc', 'clang', 'tcc']
         opt: ['', '-O0', '-O3']
     steps:
@@ -20,7 +21,7 @@ jobs:
       - name: autogen
         run: ./autogen.sh
       - name: configure
-        run: ./configure --enable-tests --enable-tests-python CC='${{matrix.cc}}' CFLAGS='${{matrix.opt}}'
+        run: ./configure ${{matrix.debug}} --enable-tests --enable-tests-python CC='${{matrix.cc}}' CFLAGS='${{matrix.opt}}'
       - name: make
         run: make
       - name: check
@@ -43,7 +44,7 @@ jobs:
       - name: autogen
         run: ./autogen.sh
       - name: configure
-        run: ./configure --without-${{matrix.pkg.main}} ${{matrix.pkg.other}} --enable-tests --enable-tests-python
+        run: ./configure --enable-debug --enable-tests --enable-tests-python --without-${{matrix.pkg.main}} ${{matrix.pkg.other}}
       - name: make
         run: make
       - name: check
@@ -64,7 +65,7 @@ jobs:
       - name: extract
         run: tar -xzf "libkernaux-$(cat VERSION).tar.gz"
       - name: configure
-        run: cd "libkernaux-$(cat VERSION)" && ./configure --enable-tests --enable-tests-python
+        run: cd "libkernaux-$(cat VERSION)" && ./configure --enable-debug --enable-tests --enable-tests-python
       - name: make
         run: cd "libkernaux-$(cat VERSION)" && make
       - name: check
