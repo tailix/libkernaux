@@ -11,6 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
+        debug: ['--disable-debug', '--enable-debug']
         packages:
           - configure: ''
           - configure: '--without-all'
@@ -26,7 +27,7 @@ jobs:
       - name: autogen
         run: ./autogen.sh
       - name: configure
-        run: ./configure --enable-debug ${{matrix.packages.configure}} CFLAGS='-O3'
+        run: ./configure ${{matrix.debug}} ${{matrix.packages.configure}} CFLAGS='-O3'
       - name: make
         run: make
       - name: install
