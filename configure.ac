@@ -243,18 +243,18 @@ AS_IF([test "$enable_debug"        = yes], [AC_DEFINE([KERNAUX_DEBUG],       [1]
 ##########################
 
 dnl Packages (enabled by default)
-AS_IF([test "$with_cmdline"      = no], [AC_SUBST([comment_line_cmdline],      [//])])
-AS_IF([test "$with_console"      = no], [AC_SUBST([comment_line_console],      [//])])
-AS_IF([test "$with_elf"          = no], [AC_SUBST([comment_line_elf],          [//])])
-AS_IF([test "$with_framebuffer"  = no], [AC_SUBST([comment_line_framebuffer],  [//])])
-AS_IF([test "$with_io"           = no], [AC_SUBST([comment_line_io],           [//])])
-AS_IF([test "$with_mbr"          = no], [AC_SUBST([comment_line_mbr],          [//])])
-AS_IF([test "$with_multiboot2"   = no], [AC_SUBST([comment_line_multiboot2],   [//])])
-AS_IF([test "$with_ntoa"         = no], [AC_SUBST([comment_line_ntoa],         [//])])
-AS_IF([test "$with_pfa"          = no], [AC_SUBST([comment_line_pfa],          [//])])
-AS_IF([test "$with_printf"       = no], [AC_SUBST([comment_line_printf],       [//])])
-AS_IF([test "$with_printf_fmt"   = no], [AC_SUBST([comment_line_printf_fmt],   [//])])
-AS_IF([test "$with_units"        = no], [AC_SUBST([comment_line_units],        [//])])
+AS_IF([test "$with_cmdline"     = no], [AC_SUBST([comment_line_cmdline],     [//])])
+AS_IF([test "$with_console"     = no], [AC_SUBST([comment_line_console],     [//])])
+AS_IF([test "$with_elf"         = no], [AC_SUBST([comment_line_elf],         [//])])
+AS_IF([test "$with_framebuffer" = no], [AC_SUBST([comment_line_framebuffer], [//])])
+AS_IF([test "$with_io"          = no], [AC_SUBST([comment_line_io],          [//])])
+AS_IF([test "$with_mbr"         = no], [AC_SUBST([comment_line_mbr],         [//])])
+AS_IF([test "$with_multiboot2"  = no], [AC_SUBST([comment_line_multiboot2],  [//])])
+AS_IF([test "$with_ntoa"        = no], [AC_SUBST([comment_line_ntoa],        [//])])
+AS_IF([test "$with_pfa"         = no], [AC_SUBST([comment_line_pfa],         [//])])
+AS_IF([test "$with_printf"      = no], [AC_SUBST([comment_line_printf],      [//])])
+AS_IF([test "$with_printf_fmt"  = no], [AC_SUBST([comment_line_printf_fmt],  [//])])
+AS_IF([test "$with_units"       = no], [AC_SUBST([comment_line_units],       [//])])
 
 
 
