@@ -4,6 +4,14 @@
 #include <kernaux.h>
 #include <ruby.h>
 
+extern ID rb_intern_call;
+extern ID rb_intern_freeze;
+extern ID rb_intern_LESS;
+extern ID rb_intern_new;
+
+extern VALUE rb_KernAux;
+extern VALUE rb_KernAux_Error;
+
 void init_version();
 void init_assert();
 

@@ -2,15 +2,27 @@
 
 #include "dynarg.h"
 
+#include <stddef.h>
 #include <stdlib.h>
 
 #include <mruby/array.h>
+#include <mruby/error.h>
 #include <mruby/presym.h>
 #include <mruby/string.h>
 
 #ifdef KERNAUX_VERSION_WITH_PRINTF
 
+struct snprintf1_userdata {
+    const struct KernAux_PrintfFmt_Spec *spec;
+    const struct DynArg *dynarg;
+    mrb_int size;
+    const char *format;
+    char *str;
+};
+
 static mrb_value rb_KernAux_snprintf1(mrb_state *mrb, mrb_value self);
+
+static mrb_value snprintf1_protect(mrb_state *mrb, void *userdata);
 
 void init_printf(mrb_state *const mrb)
 {
@@ -20,7 +32,6 @@ void init_printf(mrb_state *const mrb)
                             MRB_ARGS_REQ(2) | MRB_ARGS_OPT(2));
 }
 
-// FIXME: rewrite to ensure no memory leak on exception.
 mrb_value rb_KernAux_snprintf1(mrb_state *const mrb, mrb_value self)
 {
     mrb_int size = 0;
@@ -88,32 +99,54 @@ mrb_value rb_KernAux_snprintf1(mrb_state *const mrb, mrb_value self)
     char *const str = malloc(size);
     if (!str) mrb_raise(mrb, mrb_exc_get_id(mrb, MRB_ERROR_SYM(NoMemoryError)), "snprintf1 buffer malloc");
 
+    struct snprintf1_userdata userdata = {
+        .spec = &spec,
+        .dynarg = &dynarg,
+        .size = size,
+        .format = format,
+        .str = str,
+    };
+    mrb_bool error;
+    mrb_value result = mrb_protect_error(mrb, snprintf1_protect, &userdata, &error);
+
+    free(str);
+
+    if (error) {
+        mrb_exc_raise(mrb, result);
+    } else {
+        return result;
+    }
+}
+
+mrb_value snprintf1_protect(mrb_state *const mrb, void *const userdata_raw)
+{
+    const struct snprintf1_userdata *const userdata = userdata_raw;
+
     int slen;
-    if (spec.set_width) {
-        if (spec.set_precision) {
-            slen = dynarg.use_dbl
-                ? kernaux_snprintf(str, size, format, spec.width, spec.precision, dynarg.dbl)
-                : kernaux_snprintf(str, size, format, spec.width, spec.precision, dynarg.arg);
+    if (userdata->spec->set_width) {
+        if (userdata->spec->set_precision) {
+            slen = userdata->dynarg->use_dbl
+                ? kernaux_snprintf(userdata->str, userdata->size, userdata->format, userdata->spec->width, userdata->spec->precision, userdata->dynarg->dbl)
+                : kernaux_snprintf(userdata->str, userdata->size, userdata->format, userdata->spec->width, userdata->spec->precision, userdata->dynarg->arg);
         } else {
-            slen = dynarg.use_dbl
-                ? kernaux_snprintf(str, size, format, spec.width, dynarg.dbl)
-                : kernaux_snprintf(str, size, format, spec.width, dynarg.arg);
+            slen = userdata->dynarg->use_dbl
+                ? kernaux_snprintf(userdata->str, userdata->size, userdata->format, userdata->spec->width, userdata->dynarg->dbl)
+                : kernaux_snprintf(userdata->str, userdata->size, userdata->format, userdata->spec->width, userdata->dynarg->arg);
         }
     } else {
-        if (spec.set_precision) {
-            slen = dynarg.use_dbl
-                ? kernaux_snprintf(str, size, format, spec.precision, dynarg.dbl)
-                : kernaux_snprintf(str, size, format, spec.precision, dynarg.arg);
+        if (userdata->spec->set_precision) {
+            slen = userdata->dynarg->use_dbl
+                ? kernaux_snprintf(userdata->str, userdata->size, userdata->format, userdata->spec->precision, userdata->dynarg->dbl)
+                : kernaux_snprintf(userdata->str, userdata->size, userdata->format, userdata->spec->precision, userdata->dynarg->arg);
         } else {
-            slen = dynarg.use_dbl
-                ? kernaux_snprintf(str, size, format, dynarg.dbl)
-                : kernaux_snprintf(str, size, format, dynarg.arg);
+            slen = userdata->dynarg->use_dbl
+                ? kernaux_snprintf(userdata->str, userdata->size, userdata->format, userdata->dynarg->dbl)
+                : kernaux_snprintf(userdata->str, userdata->size, userdata->format, userdata->dynarg->arg);
         }
     }
 
     mrb_value output_rb =
-        mrb_obj_freeze(mrb, mrb_str_cat_cstr(mrb, mrb_str_new_lit(mrb, ""), str));
-    free(str);
+        mrb_obj_freeze(mrb, mrb_str_cat_cstr(mrb, mrb_str_new_lit(mrb, ""), userdata->str));
 
     mrb_value values[2];
     values[0] = output_rb;

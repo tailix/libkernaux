@@ -37,7 +37,7 @@ can only change when major version number is increased (or minor while major is
 zero). Work-in-progress APIs can change at any time.
 
 * Runtime environment
-  * [Feature macros](/include/kernaux/version.h.in) (*stable since* **?.?.?**)
+  * [Feature macros](/include/kernaux/version.h.in) (*work in progress*)
   * [Assertions](/include/kernaux/assert.h) (*stable since* **0.1.0**, *non-breaking since* **?.?.?**)
     * [Assert](/examples/assert.c)
     * [Panic](/examples/panic.c)

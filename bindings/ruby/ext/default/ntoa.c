@@ -13,10 +13,8 @@ static VALUE rb_KernAux_itoa10(VALUE self, VALUE number);
 static VALUE rb_KernAux_utoa16(VALUE self, VALUE number);
 static VALUE rb_KernAux_itoa16(VALUE self, VALUE number);
 
-static ID rb_intern_LESS = Qnil;
 static ID rb_intern_b = Qnil;
 static ID rb_intern_B = Qnil;
-static ID rb_intern_freeze = Qnil;
 static ID rb_intern_h = Qnil;
 static ID rb_intern_H = Qnil;
 static ID rb_intern_o = Qnil;
@@ -26,8 +24,6 @@ static ID rb_intern_D = Qnil;
 static ID rb_intern_x = Qnil;
 static ID rb_intern_X = Qnil;
 
-static VALUE rb_KernAux = Qnil;
-static VALUE rb_KernAux_Error = Qnil;
 static VALUE rb_KernAux_InvalidNtoaBaseError = Qnil;
 static VALUE rb_KernAux_TooLongNtoaPrefixError = Qnil;
 
@@ -35,10 +31,8 @@ static int convert_base(VALUE base);
 
 void init_ntoa()
 {
-    rb_gc_register_mark_object(ID2SYM(rb_intern_LESS   = rb_intern("<")));
     rb_gc_register_mark_object(ID2SYM(rb_intern_b      = rb_intern("b")));
     rb_gc_register_mark_object(ID2SYM(rb_intern_B      = rb_intern("B")));
-    rb_gc_register_mark_object(ID2SYM(rb_intern_freeze = rb_intern("freeze")));
     rb_gc_register_mark_object(ID2SYM(rb_intern_h      = rb_intern("h")));
     rb_gc_register_mark_object(ID2SYM(rb_intern_H      = rb_intern("H")));
     rb_gc_register_mark_object(ID2SYM(rb_intern_o      = rb_intern("o")));
@@ -48,9 +42,6 @@ void init_ntoa()
     rb_gc_register_mark_object(ID2SYM(rb_intern_x      = rb_intern("x")));
     rb_gc_register_mark_object(ID2SYM(rb_intern_X      = rb_intern("X")));
 
-    rb_gc_register_mark_object(rb_KernAux = rb_define_module("KernAux"));
-    rb_gc_register_mark_object(rb_KernAux_Error =
-        rb_define_class_under(rb_KernAux, "Error", rb_eRuntimeError));
     rb_gc_register_mark_object(rb_KernAux_InvalidNtoaBaseError =
         rb_define_class_under(rb_KernAux, "InvalidNtoaBaseError",
                               rb_KernAux_Error));

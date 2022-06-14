@@ -5,12 +5,10 @@ static VALUE rb_KernAux_Version_with_fileQN(VALUE self);
 static VALUE rb_KernAux_Version_with_ntoaQN(VALUE self);
 static VALUE rb_KernAux_Version_with_printfQN(VALUE self);
 
-static VALUE rb_KernAux = Qnil;
 static VALUE rb_KernAux_Version = Qnil;
 
 void init_version()
 {
-    rb_gc_register_mark_object(rb_KernAux = rb_define_module("KernAux"));
     rb_gc_register_mark_object(rb_KernAux_Version =
         rb_define_module_under(rb_KernAux, "Version"));
 
