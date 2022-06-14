@@ -3,10 +3,6 @@
 	* include/kernaux/version.h.in: Added
 	* include/kernaux/assert.h: Complete rewrite
 
-2022-06-12  Alex Kotov  <kotovalexarian@gmail.com>
-
-	* libc/include/errno.h: Added
-
 2022-06-10  Alex Kotov  <kotovalexarian@gmail.com>
 
 	* libc/include/string.h: Add funcs "memchr", "strcat", "strncat", "strchr"
