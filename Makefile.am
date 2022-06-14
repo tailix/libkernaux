@@ -6,6 +6,7 @@ EXTRA_DIST = autogen.sh CONTRIBUTING.md sha256sums.txt
 SUBDIRS = include
 
 if WITH_LIBC
+# FIXME: after "make clean" libc is not rebuiling
 SUBDIRS += libc
 endif
 
