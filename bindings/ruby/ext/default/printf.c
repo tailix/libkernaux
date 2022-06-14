@@ -7,13 +7,9 @@
 
 #ifdef KERNAUX_VERSION_WITH_PRINTF
 
-static ID rb_intern_freeze = Qnil;
-
 /*************
  * ::KernAux *
  *************/
-
-static VALUE rb_KernAux = Qnil;
 
 static VALUE rb_KernAux_snprintf1(int argc, const VALUE *argv, VALUE self);
 
@@ -55,10 +51,6 @@ struct rb_KernAux_Snprintf1_DATA {
 
 void init_printf()
 {
-    rb_gc_register_mark_object(ID2SYM(rb_intern_freeze = rb_intern("freeze")));
-
-    rb_gc_register_mark_object(rb_KernAux = rb_define_module("KernAux"));
-
     rb_gc_register_mark_object(
         rb_KernAux_Snprintf1 =
             // @api private
