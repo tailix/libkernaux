@@ -3,7 +3,7 @@
 #endif
 
 #include <kernaux/assert.h>
-#include <kernaux/file.h>
+#include <kernaux/io.h>
 
 #include <stddef.h>
 

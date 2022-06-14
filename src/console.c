@@ -14,8 +14,8 @@
 #include <kernaux/asm/x86_64.h>
 #endif
 
-#ifdef WITH_FILE
-#include <kernaux/file.h>
+#ifdef WITH_IO
+#include <kernaux/io.h>
 #endif
 #ifdef WITH_PRINTF
 #include <kernaux/printf.h>
@@ -23,7 +23,7 @@
 
 #include <stddef.h>
 
-#if defined(WITH_FILE) && defined(WITH_PRINTF)
+#if defined(WITH_IO) && defined(WITH_PRINTF)
 static void kernaux_console_printf_putc(
     const char c,
     void *const arg __attribute__((unused))
@@ -51,7 +51,7 @@ void kernaux_console_print(const char *const s)
     }
 }
 
-#if defined(WITH_FILE) && defined(WITH_PRINTF)
+#if defined(WITH_IO) && defined(WITH_PRINTF)
 void kernaux_console_printf(const char *format, ...)
 {
     KERNAUX_ASSERT(format);

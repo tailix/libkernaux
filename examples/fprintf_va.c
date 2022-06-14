@@ -1,4 +1,4 @@
-#include <kernaux/file.h>
+#include <kernaux/io.h>
 #include <kernaux/printf.h>
 
 #include <assert.h>

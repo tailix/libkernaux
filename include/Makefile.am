@@ -25,11 +25,11 @@ endif
 if WITH_ELF
 nobase_include_HEADERS += kernaux/elf.h
 endif
-if WITH_FILE
-nobase_include_HEADERS += kernaux/file.h
-endif
 if WITH_FRAMEBUFFER
 nobase_include_HEADERS += kernaux/framebuffer.h
+endif
+if WITH_IO
+nobase_include_HEADERS += kernaux/io.h
 endif
 if WITH_MBR
 nobase_include_HEADERS += kernaux/mbr.h

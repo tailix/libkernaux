@@ -41,11 +41,11 @@ endif
 if WITH_ELF
 libkernaux_la_SOURCES += src/elf.c
 endif
-if WITH_FILE
-libkernaux_la_SOURCES += src/file.c
-endif
 if WITH_FRAMEBUFFER
 libkernaux_la_SOURCES += src/framebuffer.c
+endif
+if WITH_IO
+libkernaux_la_SOURCES += src/io.c
 endif
 if WITH_LIBC
 libkernaux_la_LIBADD += libc/libc.la

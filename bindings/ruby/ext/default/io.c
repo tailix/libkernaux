@@ -1,6 +1,6 @@
 #include "main.h"
 
-#ifdef KERNAUX_VERSION_WITH_FILE
+#ifdef KERNAUX_VERSION_WITH_IO
 
 static VALUE rb_KernAux_File_initialize(VALUE self, VALUE out);
 
@@ -8,7 +8,7 @@ static ID rb_intern_ATout = Qnil;
 
 static VALUE rb_KernAux_File = Qnil;
 
-void init_file() {
+void init_io() {
     rb_gc_register_mark_object(ID2SYM(rb_intern_ATout = rb_intern("@out")));
 
     rb_gc_register_mark_object(rb_KernAux_File =
@@ -24,4 +24,4 @@ VALUE rb_KernAux_File_initialize(VALUE self, VALUE out)
     return Qnil;
 }
 
-#endif // KERNAUX_VERSION_WITH_FILE
+#endif // KERNAUX_VERSION_WITH_IO

@@ -1,5 +1,5 @@
-#ifndef KERNAUX_INCLUDED_FILE
-#define KERNAUX_INCLUDED_FILE
+#ifndef KERNAUX_INCLUDED_IO
+#define KERNAUX_INCLUDED_IO
 
 #ifdef __cplusplus
 extern "C" {
