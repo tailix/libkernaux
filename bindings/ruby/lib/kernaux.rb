@@ -16,7 +16,6 @@ require_relative 'kernaux/default'
 require_relative 'kernaux/assert'
 require_relative 'kernaux/cmdline'
 require_relative 'kernaux/errors'
+require_relative 'kernaux/io'
 require_relative 'kernaux/ntoa'
 require_relative 'kernaux/printf'
-
-require_relative 'kernaux/file'

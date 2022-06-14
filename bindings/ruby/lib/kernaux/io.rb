@@ -2,7 +2,7 @@
 
 # rubocop:disable Lint/EmptyClass
 
-if KernAux::Version.with_file?
+if KernAux::Version.with_io?
   module KernAux
     ##
     # File simulator.

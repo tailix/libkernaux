@@ -3,10 +3,6 @@
 	* include/kernaux/version.h.in: Added
 	* include/kernaux/assert.h: Complete rewrite
 
-2022-06-12  Alex Kotov  <kotovalexarian@gmail.com>
-
-	* libc/include/errno.h: Added
-
 2022-06-10  Alex Kotov  <kotovalexarian@gmail.com>
 
 	* libc/include/string.h: Add funcs "memchr", "strcat", "strncat", "strchr"
@@ -17,7 +13,7 @@
 
 	* include/kernaux/libc.h: Has been split into separate headers
 	* include/kernaux/print.h: Functions "[v]printf" renamed to "[v]fprintf"
-	* include/kernaux/file.h: Added
+	* include/kernaux/io.h: Added
 
 2022-06-06  Alex Kotov  <kotovalexarian@gmail.com>
 

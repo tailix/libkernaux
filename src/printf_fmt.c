@@ -1,4 +1,6 @@
 /**
+ * The code was taken from Marco Paland's printf.
+ *
  * Copyright (c) 2014-2019 Marco Paland <info@paland.com>
  */
 

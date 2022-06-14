@@ -42,7 +42,7 @@ zero). Work-in-progress APIs can change at any time.
     * [Assert](/examples/assert.c)
     * [Panic](/examples/panic.c)
   * Stack trace *(planned)*
-  * [File simulator](/include/kernaux/file.h) (*work in progress*)
+  * [Input/output](/include/kernaux/io.h) (*work in progress*)
   * Architecture-specific code (*work in progress*)
     * [Declarations](/include/kernaux/arch/)
     * [Functions](/include/kernaux/asm/)
@@ -77,7 +77,6 @@ zero). Work-in-progress APIs can change at any time.
     * [vsnprintf](/examples/snprintf_va.c)
 * libc replacement (*work in progress*)
   * [ctype.h](/libc/include/ctype.h)
-  * [errno.h](/libc/include/errno.h)
   * [inttypes.h](/libc/include/inttypes.h)
   * [setjmo.h](/libc/include/setjmo.h)
   * [stdlib.h](/libc/include/stdlib.h)
