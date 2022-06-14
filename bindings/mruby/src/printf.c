@@ -2,6 +2,7 @@
 
 #include "dynarg.h"
 
+#include <stddef.h>
 #include <stdlib.h>
 
 #include <mruby/array.h>
