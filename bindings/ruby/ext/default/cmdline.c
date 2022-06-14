@@ -1,6 +1,6 @@
 #include "main.h"
 
-#ifdef KERNAUX_VERSION_SUPPORTS_CMDLINE
+#ifdef KERNAUX_VERSION_WITH_CMDLINE
 
 #define ARGV_COUNT_MAX 256
 #define BUFFER_SIZE 4096
@@ -91,4 +91,4 @@ VALUE rb_KernAux_cmdline(const VALUE self_rb, VALUE cmdline_rb)
     return rb_funcall(result_rb, rb_intern_freeze, 0);
 }
 
-#endif // KERNAUX_VERSION_SUPPORTS_CMDLINE
+#endif // KERNAUX_VERSION_WITH_CMDLINE

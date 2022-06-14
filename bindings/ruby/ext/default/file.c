@@ -1,6 +1,6 @@
 #include "main.h"
 
-#ifdef KERNAUX_VERSION_SUPPORTS_FILE
+#ifdef KERNAUX_VERSION_WITH_FILE
 
 static VALUE rb_KernAux_File_initialize(VALUE self, VALUE out);
 
@@ -26,4 +26,4 @@ VALUE rb_KernAux_File_initialize(VALUE self, VALUE out)
     return Qnil;
 }
 
-#endif // KERNAUX_VERSION_SUPPORTS_FILE
+#endif // KERNAUX_VERSION_WITH_FILE

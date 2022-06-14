@@ -9,7 +9,7 @@ module KernAux
 
   SPRINTF1_BUFFER_SIZE = 10_000
 
-  if Version.supports_printf?
+  if Version.with_printf?
     def self.sprintf(*args)
       args.map do |arg|
         if arg.is_a? Array

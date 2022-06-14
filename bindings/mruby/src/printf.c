@@ -8,7 +8,7 @@
 #include <mruby/presym.h>
 #include <mruby/string.h>
 
-#ifdef KERNAUX_VERSION_SUPPORTS_PRINTF
+#ifdef KERNAUX_VERSION_WITH_PRINTF
 
 static mrb_value rb_KernAux_snprintf1(mrb_state *mrb, mrb_value self);
 
@@ -121,4 +121,4 @@ mrb_value rb_KernAux_snprintf1(mrb_state *const mrb, mrb_value self)
     return mrb_obj_freeze(mrb, mrb_ary_new_from_values(mrb, 2, values));
 }
 
-#endif // KERNAUX_VERSION_SUPPORTS_PRINTF
+#endif // KERNAUX_VERSION_WITH_PRINTF

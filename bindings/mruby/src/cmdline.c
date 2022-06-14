@@ -11,7 +11,7 @@
 #define ARGV_COUNT_MAX 256
 #define BUFFER_SIZE 4096
 
-#ifdef KERNAUX_VERSION_SUPPORTS_CMDLINE
+#ifdef KERNAUX_VERSION_WITH_CMDLINE
 
 static mrb_value rb_KernAux_cmdline(mrb_state *mrb, mrb_value self);
 
@@ -69,4 +69,4 @@ mrb_value rb_KernAux_cmdline(mrb_state *const mrb, mrb_value self)
     return mrb_obj_freeze(mrb, mrb_ary_new_from_values(mrb, argc, values));
 }
 
-#endif // KERNAUX_VERSION_SUPPORTS_CMDLINE
+#endif // KERNAUX_VERSION_WITH_CMDLINE

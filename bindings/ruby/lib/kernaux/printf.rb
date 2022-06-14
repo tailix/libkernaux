@@ -12,7 +12,7 @@ module KernAux
 
   # @!parse [ruby]
 
-  if Version.supports_printf?
+  if Version.with_printf?
     ##
     # Typical `printf`.
     #

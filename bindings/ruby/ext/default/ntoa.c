@@ -1,6 +1,6 @@
 #include "main.h"
 
-#ifdef KERNAUX_VERSION_SUPPORTS_NTOA
+#ifdef KERNAUX_VERSION_WITH_NTOA
 
 static VALUE rb_KernAux_utoa(int argc, const VALUE *argv, VALUE self);
 static VALUE rb_KernAux_itoa(int argc, const VALUE *argv, VALUE self);
@@ -259,4 +259,4 @@ int convert_base(const VALUE base_rb)
     }
 }
 
-#endif // KERNAUX_VERSION_SUPPORTS_NTOA
+#endif // KERNAUX_VERSION_WITH_NTOA

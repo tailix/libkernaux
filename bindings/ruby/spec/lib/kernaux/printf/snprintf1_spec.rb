@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-KernAux::Version.supports_printf? and RSpec.describe KernAux, '.snprintf1' do
+KernAux::Version.with_printf? and RSpec.describe KernAux, '.snprintf1' do
   let(:size) { 10_000 }
 
   context 'with 0 arguments' do

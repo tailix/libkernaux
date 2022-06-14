@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-KernAux::Version.supports_cmdline? and RSpec.describe KernAux, '.cmdline' do
+KernAux::Version.with_cmdline? and RSpec.describe KernAux, '.cmdline' do
   subject(:cmdline) { described_class.cmdline str }
 
   let(:str) { 'foo bar\\ baz "car cdr"' }

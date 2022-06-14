@@ -56,7 +56,7 @@ def test_itoa16(number, expected)
   common_assert expected, KernAux.itoa16(number)
 end
 
-if KernAux::Version.supports_ntoa?
+if KernAux::Version.with_ntoa?
   assert 'KernAux.utoa' do
     number = Random.rand(2**32 - 1)
     base = 2 + Random.rand(36 - 2)

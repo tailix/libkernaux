@@ -26,15 +26,15 @@ void mrb_mruby_kernaux_gem_init(mrb_state *const mrb)
     init_assert(mrb);
     init_version(mrb);
 
-#ifdef KERNAUX_VERSION_SUPPORTS_CMDLINE
+#ifdef KERNAUX_VERSION_WITH_CMDLINE
     init_cmdline(mrb);
-#endif // KERNAUX_VERSION_SUPPORTS_CMDLINE
-#ifdef KERNAUX_VERSION_SUPPORTS_NTOA
+#endif // KERNAUX_VERSION_WITH_CMDLINE
+#ifdef KERNAUX_VERSION_WITH_NTOA
     init_ntoa(mrb);
-#endif // KERNAUX_VERSION_SUPPORTS_NTOA
-#ifdef KERNAUX_VERSION_SUPPORTS_PRINTF
+#endif // KERNAUX_VERSION_WITH_NTOA
+#ifdef KERNAUX_VERSION_WITH_PRINTF
     init_printf(mrb);
-#endif // KERNAUX_VERSION_SUPPORTS_PRINTF
+#endif // KERNAUX_VERSION_WITH_PRINTF
 }
 
 void current_mrb_start(mrb_state *mrb)
