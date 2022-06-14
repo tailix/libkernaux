@@ -33,18 +33,18 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        pkg:
-          - main: 'all'
-          - main: 'file'
-          - main: 'ntoa'
-            other: '--without-printf --without-units'
-          - main: 'printf'
+        packages:
+          - without: 'all'
+          - without: 'io'
+          - without: 'ntoa'
+            dependencies: '--without-printf --without-units'
+          - without: 'printf'
     steps:
       - uses: actions/checkout@v2
       - name: autogen
         run: ./autogen.sh
       - name: configure
-        run: ./configure --enable-debug --enable-tests --enable-tests-python --without-${{matrix.pkg.main}} ${{matrix.pkg.other}}
+        run: ./configure --enable-debug --enable-tests --enable-tests-python --without-${{matrix.packages.without}} ${{matrix.packages.dependencies}}
       - name: make
         run: make
       - name: check
