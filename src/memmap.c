@@ -126,3 +126,22 @@ KernAux_MemMap_entry_by_start(KernAux_MemMap memmap, const size_t start)
 
     return NULL;
 }
+
+KernAux_MemMap_Entry
+KernAux_MemMap_entry_by_addr(KernAux_MemMap memmap, const size_t addr)
+{
+    if (!MEMMAP.is_finished) {
+        KERNAUX_PANIC("memmap is not finished");
+        return NULL;
+    }
+
+    for (size_t index = 0; index < MEMMAP.entries_count; ++index) {
+        if (addr >= MEMMAP.entries[index].start &&
+            addr <= MEMMAP.entries[index].end)
+        {
+            return &MEMMAP.entries[index];
+        }
+    }
+
+    return NULL;
+}

@@ -49,6 +49,10 @@ KernAux_MemMap_entry_by_index(KernAux_MemMap memmap, size_t index);
 KernAux_MemMap_Entry
 KernAux_MemMap_entry_by_start(KernAux_MemMap memmap, size_t start);
 
+/// @warning Must only be called with finished memmap, otherwise panics.
+KernAux_MemMap_Entry
+KernAux_MemMap_entry_by_addr(KernAux_MemMap memmap, size_t addr);
+
 #ifdef __cplusplus
 }
 #endif
