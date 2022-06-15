@@ -28,6 +28,14 @@ typedef struct KernAux_MemMap {
 
 void KernAux_MemMap_init(KernAux_MemMap memmap, size_t memory_size);
 
+bool KernAux_MemMap_add_entry(
+    KernAux_MemMap memmap,
+    bool is_available,
+    const char *tag,
+    size_t start,
+    size_t size
+);
+
 #ifdef __cplusplus
 }
 #endif
