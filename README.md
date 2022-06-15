@@ -40,7 +40,7 @@ zero). Work-in-progress APIs can change at any time.
 
 * Runtime environment
   * [Feature macros](/include/kernaux/version.h.in) (*work in progress*)
-  * [Assertions](/include/kernaux/assert.h) (*stable since* **0.1.0**, *non-breaking since* **?.?.?**)
+  * [Assertions](/include/kernaux/assert.h) (*non-breaking since* **?.?.?**)
     * [Assert](/examples/assert.c)
     * [Panic](/examples/panic.c)
   * Stack trace *(planned)*
@@ -53,7 +53,7 @@ zero). Work-in-progress APIs can change at any time.
   * [Framebuffer](/include/kernaux/framebuffer.h) (*planned*)
   * USB (*planned*)
 * Algorithms
-  * [Simple command line parser](/include/kernaux/cmdline.h) (*stable since* **0.2.0**)
+  * [Simple command line parser](/include/kernaux/cmdline.h) (*non-breaking since* **0.2.0**)
     * [Example](/examples/cmdline.c)
   * [Page Frame Allocator](/include/kernaux/pfa.h) (*work in progress*)
     * [Example](/examples/pfa.c)
@@ -65,15 +65,15 @@ zero). Work-in-progress APIs can change at any time.
 * Utilities
   * [Measurement units utils](/include/kernaux/units.h) (*work in progress*)
     * [To human](/examples/units_human.c)
-  * [Memory map](/include/kernaux/memmap.h.in) (*stable since* **?.?.?**)
+  * [Memory map](/include/kernaux/memmap.h.in) (*non-breaking since* **?.?.?**)
     * [Example](/examples/memmap.c)
   * [printf format parser](/include/kernaux/printf_fmt.h) (*work in progress*)
     * Code from [https://github.com/mpaland/printf](https://github.com/mpaland/printf). Thank you!
     * [Example](/examples/printf_fmt.c)
 * Usual functions
-  * [itoa/ftoa replacement](/include/kernaux/ntoa.h) (*stable since* **0.1.0**, *non-breaking since* **?.?.?**)
+  * [itoa/ftoa replacement](/include/kernaux/ntoa.h) (*non-breaking since* **?.?.?**)
     * [Example](/examples/ntoa.c)
-  * [printf replacement](/include/kernaux/printf.h.in) (*stable since* **0.1.0**, *non-breaking since* **?.?.?**)
+  * [printf replacement](/include/kernaux/printf.h.in) (*non-breaking since* **?.?.?**)
     * Code from [https://github.com/mpaland/printf](https://github.com/mpaland/printf). Thank you!
     * [fprintf](/examples/fprintf.c)
     * [vfprintf](/examples/fprintf_va.c)
