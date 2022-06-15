@@ -1,6 +1,7 @@
 2022-06-15  Alex Kotov  <kotovalexarian@gmail.com>
 
-	* include/kernaux/memmap.h: Added
+	* include/kernaux/memmap.h: Added, made stable
+	* configure.ac: Added "--with-memmap", made stable
 
 2022-06-13  Alex Kotov  <kotovalexarian@gmail.com>
 

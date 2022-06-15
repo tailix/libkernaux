@@ -65,7 +65,7 @@ zero). Work-in-progress APIs can change at any time.
 * Utilities
   * [Measurement units utils](/include/kernaux/units.h) (*work in progress*)
     * [To human](/examples/units_human.c)
-  * [Memory map](/include/kernaux/memmap.h.in) (*work in progress*)
+  * [Memory map](/include/kernaux/memmap.h.in) (*stable since* **?.?.?**)
     * [Example](/examples/memmap.c)
   * [printf format parser](/include/kernaux/printf_fmt.h) (*work in progress*)
     * Code from [https://github.com/mpaland/printf](https://github.com/mpaland/printf). Thank you!
@@ -150,6 +150,7 @@ explicitly included, use `--without-all`.
 
 * `--with[out]-cmdline` - command line parser
 * `--with[out]-file` - file simulator
+* `--with[out]-memmap` - memory map
 * `--with[out]-ntoa` - itoa/ftoa
 * `--with[out]-printf` - printf
 
