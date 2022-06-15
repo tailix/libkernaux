@@ -13,17 +13,17 @@ extern "C" {
 #define KERNAUX_MEMMAP_ENTRY_TAG_SLEN_MAX 24
 #define KERNAUX_MEMMAP_ENTRY_TAG_SIZE_MAX (KERNAUX_MEMMAP_ENTRY_TAG_SLEN_MAX + 1)
 
-typedef struct KernAux_MemMap_Entry {
+typedef const struct KernAux_MemMap_Entry {
     bool is_available;
     char tag[KERNAUX_MEMMAP_ENTRY_TAG_SIZE_MAX];
     size_t start, size, end, limit;
-} KernAux_MemMap_Entry[1];
+} *KernAux_MemMap_Entry;
 
 typedef struct KernAux_MemMap {
     bool is_finished;
     size_t memory_size;
     size_t entries_count;
-    KernAux_MemMap_Entry entries[KERNAUX_MEMMAP_ENTRIES_MAX];
+    struct KernAux_MemMap_Entry entries[KERNAUX_MEMMAP_ENTRIES_MAX];
 } KernAux_MemMap[1];
 
 void KernAux_MemMap_init(KernAux_MemMap memmap, size_t memory_size);
@@ -41,11 +41,11 @@ bool KernAux_MemMap_add_entry(
 bool KernAux_MemMap_finish(KernAux_MemMap memmap);
 
 /// @warning Must only be called with finished memmap, otherwise panics.
-const struct KernAux_MemMap_Entry*
+KernAux_MemMap_Entry
 KernAux_MemMap_entry_by_index(KernAux_MemMap memmap, size_t index);
 
 /// @warning Must only be called with finished memmap, otherwise panics.
-const struct KernAux_MemMap_Entry*
+KernAux_MemMap_Entry
 KernAux_MemMap_entry_by_start(KernAux_MemMap memmap, size_t start);
 
 #ifdef __cplusplus
