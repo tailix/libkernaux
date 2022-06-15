@@ -33,6 +33,10 @@ bool KernAux_Multiboot2_Info_to_memmap(
             KERNAUX_MULTIBOOT2_ITAG_MEMORY_MAP
         );
 
+    // FIXME: Basic memory info tag may not be provided by some boot loaders on
+    // EFI platforms if EFI boot services are enabled and available for the
+    // loaded image (EFI boot services not terminated tag exists in Multiboot2
+    // information structure).
     if (basic_memory_info_tag_base == NULL || memory_map_tag_base == NULL) {
         return false;
     }
@@ -46,7 +50,12 @@ bool KernAux_Multiboot2_Info_to_memmap(
         (const struct KernAux_Multiboot2_ITag_MemoryMap*)
         memory_map_tag_base;
 
-    (void)basic_memory_info_tag;
+    // FIXME: The value returned for upper memory is maximally the address of
+    // the first upper memory hole minus 1 megabyte. It is not guaranteed to be
+    // this value.
+    const size_t memory_size = (size_t)basic_memory_info_tag->mem_upper * 1024;
+    KernAux_MemMap_init(memmap, memory_size);
+
     (void)memory_map_tag;
 
     return false;
