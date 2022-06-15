@@ -63,6 +63,8 @@ zero). Work-in-progress APIs can change at any time.
 * Utilities
   * [Measurement units utils](/include/kernaux/units.h) (*work in progress*)
     * [To human](/examples/units_human.c)
+  * [Memory map](/include/kernaux/memmap.h) (*work in progress*)
+    * [Example](/examples/memmap.c)
   * [printf format parser](/include/kernaux/printf_fmt.h) (*work in progress*)
     * Code from [https://github.com/mpaland/printf](https://github.com/mpaland/printf). Thank you!
     * [Example](/examples/printf_fmt.c)

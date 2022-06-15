@@ -109,6 +109,7 @@
 /examples/cmdline
 /examples/fprintf
 /examples/fprintf_va
+/examples/memmap
 /examples/ntoa
 /examples/panic
 /examples/pfa

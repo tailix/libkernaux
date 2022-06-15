@@ -54,6 +54,9 @@ endif
 if WITH_MBR
 libkernaux_la_SOURCES += src/mbr.c
 endif
+if WITH_MEMMAP
+libkernaux_la_SOURCES += src/memmap.c
+endif
 if WITH_MULTIBOOT2
 libkernaux_la_SOURCES += \
 	src/multiboot2/enums_to_str.c \

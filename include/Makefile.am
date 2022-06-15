@@ -34,6 +34,9 @@ endif
 if WITH_MBR
 nobase_include_HEADERS += kernaux/mbr.h
 endif
+if WITH_MEMMAP
+nobase_include_HEADERS += kernaux/memmap.h
+endif
 if WITH_MULTIBOOT2
 nobase_include_HEADERS += kernaux/multiboot2.h
 endif
