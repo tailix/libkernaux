@@ -92,3 +92,32 @@ bool KernAux_MemMap_finish(KernAux_MemMap memmap)
 
     return MEMMAP.is_finished = true;
 }
+
+const struct KernAux_MemMap_Entry*
+KernAux_MemMap_entry_by_index(KernAux_MemMap memmap, const size_t index)
+{
+    if (!MEMMAP.is_finished) {
+        KERNAUX_PANIC("memmap is not finished");
+        return NULL;
+    }
+
+    if (index >= MEMMAP.entries_count) return NULL;
+    return MEMMAP.entries[index];
+}
+
+const struct KernAux_MemMap_Entry*
+KernAux_MemMap_entry_by_start(KernAux_MemMap memmap, const size_t start)
+{
+    if (!MEMMAP.is_finished) {
+        KERNAUX_PANIC("memmap is not finished");
+        return NULL;
+    }
+
+    for (size_t index = 0; index < MEMMAP.entries_count; ++index) {
+        if (MEMMAP.entries[index]->start == start) {
+            return MEMMAP.entries[index];
+        }
+    }
+
+    return NULL;
+}

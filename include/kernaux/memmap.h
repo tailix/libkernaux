@@ -40,6 +40,14 @@ bool KernAux_MemMap_add_entry(
 /// @warning Must only be called with unfinished memmap, otherwise panics.
 bool KernAux_MemMap_finish(KernAux_MemMap memmap);
 
+/// @warning Must only be called with finished memmap, otherwise panics.
+const struct KernAux_MemMap_Entry*
+KernAux_MemMap_entry_by_index(KernAux_MemMap memmap, size_t index);
+
+/// @warning Must only be called with finished memmap, otherwise panics.
+const struct KernAux_MemMap_Entry*
+KernAux_MemMap_entry_by_start(KernAux_MemMap memmap, size_t start);
+
 #ifdef __cplusplus
 }
 #endif
