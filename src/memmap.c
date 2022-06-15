@@ -32,15 +32,8 @@ bool KernAux_MemMap_add_entry(
         return false;
     }
 
-    if (MEMMAP.entries_count >= KERNAUX_MEMMAP_ENTRIES_MAX) {
-        KERNAUX_PANIC("memmap is full");
-        return false;
-    }
-
-    if (SIZE_MAX - start < size) {
-        KERNAUX_PANIC("memmap entry limit is too high");
-        return false;
-    }
+    if (MEMMAP.entries_count >= KERNAUX_MEMMAP_ENTRIES_MAX) return false;
+    if (SIZE_MAX - start < size) return false;
 
     memset(MEMMAP.entries[MEMMAP.entries_count], 0, sizeof(MEMMAP.entries[MEMMAP.entries_count]));
     const size_t index = MEMMAP.entries_count++;
@@ -70,10 +63,10 @@ bool KernAux_MemMap_finish(KernAux_MemMap memmap)
         MEMMAP.entries[0]->start != 0                          ||
         MEMMAP.entries[MEMMAP.entries_count - 1]->limit != MEMMAP.memory_size)
     {
-        KERNAUX_PANIC("memmap is invalid");
         return false;
     }
 
+    // At first, let's validate the individual entries.
     for (size_t index = 0; index < MEMMAP.entries_count; ++index) {
         if (SIZE_MAX - MEMMAP.entries[index]->start <
             MEMMAP.entries[index]->size
@@ -84,14 +77,15 @@ bool KernAux_MemMap_finish(KernAux_MemMap memmap)
             MEMMAP.entries[index]->limit !=
             MEMMAP.entries[index]->start + MEMMAP.entries[index]->size)
         {
-            KERNAUX_PANIC("memmap is invalid");
             return false;
         }
     }
 
+    // TODO: Next, let's sort the entries.
+
+    // Finally, let's validate that the entries fit each other properly.
     for (size_t index = 1; index < MEMMAP.entries_count; ++index) {
         if (MEMMAP.entries[index - 1]->limit != MEMMAP.entries[index]->start) {
-            KERNAUX_PANIC("memmap is invalid");
             return false;
         }
     }
