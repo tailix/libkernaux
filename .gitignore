@@ -102,6 +102,7 @@
 
 /include/kernaux.h
 /include/kernaux/console.h
+/include/kernaux/multiboot2.h
 /include/kernaux/printf.h
 /include/kernaux/version.h
 
