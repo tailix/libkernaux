@@ -36,6 +36,8 @@ bool KernAux_MemMap_add_entry(
     size_t size
 );
 
+bool KernAux_MemMap_finish(KernAux_MemMap memmap);
+
 #ifdef __cplusplus
 }
 #endif

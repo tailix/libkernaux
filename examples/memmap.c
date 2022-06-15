@@ -18,5 +18,7 @@ int main()
     assert(KernAux_MemMap_add_entry(memmap, false, "foo", SIZE_256MiB, SIZE_256MiB));
     assert(KernAux_MemMap_add_entry(memmap, true,  "bar", SIZE_512MiB, SIZE_512MiB));
 
+    assert(KernAux_MemMap_finish(memmap));
+
     return 0;
 }

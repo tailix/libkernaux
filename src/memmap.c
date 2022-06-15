@@ -57,3 +57,44 @@ bool KernAux_MemMap_add_entry(
 
     return true;
 }
+
+bool KernAux_MemMap_finish(KernAux_MemMap memmap)
+{
+    if (MEMMAP.is_finished) {
+        KERNAUX_PANIC("memmap is finished");
+        return false;
+    }
+
+    if ((MEMMAP.entries_count == 0 && MEMMAP.memory_size != 0) ||
+        MEMMAP.entries_count > KERNAUX_MEMMAP_ENTRIES_MAX      ||
+        MEMMAP.entries[0]->start != 0                          ||
+        MEMMAP.entries[MEMMAP.entries_count - 1]->limit != MEMMAP.memory_size)
+    {
+        KERNAUX_PANIC("memmap is invalid");
+        return false;
+    }
+
+    for (size_t index = 0; index < MEMMAP.entries_count; ++index) {
+        if (SIZE_MAX - MEMMAP.entries[index]->start <
+            MEMMAP.entries[index]->size
+            ||
+            MEMMAP.entries[index]->end !=
+            MEMMAP.entries[index]->start + MEMMAP.entries[index]->size - 1
+            ||
+            MEMMAP.entries[index]->limit !=
+            MEMMAP.entries[index]->start + MEMMAP.entries[index]->size)
+        {
+            KERNAUX_PANIC("memmap is invalid");
+            return false;
+        }
+    }
+
+    for (size_t index = 1; index < MEMMAP.entries_count; ++index) {
+        if (MEMMAP.entries[index - 1]->limit != MEMMAP.entries[index]->start) {
+            KERNAUX_PANIC("memmap is invalid");
+            return false;
+        }
+    }
+
+    return MEMMAP.is_finished = true;
+}
