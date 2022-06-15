@@ -18,11 +18,17 @@ C language
 typedef struct FooBar { int car; } *FooBar;
 
 static struct FooBar FooBar_create();
+static void FooBar FooBar_init(FooBar foobar);
+
 static void FooBar_do_something(FooBar foobar);
 
-// ...
-
+// Initialize:
 struct FooBar foobar = FooBar_create();
+// or
+struct FooBar foobar;
+FooBar_init(&foobar);
+
+// Use:
 FooBar foobar_ptr = &foobar;
 FooBar_do_something(&foobar);
 ```
@@ -35,13 +41,13 @@ static void FooBar FooBar_init(FooBar foobar);
 
 static void FooBar_do_something(FooBar foobar);
 
-// ...
-
+// Initialize:
 FooBar foobar = { FooBar_create() };
 // or
 FooBar foobar;
 FooBar_init(foobar);
 
+// Use:
 FooBar_do_something(foobar);
 ```
 
