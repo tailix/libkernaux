@@ -16,6 +16,7 @@ Table of contents
 * [Overview](#libkernaux)
 * [Table of contents](#table-of-contents)
 * [API](#api)
+  * [Headers](#headers)
   * [Definitions](#definitions)
   * [Global variables](#global-variables)
 * [Configuration](#configuration)
@@ -30,6 +31,8 @@ Table of contents
 
 API
 ---
+
+### Headers
 
 We use [semantic versioning](https://semver.org) for stable APIs. Stable APIs
 can only change when major version number is increased (or minor while major is
