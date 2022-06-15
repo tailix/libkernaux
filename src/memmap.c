@@ -12,6 +12,13 @@
 
 #define MEMMAP (*memmap)
 
+struct KernAux_MemMap KernAux_MemMap_create(const size_t memory_size)
+{
+    struct KernAux_MemMap memmap;
+    KernAux_MemMap_init(&memmap, memory_size);
+    return memmap;
+}
+
 void KernAux_MemMap_init(KernAux_MemMap memmap, const size_t memory_size)
 {
     MEMMAP.is_finished = false;

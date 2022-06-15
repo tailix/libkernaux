@@ -26,6 +26,7 @@ typedef struct KernAux_MemMap {
     struct KernAux_MemMap_Entry entries[KERNAUX_MEMMAP_ENTRIES_MAX];
 } KernAux_MemMap[1];
 
+struct KernAux_MemMap KernAux_MemMap_create(size_t memory_size);
 void KernAux_MemMap_init(KernAux_MemMap memmap, size_t memory_size);
 
 /// @warning Must only be called with unfinished memmap, otherwise panics.
