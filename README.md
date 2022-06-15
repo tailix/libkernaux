@@ -25,7 +25,6 @@ Table of contents
   * [Installation](#installation)
   * [Development](#development)
   * [Cross](#cross)
-* [Architectures](#architectures)
 
 
 
@@ -261,21 +260,3 @@ Disassembly of section .text:
   1c:   0f 22 e0              mov    %eax,%cr4
   1f:   c3                    ret
 ```
-
-
-
-Architectures
--------------
-
-Architectures should be properly identified. We use the following scheme, but it
-may change in future:
-
-* `x86`
-  * `i386`
-  * `x86_64`
-* `riscv`
-  * `riscv64`
-* `arm` - we need more info, now similar to [Debian](https://www.debian.org/ports/arm/)
-  * `armel`
-  * `armhf`
-  * `arm64`
