@@ -82,7 +82,7 @@ zero). Work-in-progress APIs can change at any time.
 * libc replacement (*work in progress*)
   * [ctype.h](/libc/include/ctype.h)
   * [inttypes.h](/libc/include/inttypes.h)
-  * [setjmo.h](/libc/include/setjmo.h)
+  * [setjmp.h](/libc/include/setjmp.h)
   * [stdlib.h](/libc/include/stdlib.h)
   * [string.h](/libc/include/string.h)
   * [sys/types.h](/libc/include/sys/types.h)
