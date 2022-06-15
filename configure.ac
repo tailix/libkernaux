@@ -31,6 +31,7 @@ AC_CONFIG_FILES([
   libc/include/Makefile
   include/kernaux.h
   include/kernaux/console.h
+  include/kernaux/multiboot2.h
   include/kernaux/printf.h
   include/kernaux/version.h
   tests/Makefile
@@ -62,6 +63,7 @@ AC_ARG_WITH(  [elf],               AS_HELP_STRING([--without-elf],            [w
 AC_ARG_WITH(  [framebuffer],       AS_HELP_STRING([--without-framebuffer],    [without framebuffer]))
 AC_ARG_WITH(  [io],                AS_HELP_STRING([--without-io],             [without input/output]))
 AC_ARG_WITH(  [mbr],               AS_HELP_STRING([--without-mbr],            [without Master Boot Record]))
+AC_ARG_WITH(  [memmap],            AS_HELP_STRING([--without-memmap],         [without memory map]))
 AC_ARG_WITH(  [multiboot2],        AS_HELP_STRING([--without-multiboot2],     [without Multiboot 2 information parser]))
 AC_ARG_WITH(  [ntoa],              AS_HELP_STRING([--without-ntoa],           [without itoa/ftoa]))
 AC_ARG_WITH(  [pfa],               AS_HELP_STRING([--without-pfa],            [without Page Frame Allocator]))
@@ -95,6 +97,7 @@ if test -z "$with_elf";         then with_elf=no;         fi
 if test -z "$with_framebuffer"; then with_framebuffer=no; fi
 if test -z "$with_io";          then with_io=no;          fi
 if test -z "$with_mbr";         then with_mbr=no;         fi
+if test -z "$with_memmap";      then with_memmap=no;      fi
 if test -z "$with_multiboot2";  then with_multiboot2=no;  fi
 if test -z "$with_ntoa";        then with_ntoa=no;        fi
 if test -z "$with_pfa";         then with_pfa=no;         fi
@@ -130,6 +133,7 @@ AS_IF([test "$with_elf"               = no ], [with_elf=no],                [wit
 AS_IF([test "$with_framebuffer"       = no ], [with_framebuffer=no],        [with_framebuffer=yes])
 AS_IF([test "$with_io"                = no ], [with_io=no],                 [with_io=yes])
 AS_IF([test "$with_mbr"               = no ], [with_mbr=no],                [with_mbr=yes])
+AS_IF([test "$with_memmap"            = no ], [with_memmap=no],             [with_memmap=yes])
 AS_IF([test "$with_multiboot2"        = no ], [with_multiboot2=no],         [with_multiboot2=yes])
 AS_IF([test "$with_ntoa"              = no ], [with_ntoa=no],               [with_ntoa=yes])
 AS_IF([test "$with_pfa"               = no ], [with_pfa=no],                [with_pfa=yes])
@@ -193,6 +197,7 @@ AM_CONDITIONAL([WITH_ELF],               [test "$with_elf"               = yes])
 AM_CONDITIONAL([WITH_FRAMEBUFFER],       [test "$with_framebuffer"       = yes])
 AM_CONDITIONAL([WITH_IO],                [test "$with_io"                = yes])
 AM_CONDITIONAL([WITH_MBR],               [test "$with_mbr"               = yes])
+AM_CONDITIONAL([WITH_MEMMAP],            [test "$with_memmap"            = yes])
 AM_CONDITIONAL([WITH_MULTIBOOT2],        [test "$with_multiboot2"        = yes])
 AM_CONDITIONAL([WITH_NTOA],              [test "$with_ntoa"              = yes])
 AM_CONDITIONAL([WITH_PFA],               [test "$with_pfa"               = yes])
@@ -234,6 +239,7 @@ AS_IF([test "$with_elf"               = yes], [AC_DEFINE([WITH_ELF],            
 AS_IF([test "$with_framebuffer"       = yes], [AC_DEFINE([WITH_FRAMEBUFFER],       [1], [with framebuffer])])
 AS_IF([test "$with_io"                = yes], [AC_DEFINE([WITH_IO],                [1], [with input/output])])
 AS_IF([test "$with_mbr"               = yes], [AC_DEFINE([WITH_MBR],               [1], [with Master Boot Record])])
+AS_IF([test "$with_memmap"            = yes], [AC_DEFINE([WITH_MEMMAP],            [1], [with memory map])])
 AS_IF([test "$with_multiboot2"        = yes], [AC_DEFINE([WITH_MULTIBOOT2],        [1], [with Multiboot 2 information parser])])
 AS_IF([test "$with_ntoa"              = yes], [AC_DEFINE([WITH_NTOA],              [1], [with ntoa])])
 AS_IF([test "$with_pfa"               = yes], [AC_DEFINE([WITH_PFA],               [1], [with Page Frame Allocator])])
@@ -262,6 +268,7 @@ AS_IF([test "$with_elf"         = no], [AC_SUBST([comment_line_elf],         [//
 AS_IF([test "$with_framebuffer" = no], [AC_SUBST([comment_line_framebuffer], [//])])
 AS_IF([test "$with_io"          = no], [AC_SUBST([comment_line_io],          [//])])
 AS_IF([test "$with_mbr"         = no], [AC_SUBST([comment_line_mbr],         [//])])
+AS_IF([test "$with_memmap"      = no], [AC_SUBST([comment_line_memmap],      [//])])
 AS_IF([test "$with_multiboot2"  = no], [AC_SUBST([comment_line_multiboot2],  [//])])
 AS_IF([test "$with_ntoa"        = no], [AC_SUBST([comment_line_ntoa],        [//])])
 AS_IF([test "$with_pfa"         = no], [AC_SUBST([comment_line_pfa],         [//])])

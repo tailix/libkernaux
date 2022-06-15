@@ -45,6 +45,16 @@ fprintf_va_SOURCES = fprintf_va.c
 endif
 endif
 
+##########
+# memmap #
+##########
+
+if WITH_MEMMAP
+TESTS += memmap
+memmap_LDADD = $(top_builddir)/libkernaux.la
+memmap_SOURCES = memmap.c
+endif
+
 ########
 # ntoa #
 ########
