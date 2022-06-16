@@ -21,6 +21,8 @@ void KernAux_SizedVoid_init(
     void *ptr
 );
 
+void KernAux_SizedVoid_memset(KernAux_SizedVoid sized_void, int c);
+
 #ifdef __cplusplus
 }
 #endif
