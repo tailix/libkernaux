@@ -26,6 +26,23 @@ static void assert_cb(
     assert_last_file = file;
 }
 
+static void before_assert()
+{
+    assert(assert_count_ctr == assert_count_exp);
+}
+
+static void expect_assert()
+{
+#ifdef ENABLE_DEBUG
+    assert(assert_count_ctr == ++assert_count_exp);
+    assert(strstr(assert_last_file, "src/memmap.c") != NULL);
+    assert_last_file = NULL;
+#else
+    assert(assert_count_ctr == 0);
+    assert(assert_last_file == NULL);
+#endif
+}
+
 #define MEMSET memset(memmap, 0xff, sizeof(memmap))
 #define MEMMAP (*memmap)
 
@@ -49,11 +66,9 @@ int main()
 
         assert(KernAux_MemMap_entry_by_index(memmap, 0) == NULL);
 
-        assert(assert_count_ctr == assert_count_exp);
+        before_assert();
         assert(!KernAux_MemMap_finish(memmap));
-        assert(assert_count_ctr == ++assert_count_exp);
-        assert(strstr(assert_last_file, "src/memmap.c") != NULL);
-        assert_last_file = NULL;
+        expect_assert();
     }
 
     {
@@ -163,11 +178,9 @@ int main()
         assert(MEMMAP.entries[0].end == 1);
         assert(MEMMAP.entries[0].limit == 2);
 
-        assert(assert_count_ctr == assert_count_exp);
+        before_assert();
         assert(KernAux_MemMap_entry_by_index(memmap, 0) == NULL);
-        assert(assert_count_ctr == ++assert_count_exp);
-        assert(strstr(assert_last_file, "src/memmap.c") != NULL);
-        assert_last_file = NULL;
+        expect_assert();
     }
 
     {
