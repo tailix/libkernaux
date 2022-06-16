@@ -45,6 +45,7 @@ zero). Work-in-progress APIs can change at any time.
     * [Panic](/examples/panic.c)
   * Stack trace *(planned)*
   * [Input/output](/include/kernaux/io.h) (*work in progress*)
+    * [Memory store](/examples/io_memstore.c)
   * Architecture-specific code (*work in progress*)
     * [Declarations](/include/kernaux/arch/)
     * [Functions](/include/kernaux/asm/)

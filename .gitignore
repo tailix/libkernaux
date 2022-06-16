@@ -110,6 +110,7 @@
 /examples/cmdline
 /examples/fprintf
 /examples/fprintf_va
+/examples/io_memstore
 /examples/memmap
 /examples/ntoa
 /examples/panic

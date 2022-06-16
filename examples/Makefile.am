@@ -45,6 +45,16 @@ fprintf_va_SOURCES = fprintf_va.c
 endif
 endif
 
+###############
+# io_memstore #
+###############
+
+if WITH_IO
+TESTS += io_memstore
+io_memstore_LDADD = $(top_builddir)/libkernaux.la
+io_memstore_SOURCES = io_memstore.c
+endif
+
 ##########
 # memmap #
 ##########
