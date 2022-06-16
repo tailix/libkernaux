@@ -41,11 +41,11 @@ zero). Work-in-progress APIs can change at any time.
 * Runtime environment
   * [Feature macros](/include/kernaux/version.h.in) (*work in progress*)
   * [Assertions](/include/kernaux/assert.h) (*non-breaking since* **0.4.0**)
-    * [Assert](/examples/assert.c)
-    * [Panic](/examples/panic.c)
+    * [Example: Assert](/examples/assert.c)
+    * [Example: Panic](/examples/panic.c)
   * Stack trace *(planned)*
   * [Input/output](/include/kernaux/io.h) (*work in progress*)
-    * [Memory store](/examples/io_memstore.c)
+    * [Example: Memory store](/examples/io_memstore.c)
   * Architecture-specific code (*work in progress*)
     * [Declarations](/include/kernaux/arch/)
     * [Functions](/include/kernaux/asm/)
@@ -65,7 +65,7 @@ zero). Work-in-progress APIs can change at any time.
   * Stivale 2 (Limine) (*planned*)
 * Utilities
   * [Measurement units utils](/include/kernaux/units.h) (*work in progress*)
-    * [To human](/examples/units_human.c)
+    * [Example: To human](/examples/units_human.c)
   * [Memory map](/include/kernaux/memmap.h.in) (*non-breaking since* **0.4.0**)
     * [Example](/examples/memmap.c)
   * [printf format parser](/include/kernaux/printf_fmt.h) (*work in progress*)
@@ -76,10 +76,10 @@ zero). Work-in-progress APIs can change at any time.
     * [Example](/examples/ntoa.c)
   * [printf replacement](/include/kernaux/printf.h.in) (*non-breaking since* **0.4.0**)
     * Code from [https://github.com/mpaland/printf](https://github.com/mpaland/printf). Thank you!
-    * [fprintf](/examples/fprintf.c)
-    * [vfprintf](/examples/fprintf_va.c)
-    * [snprintf](/examples/snprintf.c)
-    * [vsnprintf](/examples/snprintf_va.c)
+    * [Example: fprintf](/examples/fprintf.c)
+    * [Example: vfprintf](/examples/fprintf_va.c)
+    * [Example: snprintf](/examples/snprintf.c)
+    * [Example: vsnprintf](/examples/snprintf_va.c)
 * libc replacement (*work in progress*)
   * [ctype.h](/libc/include/ctype.h)
   * [inttypes.h](/libc/include/inttypes.h)
