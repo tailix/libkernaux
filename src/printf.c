@@ -395,7 +395,7 @@ size_t _ntoa_long(out_fct_type out, char* buffer, size_t idx, size_t maxlen, uns
     if (!(flags & KERNAUX_PRINTF_FMT_FLAGS_PRECISION) || value) {
         do {
             const char digit = (char)(value % base);
-            buf[len++] = digit < 10 ? '0' + digit : (flags & KERNAUX_PRINTF_FMT_FLAGS_UPPERCASE ? 'A' : 'a') + digit - 10;
+            buf[len++] = digit < 10 ? '0' + digit : ((flags & KERNAUX_PRINTF_FMT_FLAGS_UPPERCASE) ? 'A' : 'a') + digit - 10;
             value /= base;
         } while (value && (len < PRINTF_NTOA_BUFFER_SIZE));
     }
@@ -418,7 +418,7 @@ size_t _ntoa_long_long(out_fct_type out, char* buffer, size_t idx, size_t maxlen
     if (!(flags & KERNAUX_PRINTF_FMT_FLAGS_PRECISION) || value) {
         do {
             const char digit = (char)(value % base);
-            buf[len++] = digit < 10 ? '0' + digit : (flags & KERNAUX_PRINTF_FMT_FLAGS_UPPERCASE ? 'A' : 'a') + digit - 10;
+            buf[len++] = digit < 10 ? '0' + digit : ((flags & KERNAUX_PRINTF_FMT_FLAGS_UPPERCASE) ? 'A' : 'a') + digit - 10;
             value /= base;
         } while (value && (len < PRINTF_NTOA_BUFFER_SIZE));
     }
