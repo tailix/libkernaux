@@ -40,4 +40,13 @@ KernAux::Version.with_ntoa? and RSpec.describe KernAux, '.utoa16' do
         RangeError, 'bignum too big to convert into `unsigned long long\''
     end
   end
+
+  context 'when number is not numeric' do
+    let(:number) { rand(0..(2**64 - 1)).to_s }
+
+    specify do
+      expect { utoa16 }.to raise_error \
+        TypeError, 'no implicit conversion from string'
+    end
+  end
 end
