@@ -21,7 +21,7 @@ libc/libc.la:
 
 lib_LTLIBRARIES = libkernaux.la
 
-libkernaux_la_SOURCES = src/libc.h src/assert.c src/generic_array.c
+libkernaux_la_SOURCES = src/libc.h src/assert.c src/sized_void.c
 libkernaux_la_LIBADD =
 
 if ASM_I386
