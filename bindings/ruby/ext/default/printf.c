@@ -106,15 +106,12 @@ VALUE rb_KernAux_snprintf1(
         VALUE arg_rb = argv_rb[arg_index];
 
         if (spec.type == KERNAUX_PRINTF_FMT_TYPE_INT) {
-            RB_INTEGER_TYPE_P(arg_rb);
             DynArg_use_long_long(&dynarg, NUM2LL(arg_rb));
         } else if (spec.type == KERNAUX_PRINTF_FMT_TYPE_UINT) {
-            RB_INTEGER_TYPE_P(arg_rb);
             DynArg_use_unsigned_long_long(&dynarg, NUM2ULL(arg_rb));
         } else if (spec.type == KERNAUX_PRINTF_FMT_TYPE_FLOAT ||
                    spec.type == KERNAUX_PRINTF_FMT_TYPE_EXP)
         {
-            RB_FLOAT_TYPE_P(arg_rb);
             DynArg_use_double(&dynarg, NUM2DBL(arg_rb));
         } else if (spec.type == KERNAUX_PRINTF_FMT_TYPE_CHAR) {
             Check_Type(arg_rb, T_STRING);
