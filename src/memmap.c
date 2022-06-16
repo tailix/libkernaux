@@ -41,6 +41,7 @@ bool KernAux_MemMap_add_entry(
 
     if (MEMMAP.entries_count >= KERNAUX_MEMMAP_ENTRIES_MAX) return false;
     if (SIZE_MAX - start < size) return false;
+    if (size == 0) return false;
 
     const size_t index = MEMMAP.entries_count++;
 

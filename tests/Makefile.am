@@ -103,6 +103,16 @@ test_mbr_LDADD = $(top_builddir)/libkernaux.la
 test_mbr_SOURCES = test_mbr.c
 endif
 
+###############
+# test_memmap #
+###############
+
+if WITH_MEMMAP
+TESTS += test_memmap
+test_memmap_LDADD = $(top_builddir)/libkernaux.la
+test_memmap_SOURCES = test_memmap.c
+endif
+
 ##################################
 # test_multiboot2_common_packing #
 ##################################

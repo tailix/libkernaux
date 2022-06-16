@@ -2,6 +2,7 @@
 
 #include <assert.h>
 #include <stdbool.h>
+#include <stddef.h>
 #include <string.h>
 
 #define SIZE_256MiB ( 256 * 1024 * 1024)
