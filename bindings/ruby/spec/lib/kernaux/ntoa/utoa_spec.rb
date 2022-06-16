@@ -47,6 +47,15 @@ KernAux::Version.with_ntoa? and RSpec.describe KernAux, '.utoa' do
     end
   end
 
+  context 'when number is not numeric' do
+    let(:number) { rand(0..(2**64 - 1)).to_s }
+
+    specify do
+      expect { utoa }.to raise_error \
+        TypeError, 'no implicit conversion from string'
+    end
+  end
+
   context 'when base is negative' do
     let(:base) { -rand(2..36) }
 

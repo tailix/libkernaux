@@ -41,19 +41,25 @@ bool KernAux_MemMap_add_entry(
 
     if (MEMMAP.entries_count >= KERNAUX_MEMMAP_ENTRIES_MAX) return false;
     if (SIZE_MAX - start < size) return false;
+    if (size == 0) return false;
 
-    memset(&MEMMAP.entries[MEMMAP.entries_count], 0, sizeof(MEMMAP.entries[MEMMAP.entries_count]));
     const size_t index = MEMMAP.entries_count++;
 
+    memset(&MEMMAP.entries[index], 0, sizeof(MEMMAP.entries[index]));
+
     MEMMAP.entries[index].is_available = is_available;
-    if (tag) {
-        memset (MEMMAP.entries[index].tag, 0,   KERNAUX_MEMMAP_ENTRY_TAG_SIZE_MAX);
-        strncpy(MEMMAP.entries[index].tag, tag, KERNAUX_MEMMAP_ENTRY_TAG_SLEN_MAX);
-    }
     MEMMAP.entries[index].start = start;
     MEMMAP.entries[index].size  = size;
     MEMMAP.entries[index].end   = start + size - 1;
     MEMMAP.entries[index].limit = start + size;
+
+    if (tag) {
+        strncpy(
+            MEMMAP.entries[index].tag,
+            tag,
+            KERNAUX_MEMMAP_ENTRY_TAG_SLEN_MAX
+        );
+    }
 
     return true;
 }

@@ -75,7 +75,8 @@ VALUE rb_KernAux_utoa(const int argc, const VALUE *argv, const VALUE self)
     VALUE base_rb   = argv[1];
     VALUE prefix_rb = argc == 3 ? argv[2] : Qnil;
 
-    RB_INTEGER_TYPE_P(number_rb);
+    const uint64_t number = NUM2ULL(number_rb);
+
     if (rb_funcall(number_rb, rb_intern_LESS, 1, INT2FIX(0))) {
         rb_raise(rb_eRangeError, "can't convert negative number to uint64_t");
     }
@@ -96,7 +97,7 @@ VALUE rb_KernAux_utoa(const int argc, const VALUE *argv, const VALUE self)
     }
 
     char buffer[KERNAUX_UTOA_MIN_BUFFER_SIZE + prefix_len];
-    kernaux_utoa(NUM2ULL(number_rb), buffer, convert_base(base_rb), prefix);
+    kernaux_utoa(number, buffer, convert_base(base_rb), prefix);
     return rb_funcall(rb_str_new2(buffer), rb_intern_freeze, 0);
 }
 
@@ -114,7 +115,7 @@ VALUE rb_KernAux_itoa(const int argc, const VALUE *argv, const VALUE self)
     VALUE base_rb   = argv[1];
     VALUE prefix_rb = argc == 3 ? argv[2] : Qnil;
 
-    RB_INTEGER_TYPE_P(number_rb);
+    const int64_t number = NUM2LL(number_rb);
 
     const char *prefix = NULL;
     long prefix_len = 0;
@@ -132,7 +133,7 @@ VALUE rb_KernAux_itoa(const int argc, const VALUE *argv, const VALUE self)
     }
 
     char buffer[KERNAUX_ITOA_MIN_BUFFER_SIZE + prefix_len];
-    kernaux_itoa(NUM2LL(number_rb), buffer, convert_base(base_rb), prefix);
+    kernaux_itoa(number, buffer, convert_base(base_rb), prefix);
     return rb_funcall(rb_str_new2(buffer), rb_intern_freeze, 0);
 }
 
@@ -140,12 +141,12 @@ VALUE rb_KernAux_utoa2(
     const VALUE self_rb __attribute__((unused)),
     const VALUE number_rb
 ) {
-    RB_INTEGER_TYPE_P(number_rb);
+    const uint64_t number = NUM2ULL(number_rb);
     if (rb_funcall(number_rb, rb_intern_LESS, 1, INT2FIX(0))) {
         rb_raise(rb_eRangeError, "can't convert negative number to uint64_t");
     }
     char buffer[KERNAUX_UTOA2_BUFFER_SIZE];
-    kernaux_utoa2(NUM2ULL(number_rb), buffer);
+    kernaux_utoa2(number, buffer);
     return rb_funcall(rb_str_new2(buffer), rb_intern_freeze, 0);
 }
 
@@ -153,9 +154,9 @@ VALUE rb_KernAux_itoa2(
     const VALUE self_rb __attribute__((unused)),
     const VALUE number_rb
 ) {
-    RB_INTEGER_TYPE_P(number_rb);
+    const int64_t number = NUM2LL(number_rb);
     char buffer[KERNAUX_ITOA2_BUFFER_SIZE];
-    kernaux_itoa2(NUM2LL(number_rb), buffer);
+    kernaux_itoa2(number, buffer);
     return rb_funcall(rb_str_new2(buffer), rb_intern_freeze, 0);
 }
 
@@ -163,12 +164,12 @@ VALUE rb_KernAux_utoa8(
     const VALUE self_rb __attribute__((unused)),
     const VALUE number_rb
 ) {
-    RB_INTEGER_TYPE_P(number_rb);
+    const uint64_t number = NUM2ULL(number_rb);
     if (rb_funcall(number_rb, rb_intern_LESS, 1, INT2FIX(0))) {
         rb_raise(rb_eRangeError, "can't convert negative number to uint64_t");
     }
     char buffer[KERNAUX_UTOA8_BUFFER_SIZE];
-    kernaux_utoa8(NUM2ULL(number_rb), buffer);
+    kernaux_utoa8(number, buffer);
     return rb_funcall(rb_str_new2(buffer), rb_intern_freeze, 0);
 }
 
@@ -176,9 +177,9 @@ VALUE rb_KernAux_itoa8(
     const VALUE self_rb __attribute__((unused)),
     const VALUE number_rb
 ) {
-    RB_INTEGER_TYPE_P(number_rb);
+    const int64_t number = NUM2LL(number_rb);
     char buffer[KERNAUX_ITOA8_BUFFER_SIZE];
-    kernaux_itoa8(NUM2LL(number_rb), buffer);
+    kernaux_itoa8(number, buffer);
     return rb_funcall(rb_str_new2(buffer), rb_intern_freeze, 0);
 }
 
@@ -186,12 +187,12 @@ VALUE rb_KernAux_utoa10(
     const VALUE self_rb __attribute__((unused)),
     const VALUE number_rb
 ) {
-    RB_INTEGER_TYPE_P(number_rb);
+    const uint64_t number = NUM2ULL(number_rb);
     if (rb_funcall(number_rb, rb_intern_LESS, 1, INT2FIX(0))) {
         rb_raise(rb_eRangeError, "can't convert negative number to uint64_t");
     }
     char buffer[KERNAUX_UTOA10_BUFFER_SIZE];
-    kernaux_utoa10(NUM2ULL(number_rb), buffer);
+    kernaux_utoa10(number, buffer);
     return rb_funcall(rb_str_new2(buffer), rb_intern_freeze, 0);
 }
 
@@ -199,9 +200,9 @@ VALUE rb_KernAux_itoa10(
     const VALUE self_rb __attribute__((unused)),
     const VALUE number_rb
 ) {
-    RB_INTEGER_TYPE_P(number_rb);
+    const int64_t number = NUM2LL(number_rb);
     char buffer[KERNAUX_ITOA10_BUFFER_SIZE];
-    kernaux_itoa10(NUM2LL(number_rb), buffer);
+    kernaux_itoa10(number, buffer);
     return rb_funcall(rb_str_new2(buffer), rb_intern_freeze, 0);
 }
 
@@ -209,12 +210,12 @@ VALUE rb_KernAux_utoa16(
     const VALUE self_rb __attribute__((unused)),
     const VALUE number_rb
 ) {
-    RB_INTEGER_TYPE_P(number_rb);
+    const uint64_t number = NUM2ULL(number_rb);
     if (rb_funcall(number_rb, rb_intern_LESS, 1, INT2FIX(0))) {
         rb_raise(rb_eRangeError, "can't convert negative number to uint64_t");
     }
     char buffer[KERNAUX_UTOA16_BUFFER_SIZE];
-    kernaux_utoa16(NUM2ULL(number_rb), buffer);
+    kernaux_utoa16(number, buffer);
     return rb_funcall(rb_str_new2(buffer), rb_intern_freeze, 0);
 }
 
@@ -222,9 +223,9 @@ VALUE rb_KernAux_itoa16(
     const VALUE self_rb __attribute__((unused)),
     const VALUE number_rb
 ) {
-    RB_INTEGER_TYPE_P(number_rb);
+    const int64_t number = NUM2LL(number_rb);
     char buffer[KERNAUX_ITOA16_BUFFER_SIZE];
-    kernaux_itoa16(NUM2LL(number_rb), buffer);
+    kernaux_itoa16(number, buffer);
     return rb_funcall(rb_str_new2(buffer), rb_intern_freeze, 0);
 }
 

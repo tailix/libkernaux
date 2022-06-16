@@ -29,7 +29,7 @@ typedef struct KernAux_MemMap {
 struct KernAux_MemMap KernAux_MemMap_create(size_t memory_size);
 void KernAux_MemMap_init(KernAux_MemMap memmap, size_t memory_size);
 
-/// @warning Must only be called with unfinished memmap, otherwise panics.
+/// @warning Must only be called with NOT finished memmap, otherwise panics.
 bool KernAux_MemMap_add_entry(
     KernAux_MemMap memmap,
     bool is_available,
@@ -38,7 +38,7 @@ bool KernAux_MemMap_add_entry(
     size_t size
 );
 
-/// @warning Must only be called with unfinished memmap, otherwise panics.
+/// @warning Must only be called with NOT finished memmap, otherwise panics.
 bool KernAux_MemMap_finish(KernAux_MemMap memmap);
 
 /// @warning Must only be called with finished memmap, otherwise panics.

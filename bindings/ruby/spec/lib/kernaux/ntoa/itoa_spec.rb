@@ -71,6 +71,15 @@ KernAux::Version.with_ntoa? and RSpec.describe KernAux, '.itoa' do
     end
   end
 
+  context 'when number is not numeric' do
+    let(:number) { rand((-2**63)..(2**63 - 1)).to_s }
+
+    specify do
+      expect { itoa }.to raise_error \
+        TypeError, 'no implicit conversion from string'
+    end
+  end
+
   context 'when base is negative' do
     let(:base) { -rand(2..36) }
 

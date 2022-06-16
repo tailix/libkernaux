@@ -16,6 +16,7 @@ Table of contents
 * [Overview](#libkernaux)
 * [Table of contents](#table-of-contents)
 * [API](#api)
+  * [Headers](#headers)
   * [Definitions](#definitions)
   * [Global variables](#global-variables)
 * [Configuration](#configuration)
@@ -25,12 +26,13 @@ Table of contents
   * [Installation](#installation)
   * [Development](#development)
   * [Cross](#cross)
-* [Architectures](#architectures)
 
 
 
 API
 ---
+
+### Headers
 
 We use [semantic versioning](https://semver.org) for stable APIs. Stable APIs
 can only change when major version number is increased (or minor while major is
@@ -38,7 +40,7 @@ zero). Work-in-progress APIs can change at any time.
 
 * Runtime environment
   * [Feature macros](/include/kernaux/version.h.in) (*work in progress*)
-  * [Assertions](/include/kernaux/assert.h) (*stable since* **0.1.0**, *non-breaking since* **?.?.?**)
+  * [Assertions](/include/kernaux/assert.h) (*non-breaking since* **?.?.?**)
     * [Assert](/examples/assert.c)
     * [Panic](/examples/panic.c)
   * Stack trace *(planned)*
@@ -51,7 +53,7 @@ zero). Work-in-progress APIs can change at any time.
   * [Framebuffer](/include/kernaux/framebuffer.h) (*planned*)
   * USB (*planned*)
 * Algorithms
-  * [Simple command line parser](/include/kernaux/cmdline.h) (*stable since* **0.2.0**)
+  * [Simple command line parser](/include/kernaux/cmdline.h) (*non-breaking since* **0.2.0**)
     * [Example](/examples/cmdline.c)
   * [Page Frame Allocator](/include/kernaux/pfa.h) (*work in progress*)
     * [Example](/examples/pfa.c)
@@ -63,15 +65,15 @@ zero). Work-in-progress APIs can change at any time.
 * Utilities
   * [Measurement units utils](/include/kernaux/units.h) (*work in progress*)
     * [To human](/examples/units_human.c)
-  * [Memory map](/include/kernaux/memmap.h.in) (*work in progress*)
+  * [Memory map](/include/kernaux/memmap.h.in) (*non-breaking since* **?.?.?**)
     * [Example](/examples/memmap.c)
   * [printf format parser](/include/kernaux/printf_fmt.h) (*work in progress*)
     * Code from [https://github.com/mpaland/printf](https://github.com/mpaland/printf). Thank you!
     * [Example](/examples/printf_fmt.c)
 * Usual functions
-  * [itoa/ftoa replacement](/include/kernaux/ntoa.h) (*stable since* **0.1.0**, *non-breaking since* **?.?.?**)
+  * [itoa/ftoa replacement](/include/kernaux/ntoa.h) (*non-breaking since* **?.?.?**)
     * [Example](/examples/ntoa.c)
-  * [printf replacement](/include/kernaux/printf.h.in) (*stable since* **0.1.0**, *non-breaking since* **?.?.?**)
+  * [printf replacement](/include/kernaux/printf.h.in) (*non-breaking since* **?.?.?**)
     * Code from [https://github.com/mpaland/printf](https://github.com/mpaland/printf). Thank you!
     * [fprintf](/examples/fprintf.c)
     * [vfprintf](/examples/fprintf_va.c)
@@ -80,7 +82,7 @@ zero). Work-in-progress APIs can change at any time.
 * libc replacement (*work in progress*)
   * [ctype.h](/libc/include/ctype.h)
   * [inttypes.h](/libc/include/inttypes.h)
-  * [setjmo.h](/libc/include/setjmo.h)
+  * [setjmp.h](/libc/include/setjmp.h)
   * [stdlib.h](/libc/include/stdlib.h)
   * [string.h](/libc/include/string.h)
   * [sys/types.h](/libc/include/sys/types.h)
@@ -148,6 +150,7 @@ explicitly included, use `--without-all`.
 
 * `--with[out]-cmdline` - command line parser
 * `--with[out]-file` - file simulator
+* `--with[out]-memmap` - memory map
 * `--with[out]-ntoa` - itoa/ftoa
 * `--with[out]-printf` - printf
 
@@ -261,21 +264,3 @@ Disassembly of section .text:
   1c:   0f 22 e0              mov    %eax,%cr4
   1f:   c3                    ret
 ```
-
-
-
-Architectures
--------------
-
-Architectures should be properly identified. We use the following scheme, but it
-may change in future:
-
-* `x86`
-  * `i386`
-  * `x86_64`
-* `riscv`
-  * `riscv64`
-* `arm` - we need more info, now similar to [Debian](https://www.debian.org/ports/arm/)
-  * `armel`
-  * `armhf`
-  * `arm64`
