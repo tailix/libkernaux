@@ -7,7 +7,7 @@
 
 static char buffer[BUFFER_SIZE];
 
-int main()
+void example_main()
 {
     const int result = kernaux_snprintf(
         buffer,
@@ -18,5 +18,4 @@ int main()
     );
     assert((size_t)result == strlen(buffer));
     assert(strcmp(buffer, "Hello, Alex! Session ID: 123.") == 0);
-    return 0;
 }

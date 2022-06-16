@@ -9,7 +9,7 @@
 #define SIZE_512MiB ( 512 * 1024 * 1024)
 #define SIZE_1GiB   (1024 * 1024 * 1024)
 
-int main()
+void example_main()
 {
     KernAux_MemMap memmap = { KernAux_MemMap_create(SIZE_1GiB) };
 
@@ -42,6 +42,4 @@ int main()
     assert(       KernAux_MemMap_entry_by_addr(memmap, SIZE_1GiB - 3            )->size  == SIZE_512MiB);
     assert(       KernAux_MemMap_entry_by_addr(memmap, SIZE_1GiB - 2            )->end   == SIZE_1GiB - 1);
     assert(       KernAux_MemMap_entry_by_addr(memmap, SIZE_1GiB - 1            )->limit == SIZE_1GiB);
-
-    return 0;
 }

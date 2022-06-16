@@ -2,7 +2,7 @@
 
 #include <assert.h>
 
-int main()
+void example_main()
 {
     {
         const char *format = "s";
@@ -89,6 +89,4 @@ int main()
         assert(spec.type == KERNAUX_PRINTF_FMT_TYPE_INT);
         assert(spec.base == 10);
     }
-
-    return 0;
 }

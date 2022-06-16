@@ -3,7 +3,7 @@
 #include <assert.h>
 #include <string.h>
 
-int main()
+void example_main()
 {
     char buffer[256];
 
@@ -42,6 +42,4 @@ int main()
     assert(strcmp(buffer, "123 GB") == 0);
     kernaux_units_human_bin(123, KERNAUX_UNIT_BYTE, KERNAUX_UNITPFX_GIBI, buffer, sizeof(buffer));
     assert(strcmp(buffer, "123 GiB") == 0);
-
-    return 0;
 }
