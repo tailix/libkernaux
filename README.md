@@ -64,6 +64,7 @@ zero). Work-in-progress APIs can change at any time.
   * [Multiboot 2 (GRUB 2)](/include/kernaux/multiboot2.h) (*work in progress*)
   * Stivale 2 (Limine) (*planned*)
 * Utilities
+  * [Generic array](/include/kernaux/generic_array.h) (*work in progress*)
   * [Measurement units utils](/include/kernaux/units.h) (*work in progress*)
     * [Example: To human](/examples/units_human.c)
   * [Memory map](/include/kernaux/memmap.h.in) (*non-breaking since* **0.4.0**)

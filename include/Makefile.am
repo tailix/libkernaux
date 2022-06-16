@@ -4,6 +4,7 @@ nobase_include_HEADERS = \
 	kernaux/arch/riscv64.h \
 	kernaux/arch/x86_64.h \
 	kernaux/assert.h \
+	kernaux/generic_array.h \
 	kernaux/version.h
 
 if ASM_I386

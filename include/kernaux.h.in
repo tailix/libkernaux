@@ -3,9 +3,9 @@
     contain architecture-specific assembly functions.
 */
 
-#include <kernaux/version.h>
-
 #include <kernaux/assert.h>
+#include <kernaux/generic_array.h>
+#include <kernaux/version.h>
 
 @comment_line_cmdline@#include <kernaux/cmdline.h>
 @comment_line_console@#include <kernaux/console.h>
