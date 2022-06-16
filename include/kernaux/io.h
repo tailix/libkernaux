@@ -5,24 +5,27 @@
 extern "C" {
 #endif
 
+#include <stdbool.h>
 #include <stddef.h>
 #include <stdint.h>
 
 #define KERNAUX_EOF (-1)
 
-typedef int (*KernAux_Store_GetChar)(void *store);
-typedef int (*KernAux_Store_PutChar)(void *store, int c);
+typedef size_t (*KernAux_Store_Read)(void *store, void *buffer, size_t size);
+typedef size_t (*KernAux_Store_Write)(void *store, const void *buffer, size_t size);
 
 /*****************
  * KernAux_Store *
  *****************/
 
 typedef struct KernAux_Store {
-    KernAux_Store_GetChar get_char;
-    KernAux_Store_PutChar put_char;
+    KernAux_Store_Read read;
+    KernAux_Store_Write write;
 } *KernAux_Store;
 
-int KernAux_Store_put_char(KernAux_Store store, int c);
+size_t KernAux_Store_write(KernAux_Store store, const void *buffer, size_t size);
+int KernAux_Store_putc(KernAux_Store store, int c);
+bool KernAux_Store_puts(KernAux_Store store, const char *s);
 
 /********************
  * KernAux_MemStore *

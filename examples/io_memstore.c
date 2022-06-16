@@ -5,20 +5,28 @@
 
 #define BUFFER_SIZE 4096
 
+static const char *const hello = "Hello, World!";
+
 static char buffer[BUFFER_SIZE];
 
 void example_main()
 {
-    struct KernAux_MemStore mem_store =
-        KernAux_MemStore_create(buffer, BUFFER_SIZE);
+    {
+        struct KernAux_MemStore mem_store =
+            KernAux_MemStore_create(buffer, BUFFER_SIZE);
 
-    assert(KernAux_Store_put_char(&mem_store.store, 'H' ) == 'H' );
-    assert(KernAux_Store_put_char(&mem_store.store, 'e' ) == 'e' );
-    assert(KernAux_Store_put_char(&mem_store.store, 'l' ) == 'l' );
-    assert(KernAux_Store_put_char(&mem_store.store, 'l' ) == 'l' );
-    assert(KernAux_Store_put_char(&mem_store.store, 'o' ) == 'o' );
-    assert(KernAux_Store_put_char(&mem_store.store, '!' ) == '!' );
-    assert(KernAux_Store_put_char(&mem_store.store, '\0') == '\0');
+        assert(KernAux_Store_puts(&mem_store.store, hello));
+        assert(strncmp(buffer, hello, strlen(hello)) == 0);
+    }
 
-    assert(strncmp(buffer, "Hello!", BUFFER_SIZE) == 0);
+    memset(buffer, 0, sizeof(buffer));
+
+    {
+        struct KernAux_MemStore mem_store;
+        KernAux_MemStore_init(&mem_store, buffer, 5);
+
+        assert(!KernAux_Store_puts(&mem_store.store, hello));
+        assert(strncmp(buffer, hello, 5) == 0);
+        assert(strncmp(buffer, hello, strlen(hello)) != 0);
+    }
 }
