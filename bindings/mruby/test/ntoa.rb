@@ -127,6 +127,11 @@ if KernAux::Version.with_ntoa?
       prefix = 'a' * 101
       KernAux.utoa(number, base, prefix)
     end
+
+    assert_raise TypeError, 'no implicit conversion from string' do
+      number = Random.rand(2**32 - 1).to_s
+      KernAux.utoa(number.to_s)
+    end
   end
 
   assert 'KernAux.itoa' do
@@ -210,6 +215,11 @@ if KernAux::Version.with_ntoa?
       prefix = 'a' * 101
       KernAux.itoa(number, base, prefix)
     end
+
+    assert_raise TypeError, 'no implicit conversion from string' do
+      number = Random.rand(2**31 - 1) * [1, -1].sample
+      KernAux.itoa(number.to_s)
+    end
   end
 
   assert 'KernAux.utoa2' do
@@ -221,6 +231,11 @@ if KernAux::Version.with_ntoa?
     assert_raise RangeError, 'can\'t convert negative number to uint64_t' do
       KernAux.utoa2(-1)
     end
+
+    assert_raise TypeError, 'no implicit conversion from string' do
+      number = Random.rand(2**32 - 1).to_s
+      KernAux.utoa2(number.to_s)
+    end
   end
 
   assert 'KernAux.itoa2' do
@@ -231,6 +246,11 @@ if KernAux::Version.with_ntoa?
     test_itoa2(-123, '-0b1111011')
     test_itoa2 2**31 - 1, "0b#{(2**31 - 1).to_s(2)}"
     test_itoa2(-2**31, "-0b#{(2**31).to_s(2)}")
+
+    assert_raise TypeError, 'no implicit conversion from string' do
+      number = Random.rand(2**31 - 1) * [1, -1].sample
+      KernAux.itoa2(number.to_s)
+    end
   end
 
   assert 'KernAux.utoa8' do
@@ -242,6 +262,11 @@ if KernAux::Version.with_ntoa?
     assert_raise RangeError, 'can\'t convert negative number to uint64_t' do
       KernAux.utoa8(-1)
     end
+
+    assert_raise TypeError, 'no implicit conversion from string' do
+      number = Random.rand(2**32 - 1).to_s
+      KernAux.utoa8(number.to_s)
+    end
   end
 
   assert 'KernAux.itoa8' do
@@ -252,6 +277,11 @@ if KernAux::Version.with_ntoa?
     test_itoa8(-0o123, '-0o123')
     test_itoa8 2**31 - 1, "0o#{(2**31 - 1).to_s(8)}"
     test_itoa8(-2**31, "-0o#{(2**31).to_s(8)}")
+
+    assert_raise TypeError, 'no implicit conversion from string' do
+      number = Random.rand(2**31 - 1) * [1, -1].sample
+      KernAux.itoa8(number.to_s)
+    end
   end
 
   assert 'KernAux.utoa10' do
@@ -263,6 +293,11 @@ if KernAux::Version.with_ntoa?
     assert_raise RangeError, 'can\'t convert negative number to uint64_t' do
       KernAux.utoa10(-1)
     end
+
+    assert_raise TypeError, 'no implicit conversion from string' do
+      number = Random.rand(2**32 - 1).to_s
+      KernAux.utoa10(number.to_s)
+    end
   end
 
   assert 'KernAux.itoa10' do
@@ -273,6 +308,11 @@ if KernAux::Version.with_ntoa?
     test_itoa10(-123, '-123')
     test_itoa10 2**31 - 1, (2**31 - 1).to_s
     test_itoa10(-2**31, (-2**31).to_s)
+
+    assert_raise TypeError, 'no implicit conversion from string' do
+      number = Random.rand(2**31 - 1) * [1, -1].sample
+      KernAux.itoa10(number.to_s)
+    end
   end
 
   assert 'KernAux.utoa16' do
@@ -284,6 +324,11 @@ if KernAux::Version.with_ntoa?
     assert_raise RangeError, 'can\'t convert negative number to uint64_t' do
       KernAux.utoa16(-1)
     end
+
+    assert_raise TypeError, 'no implicit conversion from string' do
+      number = Random.rand(2**32 - 1).to_s
+      KernAux.utoa16(number.to_s)
+    end
   end
 
   assert 'KernAux.itoa16' do
@@ -294,5 +339,10 @@ if KernAux::Version.with_ntoa?
     test_itoa16(-0x123, '-0x123')
     test_itoa16 2**31 - 1, "0x#{(2**31 - 1).to_s(16)}"
     test_itoa16(-2**31, "-0x#{(2**31).to_s(16)}")
+
+    assert_raise TypeError, 'no implicit conversion from string' do
+      number = Random.rand(2**31 - 1) * [1, -1].sample
+      KernAux.itoa16(number.to_s)
+    end
   end
 end
