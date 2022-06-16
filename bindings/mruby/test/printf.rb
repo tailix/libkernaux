@@ -1,6 +1,3 @@
-# TODO: implement this
-# rubocop:disable Style/BlockComments
-=begin
 if KernAux::Version.with_printf?
   assert 'KernAux.sprintf' do
     [
@@ -36,5 +33,3 @@ if KernAux::Version.with_printf?
     end
   end
 end
-=end
-# rubocop:enable Style/BlockComments
