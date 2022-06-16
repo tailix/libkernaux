@@ -2,6 +2,7 @@
 #include "config.h"
 #endif
 
+#include <kernaux/assert.h>
 #include <kernaux/memmap.h>
 
 #include <assert.h>
@@ -11,11 +12,27 @@
 
 static KernAux_MemMap memmap;
 
+static unsigned int assert_count_exp = 0;
+static unsigned int assert_count_ctr = 0;
+
+static const char *assert_last_file = NULL;
+
+static void assert_cb(
+    const char *const file,
+    __attribute__((unused)) const int line,
+    __attribute__((unused)) const char *const msg
+) {
+    ++assert_count_ctr;
+    assert_last_file = file;
+}
+
 #define MEMSET memset(memmap, 0xff, sizeof(memmap))
 #define MEMMAP (*memmap)
 
 int main()
 {
+    kernaux_assert_cb = assert_cb;
+
     {
         MEMSET;
         KernAux_MemMap_init(memmap, 0);
@@ -31,6 +48,12 @@ int main()
         assert(MEMMAP.entries_count == 0);
 
         assert(KernAux_MemMap_entry_by_index(memmap, 0) == NULL);
+
+        assert(assert_count_ctr == assert_count_exp);
+        assert(!KernAux_MemMap_finish(memmap));
+        assert(assert_count_ctr == ++assert_count_exp);
+        assert(strstr(assert_last_file, "src/memmap.c") != NULL);
+        assert_last_file = NULL;
     }
 
     {
@@ -140,7 +163,11 @@ int main()
         assert(MEMMAP.entries[0].end == 1);
         assert(MEMMAP.entries[0].limit == 2);
 
+        assert(assert_count_ctr == assert_count_exp);
         assert(KernAux_MemMap_entry_by_index(memmap, 0) == NULL);
+        assert(assert_count_ctr == ++assert_count_exp);
+        assert(strstr(assert_last_file, "src/memmap.c") != NULL);
+        assert_last_file = NULL;
     }
 
     {
@@ -184,6 +211,8 @@ int main()
         assert(KernAux_MemMap_entry_by_index(memmap, 0) == &MEMMAP.entries[0]);
         assert(KernAux_MemMap_entry_by_index(memmap, 1) == &MEMMAP.entries[1]);
     }
+
+    assert(assert_count_ctr == assert_count_exp);
 
     return 0;
 }
