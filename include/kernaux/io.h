@@ -11,12 +11,12 @@ extern "C" {
 
 #define KERNAUX_EOF (-1)
 
-typedef size_t (*KernAux_Store_Read)(void *store, void *buffer, size_t size);
-typedef size_t (*KernAux_Store_Write)(void *store, const void *buffer, size_t size);
-
 /*****************
  * KernAux_Store *
  *****************/
+
+typedef size_t (*KernAux_Store_Read)(void *store, void *buffer, size_t size);
+typedef size_t (*KernAux_Store_Write)(void *store, const void *buffer, size_t size);
 
 typedef struct KernAux_Store {
     KernAux_Store_Read read;
@@ -46,14 +46,14 @@ KernAux_MemStore_init(KernAux_MemStore mem_store, void *start, size_t size);
  * Old API *
  ***********/
 
-typedef void (*KernAux_File_Out)(char c, void *arg);
+typedef void (*KernAux_OldFile_Out)(char c, void *arg);
 
-typedef struct KernAux_File {
-    KernAux_File_Out out;
-} *KernAux_File;
+typedef struct KernAux_OldFile {
+    KernAux_OldFile_Out out;
+} *KernAux_OldFile;
 
-struct KernAux_File KernAux_File_create(KernAux_File_Out out);
-void KernAux_File_init(KernAux_File file, KernAux_File_Out out);
+struct KernAux_OldFile KernAux_OldFile_create(KernAux_OldFile_Out out);
+void KernAux_OldFile_init(KernAux_OldFile file, KernAux_OldFile_Out out);
 
 #ifdef __cplusplus
 }

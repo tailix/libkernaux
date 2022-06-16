@@ -45,7 +45,7 @@ static void test(const char *const expected, const char *const format, ...)
     memset(buffer, '\0', sizeof(buffer));
     buffer_index = 0;
     va_start(va, format);
-    struct KernAux_File file = KernAux_File_create(test_putchar);
+    struct KernAux_OldFile file = KernAux_OldFile_create(test_putchar);
     result = kernaux_vfprintf(&file, (char*)data, format, va);
     va_end(va);
     assert((size_t)result == strlen(expected));
@@ -66,7 +66,7 @@ int main()
 #ifdef WITH_IO
     memset(buffer, '\0', sizeof(buffer));
     buffer_index = 0;
-    struct KernAux_File file = KernAux_File_create(test_putchar);
+    struct KernAux_OldFile file = KernAux_OldFile_create(test_putchar);
     kernaux_fprintf(&file, (char*)data, "Hello, World!");
     assert(strcmp("Hello, World!", buffer) == 0);
 #endif
