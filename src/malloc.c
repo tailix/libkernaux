@@ -1,3 +1,9 @@
+/**
+ * The code was inspired by the Embedded Artistry's libmemory.
+ *
+ * Copyright (c) 2017-2022 Embedded Artistry LLC
+ */
+
 #ifdef HAVE_CONFIG_H
 #include "config.h"
 #endif
