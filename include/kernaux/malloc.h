@@ -5,10 +5,18 @@
 extern "C" {
 #endif
 
+#include <stdbool.h>
 #include <stddef.h>
 
+typedef struct KernAux_Malloc_Node {
+    struct KernAux_Malloc_Node *next;
+    bool free;
+    size_t actual_size, user_size;
+    char *block;
+} *KernAux_Malloc_Node;
+
 typedef struct KernAux_Malloc {
-    int foobar;
+    KernAux_Malloc_Node head;
 } *KernAux_Malloc;
 
 struct KernAux_Malloc KernAux_Malloc_create();

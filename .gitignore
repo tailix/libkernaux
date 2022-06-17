@@ -127,6 +127,7 @@
 /tests/test_cmdline_gen
 /tests/test_cmdline_gen.c
 /tests/test_elf
+/tests/test_malloc
 /tests/test_mbr
 /tests/test_memmap
 /tests/test_multiboot2_common_packing

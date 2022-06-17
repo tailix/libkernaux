@@ -93,6 +93,16 @@ test_elf_LDADD = $(top_builddir)/libkernaux.la
 test_elf_SOURCES = test_elf.c
 endif
 
+###############
+# test_malloc #
+###############
+
+if WITH_MALLOC
+TESTS += test_malloc
+test_malloc_LDADD = $(top_builddir)/libkernaux.la
+test_malloc_SOURCES = test_malloc.c
+endif
+
 ############
 # test_mbr #
 ############
