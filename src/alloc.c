@@ -8,8 +8,8 @@
 #include "config.h"
 #endif
 
+#include <kernaux/alloc.h>
 #include <kernaux/assert.h>
-#include <kernaux/malloc.h>
 
 #include <stddef.h>
 #include <stdint.h>
@@ -19,55 +19,55 @@
 
 #define PTR_ALIGNMENT (sizeof(void*)) // TODO: align node to this value
 
-#define ALLOC_HEADER_SIZE (offsetof(struct KernAux_Malloc_Node, block))
+#define ALLOC_HEADER_SIZE (offsetof(struct KernAux_Alloc_Node, block))
 #define MIN_ALLOC_SIZE (ALLOC_HEADER_SIZE + 16)
 
-struct KernAux_Malloc KernAux_Malloc_create()
+struct KernAux_Alloc KernAux_Alloc_create()
 {
-    struct KernAux_Malloc malloc;
-    KernAux_Malloc_init(&malloc);
-    return malloc;
+    struct KernAux_Alloc alloc;
+    KernAux_Alloc_init(&alloc);
+    return alloc;
 }
 
-void KernAux_Malloc_init(const KernAux_Malloc malloc)
+void KernAux_Alloc_init(const KernAux_Alloc alloc)
 {
-    KERNAUX_ASSERT(malloc);
+    KERNAUX_ASSERT(alloc);
 
-    malloc->head = NULL;
+    alloc->head = NULL;
 }
 
-void KernAux_Malloc_add_memory_block(
-    const KernAux_Malloc malloc,
+void KernAux_Alloc_add_memory_block(
+    const KernAux_Alloc alloc,
     void *const ptr,
     const size_t size
 ) {
-    KERNAUX_ASSERT(malloc);
+    KERNAUX_ASSERT(alloc);
     KERNAUX_ASSERT(ptr);
-    KERNAUX_ASSERT(size >= 2 * sizeof(struct KernAux_Malloc_Node));
+    KERNAUX_ASSERT(size >= 2 * sizeof(struct KernAux_Alloc_Node));
 
-    KernAux_Malloc_Node new_node = ptr;
+    KernAux_Alloc_Node new_node = ptr;
     new_node->free = true;
     new_node->actual_size = size;
-    new_node->user_size = size - sizeof(struct KernAux_Malloc_Node);
+    new_node->user_size = size - sizeof(struct KernAux_Alloc_Node);
 
     // TODO: lock
-    new_node->next = malloc->head;
-    malloc->head = new_node;
+    new_node->next = alloc->head;
+    alloc->head = new_node;
     // TODO: unlock
 }
 
-void *KernAux_Malloc_malloc(const KernAux_Malloc malloc, const size_t size)
+void *KernAux_Alloc_malloc(const KernAux_Alloc alloc, const size_t size)
 {
-    KERNAUX_ASSERT(malloc);
+    KERNAUX_ASSERT(alloc);
     if (size == 0) return NULL;
 
-    KernAux_Malloc_Node node = NULL;
+    KernAux_Alloc_Node node = NULL;
     void *ptr = NULL;
 
     // TODO: lock
 
     for (
-        KernAux_Malloc_Node item_node = malloc->head;
+        KernAux_Alloc_Node item_node = alloc->head;
         item_node;
         item_node = item_node->next
     ) {
@@ -80,8 +80,8 @@ void *KernAux_Malloc_malloc(const KernAux_Malloc malloc, const size_t size)
     if (node) {
         // Can we split the block?
         if (node->actual_size - size >= MIN_ALLOC_SIZE) {
-            KernAux_Malloc_Node new_node =
-                (KernAux_Malloc_Node)(((uintptr_t)&node->block) + size);
+            KernAux_Alloc_Node new_node =
+                (KernAux_Alloc_Node)(((uintptr_t)&node->block) + size);
             new_node->free = true;
             new_node->actual_size = node->actual_size - size - ALLOC_HEADER_SIZE;
             new_node->user_size   = node->user_size   - size - ALLOC_HEADER_SIZE;
@@ -98,12 +98,12 @@ void *KernAux_Malloc_malloc(const KernAux_Malloc malloc, const size_t size)
     return ptr;
 }
 
-void KernAux_Malloc_free(const KernAux_Malloc malloc, void *const ptr)
+void KernAux_Alloc_free(const KernAux_Alloc alloc, void *const ptr)
 {
-    KERNAUX_ASSERT(malloc);
+    KERNAUX_ASSERT(alloc);
 
     // TODO: implement this
 
-    (void)malloc;
+    (void)alloc;
     (void)ptr;
 }

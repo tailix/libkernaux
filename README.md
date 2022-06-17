@@ -65,7 +65,7 @@ zero). Work-in-progress APIs can change at any time.
 * Utilities
   * [Measurement units utils](/include/kernaux/units.h) (*work in progress*)
     * [Example: To human](/examples/units_human.c)
-  * [Memory allocator](/include/kernaux/malloc.h) (*work in progress*)
+  * [Memory allocator](/include/kernaux/alloc.h) (*work in progress*)
   * [Memory map](/include/kernaux/memmap.h.in) (*non-breaking since* **0.4.0**)
     * [Example](/examples/memmap.c)
   * [printf format parser](/include/kernaux/printf_fmt.h) (*work in progress*)
@@ -147,9 +147,9 @@ stable options.
 All packages are included by default. To exclude all packages except those
 explicitly included, use `--without-all`.
 
+* `--with[out]-alloc` - memory allocator
 * `--with[out]-cmdline` - command line parser
 * `--with[out]-io` - input/output
-* `--with[out]-malloc` - memory allocator
 * `--with[out]-memmap` - memory map
 * `--with[out]-ntoa` - itoa/ftoa
 * `--with[out]-printf` - printf

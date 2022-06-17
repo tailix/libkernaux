@@ -16,6 +16,9 @@ if ASM_X86_64
 nobase_include_HEADERS += kernaux/asm/x86_64.h
 endif
 
+if WITH_ALLOC
+nobase_include_HEADERS += kernaux/alloc.h
+endif
 if WITH_CMDLINE
 nobase_include_HEADERS += kernaux/cmdline.h
 endif
@@ -30,9 +33,6 @@ nobase_include_HEADERS += kernaux/framebuffer.h
 endif
 if WITH_IO
 nobase_include_HEADERS += kernaux/io.h
-endif
-if WITH_MALLOC
-nobase_include_HEADERS += kernaux/malloc.h
 endif
 if WITH_MBR
 nobase_include_HEADERS += kernaux/mbr.h

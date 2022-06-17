@@ -1,7 +1,7 @@
 2022-06-17  Alex Kotov  <kotovalexarian@gmail.com>
 
-	* configure.ac: Added package "malloc"
-	* include/kernaux/malloc.h: Added
+	* configure.ac: Added package "alloc"
+	* include/kernaux/alloc.h: Added
 
 2022-06-16  Alex Kotov  <kotovalexarian@gmail.com>
 
