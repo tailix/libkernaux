@@ -31,6 +31,9 @@ endif
 if WITH_IO
 nobase_include_HEADERS += kernaux/io.h
 endif
+if WITH_MALLOC
+nobase_include_HEADERS += kernaux/malloc.h
+endif
 if WITH_MBR
 nobase_include_HEADERS += kernaux/mbr.h
 endif

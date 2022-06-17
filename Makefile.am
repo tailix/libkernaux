@@ -51,6 +51,9 @@ endif
 if WITH_LIBC
 libkernaux_la_LIBADD += libc/libc.la
 endif
+if WITH_MALLOC
+libkernaux_la_SOURCES += src/malloc.c
+endif
 if WITH_MBR
 libkernaux_la_SOURCES += src/mbr.c
 endif

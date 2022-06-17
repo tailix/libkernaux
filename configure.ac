@@ -62,6 +62,7 @@ AC_ARG_WITH(  [console],      AS_HELP_STRING([--without-console],     [without s
 AC_ARG_WITH(  [elf],          AS_HELP_STRING([--without-elf],         [without ELF utils]))
 AC_ARG_WITH(  [framebuffer],  AS_HELP_STRING([--without-framebuffer], [without framebuffer]))
 AC_ARG_WITH(  [io],           AS_HELP_STRING([--without-io],          [without input/output]))
+AC_ARG_WITH(  [malloc],       AS_HELP_STRING([--without-malloc],      [without memory allocator]))
 AC_ARG_WITH(  [mbr],          AS_HELP_STRING([--without-mbr],         [without Master Boot Record]))
 AC_ARG_WITH(  [memmap],       AS_HELP_STRING([--without-memmap],      [without memory map]))
 AC_ARG_WITH(  [multiboot2],   AS_HELP_STRING([--without-multiboot2],  [without Multiboot 2 information parser]))
@@ -94,6 +95,7 @@ if test -z "$with_console";     then with_console=no;     fi
 if test -z "$with_elf";         then with_elf=no;         fi
 if test -z "$with_framebuffer"; then with_framebuffer=no; fi
 if test -z "$with_io";          then with_io=no;          fi
+if test -z "$with_malloc";      then with_malloc=no;      fi
 if test -z "$with_mbr";         then with_mbr=no;         fi
 if test -z "$with_memmap";      then with_memmap=no;      fi
 if test -z "$with_multiboot2";  then with_multiboot2=no;  fi
@@ -130,6 +132,7 @@ AS_IF([test "$with_console"        = no ], [with_console=no],         [with_cons
 AS_IF([test "$with_elf"            = no ], [with_elf=no],             [with_elf=yes])
 AS_IF([test "$with_framebuffer"    = no ], [with_framebuffer=no],     [with_framebuffer=yes])
 AS_IF([test "$with_io"             = no ], [with_io=no],              [with_io=yes])
+AS_IF([test "$with_malloc"         = no ], [with_malloc=no],          [with_malloc=yes])
 AS_IF([test "$with_mbr"            = no ], [with_mbr=no],             [with_mbr=yes])
 AS_IF([test "$with_memmap"         = no ], [with_memmap=no],          [with_memmap=yes])
 AS_IF([test "$with_multiboot2"     = no ], [with_multiboot2=no],      [with_multiboot2=yes])
@@ -187,6 +190,7 @@ AM_CONDITIONAL([WITH_CONSOLE],        [test "$with_console"        = yes])
 AM_CONDITIONAL([WITH_ELF],            [test "$with_elf"            = yes])
 AM_CONDITIONAL([WITH_FRAMEBUFFER],    [test "$with_framebuffer"    = yes])
 AM_CONDITIONAL([WITH_IO],             [test "$with_io"             = yes])
+AM_CONDITIONAL([WITH_MALLOC],         [test "$with_malloc"         = yes])
 AM_CONDITIONAL([WITH_MBR],            [test "$with_mbr"            = yes])
 AM_CONDITIONAL([WITH_MEMMAP],         [test "$with_memmap"         = yes])
 AM_CONDITIONAL([WITH_MULTIBOOT2],     [test "$with_multiboot2"     = yes])
@@ -227,6 +231,7 @@ AS_IF([test "$with_console"        = yes], [AC_DEFINE([WITH_CONSOLE],        [1]
 AS_IF([test "$with_elf"            = yes], [AC_DEFINE([WITH_ELF],            [1], [with ELF utils])])
 AS_IF([test "$with_framebuffer"    = yes], [AC_DEFINE([WITH_FRAMEBUFFER],    [1], [with framebuffer])])
 AS_IF([test "$with_io"             = yes], [AC_DEFINE([WITH_IO],             [1], [with input/output])])
+AS_IF([test "$with_malloc"         = yes], [AC_DEFINE([WITH_MALLOC],         [1], [with memory allocator])])
 AS_IF([test "$with_mbr"            = yes], [AC_DEFINE([WITH_MBR],            [1], [with Master Boot Record])])
 AS_IF([test "$with_memmap"         = yes], [AC_DEFINE([WITH_MEMMAP],         [1], [with memory map])])
 AS_IF([test "$with_multiboot2"     = yes], [AC_DEFINE([WITH_MULTIBOOT2],     [1], [with Multiboot 2 information parser])])
@@ -254,6 +259,7 @@ AS_IF([test "$with_console"     = no], [AC_SUBST([comment_line_console],     [//
 AS_IF([test "$with_elf"         = no], [AC_SUBST([comment_line_elf],         [//])])
 AS_IF([test "$with_framebuffer" = no], [AC_SUBST([comment_line_framebuffer], [//])])
 AS_IF([test "$with_io"          = no], [AC_SUBST([comment_line_io],          [//])])
+AS_IF([test "$with_malloc"      = no], [AC_SUBST([comment_line_malloc],      [//])])
 AS_IF([test "$with_mbr"         = no], [AC_SUBST([comment_line_mbr],         [//])])
 AS_IF([test "$with_memmap"      = no], [AC_SUBST([comment_line_memmap],      [//])])
 AS_IF([test "$with_multiboot2"  = no], [AC_SUBST([comment_line_multiboot2],  [//])])
