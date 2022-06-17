@@ -45,7 +45,6 @@ zero). Work-in-progress APIs can change at any time.
     * [Example: Panic](/examples/panic.c)
   * Stack trace *(planned)*
   * [Input/output](/include/kernaux/io.h) (*work in progress*)
-    * [Example: Memory store](/examples/io_memstore.c)
   * Architecture-specific code (*work in progress*)
     * [Declarations](/include/kernaux/arch/)
     * [Functions](/include/kernaux/asm/)
@@ -64,7 +63,6 @@ zero). Work-in-progress APIs can change at any time.
   * [Multiboot 2 (GRUB 2)](/include/kernaux/multiboot2.h) (*work in progress*)
   * Stivale 2 (Limine) (*planned*)
 * Utilities
-  * [Sized void](/include/kernaux/sized_void.h) (*work in progress*)
   * [Measurement units utils](/include/kernaux/units.h) (*work in progress*)
     * [Example: To human](/examples/units_human.c)
   * [Memory map](/include/kernaux/memmap.h.in) (*non-breaking since* **0.4.0**)

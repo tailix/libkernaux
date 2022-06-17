@@ -4,7 +4,6 @@
 */
 
 #include <kernaux/assert.h>
-#include <kernaux/sized_void.h>
 #include <kernaux/version.h>
 
 @comment_line_cmdline@#include <kernaux/cmdline.h>
