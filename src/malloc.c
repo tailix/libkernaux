@@ -13,6 +13,11 @@
 
 #include <stddef.h>
 
+#define ALIGN_MASK(align) ((align) - 1) // align should be a power of 2
+#define ALIGN_UP(val, align) (((val) + ALIGN_MASK(align)) & ~ALIGN_MASK(align))
+
+#define MIN_MALLOC_SIZE (32) // 2**5
+
 struct KernAux_Malloc KernAux_Malloc_create()
 {
     struct KernAux_Malloc malloc;
@@ -41,13 +46,16 @@ void KernAux_Malloc_add_memory_block(
     (void)size;
 }
 
-void *KernAux_Malloc_malloc(const KernAux_Malloc malloc, size_t size)
+void *KernAux_Malloc_malloc(const KernAux_Malloc malloc, const size_t size)
 {
     KERNAUX_ASSERT(malloc);
     if (size == 0) return NULL;
 
+    const size_t actual_size = ALIGN_UP(size, MIN_MALLOC_SIZE);
+    // Too large, let's not care about the case.
+    if (actual_size < size) return NULL;
+
     (void)malloc;
-    (void)size;
 
     return NULL;
 }
