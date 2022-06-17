@@ -13,12 +13,12 @@ typedef struct KernAux_SizedVoid {
 } *KernAux_SizedVoid;
 
 struct KernAux_SizedVoid
-KernAux_SizedVoid_create(size_t memory_size, void *ptr);
+KernAux_SizedVoid_create(void *ptr, size_t memory_size);
 
 void KernAux_SizedVoid_init(
     KernAux_SizedVoid sized_void,
-    size_t memory_size,
-    void *ptr
+    void *ptr,
+    size_t memory_size
 );
 
 void KernAux_SizedVoid_memset(KernAux_SizedVoid sized_void, int c);

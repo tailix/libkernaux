@@ -8,19 +8,28 @@
 
 static const char *const hello = "Hello, World!";
 
-static unsigned char files_void[1000];
-static char buffer[BUFFER_SIZE];
+static char                     buffer[BUFFER_SIZE];
+static struct KernAux_MemStore  buffer_mem_store;
+static struct KernAux_SizedVoid buffer_mem_store_files_sized_void;
+static unsigned char            buffer_mem_store_files_void[1000];
 
 void example_main()
 {
-    struct KernAux_SizedVoid files_sized_void =
-        KernAux_SizedVoid_create(sizeof(files_void), files_void);
+    KernAux_SizedVoid_init(
+        &buffer_mem_store_files_sized_void,
+        buffer_mem_store_files_void,
+        sizeof(buffer_mem_store_files_void)
+    );
 
     {
-        struct KernAux_MemStore mem_store =
-            KernAux_MemStore_create(&files_sized_void, buffer, BUFFER_SIZE);
+        KernAux_MemStore_init(
+            &buffer_mem_store,
+            &buffer_mem_store_files_sized_void,
+            buffer,
+            BUFFER_SIZE
+        );
 
-        KernAux_File file = KernAux_Store_open(&mem_store.store);
+        KernAux_File file = KernAux_Store_open(&buffer_mem_store.store);
         assert(file);
 
         assert(KernAux_File_puts(file, hello));
@@ -30,15 +39,14 @@ void example_main()
     memset(buffer, 0, sizeof(buffer));
 
     {
-        struct KernAux_MemStore mem_store;
         KernAux_MemStore_init(
-            &mem_store,
-            &files_sized_void,
+            &buffer_mem_store,
+            &buffer_mem_store_files_sized_void,
             buffer,
             SMALL_BUFFER_SIZE
         );
 
-        KernAux_File file = KernAux_Store_open(&mem_store.store);
+        KernAux_File file = KernAux_Store_open(&buffer_mem_store.store);
         assert(file);
 
         assert(!KernAux_File_puts(file, hello));
