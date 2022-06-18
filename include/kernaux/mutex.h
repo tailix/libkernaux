@@ -16,6 +16,9 @@ typedef struct KernAux_Mutex {
     char extra_data[KERNAUX_MUTEX_EXTRA_DATA_SIZE];
 } *KernAux_Mutex;
 
+void KernAux_Mutex_lock  (KernAux_Mutex mutex);
+void KernAux_Mutex_unlock(KernAux_Mutex mutex);
+
 #ifdef __cplusplus
 }
 #endif
