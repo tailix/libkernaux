@@ -10,7 +10,7 @@ int main()
 {
     char memory_block[1000];
     struct KernAux_Alloc alloc = KernAux_Alloc_create();
-    KernAux_Alloc_add_memory_block(&alloc, memory_block, sizeof(memory_block));
+    KernAux_Alloc_add_zone(&alloc, memory_block, sizeof(memory_block), false);
 
     char *const ptr1 = KernAux_Alloc_malloc(&alloc, 100);
     assert(ptr1);

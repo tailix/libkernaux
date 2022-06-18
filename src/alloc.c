@@ -36,14 +36,16 @@ void KernAux_Alloc_init(const KernAux_Alloc alloc)
     alloc->head = NULL;
 }
 
-void KernAux_Alloc_add_memory_block(
+void KernAux_Alloc_add_zone(
     const KernAux_Alloc alloc,
     void *const ptr,
-    const size_t size
+    const size_t size,
+    const bool dynamic
 ) {
     KERNAUX_ASSERT(alloc);
     KERNAUX_ASSERT(ptr);
     KERNAUX_ASSERT(size >= 2 * sizeof(struct KernAux_Alloc_Node));
+    KERNAUX_ASSERT(dynamic == false) // TODO: implement dynamic zones
 
     KernAux_Alloc_Node new_node = ptr;
     new_node->free = true;
