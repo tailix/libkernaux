@@ -45,7 +45,10 @@ void KernAux_Alloc_add_zone(
     KERNAUX_ASSERT(alloc);
     KERNAUX_ASSERT(ptr);
     KERNAUX_ASSERT(size >= 2 * sizeof(struct KernAux_Alloc_Node));
-    KERNAUX_ASSERT(dynamic == false) // TODO: implement dynamic zones
+
+    // TODO: implement dynamic zones
+    KERNAUX_ASSERT(dynamic == false);
+    (void)dynamic;
 
     KernAux_Alloc_Node new_node = ptr;
     new_node->free = true;
