@@ -3,10 +3,10 @@
     contain architecture-specific assembly functions.
 */
 
+#include <kernaux/assert.h>
 #include <kernaux/version.h>
 
-#include <kernaux/assert.h>
-
+@comment_line_alloc@#include <kernaux/alloc.h>
 @comment_line_cmdline@#include <kernaux/cmdline.h>
 @comment_line_console@#include <kernaux/console.h>
 @comment_line_elf@#include <kernaux/elf.h>

@@ -57,6 +57,7 @@ AC_ARG_ENABLE([tests-python],      AS_HELP_STRING([--enable-tests-python],    [e
 
 dnl Packages (enabled by default)
 AC_ARG_WITH(  [all],               AS_HELP_STRING([--without-all],            [without all default packages]))
+AC_ARG_WITH(  [alloc],             AS_HELP_STRING([--without-alloc],          [without memory allocator]))
 AC_ARG_WITH(  [cmdline],           AS_HELP_STRING([--without-cmdline],        [without command line parser]))
 AC_ARG_WITH(  [console],           AS_HELP_STRING([--without-console],        [without serial console]))
 AC_ARG_WITH(  [elf],               AS_HELP_STRING([--without-elf],            [without ELF utils]))
@@ -91,6 +92,7 @@ AS_IF([test "$enable_tests_all" = yes], do_enable_tests_all)
 
 AC_DEFUN([do_without_all],
 [
+if test -z "$with_alloc";       then with_alloc=no;       fi
 if test -z "$with_cmdline";     then with_cmdline=no;     fi
 if test -z "$with_console";     then with_console=no;     fi
 if test -z "$with_elf";         then with_elf=no;         fi
@@ -127,6 +129,7 @@ AS_IF([test "$enable_tests_python"    = yes], [enable_tests_python=yes],    [ena
 
 dnl Packages (enabled by default)
 AS_IF([test "$with_all"               = no ], [with_all=no],                [with_all=yes])
+AS_IF([test "$with_alloc"             = no ], [with_alloc=no],              [with_alloc=yes])
 AS_IF([test "$with_cmdline"           = no ], [with_cmdline=no],            [with_cmdline=yes])
 AS_IF([test "$with_console"           = no ], [with_console=no],            [with_console=yes])
 AS_IF([test "$with_elf"               = no ], [with_elf=no],                [with_elf=yes])
@@ -191,6 +194,7 @@ AM_CONDITIONAL([ENABLE_TESTS],           [test "$enable_tests"           = yes])
 AM_CONDITIONAL([ENABLE_TESTS_PYTHON],    [test "$enable_tests_python"    = yes])
 
 dnl Packages (enabled by default)
+AM_CONDITIONAL([WITH_ALLOC],             [test "$with_alloc"             = yes])
 AM_CONDITIONAL([WITH_CMDLINE],           [test "$with_cmdline"           = yes])
 AM_CONDITIONAL([WITH_CONSOLE],           [test "$with_console"           = yes])
 AM_CONDITIONAL([WITH_ELF],               [test "$with_elf"               = yes])
@@ -233,6 +237,7 @@ AS_IF([test "$enable_tests"           = yes], [AC_DEFINE([ENABLE_TESTS],        
 AS_IF([test "$enable_tests_python"    = yes], [AC_DEFINE([ENABLE_TESTS_PYTHON],    [1], [enabled tests that require Python 3 with YAML and Jinja2])])
 
 dnl Packages (enabled by default)
+AS_IF([test "$with_alloc"             = yes], [AC_DEFINE([WITH_ALLOC],             [1], [with memory allocator])])
 AS_IF([test "$with_cmdline"           = yes], [AC_DEFINE([WITH_CMDLINE],           [1], [with command line parser])])
 AS_IF([test "$with_console"           = yes], [AC_DEFINE([WITH_CONSOLE],           [1], [with serial console])])
 AS_IF([test "$with_elf"               = yes], [AC_DEFINE([WITH_ELF],               [1], [with ELF utils])])
@@ -262,6 +267,7 @@ AS_IF([test "$enable_debug"           = yes], [AC_DEFINE([KERNAUX_DEBUG],       
 ##########################
 
 dnl Packages (enabled by default)
+AS_IF([test "$with_alloc"       = no], [AC_SUBST([comment_line_alloc],       [//])])
 AS_IF([test "$with_cmdline"     = no], [AC_SUBST([comment_line_cmdline],     [//])])
 AS_IF([test "$with_console"     = no], [AC_SUBST([comment_line_console],     [//])])
 AS_IF([test "$with_elf"         = no], [AC_SUBST([comment_line_elf],         [//])])

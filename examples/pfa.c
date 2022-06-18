@@ -6,7 +6,7 @@
 // management in kernel without PFA.
 struct KernAux_PFA pfa;
 
-int main()
+void example_main()
 {
     // In the earliest stage of kernel initialization mark all pages as
     // unavailable because you don't have memory map yet.
@@ -68,6 +68,4 @@ int main()
         KernAux_PFA_free_pages(&pfa, page_addr, 123);
         assert(KernAux_PFA_is_available(&pfa, page_addr));
     }
-
-    return 0;
 }

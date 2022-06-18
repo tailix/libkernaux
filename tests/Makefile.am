@@ -52,6 +52,16 @@ multiboot2_info_print2_SOURCES = \
 	multiboot2_info_example2.h
 endif
 
+##############
+# test_alloc #
+##############
+
+if WITH_ALLOC
+TESTS += test_alloc
+test_alloc_LDADD = $(top_builddir)/libkernaux.la
+test_alloc_SOURCES = test_alloc.c
+endif
+
 ################
 # test_cmdline #
 ################

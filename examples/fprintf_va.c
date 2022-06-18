@@ -30,10 +30,9 @@ static int my_printf(const char *const format, ...)
     return result;
 }
 
-int main()
+void example_main()
 {
     const int result = my_printf("Hello, %s! Session ID: %u.", "Alex", 123);
     assert((size_t)result == strlen(buffer));
     assert(strcmp(buffer, "Hello, Alex! Session ID: 123.") == 0);
-    return 0;
 }

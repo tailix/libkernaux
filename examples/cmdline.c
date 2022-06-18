@@ -8,7 +8,7 @@
 
 static const char *const cmdline = "foo bar\\ baz \"car cdr\"";
 
-int main()
+void example_main()
 {
     char error_msg[KERNAUX_CMDLINE_ERROR_MSG_SIZE_MAX];
     size_t argc;
@@ -30,6 +30,4 @@ int main()
     assert(strcmp(argv[0], "foo") == 0);
     assert(strcmp(argv[1], "bar baz") == 0);
     assert(strcmp(argv[2], "car cdr") == 0);
-
-    return 0;
 }

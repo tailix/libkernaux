@@ -40,9 +40,9 @@ zero). Work-in-progress APIs can change at any time.
 
 * Runtime environment
   * [Feature macros](/include/kernaux/version.h.in) (*work in progress*)
-  * [Assertions](/include/kernaux/assert.h) (*non-breaking since* **?.?.?**)
-    * [Assert](/examples/assert.c)
-    * [Panic](/examples/panic.c)
+  * [Assertions](/include/kernaux/assert.h) (*non-breaking since* **0.4.0**)
+    * [Example: Assert](/examples/assert.c)
+    * [Example: Panic](/examples/panic.c)
   * Stack trace *(planned)*
   * [Input/output](/include/kernaux/io.h) (*work in progress*)
   * Architecture-specific code (*work in progress*)
@@ -64,21 +64,22 @@ zero). Work-in-progress APIs can change at any time.
   * Stivale 2 (Limine) (*planned*)
 * Utilities
   * [Measurement units utils](/include/kernaux/units.h) (*work in progress*)
-    * [To human](/examples/units_human.c)
-  * [Memory map](/include/kernaux/memmap.h.in) (*non-breaking since* **?.?.?**)
+    * [Example: To human](/examples/units_human.c)
+  * [Memory allocator](/include/kernaux/alloc.h) (*work in progress*)
+  * [Memory map](/include/kernaux/memmap.h.in) (*non-breaking since* **0.4.0**)
     * [Example](/examples/memmap.c)
   * [printf format parser](/include/kernaux/printf_fmt.h) (*work in progress*)
     * Code from [https://github.com/mpaland/printf](https://github.com/mpaland/printf). Thank you!
     * [Example](/examples/printf_fmt.c)
 * Usual functions
-  * [itoa/ftoa replacement](/include/kernaux/ntoa.h) (*non-breaking since* **?.?.?**)
+  * [itoa/ftoa replacement](/include/kernaux/ntoa.h) (*non-breaking since* **0.4.0**)
     * [Example](/examples/ntoa.c)
-  * [printf replacement](/include/kernaux/printf.h.in) (*non-breaking since* **?.?.?**)
+  * [printf replacement](/include/kernaux/printf.h.in) (*non-breaking since* **0.4.0**)
     * Code from [https://github.com/mpaland/printf](https://github.com/mpaland/printf). Thank you!
-    * [fprintf](/examples/fprintf.c)
-    * [vfprintf](/examples/fprintf_va.c)
-    * [snprintf](/examples/snprintf.c)
-    * [vsnprintf](/examples/snprintf_va.c)
+    * [Example: fprintf](/examples/fprintf.c)
+    * [Example: vfprintf](/examples/fprintf_va.c)
+    * [Example: snprintf](/examples/snprintf.c)
+    * [Example: vsnprintf](/examples/snprintf_va.c)
 * libc replacement (*work in progress*)
   * [ctype.h](/libc/include/ctype.h)
   * [inttypes.h](/libc/include/inttypes.h)
@@ -123,8 +124,6 @@ stable options.
 
 #### Features
 
-* `--enable-freestanding` - build for freestanding environment
-* `--enable-split-libc` - split off libc
 * `--enable-tests` - enable usual tests and examples
 * `--enable-tests-all` - enable all tests
 * `--enable-tests-python` - enable tests that require Python 3 with YAML and
@@ -148,8 +147,9 @@ stable options.
 All packages are included by default. To exclude all packages except those
 explicitly included, use `--without-all`.
 
+* `--with[out]-alloc` - memory allocator
 * `--with[out]-cmdline` - command line parser
-* `--with[out]-file` - file simulator
+* `--with[out]-io` - input/output
 * `--with[out]-memmap` - memory map
 * `--with[out]-ntoa` - itoa/ftoa
 * `--with[out]-printf` - printf

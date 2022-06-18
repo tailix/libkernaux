@@ -9,7 +9,7 @@ static const char *str_end(const char *str)
     for (;; ++str) if (*str == '\0') return str;
 }
 
-int main()
+void example_main()
 {
     // kernaux_utoa
     {
@@ -278,6 +278,4 @@ int main()
         assert(strcmp(buffer, "-0x123") == 0);
         assert(end == str_end(buffer));
     }
-
-    return 0;
 }

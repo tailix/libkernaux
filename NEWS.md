@@ -3,6 +3,31 @@ Releases
 
 
 
+0.4.0 (2022-06-16)
+------------------
+
+225 files changed, 8625 insertions(+), 3744 deletions(-)
+
+### Breaking changes
+
+* `./configure` - feature `--(enable|disable)-bloat` has been removed.
+* `./configure` - feature `--(enable|disable)-pic` has been removed.
+* `<kernaux/assert.h>` - API has been completely changed.
+* `<kernaux/libc.h>` - header has been removed.
+* `<kernaux/ntoa.h>` - API has been completely changed.
+* `<kernaux/printf.h>` - Easter egg has been removed.
+* `<kernaux/printf.h>` - functions "[v]printf" have been renamed to "[v]fprintf",
+  API has been changed.
+
+### New features
+
+* `./configure` - new feature `--(enable|disable)-debug`.
+* `./configure` - new package `--with[out]-io`.
+* `./configure` - new package `--with[out]-memmap`.
+* `<kernaux/memmap.h>` - new header. It's a memory map.
+
+
+
 0.3.0 (2022-05-28)
 ------------------
 
