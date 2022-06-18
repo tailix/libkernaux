@@ -5,11 +5,12 @@
 #include <kernaux/alloc.h>
 
 #include <assert.h>
+#include <stddef.h>
 
 int main()
 {
     char memory_block[1000];
-    struct KernAux_Alloc alloc = KernAux_Alloc_create();
+    struct KernAux_Alloc alloc = KernAux_Alloc_create(NULL);
     KernAux_Alloc_add_zone(&alloc, memory_block, sizeof(memory_block), false);
 
     char *const ptr1 = KernAux_Alloc_malloc(&alloc, 100);

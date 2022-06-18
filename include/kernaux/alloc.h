@@ -5,6 +5,8 @@
 extern "C" {
 #endif
 
+#include <kernaux/mutex.h>
+
 #include <stdbool.h>
 #include <stddef.h>
 
@@ -16,11 +18,12 @@ typedef struct KernAux_Alloc_Node {
 } *KernAux_Alloc_Node;
 
 typedef struct KernAux_Alloc {
+    KernAux_Mutex mutex;
     KernAux_Alloc_Node head;
 } *KernAux_Alloc;
 
-struct KernAux_Alloc KernAux_Alloc_create();
-void KernAux_Alloc_init(KernAux_Alloc alloc);
+struct KernAux_Alloc KernAux_Alloc_create(KernAux_Mutex mutex);
+void KernAux_Alloc_init(KernAux_Alloc alloc, KernAux_Mutex mutex);
 
 void KernAux_Alloc_add_zone(
     KernAux_Alloc alloc,

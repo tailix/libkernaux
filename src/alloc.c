@@ -22,17 +22,18 @@
 #define ALLOC_HEADER_SIZE (offsetof(struct KernAux_Alloc_Node, block))
 #define MIN_ALLOC_SIZE (ALLOC_HEADER_SIZE + 16)
 
-struct KernAux_Alloc KernAux_Alloc_create()
+struct KernAux_Alloc KernAux_Alloc_create(const KernAux_Mutex mutex)
 {
     struct KernAux_Alloc alloc;
-    KernAux_Alloc_init(&alloc);
+    KernAux_Alloc_init(&alloc, mutex);
     return alloc;
 }
 
-void KernAux_Alloc_init(const KernAux_Alloc alloc)
+void KernAux_Alloc_init(const KernAux_Alloc alloc, const KernAux_Mutex mutex)
 {
     KERNAUX_ASSERT(alloc);
 
+    alloc->mutex = mutex;
     alloc->head = NULL;
 }
 
@@ -55,10 +56,10 @@ void KernAux_Alloc_add_zone(
     new_node->actual_size = size;
     new_node->user_size = size - sizeof(struct KernAux_Alloc_Node);
 
-    // TODO: lock
+    if (alloc->mutex) KernAux_Mutex_lock(alloc->mutex);
     new_node->next = alloc->head;
     alloc->head = new_node;
-    // TODO: unlock
+    if (alloc->mutex) KernAux_Mutex_unlock(alloc->mutex);
 }
 
 void *KernAux_Alloc_malloc(const KernAux_Alloc alloc, const size_t size)
@@ -69,7 +70,7 @@ void *KernAux_Alloc_malloc(const KernAux_Alloc alloc, const size_t size)
     KernAux_Alloc_Node node = NULL;
     void *ptr = NULL;
 
-    // TODO: lock
+    if (alloc->mutex) KernAux_Mutex_lock(alloc->mutex);
 
     for (
         KernAux_Alloc_Node item_node = alloc->head;
@@ -98,7 +99,7 @@ void *KernAux_Alloc_malloc(const KernAux_Alloc alloc, const size_t size)
         ptr = &node->block;
     }
 
-    // TODO: unlock
+    if (alloc->mutex) KernAux_Mutex_unlock(alloc->mutex);
 
     return ptr;
 }
