@@ -44,6 +44,7 @@ zero). Work-in-progress APIs can change at any time.
     * [Example: Assert](/examples/assert.c)
     * [Example: Panic](/examples/panic.c)
   * Stack trace *(planned)*
+  * [Mutex](/include/kernaux/mutex.h) (*non-breaking since* **?.?.?**)
   * [Input/output](/include/kernaux/io.h) (*work in progress*)
   * Architecture-specific code (*work in progress*)
     * [Declarations](/include/kernaux/arch/)
