@@ -14,13 +14,13 @@
 #include <stddef.h>
 #include <stdint.h>
 
+#define ALLOC_HEADER_SIZE (offsetof(struct KernAux_Alloc_Node, block))
+#define MIN_ALLOC_SIZE (ALLOC_HEADER_SIZE + 16)
+
 #define ALIGN_MASK(align) ((align) - 1) // align should be a power of 2
 #define ALIGN_UP(val, align) (((val) + ALIGN_MASK(align)) & ~ALIGN_MASK(align))
 
 #define PTR_ALIGNMENT (sizeof(void*)) // TODO: align node to this value
-
-#define ALLOC_HEADER_SIZE (offsetof(struct KernAux_Alloc_Node, block))
-#define MIN_ALLOC_SIZE (ALLOC_HEADER_SIZE + 16)
 
 #define LOCK(alloc)                               \
     do {                                          \
@@ -36,20 +36,13 @@
         }                                         \
     } while (0)
 
-#define INSERT(node, prev_, next_)                           \
-    do {                                                     \
-        (node)->next = (next_);                              \
-        (node)->prev = (prev_);                              \
-        if ((node)->next) (node)->next->prev = (node);       \
-        if ((node)->prev) (node)->prev->next = (node);       \
-    } while (0)
-
-#define REMOVE(head, node)                                   \
-    do {                                                     \
-        if ((head) == (node)) (head) = (node)->next;         \
-        if ((node)->next) (node)->next->prev = (node)->prev; \
-        if ((node)->prev) (node)->prev->next = (node)->next; \
-    } while (0)
+static void KernAux_Alloc_insert(
+    KernAux_Alloc alloc,
+    KernAux_Alloc_Node node,
+    KernAux_Alloc_Node prev,
+    KernAux_Alloc_Node next
+);
+static void KernAux_Alloc_remove(KernAux_Alloc alloc, KernAux_Alloc_Node node);
 
 struct KernAux_Alloc KernAux_Alloc_create(const KernAux_Mutex mutex)
 {
@@ -81,8 +74,7 @@ void KernAux_Alloc_add_zone(
     new_node->actual_size = size;
     new_node->user_size = size - sizeof(struct KernAux_Alloc_Node);
 
-    INSERT(new_node, NULL, alloc->head);
-    alloc->head = new_node;
+    KernAux_Alloc_insert(alloc, new_node, NULL, alloc->head);
 
     UNLOCK(alloc);
 }
@@ -114,10 +106,10 @@ void *KernAux_Alloc_malloc(const KernAux_Alloc alloc, const size_t size)
                 (KernAux_Alloc_Node)(((uintptr_t)&node->block) + size);
             new_node->actual_size = node->actual_size - size - ALLOC_HEADER_SIZE;
             new_node->user_size   = node->user_size   - size - ALLOC_HEADER_SIZE;
-            INSERT(new_node, node, node->next);
+            KernAux_Alloc_insert(alloc, new_node, node, node->next);
         }
 
-        REMOVE(alloc->head, node);
+        KernAux_Alloc_remove(alloc, node);
     }
 
     UNLOCK(alloc);
@@ -137,4 +129,26 @@ void KernAux_Alloc_free(const KernAux_Alloc alloc, void *const ptr)
 
     (void)alloc;
     (void)ptr;
+}
+
+void KernAux_Alloc_insert(
+    const KernAux_Alloc alloc,
+    const KernAux_Alloc_Node node,
+    const KernAux_Alloc_Node prev,
+    const KernAux_Alloc_Node next
+) {
+    if (prev == NULL) alloc->head = node;
+    node->next = next;
+    node->prev = prev;
+    if (node->next) node->next->prev = node;
+    if (node->prev) node->prev->next = node;
+}
+
+void KernAux_Alloc_remove(
+    const KernAux_Alloc alloc,
+    const KernAux_Alloc_Node node
+) {
+    if (alloc->head == node) alloc->head = node->next;
+    if (node->next) node->next->prev = node->prev;
+    if (node->prev) node->prev->next = node->next;
 }
