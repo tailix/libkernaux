@@ -36,5 +36,14 @@ int main()
     KernAux_Alloc_free(&alloc, ptr2);
     KernAux_Alloc_free(&alloc, ptr3);
 
+    char *const ptr5 = KernAux_Alloc_malloc(&alloc, 100);
+    assert(ptr5 == ptr2);
+
+    char *const ptr6 = KernAux_Alloc_malloc(&alloc, 100);
+    assert(ptr6 == ptr3);
+
+    KernAux_Alloc_free(&alloc, ptr2);
+    KernAux_Alloc_free(&alloc, ptr3);
+
     return 0;
 }
