@@ -22,7 +22,7 @@ libc/libc.la:
 lib_LTLIBRARIES = libkernaux.la
 libexec_PROGRAMS =
 
-libkernaux_la_SOURCES = src/libc.h src/assert.c
+libkernaux_la_SOURCES = src/libc.h src/assert.c src/mutex.c
 libkernaux_la_LIBADD =
 
 if ASM_I386
