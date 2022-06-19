@@ -33,5 +33,8 @@ int main()
     assert(ptr4 > ptr3);
     assert(ptr4 < &memory_block[1000]);
 
+    KernAux_Alloc_free(&alloc, ptr2);
+    KernAux_Alloc_free(&alloc, ptr3);
+
     return 0;
 }

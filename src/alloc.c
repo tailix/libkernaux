@@ -129,8 +129,27 @@ void KernAux_Alloc_free(const KernAux_Alloc alloc, void *const ptr)
 
     LOCK(alloc);
 
-    // KernAux_Alloc_Node node =
-    //     CONTAINER_OF(ptr, struct KernAux_Alloc_Node, block);
+    KernAux_Alloc_Node node =
+        CONTAINER_OF(ptr, struct KernAux_Alloc_Node, block);
+
+    KernAux_Alloc_Node last_node = NULL;
+
+    for (
+        KernAux_Alloc_Node item_node = alloc->head;
+        item_node;
+        item_node = item_node->next
+    ) {
+        last_node = item_node;
+
+        if (item_node > node) {
+            KernAux_Alloc_insert(alloc, node, item_node->prev, item_node);
+            goto block_added;
+        }
+    }
+
+    KernAux_Alloc_insert(alloc, node, last_node, NULL);
+
+block_added:
 
     UNLOCK(alloc);
 }
