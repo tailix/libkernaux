@@ -22,6 +22,35 @@
 #define ALLOC_HEADER_SIZE (offsetof(struct KernAux_Alloc_Node, block))
 #define MIN_ALLOC_SIZE (ALLOC_HEADER_SIZE + 16)
 
+#define LOCK(alloc)                               \
+    do {                                          \
+        if ((alloc)->mutex) {                     \
+            KernAux_Mutex_lock((alloc)->mutex);   \
+        }                                         \
+    } while (0)
+
+#define UNLOCK(alloc)                             \
+    do {                                          \
+        if ((alloc)->mutex) {                     \
+            KernAux_Mutex_unlock((alloc)->mutex); \
+        }                                         \
+    } while (0)
+
+#define INSERT(node, prev_, next_)                           \
+    do {                                                     \
+        (node)->next = (next_);                              \
+        (node)->prev = (prev_);                              \
+        if ((node)->next) (node)->next->prev = (node);       \
+        if ((node)->prev) (node)->prev->next = (node);       \
+    } while (0)
+
+#define REMOVE(head, node)                                   \
+    do {                                                     \
+        if ((head) == (node)) (head) = (node)->next;         \
+        if ((node)->next) (node)->next->prev = (node)->prev; \
+        if ((node)->prev) (node)->prev->next = (node)->next; \
+    } while (0)
+
 struct KernAux_Alloc KernAux_Alloc_create(const KernAux_Mutex mutex)
 {
     struct KernAux_Alloc alloc;
@@ -40,26 +69,22 @@ void KernAux_Alloc_init(const KernAux_Alloc alloc, const KernAux_Mutex mutex)
 void KernAux_Alloc_add_zone(
     const KernAux_Alloc alloc,
     void *const ptr,
-    const size_t size,
-    const bool dynamic
+    const size_t size
 ) {
     KERNAUX_ASSERT(alloc);
     KERNAUX_ASSERT(ptr);
     KERNAUX_ASSERT(size >= 2 * sizeof(struct KernAux_Alloc_Node));
 
-    // TODO: implement dynamic zones
-    KERNAUX_ASSERT(dynamic == false);
-    (void)dynamic;
+    LOCK(alloc);
 
     KernAux_Alloc_Node new_node = ptr;
-    new_node->free = true;
     new_node->actual_size = size;
     new_node->user_size = size - sizeof(struct KernAux_Alloc_Node);
 
-    if (alloc->mutex) KernAux_Mutex_lock(alloc->mutex);
-    new_node->next = alloc->head;
+    INSERT(new_node, NULL, alloc->head);
     alloc->head = new_node;
-    if (alloc->mutex) KernAux_Mutex_unlock(alloc->mutex);
+
+    UNLOCK(alloc);
 }
 
 void *KernAux_Alloc_malloc(const KernAux_Alloc alloc, const size_t size)
@@ -67,17 +92,16 @@ void *KernAux_Alloc_malloc(const KernAux_Alloc alloc, const size_t size)
     KERNAUX_ASSERT(alloc);
     if (size == 0) return NULL;
 
-    KernAux_Alloc_Node node = NULL;
-    void *ptr = NULL;
+    LOCK(alloc);
 
-    if (alloc->mutex) KernAux_Mutex_lock(alloc->mutex);
+    KernAux_Alloc_Node node = NULL;
 
     for (
         KernAux_Alloc_Node item_node = alloc->head;
         item_node;
         item_node = item_node->next
     ) {
-        if (item_node->free && item_node->user_size >= size) {
+        if (item_node->user_size >= size) {
             node = item_node;
             break;
         }
@@ -88,20 +112,21 @@ void *KernAux_Alloc_malloc(const KernAux_Alloc alloc, const size_t size)
         if (node->actual_size - size >= MIN_ALLOC_SIZE) {
             KernAux_Alloc_Node new_node =
                 (KernAux_Alloc_Node)(((uintptr_t)&node->block) + size);
-            new_node->free = true;
             new_node->actual_size = node->actual_size - size - ALLOC_HEADER_SIZE;
             new_node->user_size   = node->user_size   - size - ALLOC_HEADER_SIZE;
-            new_node->next = node->next;
-            node->next = new_node;
+            INSERT(new_node, node, node->next);
         }
 
-        node->free = false;
-        ptr = &node->block;
+        REMOVE(alloc->head, node);
     }
 
-    if (alloc->mutex) KernAux_Mutex_unlock(alloc->mutex);
+    UNLOCK(alloc);
 
-    return ptr;
+    if (node) {
+        return &node->block;
+    } else {
+        return NULL;
+    }
 }
 
 void KernAux_Alloc_free(const KernAux_Alloc alloc, void *const ptr)
