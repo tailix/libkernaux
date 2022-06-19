@@ -17,6 +17,8 @@
 #define ALLOC_HEADER_SIZE (offsetof(struct KernAux_Alloc_Node, block))
 #define MIN_ALLOC_SIZE (ALLOC_HEADER_SIZE + 16)
 
+#define CONTAINER_OF(ptr, type, member) ((type*)((uintptr_t)(ptr) - offsetof(type, member)))
+
 #define ALIGN_MASK(align) ((align) - 1) // align should be a power of 2
 #define ALIGN_UP(val, align) (((val) + ALIGN_MASK(align)) & ~ALIGN_MASK(align))
 
@@ -73,7 +75,6 @@ void KernAux_Alloc_add_zone(
     KernAux_Alloc_Node new_node = ptr;
     new_node->actual_size = size;
     new_node->user_size = size - sizeof(struct KernAux_Alloc_Node);
-
     KernAux_Alloc_insert(alloc, new_node, NULL, alloc->head);
 
     UNLOCK(alloc);
@@ -124,11 +125,14 @@ void *KernAux_Alloc_malloc(const KernAux_Alloc alloc, const size_t size)
 void KernAux_Alloc_free(const KernAux_Alloc alloc, void *const ptr)
 {
     KERNAUX_ASSERT(alloc);
+    if (!ptr) return;
 
-    // TODO: implement this
+    LOCK(alloc);
 
-    (void)alloc;
-    (void)ptr;
+    // KernAux_Alloc_Node node =
+    //     CONTAINER_OF(ptr, struct KernAux_Alloc_Node, block);
+
+    UNLOCK(alloc);
 }
 
 void KernAux_Alloc_insert(
@@ -137,7 +141,7 @@ void KernAux_Alloc_insert(
     const KernAux_Alloc_Node prev,
     const KernAux_Alloc_Node next
 ) {
-    if (prev == NULL) alloc->head = node;
+    if (!prev) alloc->head = node;
     node->next = next;
     node->prev = prev;
     if (node->next) node->next->prev = node;
