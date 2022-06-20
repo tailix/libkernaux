@@ -5,7 +5,7 @@
 extern "C" {
 #endif
 
-#ifdef KERNAUX_PRIVATE_NO
+#ifdef KERNAUX_ACCESS_MOD_OFF
 #define KERNAUX_PRIVATE_FIELD(id) id
 #else
 #define KERNAUX_PRIVATE_FIELD(id) _private_##id

@@ -2,6 +2,7 @@
 
 	* include/kernaux/alloc.h: Finished
 	* include/kernaux/generic/mutex.h: Mutex moved here
+	* include/kernaux/macro.h: Definition "KERNAUX_ACCESS_MOD_OFF" made stable
 
 2022-06-18  Alex Kotov  <kotovalexarian@gmail.com>
 
