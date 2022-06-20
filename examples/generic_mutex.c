@@ -13,9 +13,11 @@
 //============
 
 #include <kernaux/generic/mutex.h>
+#include <pthread.h>
 
 typedef struct MyMutex {
     struct KernAux_Mutex mutex;
+    pthread_mutex_t pthread_mutex;
 } *MyMutex;
 
 struct MyMutex MyMytex_create();
@@ -25,6 +27,8 @@ struct MyMutex MyMytex_create();
 //============
 
 #include <kernaux/generic/mutex.h>
+#include <pthread.h>
+#include <stdlib.h>
 
 static void MyMutex_lock  (void *mutex);
 static void MyMutex_unlock(void *mutex);
@@ -34,17 +38,20 @@ struct MyMutex MyMutex_create()
     struct MyMutex my_mutex;
     my_mutex.mutex.lock = MyMutex_lock;
     my_mutex.mutex.unlock = MyMutex_unlock;
+    if (pthread_mutex_init(&my_mutex.pthread_mutex, NULL) != 0) abort();
     return my_mutex;
 }
 
 void MyMutex_lock(void *const mutex)
 {
     MyMutex my_mutex = mutex;
+    pthread_mutex_lock(&my_mutex->pthread_mutex);
 }
 
 void MyMutex_unlock(void *const mutex)
 {
     MyMutex my_mutex = mutex;
+    pthread_mutex_unlock(&my_mutex->pthread_mutex);
 }
 
 //========
