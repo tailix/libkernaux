@@ -5,6 +5,8 @@
 extern "C" {
 #endif
 
+#include <kernaux/macro.h>
+
 #include <stdbool.h>
 #include <stddef.h>
 
@@ -14,16 +16,19 @@ extern "C" {
 #define KERNAUX_MEMMAP_ENTRY_TAG_SIZE_MAX (KERNAUX_MEMMAP_ENTRY_TAG_SLEN_MAX + 1)
 
 typedef const struct KernAux_MemMap_Entry {
-    bool is_available;
-    char tag[KERNAUX_MEMMAP_ENTRY_TAG_SIZE_MAX];
-    size_t start, size, end, limit;
+    bool KERNAUX_PRIVATE(is_available);
+    char KERNAUX_PRIVATE(tag)[KERNAUX_MEMMAP_ENTRY_TAG_SIZE_MAX];
+    size_t KERNAUX_PRIVATE(start);
+    size_t KERNAUX_PRIVATE(size);
+    size_t KERNAUX_PRIVATE(end);
+    size_t KERNAUX_PRIVATE(limit);
 } *KernAux_MemMap_Entry;
 
 typedef struct KernAux_MemMap {
-    bool is_finished;
-    size_t memory_size;
-    size_t entries_count;
-    struct KernAux_MemMap_Entry entries[KERNAUX_MEMMAP_ENTRIES_MAX];
+    bool KERNAUX_PRIVATE(is_finished);
+    size_t KERNAUX_PRIVATE(memory_size);
+    size_t KERNAUX_PRIVATE(entries_count);
+    struct KernAux_MemMap_Entry KERNAUX_PRIVATE(entries)[KERNAUX_MEMMAP_ENTRIES_MAX];
 } KernAux_MemMap[1];
 
 struct KernAux_MemMap KernAux_MemMap_create(size_t memory_size);

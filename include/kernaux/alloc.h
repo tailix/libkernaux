@@ -5,19 +5,20 @@
 extern "C" {
 #endif
 
+#include <kernaux/macro.h>
 #include <kernaux/mutex.h>
 
 #include <stddef.h>
 
 typedef struct KernAux_Alloc_Node {
-    struct KernAux_Alloc_Node *next, *prev;
-    size_t size;
-    char *block;
+    struct KernAux_Alloc_Node *KERNAUX_PRIVATE(next), *KERNAUX_PRIVATE(prev);
+    size_t KERNAUX_PRIVATE(size);
+    char *KERNAUX_PRIVATE(block);
 } *KernAux_Alloc_Node;
 
 typedef struct KernAux_Alloc {
-    KernAux_Mutex mutex;
-    KernAux_Alloc_Node head;
+    KernAux_Mutex KERNAUX_PRIVATE(mutex);
+    KernAux_Alloc_Node KERNAUX_PRIVATE(head);
 } *KernAux_Alloc;
 
 struct KernAux_Alloc KernAux_Alloc_create(KernAux_Mutex mutex);
