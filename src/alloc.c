@@ -15,7 +15,7 @@
 #include <stdint.h>
 
 #define NODE_HEADER_SIZE (offsetof(struct KernAux_Alloc_Node, block))
-#define MIN_ALLOC_SIZE (NODE_HEADER_SIZE + 16)
+#define MIN_SPLIT_SIZE (NODE_HEADER_SIZE + 16)
 
 #define CONTAINER_OF(ptr, type, member) ((type*)((uintptr_t)(ptr) - offsetof(type, member)))
 
@@ -102,7 +102,7 @@ void *KernAux_Alloc_malloc(const KernAux_Alloc alloc, const size_t size)
 
     if (node) {
         // Can we split the block?
-        if (node->actual_size - size >= MIN_ALLOC_SIZE) {
+        if (node->actual_size - size >= MIN_SPLIT_SIZE) {
             KernAux_Alloc_Node new_node =
                 (KernAux_Alloc_Node)(((uintptr_t)&node->block) + size);
             new_node->actual_size = node->actual_size - size - NODE_HEADER_SIZE;
