@@ -7,12 +7,12 @@ extern "C" {
 
 #include <kernaux/macro.h>
 
-typedef void (*KernAux_Mutex_Lock  )(struct KernAux_Mutex *mutex);
-typedef void (*KernAux_Mutex_Unlock)(struct KernAux_Mutex *mutex);
+typedef void (*KernAux_Mutex_Lock  )(void *mutex);
+typedef void (*KernAux_Mutex_Unlock)(void *mutex);
 
 typedef struct KernAux_Mutex {
-    KernAux_Mutex_Lock   KERNAUX_PROTECTED(lock);
-    KernAux_Mutex_Unlock KERNAUX_PROTECTED(unlock);
+    KernAux_Mutex_Lock   KERNAUX_PROTECTED_FIELD(lock);
+    KernAux_Mutex_Unlock KERNAUX_PROTECTED_FIELD(unlock);
 } *KernAux_Mutex;
 
 void KernAux_Mutex_lock  (KernAux_Mutex mutex);
