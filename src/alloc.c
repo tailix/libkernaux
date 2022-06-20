@@ -160,6 +160,11 @@ void KernAux_Alloc_insert(
     const KernAux_Alloc_Node prev,
     const KernAux_Alloc_Node next
 ) {
+    KERNAUX_ASSERT(alloc);
+    KERNAUX_ASSERT(node);
+    KERNAUX_ASSERT(node != prev);
+    KERNAUX_ASSERT(node != next);
+
     if (!prev) alloc->head = node;
     node->next = next;
     node->prev = prev;
@@ -171,6 +176,9 @@ void KernAux_Alloc_remove(
     const KernAux_Alloc alloc,
     const KernAux_Alloc_Node node
 ) {
+    KERNAUX_ASSERT(alloc);
+    KERNAUX_ASSERT(node);
+
     if (alloc->head == node) alloc->head = node->next;
     if (node->next) node->next->prev = node->prev;
     if (node->prev) node->prev->next = node->next;
