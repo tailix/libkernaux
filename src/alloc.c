@@ -106,6 +106,8 @@ void *KernAux_Alloc_malloc(const KernAux_Alloc alloc, const size_t size)
         if (node->actual_size - size >= MIN_SPLIT_SIZE) {
             KernAux_Alloc_Node new_node =
                 (KernAux_Alloc_Node)(((uintptr_t)&node->block) + size);
+            node->actual_size = NODE_HEADER_SIZE + size;
+            node->user_size = size;
             new_node->actual_size = node->actual_size - size - NODE_HEADER_SIZE;
             new_node->user_size   = node->user_size   - size - NODE_HEADER_SIZE;
             KernAux_Alloc_insert(alloc, new_node, node, node->next);
