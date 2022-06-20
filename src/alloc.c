@@ -78,7 +78,7 @@ void KernAux_Alloc_add_zone(
     new_node->size = size;
 
     KernAux_Alloc_Node prev_node = NULL;
-    KernAux_Alloc_Node next_node = alloc->head;
+    KernAux_Alloc_Node next_node;
     KernAux_Alloc_Node last_node = NULL;
 
     for (
