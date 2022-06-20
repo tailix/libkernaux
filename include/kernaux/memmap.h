@@ -5,6 +5,8 @@
 extern "C" {
 #endif
 
+#include <kernaux/macro.h>
+
 #include <stdbool.h>
 #include <stddef.h>
 
@@ -20,10 +22,10 @@ typedef const struct KernAux_MemMap_Entry {
 } *KernAux_MemMap_Entry;
 
 typedef struct KernAux_MemMap {
-    bool is_finished;
-    size_t memory_size;
-    size_t entries_count;
-    struct KernAux_MemMap_Entry entries[KERNAUX_MEMMAP_ENTRIES_MAX];
+    bool KERNAUX_PRIVATE_FIELD(is_finished);
+    size_t KERNAUX_PRIVATE_FIELD(memory_size);
+    size_t KERNAUX_PRIVATE_FIELD(entries_count);
+    struct KernAux_MemMap_Entry KERNAUX_PRIVATE_FIELD(entries)[KERNAUX_MEMMAP_ENTRIES_MAX];
 } KernAux_MemMap[1];
 
 struct KernAux_MemMap KernAux_MemMap_create(size_t memory_size);

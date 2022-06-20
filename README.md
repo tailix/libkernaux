@@ -54,7 +54,7 @@ zero). Work-in-progress APIs can change at any time.
   * [Framebuffer](/include/kernaux/framebuffer.h) (*planned*)
   * USB (*planned*)
 * Algorithms
-  * [Memory allocator](/include/kernaux/alloc.h) (*work in progress*)
+  * [Memory allocator](/include/kernaux/alloc.h) (*non-breaking since* **?.?.?**)
   * [Simple command line parser](/include/kernaux/cmdline.h) (*non-breaking since* **0.2.0**)
     * [Example](/examples/cmdline.c)
   * [Page Frame Allocator](/include/kernaux/pfa.h) (*work in progress*)

@@ -19,6 +19,8 @@ endif
 libc/libc.la:
 	$(MAKE) $(AM_MAKEFLAGS) -C $(top_builddir)/libc libc.la
 
+AM_CFLAGS += -DKERNAUX_PRIVATE_NO
+
 lib_LTLIBRARIES = libkernaux.la
 libexec_PROGRAMS =
 
