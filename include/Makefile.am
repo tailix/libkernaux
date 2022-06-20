@@ -4,6 +4,7 @@ nobase_include_HEADERS = \
 	kernaux/arch/riscv64.h \
 	kernaux/arch/x86_64.h \
 	kernaux/assert.h \
+	kernaux/macro.h \
 	kernaux/mutex.h \
 	kernaux/version.h
 
