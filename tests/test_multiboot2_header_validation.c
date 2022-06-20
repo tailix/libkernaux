@@ -2,8 +2,7 @@
 #include "config.h"
 #endif
 
-int main()
+void test_main()
 {
     // TODO: write this
-    return 0;
 }

@@ -18,7 +18,7 @@ static void my_printf(const char *format, ...)
     va_end(va);
 }
 
-int main()
+void test_main()
 {
     assert(KernAux_Multiboot2_Info_is_valid(
         (struct KernAux_Multiboot2_Info*)multiboot2_info_example1
@@ -28,6 +28,4 @@ int main()
         (struct KernAux_Multiboot2_Info*)multiboot2_info_example1,
         my_printf
     );
-
-    return 0;
 }

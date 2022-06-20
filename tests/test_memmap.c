@@ -48,7 +48,7 @@ static void expect_assert()
 #define MEMSET memset(memmap, 0xff, sizeof(memmap))
 #define MEMMAP (*memmap)
 
-int main()
+void test_main()
 {
     kernaux_assert_cb = assert_cb;
 
@@ -228,6 +228,4 @@ int main()
     }
 
     assert(assert_count_ctr == assert_count_exp);
-
-    return 0;
 }

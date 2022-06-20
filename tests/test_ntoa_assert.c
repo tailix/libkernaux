@@ -74,7 +74,7 @@ static const char *str_end(const char *str)
     for (;; ++str) if (*str == '\0') return str;
 }
 
-int main()
+void test_main()
 {
     kernaux_assert_cb = assert_cb;
 
@@ -147,6 +147,4 @@ int main()
         test_itoa_assert(buffer, 37);
         test_itoa_assert(buffer, -37);
     }
-
-    return 0;
 }

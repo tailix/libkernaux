@@ -74,7 +74,7 @@
         info += 8 + (tag) + (data) + (align);                             \
     } while (0)
 
-int main()
+void test_main()
 {
     assert(sizeof(struct KernAux_Multiboot2_Header) == 16);
     assert(sizeof(struct KernAux_Multiboot2_Info)   == 8);
@@ -161,6 +161,4 @@ int main()
     INFO2(efi_64bit_image_handle_ptr,       8,    /**/       0    );
     INFO2(image_load_base_phys_addr,        4,    /**/       4    );
     INFO0(none                              /**/  /**/       /**/ );
-
-    return 0;
 }

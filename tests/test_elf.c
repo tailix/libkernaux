@@ -11,7 +11,7 @@
 
 #define BUFFER_SIZE (1024 * 1024)
 
-int main(int argc, char **argv)
+void test_main(int argc, char **argv)
 {
     assert(argc >= 1);
 
@@ -25,6 +25,4 @@ int main(int argc, char **argv)
     assert(KernAux_ELF_Header_is_valid((struct KernAux_ELF_Header*)buffer));
 
     fclose(fd);
-
-    return 0;
 }

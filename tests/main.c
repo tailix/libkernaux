@@ -7,18 +7,20 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-static void assert_cb_abort(const char *file, int line, const char *msg);
+void test_main(int argc, char **argv);
 
-void setup_assert_abort()
-{
-    kernaux_assert_cb = assert_cb_abort;
-}
-
-void assert_cb_abort(
+static void assert_cb(
     const char *const file,
     const int line,
     const char *const msg
 ) {
     fprintf(stderr, "%s:%d:%s\n", file, line, msg);
     abort();
+}
+
+int main(int argc, char **argv)
+{
+    kernaux_assert_cb = assert_cb;
+    test_main(argc, argv);
+    exit(EXIT_SUCCESS);
 }

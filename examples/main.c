@@ -1,3 +1,7 @@
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
+
 #include <kernaux/assert.h>
 
 #include <stdio.h>
@@ -5,9 +9,12 @@
 
 void example_main();
 
-static void assert_cb(const char *file, const int line, const char *msg)
-{
-    fprintf(stderr, "%s:%i:%s\n", file, line, msg);
+static void assert_cb(
+    const char *const file,
+    const int line,
+    const char *const msg
+) {
+    fprintf(stderr, "%s:%d:%s\n", file, line, msg);
     abort();
 }
 
