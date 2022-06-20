@@ -96,7 +96,7 @@ Define the following C preprocessor macros before including `<kernaux.h>` and
 `<kernaux/*.h>` files. They have effect on your code, not the library code.
 
 * `KERNAUX_DEBUG` - enable assertions
-* `KERNAUX_ACCESS_MOD_OFF` - disable access modifies (private)
+* `KERNAUX_ACCESS_MOD_OFF` - disable access modifies (private, protected, etc.)
 
 ### Global variables
 

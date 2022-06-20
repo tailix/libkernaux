@@ -7,8 +7,10 @@ extern "C" {
 
 #ifdef KERNAUX_ACCESS_MOD_OFF
 #define KERNAUX_PRIVATE_FIELD(id) id
+#define KERNAUX_PROTECTED_FIELD(id) id
 #else
 #define KERNAUX_PRIVATE_FIELD(id) _private_##id
+#define KERNAUX_PROTECTED_FIELD(id) _protected_##id
 #endif
 
 #ifdef __cplusplus
