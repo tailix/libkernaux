@@ -1,3 +1,7 @@
+2022-06-20  Alex Kotov  <kotovalexarian@gmail.com>
+
+	* include/kernaux/alloc.h: Finished, made stable
+
 2022-06-18  Alex Kotov  <kotovalexarian@gmail.com>
 
 	* include/kernaux/mutex.h: Added
