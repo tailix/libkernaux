@@ -45,13 +45,13 @@ fprintf_va_SOURCES = main.c fprintf_va.c
 endif
 endif
 
-######################
-# generic_mutex_file #
-######################
+#################
+# generic_mutex #
+#################
 
-TESTS += generic_mutex_file
-generic_mutex_file_LDADD = $(top_builddir)/libkernaux.la
-generic_mutex_file_SOURCES = main.c generic_mutex_file.c
+TESTS += generic_mutex
+generic_mutex_LDADD = $(top_builddir)/libkernaux.la
+generic_mutex_SOURCES = main.c generic_mutex.c
 
 ##########
 # memmap #

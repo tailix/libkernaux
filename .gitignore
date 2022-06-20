@@ -110,8 +110,7 @@
 /examples/cmdline
 /examples/fprintf
 /examples/fprintf_va
-/examples/generic_mutex_file
-/examples/generic_mutex_file.lock
+/examples/generic_mutex
 /examples/memmap
 /examples/ntoa
 /examples/panic
