@@ -68,10 +68,10 @@ void LockFileMutex_lock(void *const mutex)
 void LockFileMutex_unlock(void *const mutex)
 {
     LockFileMutex lock_file_mutex = mutex;
-    if (!lock_file_mutex->fd) {
+    FILE *const fd = lock_file_mutex->fd;
+    if (!fd) {
         return;
     }
-    FILE *const fd = lock_file_mutex->fd;
     lock_file_mutex->fd = NULL;
     fclose(fd);
 }
