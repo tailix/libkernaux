@@ -2,8 +2,6 @@
 #include "config.h"
 #endif
 
-#include "helper.h"
-
 #include <kernaux/multiboot2.h>
 
 #include <assert.h>
@@ -123,10 +121,8 @@ static const struct {
 #pragma pack(pop)
 #endif
 
-int main()
+void test_main()
 {
-    setup_assert_abort();
-
     assert(KernAux_Multiboot2_Info_is_valid(
         (struct KernAux_Multiboot2_Info*)multiboot2_info_example1
     ));
@@ -405,6 +401,4 @@ int main()
             &multiboot2_with_two_boot_cmd_lines.multiboot2_info
         ) == multiboot2_with_two_boot_cmd_lines.tag_boot_cmd_line1.cmdline
     );
-
-    return 0;
 }

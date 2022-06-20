@@ -2,12 +2,7 @@
 #include "config.h"
 #endif
 
-#include "helper.h"
-
-int main()
+void test_main()
 {
-    setup_assert_abort();
-
     // TODO: write this
-    return 0;
 }

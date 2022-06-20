@@ -2,8 +2,6 @@
 #include "config.h"
 #endif
 
-#include "helper.h"
-
 #include <kernaux/ntoa.h>
 
 #include <assert.h>
@@ -519,10 +517,8 @@ static const char *str_end(const char *str)
     for (;; ++str) if (*str == '\0') return str;
 }
 
-int main()
+void test_main()
 {
-    setup_assert_abort();
-
     {
         char buffer[KERNAUX_UTOA_MIN_BUFFER_SIZE + 3];
 
@@ -778,6 +774,4 @@ int main()
             assert(end2 == str_end(buffer));
         }
     }
-
-    return 0;
 }

@@ -2,8 +2,6 @@
 #include "config.h"
 #endif
 
-#include "helper.h"
-
 #include <kernaux/cmdline.h>
 
 #include <assert.h>
@@ -41,10 +39,8 @@ static const char *const argv_a_X4[] = { "a", "a", "a", "a" };
 static const char *const argv_a_X5[] = { "a", "a", "a", "a", "a" };
 static const char *const argv_a_X6[] = { "a", "a", "a", "a", "a", "a" };
 
-int main()
+void test_main()
 {
-    setup_assert_abort();
-
     test("\\ \\ \\  \\ \\ \\  \\ \\ \\ ",          3, 0,  true, "", 3, argv_spaceX3_X3);
     test("\\\\\\\\\\\\ \\\\\\\\\\\\ \\\\\\\\\\\\", 3, 0,  true, "", 3, argv_backslashX3_X3);
     test("\\\"\\\"\\\" \\\"\\\"\\\" \\\"\\\"\\\"", 3, 0,  true, "", 3, argv_quotmarkX3_X3);
@@ -135,8 +131,6 @@ int main()
         test(buffer, 256, 4096, false, "buffer overflow", 0, NULL);
         free(buffer);
     }
-
-    return 0;
 }
 
 void test(

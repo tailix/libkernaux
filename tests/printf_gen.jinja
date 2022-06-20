@@ -61,7 +61,7 @@ static void test(const char *const expected, const char *const format, ...)
     assert(strcmp(expected, buffer) == 0);
 }
 
-int main()
+void test_main()
 {
 #ifdef WITH_IO
     memset(buffer, '\0', sizeof(buffer));
@@ -81,6 +81,4 @@ int main()
 #endif
     {% endif %}
     {% endfor %}
-
-    return 0;
 }

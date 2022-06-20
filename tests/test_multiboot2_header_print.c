@@ -2,8 +2,6 @@
 #include "config.h"
 #endif
 
-#include "helper.h"
-
 #include <assert.h>
 
 #ifndef __USE_POSIX2
@@ -73,10 +71,8 @@ static const char output2[] =
     "  flags: 0\n"
     "  size: 8\n";
 
-int main()
+void test_main()
 {
-    setup_assert_abort();
-
     {
         FILE *const fd = popen("./multiboot2_header_print1", "r");
         assert(fd != NULL);
@@ -100,6 +96,4 @@ int main()
         const int status = pclose(fd);
         assert(status == 0);
     }
-
-    return 0;
 }

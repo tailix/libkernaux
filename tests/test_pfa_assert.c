@@ -25,7 +25,7 @@ static void assert_cb(
     longjmp(jmpbuf, 1);
 }
 
-int main()
+void test_main()
 {
     if (setjmp(jmpbuf) != 0) abort();
 
@@ -98,6 +98,4 @@ int main()
     } else {
         assert(count == 10);
     }
-
-    return 0;
 }

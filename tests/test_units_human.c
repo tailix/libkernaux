@@ -2,8 +2,6 @@
 #include "config.h"
 #endif
 
-#include "helper.h"
-
 #include <kernaux/units.h>
 
 #include <assert.h>
@@ -28,10 +26,8 @@ static void test_bin(
     const char *result
 );
 
-int main()
+void test_main()
 {
-    setup_assert_abort();
-
     test_raw(0,          KERNAUX_UNIT_BIT,  "0 bit");
     test_raw(0,          KERNAUX_UNIT_BYTE, "0 Byte");
     test_raw(1,          KERNAUX_UNIT_BIT,  "1 bit");
@@ -138,8 +134,6 @@ int main()
     test_bin(UINT32_MAX, KERNAUX_UNIT_BYTE, KERNAUX_UNITPFX_GIBI, "4294967295 GiB");
     test_bin(UINT64_MAX, KERNAUX_UNIT_BIT,  KERNAUX_UNITPFX_GIBI, "18446744073709551615 Gibit");
     test_bin(UINT64_MAX, KERNAUX_UNIT_BYTE, KERNAUX_UNITPFX_GIBI, "18446744073709551615 GiB");
-
-    return 0;
 }
 
 void test_raw(

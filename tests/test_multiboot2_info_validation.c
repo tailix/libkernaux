@@ -2,8 +2,6 @@
 #include "config.h"
 #endif
 
-#include "helper.h"
-
 #include <kernaux/multiboot2.h>
 
 #include <assert.h>
@@ -788,10 +786,8 @@ static const struct {
  * main *
  ********/
 
-int main()
+void test_main()
 {
-    setup_assert_abort();
-
     // Multiboot2
 
     assert(KernAux_Multiboot2_Info_is_valid(
@@ -1133,6 +1129,4 @@ int main()
     assert(KernAux_Multiboot2_ITag_ELFSymbols_is_valid(
         &tag_elf_symbols_with_zero_ent_size_valid
     ));
-
-    return 0;
 }

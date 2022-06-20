@@ -2,8 +2,6 @@
 #include "config.h"
 #endif
 
-#include "helper.h"
-
 #include <kernaux/mbr.h>
 
 #include <assert.h>
@@ -11,10 +9,8 @@
 
 static void create_valid_mbr(struct KernAux_Mbr *mbr);
 
-int main()
+void test_main()
 {
-    setup_assert_abort();
-
     struct KernAux_Mbr mbr;
 
     create_valid_mbr(&mbr);
@@ -35,8 +31,6 @@ int main()
     }
 
     // TODO: test partition table
-
-    return 0;
 }
 
 void create_valid_mbr(struct KernAux_Mbr *const mbr)
