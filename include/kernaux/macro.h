@@ -5,13 +5,18 @@
 extern "C" {
 #endif
 
-#ifdef KERNAUX_ACCESS_MOD_OFF
-#define KERNAUX_PRIVATE_FIELD(id) id
-#define KERNAUX_PROTECTED_FIELD(id) id
+#ifdef KERNAUX_ACCESS_PRIVATE
+#   define KERNAUX_PRIVATE_FIELD(id) id
+#   define KERNAUX_PROTECTED_FIELD(id) id
 #else
-#define KERNAUX_PRIVATE_FIELD(id) _private_##id
-#define KERNAUX_PROTECTED_FIELD(id) _protected_##id
-#endif
+#   define KERNAUX_PRIVATE_FIELD(id) _private_##id
+
+#   ifdef KERNAUX_ACCESS_PROTECTED
+#       define KERNAUX_PROTECTED_FIELD(id) id
+#   else
+#       define KERNAUX_PROTECTED_FIELD(id) _protected_##id
+#   endif
+#endif // KERNAUX_ACCESS_PRIVATE
 
 #ifdef __cplusplus
 }

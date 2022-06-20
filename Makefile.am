@@ -19,7 +19,7 @@ endif
 libc/libc.la:
 	$(MAKE) $(AM_MAKEFLAGS) -C $(top_builddir)/libc libc.la
 
-AM_CFLAGS += -DKERNAUX_ACCESS_MOD_OFF
+AM_CFLAGS += -DKERNAUX_ACCESS_PRIVATE
 
 lib_LTLIBRARIES = libkernaux.la
 
