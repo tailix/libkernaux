@@ -3,7 +3,7 @@
 #endif
 
 #include <kernaux/assert.h>
-#include <kernaux/mutex.h>
+#include <kernaux/generic/mutex.h>
 
 void KernAux_Mutex_lock(const KernAux_Mutex mutex)
 {

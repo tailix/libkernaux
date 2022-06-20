@@ -1,6 +1,7 @@
 2022-06-20  Alex Kotov  <kotovalexarian@gmail.com>
 
-	* include/kernaux/alloc.h: Finished, made stable
+	* include/kernaux/alloc.h: Finished
+	* include/kernaux/generic/mutex.h: Mutex moved here
 
 2022-06-18  Alex Kotov  <kotovalexarian@gmail.com>
 
