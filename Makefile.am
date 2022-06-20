@@ -19,13 +19,16 @@ endif
 libc/libc.la:
 	$(MAKE) $(AM_MAKEFLAGS) -C $(top_builddir)/libc libc.la
 
-AM_CFLAGS += -DKERNAUX_PRIVATE_NO
+AM_CFLAGS += -DKERNAUX_ACCESS_PRIVATE
 
 lib_LTLIBRARIES = libkernaux.la
 libexec_PROGRAMS =
 
-libkernaux_la_SOURCES = src/libc.h src/assert.c src/mutex.c
 libkernaux_la_LIBADD =
+libkernaux_la_SOURCES = \
+	src/assert.c \
+	src/libc.h \
+	src/generic/mutex.c
 
 if ASM_I386
 libkernaux_la_SOURCES += src/asm/i386.S

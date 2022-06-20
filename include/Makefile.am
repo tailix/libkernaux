@@ -5,8 +5,8 @@ nobase_include_HEADERS = \
 	kernaux/arch/x86_64.h \
 	kernaux/assert.h \
 	kernaux/macro.h \
-	kernaux/mutex.h \
-	kernaux/version.h
+	kernaux/version.h \
+	kernaux/generic/mutex.h
 
 if ASM_I386
 nobase_include_HEADERS += kernaux/asm/i386.h

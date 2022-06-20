@@ -1,6 +1,9 @@
 2022-06-20  Alex Kotov  <kotovalexarian@gmail.com>
 
-	* include/kernaux/alloc.h: Finished, made stable
+	* include/kernaux/alloc.h: Finished
+	* include/kernaux/generic/mutex.h: Mutex moved here
+	* include/kernaux/macro.h: Definitions "KERNAUX_ACCESS_*" made stable
+	* include/kernaux/macro.h: Macro "KERNAUX_PROTECTED_FIELD" added
 
 2022-06-18  Alex Kotov  <kotovalexarian@gmail.com>
 
