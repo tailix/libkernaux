@@ -2,6 +2,8 @@
 #include "config.h"
 #endif
 
+#include "helper.h"
+
 #include <kernaux/alloc.h>
 
 #include <assert.h>
@@ -9,6 +11,8 @@
 
 int main()
 {
+    setup_assert_abort();
+
     char memory_block[1000];
     struct KernAux_Alloc alloc = KernAux_Alloc_create(NULL);
     KernAux_Alloc_add_zone(&alloc, memory_block, sizeof(memory_block));
