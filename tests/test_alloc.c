@@ -2,6 +2,8 @@
 #include "config.h"
 #endif
 
+#define KERNAUX_PRIVATE_NO
+
 #include "helper.h"
 
 #include <kernaux/alloc.h>
