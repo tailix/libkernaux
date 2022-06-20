@@ -40,7 +40,6 @@ int main()
     KernAux_Alloc_free(&alloc, ptr2);
     KernAux_Alloc_free(&alloc, ptr3);
 
-    // FIXME: This causes a loop: node == node->next
     char *const ptr5 = KernAux_Alloc_malloc(&alloc, 100);
     assert(ptr5 == ptr2);
 
@@ -49,6 +48,9 @@ int main()
 
     KernAux_Alloc_free(&alloc, ptr2);
     KernAux_Alloc_free(&alloc, ptr3);
+
+    char *const ptr7 = KernAux_Alloc_malloc(&alloc, 200);
+    assert(ptr7 == ptr2);
 
     return 0;
 }
