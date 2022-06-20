@@ -5,8 +5,9 @@
 
 #include <kernaux/assert.h>
 #include <kernaux/macro.h>
-#include <kernaux/mutex.h>
 #include <kernaux/version.h>
+
+#include <kernaux/generic/mutex.h>
 
 @comment_line_alloc@#include <kernaux/alloc.h>
 @comment_line_cmdline@#include <kernaux/cmdline.h>

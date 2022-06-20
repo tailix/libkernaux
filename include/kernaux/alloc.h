@@ -6,7 +6,7 @@ extern "C" {
 #endif
 
 #include <kernaux/macro.h>
-#include <kernaux/mutex.h>
+#include <kernaux/generic/mutex.h>
 
 #include <stddef.h>
 
