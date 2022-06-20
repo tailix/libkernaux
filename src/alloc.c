@@ -39,6 +39,7 @@
         }                                         \
     } while (0)
 
+static void KernAux_Alloc_defrag(KernAux_Alloc alloc);
 static void KernAux_Alloc_insert(
     KernAux_Alloc alloc,
     KernAux_Alloc_Node node,
@@ -77,6 +78,7 @@ void KernAux_Alloc_add_zone(
     new_node->actual_size = size;
     new_node->user_size = size - NODE_HEADER_SIZE;
     KernAux_Alloc_insert(alloc, new_node, NULL, alloc->head);
+    KernAux_Alloc_defrag(alloc);
 
     UNLOCK(alloc);
 }
@@ -153,8 +155,30 @@ void KernAux_Alloc_free(const KernAux_Alloc alloc, void *const ptr)
     KernAux_Alloc_insert(alloc, node, last_node, NULL);
 
 block_added:
+    KernAux_Alloc_defrag(alloc);
 
     UNLOCK(alloc);
+}
+
+void KernAux_Alloc_defrag(const KernAux_Alloc alloc)
+{
+    KERNAUX_ASSERT(alloc);
+
+    for (
+        KernAux_Alloc_Node item_node = alloc->head;
+        item_node;
+        item_node = item_node->next
+    ) {
+        const KernAux_Alloc_Node node = item_node->prev;
+        if (!node) continue;
+        if (((uintptr_t)node) + node->actual_size != (uintptr_t)item_node) {
+            continue;
+        }
+
+        node->actual_size += item_node->actual_size;
+        node->user_size   += item_node->actual_size;
+        KernAux_Alloc_remove(alloc, item_node);
+    }
 }
 
 void KernAux_Alloc_insert(
