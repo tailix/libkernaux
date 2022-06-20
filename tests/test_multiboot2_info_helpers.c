@@ -2,6 +2,8 @@
 #include "config.h"
 #endif
 
+#include "helper.h"
+
 #include <kernaux/multiboot2.h>
 
 #include <assert.h>
@@ -123,6 +125,8 @@ static const struct {
 
 int main()
 {
+    setup_assert_abort();
+
     assert(KernAux_Multiboot2_Info_is_valid(
         (struct KernAux_Multiboot2_Info*)multiboot2_info_example1
     ));

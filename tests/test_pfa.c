@@ -2,12 +2,16 @@
 #include "config.h"
 #endif
 
+#include "helper.h"
+
 #include <kernaux/pfa.h>
 
 #include <assert.h>
 
 int main()
 {
+    setup_assert_abort();
+
     struct KernAux_PFA pfa;
 
     KernAux_PFA_initialize(&pfa);

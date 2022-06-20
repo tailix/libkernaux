@@ -2,6 +2,8 @@
 #include "config.h"
 #endif
 
+#include "helper.h"
+
 #include <kernaux/multiboot2.h>
 
 #include <assert.h>
@@ -20,6 +22,8 @@ static void my_printf(const char *format, ...)
 
 int main()
 {
+    setup_assert_abort();
+
     assert(KernAux_Multiboot2_Header_is_valid(
         &multiboot2_header_example2.multiboot2_header
     ));

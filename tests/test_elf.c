@@ -2,6 +2,8 @@
 #include "config.h"
 #endif
 
+#include "helper.h"
+
 #include <kernaux/elf.h>
 
 #include <assert.h>
@@ -13,6 +15,8 @@
 
 int main(int argc, char **argv)
 {
+    setup_assert_abort();
+
     assert(argc >= 1);
 
     FILE *const fd = fopen(argv[0], "r");

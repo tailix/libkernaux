@@ -2,6 +2,8 @@
 #include "config.h"
 #endif
 
+#include "helper.h"
+
 #include <kernaux/multiboot2.h>
 
 #include <assert.h>
@@ -76,6 +78,8 @@
 
 int main()
 {
+    setup_assert_abort();
+
     assert(sizeof(struct KernAux_Multiboot2_Header) == 16);
     assert(sizeof(struct KernAux_Multiboot2_Info)   == 8);
 

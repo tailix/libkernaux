@@ -2,6 +2,8 @@
 #include "config.h"
 #endif
 
+#include "helper.h"
+
 #include <kernaux/ntoa.h>
 
 #include <assert.h>
@@ -519,6 +521,8 @@ static const char *str_end(const char *str)
 
 int main()
 {
+    setup_assert_abort();
+
     {
         char buffer[KERNAUX_UTOA_MIN_BUFFER_SIZE + 3];
 

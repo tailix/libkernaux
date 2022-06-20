@@ -2,6 +2,8 @@
 #include "config.h"
 #endif
 
+#include "helper.h"
+
 #include <kernaux/units.h>
 
 #include <assert.h>
@@ -28,6 +30,8 @@ static void test_bin(
 
 int main()
 {
+    setup_assert_abort();
+
     test_raw(0,          KERNAUX_UNIT_BIT,  "0 bit");
     test_raw(0,          KERNAUX_UNIT_BYTE, "0 Byte");
     test_raw(1,          KERNAUX_UNIT_BIT,  "1 bit");
