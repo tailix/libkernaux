@@ -68,13 +68,13 @@ void KernAux_Alloc_add_zone(
 ) {
     KERNAUX_ASSERT(alloc);
     KERNAUX_ASSERT(ptr);
-    KERNAUX_ASSERT(size >= 2 * sizeof(struct KernAux_Alloc_Node));
+    KERNAUX_ASSERT(size >= 2 * ALLOC_HEADER_SIZE);
 
     LOCK(alloc);
 
     KernAux_Alloc_Node new_node = ptr;
     new_node->actual_size = size;
-    new_node->user_size = size - sizeof(struct KernAux_Alloc_Node);
+    new_node->user_size = size - ALLOC_HEADER_SIZE;
     KernAux_Alloc_insert(alloc, new_node, NULL, alloc->head);
 
     UNLOCK(alloc);
