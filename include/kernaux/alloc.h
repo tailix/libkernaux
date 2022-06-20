@@ -11,7 +11,8 @@ extern "C" {
 #include <stddef.h>
 
 typedef struct KernAux_Alloc_Node {
-    struct KernAux_Alloc_Node *KERNAUX_PRIVATE_FIELD(next), *KERNAUX_PRIVATE_FIELD(prev);
+    struct KernAux_Alloc_Node *KERNAUX_PRIVATE_FIELD(next);
+    struct KernAux_Alloc_Node *KERNAUX_PRIVATE_FIELD(prev);
     size_t KERNAUX_PRIVATE_FIELD(size);
     char *KERNAUX_PRIVATE_FIELD(block);
 } *KernAux_Alloc_Node;
