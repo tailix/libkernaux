@@ -6,7 +6,7 @@
 
 #include <assert.h>
 
-int main()
+void test_main()
 {
     {% for case in cases %}
     {
@@ -30,6 +30,4 @@ int main()
         assert(spec.base == {{ case.out.base }});
     }
     {% endfor %}
-
-    return 0;
 }

@@ -9,7 +9,7 @@
 
 static void create_valid_mbr(struct KernAux_Mbr *mbr);
 
-int main()
+void test_main()
 {
     struct KernAux_Mbr mbr;
 
@@ -31,8 +31,6 @@ int main()
     }
 
     // TODO: test partition table
-
-    return 0;
 }
 
 void create_valid_mbr(struct KernAux_Mbr *const mbr)

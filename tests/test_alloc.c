@@ -4,8 +4,6 @@
 
 #define KERNAUX_PRIVATE_NO
 
-#include "helper.h"
-
 #include <kernaux/alloc.h>
 
 #include <assert.h>
@@ -14,12 +12,10 @@
 static void test_default();
 static void test_cross_zone_defrag();
 
-int main()
+void test_main()
 {
-    setup_assert_abort();
     test_default();
     test_cross_zone_defrag();
-    return 0;
 }
 
 void test_default()

@@ -24,7 +24,7 @@ static void test(
     const char *const *const expected_argv
 );
 
-int main()
+void test_main()
 {
     {% for case in cases %}
     {
@@ -58,8 +58,6 @@ int main()
         );
     }
     {% endfor %}
-
-    return 0;
 }
 
 void test(
