@@ -16,12 +16,9 @@ extern "C" {
 #define KERNAUX_MEMMAP_ENTRY_TAG_SIZE_MAX (KERNAUX_MEMMAP_ENTRY_TAG_SLEN_MAX + 1)
 
 typedef const struct KernAux_MemMap_Entry {
-    bool KERNAUX_PRIVATE_FIELD(is_available);
-    char KERNAUX_PRIVATE_FIELD(tag)[KERNAUX_MEMMAP_ENTRY_TAG_SIZE_MAX];
-    size_t KERNAUX_PRIVATE_FIELD(start);
-    size_t KERNAUX_PRIVATE_FIELD(size);
-    size_t KERNAUX_PRIVATE_FIELD(end);
-    size_t KERNAUX_PRIVATE_FIELD(limit);
+    bool is_available;
+    char tag[KERNAUX_MEMMAP_ENTRY_TAG_SIZE_MAX];
+    size_t start, size, end, limit;
 } *KernAux_MemMap_Entry;
 
 typedef struct KernAux_MemMap {
