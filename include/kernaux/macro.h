@@ -5,7 +5,7 @@
 extern "C" {
 #endif
 
-#define KERNAUX_PRIVATE(id) __PRIVATE_##id
+#define KERNAUX_PRIVATE_FIELD(id) __PRIVATE_##id
 
 #ifdef __cplusplus
 }
