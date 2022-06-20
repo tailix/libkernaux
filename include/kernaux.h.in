@@ -4,6 +4,7 @@
 */
 
 #include <kernaux/assert.h>
+#include <kernaux/macro.h>
 #include <kernaux/mutex.h>
 #include <kernaux/version.h>
 

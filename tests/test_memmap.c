@@ -2,6 +2,8 @@
 #include "config.h"
 #endif
 
+#define KERNAUX_PRIVATE_NO
+
 #include <kernaux/assert.h>
 #include <kernaux/memmap.h>
 
