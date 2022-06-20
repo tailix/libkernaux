@@ -75,8 +75,7 @@ void KernAux_Alloc_add_zone(
     LOCK(alloc);
 
     KernAux_Alloc_Node new_node = ptr;
-    new_node->actual_size = size;
-    new_node->user_size = size - NODE_HEADER_SIZE;
+    new_node->size = size;
     KernAux_Alloc_insert(alloc, new_node, NULL, alloc->head);
     KernAux_Alloc_defrag(alloc);
 
@@ -97,7 +96,7 @@ void *KernAux_Alloc_malloc(const KernAux_Alloc alloc, const size_t size)
         item_node;
         item_node = item_node->next
     ) {
-        if (item_node->user_size >= size) {
+        if (item_node->size - NODE_HEADER_SIZE >= size) {
             node = item_node;
             break;
         }
@@ -105,13 +104,11 @@ void *KernAux_Alloc_malloc(const KernAux_Alloc alloc, const size_t size)
 
     if (node) {
         // Can we split the block?
-        if (node->actual_size - size >= MIN_SPLIT_SIZE) {
+        if (node->size - size >= MIN_SPLIT_SIZE) {
             KernAux_Alloc_Node new_node =
                 (KernAux_Alloc_Node)(((uintptr_t)&node->block) + size);
-            node->actual_size = NODE_HEADER_SIZE + size;
-            node->user_size = size;
-            new_node->actual_size = node->actual_size - size - NODE_HEADER_SIZE;
-            new_node->user_size   = node->user_size   - size - NODE_HEADER_SIZE;
+            node->size = NODE_HEADER_SIZE + size;
+            new_node->size = node->size - size - NODE_HEADER_SIZE;
             KernAux_Alloc_insert(alloc, new_node, node, node->next);
         }
 
@@ -171,12 +168,9 @@ void KernAux_Alloc_defrag(const KernAux_Alloc alloc)
     ) {
         const KernAux_Alloc_Node node = item_node->prev;
         if (!node) continue;
-        if (((uintptr_t)node) + node->actual_size != (uintptr_t)item_node) {
-            continue;
-        }
+        if (((uintptr_t)node) + node->size != (uintptr_t)item_node) continue;
 
-        node->actual_size += item_node->actual_size;
-        node->user_size   += item_node->actual_size;
+        node->size += item_node->size;
         KernAux_Alloc_remove(alloc, item_node);
     }
 }

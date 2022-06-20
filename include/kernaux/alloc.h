@@ -11,7 +11,7 @@ extern "C" {
 
 typedef struct KernAux_Alloc_Node {
     struct KernAux_Alloc_Node *next, *prev;
-    size_t actual_size, user_size;
+    size_t size;
     char *block;
 } *KernAux_Alloc_Node;
 
