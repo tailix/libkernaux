@@ -15,6 +15,7 @@
 #include <stdint.h>
 
 #define NODE_HEADER_SIZE (offsetof(struct KernAux_Alloc_Node, block))
+#define MIN_ZONE_SIZE (2 * NODE_HEADER_SIZE)
 #define MIN_SPLIT_SIZE (NODE_HEADER_SIZE + 16)
 
 #define CONTAINER_OF(ptr, type, member) ((type*)((uintptr_t)(ptr) - offsetof(type, member)))
@@ -68,7 +69,7 @@ void KernAux_Alloc_add_zone(
 ) {
     KERNAUX_ASSERT(alloc);
     KERNAUX_ASSERT(ptr);
-    KERNAUX_ASSERT(size >= 2 * NODE_HEADER_SIZE);
+    KERNAUX_ASSERT(size >= MIN_ZONE_SIZE);
 
     LOCK(alloc);
 
