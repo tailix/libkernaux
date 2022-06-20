@@ -76,7 +76,30 @@ void KernAux_Alloc_add_zone(
 
     KernAux_Alloc_Node new_node = ptr;
     new_node->size = size;
-    KernAux_Alloc_insert(alloc, new_node, NULL, alloc->head);
+
+    KernAux_Alloc_Node prev_node = NULL;
+    KernAux_Alloc_Node next_node = alloc->head;
+    KernAux_Alloc_Node last_node = NULL;
+
+    for (
+        KernAux_Alloc_Node item_node = alloc->head;
+        item_node;
+        item_node = item_node->next
+    ) {
+        last_node = item_node;
+
+        if (item_node > new_node) {
+            next_node = item_node;
+            if (item_node->prev) prev_node = item_node->prev;
+            goto block_found;
+        }
+    }
+
+    prev_node = last_node;
+    next_node = NULL;
+
+block_found:
+    KernAux_Alloc_insert(alloc, new_node, prev_node, next_node);
     KernAux_Alloc_defrag(alloc);
 
     UNLOCK(alloc);

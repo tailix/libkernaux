@@ -9,10 +9,19 @@
 #include <assert.h>
 #include <stddef.h>
 
+static void test_default();
+static void test_cross_zone_defrag();
+
 int main()
 {
     setup_assert_abort();
+    test_default();
+    test_cross_zone_defrag();
+    return 0;
+}
 
+void test_default()
+{
     char memory_block[1000];
     struct KernAux_Alloc alloc = KernAux_Alloc_create(NULL);
     KernAux_Alloc_add_zone(&alloc, memory_block, sizeof(memory_block));
@@ -51,6 +60,23 @@ int main()
 
     char *const ptr7 = KernAux_Alloc_malloc(&alloc, 200);
     assert(ptr7 == ptr2);
+}
 
-    return 0;
+void test_cross_zone_defrag()
+{
+    char zone[1000];
+    struct KernAux_Alloc alloc = KernAux_Alloc_create(NULL);
+    KernAux_Alloc_add_zone(&alloc, &zone[0],   500);
+    KernAux_Alloc_add_zone(&alloc, &zone[500], 500);
+
+    size_t nodes_count = 0;
+    for (
+        KernAux_Alloc_Node item_node = alloc.head;
+        item_node;
+        item_node = item_node->next
+    ) {
+        ++nodes_count;
+    }
+
+    assert(nodes_count == 1);
 }
