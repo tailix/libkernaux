@@ -15,6 +15,7 @@
 
 #include <stddef.h>
 #include <stdint.h>
+#include <string.h>
 
 #define NODE_HEADER_SIZE (offsetof(struct KernAux_Alloc_Node, block))
 #define MIN_ZONE_SIZE (2 * NODE_HEADER_SIZE)
@@ -121,15 +122,16 @@ void *KernAux_Alloc_calloc(
     const size_t nmemb,
     const size_t size
 ) {
-    const KernAux_Alloc alloc = malloc;
-    KERNAUX_ASSERT(alloc);
+    KERNAUX_ASSERT(malloc);
 
-    KERNAUX_ASSERT(0); // TODO
-    (void)alloc;
-    (void)nmemb;
-    (void)size;
+    const size_t total_size = nmemb * size;
+    KERNAUX_ASSERT(total_size >= nmemb);
+    KERNAUX_ASSERT(total_size >= size);
+    KERNAUX_ASSERT(total_size / nmemb == size);
 
-    return NULL;
+    void *const ptr = KernAux_Alloc_malloc(malloc, total_size);
+    if (ptr) memset(ptr, 0, total_size);
+    return ptr;
 }
 
 void KernAux_Alloc_free(void *const malloc, void *const ptr)
