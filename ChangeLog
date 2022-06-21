@@ -1,3 +1,7 @@
+2022-06-21  Alex Kotov  <kotovalexarian@gmail.com>
+
+	* include/kernaux/generic/malloc.h: Added
+
 2022-06-20  Alex Kotov  <kotovalexarian@gmail.com>
 
 	* include/kernaux/alloc.h: Finished

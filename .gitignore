@@ -113,6 +113,7 @@
 /examples/cmdline
 /examples/fprintf
 /examples/fprintf_va
+/examples/generic_malloc
 /examples/generic_mutex
 /examples/memmap
 /examples/ntoa

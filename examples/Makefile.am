@@ -45,6 +45,14 @@ fprintf_va_SOURCES = main.c fprintf_va.c
 endif
 endif
 
+##################
+# generic_malloc #
+##################
+
+TESTS += generic_malloc
+generic_malloc_LDADD = $(top_builddir)/libkernaux.la
+generic_malloc_SOURCES = main.c generic_malloc.c
+
 #################
 # generic_mutex #
 #################
