@@ -49,7 +49,7 @@ jobs:
       - name: apt update
         run: sudo apt-get update
       - name: dependencies
-        run: sudo apt-get --yes install libc6:${{matrix.cross.apt_arch}} ${{matrix.cross.apt_pkgs}}
+        run: sudo apt-get --yes install libc6:${{matrix.cross.apt_arch}} ${{matrix.cross.apt_pkgs}} binfmt-support qemu qemu-user-static
       - name: autogen
         run: ./autogen.sh
       - name: configure
