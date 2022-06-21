@@ -95,13 +95,13 @@ zero). Work-in-progress APIs can change at any time.
 
 ### Definitions
 
-Define the following C preprocessor macros before including `<kernaux.h>` and
+`#define` the following C preprocessor macros before including `<kernaux.h>` and
 `<kernaux/*.h>` files. They have effect on your code, not the library code.
 
 * `KERNAUX_DEBUG` - enable assertions.
 * `KERNAUX_ACCESS_PRIVATE` - disable access modifier "private". Don't do this!
 * `KERNAUX_ACCESS_PROTECTED` - disable access modifier "protected". Only do this
-  (with `#define`) in a file where you implement an inherited type.
+  in a file where you implement an inherited type.
 
 ### Global variables
 
