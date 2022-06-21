@@ -44,6 +44,10 @@ jobs:
             cprefix: 'riscv64-linux-gnu-'
     steps:
       - uses: actions/checkout@v2
+      - name: tmp-cat
+        run: sudo cat /etc/apt/sources.list
+      - name: tmp-ls
+        run: sudo ls -l /etc/apt/sources.list.d
       - name: dpkg arch
         run: sudo dpkg --add-architecture ${{matrix.cross.apt_arch}}
       - name: apt update
