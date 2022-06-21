@@ -36,7 +36,13 @@ KernAux::Version.with_printf? and RSpec.describe KernAux, '.sprintf' do
           else
             arg.map do |item|
               if item.is_a? Array
-                item[0]
+                if item.length == 1
+                  item[0]
+                elsif item[0] == 'long long'
+                  item[1]
+                else
+                  raise "Unknown format: #{args.inspect}"
+                end
               else
                 item
               end
