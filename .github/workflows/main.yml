@@ -36,10 +36,7 @@ jobs:
         cross:
           - host: 'i386-unknown-elf'
             apt: 'crossbuild-essential-i386'
-            ar:     'i686-linux-gnu-ar'
-            cc:     'i686-linux-gnu-gcc'
-            ld:     'i686-linux-gnu-ld'
-            ranlib: 'i686-linux-gnu-ranlib'
+            cprefix: 'i686-linux-gnu-'
     steps:
       - uses: actions/checkout@v2
       - name: dependencies
@@ -47,7 +44,7 @@ jobs:
       - name: autogen
         run: ./autogen.sh
       - name: configure
-        run: ./configure --enable-tests --enable-tests-python AR='${{matrix.cross.ar}}' CC='${{matrix.cross.cc}}' LD='${{matrix.cross.ld}}' RANLIB='${{matrix.cross.ranlib}}'
+        run: ./configure --enable-tests --enable-tests-python AR='${{matrix.cross.cprefix}}ar' CC='${{matrix.cross.cprefix}}gcc' LD='${{matrix.cross.cprefix}}ld' RANLIB='${{matrix.cross.cprefix}}ranlib'
       - name: make
         run: make
       - name: check
