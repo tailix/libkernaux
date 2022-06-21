@@ -65,7 +65,12 @@ def values(args):
             if type(arg[1]) is str:
                 values += ', ' + escape_str(arg[1])
             elif type(arg[1]) is list:
-                values += ', ' + escape_char(arg[1][0])
+                if len(arg[1]) == 1:
+                    values += ', ' + escape_char(arg[1][0])
+                elif arg[1][0] == 'long long':
+                    values += ', (long long)' + str(arg[1][1])
+                else:
+                    raise RuntimeError('unknown format: ' + str(args))
             else:
                 values += ', ' + str(arg[1])
 

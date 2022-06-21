@@ -29,6 +29,29 @@ jobs:
       - name: install
         run: sudo make install
 
+  cross:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        cross:
+          - host: 'i386-unknown-elf'
+            apt: 'crossbuild-essential-i386'
+            cprefix: 'i686-linux-gnu-'
+    steps:
+      - uses: actions/checkout@v2
+      - name: dependencies
+        run: sudo apt-get --yes install ${{matrix.cross.apt}}
+      - name: autogen
+        run: ./autogen.sh
+      - name: configure
+        run: ./configure --host='${{matrix.cross.host}}' --enable-tests --enable-tests-python AR='${{matrix.cross.cprefix}}ar' CC='${{matrix.cross.cprefix}}gcc' LD='${{matrix.cross.cprefix}}ld' RANLIB='${{matrix.cross.cprefix}}ranlib'
+      - name: make
+        run: make
+      - name: check
+        run: make check || (./test-suite-log && false)
+      - name: install
+        run: sudo make install
+
   cond:
     runs-on: ubuntu-latest
     strategy:

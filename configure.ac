@@ -151,8 +151,6 @@ AS_IF([test "$with_libc"           = yes], [with_libc=yes],           [with_libc
 # Test args #
 #############
 
-AS_IF([test "$enable_tests"        = yes -a "$host_cpu" != "$build_cpu" ], AC_MSG_ERROR([can not build cross-platform tests]))
-AS_IF([test "$enable_tests_python" = yes -a "$host_cpu" != "$build_cpu" ], AC_MSG_ERROR([can not build cross-platform tests]))
 AS_IF([test "$enable_tests"        = yes -a "$enable_freestanding" = yes], AC_MSG_ERROR([can not build freestanding tests]))
 AS_IF([test "$enable_tests_python" = yes -a "$enable_freestanding" = yes], AC_MSG_ERROR([can not build freestanding tests]))
 AS_IF([test "$enable_tests"        = yes -a "$with_libc"           = yes], AC_MSG_ERROR([can not use package `libc' with tests]))
