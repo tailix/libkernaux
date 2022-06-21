@@ -43,25 +43,25 @@ struct MyMalloc MyMalloc_create()
     return my_malloc;
 }
 
-void *MyMalloc_calloc(void *malloc, size_t nmemb, size_t size)
+void *MyMalloc_calloc(void *const malloc, const size_t nmemb, const size_t size)
 {
     (void)malloc; // unused
     return calloc(nmemb, size);
 }
 
-void MyMalloc_free(void *malloc, void *ptr)
+void MyMalloc_free(void *const malloc, void *const ptr)
 {
     (void)malloc; // unused
     free(ptr);
 }
 
-void *MyMalloc_malloc(void *malloc_, size_t size)
+void *MyMalloc_malloc(void *const malloc_, const size_t size)
 {
     (void)malloc_; // unused
     return malloc(size);
 }
 
-void *MyMalloc_realloc(void *malloc, void *ptr, size_t size)
+void *MyMalloc_realloc(void *const malloc, void *const ptr, const size_t size)
 {
     (void)malloc; // unused
     return realloc(ptr, size);

@@ -10,6 +10,8 @@
 
 #include <kernaux/alloc.h>
 #include <kernaux/assert.h>
+#include <kernaux/generic/malloc.h>
+#include <kernaux/generic/mutex.h>
 
 #include <stddef.h>
 #include <stdint.h>
@@ -39,6 +41,11 @@
         }                                         \
     } while (0)
 
+static void *KernAux_Alloc_calloc (void *malloc, size_t nmemb, size_t size);
+static void  KernAux_Alloc_free   (void *malloc, void *ptr);
+static void *KernAux_Alloc_malloc (void *malloc, size_t size);
+static void *KernAux_Alloc_realloc(void *malloc, void *ptr, size_t size);
+
 static void KernAux_Alloc_defrag(KernAux_Alloc alloc);
 static void KernAux_Alloc_insert(
     KernAux_Alloc alloc,
@@ -51,6 +58,10 @@ static void KernAux_Alloc_remove(KernAux_Alloc alloc, KernAux_Alloc_Node node);
 struct KernAux_Alloc KernAux_Alloc_create(const KernAux_Mutex mutex)
 {
     struct KernAux_Alloc alloc;
+    alloc.malloc.calloc  = KernAux_Alloc_calloc;
+    alloc.malloc.free    = KernAux_Alloc_free;
+    alloc.malloc.malloc  = KernAux_Alloc_malloc;
+    alloc.malloc.realloc = KernAux_Alloc_realloc;
     KernAux_Alloc_init(&alloc, mutex);
     return alloc;
 }
@@ -105,8 +116,61 @@ block_found:
     UNLOCK(alloc);
 }
 
-void *KernAux_Alloc_malloc(const KernAux_Alloc alloc, const size_t size)
+void *KernAux_Alloc_calloc(
+    void *const malloc,
+    const size_t nmemb,
+    const size_t size
+) {
+    const KernAux_Alloc alloc = malloc;
+    KERNAUX_ASSERT(alloc);
+
+    KERNAUX_ASSERT(0); // TODO
+    (void)alloc;
+    (void)nmemb;
+    (void)size;
+
+    return NULL;
+}
+
+void KernAux_Alloc_free(void *const malloc, void *const ptr)
 {
+    const KernAux_Alloc alloc = malloc;
+
+    KERNAUX_ASSERT(alloc);
+    if (!ptr) return;
+
+    LOCK(alloc);
+
+    KernAux_Alloc_Node node =
+        CONTAINER_OF(ptr, struct KernAux_Alloc_Node, block);
+
+    KernAux_Alloc_Node last_node = NULL;
+
+    for (
+        KernAux_Alloc_Node item_node = alloc->head;
+        item_node;
+        item_node = item_node->next
+    ) {
+        last_node = item_node;
+
+        if (item_node > node) {
+            KernAux_Alloc_insert(alloc, node, item_node->prev, item_node);
+            goto block_added;
+        }
+    }
+
+    KernAux_Alloc_insert(alloc, node, last_node, NULL);
+
+block_added:
+    KernAux_Alloc_defrag(alloc);
+
+    UNLOCK(alloc);
+}
+
+void *KernAux_Alloc_malloc(void *const malloc, const size_t size)
+{
+    const KernAux_Alloc alloc = malloc;
+
     KERNAUX_ASSERT(alloc);
     if (size == 0) return NULL;
 
@@ -147,37 +211,20 @@ void *KernAux_Alloc_malloc(const KernAux_Alloc alloc, const size_t size)
     }
 }
 
-void KernAux_Alloc_free(const KernAux_Alloc alloc, void *const ptr)
-{
+void *KernAux_Alloc_realloc(
+    void *const malloc,
+    void *const ptr,
+    const size_t size
+) {
+    const KernAux_Alloc alloc = malloc;
     KERNAUX_ASSERT(alloc);
-    if (!ptr) return;
 
-    LOCK(alloc);
+    KERNAUX_ASSERT(0); // TODO
+    (void)alloc;
+    (void)ptr;
+    (void)size;
 
-    KernAux_Alloc_Node node =
-        CONTAINER_OF(ptr, struct KernAux_Alloc_Node, block);
-
-    KernAux_Alloc_Node last_node = NULL;
-
-    for (
-        KernAux_Alloc_Node item_node = alloc->head;
-        item_node;
-        item_node = item_node->next
-    ) {
-        last_node = item_node;
-
-        if (item_node > node) {
-            KernAux_Alloc_insert(alloc, node, item_node->prev, item_node);
-            goto block_added;
-        }
-    }
-
-    KernAux_Alloc_insert(alloc, node, last_node, NULL);
-
-block_added:
-    KernAux_Alloc_defrag(alloc);
-
-    UNLOCK(alloc);
+    return NULL;
 }
 
 void KernAux_Alloc_defrag(const KernAux_Alloc alloc)
