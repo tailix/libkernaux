@@ -50,6 +50,7 @@ zero). Work-in-progress APIs can change at any time.
     * [Functions](/include/kernaux/asm/)
 * Generic types
   * [Mutex](/include/kernaux/generic/mutex.h) (*non-breaking since* **?.?.?**)
+    * [Example](/examples/generic_mutex.c)
 * Device drivers (for debugging only)
   * [Serial console](/include/kernaux/console.h) (*work in progress*)
   * [Framebuffer](/include/kernaux/framebuffer.h) (*planned*)
