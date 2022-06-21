@@ -335,6 +335,18 @@ CLEANFILES += test_printf_gen.c
 test_printf_gen.c: printf_gen.py printf_gen.jinja $(top_srcdir)/common/printf.yml $(top_srcdir)/common/printf_orig.yml
 	python3 printf_gen.py
 
+###################
+# test_printf_reg #
+###################
+
+if WITH_PRINTF
+TESTS += test_printf_reg
+test_printf_reg_LDADD = $(top_builddir)/libkernaux.la
+test_printf_reg_SOURCES = \
+	main.c \
+	test_printf_reg.c
+endif
+
 ####################
 # test_units_human #
 ####################
