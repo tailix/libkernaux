@@ -27,6 +27,7 @@ libkernaux_la_LIBADD =
 libkernaux_la_SOURCES = \
 	src/assert.c \
 	src/libc.h \
+	src/generic/malloc.c \
 	src/generic/mutex.c
 
 if ASM_I386

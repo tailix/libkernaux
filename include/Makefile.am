@@ -6,6 +6,7 @@ nobase_include_HEADERS = \
 	kernaux/assert.h \
 	kernaux/macro.h \
 	kernaux/version.h \
+	kernaux/generic/malloc.h \
 	kernaux/generic/mutex.h
 
 if ASM_I386
