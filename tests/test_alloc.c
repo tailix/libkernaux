@@ -8,13 +8,18 @@
 
 #include <assert.h>
 #include <stddef.h>
+#include <string.h>
 
 static void test_default();
+static void test_calloc();
+static void test_calloc_nomem();
 static void test_cross_zone_defrag();
 
 void test_main()
 {
     test_default();
+    test_calloc();
+    test_calloc_nomem();
     test_cross_zone_defrag();
 }
 
@@ -24,40 +29,61 @@ void test_default()
     struct KernAux_Alloc alloc = KernAux_Alloc_create(NULL);
     KernAux_Alloc_add_zone(&alloc, memory_block, sizeof(memory_block));
 
-    char *const ptr1 = KernAux_Alloc_malloc(&alloc, 100);
+    char *const ptr1 = KernAux_Malloc_malloc(&alloc.malloc, 100);
     assert(ptr1);
     assert(ptr1 > memory_block);
     assert(ptr1 < &memory_block[1000]);
 
-    char *const ptr2 = KernAux_Alloc_malloc(&alloc, 100);
+    char *const ptr2 = KernAux_Malloc_calloc(&alloc.malloc, 100, 1);
     assert(ptr2);
     assert(ptr2 > ptr1);
     assert(ptr2 < &memory_block[1000]);
 
-    char *const ptr3 = KernAux_Alloc_malloc(&alloc, 100);
+    char *const ptr3 = KernAux_Malloc_calloc(&alloc.malloc, 1, 100);
     assert(ptr3);
     assert(ptr3 > ptr2);
     assert(ptr3 < &memory_block[1000]);
 
-    char *const ptr4 = KernAux_Alloc_malloc(&alloc, 100);
+    char *const ptr4 = KernAux_Malloc_malloc(&alloc.malloc, 100);
     assert(ptr4);
     assert(ptr4 > ptr3);
     assert(ptr4 < &memory_block[1000]);
 
-    KernAux_Alloc_free(&alloc, ptr2);
-    KernAux_Alloc_free(&alloc, ptr3);
+    KernAux_Malloc_free(&alloc.malloc, ptr2);
+    KernAux_Malloc_free(&alloc.malloc, ptr3);
 
-    char *const ptr5 = KernAux_Alloc_malloc(&alloc, 100);
+    char *const ptr5 = KernAux_Malloc_malloc(&alloc.malloc, 100);
     assert(ptr5 == ptr2);
 
-    char *const ptr6 = KernAux_Alloc_malloc(&alloc, 100);
+    char *const ptr6 = KernAux_Malloc_calloc(&alloc.malloc, 10, 10);
     assert(ptr6 == ptr3);
 
-    KernAux_Alloc_free(&alloc, ptr2);
-    KernAux_Alloc_free(&alloc, ptr3);
+    KernAux_Malloc_free(&alloc.malloc, ptr2);
+    KernAux_Malloc_free(&alloc.malloc, ptr3);
 
-    char *const ptr7 = KernAux_Alloc_malloc(&alloc, 200);
+    char *const ptr7 = KernAux_Malloc_malloc(&alloc.malloc, 200);
     assert(ptr7 == ptr2);
+}
+
+void test_calloc()
+{
+    char zone[1000];
+    struct KernAux_Alloc alloc = KernAux_Alloc_create(NULL);
+    KernAux_Alloc_add_zone(&alloc, zone, 1000);
+    char *const ptr = KernAux_Malloc_calloc(&alloc.malloc, 1, 900);
+    for (size_t index = 0; index < 900; ++index) {
+        assert(ptr[index] == 0);
+    }
+    KernAux_Malloc_free(&alloc.malloc, ptr);
+}
+
+void test_calloc_nomem()
+{
+    char zone[1000];
+    struct KernAux_Alloc alloc = KernAux_Alloc_create(NULL);
+    KernAux_Alloc_add_zone(&alloc, zone, sizeof(zone));
+    void *const ptr = KernAux_Malloc_calloc(&alloc.malloc, 1, sizeof(zone));
+    assert(ptr == NULL);
 }
 
 void test_cross_zone_defrag()
