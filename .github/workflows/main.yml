@@ -35,12 +35,21 @@ jobs:
       matrix:
         cross:
           - host: 'i386-unknown-elf'
-            apt: 'crossbuild-essential-i386'
+            apt_arch: 'i386'
+            apt_pkgs: 'crossbuild-essential-i386'
             cprefix: 'i686-linux-gnu-'
+          - host: 'riscv64-unknown-elf'
+            apt_arch: 'riscv64'
+            apt_pkgs: 'crossbuild-essential-riscv64'
+            cprefix: 'riscv64-linux-gnu-'
     steps:
       - uses: actions/checkout@v2
+      - name: dpkg arch
+        run: sudo dpkg --add-architecture ${{matrix.cross.apt_arch}}
+      - name: apt update
+        run: sudo apt-get update
       - name: dependencies
-        run: sudo apt-get --yes install ${{matrix.cross.apt}}
+        run: sudo apt-get --yes install libc6:${{matrix.cross.apt_arch}} ${{matrix.cross.apt_pkgs}}
       - name: autogen
         run: ./autogen.sh
       - name: configure
