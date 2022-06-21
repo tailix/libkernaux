@@ -196,7 +196,7 @@
 - result: '0'
   args: [['%#.1x', 0]]
 - result: ''
-  args: [['%#.0llx', 0]]
+  args: [['%#.0llx', ['long long', 0]]]
 - result: '0x0000614e'
   args: [['%#.8x', 0x614e]]
 - result: '0b110'
