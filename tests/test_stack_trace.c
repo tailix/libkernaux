@@ -41,5 +41,5 @@ void func5()
 {
     char buffer[1000];
     kernaux_stack_trace_snprint(buffer, sizeof(buffer));
-    printf("%s", buffer);
+    printf("Stack trace:\n%s", buffer);
 }

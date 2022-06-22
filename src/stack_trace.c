@@ -37,7 +37,7 @@ void kernaux_stack_trace_snprint(char *buffer, size_t buffer_size)
         :: "memory"
     );
 
-    for (;;) {
+    for (size_t index = 0;; ++index) {
         size_t old_bp   = ptr[0];
         size_t ret_addr = ptr[1];
         if (!ret_addr) break;
@@ -49,7 +49,8 @@ void kernaux_stack_trace_snprint(char *buffer, size_t buffer_size)
             snprintf_result = kernaux_snprintf(
                 buffer,
                 buffer_size,
-                "[%p] <%s + %p>\n",
+                "%lu: 0x%p: %s + 0x%p\n",
+                index,
                 ret_addr,
                 name,
                 offset
@@ -58,7 +59,8 @@ void kernaux_stack_trace_snprint(char *buffer, size_t buffer_size)
             snprintf_result = kernaux_snprintf(
                 buffer,
                 buffer_size,
-                "[%p]\n",
+                "%lu: 0x%p\n",
+                index,
                 ret_addr
             );
         }
