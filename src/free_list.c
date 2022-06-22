@@ -63,10 +63,6 @@ static void KernAux_FreeList_remove(
 struct KernAux_FreeList KernAux_FreeList_create(const KernAux_Mutex mutex)
 {
     struct KernAux_FreeList free_list;
-    free_list.malloc.calloc  = KernAux_FreeList_calloc;
-    free_list.malloc.free    = KernAux_FreeList_free;
-    free_list.malloc.malloc  = KernAux_FreeList_malloc;
-    free_list.malloc.realloc = KernAux_FreeList_realloc;
     KernAux_FreeList_init(&free_list, mutex);
     return free_list;
 }
@@ -77,6 +73,10 @@ void KernAux_FreeList_init(
 ) {
     KERNAUX_ASSERT(free_list);
 
+    free_list->malloc.calloc  = KernAux_FreeList_calloc;
+    free_list->malloc.free    = KernAux_FreeList_free;
+    free_list->malloc.malloc  = KernAux_FreeList_malloc;
+    free_list->malloc.realloc = KernAux_FreeList_realloc;
     free_list->mutex = mutex;
     free_list->head = NULL;
 }
