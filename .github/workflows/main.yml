@@ -30,21 +30,40 @@ jobs:
         run: sudo make install
 
   cross:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04 # focal, because it's in ".github/sources.list"
     strategy:
       matrix:
         cross:
-          - host: 'i386-unknown-elf'
-            apt: 'crossbuild-essential-i386'
+          - arch: 'aarch64'
+            apt_arch: 'arm64'
+            apt_pkgs: 'crossbuild-essential-arm64'
+            cprefix: 'aarch64-linux-gnu-'
+          - arch: 'i386'
+            apt_arch: 'i386'
+            apt_pkgs: 'crossbuild-essential-i386'
             cprefix: 'i686-linux-gnu-'
+          - arch: 'riscv64'
+            apt_arch: 'riscv64'
+            apt_pkgs: 'crossbuild-essential-riscv64'
+            cprefix: 'riscv64-linux-gnu-'
     steps:
       - uses: actions/checkout@v2
+      - name: apt sources
+        run: sudo cp .github/sources.list /etc/apt/sources.list
+      - name: apt upgrade
+        run: sudo apt-get --yes update && (sudo apt-get --yes upgrade || sudo apt-get --yes -f install)
       - name: dependencies
-        run: sudo apt-get --yes install ${{matrix.cross.apt}}
+        run: sudo apt-get --yes install binfmt-support qemu qemu-user-static ${{matrix.cross.apt_pkgs}}
+      - name: dpkg arch
+        run: sudo dpkg --add-architecture ${{matrix.cross.apt_arch}}
+      - name: apt update
+        run: sudo apt-get --yes update
+      - name: cross dependencies
+        run: sudo apt-get --yes install libc6:${{matrix.cross.apt_arch}}
       - name: autogen
         run: ./autogen.sh
       - name: configure
-        run: ./configure --host='${{matrix.cross.host}}' --enable-tests --enable-tests-python AR='${{matrix.cross.cprefix}}ar' CC='${{matrix.cross.cprefix}}gcc' LD='${{matrix.cross.cprefix}}ld' RANLIB='${{matrix.cross.cprefix}}ranlib'
+        run: ./configure --host='${{matrix.cross.arch}}-unknown-elf' --enable-tests --enable-tests-python AR='${{matrix.cross.cprefix}}ar' CC='${{matrix.cross.cprefix}}gcc' LD='${{matrix.cross.cprefix}}ld' RANLIB='${{matrix.cross.cprefix}}ranlib'
       - name: make
         run: make
       - name: check
