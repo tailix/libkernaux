@@ -58,7 +58,7 @@ zero). Work-in-progress APIs can change at any time.
   * [Framebuffer](/include/kernaux/framebuffer.h) (*planned*)
   * USB (*planned*)
 * Algorithms
-  * [Memory allocator](/include/kernaux/alloc.h) (*non-breaking since* **?.?.?**)
+  * [Free list memory allocator](/include/kernaux/free_list.h) (*non-breaking since* **?.?.?**)
   * [Simple command line parser](/include/kernaux/cmdline.h) (*non-breaking since* **0.2.0**)
     * [Example](/examples/cmdline.c)
   * [Page Frame Allocator](/include/kernaux/pfa.h) (*work in progress*)
@@ -154,8 +154,8 @@ stable options.
 All packages are included by default. To exclude all packages except those
 explicitly included, use `--without-all`.
 
-* `--with[out]-alloc` - memory allocator
 * `--with[out]-cmdline` - command line parser
+* `--with[out]-free-list` - free list memory allocator
 * `--with[out]-io` - input/output
 * `--with[out]-memmap` - memory map
 * `--with[out]-ntoa` - itoa/ftoa
