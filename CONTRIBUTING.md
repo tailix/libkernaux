@@ -29,7 +29,7 @@ C language
 * Name global (*defined in the headers*) macros with the prefix `KERNAUX_`
   (example: `KERNAUX_FOO_BAR`).
 * Name global (*defined in the headers*) types with the prefix `KernAux_`
-  (example: `KernAux_FooBar`.
+  (example: `KernAux_FooBar`).
 * Name global (*defined in the headers*) nested types in Pascal case, with the
   prefix `KernAux_` and with the prefix of the surrounding type in Pascal case,
   separate type names with underscore (example: `KernAux_FooBar_CarCdr`).
