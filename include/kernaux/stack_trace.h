@@ -5,6 +5,10 @@
 extern "C" {
 #endif
 
+#include <stddef.h>
+
+void kernaux_stack_trace_snprint(char *buffer, size_t buffer_size);
+
 #ifdef __cplusplus
 }
 #endif
