@@ -12,7 +12,7 @@ Common
 C language
 ----------
 
-* Name regular (*not methods*) functions and variables in lower snake case
+* Name regular functions (*not methods*) and variables in lower snake case
   (example: `foo_bar`).
 * Name macros in upper snake case (example: `FOO_BAR`).
 * Name types (structures and type definitions) in Pascal case (example:
@@ -24,8 +24,8 @@ C language
   and with the prefix of the type name in Pascal case (example:
   `FooBar_car_cdr`).
 
-* Name public (*defined in the headers and exported as symbols*) regular (*not
-  methods*) functions and variables with the prefix `kernaux_` (example:
+* Name public (*defined in the headers and exported as symbols*) regular
+  functions (*not methods*) and variables with the prefix `kernaux_` (example:
   `kernaux_foo_bar`).
 * Name public (*defined in the headers*) macros with the prefix `KERNAUX_`
   (example: `KERNAUX_FOO_BAR`).
