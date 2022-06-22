@@ -53,7 +53,7 @@ jobs:
       - name: apt update
         run: sudo apt-get update
       - name: cross dependencies
-        run: sudo apt-get --yes install libc6:${{matrix.cross.apt_arch}}
+        run: sudo apt-get --yes install libc6:${{matrix.cross.apt_arch}} || sudo apt-get --yes -f install
       - name: autogen
         run: ./autogen.sh
       - name: configure
