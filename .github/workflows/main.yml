@@ -48,16 +48,18 @@ jobs:
             cprefix: 'riscv64-linux-gnu-'
     steps:
       - uses: actions/checkout@v2
-      - name: dependencies
-        run: sudo apt-get --yes install binfmt-support qemu qemu-user-static ${{matrix.cross.apt_pkgs}}
       - name: apt sources
         run: sudo cp .github/sources.list /etc/apt/sources.list
+      - name: apt upgrade
+        run: sudo apt-get --yes update && (sudo apt-get --yes upgrade || sudo apt-get --yes -f install)
+      - name: dependencies
+        run: sudo apt-get --yes install binfmt-support qemu qemu-user-static ${{matrix.cross.apt_pkgs}}
       - name: dpkg arch
         run: sudo dpkg --add-architecture ${{matrix.cross.apt_arch}}
       - name: apt update
-        run: sudo apt-get update
+        run: sudo apt-get --yes update
       - name: cross dependencies
-        run: sudo apt-get --yes install libc6:${{matrix.cross.apt_arch}} || sudo apt-get --yes -f install
+        run: sudo apt-get --yes install libc6:${{matrix.cross.apt_arch}}
       - name: autogen
         run: ./autogen.sh
       - name: configure
