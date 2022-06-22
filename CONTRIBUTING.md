@@ -13,8 +13,7 @@ C language
 ----------
 
 * Name regular functions and variables in lower snake case (example: `foo_bar`).
-* Name macros with the prefix `KERNAUX_` and in upper snake case (example:
-  `FOO_BAR`).
+* Name macros with in upper snake case (example: `FOO_BAR`).
 * Name types (structures and type definitions) in Pascal case (example:
   `FooBar`).
 * Name nested types in Pascal case and with the prefix of the surrounding type
