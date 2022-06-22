@@ -1,6 +1,7 @@
 2022-06-22  Alex Kotov  <kotovalexarian@gmail.com>
 
 	* include/kernaux/free_list.h: Finished
+	* include/kernaux/stack_trace.h: Added
 
 2022-06-21  Alex Kotov  <kotovalexarian@gmail.com>
 

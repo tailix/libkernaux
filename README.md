@@ -43,7 +43,7 @@ zero). Work-in-progress APIs can change at any time.
   * [Assertions](/include/kernaux/assert.h) (*non-breaking since* **0.4.0**)
     * [Example: Assert](/examples/assert.c)
     * [Example: Panic](/examples/panic.c)
-  * Stack trace *(planned)*
+  * [Stack trace](/include/kernaux/stack_trace.h) *(work in progress)*
   * [Input/output](/include/kernaux/io.h) (*work in progress*)
   * Architecture-specific code (*work in progress*)
     * [Declarations](/include/kernaux/arch/)
@@ -160,6 +160,7 @@ explicitly included, use `--without-all`.
 * `--with[out]-memmap` - memory map
 * `--with[out]-ntoa` - itoa/ftoa
 * `--with[out]-printf` - printf
+* `--with[out]-stack-trace` - stack trace
 
 
 

@@ -58,6 +58,9 @@ endif
 if WITH_PRINTF_FMT
 nobase_include_HEADERS += kernaux/printf_fmt.h
 endif
+if WITH_STACK_TRACE
+nobase_include_HEADERS += kernaux/stack_trace.h
+endif
 if WITH_UNITS
 nobase_include_HEADERS += kernaux/units.h
 endif
