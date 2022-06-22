@@ -51,14 +51,14 @@ endif
 if WITH_FRAMEBUFFER
 libkernaux_la_SOURCES += src/framebuffer.c
 endif
+if WITH_FREE_LIST
+libkernaux_la_SOURCES += src/free_list.c
+endif
 if WITH_IO
 libkernaux_la_SOURCES += src/io.c
 endif
 if WITH_LIBC
 libkernaux_la_LIBADD += libc/libc.la
-endif
-if WITH_ALLOC
-libkernaux_la_SOURCES += src/alloc.c
 endif
 if WITH_MBR
 libkernaux_la_SOURCES += src/mbr.c
