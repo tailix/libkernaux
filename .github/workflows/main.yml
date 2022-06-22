@@ -30,7 +30,7 @@ jobs:
         run: sudo make install
 
   cross:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04 # focal, because it's in ".github/sources.list"
     strategy:
       matrix:
         cross:
@@ -45,7 +45,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: dependencies
-        run: sudo apt-get --yes install binfmt-support dpkg-cross qemu qemu-user-static ${{matrix.cross.apt_pkgs}}
+        run: sudo apt-get --yes install binfmt-support qemu qemu-user-static ${{matrix.cross.apt_pkgs}}
       - name: apt sources
         run: sudo cp .github/sources.list /etc/apt/sources.list
       - name: dpkg arch
