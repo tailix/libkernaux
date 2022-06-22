@@ -1,3 +1,10 @@
+/**
+ * The code was inspired by the Limine bootloader.
+ *
+ * Copyright (c) 2020-2022 mintsuki
+ * Copyright (c) 2022      Alex Kotov
+ */
+
 #ifdef HAVE_CONFIG_H
 #include "config.h"
 #endif
