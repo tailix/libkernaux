@@ -34,15 +34,15 @@ jobs:
     strategy:
       matrix:
         cross:
-          - host: 'aarch64-unknown-elf'
+          - arch: 'aarch64'
             apt_arch: 'arm64'
             apt_pkgs: 'crossbuild-essential-arm64'
             cprefix: 'aarch64-linux-gnu-'
-          - host: 'i386-unknown-elf'
+          - arch: 'i386'
             apt_arch: 'i386'
             apt_pkgs: 'crossbuild-essential-i386'
             cprefix: 'i686-linux-gnu-'
-          - host: 'riscv64-unknown-elf'
+          - arch: 'riscv64'
             apt_arch: 'riscv64'
             apt_pkgs: 'crossbuild-essential-riscv64'
             cprefix: 'riscv64-linux-gnu-'
@@ -63,7 +63,7 @@ jobs:
       - name: autogen
         run: ./autogen.sh
       - name: configure
-        run: ./configure --host='${{matrix.cross.host}}' --enable-tests --enable-tests-python AR='${{matrix.cross.cprefix}}ar' CC='${{matrix.cross.cprefix}}gcc' LD='${{matrix.cross.cprefix}}ld' RANLIB='${{matrix.cross.cprefix}}ranlib'
+        run: ./configure --host='${{matrix.cross.arch}}-unknown-elf' --enable-tests --enable-tests-python AR='${{matrix.cross.cprefix}}ar' CC='${{matrix.cross.cprefix}}gcc' LD='${{matrix.cross.cprefix}}ld' RANLIB='${{matrix.cross.cprefix}}ranlib'
       - name: make
         run: make
       - name: check
