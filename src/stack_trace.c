@@ -75,7 +75,7 @@ void kernaux_stack_trace_snprint(char *buffer, size_t buffer_size)
 
 static const char *trace(size_t *const offset, const size_t ret_addr)
 {
-    *offset = 0;
+    *offset = 0xa8; // example
     (void)ret_addr;
-    return NULL;
+    return "foobar"; // example
 }
