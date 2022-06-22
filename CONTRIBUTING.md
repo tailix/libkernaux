@@ -12,6 +12,31 @@ Common
 C language
 ----------
 
+* Name regular functions and variables in lower snake case (example: `foo_bar`).
+* Name macros with the prefix `KERNAUX_` and in upper snake case (example:
+  `FOO_BAR`).
+* Name types (structures and type definitions) in Pascal case (example:
+  `FooBar`).
+* Name nested types in Pascal case and with the prefix of the surrounding type
+  in Pascal case, separate type names with underscores (example:
+  `FooBar_CarCdr`).
+* Name methods (functions that belong to a specific type) in lower snake case
+  and with the prefix of the type name in Pascal case (example:
+  `FooBar_car_cdr`).
+
+* Name regular global functions and variables (*defined in the headers and
+  exported as symbols*) with the prefix `kernaux_` (example: `kernaux_foo_bar`).
+* Name global macros (*defined in the headers*) with the prefix `KERNAUX_`
+  (example: `KERNAUX_FOO_BAR`).
+* Name global types (*defined in the headers*) with the prefix `KernAux_`
+  (example: `KernAux_FooBar`.
+* Name nested global types (*defined in the headers*) in Pascal case, with the
+  prefix `KernAux_` and with the prefix of the surrounding type in Pascal case,
+  separate type names with underscore (example: `KernAux_FooBar_CarCdr`).
+* Name global methods (*defined in the headers*) in lower snake case, with the
+  prefix `KernAux_` and with the prefix of the type name in Pascal case
+  (example: `KernAux_FooBar_car_cdr`).
+
 * Create `typedef`s with the names of related `struct`s. Use this name with a
   prefix `struct` to declare the data itself, withoth the prefix to declare
   a pointer or an array:
