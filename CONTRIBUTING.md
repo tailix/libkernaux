@@ -15,12 +15,12 @@ C language
 * Name regular functions (*not methods*) and variables in lower snake case
   (example: `foo_bar`).
 * Name macros in upper snake case (example: `FOO_BAR`).
-* Name types (structures and type definitions) in Pascal case (example:
-  `FooBar`).
+* Name types (*structures, unions, enumerations and type definitions*) in Pascal
+  case (example: `FooBar`).
 * Name nested types in Pascal case and with the prefix of the surrounding type
   in Pascal case, separate type names with underscores (example:
   `FooBar_CarCdr`).
-* Name methods (functions that belong to a specific type) in lower snake case
+* Name methods (*functions that belong to a specific type*) in lower snake case
   and with the prefix of the type name in Pascal case (example:
   `FooBar_car_cdr`).
 
