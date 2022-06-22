@@ -34,6 +34,10 @@ jobs:
     strategy:
       matrix:
         cross:
+          - host: 'aarch64-unknown-elf'
+            apt_arch: 'arm64'
+            apt_pkgs: 'crossbuild-essential-arm64'
+            cprefix: 'aarch64-linux-gnu-'
           - host: 'i386-unknown-elf'
             apt_arch: 'i386'
             apt_pkgs: 'crossbuild-essential-i386'
