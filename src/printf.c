@@ -2,6 +2,7 @@
  * The code was taken from Marco Paland's printf.
  *
  * Copyright (c) 2014-2019 Marco Paland <info@paland.com>
+ * Copyright (c) 2020-2022 Alex Kotov
  *
  * Tiny [v]fprintf, sfprintf and [v]snprintf implementation, optimized for speed
  * on embedded systems with a very limited resources. These routines are thread
