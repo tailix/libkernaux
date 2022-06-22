@@ -148,4 +148,5 @@
 /tests/test_printf_gen
 /tests/test_printf_gen.c
 /tests/test_printf_reg
+/tests/test_stack_trace
 /tests/test_units_human

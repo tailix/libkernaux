@@ -348,6 +348,18 @@ test_printf_reg_SOURCES = \
 endif
 
 ####################
+# test_stack_trace #
+####################
+
+if WITH_STACK_TRACE
+TESTS += test_stack_trace
+test_stack_trace_LDADD = $(top_builddir)/libkernaux.la
+test_stack_trace_SOURCES = \
+	main.c \
+	test_stack_trace.c
+endif
+
+####################
 # test_units_human #
 ####################
 
