@@ -10,13 +10,14 @@
 #endif
 
 #include <kernaux/assert.h>
+#include <kernaux/printf.h>
 #include <kernaux/stack_trace.h>
 
 #include <stddef.h>
 
 static const char *trace(size_t *offset, size_t ret_addr);
 
-void kernaux_stack_trace_snprint(char *const buffer, const size_t buffer_size)
+void kernaux_stack_trace_snprint(char *buffer, size_t buffer_size)
 {
     KERNAUX_ASSERT(buffer);
     KERNAUX_ASSERT(buffer_size > 0);
@@ -43,8 +44,27 @@ void kernaux_stack_trace_snprint(char *const buffer, const size_t buffer_size)
 
         size_t offset = 0;
         const char *const name = trace(&offset, ret_addr);
+        int snprintf_result;
         if (name) {
+            snprintf_result = kernaux_snprintf(
+                buffer,
+                buffer_size,
+                "[%p] <%s + %p>\n",
+                ret_addr,
+                name,
+                offset
+            );
         } else {
+            snprintf_result = kernaux_snprintf(
+                buffer,
+                buffer_size,
+                "[%p]\n",
+                ret_addr
+            );
+        }
+        if (snprintf_result > 0 && (size_t)snprintf_result < buffer_size) {
+            buffer_size -= snprintf_result;
+            buffer += snprintf_result;
         }
 
         if (!old_bp) break;
