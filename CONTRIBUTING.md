@@ -23,7 +23,7 @@ C language
   and with the prefix of the type name in Pascal case (example:
   `FooBar_car_cdr`).
 
-* Name regular global (*defined in the headers and exported as symbols*)
+* Name global (*defined in the headers and exported as symbols*) regular
   functions and variables with the prefix `kernaux_` (example:
   `kernaux_foo_bar`).
 * Name global (*defined in the headers*) macros with the prefix `KERNAUX_`
