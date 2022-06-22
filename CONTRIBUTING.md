@@ -23,16 +23,17 @@ C language
   and with the prefix of the type name in Pascal case (example:
   `FooBar_car_cdr`).
 
-* Name regular global functions and variables (*defined in the headers and
-  exported as symbols*) with the prefix `kernaux_` (example: `kernaux_foo_bar`).
-* Name global macros (*defined in the headers*) with the prefix `KERNAUX_`
+* Name regular global (*defined in the headers and exported as symbols*)
+  functions and variables with the prefix `kernaux_` (example:
+  `kernaux_foo_bar`).
+* Name global (*defined in the headers*) macros with the prefix `KERNAUX_`
   (example: `KERNAUX_FOO_BAR`).
-* Name global types (*defined in the headers*) with the prefix `KernAux_`
+* Name global (*defined in the headers*) types with the prefix `KernAux_`
   (example: `KernAux_FooBar`.
-* Name nested global types (*defined in the headers*) in Pascal case, with the
+* Name global (*defined in the headers*) nested types in Pascal case, with the
   prefix `KernAux_` and with the prefix of the surrounding type in Pascal case,
   separate type names with underscore (example: `KernAux_FooBar_CarCdr`).
-* Name global methods (*defined in the headers*) in lower snake case, with the
+* Name global (*defined in the headers*) methods in lower snake case, with the
   prefix `KernAux_` and with the prefix of the type name in Pascal case
   (example: `KernAux_FooBar_car_cdr`).
 
