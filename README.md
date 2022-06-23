@@ -88,8 +88,9 @@ zero). Work-in-progress APIs can change at any time.
   * [string.h](/libc/include/string.h)
   * [sys/types.h](/libc/include/sys/types.h)
 * Device drivers (for debugging only)
-  * Serial console (*work in progress*)
-  * Framebuffer (*planned*)
+  * [Serial console](/include/kernaux/drivers/console.h) (*work in progress*)
+  * [Framebuffer](/include/kernaux/drivers/framebuffer.h) (*planned*)
+  * [Intel 8259 PIC](/include/kernaux/drivers/intel_8259_pic.h) (*planned*)
   * USB (*planned*)
 
 ### Definitions

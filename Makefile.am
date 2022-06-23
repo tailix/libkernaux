@@ -56,6 +56,17 @@ if ASM_X86_64
 libkernaux_la_SOURCES += src/asm/x86_64.S
 endif
 
+###########
+# Drivers #
+###########
+
+if WITH_DRIVERS
+libkernaux_la_SOURCES += \
+	src/drivers/console.c \
+	src/drivers/framebuffer.c \
+	src/drivers/intel_8259_pic.c
+endif
+
 ####################
 # Default packages #
 ####################

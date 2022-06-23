@@ -27,6 +27,17 @@ if ASM_X86_64
 nobase_include_HEADERS += kernaux/asm/x86_64.h
 endif
 
+###########
+# Drivers #
+###########
+
+if WITH_DRIVERS
+nobase_include_HEADERS += \
+	kernaux/drivers/console.h \
+	kernaux/drivers/framebuffer.h \
+	kernaux/drivers/intel_8259_pic.h
+endif
+
 ####################
 # Default packages #
 ####################
