@@ -35,6 +35,7 @@ if WITH_DRIVERS
 nobase_include_HEADERS += \
 	kernaux/drivers/console.h \
 	kernaux/drivers/framebuffer.h \
+	kernaux/drivers/intel_8253_pit.h \
 	kernaux/drivers/intel_8259_pic.h
 endif
 

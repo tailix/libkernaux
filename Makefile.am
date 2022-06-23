@@ -64,6 +64,7 @@ if WITH_DRIVERS
 libkernaux_la_SOURCES += \
 	src/drivers/console.c \
 	src/drivers/framebuffer.c \
+	src/drivers/intel_8253_pit.c \
 	src/drivers/intel_8259_pic.c
 endif
 

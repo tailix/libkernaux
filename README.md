@@ -90,6 +90,7 @@ zero). Work-in-progress APIs can change at any time.
 * Device drivers (for debugging only)
   * [Serial console](/include/kernaux/drivers/console.h) (*work in progress*)
   * [Framebuffer](/include/kernaux/drivers/framebuffer.h) (*planned*)
+  * [Intel 8253-compatible PIT](/include/kernaux/drivers/intel_8253_pit.h) (*work in progress*)
   * [Intel 8259-compatible PIC](/include/kernaux/drivers/intel_8259_pic.h) (*work in progress*)
   * USB (*planned*)
 
