@@ -69,13 +69,11 @@ zero). Work-in-progress APIs can change at any time.
   * [Memory map](/include/kernaux/memmap.h.in) (*non-breaking since* **0.4.0**)
     * [Example](/examples/memmap.c)
   * [printf format parser](/include/kernaux/printf_fmt.h) (*work in progress*)
-    * Code from [https://github.com/mpaland/printf](https://github.com/mpaland/printf). Thank you!
     * [Example](/examples/printf_fmt.c)
 * Usual functions
   * [itoa/ftoa replacement](/include/kernaux/ntoa.h) (*non-breaking since* **0.4.0**)
     * [Example](/examples/ntoa.c)
   * [printf replacement](/include/kernaux/printf.h.in) (*non-breaking since* **0.4.0**)
-    * Code from [https://github.com/mpaland/printf](https://github.com/mpaland/printf). Thank you!
     * [Example: fprintf](/examples/fprintf.c)
     * [Example: vfprintf](/examples/fprintf_va.c)
     * [Example: snprintf](/examples/snprintf.c)
