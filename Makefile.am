@@ -45,9 +45,6 @@ endif
 if WITH_ELF
 libkernaux_la_SOURCES += src/elf.c
 endif
-if WITH_FRAMEBUFFER
-libkernaux_la_SOURCES += src/framebuffer.c
-endif
 if WITH_FREE_LIST
 libkernaux_la_SOURCES += src/free_list.c
 endif

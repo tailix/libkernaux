@@ -3,7 +3,6 @@
 
 @comment_line_cmdline@#define KERNAUX_VERSION_WITH_CMDLINE
 @comment_line_elf@#define KERNAUX_VERSION_WITH_ELF
-@comment_line_framebuffer@#define KERNAUX_VERSION_WITH_FRAMEBUFFER
 @comment_line_io@#define KERNAUX_VERSION_WITH_IO
 @comment_line_mbr@#define KERNAUX_VERSION_WITH_MBR
 @comment_line_multiboot2@#define KERNAUX_VERSION_WITH_MULTIBOOT2

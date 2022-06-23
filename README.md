@@ -89,7 +89,7 @@ zero). Work-in-progress APIs can change at any time.
   * [sys/types.h](/libc/include/sys/types.h)
 * Device drivers (for debugging only)
   * Serial console (*work in progress*)
-  * [Framebuffer](/include/kernaux/framebuffer.h) (*planned*)
+  * Framebuffer (*planned*)
   * USB (*planned*)
 
 ### Definitions

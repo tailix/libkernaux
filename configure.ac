@@ -58,7 +58,6 @@ dnl Packages (enabled by default)
 AC_ARG_WITH(  [all],          AS_HELP_STRING([--without-all],         [without all default packages]))
 AC_ARG_WITH(  [cmdline],      AS_HELP_STRING([--without-cmdline],     [without command line parser]))
 AC_ARG_WITH(  [elf],          AS_HELP_STRING([--without-elf],         [without ELF utils]))
-AC_ARG_WITH(  [framebuffer],  AS_HELP_STRING([--without-framebuffer], [without framebuffer]))
 AC_ARG_WITH(  [free-list],    AS_HELP_STRING([--without-free-list],   [without free list memory allocator]))
 AC_ARG_WITH(  [io],           AS_HELP_STRING([--without-io],          [without input/output]))
 AC_ARG_WITH(  [mbr],          AS_HELP_STRING([--without-mbr],         [without Master Boot Record]))
@@ -91,7 +90,6 @@ AC_DEFUN([do_without_all],
 [
 if test -z "$with_cmdline";     then with_cmdline=no;     fi
 if test -z "$with_elf";         then with_elf=no;         fi
-if test -z "$with_framebuffer"; then with_framebuffer=no; fi
 if test -z "$with_free_list";   then with_free_list=no;   fi
 if test -z "$with_io";          then with_io=no;          fi
 if test -z "$with_mbr";         then with_mbr=no;         fi
@@ -127,7 +125,6 @@ dnl Packages (enabled by default)
 AS_IF([test "$with_all"            = no ], [with_all=no],             [with_all=yes])
 AS_IF([test "$with_cmdline"        = no ], [with_cmdline=no],         [with_cmdline=yes])
 AS_IF([test "$with_elf"            = no ], [with_elf=no],             [with_elf=yes])
-AS_IF([test "$with_framebuffer"    = no ], [with_framebuffer=no],     [with_framebuffer=yes])
 AS_IF([test "$with_free_list"      = no ], [with_free_list=no],       [with_free_list=yes])
 AS_IF([test "$with_io"             = no ], [with_io=no],              [with_io=yes])
 AS_IF([test "$with_mbr"            = no ], [with_mbr=no],             [with_mbr=yes])
@@ -183,7 +180,6 @@ AM_CONDITIONAL([ENABLE_TESTS_PYTHON], [test "$enable_tests_python" = yes])
 dnl Packages (enabled by default)
 AM_CONDITIONAL([WITH_CMDLINE],        [test "$with_cmdline"        = yes])
 AM_CONDITIONAL([WITH_ELF],            [test "$with_elf"            = yes])
-AM_CONDITIONAL([WITH_FRAMEBUFFER],    [test "$with_framebuffer"    = yes])
 AM_CONDITIONAL([WITH_FREE_LIST],      [test "$with_free_list"      = yes])
 AM_CONDITIONAL([WITH_IO],             [test "$with_io"             = yes])
 AM_CONDITIONAL([WITH_MBR],            [test "$with_mbr"            = yes])
@@ -224,7 +220,6 @@ AS_IF([test "$enable_tests_python" = yes], [AC_DEFINE([ENABLE_TESTS_PYTHON], [1]
 dnl Packages (enabled by default)
 AS_IF([test "$with_cmdline"        = yes], [AC_DEFINE([WITH_CMDLINE],        [1], [with command line parser])])
 AS_IF([test "$with_elf"            = yes], [AC_DEFINE([WITH_ELF],            [1], [with ELF utils])])
-AS_IF([test "$with_framebuffer"    = yes], [AC_DEFINE([WITH_FRAMEBUFFER],    [1], [with framebuffer])])
 AS_IF([test "$with_free_list"      = yes], [AC_DEFINE([WITH_FREE_LIST],      [1], [with free list memory allocator])])
 AS_IF([test "$with_io"             = yes], [AC_DEFINE([WITH_IO],             [1], [with input/output])])
 AS_IF([test "$with_mbr"            = yes], [AC_DEFINE([WITH_MBR],            [1], [with Master Boot Record])])
@@ -252,7 +247,6 @@ AS_IF([test "$enable_debug"        = yes], [AC_DEFINE([KERNAUX_DEBUG],       [1]
 dnl Packages (enabled by default)
 AS_IF([test "$with_cmdline"     = no], [AC_SUBST([comment_line_cmdline],     [//])])
 AS_IF([test "$with_elf"         = no], [AC_SUBST([comment_line_elf],         [//])])
-AS_IF([test "$with_framebuffer" = no], [AC_SUBST([comment_line_framebuffer], [//])])
 AS_IF([test "$with_free_list"   = no], [AC_SUBST([comment_line_free_list],   [//])])
 AS_IF([test "$with_io"          = no], [AC_SUBST([comment_line_io],          [//])])
 AS_IF([test "$with_mbr"         = no], [AC_SUBST([comment_line_mbr],         [//])])

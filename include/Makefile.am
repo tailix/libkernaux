@@ -25,9 +25,6 @@ endif
 if WITH_ELF
 nobase_include_HEADERS += kernaux/elf.h
 endif
-if WITH_FRAMEBUFFER
-nobase_include_HEADERS += kernaux/framebuffer.h
-endif
 if WITH_FREE_LIST
 nobase_include_HEADERS += kernaux/free_list.h
 endif
