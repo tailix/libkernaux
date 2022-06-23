@@ -5,8 +5,6 @@
 #include <kernaux/assert.h>
 #include <kernaux/drivers/console.h>
 
-#include "libc.h"
-
 #ifdef ASM_I386
 #include <kernaux/asm/i386.h>
 #endif
