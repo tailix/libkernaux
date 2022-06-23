@@ -119,7 +119,6 @@ void kernaux_drivers_intel_8259_pic_eoi(const unsigned char number)
     if (to_slave) kernaux_asm_i386_outportb(SLAVE_COMMAND_PORT, 0x20);
     kernaux_asm_i386_outportb(MASTER_COMMAND_PORT, 0x20);
 #else
-    (void)to_master;
     (void)to_slave;
 #endif
 }
