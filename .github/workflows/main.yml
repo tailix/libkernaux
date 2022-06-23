@@ -101,10 +101,12 @@ jobs:
         debug: ['--disable-debug', '--enable-debug']
     steps:
       - uses: actions/checkout@v2
+      - name: dependencies
+        run: sudo apt-get --yes install crossbuild-essential-i386
       - name: autogen
         run: ./autogen.sh
       - name: configure
-        run: ./configure ${{matrix.debug}} --enable-freestanding --with-drivers --with-libc
+        run: ./configure --host='i386-elf' ${{matrix.debug}} --enable-freestanding --with-drivers --with-libc AR=(which i686-linux-gnu-ar) CC=(which i686-linux-gnu-gcc) LD=(which i686-linux-gnu-ld) RANLIB=(which i686-linux-gnu-ranlib)
       - name: make
         run: make
 
