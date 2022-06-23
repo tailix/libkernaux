@@ -23,12 +23,28 @@ AM_CFLAGS += -DKERNAUX_ACCESS_PRIVATE
 
 lib_LTLIBRARIES = libkernaux.la
 
+##################
+# Required files #
+##################
+
 libkernaux_la_LIBADD =
 libkernaux_la_SOURCES = \
 	src/assert.c \
 	src/libc.h \
 	src/generic/malloc.c \
 	src/generic/mutex.c
+
+########
+# libc #
+########
+
+if WITH_LIBC
+libkernaux_la_LIBADD += libc/libc.la
+endif
+
+#######
+# ASM #
+#######
 
 if ASM_I386
 libkernaux_la_SOURCES += src/asm/i386.S
@@ -39,6 +55,11 @@ endif
 if ASM_X86_64
 libkernaux_la_SOURCES += src/asm/x86_64.S
 endif
+
+####################
+# Default packages #
+####################
+
 if WITH_CMDLINE
 libkernaux_la_SOURCES += src/cmdline.c
 endif
@@ -50,9 +71,6 @@ libkernaux_la_SOURCES += src/free_list.c
 endif
 if WITH_IO
 libkernaux_la_SOURCES += src/io.c
-endif
-if WITH_LIBC
-libkernaux_la_LIBADD += libc/libc.la
 endif
 if WITH_MBR
 libkernaux_la_SOURCES += src/mbr.c

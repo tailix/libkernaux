@@ -1,3 +1,7 @@
+##################
+# Required files #
+##################
+
 nobase_include_HEADERS = \
 	kernaux.h \
 	kernaux/arch/i386.h \
@@ -9,6 +13,10 @@ nobase_include_HEADERS = \
 	kernaux/generic/malloc.h \
 	kernaux/generic/mutex.h
 
+#######
+# ASM #
+#######
+
 if ASM_I386
 nobase_include_HEADERS += kernaux/asm/i386.h
 endif
@@ -18,6 +26,10 @@ endif
 if ASM_X86_64
 nobase_include_HEADERS += kernaux/asm/x86_64.h
 endif
+
+####################
+# Default packages #
+####################
 
 if WITH_CMDLINE
 nobase_include_HEADERS += kernaux/cmdline.h
