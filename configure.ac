@@ -73,6 +73,7 @@ AC_ARG_WITH(  [printf-fmt],   AS_HELP_STRING([--without-printf-fmt],  [without p
 AC_ARG_WITH(  [units],        AS_HELP_STRING([--without-units],       [without measurement units utils]))
 
 dnl Packages (disabled by default)
+AC_ARG_WITH(  [drivers],      AS_HELP_STRING([--with-drivers],        [with drivers]))
 AC_ARG_WITH(  [libc],         AS_HELP_STRING([--with-libc],           [with libc replacement]))
 
 
@@ -143,6 +144,7 @@ AS_IF([test "$with_printf_fmt"     = no ], [with_printf_fmt=no],      [with_prin
 AS_IF([test "$with_units"          = no ], [with_units=no],           [with_units=yes])
 
 dnl Packages (disabled by default)
+AS_IF([test "$with_drivers"        = no ], [with_drivers=yes],        [with_drivers=no])
 AS_IF([test "$with_libc"           = yes], [with_libc=yes],           [with_libc=no])
 
 
@@ -199,6 +201,7 @@ AM_CONDITIONAL([WITH_PRINTF_FMT],     [test "$with_printf_fmt"     = yes])
 AM_CONDITIONAL([WITH_UNITS],          [test "$with_units"          = yes])
 
 dnl Packages (disabled by default)
+AM_CONDITIONAL([WITH_DRIVERS],        [test "$with_drivers"        = yes])
 AM_CONDITIONAL([WITH_LIBC],           [test "$with_libc"           = yes])
 
 
@@ -240,6 +243,7 @@ AS_IF([test "$with_printf_fmt"     = yes], [AC_DEFINE([WITH_PRINTF_FMT],     [1]
 AS_IF([test "$with_units",         = yes], [AC_DEFINE([WITH_UNITS],          [1], [with measurement units utils])])
 
 dnl Packages (disabled by default)
+AS_IF([test "$with_drivers"        = yes], [AC_DEFINE([WITH_DRIVERS],        [1], [with drivers])])
 AS_IF([test "$with_libc"           = yes], [AC_DEFINE([WITH_LIBC],           [1], [with libc replacement])])
 
 dnl Additional

@@ -94,6 +94,20 @@ jobs:
       - name: install
         run: sudo make install
 
+  freestanding:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        debug: ['--disable-debug', '--enable-debug']
+    steps:
+      - uses: actions/checkout@v2
+      - name: autogen
+        run: ./autogen.sh
+      - name: configure
+        run: ./configure ${{matrix.debug}} --enable-freestanding --with-drivers --with-libc
+      - name: make
+        run: make
+
   dist:
     runs-on: ubuntu-latest
     steps:

@@ -53,10 +53,6 @@ zero). Work-in-progress APIs can change at any time.
     * [Example](/examples/generic_malloc.c)
   * [Mutex](/include/kernaux/generic/mutex.h) (*non-breaking since* **?.?.?**)
     * [Example](/examples/generic_mutex.c)
-* Device drivers (for debugging only)
-  * [Serial console](/include/kernaux/console.h) (*work in progress*)
-  * [Framebuffer](/include/kernaux/framebuffer.h) (*planned*)
-  * USB (*planned*)
 * Algorithms
   * [Free list memory allocator](/include/kernaux/free_list.h) (*non-breaking since* **?.?.?**)
   * [Simple command line parser](/include/kernaux/cmdline.h) (*non-breaking since* **0.2.0**)
@@ -91,6 +87,10 @@ zero). Work-in-progress APIs can change at any time.
   * [stdlib.h](/libc/include/stdlib.h)
   * [string.h](/libc/include/string.h)
   * [sys/types.h](/libc/include/sys/types.h)
+* Device drivers (for debugging only)
+  * [Serial console](/include/kernaux/console.h) (*work in progress*)
+  * [Framebuffer](/include/kernaux/framebuffer.h) (*planned*)
+  * USB (*planned*)
 
 ### Definitions
 
@@ -138,6 +138,7 @@ stable options.
 
 #### Packages
 
+* `--with-drivers` - device drivers
 * `--with-libc` - provides the replacement for some standard C functions.
   Useful in freestanding environment, where no libc is present.
 
@@ -200,6 +201,7 @@ without it in `$PATH`:
 ./configure \
   --host='i386-elf' \
   --enable-freestanding \
+  --with-drivers \
   --with-libc \
   AR="$(which i386-elf-ar)" \
   CC="$(which i386-elf-gcc)" \
