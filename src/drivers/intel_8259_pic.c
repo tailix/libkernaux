@@ -12,6 +12,8 @@
 #include <stdbool.h>
 #include <stdint.h>
 
+#define NOT_AVAILABLE_MSG "Intel 8259-compatible PIC is not available"
+
 #define MASTER_COMMAND_PORT 0x20
 #define SLAVE_COMMAND_PORT  0xA0
 
@@ -28,6 +30,8 @@ void kernaux_drivers_intel_8259_pic_enable_all()
 #ifdef ASM_I386
     kernaux_asm_i386_outportb(MASTER_DATA_PORT, 0);
     kernaux_asm_i386_outportb(SLAVE_DATA_PORT,  0);
+#else
+    KERNAUX_PANIC(NOT_AVAILABLE_MSG);
 #endif
 }
 
@@ -36,6 +40,8 @@ void kernaux_drivers_intel_8259_pic_disable_all()
 #ifdef ASM_I386
     kernaux_asm_i386_outportb(MASTER_DATA_PORT, 0xFF);
     kernaux_asm_i386_outportb(SLAVE_DATA_PORT,  0xFF);
+#else
+    KERNAUX_PANIC(NOT_AVAILABLE_MSG);
 #endif
 }
 
@@ -53,6 +59,7 @@ void kernaux_drivers_intel_8259_pic_enable(const unsigned char number)
     }
 #else
     (void)number;
+    KERNAUX_PANIC(NOT_AVAILABLE_MSG);
 #endif
 }
 
@@ -70,6 +77,7 @@ void kernaux_drivers_intel_8259_pic_disable(const unsigned char number)
     }
 #else
     (void)number;
+    KERNAUX_PANIC(NOT_AVAILABLE_MSG);
 #endif
 }
 
@@ -105,6 +113,7 @@ void kernaux_drivers_intel_8259_pic_remap(
     kernaux_asm_i386_outportb(SLAVE_DATA_PORT,  slave_mask);
 #else
     (void)new_master_start;
+    KERNAUX_PANIC(NOT_AVAILABLE_MSG);
 #endif
 }
 
@@ -120,5 +129,6 @@ void kernaux_drivers_intel_8259_pic_eoi(const unsigned char number)
     kernaux_asm_i386_outportb(MASTER_COMMAND_PORT, 0x20);
 #else
     (void)to_slave;
+    KERNAUX_PANIC(NOT_AVAILABLE_MSG);
 #endif
 }
