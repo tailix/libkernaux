@@ -2,7 +2,7 @@
 #include "config.h"
 #endif
 
-#include <kernaux/framebuffer.h>
+#include <kernaux/drivers/intel_8259_pic.h>
 
 __attribute__((unused))
 static const int foobar = 0;

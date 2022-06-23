@@ -30,7 +30,7 @@ AC_CONFIG_FILES([
   libc/Makefile
   libc/include/Makefile
   include/kernaux.h
-  include/kernaux/console.h
+  include/kernaux/drivers/console.h
   include/kernaux/multiboot2.h
   include/kernaux/printf.h
   include/kernaux/version.h
@@ -58,9 +58,7 @@ AC_ARG_ENABLE([tests-python], AS_HELP_STRING([--enable-tests-python], [enable te
 dnl Packages (enabled by default)
 AC_ARG_WITH(  [all],          AS_HELP_STRING([--without-all],         [without all default packages]))
 AC_ARG_WITH(  [cmdline],      AS_HELP_STRING([--without-cmdline],     [without command line parser]))
-AC_ARG_WITH(  [console],      AS_HELP_STRING([--without-console],     [without serial console]))
 AC_ARG_WITH(  [elf],          AS_HELP_STRING([--without-elf],         [without ELF utils]))
-AC_ARG_WITH(  [framebuffer],  AS_HELP_STRING([--without-framebuffer], [without framebuffer]))
 AC_ARG_WITH(  [free-list],    AS_HELP_STRING([--without-free-list],   [without free list memory allocator]))
 AC_ARG_WITH(  [io],           AS_HELP_STRING([--without-io],          [without input/output]))
 AC_ARG_WITH(  [mbr],          AS_HELP_STRING([--without-mbr],         [without Master Boot Record]))
@@ -73,6 +71,7 @@ AC_ARG_WITH(  [printf-fmt],   AS_HELP_STRING([--without-printf-fmt],  [without p
 AC_ARG_WITH(  [units],        AS_HELP_STRING([--without-units],       [without measurement units utils]))
 
 dnl Packages (disabled by default)
+AC_ARG_WITH(  [drivers],      AS_HELP_STRING([--with-drivers],        [with drivers]))
 AC_ARG_WITH(  [libc],         AS_HELP_STRING([--with-libc],           [with libc replacement]))
 
 
@@ -91,9 +90,7 @@ AS_IF([test "$enable_tests_all" = yes], do_enable_tests_all)
 AC_DEFUN([do_without_all],
 [
 if test -z "$with_cmdline";     then with_cmdline=no;     fi
-if test -z "$with_console";     then with_console=no;     fi
 if test -z "$with_elf";         then with_elf=no;         fi
-if test -z "$with_framebuffer"; then with_framebuffer=no; fi
 if test -z "$with_free_list";   then with_free_list=no;   fi
 if test -z "$with_io";          then with_io=no;          fi
 if test -z "$with_mbr";         then with_mbr=no;         fi
@@ -128,9 +125,7 @@ AS_IF([test "$enable_tests_python" = yes], [enable_tests_python=yes], [enable_te
 dnl Packages (enabled by default)
 AS_IF([test "$with_all"            = no ], [with_all=no],             [with_all=yes])
 AS_IF([test "$with_cmdline"        = no ], [with_cmdline=no],         [with_cmdline=yes])
-AS_IF([test "$with_console"        = no ], [with_console=no],         [with_console=yes])
 AS_IF([test "$with_elf"            = no ], [with_elf=no],             [with_elf=yes])
-AS_IF([test "$with_framebuffer"    = no ], [with_framebuffer=no],     [with_framebuffer=yes])
 AS_IF([test "$with_free_list"      = no ], [with_free_list=no],       [with_free_list=yes])
 AS_IF([test "$with_io"             = no ], [with_io=no],              [with_io=yes])
 AS_IF([test "$with_mbr"            = no ], [with_mbr=no],             [with_mbr=yes])
@@ -143,6 +138,7 @@ AS_IF([test "$with_printf_fmt"     = no ], [with_printf_fmt=no],      [with_prin
 AS_IF([test "$with_units"          = no ], [with_units=no],           [with_units=yes])
 
 dnl Packages (disabled by default)
+AS_IF([test "$with_drivers"        = yes], [with_drivers=yes],        [with_drivers=no])
 AS_IF([test "$with_libc"           = yes], [with_libc=yes],           [with_libc=no])
 
 
@@ -184,9 +180,7 @@ AM_CONDITIONAL([ENABLE_TESTS_PYTHON], [test "$enable_tests_python" = yes])
 
 dnl Packages (enabled by default)
 AM_CONDITIONAL([WITH_CMDLINE],        [test "$with_cmdline"        = yes])
-AM_CONDITIONAL([WITH_CONSOLE],        [test "$with_console"        = yes])
 AM_CONDITIONAL([WITH_ELF],            [test "$with_elf"            = yes])
-AM_CONDITIONAL([WITH_FRAMEBUFFER],    [test "$with_framebuffer"    = yes])
 AM_CONDITIONAL([WITH_FREE_LIST],      [test "$with_free_list"      = yes])
 AM_CONDITIONAL([WITH_IO],             [test "$with_io"             = yes])
 AM_CONDITIONAL([WITH_MBR],            [test "$with_mbr"            = yes])
@@ -199,6 +193,7 @@ AM_CONDITIONAL([WITH_PRINTF_FMT],     [test "$with_printf_fmt"     = yes])
 AM_CONDITIONAL([WITH_UNITS],          [test "$with_units"          = yes])
 
 dnl Packages (disabled by default)
+AM_CONDITIONAL([WITH_DRIVERS],        [test "$with_drivers"        = yes])
 AM_CONDITIONAL([WITH_LIBC],           [test "$with_libc"           = yes])
 
 
@@ -225,9 +220,7 @@ AS_IF([test "$enable_tests_python" = yes], [AC_DEFINE([ENABLE_TESTS_PYTHON], [1]
 
 dnl Packages (enabled by default)
 AS_IF([test "$with_cmdline"        = yes], [AC_DEFINE([WITH_CMDLINE],        [1], [with command line parser])])
-AS_IF([test "$with_console"        = yes], [AC_DEFINE([WITH_CONSOLE],        [1], [with serial console])])
 AS_IF([test "$with_elf"            = yes], [AC_DEFINE([WITH_ELF],            [1], [with ELF utils])])
-AS_IF([test "$with_framebuffer"    = yes], [AC_DEFINE([WITH_FRAMEBUFFER],    [1], [with framebuffer])])
 AS_IF([test "$with_free_list"      = yes], [AC_DEFINE([WITH_FREE_LIST],      [1], [with free list memory allocator])])
 AS_IF([test "$with_io"             = yes], [AC_DEFINE([WITH_IO],             [1], [with input/output])])
 AS_IF([test "$with_mbr"            = yes], [AC_DEFINE([WITH_MBR],            [1], [with Master Boot Record])])
@@ -240,6 +233,7 @@ AS_IF([test "$with_printf_fmt"     = yes], [AC_DEFINE([WITH_PRINTF_FMT],     [1]
 AS_IF([test "$with_units",         = yes], [AC_DEFINE([WITH_UNITS],          [1], [with measurement units utils])])
 
 dnl Packages (disabled by default)
+AS_IF([test "$with_drivers"        = yes], [AC_DEFINE([WITH_DRIVERS],        [1], [with drivers])])
 AS_IF([test "$with_libc"           = yes], [AC_DEFINE([WITH_LIBC],           [1], [with libc replacement])])
 
 dnl Additional
@@ -253,9 +247,7 @@ AS_IF([test "$enable_debug"        = yes], [AC_DEFINE([KERNAUX_DEBUG],       [1]
 
 dnl Packages (enabled by default)
 AS_IF([test "$with_cmdline"     = no], [AC_SUBST([comment_line_cmdline],     [//])])
-AS_IF([test "$with_console"     = no], [AC_SUBST([comment_line_console],     [//])])
 AS_IF([test "$with_elf"         = no], [AC_SUBST([comment_line_elf],         [//])])
-AS_IF([test "$with_framebuffer" = no], [AC_SUBST([comment_line_framebuffer], [//])])
 AS_IF([test "$with_free_list"   = no], [AC_SUBST([comment_line_free_list],   [//])])
 AS_IF([test "$with_io"          = no], [AC_SUBST([comment_line_io],          [//])])
 AS_IF([test "$with_mbr"         = no], [AC_SUBST([comment_line_mbr],         [//])])

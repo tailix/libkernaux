@@ -3,9 +3,7 @@
 #endif
 
 #include <kernaux/assert.h>
-#include <kernaux/console.h>
-
-#include "libc.h"
+#include <kernaux/drivers/console.h>
 
 #ifdef ASM_I386
 #include <kernaux/asm/i386.h>
@@ -24,15 +22,15 @@
 #include <stddef.h>
 
 #if defined(WITH_IO) && defined(WITH_PRINTF)
-static void kernaux_console_printf_putc(
+static void kernaux_drivers_console_printf_putc(
     const char c,
     void *const arg __attribute__((unused))
 ) {
-    kernaux_console_putc(c);
+    kernaux_drivers_console_putc(c);
 }
 #endif
 
-void kernaux_console_putc(const char c __attribute__((unused)))
+void kernaux_drivers_console_putc(const char c __attribute__((unused)))
 {
 #ifdef ASM_I386
     kernaux_asm_i386_outportb(0x3f8, c);
@@ -42,41 +40,42 @@ void kernaux_console_putc(const char c __attribute__((unused)))
 #endif
 }
 
-void kernaux_console_print(const char *const s)
+void kernaux_drivers_console_print(const char *const s)
 {
     KERNAUX_ASSERT(s);
 
     for (const char *c = s; *c; ++c) {
-        kernaux_console_putc(*c);
+        kernaux_drivers_console_putc(*c);
     }
 }
 
 #if defined(WITH_IO) && defined(WITH_PRINTF)
-void kernaux_console_printf(const char *format, ...)
+void kernaux_drivers_console_printf(const char *format, ...)
 {
     KERNAUX_ASSERT(format);
 
     va_list va;
     va_start(va, format);
-    struct KernAux_File file = KernAux_File_create(kernaux_console_printf_putc);
+    struct KernAux_File file =
+        KernAux_File_create(kernaux_drivers_console_printf_putc);
     kernaux_vfprintf(&file, NULL, format, va);
     va_end(va);
 }
 #endif
 
-void kernaux_console_puts(const char *const s)
+void kernaux_drivers_console_puts(const char *const s)
 {
     KERNAUX_ASSERT(s);
 
-    kernaux_console_print(s);
-    kernaux_console_putc('\n');
+    kernaux_drivers_console_print(s);
+    kernaux_drivers_console_putc('\n');
 }
 
-void kernaux_console_write(const char *const data, const size_t size)
+void kernaux_drivers_console_write(const char *const data, const size_t size)
 {
     KERNAUX_ASSERT(data);
 
     for (size_t i = 0; i < size; i++) {
-        kernaux_console_putc(data[i]);
+        kernaux_drivers_console_putc(data[i]);
     }
 }

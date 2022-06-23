@@ -1,3 +1,7 @@
+##################
+# Required files #
+##################
+
 nobase_include_HEADERS = \
 	kernaux.h \
 	kernaux/arch/i386.h \
@@ -9,6 +13,10 @@ nobase_include_HEADERS = \
 	kernaux/generic/malloc.h \
 	kernaux/generic/mutex.h
 
+#######
+# ASM #
+#######
+
 if ASM_I386
 nobase_include_HEADERS += kernaux/asm/i386.h
 endif
@@ -19,17 +27,26 @@ if ASM_X86_64
 nobase_include_HEADERS += kernaux/asm/x86_64.h
 endif
 
+###########
+# Drivers #
+###########
+
+if WITH_DRIVERS
+nobase_include_HEADERS += \
+	kernaux/drivers/console.h \
+	kernaux/drivers/framebuffer.h \
+	kernaux/drivers/intel_8259_pic.h
+endif
+
+####################
+# Default packages #
+####################
+
 if WITH_CMDLINE
 nobase_include_HEADERS += kernaux/cmdline.h
 endif
-if WITH_CONSOLE
-nobase_include_HEADERS += kernaux/console.h
-endif
 if WITH_ELF
 nobase_include_HEADERS += kernaux/elf.h
-endif
-if WITH_FRAMEBUFFER
-nobase_include_HEADERS += kernaux/framebuffer.h
 endif
 if WITH_FREE_LIST
 nobase_include_HEADERS += kernaux/free_list.h

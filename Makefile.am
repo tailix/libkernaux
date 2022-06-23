@@ -23,12 +23,28 @@ AM_CFLAGS += -DKERNAUX_ACCESS_PRIVATE
 
 lib_LTLIBRARIES = libkernaux.la
 
+##################
+# Required files #
+##################
+
 libkernaux_la_LIBADD =
 libkernaux_la_SOURCES = \
 	src/assert.c \
 	src/libc.h \
 	src/generic/malloc.c \
 	src/generic/mutex.c
+
+########
+# libc #
+########
+
+if WITH_LIBC
+libkernaux_la_LIBADD += libc/libc.la
+endif
+
+#######
+# ASM #
+#######
 
 if ASM_I386
 libkernaux_la_SOURCES += src/asm/i386.S
@@ -39,26 +55,33 @@ endif
 if ASM_X86_64
 libkernaux_la_SOURCES += src/asm/x86_64.S
 endif
+
+###########
+# Drivers #
+###########
+
+if WITH_DRIVERS
+libkernaux_la_SOURCES += \
+	src/drivers/console.c \
+	src/drivers/framebuffer.c \
+	src/drivers/intel_8259_pic.c
+endif
+
+####################
+# Default packages #
+####################
+
 if WITH_CMDLINE
 libkernaux_la_SOURCES += src/cmdline.c
 endif
-if WITH_CONSOLE
-libkernaux_la_SOURCES += src/console.c
-endif
 if WITH_ELF
 libkernaux_la_SOURCES += src/elf.c
-endif
-if WITH_FRAMEBUFFER
-libkernaux_la_SOURCES += src/framebuffer.c
 endif
 if WITH_FREE_LIST
 libkernaux_la_SOURCES += src/free_list.c
 endif
 if WITH_IO
 libkernaux_la_SOURCES += src/io.c
-endif
-if WITH_LIBC
-libkernaux_la_LIBADD += libc/libc.la
 endif
 if WITH_MBR
 libkernaux_la_SOURCES += src/mbr.c
