@@ -12,8 +12,6 @@
 #include <stdbool.h>
 #include <stdint.h>
 
-#define NOT_AVAILABLE_MSG "Intel 8259-compatible PIC is not available"
-
 #define MASTER_COMMAND_PORT 0x20
 #define SLAVE_COMMAND_PORT  0xA0
 
@@ -24,6 +22,7 @@
 #define IRQS_TOTAL 16
 
 #undef AVAILABLE
+#define NOT_AVAILABLE_MSG "Intel 8259-compatible PIC is not available"
 #ifdef ASM_I386
 #   define AVAILABLE
 #   define inportb  kernaux_asm_i386_inportb
