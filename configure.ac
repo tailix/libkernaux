@@ -138,7 +138,7 @@ AS_IF([test "$with_printf_fmt"     = no ], [with_printf_fmt=no],      [with_prin
 AS_IF([test "$with_units"          = no ], [with_units=no],           [with_units=yes])
 
 dnl Packages (disabled by default)
-AS_IF([test "$with_drivers"        = no ], [with_drivers=yes],        [with_drivers=no])
+AS_IF([test "$with_drivers"        = yes], [with_drivers=yes],        [with_drivers=no])
 AS_IF([test "$with_libc"           = yes], [with_libc=yes],           [with_libc=no])
 
 
