@@ -11,7 +11,6 @@
 #include <kernaux/generic/mutex.h>
 
 @comment_line_cmdline@#include <kernaux/cmdline.h>
-@comment_line_console@#include <kernaux/console.h>
 @comment_line_elf@#include <kernaux/elf.h>
 @comment_line_framebuffer@#include <kernaux/framebuffer.h>
 @comment_line_free_list@#include <kernaux/free_list.h>

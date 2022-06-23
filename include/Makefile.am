@@ -22,9 +22,6 @@ endif
 if WITH_CMDLINE
 nobase_include_HEADERS += kernaux/cmdline.h
 endif
-if WITH_CONSOLE
-nobase_include_HEADERS += kernaux/console.h
-endif
 if WITH_ELF
 nobase_include_HEADERS += kernaux/elf.h
 endif
