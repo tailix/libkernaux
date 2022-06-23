@@ -18,14 +18,6 @@ extern "C" {
 #endif
 
 /**
- * @brief Remap PIC
- */
-void kernaux_drivers_intel_8259_pic_remap(
-    unsigned char new_master_start,
-    unsigned char new_slave_start
-);
-
-/**
  * @brief Enable PIC
  */
 void kernaux_drivers_intel_8259_pic_enable_all();
@@ -44,6 +36,14 @@ void kernaux_drivers_intel_8259_pic_enable(unsigned char number);
  * @brief Disable single IRQ line
  */
 void kernaux_drivers_intel_8259_pic_disable(unsigned char number);
+
+/**
+ * @brief Remap PIC
+ */
+void kernaux_drivers_intel_8259_pic_remap(
+    unsigned char new_master_start,
+    unsigned char new_slave_start
+);
 
 /**
  * @brief Signal end of interrupt
