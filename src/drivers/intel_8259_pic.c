@@ -23,6 +23,7 @@
 #define IRQS_COUNT 8
 #define IRQS_TOTAL 16
 
+static unsigned char master_start = 0;
 static unsigned char slave_start  = 8;
 
 void kernaux_drivers_intel_8259_pic_enable_all()
@@ -85,7 +86,8 @@ void kernaux_drivers_intel_8259_pic_remap(
     const unsigned char new_master_start,
     const unsigned char new_slave_start
 ) {
-    slave_start = new_slave_start;
+    master_start = new_master_start;
+    slave_start  = new_slave_start;
 
 #ifdef ASM_I386
     // Save masks
@@ -112,7 +114,6 @@ void kernaux_drivers_intel_8259_pic_remap(
     kernaux_asm_i386_outportb(MASTER_DATA_PORT, master_mask);
     kernaux_asm_i386_outportb(SLAVE_DATA_PORT,  slave_mask);
 #else
-    (void)new_master_start;
     KERNAUX_PANIC(NOT_AVAILABLE_MSG);
 #endif
 }
@@ -122,12 +123,15 @@ void kernaux_drivers_intel_8259_pic_eoi(const unsigned char number)
     KERNAUX_ASSERT(number < IRQS_TOTAL);
 
     const bool to_slave =
-        slave_start <= number && number < slave_start + IRQS_COUNT;
+        number >= slave_start && number < slave_start + IRQS_COUNT;
+    const bool to_master = to_slave ||
+        (number >= master_start && number < master_start + IRQS_COUNT);
 
 #ifdef ASM_I386
-    if (to_slave) kernaux_asm_i386_outportb(SLAVE_COMMAND_PORT, 0x20);
-    kernaux_asm_i386_outportb(MASTER_COMMAND_PORT, 0x20);
+    if (to_slave)  kernaux_asm_i386_outportb(SLAVE_COMMAND_PORT,  0x20);
+    if (to_master) kernaux_asm_i386_outportb(MASTER_COMMAND_PORT, 0x20);
 #else
+    (void)to_master;
     (void)to_slave;
     KERNAUX_PANIC(NOT_AVAILABLE_MSG);
 #endif
