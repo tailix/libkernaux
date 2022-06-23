@@ -11,6 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
+        debug: ['--disable-debug', '--enable-debug']
         cc: ['gcc', 'clang', 'tcc']
         opt: ['', '-O0', '-O3']
     steps:
@@ -20,7 +21,49 @@ jobs:
       - name: autogen
         run: ./autogen.sh
       - name: configure
-        run: ./configure --enable-tests --enable-tests-python CC='${{matrix.cc}}' CFLAGS='${{matrix.opt}}'
+        run: ./configure ${{matrix.debug}} --enable-tests --enable-tests-python CC='${{matrix.cc}}' CFLAGS='${{matrix.opt}}'
+      - name: make
+        run: make
+      - name: check
+        run: make check || (./test-suite-log && false)
+      - name: install
+        run: sudo make install
+
+  cross:
+    runs-on: ubuntu-20.04 # focal, because it's in ".github/sources.list"
+    strategy:
+      matrix:
+        cross:
+          - arch: 'aarch64'
+            apt_arch: 'arm64'
+            apt_pkgs: 'crossbuild-essential-arm64'
+            cprefix: 'aarch64-linux-gnu-'
+          - arch: 'i386'
+            apt_arch: 'i386'
+            apt_pkgs: 'crossbuild-essential-i386'
+            cprefix: 'i686-linux-gnu-'
+          - arch: 'riscv64'
+            apt_arch: 'riscv64'
+            apt_pkgs: 'crossbuild-essential-riscv64'
+            cprefix: 'riscv64-linux-gnu-'
+    steps:
+      - uses: actions/checkout@v2
+      - name: apt sources
+        run: sudo cp .github/sources.list /etc/apt/sources.list
+      - name: apt upgrade
+        run: sudo apt-get --yes update && (sudo apt-get --yes upgrade || sudo apt-get --yes -f install)
+      - name: dependencies
+        run: sudo apt-get --yes install binfmt-support qemu qemu-user-static ${{matrix.cross.apt_pkgs}}
+      - name: dpkg arch
+        run: sudo dpkg --add-architecture ${{matrix.cross.apt_arch}}
+      - name: apt update
+        run: sudo apt-get --yes update
+      - name: cross dependencies
+        run: sudo apt-get --yes install libc6:${{matrix.cross.apt_arch}}
+      - name: autogen
+        run: ./autogen.sh
+      - name: configure
+        run: ./configure --host='${{matrix.cross.arch}}-unknown-elf' --enable-tests --enable-tests-python AR='${{matrix.cross.cprefix}}ar' CC='${{matrix.cross.cprefix}}gcc' LD='${{matrix.cross.cprefix}}ld' RANLIB='${{matrix.cross.cprefix}}ranlib'
       - name: make
         run: make
       - name: check
@@ -32,24 +75,40 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        pkg:
-          - main: 'all'
-          - main: 'file'
-          - main: 'ntoa'
-            other: '--without-printf --without-units'
-          - main: 'printf'
+        packages:
+          - without: 'all'
+          - without: 'io'
+          - without: 'ntoa'
+            dependencies: '--without-printf --without-units'
+          - without: 'printf'
     steps:
       - uses: actions/checkout@v2
       - name: autogen
         run: ./autogen.sh
       - name: configure
-        run: ./configure --without-${{matrix.pkg.main}} ${{matrix.pkg.other}} --enable-tests --enable-tests-python
+        run: ./configure --enable-debug --enable-tests --enable-tests-python --without-${{matrix.packages.without}} ${{matrix.packages.dependencies}}
       - name: make
         run: make
       - name: check
         run: make check || (./test-suite-log && false)
       - name: install
         run: sudo make install
+
+  freestanding:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        debug: ['--disable-debug', '--enable-debug']
+    steps:
+      - uses: actions/checkout@v2
+      - name: dependencies
+        run: sudo apt-get --yes install crossbuild-essential-i386
+      - name: autogen
+        run: ./autogen.sh
+      - name: configure
+        run: ./configure --host='i386-elf' ${{matrix.debug}} --enable-freestanding --with-drivers --with-libc AR="$(which i686-linux-gnu-ar)" CC="$(which i686-linux-gnu-gcc)" LD="$(which i686-linux-gnu-ld)" RANLIB="$(which i686-linux-gnu-ranlib)"
+      - name: make
+        run: make
 
   dist:
     runs-on: ubuntu-latest
@@ -62,19 +121,15 @@ jobs:
       - name: dist
         run: make dist
       - name: extract
-        run: tar -xzf libkernaux-0.3.0.tar.gz
-      - working-directory: libkernaux-0.3.0
-        name: configure
-        run: ./configure --enable-tests --enable-tests-python
-      - working-directory: libkernaux-0.3.0
-        name: make
-        run: make
-      - working-directory: libkernaux-0.3.0
-        name: check
-        run: make check || (./test-suite-log && false)
-      - working-directory: libkernaux-0.3.0
-        name: install
-        run: sudo make install
+        run: tar -xzf "libkernaux-$(cat VERSION).tar.gz"
+      - name: configure
+        run: cd "libkernaux-$(cat VERSION)" && ./configure --enable-debug --enable-tests --enable-tests-python
+      - name: make
+        run: cd "libkernaux-$(cat VERSION)" && make
+      - name: check
+        run: cd "libkernaux-$(cat VERSION)" && make check || (./test-suite-log && false)
+      - name: install
+        run: cd "libkernaux-$(cat VERSION)" && sudo make install
 
   cppcheck:
     runs-on: ubuntu-latest
@@ -84,7 +139,7 @@ jobs:
         run: sudo apt-get --yes install cppcheck
       - name: cppcheck source code
         # TODO: don't suppress "src/printf.c"
-        run: cppcheck --quiet --error-exitcode=1 --std=c99 --enable=warning,style,performance,portability --suppress='*:src/printf.c' include/ src/ libc/ libm/
+        run: cppcheck --quiet --error-exitcode=1 --std=c99 --enable=warning,style,performance,portability --suppress='*:src/printf.c' include/ src/ libc/
       - name: cppcheck examples
         run: cppcheck --quiet --error-exitcode=1 --std=c99 --enable=warning,style,performance,portability --suppress=duplicateExpression --suppress=staticStringCompare examples/
       - name: cppcheck tests

@@ -1,41 +1,20 @@
-#include <kernaux.h>
-#include <ruby.h>
+#include "main.h"
 
-#ifdef HAVE_KERNAUX_UTOA
+#ifdef KERNAUX_VERSION_WITH_NTOA
+
 static VALUE rb_KernAux_utoa(int argc, const VALUE *argv, VALUE self);
-#endif
-#ifdef HAVE_KERNAUX_ITOA
 static VALUE rb_KernAux_itoa(int argc, const VALUE *argv, VALUE self);
-#endif
-#ifdef HAVE_KERNAUX_UTOA2
 static VALUE rb_KernAux_utoa2(VALUE self, VALUE number);
-#endif
-#ifdef HAVE_KERNAUX_ITOA2
 static VALUE rb_KernAux_itoa2(VALUE self, VALUE number);
-#endif
-#ifdef HAVE_KERNAUX_UTOA8
 static VALUE rb_KernAux_utoa8(VALUE self, VALUE number);
-#endif
-#ifdef HAVE_KERNAUX_ITOA8
 static VALUE rb_KernAux_itoa8(VALUE self, VALUE number);
-#endif
-#ifdef HAVE_KERNAUX_UTOA10
 static VALUE rb_KernAux_utoa10(VALUE self, VALUE number);
-#endif
-#ifdef HAVE_KERNAUX_ITOA10
 static VALUE rb_KernAux_itoa10(VALUE self, VALUE number);
-#endif
-#ifdef HAVE_KERNAUX_UTOA16
 static VALUE rb_KernAux_utoa16(VALUE self, VALUE number);
-#endif
-#ifdef HAVE_KERNAUX_ITOA16
 static VALUE rb_KernAux_itoa16(VALUE self, VALUE number);
-#endif
 
-static ID rb_intern_LESS = Qnil;
 static ID rb_intern_b = Qnil;
 static ID rb_intern_B = Qnil;
-static ID rb_intern_freeze = Qnil;
 static ID rb_intern_h = Qnil;
 static ID rb_intern_H = Qnil;
 static ID rb_intern_o = Qnil;
@@ -45,21 +24,15 @@ static ID rb_intern_D = Qnil;
 static ID rb_intern_x = Qnil;
 static ID rb_intern_X = Qnil;
 
-static VALUE rb_KernAux = Qnil;
-static VALUE rb_KernAux_Error = Qnil;
 static VALUE rb_KernAux_InvalidNtoaBaseError = Qnil;
 static VALUE rb_KernAux_TooLongNtoaPrefixError = Qnil;
 
-#if defined(HAVE_KERNAUX_UTOA) || defined(HAVE_KERNAUX_ITOA)
 static int convert_base(VALUE base);
-#endif
 
 void init_ntoa()
 {
-    rb_gc_register_mark_object(ID2SYM(rb_intern_LESS   = rb_intern("<")));
     rb_gc_register_mark_object(ID2SYM(rb_intern_b      = rb_intern("b")));
     rb_gc_register_mark_object(ID2SYM(rb_intern_B      = rb_intern("B")));
-    rb_gc_register_mark_object(ID2SYM(rb_intern_freeze = rb_intern("freeze")));
     rb_gc_register_mark_object(ID2SYM(rb_intern_h      = rb_intern("h")));
     rb_gc_register_mark_object(ID2SYM(rb_intern_H      = rb_intern("H")));
     rb_gc_register_mark_object(ID2SYM(rb_intern_o      = rb_intern("o")));
@@ -69,9 +42,6 @@ void init_ntoa()
     rb_gc_register_mark_object(ID2SYM(rb_intern_x      = rb_intern("x")));
     rb_gc_register_mark_object(ID2SYM(rb_intern_X      = rb_intern("X")));
 
-    rb_gc_register_mark_object(rb_KernAux = rb_define_module("KernAux"));
-    rb_gc_register_mark_object(rb_KernAux_Error =
-        rb_define_class_under(rb_KernAux, "Error", rb_eRuntimeError));
     rb_gc_register_mark_object(rb_KernAux_InvalidNtoaBaseError =
         rb_define_class_under(rb_KernAux, "InvalidNtoaBaseError",
                               rb_KernAux_Error));
@@ -79,39 +49,18 @@ void init_ntoa()
         rb_define_class_under(rb_KernAux, "TooLongNtoaPrefixError",
                               rb_KernAux_Error));
 
-#ifdef HAVE_KERNAUX_UTOA
     rb_define_singleton_method(rb_KernAux, "utoa", rb_KernAux_utoa, -1);
-#endif
-#ifdef HAVE_KERNAUX_ITOA
     rb_define_singleton_method(rb_KernAux, "itoa", rb_KernAux_itoa, -1);
-#endif
-#ifdef HAVE_KERNAUX_UTOA2
     rb_define_singleton_method(rb_KernAux, "utoa2", rb_KernAux_utoa2, 1);
-#endif
-#ifdef HAVE_KERNAUX_ITOA2
     rb_define_singleton_method(rb_KernAux, "itoa2", rb_KernAux_itoa2, 1);
-#endif
-#ifdef HAVE_KERNAUX_UTOA8
     rb_define_singleton_method(rb_KernAux, "utoa8", rb_KernAux_utoa8, 1);
-#endif
-#ifdef HAVE_KERNAUX_ITOA8
     rb_define_singleton_method(rb_KernAux, "itoa8", rb_KernAux_itoa8, 1);
-#endif
-#ifdef HAVE_KERNAUX_UTOA10
     rb_define_singleton_method(rb_KernAux, "utoa10", rb_KernAux_utoa10, 1);
-#endif
-#ifdef HAVE_KERNAUX_ITOA10
     rb_define_singleton_method(rb_KernAux, "itoa10", rb_KernAux_itoa10, 1);
-#endif
-#ifdef HAVE_KERNAUX_UTOA16
     rb_define_singleton_method(rb_KernAux, "utoa16", rb_KernAux_utoa16, 1);
-#endif
-#ifdef HAVE_KERNAUX_ITOA16
     rb_define_singleton_method(rb_KernAux, "itoa16", rb_KernAux_itoa16, 1);
-#endif
 }
 
-#ifdef HAVE_KERNAUX_UTOA
 VALUE rb_KernAux_utoa(const int argc, const VALUE *argv, const VALUE self)
 {
     if (argc < 2 || argc > 3) {
@@ -126,7 +75,8 @@ VALUE rb_KernAux_utoa(const int argc, const VALUE *argv, const VALUE self)
     VALUE base_rb   = argv[1];
     VALUE prefix_rb = argc == 3 ? argv[2] : Qnil;
 
-    RB_INTEGER_TYPE_P(number_rb);
+    const uint64_t number = NUM2ULL(number_rb);
+
     if (rb_funcall(number_rb, rb_intern_LESS, 1, INT2FIX(0))) {
         rb_raise(rb_eRangeError, "can't convert negative number to uint64_t");
     }
@@ -147,12 +97,10 @@ VALUE rb_KernAux_utoa(const int argc, const VALUE *argv, const VALUE self)
     }
 
     char buffer[KERNAUX_UTOA_MIN_BUFFER_SIZE + prefix_len];
-    kernaux_utoa(NUM2ULL(number_rb), buffer, convert_base(base_rb), prefix);
+    kernaux_utoa(number, buffer, convert_base(base_rb), prefix);
     return rb_funcall(rb_str_new2(buffer), rb_intern_freeze, 0);
 }
-#endif
 
-#ifdef HAVE_KERNAUX_ITOA
 VALUE rb_KernAux_itoa(const int argc, const VALUE *argv, const VALUE self)
 {
     if (argc < 2 || argc > 3) {
@@ -167,7 +115,7 @@ VALUE rb_KernAux_itoa(const int argc, const VALUE *argv, const VALUE self)
     VALUE base_rb   = argv[1];
     VALUE prefix_rb = argc == 3 ? argv[2] : Qnil;
 
-    RB_INTEGER_TYPE_P(number_rb);
+    const int64_t number = NUM2LL(number_rb);
 
     const char *prefix = NULL;
     long prefix_len = 0;
@@ -185,120 +133,102 @@ VALUE rb_KernAux_itoa(const int argc, const VALUE *argv, const VALUE self)
     }
 
     char buffer[KERNAUX_ITOA_MIN_BUFFER_SIZE + prefix_len];
-    kernaux_itoa(NUM2LL(number_rb), buffer, convert_base(base_rb), prefix);
+    kernaux_itoa(number, buffer, convert_base(base_rb), prefix);
     return rb_funcall(rb_str_new2(buffer), rb_intern_freeze, 0);
 }
-#endif
 
-#ifdef HAVE_KERNAUX_UTOA2
 VALUE rb_KernAux_utoa2(
     const VALUE self_rb __attribute__((unused)),
     const VALUE number_rb
 ) {
-    RB_INTEGER_TYPE_P(number_rb);
+    const uint64_t number = NUM2ULL(number_rb);
     if (rb_funcall(number_rb, rb_intern_LESS, 1, INT2FIX(0))) {
         rb_raise(rb_eRangeError, "can't convert negative number to uint64_t");
     }
     char buffer[KERNAUX_UTOA2_BUFFER_SIZE];
-    kernaux_utoa2(NUM2ULL(number_rb), buffer);
+    kernaux_utoa2(number, buffer);
     return rb_funcall(rb_str_new2(buffer), rb_intern_freeze, 0);
 }
-#endif
 
-#ifdef HAVE_KERNAUX_ITOA2
 VALUE rb_KernAux_itoa2(
     const VALUE self_rb __attribute__((unused)),
     const VALUE number_rb
 ) {
-    RB_INTEGER_TYPE_P(number_rb);
+    const int64_t number = NUM2LL(number_rb);
     char buffer[KERNAUX_ITOA2_BUFFER_SIZE];
-    kernaux_itoa2(NUM2LL(number_rb), buffer);
+    kernaux_itoa2(number, buffer);
     return rb_funcall(rb_str_new2(buffer), rb_intern_freeze, 0);
 }
-#endif
 
-#ifdef HAVE_KERNAUX_UTOA8
 VALUE rb_KernAux_utoa8(
     const VALUE self_rb __attribute__((unused)),
     const VALUE number_rb
 ) {
-    RB_INTEGER_TYPE_P(number_rb);
+    const uint64_t number = NUM2ULL(number_rb);
     if (rb_funcall(number_rb, rb_intern_LESS, 1, INT2FIX(0))) {
         rb_raise(rb_eRangeError, "can't convert negative number to uint64_t");
     }
     char buffer[KERNAUX_UTOA8_BUFFER_SIZE];
-    kernaux_utoa8(NUM2ULL(number_rb), buffer);
+    kernaux_utoa8(number, buffer);
     return rb_funcall(rb_str_new2(buffer), rb_intern_freeze, 0);
 }
-#endif
 
-#ifdef HAVE_KERNAUX_ITOA8
 VALUE rb_KernAux_itoa8(
     const VALUE self_rb __attribute__((unused)),
     const VALUE number_rb
 ) {
-    RB_INTEGER_TYPE_P(number_rb);
+    const int64_t number = NUM2LL(number_rb);
     char buffer[KERNAUX_ITOA8_BUFFER_SIZE];
-    kernaux_itoa8(NUM2LL(number_rb), buffer);
+    kernaux_itoa8(number, buffer);
     return rb_funcall(rb_str_new2(buffer), rb_intern_freeze, 0);
 }
-#endif
 
-#ifdef HAVE_KERNAUX_UTOA10
 VALUE rb_KernAux_utoa10(
     const VALUE self_rb __attribute__((unused)),
     const VALUE number_rb
 ) {
-    RB_INTEGER_TYPE_P(number_rb);
+    const uint64_t number = NUM2ULL(number_rb);
     if (rb_funcall(number_rb, rb_intern_LESS, 1, INT2FIX(0))) {
         rb_raise(rb_eRangeError, "can't convert negative number to uint64_t");
     }
     char buffer[KERNAUX_UTOA10_BUFFER_SIZE];
-    kernaux_utoa10(NUM2ULL(number_rb), buffer);
+    kernaux_utoa10(number, buffer);
     return rb_funcall(rb_str_new2(buffer), rb_intern_freeze, 0);
 }
-#endif
 
-#ifdef HAVE_KERNAUX_ITOA10
 VALUE rb_KernAux_itoa10(
     const VALUE self_rb __attribute__((unused)),
     const VALUE number_rb
 ) {
-    RB_INTEGER_TYPE_P(number_rb);
+    const int64_t number = NUM2LL(number_rb);
     char buffer[KERNAUX_ITOA10_BUFFER_SIZE];
-    kernaux_itoa10(NUM2LL(number_rb), buffer);
+    kernaux_itoa10(number, buffer);
     return rb_funcall(rb_str_new2(buffer), rb_intern_freeze, 0);
 }
-#endif
 
-#ifdef HAVE_KERNAUX_UTOA16
 VALUE rb_KernAux_utoa16(
     const VALUE self_rb __attribute__((unused)),
     const VALUE number_rb
 ) {
-    RB_INTEGER_TYPE_P(number_rb);
+    const uint64_t number = NUM2ULL(number_rb);
     if (rb_funcall(number_rb, rb_intern_LESS, 1, INT2FIX(0))) {
         rb_raise(rb_eRangeError, "can't convert negative number to uint64_t");
     }
     char buffer[KERNAUX_UTOA16_BUFFER_SIZE];
-    kernaux_utoa16(NUM2ULL(number_rb), buffer);
+    kernaux_utoa16(number, buffer);
     return rb_funcall(rb_str_new2(buffer), rb_intern_freeze, 0);
 }
-#endif
 
-#ifdef HAVE_KERNAUX_ITOA16
 VALUE rb_KernAux_itoa16(
     const VALUE self_rb __attribute__((unused)),
     const VALUE number_rb
 ) {
-    RB_INTEGER_TYPE_P(number_rb);
+    const int64_t number = NUM2LL(number_rb);
     char buffer[KERNAUX_ITOA16_BUFFER_SIZE];
-    kernaux_itoa16(NUM2LL(number_rb), buffer);
+    kernaux_itoa16(number, buffer);
     return rb_funcall(rb_str_new2(buffer), rb_intern_freeze, 0);
 }
-#endif
 
-#if defined(HAVE_KERNAUX_UTOA) || defined(HAVE_KERNAUX_ITOA)
 int convert_base(const VALUE base_rb)
 {
     if (TYPE(base_rb) == T_SYMBOL) {
@@ -320,4 +250,5 @@ int convert_base(const VALUE base_rb)
         return NUM2INT(base_rb);
     }
 }
-#endif
+
+#endif // KERNAUX_VERSION_WITH_NTOA

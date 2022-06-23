@@ -786,7 +786,7 @@ static const struct {
  * main *
  ********/
 
-int main()
+void test_main()
 {
     // Multiboot2
 
@@ -1129,6 +1129,4 @@ int main()
     assert(KernAux_Multiboot2_ITag_ELFSymbols_is_valid(
         &tag_elf_symbols_with_zero_ent_size_valid
     ));
-
-    return 0;
 }

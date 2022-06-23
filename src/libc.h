@@ -1,7 +1,7 @@
 // TODO: remove this file, require needed headers separately
 
-#ifndef KERNAUX_INCLUDED_LIBC
-#define KERNAUX_INCLUDED_LIBC
+#ifndef KERNAUX_INCLUDED_SRC_LIBC
+#define KERNAUX_INCLUDED_SRC_LIBC
 
 #ifdef __cplusplus
 extern "C" {

@@ -11,7 +11,7 @@ main_freebsd_task:
     - pkg install --yes autoconf automake libtool
   main_build_script:
     - ./autogen.sh
-    - ./configure --enable-tests CFLAGS='-O3'
+    - ./configure --enable-debug --enable-tests CFLAGS='-O3'
     - make
     - sudo make install
   main_test_script:
@@ -31,7 +31,7 @@ mruby_freebsd_task:
     - unzip mruby-3.1.0.zip
   main_build_script:
     - ./autogen.sh
-    - ./configure CFLAGS='-O3'
+    - ./configure --enable-debug CFLAGS='-O3'
     - make
     - sudo make install
   mruby_test_script:
@@ -55,7 +55,7 @@ ruby_freebsd_task:
     - sudo make install
   main_build_script:
     - ./autogen.sh
-    - ./configure CFLAGS='-O3'
+    - ./configure --enable-debug CFLAGS='-O3'
     - make
     - sudo make install
   ruby_build_script:
@@ -77,7 +77,7 @@ rust_freebsd_task:
     - curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
   main_build_script:
     - ./autogen.sh
-    - ./configure CFLAGS='-O3'
+    - ./configure --enable-debug CFLAGS='-O3'
     - make
     - sudo make install
   rust_test_script:

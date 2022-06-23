@@ -1,114 +1,30 @@
-2022-06-12  Alex Kotov  <kotovalexarian@gmail.com>
+2022-06-23  Alex Kotov  <kotovalexarian@gmail.com>
 
-	* libc/include/errno.h: Added
+	* configure.ac: Added package "drivers"
 
-2022-06-10  Alex Kotov  <kotovalexarian@gmail.com>
+2022-06-22  Alex Kotov  <kotovalexarian@gmail.com>
 
-	* libc/include/string.h: Add funcs "memchr", "strcat", "strncat", "strchr"
-	* libc/include/inttypes.h: Added
-	* libc/include/sys/types.h: Added
-	* libm/include/math.h: Added
+	* include/kernaux/free_list.h: Finished
 
-2022-06-07  Alex Kotov  <kotovalexarian@gmail.com>
+2022-06-21  Alex Kotov  <kotovalexarian@gmail.com>
 
-	* include/kernaux/libc.h: Has been split into separate headers
-	* include/kernaux/print.h: Functions "[v]printf" renamed to "[v]fprintf"
-	* include/kernaux/file.h: Added
+	* include/kernaux/generic/malloc.h: Added
 
-2022-06-06  Alex Kotov  <kotovalexarian@gmail.com>
+2022-06-20  Alex Kotov  <kotovalexarian@gmail.com>
 
-	* include/kernaux/libc.h: Add more functions
-	* include/kernaux/print.h: Remove Easter egg
+	* include/kernaux/generic/mutex.h: Mutex moved here
+	* include/kernaux/macro.h: Definitions "KERNAUX_ACCESS_*" made stable
+	* include/kernaux/macro.h: Macro "KERNAUX_PROTECTED_FIELD" added
 
-2022-06-04  Alex Kotov  <kotovalexarian@gmail.com>
+2022-06-18  Alex Kotov  <kotovalexarian@gmail.com>
 
-	* configure.ac: Remove feature "pic"
-	* configure.ac: Add feature "freestanding"
+	* include/kernaux/mutex.h: Added
 
-2022-06-03  Alex Kotov  <kotovalexarian@gmail.com>
+2022-06-17  Alex Kotov  <kotovalexarian@gmail.com>
 
-	* configure.ac: Option "--with-libc" renamed to "--with-libc-all"
+	* configure.ac: Added package "free-list"
+	* include/kernaux/free_list.h: Added
 
-2022-06-02  Alex Kotov  <kotovalexarian@gmail.com>
+2022-06-16  Alex Kotov  <kotovalexarian@gmail.com>
 
-	* include/kernaux/assert.h: Macro "KERNAUX_PANIC" receives string
-
-2022-06-01  Alex Kotov  <kotovalexarian@gmail.com>
-
-	* include/kernaux/ntoa.h: Protect from too long prefix
-
-2022-05-30  Alex Kotov  <kotovalexarian@gmail.com>
-
-	* include/kernaux/ntoa.h: Functions "kernaux_utoa" and "kernaux_itoa"
-	receive prefix
-	* include/kernaux/ntoa.h: Constant "KERNAUX_UTOA_BUFFER_SIZE" renamed to
-	"KERNAUX_UTOA_MIN_BUFFER_SIZE", "KERNAUX_ITOA_BUFFER_SIZE" to
-	"KERNAUX_ITOA_MIN_BUFFER_SIZE"
-	* include/kernaux/ntoa.h: Functions "kernaux_[u|i]toa[10|16]" return the end
-	of a buffer
-	* include/kernaux/ntoa.h: Functions "kernaux_[u|i]toa16" put default prefix
-	* include/kernaux/ntoa.h: Add octal functions "kernaux_[u|i]toa8"
-	* include/kernaux/ntoa.h: Add binary functions "kernaux_[u|i]toa2"
-	* src/ntoa.h: Protect caller from invalid state in case of future assertions
-
-2022-05-28  Alex Kotov  <kotovalexarian@gmail.com>
-
-	libkernaux 0.3.0 released
-
-2022-05-24  Alex Kotov  <kotovalexarian@gmail.com>
-
-	* configure.ac: Test options made stable
-	* configure.ac: Feature "bloat" made stable
-	* src/: Use assertions everywhere (closes #14)
-
-2022-02-02  Alex Kotov  <kotovalexarian@gmail.com>
-
-	* configure.ac: Generate position-independent code by default, disable with
-	"--disable-pic"
-	* configure.ac: "-Werror" by default, disable with "--disable-werror"
-
-2022-02-01  Alex Kotov  <kotovalexarian@gmail.com>
-
-	* configure.ac: Generate headers conditionally depending on options
-	* src/printf.c: Fix potential buffer overflow
-
-2022-01-24  Alex Kotov  <kotovalexarian@gmail.com>
-
-	* include/kernaux/ntoa.h: Add func "kernaux_itoa"
-
-2022-01-23  Alex Kotov  <kotovalexarian@gmail.com>
-
-	* include/kernaux/assert.h: Require semicolon after macros
-	* include/kernaux/libc.h: Add funcs "atoi", "isdigit", "isspace"
-	* include/kernaux/ntoa.h: Rename const "KERNAUX_ITOA_BUFFER_SIZE" to
-	"KERNAUX_ITOA10_BUFFER_SIZE"
-	* include/kernaux/ntoa.h: Add funcs "kernaux_utoa16" and "kernaux_itoa16"
-	* include/kernaux/ntoa.h: Add consts "KERNAUX_UTOA10_BUFFER_SIZE" and
-	"KERNAUX_UTOA16_BUFFER_SIZE"
-	* include/kernaux/ntoa.h: Add func "kernaux_utoa"
-
-2022-01-22  Alex Kotov  <kotovalexarian@gmail.com>
-
-	libkernaux 0.2.0 released
-
-	* configure.ac: Made stable
-	* include/kernaux/cmdline.h: Made stable
-
-2022-01-22  Alex Kotov  <kotovalexarian@gmail.com>
-
-	* README.md: Configuration options now follow semver
-	* include/kernaux/assert.h: Do not allow to disable asserts and guards
-
-2022-01-21  Alex Kotov  <kotovalexarian@gmail.com>
-
-	* configure.ac: Allow to disable unnecessary heavy binary data
-
-2022-01-20  Alex Kotov  <kotovalexarian@gmail.com>
-
-	* include/kernaux/assert.h: Added unconditional assertion (panic)
-	* include/kernaux/assert.h: Added guards for unconditional assertion (panic)
-	* src/printf.c: Fix bug and actually enable floating-point arithmetics
-
-2022-01-20  Alex Kotov  <kotovalexarian@gmail.com>
-
-	libkernaux 0.1.0 released
+	libkernaux 0.4.0 released

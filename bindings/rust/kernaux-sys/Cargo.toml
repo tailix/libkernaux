@@ -1,6 +1,6 @@
 [package]
 name = "kernaux-sys"
-version = "0.3.0"
+version = "0.4.0"
 authors = ["Alex Kotov <kotovalexarian@gmail.com>"]
 edition = "2021"
 description = "Unsafe no-std binding to libkernaux - auxiliary library for kernel development"
@@ -11,6 +11,11 @@ license = "MIT"
 keywords = ["ffi", "no_std", "no-std", "embedded", "bindings"]
 categories = ["embedded", "external-ffi-bindings", "no-std", "parsing"]
 publish = true
+
+[features]
+default = ["cmdline", "ntoa"]
+cmdline = []
+ntoa = []
 
 [dependencies.libc]
 version = "0.2.113"

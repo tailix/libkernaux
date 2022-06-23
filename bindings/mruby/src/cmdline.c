@@ -4,15 +4,14 @@
 #include <stddef.h>
 #include <stdlib.h>
 
-#include <kernaux.h>
-
-#include <mruby.h>
 #include <mruby/array.h>
 #include <mruby/presym.h>
 #include <mruby/string.h>
 
 #define ARGV_COUNT_MAX 256
 #define BUFFER_SIZE 4096
+
+#ifdef KERNAUX_VERSION_WITH_CMDLINE
 
 static mrb_value rb_KernAux_cmdline(mrb_state *mrb, mrb_value self);
 
@@ -69,3 +68,5 @@ mrb_value rb_KernAux_cmdline(mrb_state *const mrb, mrb_value self)
     free(buffer);
     return mrb_obj_freeze(mrb, mrb_ary_new_from_values(mrb, argc, values));
 }
+
+#endif // KERNAUX_VERSION_WITH_CMDLINE

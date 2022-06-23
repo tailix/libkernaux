@@ -13,7 +13,7 @@ const struct KernAux_Multiboot2_HTagBase
     const struct KernAux_Multiboot2_Header *const multiboot2_header,
     const enum KernAux_Multiboot2_HTag tag_type
 ) {
-    KERNAUX_NOTNULL_RETVAL(multiboot2_header, NULL);
+    KERNAUX_ASSERT(multiboot2_header);
 
     const struct KernAux_Multiboot2_HTagBase *tag_base =
         (struct KernAux_Multiboot2_HTagBase*)
@@ -38,14 +38,14 @@ const struct KernAux_Multiboot2_HTagBase
     const enum KernAux_Multiboot2_HTag tag_type,
     const struct KernAux_Multiboot2_HTagBase *const after_tag
 ) {
-    KERNAUX_NOTNULL_RETVAL(multiboot2_header, NULL);
-    KERNAUX_NOTNULL_RETVAL(after_tag, NULL);
+    KERNAUX_ASSERT(multiboot2_header);
+    KERNAUX_ASSERT(after_tag);
 
     const struct KernAux_Multiboot2_HTagBase *tag_base =
         (struct KernAux_Multiboot2_HTagBase*)
         KERNAUX_MULTIBOOT2_DATA(multiboot2_header);
 
-    KERNAUX_ASSERT_RETVAL(tag_base <= after_tag, NULL);
+    KERNAUX_ASSERT(tag_base <= after_tag);
 
     while (tag_base <
            (struct KernAux_Multiboot2_HTagBase*)

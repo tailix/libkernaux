@@ -101,17 +101,20 @@
 /include/Makefile
 
 /include/kernaux.h
-/include/kernaux/console.h
+/include/kernaux/drivers/console.h
+/include/kernaux/multiboot2.h
 /include/kernaux/printf.h
+/include/kernaux/version.h
 
-/examples/assert_guards
-/examples/assert_simple
+/examples/assert
 /examples/cmdline
 /examples/fprintf
 /examples/fprintf_va
+/examples/generic_malloc
+/examples/generic_mutex
+/examples/memmap
 /examples/ntoa
-/examples/panic_guards
-/examples/panic_simple
+/examples/panic
 /examples/pfa
 /examples/printf_fmt
 /examples/snprintf
@@ -126,7 +129,9 @@
 /tests/test_cmdline_gen
 /tests/test_cmdline_gen.c
 /tests/test_elf
+/tests/test_free_list
 /tests/test_mbr
+/tests/test_memmap
 /tests/test_multiboot2_common_packing
 /tests/test_multiboot2_header_helpers
 /tests/test_multiboot2_header_print
@@ -135,10 +140,12 @@
 /tests/test_multiboot2_info_print
 /tests/test_multiboot2_info_validation
 /tests/test_ntoa
+/tests/test_ntoa_assert
 /tests/test_pfa
 /tests/test_pfa_assert
 /tests/test_printf_fmt_gen
 /tests/test_printf_fmt_gen.c
 /tests/test_printf_gen
 /tests/test_printf_gen.c
+/tests/test_printf_reg
 /tests/test_units_human

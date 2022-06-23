@@ -2,7 +2,6 @@
 
 #include <stddef.h>
 
-#include <mruby.h>
 #include <mruby/presym.h>
 
 #define MRB_STACK_SIZE 100
@@ -25,9 +24,17 @@ void mrb_mruby_kernaux_gem_init(mrb_state *const mrb)
     mrb_define_class_under_id(mrb, rb_KernAux, MRB_SYM(Error), E_RUNTIME_ERROR);
 
     init_assert(mrb);
+    init_version(mrb);
+
+#ifdef KERNAUX_VERSION_WITH_CMDLINE
     init_cmdline(mrb);
+#endif // KERNAUX_VERSION_WITH_CMDLINE
+#ifdef KERNAUX_VERSION_WITH_NTOA
     init_ntoa(mrb);
+#endif // KERNAUX_VERSION_WITH_NTOA
+#ifdef KERNAUX_VERSION_WITH_PRINTF
     init_printf(mrb);
+#endif // KERNAUX_VERSION_WITH_PRINTF
 }
 
 void current_mrb_start(mrb_state *mrb)

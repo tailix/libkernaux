@@ -6,6 +6,18 @@
 #include <stdbool.h>
 #include <stdlib.h>
 
+// TODO: stub
+void exit(const int status __attribute__((unused)))
+{
+    for (;;);
+}
+
+// TODO: stub
+void abort()
+{
+    exit(EXIT_FAILURE);
+}
+
 int atoi(const char *str)
 {
     while (isspace(*str)) ++str;

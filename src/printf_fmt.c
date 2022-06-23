@@ -1,5 +1,8 @@
 /**
+ * The code was taken from Marco Paland's printf.
+ *
  * Copyright (c) 2014-2019 Marco Paland <info@paland.com>
+ * Copyright (c) 2020-2022 Alex Kotov
  */
 
 #ifdef HAVE_CONFIG_H
@@ -26,7 +29,7 @@ struct KernAux_PrintfFmt_Spec KernAux_PrintfFmt_Spec_create()
 
 void KernAux_PrintfFmt_Spec_init(struct KernAux_PrintfFmt_Spec *const spec)
 {
-    KERNAUX_NOTNULL_RETURN(spec);
+    KERNAUX_ASSERT(spec);
 
     spec->flags = 0u;
     spec->width = 0u;
@@ -40,8 +43,8 @@ void KernAux_PrintfFmt_Spec_init(struct KernAux_PrintfFmt_Spec *const spec)
 
 const char *KernAux_PrintfFmt_Spec_parse(struct KernAux_PrintfFmt_Spec *spec, const char *format)
 {
-    KERNAUX_NOTNULL_RETVAL(spec, NULL);
-    KERNAUX_NOTNULL_RETVAL(format, NULL);
+    KERNAUX_ASSERT(spec);
+    KERNAUX_ASSERT(format);
 
     KernAux_PrintfFmt_Spec_parse_flags(spec, &format);
     KernAux_PrintfFmt_Spec_parse_width(spec, &format);
@@ -54,9 +57,9 @@ const char *KernAux_PrintfFmt_Spec_parse(struct KernAux_PrintfFmt_Spec *spec, co
 
 void KernAux_PrintfFmt_Spec_parse_flags(struct KernAux_PrintfFmt_Spec *const spec, const char **const format)
 {
-    KERNAUX_NOTNULL_RETURN(spec);
-    KERNAUX_NOTNULL_RETURN(format);
-    KERNAUX_NOTNULL_RETURN(*format);
+    KERNAUX_ASSERT(spec);
+    KERNAUX_ASSERT(format);
+    KERNAUX_ASSERT(*format);
 
     bool running = true;
     do {
@@ -73,9 +76,9 @@ void KernAux_PrintfFmt_Spec_parse_flags(struct KernAux_PrintfFmt_Spec *const spe
 
 void KernAux_PrintfFmt_Spec_parse_width(struct KernAux_PrintfFmt_Spec *const spec, const char **const format)
 {
-    KERNAUX_NOTNULL_RETURN(spec);
-    KERNAUX_NOTNULL_RETURN(format);
-    KERNAUX_NOTNULL_RETURN(*format);
+    KERNAUX_ASSERT(spec);
+    KERNAUX_ASSERT(format);
+    KERNAUX_ASSERT(*format);
 
     if (isdigit(**format)) {
         spec->width = _atoi(format);
@@ -90,9 +93,9 @@ void KernAux_PrintfFmt_Spec_parse_width(struct KernAux_PrintfFmt_Spec *const spe
 
 void KernAux_PrintfFmt_Spec_parse_precision(struct KernAux_PrintfFmt_Spec *const spec, const char **const format)
 {
-    KERNAUX_NOTNULL_RETURN(spec);
-    KERNAUX_NOTNULL_RETURN(format);
-    KERNAUX_NOTNULL_RETURN(*format);
+    KERNAUX_ASSERT(spec);
+    KERNAUX_ASSERT(format);
+    KERNAUX_ASSERT(*format);
 
     if (**format == '.') {
         spec->flags |= KERNAUX_PRINTF_FMT_FLAGS_PRECISION;
@@ -113,9 +116,9 @@ void KernAux_PrintfFmt_Spec_parse_precision(struct KernAux_PrintfFmt_Spec *const
 
 void KernAux_PrintfFmt_Spec_parse_length(struct KernAux_PrintfFmt_Spec *const spec, const char **const format)
 {
-    KERNAUX_NOTNULL_RETURN(spec);
-    KERNAUX_NOTNULL_RETURN(format);
-    KERNAUX_NOTNULL_RETURN(*format);
+    KERNAUX_ASSERT(spec);
+    KERNAUX_ASSERT(format);
+    KERNAUX_ASSERT(*format);
 
     switch (**format) {
         case 'l':
@@ -153,9 +156,9 @@ void KernAux_PrintfFmt_Spec_parse_length(struct KernAux_PrintfFmt_Spec *const sp
 
 void KernAux_PrintfFmt_Spec_parse_type(struct KernAux_PrintfFmt_Spec *const spec, const char **const format)
 {
-    KERNAUX_NOTNULL_RETURN(spec);
-    KERNAUX_NOTNULL_RETURN(format);
-    KERNAUX_NOTNULL_RETURN(*format);
+    KERNAUX_ASSERT(spec);
+    KERNAUX_ASSERT(format);
+    KERNAUX_ASSERT(*format);
 
     switch (**format) {
         case 'd':
@@ -249,7 +252,7 @@ void KernAux_PrintfFmt_Spec_parse_type(struct KernAux_PrintfFmt_Spec *const spec
 
 void KernAux_PrintfFmt_Spec_set_width(struct KernAux_PrintfFmt_Spec *const spec, const int width)
 {
-    KERNAUX_NOTNULL_RETURN(spec);
+    KERNAUX_ASSERT(spec);
 
     if (width < 0) {
         spec->flags |= KERNAUX_PRINTF_FMT_FLAGS_LEFT; // reverse padding
@@ -261,7 +264,7 @@ void KernAux_PrintfFmt_Spec_set_width(struct KernAux_PrintfFmt_Spec *const spec,
 
 void KernAux_PrintfFmt_Spec_set_precision(struct KernAux_PrintfFmt_Spec *const spec, const int precision)
 {
-    KERNAUX_NOTNULL_RETURN(spec);
+    KERNAUX_ASSERT(spec);
 
     spec->precision = precision > 0 ? (unsigned int)precision : 0u;
 }

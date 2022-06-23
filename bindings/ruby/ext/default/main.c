@@ -1,34 +1,38 @@
-#include <stdbool.h>
-#include <stddef.h>
-#include <stdint.h>
-#include <stdlib.h>
+#include "main.h"
 
-#include <kernaux.h>
-#include <ruby.h>
+ID rb_intern_call   = Qnil;
+ID rb_intern_freeze = Qnil;
+ID rb_intern_LESS   = Qnil;
+ID rb_intern_new    = Qnil;
 
-void init_assert();
-void init_ntoa();
-#ifdef HAVE_KERNAUX_CMDLINE
-void init_cmdline();
-#endif // HAVE_KERNAUX_CMDLINE
-#ifdef HAVE_KERNAUX_FILE_CREATE
-void init_file();
-#endif // HAVE_KERNAUX_FILE_CREATE
-#ifdef HAVE_KERNAUX_SNPRINTF
-void init_printf();
-#endif // HAVE_KERNAUX_SNPRINTF
+VALUE rb_KernAux = Qnil;
+VALUE rb_KernAux_Error = Qnil;
 
 void Init_default()
 {
+    rb_gc_register_mark_object(ID2SYM(rb_intern_call   = rb_intern("call")));
+    rb_gc_register_mark_object(ID2SYM(rb_intern_freeze = rb_intern("freeze")));
+    rb_gc_register_mark_object(ID2SYM(rb_intern_LESS   = rb_intern("<")));
+    rb_gc_register_mark_object(ID2SYM(rb_intern_new    = rb_intern("new")));
+
+    rb_gc_register_mark_object(rb_KernAux = rb_define_module("KernAux"));
+    rb_gc_register_mark_object(rb_KernAux_Error =
+        rb_define_class_under(rb_KernAux, "Error", rb_eRuntimeError));
+
+    init_version();
     init_assert();
-    init_ntoa();
-#ifdef HAVE_KERNAUX_CMDLINE
+
+#ifdef KERNAUX_VERSION_WITH_IO
+    init_io();
+#endif // KERNAUX_VERSION_WITH_IO
+
+#ifdef KERNAUX_VERSION_WITH_CMDLINE
     init_cmdline();
-#endif // HAVE_KERNAUX_CMDLINE
-#ifdef HAVE_KERNAUX_FILE_CREATE
-    init_file();
-#endif // HAVE_KERNAUX_FILE_CREATE
-#ifdef HAVE_KERNAUX_SNPRINTF
+#endif // KERNAUX_VERSION_WITH_CMDLINE
+#ifdef KERNAUX_VERSION_WITH_NTOA
+    init_ntoa();
+#endif // KERNAUX_VERSION_WITH_NTOA
+#ifdef KERNAUX_VERSION_WITH_PRINTF
     init_printf();
-#endif // HAVE_KERNAUX_SNPRINTF
+#endif // KERNAUX_VERSION_WITH_PRINTF
 }

@@ -4,8 +4,8 @@
 
 #include <kernaux/printf.h>
 
-#ifdef WITH_FILE
-#include <kernaux/file.h>
+#ifdef WITH_IO
+#include <kernaux/io.h>
 #endif
 
 #include <assert.h>
@@ -18,7 +18,7 @@
 static char buffer[BUFFER_SIZE];
 static size_t buffer_index;
 
-#ifdef WITH_FILE
+#ifdef WITH_IO
 
 static const char *const data = "foobar";
 
@@ -34,14 +34,14 @@ static void test_putchar(const char chr, void *const arg)
     buffer[buffer_index++] = chr;
 }
 
-#endif // WITH_FILE
+#endif // WITH_IO
 
 static void test(const char *const expected, const char *const format, ...)
 {
     va_list va;
     int result;
 
-#ifdef WITH_FILE
+#ifdef WITH_IO
     memset(buffer, '\0', sizeof(buffer));
     buffer_index = 0;
     va_start(va, format);
@@ -61,9 +61,9 @@ static void test(const char *const expected, const char *const format, ...)
     assert(strcmp(expected, buffer) == 0);
 }
 
-int main()
+void test_main()
 {
-#ifdef WITH_FILE
+#ifdef WITH_IO
     memset(buffer, '\0', sizeof(buffer));
     buffer_index = 0;
     struct KernAux_File file = KernAux_File_create(test_putchar);
@@ -81,6 +81,4 @@ int main()
 #endif
     {% endif %}
     {% endfor %}
-
-    return 0;
 }

@@ -9,6 +9,15 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        debug: ['--disable-debug', '--enable-debug']
+        packages:
+          - configure: ''
+          - configure: '--without-all'
+            cargo: '--no-default-features'
+          - configure: '--without-all --with-ntoa'
+            cargo: '--no-default-features --features ntoa'
     steps:
       - uses: actions/checkout@v2
       - uses: actions-rs/toolchain@v1
@@ -18,14 +27,14 @@ jobs:
       - name: autogen
         run: ./autogen.sh
       - name: configure
-        run: ./configure CFLAGS='-O3'
+        run: ./configure ${{matrix.debug}} ${{matrix.packages.configure}} CFLAGS='-O3'
       - name: make
         run: make
       - name: install
         run: sudo make install
       - working-directory: bindings/rust
         name: test
-        run: cargo test
+        run: cargo test ${{matrix.packages.cargo}}
       - working-directory: bindings/rust
         name: clippy
         run: cargo clippy

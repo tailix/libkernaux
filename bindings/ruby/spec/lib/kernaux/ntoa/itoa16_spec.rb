@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-KernAux::Version.supports_itoa16? and RSpec.describe KernAux, '.itoa16' do
+KernAux::Version.with_ntoa? and RSpec.describe KernAux, '.itoa16' do
   subject(:itoa16) { described_class.itoa16 number }
 
   let(:number) { rand((-2**63)..(2**63 - 1)) }
@@ -58,6 +58,15 @@ KernAux::Version.supports_itoa16? and RSpec.describe KernAux, '.itoa16' do
     specify do
       expect { itoa16 }.to raise_error \
         RangeError, 'bignum too big to convert into `long long\''
+    end
+  end
+
+  context 'when number is not numeric' do
+    let(:number) { rand((-2**63)..(2**63 - 1)).to_s }
+
+    specify do
+      expect { itoa16 }.to raise_error \
+        TypeError, 'no implicit conversion from string'
     end
   end
 end

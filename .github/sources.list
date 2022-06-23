@@ -1,0 +1,9 @@
+deb [arch=i386,amd64]    http://azure.archive.ubuntu.com/ubuntu focal           main restricted universe multiverse
+deb [arch=i386,amd64]    http://azure.archive.ubuntu.com/ubuntu focal-updates   main restricted universe multiverse
+deb [arch=i386,amd64]    http://azure.archive.ubuntu.com/ubuntu focal-backports main restricted universe multiverse
+deb [arch=i386,amd64]    http://azure.archive.ubuntu.com/ubuntu focal-security  main restricted universe multiverse
+
+deb [arch=arm64,riscv64] http://ports.ubuntu.com/ubuntu-ports   focal           main restricted universe multiverse
+deb [arch=arm64,riscv64] http://ports.ubuntu.com/ubuntu-ports   focal-updates   main restricted universe multiverse
+deb [arch=arm64,riscv64] http://ports.ubuntu.com/ubuntu-ports   focal-backports main restricted universe multiverse
+deb [arch=arm64,riscv64] http://ports.ubuntu.com/ubuntu-ports   focal-security  main restricted universe multiverse

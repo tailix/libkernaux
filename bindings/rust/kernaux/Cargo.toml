@@ -1,6 +1,6 @@
 [package]
 name = "kernaux"
-version = "0.3.0"
+version = "0.4.0"
 authors = ["Alex Kotov <kotovalexarian@gmail.com>"]
 edition = "2021"
 description = "Safe binding to libkernaux - auxiliary library for kernel development"
@@ -12,11 +12,17 @@ keywords = ["ffi", "embedded", "bindings"]
 categories = ["api-bindings", "embedded", "parsing"]
 publish = true
 
+[features]
+default = ["cmdline", "ntoa"]
+cmdline = ["kernaux-sys/cmdline"]
+ntoa = ["kernaux-sys/ntoa"]
+
 [dependencies]
 ctor = "0.1.22"
 
 [dependencies.kernaux-sys]
-version = "0.3.0"
+version = "0.4.0"
+default-features = false
 path = "../kernaux-sys"
 
 [dependencies.libc]

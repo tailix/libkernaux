@@ -9,6 +9,15 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        debug: ['--disable-debug', '--enable-debug']
+        packages:
+          - configure: ''
+          - configure: '--without-all'
+            skip_coverage: 'x'
+          - configure: '--without-all --with-ntoa'
+            skip_coverage: 'x'
     steps:
       - uses: actions/checkout@v2
       - uses: ruby/setup-ruby@v1
@@ -19,7 +28,7 @@ jobs:
       - name: autogen
         run: ./autogen.sh
       - name: configure
-        run: ./configure CFLAGS='-O3'
+        run: ./configure ${{matrix.debug}} ${{matrix.packages.configure}} CFLAGS='-O3'
       - name: make
         run: make
       - name: install
@@ -32,36 +41,7 @@ jobs:
         run: rake compile
       - working-directory: bindings/ruby
         name: test & lint
-        run: rake
+        run: SKIP_COVERAGE='${{matrix.packages.skip_coverage}}' rake
       - working-directory: bindings/ruby
         name: cppcheck
         run: cppcheck --quiet --error-exitcode=1 --std=c99 --enable=warning,style,performance,portability .
-
-  cond:
-    runs-on: ubuntu-latest
-    env:
-      SKIP_COVERAGE: x
-    steps:
-      - uses: actions/checkout@v2
-      - uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: 3.0
-      - name: dependencies
-        run: sudo apt-get --yes install
-      - name: autogen
-        run: ./autogen.sh
-      - name: configure
-        run: ./configure --without-all CFLAGS='-O3'
-      - name: make
-        run: make
-      - name: install
-        run: sudo make install
-      - working-directory: bindings/ruby
-        name: setup
-        run: ./bin/setup
-      - working-directory: bindings/ruby
-        name: compile
-        run: rake compile
-      - working-directory: bindings/ruby
-        name: test & lint
-        run: rake

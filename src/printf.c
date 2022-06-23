@@ -1,5 +1,8 @@
 /**
+ * The code was taken from Marco Paland's printf.
+ *
  * Copyright (c) 2014-2019 Marco Paland <info@paland.com>
+ * Copyright (c) 2020-2022 Alex Kotov
  *
  * Tiny [v]fprintf, sfprintf and [v]snprintf implementation, optimized for speed
  * on embedded systems with a very limited resources. These routines are thread
@@ -66,12 +69,12 @@ static size_t _etoa(out_fct_type out, char* buffer, size_t idx, size_t maxlen, d
  * Implementations: main API *
  *****************************/
 
-#ifdef WITH_FILE
+#ifdef WITH_IO
 
 int kernaux_fprintf(const KernAux_File file, void* arg, const char* format, ...)
 {
-    KERNAUX_NOTNULL_RETVAL(file, 0);
-    KERNAUX_NOTNULL_RETVAL(format, 0);
+    KERNAUX_ASSERT(file);
+    KERNAUX_ASSERT(format);
 
     va_list va;
     va_start(va, format);
@@ -83,19 +86,19 @@ int kernaux_fprintf(const KernAux_File file, void* arg, const char* format, ...)
 
 int kernaux_vfprintf(const KernAux_File file, void* arg, const char* format, va_list va)
 {
-    KERNAUX_NOTNULL_RETVAL(file, 0);
-    KERNAUX_NOTNULL_RETVAL(format, 0);
+    KERNAUX_ASSERT(file);
+    KERNAUX_ASSERT(format);
 
     const out_fct_wrap_type out_fct_wrap = { file->out, arg };
     return _vsnprintf(_out_fct, (char*)(uintptr_t)&out_fct_wrap, (size_t)-1, format, va);
 }
 
-#endif // WITH_FILE
+#endif // WITH_IO
 
 int kernaux_snprintf(char* buffer, size_t count, const char* format, ...)
 {
-    KERNAUX_NOTNULL_RETVAL(buffer, 0);
-    KERNAUX_NOTNULL_RETVAL(format, 0);
+    KERNAUX_ASSERT(buffer);
+    KERNAUX_ASSERT(format);
 
     va_list va;
     va_start(va, format);
@@ -106,16 +109,16 @@ int kernaux_snprintf(char* buffer, size_t count, const char* format, ...)
 
 int kernaux_vsnprintf(char* buffer, size_t count, const char* format, va_list va)
 {
-    KERNAUX_NOTNULL_RETVAL(buffer, 0);
-    KERNAUX_NOTNULL_RETVAL(format, 0);
+    KERNAUX_ASSERT(buffer);
+    KERNAUX_ASSERT(format);
 
     return _vsnprintf(_out_buffer, buffer, count, format, va);
 }
 
 int kernaux_sprintf(char* buffer, const char* format, ...)
 {
-    KERNAUX_NOTNULL_RETVAL(buffer, 0);
-    KERNAUX_NOTNULL_RETVAL(format, 0);
+    KERNAUX_ASSERT(buffer);
+    KERNAUX_ASSERT(format);
 
     va_list va;
     va_start(va, format);
@@ -130,7 +133,7 @@ int kernaux_sprintf(char* buffer, const char* format, ...)
 
 int _vsnprintf(out_fct_type out, char* buffer, const size_t maxlen, const char* format, va_list va)
 {
-    KERNAUX_NOTNULL_RETVAL(format, 0);
+    KERNAUX_ASSERT(format);
 
     size_t idx = 0u;
 
@@ -393,7 +396,7 @@ size_t _ntoa_long(out_fct_type out, char* buffer, size_t idx, size_t maxlen, uns
     if (!(flags & KERNAUX_PRINTF_FMT_FLAGS_PRECISION) || value) {
         do {
             const char digit = (char)(value % base);
-            buf[len++] = digit < 10 ? '0' + digit : (flags & KERNAUX_PRINTF_FMT_FLAGS_UPPERCASE ? 'A' : 'a') + digit - 10;
+            buf[len++] = digit < 10 ? '0' + digit : ((flags & KERNAUX_PRINTF_FMT_FLAGS_UPPERCASE) ? 'A' : 'a') + digit - 10;
             value /= base;
         } while (value && (len < PRINTF_NTOA_BUFFER_SIZE));
     }
@@ -416,7 +419,7 @@ size_t _ntoa_long_long(out_fct_type out, char* buffer, size_t idx, size_t maxlen
     if (!(flags & KERNAUX_PRINTF_FMT_FLAGS_PRECISION) || value) {
         do {
             const char digit = (char)(value % base);
-            buf[len++] = digit < 10 ? '0' + digit : (flags & KERNAUX_PRINTF_FMT_FLAGS_UPPERCASE ? 'A' : 'a') + digit - 10;
+            buf[len++] = digit < 10 ? '0' + digit : ((flags & KERNAUX_PRINTF_FMT_FLAGS_UPPERCASE) ? 'A' : 'a') + digit - 10;
             value /= base;
         } while (value && (len < PRINTF_NTOA_BUFFER_SIZE));
     }

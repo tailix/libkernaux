@@ -4,13 +4,18 @@
 */
 
 #include <kernaux/assert.h>
+#include <kernaux/macro.h>
+#include <kernaux/version.h>
+
+#include <kernaux/generic/malloc.h>
+#include <kernaux/generic/mutex.h>
 
 @comment_line_cmdline@#include <kernaux/cmdline.h>
-@comment_line_console@#include <kernaux/console.h>
 @comment_line_elf@#include <kernaux/elf.h>
-@comment_line_file@#include <kernaux/file.h>
-@comment_line_framebuffer@#include <kernaux/framebuffer.h>
+@comment_line_free_list@#include <kernaux/free_list.h>
+@comment_line_io@#include <kernaux/io.h>
 @comment_line_mbr@#include <kernaux/mbr.h>
+@comment_line_memmap@#include <kernaux/memmap.h>
 @comment_line_multiboot2@#include <kernaux/multiboot2.h>
 @comment_line_ntoa@#include <kernaux/ntoa.h>
 @comment_line_pfa@#include <kernaux/pfa.h>

@@ -6,7 +6,7 @@
 
 #include <assert.h>
 
-int main()
+void test_main()
 {
     struct KernAux_PFA pfa;
 
@@ -83,6 +83,4 @@ int main()
     }
 
     assert(KernAux_PFA_alloc_pages(&pfa, 1) == 0);
-
-    return 0;
 }

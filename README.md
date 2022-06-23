@@ -16,6 +16,9 @@ Table of contents
 * [Overview](#libkernaux)
 * [Table of contents](#table-of-contents)
 * [API](#api)
+  * [Headers](#headers)
+  * [Definitions](#definitions)
+  * [Global variables](#global-variables)
 * [Configuration](#configuration)
   * [Non-default options](#non-default-options)
   * [Default options](#default-options)
@@ -23,34 +26,36 @@ Table of contents
   * [Installation](#installation)
   * [Development](#development)
   * [Cross](#cross)
-* [Architectures](#architectures)
 
 
 
 API
 ---
 
+### Headers
+
 We use [semantic versioning](https://semver.org) for stable APIs. Stable APIs
 can only change when major version number is increased (or minor while major is
 zero). Work-in-progress APIs can change at any time.
 
 * Runtime environment
+  * [Feature macros](/include/kernaux/version.h.in) (*work in progress*)
+  * [Assertions](/include/kernaux/assert.h) (*non-breaking since* **0.4.0**)
+    * [Example: Assert](/examples/assert.c)
+    * [Example: Panic](/examples/panic.c)
+  * Stack trace *(planned)*
+  * [Input/output](/include/kernaux/io.h) (*work in progress*)
   * Architecture-specific code (*work in progress*)
     * [Declarations](/include/kernaux/arch/)
     * [Functions](/include/kernaux/asm/)
-  * [Assertions](/include/kernaux/assert.h) (*stable since* **0.1.0**, *non-breaking since* **?.?.?**)
-    * [Assert: simple](/examples/assert_simple.c)
-    * [Assert: guards](/examples/assert_guards.c)
-    * [Panic: simple](/examples/panic_simple.c)
-    * [Panic: guards](/examples/panic_guards.c)
-  * Stack trace *(planned)*
-  * [File simulator](/include/kernaux/file.h) (*work in progress*)
-* Device drivers (for debugging only)
-  * [Serial console](/include/kernaux/console.h) (*work in progress*)
-  * [Framebuffer](/include/kernaux/framebuffer.h) (*work in progress*)
-  * USB (*planned*)
+* Generic types
+  * [Memory allocator](/include/kernaux/generic/malloc.h) (*non-breaking since* **?.?.?**)
+    * [Example](/examples/generic_malloc.c)
+  * [Mutex](/include/kernaux/generic/mutex.h) (*non-breaking since* **?.?.?**)
+    * [Example](/examples/generic_mutex.c)
 * Algorithms
-  * [Simple command line parser](/include/kernaux/cmdline.h) (*stable since* **0.2.0**)
+  * [Free list memory allocator](/include/kernaux/free_list.h) (*non-breaking since* **?.?.?**)
+  * [Simple command line parser](/include/kernaux/cmdline.h) (*non-breaking since* **0.2.0**)
     * [Example](/examples/cmdline.c)
   * [Page Frame Allocator](/include/kernaux/pfa.h) (*work in progress*)
     * [Example](/examples/pfa.c)
@@ -58,27 +63,59 @@ zero). Work-in-progress APIs can change at any time.
   * [ELF](/include/kernaux/elf.h) (*work in progress*)
   * [Master Boot Record](/include/kernaux/mbr.h) (*work in progress*)
   * [Multiboot 2 (GRUB 2)](/include/kernaux/multiboot2.h) (*work in progress*)
-  * Stivale 2 (Limine) (*planned*)
 * Utilities
   * [Measurement units utils](/include/kernaux/units.h) (*work in progress*)
-    * [To human](/examples/units_human.c)
+    * [Example: To human](/examples/units_human.c)
+  * [Memory map](/include/kernaux/memmap.h.in) (*non-breaking since* **0.4.0**)
+    * [Example](/examples/memmap.c)
   * [printf format parser](/include/kernaux/printf_fmt.h) (*work in progress*)
     * Code from [https://github.com/mpaland/printf](https://github.com/mpaland/printf). Thank you!
     * [Example](/examples/printf_fmt.c)
 * Usual functions
-  * [itoa/ftoa replacement](/include/kernaux/ntoa.h) (*stable since* **0.1.0**, *non-breaking since* **?.?.?**)
+  * [itoa/ftoa replacement](/include/kernaux/ntoa.h) (*non-breaking since* **0.4.0**)
     * [Example](/examples/ntoa.c)
-  * [printf replacement](/include/kernaux/printf.h.in) (*stable since* **0.1.0**, *non-breaking since* **?.?.?**)
+  * [printf replacement](/include/kernaux/printf.h.in) (*non-breaking since* **0.4.0**)
     * Code from [https://github.com/mpaland/printf](https://github.com/mpaland/printf). Thank you!
-    * [fprintf](/examples/fprintf.c)
-    * [vfprintf](/examples/fprintf_va.c)
-    * [snprintf](/examples/snprintf.c)
-    * [vsnprintf](/examples/snprintf_va.c)
-* libc replacement
+    * [Example: fprintf](/examples/fprintf.c)
+    * [Example: vfprintf](/examples/fprintf_va.c)
+    * [Example: snprintf](/examples/snprintf.c)
+    * [Example: vsnprintf](/examples/snprintf_va.c)
+* libc replacement (*work in progress*)
   * [ctype.h](/libc/include/ctype.h)
-  * [math.h](/libm/include/math.h)
+  * [inttypes.h](/libc/include/inttypes.h)
+  * [setjmp.h](/libc/include/setjmp.h)
   * [stdlib.h](/libc/include/stdlib.h)
   * [string.h](/libc/include/string.h)
+  * [sys/types.h](/libc/include/sys/types.h)
+* Device drivers (for debugging only)
+  * [Serial console](/include/kernaux/drivers/console.h) (*work in progress*)
+  * [Framebuffer](/include/kernaux/drivers/framebuffer.h) (*work in progress*)
+  * [Intel 8259 PIC](/include/kernaux/drivers/intel_8259_pic.h) (*planned*)
+  * USB (*planned*)
+
+### Definitions
+
+`#define` the following C preprocessor macros before including `<kernaux.h>` and
+`<kernaux/*.h>` files. They have effect on your code, not the library code.
+
+* `KERNAUX_DEBUG` - enable assertions.
+* `KERNAUX_ACCESS_PRIVATE` - disable access modifier "private". Don't do this!
+* `KERNAUX_ACCESS_PROTECTED` - disable access modifier "protected". Only do this
+  in a file where you implement an inherited type.
+
+### Global variables
+
+```c
+// in <kernaux/assert.h>
+void (*kernaux_assert_cb)(const char *file, int line, const char *msg)
+```
+
+Assertion callback. It's better to always set it to some function which always
+interrupts the execution, even when debugging is disabled. It may for example
+call `abort()` in hosted environment, raise an exception in Ruby, panic in Rust
+or power off the machine in freestanding environment. It may also log the error
+location and message.
+
 
 
 
@@ -95,10 +132,6 @@ stable options.
 
 #### Features
 
-* `--enable-freestanding` - build for freestanding environment
-* `--enable-split-all` - split off all libraries
-* `--enable-split-libc` - split off libc
-* `--enable-split-libm` - split off libm
 * `--enable-tests` - enable usual tests and examples
 * `--enable-tests-all` - enable all tests
 * `--enable-tests-python` - enable tests that require Python 3 with YAML and
@@ -106,15 +139,15 @@ stable options.
 
 #### Packages
 
+* `--with-drivers` - device drivers
 * `--with-libc` - provides the replacement for some standard C functions.
   Useful in freestanding environment, where no libc is present.
-* `--with-libm` - provides the replacement for C functions from `<math.h>`,
-  Useful in freestanding environment, where no libm is present.
 
 ### Default options
 
 #### Features
 
+* `--(enable|disable)-debug` - debugging
 * `--(enable|disable)-float` - floating-point arithmetic
 * `--(enable|disable)-werror` - fail on warning (`CFLAGS+='-Werror'`)
 
@@ -124,7 +157,9 @@ All packages are included by default. To exclude all packages except those
 explicitly included, use `--without-all`.
 
 * `--with[out]-cmdline` - command line parser
-* `--with[out]-file` - file simulator
+* `--with[out]-free-list` - free list memory allocator
+* `--with[out]-io` - input/output
+* `--with[out]-memmap` - memory map
 * `--with[out]-ntoa` - itoa/ftoa
 * `--with[out]-printf` - printf
 
@@ -167,8 +202,8 @@ without it in `$PATH`:
 ./configure \
   --host='i386-elf' \
   --enable-freestanding \
+  --with-drivers \
   --with-libc \
-  --with-libm \
   AR="$(which i386-elf-ar)" \
   CC="$(which i386-elf-gcc)" \
   RANLIB="$(which i386-elf-ranlib)"
@@ -239,21 +274,3 @@ Disassembly of section .text:
   1c:   0f 22 e0              mov    %eax,%cr4
   1f:   c3                    ret
 ```
-
-
-
-Architectures
--------------
-
-Architectures should be properly identified. We use the following scheme, but it
-may change in future:
-
-* `x86`
-  * `i386`
-  * `x86_64`
-* `riscv`
-  * `riscv64`
-* `arm` - we need more info, now similar to [Debian](https://www.debian.org/ports/arm/)
-  * `armel`
-  * `armhf`
-  * `arm64`

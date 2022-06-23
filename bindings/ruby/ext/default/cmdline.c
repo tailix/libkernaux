@@ -1,7 +1,6 @@
-#include <kernaux.h>
-#include <ruby.h>
+#include "main.h"
 
-#ifdef HAVE_KERNAUX_CMDLINE
+#ifdef KERNAUX_VERSION_WITH_CMDLINE
 
 #define ARGV_COUNT_MAX 256
 #define BUFFER_SIZE 4096
@@ -29,22 +28,11 @@ static const struct rb_data_type_struct info = {
     .flags = RUBY_TYPED_FREE_IMMEDIATELY,
 };
 
-static ID rb_intern_freeze = Qnil;
-static ID rb_intern_new = Qnil;
-
-static VALUE rb_KernAux = Qnil;
-static VALUE rb_KernAux_Error = Qnil;
 static VALUE rb_KernAux_CmdlineError = Qnil;
 static VALUE rb_ANON_Data = Qnil;
 
 void init_cmdline()
 {
-    rb_gc_register_mark_object(ID2SYM(rb_intern_freeze = rb_intern("freeze")));
-    rb_gc_register_mark_object(ID2SYM(rb_intern_new    = rb_intern("new")));
-
-    rb_gc_register_mark_object(rb_KernAux = rb_define_module("KernAux"));
-    rb_gc_register_mark_object(rb_KernAux_Error =
-        rb_define_class_under(rb_KernAux, "Error", rb_eRuntimeError));
     rb_gc_register_mark_object(rb_KernAux_CmdlineError =
         rb_define_class_under(rb_KernAux, "CmdlineError", rb_KernAux_Error));
     rb_gc_register_mark_object(rb_ANON_Data =
@@ -92,4 +80,4 @@ VALUE rb_KernAux_cmdline(const VALUE self_rb, VALUE cmdline_rb)
     return rb_funcall(result_rb, rb_intern_freeze, 0);
 }
 
-#endif // HAVE_KERNAUX_CMDLINE
+#endif // KERNAUX_VERSION_WITH_CMDLINE

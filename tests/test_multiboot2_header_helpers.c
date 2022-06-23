@@ -7,8 +7,7 @@
 #include "multiboot2_header_example1.h"
 #include "multiboot2_header_example2.h"
 
-int main()
+void test_main()
 {
     // TODO: write this
-    return 0;
 }

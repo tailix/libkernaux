@@ -12,7 +12,7 @@ LT_PREREQ([2.4.6])
 #######################
 
 AC_INIT([libkernaux],
-  [0.3.0],
+  m4_normalize(m4_include([VERSION])),
   [https://github.com/tailix/libkernaux/issues],
   [libkernaux],
   [https://github.com/tailix/libkernaux])
@@ -29,11 +29,11 @@ AC_CONFIG_FILES([
   include/Makefile
   libc/Makefile
   libc/include/Makefile
-  libm/Makefile
-  libm/include/Makefile
   include/kernaux.h
-  include/kernaux/console.h
+  include/kernaux/drivers/console.h
+  include/kernaux/multiboot2.h
   include/kernaux/printf.h
+  include/kernaux/version.h
   tests/Makefile
 ])
 
@@ -44,14 +44,13 @@ AC_CONFIG_FILES([
 ###############
 
 dnl Features (enabled by default)
+AC_ARG_ENABLE([debug],        AS_HELP_STRING([--disable-debug],       [disable debugging]))
 AC_ARG_ENABLE([float],        AS_HELP_STRING([--disable-float],       [disable floating-point arithmetic]))
 AC_ARG_ENABLE([werror],       AS_HELP_STRING([--disable-werror],      [disable -Werror]))
 
 dnl Features (disabled by default)
 AC_ARG_ENABLE([freestanding], AS_HELP_STRING([--enable-freestanding], [build for freestanding environment]))
-AC_ARG_ENABLE([split-all],    AS_HELP_STRING([--enable-split-all],    [split off all libraries]))
 AC_ARG_ENABLE([split-libc],   AS_HELP_STRING([--enable-split-libc],   [split off libc]))
-AC_ARG_ENABLE([split-libm],   AS_HELP_STRING([--enable-split-libm],   [split off libm]))
 AC_ARG_ENABLE([tests],        AS_HELP_STRING([--enable-tests],        [enable usual tests and examples]))
 AC_ARG_ENABLE([tests-all],    AS_HELP_STRING([--enable-tests-all],    [enable all tests]))
 AC_ARG_ENABLE([tests-python], AS_HELP_STRING([--enable-tests-python], [enable tests that require Python 3 with YAML and Jinja2]))
@@ -59,11 +58,11 @@ AC_ARG_ENABLE([tests-python], AS_HELP_STRING([--enable-tests-python], [enable te
 dnl Packages (enabled by default)
 AC_ARG_WITH(  [all],          AS_HELP_STRING([--without-all],         [without all default packages]))
 AC_ARG_WITH(  [cmdline],      AS_HELP_STRING([--without-cmdline],     [without command line parser]))
-AC_ARG_WITH(  [console],      AS_HELP_STRING([--without-console],     [without serial console]))
 AC_ARG_WITH(  [elf],          AS_HELP_STRING([--without-elf],         [without ELF utils]))
-AC_ARG_WITH(  [file],         AS_HELP_STRING([--without-file],        [without file simulator]))
-AC_ARG_WITH(  [framebuffer],  AS_HELP_STRING([--without-framebuffer], [without framebuffer]))
+AC_ARG_WITH(  [free-list],    AS_HELP_STRING([--without-free-list],   [without free list memory allocator]))
+AC_ARG_WITH(  [io],           AS_HELP_STRING([--without-io],          [without input/output]))
 AC_ARG_WITH(  [mbr],          AS_HELP_STRING([--without-mbr],         [without Master Boot Record]))
+AC_ARG_WITH(  [memmap],       AS_HELP_STRING([--without-memmap],      [without memory map]))
 AC_ARG_WITH(  [multiboot2],   AS_HELP_STRING([--without-multiboot2],  [without Multiboot 2 information parser]))
 AC_ARG_WITH(  [ntoa],         AS_HELP_STRING([--without-ntoa],        [without itoa/ftoa]))
 AC_ARG_WITH(  [pfa],          AS_HELP_STRING([--without-pfa],         [without Page Frame Allocator]))
@@ -72,21 +71,14 @@ AC_ARG_WITH(  [printf-fmt],   AS_HELP_STRING([--without-printf-fmt],  [without p
 AC_ARG_WITH(  [units],        AS_HELP_STRING([--without-units],       [without measurement units utils]))
 
 dnl Packages (disabled by default)
+AC_ARG_WITH(  [drivers],      AS_HELP_STRING([--with-drivers],        [with drivers]))
 AC_ARG_WITH(  [libc],         AS_HELP_STRING([--with-libc],           [with libc replacement]))
-AC_ARG_WITH(  [libm],         AS_HELP_STRING([--with-libm],           [with libm replacement]))
 
 
 
 ################
 # Default args #
 ################
-
-AC_DEFUN([do_enable_split_all],
-[
-if test -z "$enable_split_libc"; then enable_split_libc=yes; fi
-if test -z "$enable_split_libm"; then enable_split_libm=yes; fi
-])
-AS_IF([test "$enable_split_all" = yes], do_enable_split_all)
 
 AC_DEFUN([do_enable_tests_all],
 [
@@ -98,11 +90,11 @@ AS_IF([test "$enable_tests_all" = yes], do_enable_tests_all)
 AC_DEFUN([do_without_all],
 [
 if test -z "$with_cmdline";     then with_cmdline=no;     fi
-if test -z "$with_console";     then with_console=no;     fi
 if test -z "$with_elf";         then with_elf=no;         fi
-if test -z "$with_file";        then with_file=no;        fi
-if test -z "$with_framebuffer"; then with_framebuffer=no; fi
+if test -z "$with_free_list";   then with_free_list=no;   fi
+if test -z "$with_io";          then with_io=no;          fi
 if test -z "$with_mbr";         then with_mbr=no;         fi
+if test -z "$with_memmap";      then with_memmap=no;      fi
 if test -z "$with_multiboot2";  then with_multiboot2=no;  fi
 if test -z "$with_ntoa";        then with_ntoa=no;        fi
 if test -z "$with_pfa";         then with_pfa=no;         fi
@@ -119,14 +111,13 @@ AS_IF([test "$with_all" = no], do_without_all)
 ##################
 
 dnl Features (enabled by default)
+AS_IF([test "$enable_debug"        = no ], [enable_debug=no],         [enable_debug=yes])
 AS_IF([test "$enable_float"        = no ], [enable_float=no],         [enable_float=yes])
 AS_IF([test "$enable_werror"       = no ], [enable_werror=no],        [enable_werror=yes])
 
 dnl Features (disabled by default)
 AS_IF([test "$enable_freestanding" = yes], [enable_freestanding=yes], [enable_freestanding=no])
-AS_IF([test "$enable_split_all"    = yes], [enable_split_all=yes],    [enable_split_all=no])
 AS_IF([test "$enable_split_libc"   = yes], [enable_split_libc=yes],   [enable_split_libc=no])
-AS_IF([test "$enable_split_libm"   = yes], [enable_split_libm=yes],   [enable_split_libm=no])
 AS_IF([test "$enable_tests"        = yes], [enable_tests=yes],        [enable_tests=no])
 AS_IF([test "$enable_tests_all"    = yes], [enable_tests_all=yes],    [enable_tests_all=no])
 AS_IF([test "$enable_tests_python" = yes], [enable_tests_python=yes], [enable_tests_python=no])
@@ -134,11 +125,11 @@ AS_IF([test "$enable_tests_python" = yes], [enable_tests_python=yes], [enable_te
 dnl Packages (enabled by default)
 AS_IF([test "$with_all"            = no ], [with_all=no],             [with_all=yes])
 AS_IF([test "$with_cmdline"        = no ], [with_cmdline=no],         [with_cmdline=yes])
-AS_IF([test "$with_console"        = no ], [with_console=no],         [with_console=yes])
 AS_IF([test "$with_elf"            = no ], [with_elf=no],             [with_elf=yes])
-AS_IF([test "$with_file"           = no ], [with_file=no],            [with_file=yes])
-AS_IF([test "$with_framebuffer"    = no ], [with_framebuffer=no],     [with_framebuffer=yes])
+AS_IF([test "$with_free_list"      = no ], [with_free_list=no],       [with_free_list=yes])
+AS_IF([test "$with_io"             = no ], [with_io=no],              [with_io=yes])
 AS_IF([test "$with_mbr"            = no ], [with_mbr=no],             [with_mbr=yes])
+AS_IF([test "$with_memmap"         = no ], [with_memmap=no],          [with_memmap=yes])
 AS_IF([test "$with_multiboot2"     = no ], [with_multiboot2=no],      [with_multiboot2=yes])
 AS_IF([test "$with_ntoa"           = no ], [with_ntoa=no],            [with_ntoa=yes])
 AS_IF([test "$with_pfa"            = no ], [with_pfa=no],             [with_pfa=yes])
@@ -147,8 +138,8 @@ AS_IF([test "$with_printf_fmt"     = no ], [with_printf_fmt=no],      [with_prin
 AS_IF([test "$with_units"          = no ], [with_units=no],           [with_units=yes])
 
 dnl Packages (disabled by default)
+AS_IF([test "$with_drivers"        = yes], [with_drivers=yes],        [with_drivers=no])
 AS_IF([test "$with_libc"           = yes], [with_libc=yes],           [with_libc=no])
-AS_IF([test "$with_libm"           = yes], [with_libm=yes],           [with_libm=no])
 
 
 
@@ -156,14 +147,10 @@ AS_IF([test "$with_libm"           = yes], [with_libm=yes],           [with_libm
 # Test args #
 #############
 
-AS_IF([test "$enable_tests"        = yes -a "$host_cpu" != "$build_cpu" ], AC_MSG_ERROR([can not build cross-platform tests]))
-AS_IF([test "$enable_tests_python" = yes -a "$host_cpu" != "$build_cpu" ], AC_MSG_ERROR([can not build cross-platform tests]))
 AS_IF([test "$enable_tests"        = yes -a "$enable_freestanding" = yes], AC_MSG_ERROR([can not build freestanding tests]))
 AS_IF([test "$enable_tests_python" = yes -a "$enable_freestanding" = yes], AC_MSG_ERROR([can not build freestanding tests]))
 AS_IF([test "$enable_tests"        = yes -a "$with_libc"           = yes], AC_MSG_ERROR([can not use package `libc' with tests]))
 AS_IF([test "$enable_tests_python" = yes -a "$with_libc"           = yes], AC_MSG_ERROR([can not use package `libc' with tests]))
-AS_IF([test "$enable_tests"        = yes -a "$with_libm"           = yes], AC_MSG_ERROR([can not use package `libm' with tests]))
-AS_IF([test "$enable_tests_python" = yes -a "$with_libm"           = yes], AC_MSG_ERROR([can not use package `libm' with tests]))
 
 AS_IF([test "$with_printf" = yes -a "$with_ntoa"       = no], AC_MSG_ERROR([package `printf' requires package `ntoa']))
 AS_IF([test "$with_printf" = yes -a "$with_printf_fmt" = no], AC_MSG_ERROR([package `printf' requires package `printf-fmt']))
@@ -181,23 +168,23 @@ AM_CONDITIONAL([ASM_RISCV64],         [test "$host_cpu" = riscv64])
 AM_CONDITIONAL([ASM_X86_64],          [test "$host_cpu" = x86_64])
 
 dnl Features (enabled by default)
+AM_CONDITIONAL([ENABLE_DEBUG],        [test "$enable_debug"        = yes])
 AM_CONDITIONAL([ENABLE_FLOAT],        [test "$enable_float"        = yes])
 AM_CONDITIONAL([ENABLE_WERROR],       [test "$enable_werror"       = yes])
 
 dnl Features (disabled by default)
 AM_CONDITIONAL([ENABLE_FREESTANDING], [test "$enable_freestanding" = yes])
 AM_CONDITIONAL([ENABLE_SPLIT_LIBC],   [test "$enable_split_libc"   = yes])
-AM_CONDITIONAL([ENABLE_SPLIT_LIBM],   [test "$enable_split_libm"   = yes])
 AM_CONDITIONAL([ENABLE_TESTS],        [test "$enable_tests"        = yes])
 AM_CONDITIONAL([ENABLE_TESTS_PYTHON], [test "$enable_tests_python" = yes])
 
 dnl Packages (enabled by default)
 AM_CONDITIONAL([WITH_CMDLINE],        [test "$with_cmdline"        = yes])
-AM_CONDITIONAL([WITH_CONSOLE],        [test "$with_console"        = yes])
 AM_CONDITIONAL([WITH_ELF],            [test "$with_elf"            = yes])
-AM_CONDITIONAL([WITH_FILE],           [test "$with_file"           = yes])
-AM_CONDITIONAL([WITH_FRAMEBUFFER],    [test "$with_framebuffer"    = yes])
+AM_CONDITIONAL([WITH_FREE_LIST],      [test "$with_free_list"      = yes])
+AM_CONDITIONAL([WITH_IO],             [test "$with_io"             = yes])
 AM_CONDITIONAL([WITH_MBR],            [test "$with_mbr"            = yes])
+AM_CONDITIONAL([WITH_MEMMAP],         [test "$with_memmap"         = yes])
 AM_CONDITIONAL([WITH_MULTIBOOT2],     [test "$with_multiboot2"     = yes])
 AM_CONDITIONAL([WITH_NTOA],           [test "$with_ntoa"           = yes])
 AM_CONDITIONAL([WITH_PFA],            [test "$with_pfa"            = yes])
@@ -206,8 +193,8 @@ AM_CONDITIONAL([WITH_PRINTF_FMT],     [test "$with_printf_fmt"     = yes])
 AM_CONDITIONAL([WITH_UNITS],          [test "$with_units"          = yes])
 
 dnl Packages (disabled by default)
+AM_CONDITIONAL([WITH_DRIVERS],        [test "$with_drivers"        = yes])
 AM_CONDITIONAL([WITH_LIBC],           [test "$with_libc"           = yes])
-AM_CONDITIONAL([WITH_LIBM],           [test "$with_libm"           = yes])
 
 
 
@@ -221,23 +208,23 @@ AS_IF([test "$host_cpu" = riscv64],        [AC_DEFINE([ASM_RISCV64],         [1]
 AS_IF([test "$host_cpu" = x86_64],         [AC_DEFINE([ASM_X86_64],          [1], [architecture is x86_64])])
 
 dnl Features (enabled by default)
+AS_IF([test "$enable_debug"        = yes], [AC_DEFINE([ENABLE_DEBUG],        [1], [enabled debugging])])
 AS_IF([test "$enable_float"        = yes], [AC_DEFINE([ENABLE_FLOAT],        [1], [enabled floating-point arithmetic])])
 AS_IF([test "$enable_werror"       = yes], [AC_DEFINE([ENABLE_WERROR],       [1], [enabled -Werror])])
 
 dnl Features (disabled by default)
 AS_IF([test "$enable_split_libc"   = yes], [AC_DEFINE([ENABLE_SPLIT_LIBC],   [1], [split off libc])])
-AS_IF([test "$enable_split_libm"   = yes], [AC_DEFINE([ENABLE_SPLIT_LIBM],   [1], [split off libm])])
 AS_IF([test "$enable_freestanding" = yes], [AC_DEFINE([ENABLE_FREESTANDING], [1], [build for freestanding environment])])
 AS_IF([test "$enable_tests"        = yes], [AC_DEFINE([ENABLE_TESTS],        [1], [enabled usual tests and examples])])
 AS_IF([test "$enable_tests_python" = yes], [AC_DEFINE([ENABLE_TESTS_PYTHON], [1], [enabled tests that require Python 3 with YAML and Jinja2])])
 
 dnl Packages (enabled by default)
 AS_IF([test "$with_cmdline"        = yes], [AC_DEFINE([WITH_CMDLINE],        [1], [with command line parser])])
-AS_IF([test "$with_console"        = yes], [AC_DEFINE([WITH_CONSOLE],        [1], [with serial console])])
 AS_IF([test "$with_elf"            = yes], [AC_DEFINE([WITH_ELF],            [1], [with ELF utils])])
-AS_IF([test "$with_file"           = yes], [AC_DEFINE([WITH_FILE],           [1], [with file simulator])])
-AS_IF([test "$with_framebuffer"    = yes], [AC_DEFINE([WITH_FRAMEBUFFER],    [1], [with framebuffer])])
+AS_IF([test "$with_free_list"      = yes], [AC_DEFINE([WITH_FREE_LIST],      [1], [with free list memory allocator])])
+AS_IF([test "$with_io"             = yes], [AC_DEFINE([WITH_IO],             [1], [with input/output])])
 AS_IF([test "$with_mbr"            = yes], [AC_DEFINE([WITH_MBR],            [1], [with Master Boot Record])])
+AS_IF([test "$with_memmap"         = yes], [AC_DEFINE([WITH_MEMMAP],         [1], [with memory map])])
 AS_IF([test "$with_multiboot2"     = yes], [AC_DEFINE([WITH_MULTIBOOT2],     [1], [with Multiboot 2 information parser])])
 AS_IF([test "$with_ntoa"           = yes], [AC_DEFINE([WITH_NTOA],           [1], [with ntoa])])
 AS_IF([test "$with_pfa"            = yes], [AC_DEFINE([WITH_PFA],            [1], [with Page Frame Allocator])])
@@ -246,8 +233,11 @@ AS_IF([test "$with_printf_fmt"     = yes], [AC_DEFINE([WITH_PRINTF_FMT],     [1]
 AS_IF([test "$with_units",         = yes], [AC_DEFINE([WITH_UNITS],          [1], [with measurement units utils])])
 
 dnl Packages (disabled by default)
+AS_IF([test "$with_drivers"        = yes], [AC_DEFINE([WITH_DRIVERS],        [1], [with drivers])])
 AS_IF([test "$with_libc"           = yes], [AC_DEFINE([WITH_LIBC],           [1], [with libc replacement])])
-AS_IF([test "$with_libm"           = yes], [AC_DEFINE([WITH_LIBM],           [1], [with libm replacement])])
+
+dnl Additional
+AS_IF([test "$enable_debug"        = yes], [AC_DEFINE([KERNAUX_DEBUG],       [1], [enabled debugging])])
 
 
 
@@ -256,18 +246,18 @@ AS_IF([test "$with_libm"           = yes], [AC_DEFINE([WITH_LIBM],           [1]
 ##########################
 
 dnl Packages (enabled by default)
-AS_IF([test "$with_cmdline"      = no], [AC_SUBST([comment_line_cmdline],      [//])])
-AS_IF([test "$with_console"      = no], [AC_SUBST([comment_line_console],      [//])])
-AS_IF([test "$with_elf"          = no], [AC_SUBST([comment_line_elf],          [//])])
-AS_IF([test "$with_file"         = no], [AC_SUBST([comment_line_file],         [//])])
-AS_IF([test "$with_framebuffer"  = no], [AC_SUBST([comment_line_framebuffer],  [//])])
-AS_IF([test "$with_mbr"          = no], [AC_SUBST([comment_line_mbr],          [//])])
-AS_IF([test "$with_multiboot2"   = no], [AC_SUBST([comment_line_multiboot2],   [//])])
-AS_IF([test "$with_ntoa"         = no], [AC_SUBST([comment_line_ntoa],         [//])])
-AS_IF([test "$with_pfa"          = no], [AC_SUBST([comment_line_pfa],          [//])])
-AS_IF([test "$with_printf"       = no], [AC_SUBST([comment_line_printf],       [//])])
-AS_IF([test "$with_printf_fmt"   = no], [AC_SUBST([comment_line_printf_fmt],   [//])])
-AS_IF([test "$with_units"        = no], [AC_SUBST([comment_line_units],        [//])])
+AS_IF([test "$with_cmdline"     = no], [AC_SUBST([comment_line_cmdline],     [//])])
+AS_IF([test "$with_elf"         = no], [AC_SUBST([comment_line_elf],         [//])])
+AS_IF([test "$with_free_list"   = no], [AC_SUBST([comment_line_free_list],   [//])])
+AS_IF([test "$with_io"          = no], [AC_SUBST([comment_line_io],          [//])])
+AS_IF([test "$with_mbr"         = no], [AC_SUBST([comment_line_mbr],         [//])])
+AS_IF([test "$with_memmap"      = no], [AC_SUBST([comment_line_memmap],      [//])])
+AS_IF([test "$with_multiboot2"  = no], [AC_SUBST([comment_line_multiboot2],  [//])])
+AS_IF([test "$with_ntoa"        = no], [AC_SUBST([comment_line_ntoa],        [//])])
+AS_IF([test "$with_pfa"         = no], [AC_SUBST([comment_line_pfa],         [//])])
+AS_IF([test "$with_printf"      = no], [AC_SUBST([comment_line_printf],      [//])])
+AS_IF([test "$with_printf_fmt"  = no], [AC_SUBST([comment_line_printf_fmt],  [//])])
+AS_IF([test "$with_units"       = no], [AC_SUBST([comment_line_units],       [//])])
 
 
 

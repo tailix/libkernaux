@@ -3,21 +3,13 @@ include $(top_srcdir)/shared.am
 TESTS =
 noinst_PROGRAMS = $(TESTS)
 
-#################
-# assert_guards #
-#################
+##########
+# assert #
+##########
 
-TESTS += assert_guards
-assert_guards_LDADD = $(top_builddir)/libkernaux.la
-assert_guards_SOURCES = assert_guards.c
-
-#################
-# assert_simple #
-#################
-
-TESTS += assert_simple
-assert_simple_LDADD = $(top_builddir)/libkernaux.la
-assert_simple_SOURCES = assert_simple.c
+TESTS += assert
+assert_LDADD = $(top_builddir)/libkernaux.la
+assert_SOURCES = assert.c
 
 ###########
 # cmdline #
@@ -26,7 +18,7 @@ assert_simple_SOURCES = assert_simple.c
 if WITH_CMDLINE
 TESTS += cmdline
 cmdline_LDADD = $(top_builddir)/libkernaux.la
-cmdline_SOURCES = cmdline.c
+cmdline_SOURCES = main.c cmdline.c
 endif
 
 ###########
@@ -34,10 +26,10 @@ endif
 ###########
 
 if WITH_PRINTF
-if WITH_FILE
+if WITH_IO
 TESTS += fprintf
 fprintf_LDADD = $(top_builddir)/libkernaux.la
-fprintf_SOURCES = fprintf.c
+fprintf_SOURCES = main.c fprintf.c
 endif
 endif
 
@@ -46,11 +38,37 @@ endif
 ##############
 
 if WITH_PRINTF
-if WITH_FILE
+if WITH_IO
 TESTS += fprintf_va
 fprintf_va_LDADD = $(top_builddir)/libkernaux.la
-fprintf_va_SOURCES = fprintf_va.c
+fprintf_va_SOURCES = main.c fprintf_va.c
 endif
+endif
+
+##################
+# generic_malloc #
+##################
+
+TESTS += generic_malloc
+generic_malloc_LDADD = $(top_builddir)/libkernaux.la
+generic_malloc_SOURCES = main.c generic_malloc.c
+
+#################
+# generic_mutex #
+#################
+
+TESTS += generic_mutex
+generic_mutex_LDADD = $(top_builddir)/libkernaux.la
+generic_mutex_SOURCES = main.c generic_mutex.c
+
+##########
+# memmap #
+##########
+
+if WITH_MEMMAP
+TESTS += memmap
+memmap_LDADD = $(top_builddir)/libkernaux.la
+memmap_SOURCES = main.c memmap.c
 endif
 
 ########
@@ -60,24 +78,16 @@ endif
 if WITH_NTOA
 TESTS += ntoa
 ntoa_LDADD = $(top_builddir)/libkernaux.la
-ntoa_SOURCES = ntoa.c
+ntoa_SOURCES = main.c ntoa.c
 endif
 
-################
-# panic_guards #
-################
+#########
+# panic #
+#########
 
-TESTS += panic_guards
-panic_guards_LDADD = $(top_builddir)/libkernaux.la
-panic_guards_SOURCES = panic_guards.c
-
-################
-# panic_simple #
-################
-
-TESTS += panic_simple
-panic_simple_LDADD = $(top_builddir)/libkernaux.la
-panic_simple_SOURCES = panic_simple.c
+TESTS += panic
+panic_LDADD = $(top_builddir)/libkernaux.la
+panic_SOURCES = panic.c
 
 #######
 # pfa #
@@ -86,7 +96,7 @@ panic_simple_SOURCES = panic_simple.c
 if WITH_PFA
 TESTS += pfa
 pfa_LDADD = $(top_builddir)/libkernaux.la
-pfa_SOURCES = pfa.c
+pfa_SOURCES = main.c pfa.c
 endif
 
 ##############
@@ -96,7 +106,7 @@ endif
 if WITH_PRINTF_FMT
 TESTS += printf_fmt
 printf_fmt_LDADD = $(top_builddir)/libkernaux.la
-printf_fmt_SOURCES = printf_fmt.c
+printf_fmt_SOURCES = main.c printf_fmt.c
 endif
 
 ############
@@ -106,7 +116,7 @@ endif
 if WITH_PRINTF
 TESTS += snprintf
 snprintf_LDADD = $(top_builddir)/libkernaux.la
-snprintf_SOURCES = snprintf.c
+snprintf_SOURCES = main.c snprintf.c
 endif
 
 ###############
@@ -116,7 +126,7 @@ endif
 if WITH_PRINTF
 TESTS += snprintf_va
 snprintf_va_LDADD = $(top_builddir)/libkernaux.la
-snprintf_va_SOURCES = snprintf_va.c
+snprintf_va_SOURCES = main.c snprintf_va.c
 endif
 
 ###############
@@ -126,5 +136,5 @@ endif
 if WITH_UNITS
 TESTS += units_human
 units_human_LDADD = $(top_builddir)/libkernaux.la
-units_human_SOURCES = units_human.c
+units_human_SOURCES = main.c units_human.c
 endif

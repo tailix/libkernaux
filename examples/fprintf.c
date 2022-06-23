@@ -1,4 +1,4 @@
-#include <kernaux/file.h>
+#include <kernaux/io.h>
 #include <kernaux/printf.h>
 
 #include <assert.h>
@@ -20,7 +20,7 @@ static void my_putchar(const char chr, void *arg)
     buffer[buffer_index++] = chr;
 }
 
-int main()
+void example_main()
 {
     struct KernAux_File file = KernAux_File_create(my_putchar);
     const int result = kernaux_fprintf(
@@ -32,5 +32,4 @@ int main()
     );
     assert((size_t)result == strlen(buffer));
     assert(strcmp(buffer, "Hello, Alex! Session ID: 123.") == 0);
-    return 0;
 }
