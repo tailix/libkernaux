@@ -55,12 +55,12 @@ void kernaux_drivers_intel_8259_pic_disable_all()
 
 void kernaux_drivers_intel_8259_pic_enable(const unsigned char number)
 {
-    KERNAUX_ASSERT(number < IRQS_TOTAL);
-
 #ifndef AVAILABLE
     (void)number;
     KERNAUX_PANIC(NOT_AVAILABLE_MSG);
 #else
+    KERNAUX_ASSERT(number < IRQS_TOTAL);
+
     if (number < IRQS_COUNT) {
         const uint8_t mask = inportb(MASTER_DATA_PORT);
         outportb(MASTER_DATA_PORT, mask & ~(1 << number));
@@ -73,12 +73,12 @@ void kernaux_drivers_intel_8259_pic_enable(const unsigned char number)
 
 void kernaux_drivers_intel_8259_pic_disable(const unsigned char number)
 {
-    KERNAUX_ASSERT(number < IRQS_TOTAL);
-
 #ifndef AVAILABLE
     (void)number;
     KERNAUX_PANIC(NOT_AVAILABLE_MSG);
 #else
+    KERNAUX_ASSERT(number < IRQS_TOTAL);
+
     if (number < IRQS_COUNT) {
         const uint8_t mask = inportb(MASTER_DATA_PORT);
         outportb(MASTER_DATA_PORT, mask | (1 << number));
