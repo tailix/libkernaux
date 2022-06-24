@@ -14,6 +14,7 @@ The following statements are recommendations, but highly encouraged:
 
 * Write documentation
 * Write tests
+* Keep lines less than 80 characters long for better experience on split screen
 
 ### Programming mistakes
 
@@ -114,8 +115,8 @@ FooBar_init(foobar);
 FooBar_do_something(foobar);
 ```
 
-* Only omit braces (curly brackets) of a block if the statement is placed on the
-  same line as conditional statement:
+* Only omit braces (curly brackets) of a block if it's statement is placed on
+  the same line as conditional statement:
 
 ```c
 // Good:
