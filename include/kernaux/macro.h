@@ -18,6 +18,16 @@ extern "C" {
 #   endif
 #endif // KERNAUX_ACCESS_PRIVATE
 
+#ifdef __TINY_C__
+#   define KERNAUX_PACKING_START #pragma pack(push, 1)
+#   define KERNAUX_PACKING_END   #pragma pack(pop)
+#   define KERNAUX_PACKING_ATTR
+#else
+#   define KERNAUX_PACKING_START
+#   define KERNAUX_PACKING_END
+#   define KERNAUX_PACKING_ATTR __attribute__((packed))
+#endif
+
 #ifdef __cplusplus
 }
 #endif
