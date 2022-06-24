@@ -46,7 +46,7 @@ endif
 # ARCH #
 #######
 
-if ASM_I386
+if WITH_ARCH_I386
 libkernaux_la_SOURCES += src/arch/i386.c
 endif
 
@@ -54,6 +54,7 @@ endif
 # ASM #
 #######
 
+if WITH_ASM
 if ASM_I386
 libkernaux_la_SOURCES += src/asm/i386.S
 endif
@@ -62,6 +63,7 @@ libkernaux_la_SOURCES += src/asm/riscv64.S
 endif
 if ASM_X86_64
 libkernaux_la_SOURCES += src/asm/x86_64.S
+endif
 endif
 
 ####################

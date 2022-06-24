@@ -61,6 +61,7 @@ AC_ARG_WITH(  [arch-all],     AS_HELP_STRING([--without-arch-all],     [without 
 AC_ARG_WITH(  [arch-i386],    AS_HELP_STRING([--without-arch-i386],    [without architecture i386]))
 AC_ARG_WITH(  [arch-riscv64], AS_HELP_STRING([--without-arch-riscv64], [without architecture riscv64]))
 AC_ARG_WITH(  [arch-x86-64],  AS_HELP_STRING([--without-arch-x86-64],  [without architecture x86-64]))
+AC_ARG_WITH(  [asm],          AS_HELP_STRING([--without-asm],          [without kernel assembler helpers]))
 AC_ARG_WITH(  [cmdline],      AS_HELP_STRING([--without-cmdline],      [without command line parser]))
 AC_ARG_WITH(  [elf],          AS_HELP_STRING([--without-elf],          [without ELF utils]))
 AC_ARG_WITH(  [free-list],    AS_HELP_STRING([--without-free-list],    [without free list memory allocator]))
@@ -104,6 +105,7 @@ AC_DEFUN([do_without_all],
 if test -z "$with_arch_i386";    then with_arch_i386=no;    fi
 if test -z "$with_arch_riscv64"; then with_arch_riscv64=no; fi
 if test -z "$with_arch_x86_64";  then with_arch_x86_64=no;  fi
+if test -z "$with_asm";          then with_asm=no;          fi
 if test -z "$with_cmdline";      then with_cmdline=no;      fi
 if test -z "$with_elf";          then with_elf=no;          fi
 if test -z "$with_free_list";    then with_free_list=no;    fi
@@ -143,6 +145,7 @@ AS_IF([test "$with_arch_all"       = no ], [with_arch_all=no],        [with_arch
 AS_IF([test "$with_arch_i386"      = no ], [with_arch_i386=no],       [with_arch_i386=yes])
 AS_IF([test "$with_arch_riscv64"   = no ], [with_arch_riscv64=no],    [with_arch_riscv64=yes])
 AS_IF([test "$with_arch_x86_64"    = no ], [with_arch_x86_64=no],     [with_arch_x86_64=yes])
+AS_IF([test "$with_asm"            = no ], [with_asm=no],             [with_asm=yes])
 AS_IF([test "$with_cmdline"        = no ], [with_cmdline=no],         [with_cmdline=yes])
 AS_IF([test "$with_elf"            = no ], [with_elf=no],             [with_elf=yes])
 AS_IF([test "$with_free_list"      = no ], [with_free_list=no],       [with_free_list=yes])
@@ -201,6 +204,7 @@ dnl Packages (enabled by default)
 AM_CONDITIONAL([WITH_ARCH_I386],      [test "$with_arch_i386"      = yes])
 AM_CONDITIONAL([WITH_ARCH_RISCV64],   [test "$with_arch_riscv64"   = yes])
 AM_CONDITIONAL([WITH_ARCH_X86_64],    [test "$with_arch_x86_64"    = yes])
+AM_CONDITIONAL([WITH_ASM],            [test "$with_asm"            = yes])
 AM_CONDITIONAL([WITH_CMDLINE],        [test "$with_cmdline"        = yes])
 AM_CONDITIONAL([WITH_ELF],            [test "$with_elf"            = yes])
 AM_CONDITIONAL([WITH_FREE_LIST],      [test "$with_free_list"      = yes])
@@ -244,6 +248,7 @@ dnl Packages (enabled by default)
 AS_IF([test "$with_arch_i386"      = yes], [AC_DEFINE([WITH_ARCH_I386],      [1], [with architecture i386])])
 AS_IF([test "$with_arch_riscv64"   = yes], [AC_DEFINE([WITH_ARCH_RISCV64],   [1], [with architecture riscv64])])
 AS_IF([test "$with_arch_x86_64"    = yes], [AC_DEFINE([WITH_ARCH_X86_64],    [1], [with architecture x86_64])])
+AS_IF([test "$with_asm"            = yes], [AC_DEFINE([WITH_ASM],            [1], [with kernel assembler helpers])])
 AS_IF([test "$with_cmdline"        = yes], [AC_DEFINE([WITH_CMDLINE],        [1], [with command line parser])])
 AS_IF([test "$with_elf"            = yes], [AC_DEFINE([WITH_ELF],            [1], [with ELF utils])])
 AS_IF([test "$with_free_list"      = yes], [AC_DEFINE([WITH_FREE_LIST],      [1], [with free list memory allocator])])
