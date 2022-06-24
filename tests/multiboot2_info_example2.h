@@ -1,6 +1,6 @@
 #include <kernaux/macro.h>
 
-KERNAUX_PACKING_START
+#include <kernaux/macro/packing_start.run>
 
 static const struct {
     struct KernAux_Multiboot2_Info multiboot2_info;
@@ -370,4 +370,4 @@ static const struct {
     },
 };
 
-KERNAUX_PACKING_END
+#include <kernaux/macro/packing_end.run>

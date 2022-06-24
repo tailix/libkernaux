@@ -10,7 +10,7 @@
 #include "multiboot2_info_example1.h"
 #include "multiboot2_info_example2.h"
 
-KERNAUX_PACKING_START
+#include <kernaux/macro/packing_start.run>
 
 /************
  * Tag_None *
@@ -777,7 +777,7 @@ static const struct {
     },
 };
 
-KERNAUX_PACKING_END
+#include <kernaux/macro/packing_end.run>
 
 /********
  * main *

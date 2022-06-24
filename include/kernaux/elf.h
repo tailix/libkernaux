@@ -9,7 +9,7 @@ extern "C" {
 
 #include <stdbool.h>
 
-KERNAUX_PACKING_START
+#include <kernaux/macro/packing_start.run>
 
 struct KernAux_ELF_Header {
     unsigned magic_0x7f     : 8;
@@ -78,7 +78,7 @@ KERNAUX_PACKING_ATTR;
 
 KERNAUX_STATIC_TEST_STRUCT_SIZE(KernAux_ELF_RelocationEntry, 8);
 
-KERNAUX_PACKING_END
+#include <kernaux/macro/packing_end.run>
 
 typedef struct KernAux_ELF_ProgramEntry KernAux_ELF_ProgramTable[];
 

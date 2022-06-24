@@ -17,7 +17,7 @@ extern "C" {
 #define KERNAUX_MBR_BOOTSTRAP_SIZE \
     (KERNAUX_MBR_SIZE - sizeof(struct KernAux_Mbr_Info))
 
-KERNAUX_PACKING_START
+#include <kernaux/macro/packing_start.run>
 
 struct KernAux_Mbr_Entry {
     uint8_t  drive_attributes;
@@ -55,7 +55,7 @@ KERNAUX_STATIC_TEST_STRUCT_SIZE(
     KERNAUX_MBR_BOOTSTRAP_SIZE + sizeof(struct KernAux_Mbr_Info)
 );
 
-KERNAUX_PACKING_END
+#include <kernaux/macro/packing_end.run>
 
 bool KernAux_Mbr_is_valid(const struct KernAux_Mbr *mbr);
 bool KernAux_Mbr_Info_is_valid(const struct KernAux_Mbr_Info *mbr_info);

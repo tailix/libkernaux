@@ -41,7 +41,7 @@ extern "C" {
 #define KERNAUX_MULTIBOOT2_HTAG_FLAGS_REQUIRE_CONSOLE (1 << 0)
 #define KERNAUX_MULTIBOOT2_HTAG_FLAGS_EGA_SUPPORT     (1 << 1)
 
-KERNAUX_PACKING_START
+#include <kernaux/macro/packing_start.run>
 
 /***********************
  * Header common types *
@@ -553,7 +553,7 @@ KERNAUX_STATIC_TEST_STRUCT_SIZE(
     12
 );
 
-KERNAUX_PACKING_END
+#include <kernaux/macro/packing_end.run>
 
 /********************
  * String functions *

@@ -51,7 +51,7 @@ extern "C" {
 #define KERNAUX_ARCH_I386_CR4_PGE ((uint32_t)0x00000080) // 7: Page Global Enabled
 // TODO: bits 8-31
 
-KERNAUX_PACKING_START
+#include <kernaux/macro/packing_start.run>
 
 // Global or local descriptor table entry
 // TODO: validate this according to spec
@@ -182,7 +182,7 @@ KERNAUX_PACKING_ATTR;
 
 KERNAUX_STATIC_TEST_STRUCT_SIZE(KernAux_Arch_I386_PageTable, KERNAUX_ARCH_I386_PAGE_SIZE);
 
-KERNAUX_PACKING_END
+#include <kernaux/macro/packing_end.run>
 
 #ifdef __cplusplus
 }
