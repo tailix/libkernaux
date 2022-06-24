@@ -74,6 +74,8 @@ struct KernAux_Arch_I386_DTE {
 }
 KERNAUX_PACKING_ATTR;
 
+KERNAUX_STATIC_TEST_STRUCT_SIZE(KernAux_Arch_I386_DTE, 8);
+
 /**
  * @brief Task state segment
  * @see The manual, page 132, figure 7-1
@@ -125,6 +127,8 @@ struct KernAux_Arch_I386_TSS {
 }
 KERNAUX_PACKING_ATTR;
 
+KERNAUX_STATIC_TEST_STRUCT_SIZE(KernAux_Arch_I386_TSS, 104);
+
 // Page directory entry
 // TODO: validate this according to spec
 struct KernAux_Arch_I386_PDE {
@@ -140,6 +144,8 @@ struct KernAux_Arch_I386_PDE {
     unsigned addr           : 20;
 }
 KERNAUX_PACKING_ATTR;
+
+KERNAUX_STATIC_TEST_STRUCT_SIZE(KernAux_Arch_I386_PDE, 4);
 
 // Page table entry
 // TODO: validate this according to spec
@@ -158,17 +164,23 @@ struct KernAux_Arch_I386_PTE {
 }
 KERNAUX_PACKING_ATTR;
 
+KERNAUX_STATIC_TEST_STRUCT_SIZE(KernAux_Arch_I386_PDE, 4);
+
 // Page directory
 struct KernAux_Arch_I386_PageDir {
     struct KernAux_Arch_I386_PDE pdes[KERNAUX_ARCH_I386_PAGE_DIR_ENTRIES_COUNT];
 }
 KERNAUX_PACKING_ATTR;
 
+KERNAUX_STATIC_TEST_STRUCT_SIZE(KernAux_Arch_I386_PageDir, KERNAUX_ARCH_I386_PAGE_SIZE);
+
 // Page table
 struct KernAux_Arch_I386_PageTable {
     struct KernAux_Arch_I386_PTE ptes[KERNAUX_ARCH_I386_PAGE_TABLE_ENTRIES_COUNT];
 }
 KERNAUX_PACKING_ATTR;
+
+KERNAUX_STATIC_TEST_STRUCT_SIZE(KernAux_Arch_I386_PageTable, KERNAUX_ARCH_I386_PAGE_SIZE);
 
 KERNAUX_PACKING_END
 
