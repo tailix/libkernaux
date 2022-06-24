@@ -15,6 +15,7 @@ Common
   * Endianness (byte order)
   * Thread safety
   * Undefined behavior
+  * Logical expressions (tautology, whatever)
   * Checking for an error (return value, pointer argument, whatever)
   * Use of not fully initialized data
   * Not reading beyond a buffer, array or string
