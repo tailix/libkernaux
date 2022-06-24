@@ -1,6 +1,6 @@
-#ifdef __TINYC__
-#pragma pack(push, 1)
-#endif
+#include <kernaux/macro.h>
+
+KERNAUX_PACKING_START
 
 static const struct {
     struct KernAux_Multiboot2_Header multiboot2_header;
@@ -34,7 +34,7 @@ static const struct {
     struct KernAux_Multiboot2_HTag_RelocatableHeader tag_relocatable_header;
 
     struct KernAux_Multiboot2_HTag_None tag_none;
-} multiboot2_header_example2 = {
+} KERNAUX_PACKING_ATTR multiboot2_header_example2 = {
     .multiboot2_header = {
         .magic = KERNAUX_MULTIBOOT2_HEADER_MAGIC,
         .arch = KERNAUX_MULTIBOOT2_HEADER_ARCH_I386,
@@ -168,6 +168,4 @@ static const struct {
     },
 };
 
-#ifdef __TINYC__
-#pragma pack(pop)
-#endif
+KERNAUX_PACKING_END
