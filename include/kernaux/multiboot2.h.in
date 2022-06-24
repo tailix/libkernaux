@@ -5,6 +5,7 @@
 extern "C" {
 #endif
 
+#include <kernaux/macro.h>
 @comment_line_memmap@#include <kernaux/memmap.h>
 
 #include <stdint.h>
@@ -40,9 +41,7 @@ extern "C" {
 #define KERNAUX_MULTIBOOT2_HTAG_FLAGS_REQUIRE_CONSOLE (1 << 0)
 #define KERNAUX_MULTIBOOT2_HTAG_FLAGS_EGA_SUPPORT     (1 << 1)
 
-#ifdef __TINYC__
-#pragma pack(push, 1)
-#endif
+KERNAUX_PACKING_START
 
 /***********************
  * Header common types *
@@ -59,7 +58,7 @@ struct KernAux_Multiboot2_Header {
     unsigned total_size                      : 32;
     unsigned checksum                        : 32;
 }
-__attribute__((packed));
+KERNAUX_PACKING_ATTR;
 
 enum KernAux_Multiboot2_HTag {
     KERNAUX_MULTIBOOT2_HTAG_NONE = 0,
@@ -80,7 +79,7 @@ struct KernAux_Multiboot2_HTagBase {
     unsigned flags                    : 16;
     unsigned size                     : 32;
 }
-__attribute__((packed));
+KERNAUX_PACKING_ATTR;
 
 /****************************
  * Information common types *
@@ -90,7 +89,7 @@ struct KernAux_Multiboot2_Info {
     unsigned total_size : 32;
     unsigned reserved1  : 32;
 }
-__attribute__((packed));
+KERNAUX_PACKING_ATTR;
 
 enum KernAux_Multiboot2_ITag {
     KERNAUX_MULTIBOOT2_ITAG_NONE = 0,
@@ -121,7 +120,7 @@ struct KernAux_Multiboot2_ITagBase {
     enum KernAux_Multiboot2_ITag type : 32;
     unsigned size                     : 32;
 }
-__attribute__((packed));
+KERNAUX_PACKING_ATTR;
 
 /***************************
  * Header additional types *
@@ -143,7 +142,7 @@ struct KernAux_Multiboot2_ITag_MemoryMap_EntryBase {
     unsigned type                : 32;
     unsigned reserved1           : 32;
 }
-__attribute__((packed));
+KERNAUX_PACKING_ATTR;
 
 /*************************
  * Header tag structures *
@@ -154,14 +153,14 @@ struct KernAux_Multiboot2_HTag_None {
     // size = 8
     struct KernAux_Multiboot2_HTagBase base;
 }
-__attribute__((packed));
+KERNAUX_PACKING_ATTR;
 
 struct KernAux_Multiboot2_HTag_InfoReq {
     // type = 1
     // size > 8
     struct KernAux_Multiboot2_HTagBase base;
 }
-__attribute__((packed));
+KERNAUX_PACKING_ATTR;
 
 struct KernAux_Multiboot2_HTag_Addr {
     // type = 2
@@ -173,7 +172,7 @@ struct KernAux_Multiboot2_HTag_Addr {
     unsigned load_end_addr : 32;
     unsigned bss_end_addr  : 32;
 }
-__attribute__((packed));
+KERNAUX_PACKING_ATTR;
 
 struct KernAux_Multiboot2_HTag_EntryAddr {
     // type = 3
@@ -182,7 +181,7 @@ struct KernAux_Multiboot2_HTag_EntryAddr {
 
     unsigned entry_addr : 32;
 }
-__attribute__((packed));
+KERNAUX_PACKING_ATTR;
 
 struct KernAux_Multiboot2_HTag_Flags {
     // type = 4
@@ -191,7 +190,7 @@ struct KernAux_Multiboot2_HTag_Flags {
 
     unsigned console_flags : 32;
 }
-__attribute__((packed));
+KERNAUX_PACKING_ATTR;
 
 struct KernAux_Multiboot2_HTag_Framebuffer {
     // type = 5
@@ -202,21 +201,21 @@ struct KernAux_Multiboot2_HTag_Framebuffer {
     unsigned height : 32;
     unsigned depth  : 32;
 }
-__attribute__((packed));
+KERNAUX_PACKING_ATTR;
 
 struct KernAux_Multiboot2_HTag_ModuleAlign {
     // type = 6
     // size = 8
     struct KernAux_Multiboot2_HTagBase base;
 }
-__attribute__((packed));
+KERNAUX_PACKING_ATTR;
 
 struct KernAux_Multiboot2_HTag_EFIBootServices {
     // type = 7
     // size = 8
     struct KernAux_Multiboot2_HTagBase base;
 }
-__attribute__((packed));
+KERNAUX_PACKING_ATTR;
 
 struct KernAux_Multiboot2_HTag_EFII386EntryAddr {
     // type = 8
@@ -225,7 +224,7 @@ struct KernAux_Multiboot2_HTag_EFII386EntryAddr {
 
     unsigned entry_addr : 32;
 }
-__attribute__((packed));
+KERNAUX_PACKING_ATTR;
 
 struct KernAux_Multiboot2_HTag_EFIAmd64EntryAddr {
     // type = 9
@@ -234,7 +233,7 @@ struct KernAux_Multiboot2_HTag_EFIAmd64EntryAddr {
 
     unsigned entry_addr : 32;
 }
-__attribute__((packed));
+KERNAUX_PACKING_ATTR;
 
 struct KernAux_Multiboot2_HTag_RelocatableHeader {
     // type = 10
@@ -246,7 +245,7 @@ struct KernAux_Multiboot2_HTag_RelocatableHeader {
     unsigned align                                                        : 32;
     enum KernAux_Multiboot2_HTag_RelocatableHeader_Preference preferences : 32;
 }
-__attribute__((packed));
+KERNAUX_PACKING_ATTR;
 
 /******************************
  * Information tag structures *
@@ -257,21 +256,21 @@ struct KernAux_Multiboot2_ITag_None {
     // size = 8
     struct KernAux_Multiboot2_ITagBase base;
 }
-__attribute__((packed));
+KERNAUX_PACKING_ATTR;
 
 struct KernAux_Multiboot2_ITag_BootCmdLine {
     // type = 1
     // size > 8
     struct KernAux_Multiboot2_ITagBase base;
 }
-__attribute__((packed));
+KERNAUX_PACKING_ATTR;
 
 struct KernAux_Multiboot2_ITag_BootLoaderName {
     // type = 2
     // size > 8
     struct KernAux_Multiboot2_ITagBase base;
 }
-__attribute__((packed));
+KERNAUX_PACKING_ATTR;
 
 struct KernAux_Multiboot2_ITag_Module {
     // type = 3
@@ -281,7 +280,7 @@ struct KernAux_Multiboot2_ITag_Module {
     unsigned mod_start : 32;
     unsigned mod_end   : 32;
 }
-__attribute__((packed));
+KERNAUX_PACKING_ATTR;
 
 struct KernAux_Multiboot2_ITag_BasicMemoryInfo {
     // type = 4
@@ -291,7 +290,7 @@ struct KernAux_Multiboot2_ITag_BasicMemoryInfo {
     unsigned mem_lower : 32;
     unsigned mem_upper : 32;
 }
-__attribute__((packed));
+KERNAUX_PACKING_ATTR;
 
 struct KernAux_Multiboot2_ITag_BIOSBootDevice {
     // type = 5
@@ -302,7 +301,7 @@ struct KernAux_Multiboot2_ITag_BIOSBootDevice {
     unsigned partition     : 32;
     unsigned sub_partition : 32;
 }
-__attribute__((packed));
+KERNAUX_PACKING_ATTR;
 
 struct KernAux_Multiboot2_ITag_MemoryMap {
     // type = 6
@@ -312,7 +311,7 @@ struct KernAux_Multiboot2_ITag_MemoryMap {
     unsigned entry_size    : 32;
     unsigned entry_version : 32;
 }
-__attribute__((packed));
+KERNAUX_PACKING_ATTR;
 
 struct KernAux_Multiboot2_ITag_VBEInfo {
     // type = 7
@@ -326,7 +325,7 @@ struct KernAux_Multiboot2_ITag_VBEInfo {
     unsigned char vbe_control_info[512];
     unsigned char vbe_mode_info[256];
 }
-__attribute__((packed));
+KERNAUX_PACKING_ATTR;
 
 struct KernAux_Multiboot2_ITag_FramebufferInfo {
     // type = 8
@@ -341,7 +340,7 @@ struct KernAux_Multiboot2_ITag_FramebufferInfo {
     unsigned framebuffer_type           : 8;
     unsigned reserved1                  : 8;
 }
-__attribute__((packed));
+KERNAUX_PACKING_ATTR;
 
 struct KernAux_Multiboot2_ITag_ELFSymbols {
     // type = 9
@@ -353,7 +352,7 @@ struct KernAux_Multiboot2_ITag_ELFSymbols {
     unsigned shndx     : 16;
     unsigned reserved1 : 16;
 }
-__attribute__((packed));
+KERNAUX_PACKING_ATTR;
 
 struct KernAux_Multiboot2_ITag_APMTable {
     // type = 10
@@ -370,7 +369,7 @@ struct KernAux_Multiboot2_ITag_APMTable {
     unsigned cseg_16_len : 16;
     unsigned dseg_len    : 16;
 }
-__attribute__((packed));
+KERNAUX_PACKING_ATTR;
 
 struct KernAux_Multiboot2_ITag_EFI32bitSystemTablePtr {
     // type = 11
@@ -379,7 +378,7 @@ struct KernAux_Multiboot2_ITag_EFI32bitSystemTablePtr {
 
     unsigned pointer : 32;
 }
-__attribute__((packed));
+KERNAUX_PACKING_ATTR;
 
 struct KernAux_Multiboot2_ITag_EFI64bitSystemTablePtr {
     // type = 12
@@ -388,7 +387,7 @@ struct KernAux_Multiboot2_ITag_EFI64bitSystemTablePtr {
 
     unsigned long long pointer : 64;
 }
-__attribute__((packed));
+KERNAUX_PACKING_ATTR;
 
 struct KernAux_Multiboot2_ITag_SMBIOSTables {
     // type = 13
@@ -399,28 +398,28 @@ struct KernAux_Multiboot2_ITag_SMBIOSTables {
     unsigned minor : 8;
     unsigned char reserved1[6];
 }
-__attribute__((packed));
+KERNAUX_PACKING_ATTR;
 
 struct KernAux_Multiboot2_ITag_ACPIOldRSDP {
     // type = 14
     // size > 8
     struct KernAux_Multiboot2_ITagBase base;
 }
-__attribute__((packed));
+KERNAUX_PACKING_ATTR;
 
 struct KernAux_Multiboot2_ITag_ACPINewRSDP {
     // type = 15
     // size > 8
     struct KernAux_Multiboot2_ITagBase base;
 }
-__attribute__((packed));
+KERNAUX_PACKING_ATTR;
 
 struct KernAux_Multiboot2_ITag_NetworkingInfo {
     // type = 16
     // size > 8
     struct KernAux_Multiboot2_ITagBase base;
 }
-__attribute__((packed));
+KERNAUX_PACKING_ATTR;
 
 struct KernAux_Multiboot2_ITag_EFIMemoryMap {
     // type = 17
@@ -430,14 +429,14 @@ struct KernAux_Multiboot2_ITag_EFIMemoryMap {
     unsigned descriptor_size    : 32;
     unsigned descriptor_version : 32;
 }
-__attribute__((packed));
+KERNAUX_PACKING_ATTR;
 
 struct KernAux_Multiboot2_ITag_EFIBootServicesNotTerminated {
     // type = 18
     // size = 8
     struct KernAux_Multiboot2_ITagBase base;
 }
-__attribute__((packed));
+KERNAUX_PACKING_ATTR;
 
 struct KernAux_Multiboot2_ITag_EFI32bitImageHandlePtr {
     // type = 19
@@ -446,7 +445,7 @@ struct KernAux_Multiboot2_ITag_EFI32bitImageHandlePtr {
 
     unsigned pointer : 32;
 }
-__attribute__((packed));
+KERNAUX_PACKING_ATTR;
 
 struct KernAux_Multiboot2_ITag_EFI64bitImageHandlePtr {
     // type = 20
@@ -455,7 +454,7 @@ struct KernAux_Multiboot2_ITag_EFI64bitImageHandlePtr {
 
     unsigned long long pointer : 64;
 }
-__attribute__((packed));
+KERNAUX_PACKING_ATTR;
 
 struct KernAux_Multiboot2_ITag_ImageLoadBasePhysAddr {
     // type = 21
@@ -464,11 +463,9 @@ struct KernAux_Multiboot2_ITag_ImageLoadBasePhysAddr {
 
     unsigned load_base_addr : 32;
 }
-__attribute__((packed));
+KERNAUX_PACKING_ATTR;
 
-#ifdef __TINYC__
-#pragma pack(pop)
-#endif
+KERNAUX_PACKING_END
 
 /********************
  * String functions *
