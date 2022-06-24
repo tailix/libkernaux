@@ -29,6 +29,7 @@ The following statements are recommendations, but highly encouraged:
 Avoid stupid errors with:
 
 * `NULL` pointers and `nil`/`None`/whatever objects
+* Division by zero
 * Type sizes (like `long` on 32-bit and 64-bit)
 * Integer arithmetic overflow
 * Bit shift
