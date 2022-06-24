@@ -114,7 +114,7 @@ FooBar_init(foobar);
 FooBar_do_something(foobar);
 ```
 
-* Only omit braces (curly brackets) if the statement of a block is placed on the
+* Only omit braces (curly brackets) of a block if the statement is placed on the
   same line as conditional statement:
 
 ```c
