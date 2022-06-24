@@ -28,8 +28,16 @@ The following statements are recommendations, but highly encouraged:
 
 Avoid stupid errors with:
 
+* Manual memory management
+  * `malloc` may return `NULL`
+  * Memory leak (forget to `free`)
+  * Use after `free`
+  * Double `free`
+  * `free`ing unallocated memory
+  * Changing the original pointer to the allocated memory (use `const`!)
 * `NULL` pointers and `nil`/`None`/whatever objects
 * Division by zero
+* Pointer arithmetic - consider type size
 * Type sizes (like `long` on 32-bit and 64-bit)
 * Integer arithmetic overflow
 * Bit shift
