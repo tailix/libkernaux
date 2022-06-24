@@ -31,9 +31,9 @@ Avoid stupid errors with:
 * Manual memory management
   * `malloc` may return `NULL`
   * Memory leak (forget to `free`)
-  * Use after `free`
+  * Use after `free`/`realloc`
   * Double `free`
-  * `free`ing unallocated memory
+  * `free`ing/`realloc`ating unallocated memory
   * Changing the original pointer to the allocated memory (use `const`!)
 * `NULL` pointers and `nil`/`None`/whatever objects
 * Division by zero
