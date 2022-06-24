@@ -33,6 +33,8 @@ Avoid stupid errors with:
 * Integer arithmetic overflow
 * Bit shift
 * Endianness (byte order)
+* Data packing
+* Data alignment
 * Thread safety
 * Undefined behavior
 * Logical expressions (tautology, whatever)
