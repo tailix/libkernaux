@@ -90,7 +90,8 @@ zero). Work-in-progress APIs can change at any time.
 * Device drivers (for debugging only)
   * [Serial console](/include/kernaux/drivers/console.h) (*work in progress*)
   * [Framebuffer](/include/kernaux/drivers/framebuffer.h) (*planned*)
-  * [Intel 8259 PIC](/include/kernaux/drivers/intel_8259_pic.h) (*planned*)
+  * [Intel 8253-compatible PIT](/include/kernaux/drivers/intel_8253_pit.h) (*work in progress*)
+  * [Intel 8259-compatible PIC](/include/kernaux/drivers/intel_8259_pic.h) (*work in progress*)
   * USB (*planned*)
 
 ### Definitions
@@ -156,6 +157,11 @@ stable options.
 All packages are included by default. To exclude all packages except those
 explicitly included, use `--without-all`.
 
+* `--with[out]-arch-all` - all architectures
+* `--with[out]-arch-i386` - architecture i386
+* `--with[out]-arch-riscv64` - architecture riscv64
+* `--with[out]-arch-x86-64` - architecture x86-64
+* `--with[out]-asm` - kernel assembler helpers
 * `--with[out]-cmdline` - command line parser
 * `--with[out]-free-list` - free list memory allocator
 * `--with[out]-io` - input/output

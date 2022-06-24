@@ -43,9 +43,18 @@ libkernaux_la_LIBADD += libc/libc.la
 endif
 
 #######
+# ARCH #
+#######
+
+if WITH_ARCH_I386
+libkernaux_la_SOURCES += src/arch/i386.c
+endif
+
+#######
 # ASM #
 #######
 
+if WITH_ASM
 if ASM_I386
 libkernaux_la_SOURCES += src/asm/i386.S
 endif
@@ -55,16 +64,6 @@ endif
 if ASM_X86_64
 libkernaux_la_SOURCES += src/asm/x86_64.S
 endif
-
-###########
-# Drivers #
-###########
-
-if WITH_DRIVERS
-libkernaux_la_SOURCES += \
-	src/drivers/console.c \
-	src/drivers/framebuffer.c \
-	src/drivers/intel_8259_pic.c
 endif
 
 ####################
@@ -115,3 +114,26 @@ endif
 if WITH_UNITS
 libkernaux_la_SOURCES += src/units.c
 endif
+
+###########
+# Drivers #
+###########
+
+if WITH_DRIVERS
+libkernaux_la_SOURCES += \
+	src/drivers/console.c \
+	src/drivers/framebuffer.c
+
+# Intel 8253-compatible programmable interval timer
+
+if ASM_I386
+libkernaux_la_SOURCES += src/drivers/intel_8253_pit.c
+endif
+
+# Intel 8259-compatible programmable interrupt controller
+
+if ASM_I386
+libkernaux_la_SOURCES += src/drivers/intel_8259_pic.c
+endif
+
+endif # WITH_DRIVERS
