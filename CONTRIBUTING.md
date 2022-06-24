@@ -14,10 +14,12 @@ Common
   * Bit shift
   * Endianness (byte order)
   * Thread safety
+  * Undefined behavior
   * Checking for an error (return value, pointer argument, whatever)
   * Allowed values of arguments
   * Possible values of parameters
   * Default case in switch statements
+  * Use of not fully initialized data
 
 
 
