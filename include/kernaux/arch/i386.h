@@ -49,9 +49,9 @@ extern "C" {
 #define KERNAUX_ARCH_I386_CR4_PGE ((uint32_t)0x00000080) // 7: Page Global Enabled
 // TODO: bits 8-31
 
-// Global descriptor table entry
+// Global or local descriptor table entry
 // TODO: validate this according to spec
-struct KernAux_Arch_I386_GDTE {
+struct KernAux_Arch_I386_DTE {
     unsigned limit_low              : 16;
     unsigned base_low               : 24;
     unsigned accessed               : 1;
@@ -67,6 +67,57 @@ struct KernAux_Arch_I386_GDTE {
     unsigned big                    : 1;
     unsigned gran                   : 1;
     unsigned base_high              : 8;
+}
+__attribute__((packed));
+
+/**
+ * @brief Task state segment
+ * @see The manual, page 132, figure 7-1
+ */
+struct KernAux_Arch_I386_TSS {
+    // 0x00
+    unsigned prev_tss    : 16;
+    unsigned _zero0      : 16;
+    // 0x04
+    unsigned esp0        : 32;
+    unsigned ss0         : 16;
+    unsigned _zero1      : 16;
+    unsigned esp1        : 32;
+    unsigned ss1         : 16;
+    unsigned _zero2      : 16;
+    unsigned esp2        : 32;
+    unsigned ss2         : 16;
+    unsigned _zero3      : 16;
+    // 0x1c
+    unsigned cr3         : 32;
+    unsigned eip         : 32;
+    unsigned eflags      : 32;
+    unsigned eax         : 32;
+    unsigned ecx         : 32;
+    unsigned edx         : 32;
+    unsigned ebx         : 32;
+    unsigned esp         : 32;
+    unsigned ebp         : 32;
+    unsigned esi         : 32;
+    unsigned edi         : 32;
+    // 0x48
+    unsigned es          : 16;
+    unsigned _zero4      : 16;
+    unsigned cs          : 16;
+    unsigned _zero5      : 16;
+    unsigned ss          : 16;
+    unsigned _zero6      : 16;
+    unsigned ds          : 16;
+    unsigned _zero7      : 16;
+    unsigned fs          : 16;
+    unsigned _zero8      : 16;
+    unsigned gs          : 16;
+    unsigned _zero9      : 16;
+    unsigned ldt         : 16;
+    unsigned _zero10     : 16;
+    // 0x64
+    unsigned _zero11     : 16;
+    unsigned io_map_base : 16;
 }
 __attribute__((packed));
 

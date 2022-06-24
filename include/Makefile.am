@@ -4,19 +4,31 @@
 
 nobase_include_HEADERS = \
 	kernaux.h \
-	kernaux/arch/i386.h \
-	kernaux/arch/riscv64.h \
-	kernaux/arch/x86_64.h \
 	kernaux/assert.h \
 	kernaux/macro.h \
 	kernaux/version.h \
 	kernaux/generic/malloc.h \
 	kernaux/generic/mutex.h
 
+########
+# ARCH #
+########
+
+if WITH_ARCH_I386
+nobase_include_HEADERS += kernaux/arch/i386.h
+endif
+if WITH_ARCH_RISCV64
+nobase_include_HEADERS += kernaux/arch/riscv64.h
+endif
+if WITH_ARCH_X86_64
+nobase_include_HEADERS += kernaux/arch/x86_64.h
+endif
+
 #######
 # ASM #
 #######
 
+if WITH_ASM
 if ASM_I386
 nobase_include_HEADERS += kernaux/asm/i386.h
 endif
@@ -25,6 +37,7 @@ nobase_include_HEADERS += kernaux/asm/riscv64.h
 endif
 if ASM_X86_64
 nobase_include_HEADERS += kernaux/asm/x86_64.h
+endif
 endif
 
 ####################

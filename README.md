@@ -155,6 +155,11 @@ stable options.
 All packages are included by default. To exclude all packages except those
 explicitly included, use `--without-all`.
 
+* `--with[out]-arch-all` - all architectures
+* `--with[out]-arch-i386` - architecture i386
+* `--with[out]-arch-riscv64` - architecture riscv64
+* `--with[out]-arch-x86-64` - architecture x86-64
+* `--with[out]-asm` - kernel assembler helpers
 * `--with[out]-cmdline` - command line parser
 * `--with[out]-free-list` - free list memory allocator
 * `--with[out]-io` - input/output
