@@ -11,7 +11,7 @@ Prohibitions:
 
 * Don't commit binary files
 * Don't commit configuration files of your editor or IDE
-* Don't use tabulations (I don't hate the tabs, but people can not use them
+* Don't use tabulations (I don't hate tabs, but people can not use them
   properly)
 * Don't leave trailing whitespaces
 * Don't forget the newline character the the end of files
