@@ -28,6 +28,13 @@ extern "C" {
 #   define KERNAUX_PACKING_ATTR __attribute__((packed))
 #endif
 
+#define KERNAUX_STATIC_TEST_STRUCT_SIZE(name, size) \
+__attribute__((unused))                             \
+static const int                                    \
+_kernaux_static_test_struct_size_##name[            \
+    sizeof(struct name) == (size) ? 1 : -1          \
+]
+
 #ifdef __cplusplus
 }
 #endif
