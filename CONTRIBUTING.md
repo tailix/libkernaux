@@ -14,7 +14,7 @@ Prohibitions:
 * Don't use tabulations (I don't hate tabs, but people can not use them
   properly)
 * Don't leave trailing whitespaces
-* Don't forget the newline character the the end of files
+* Don't forget the newline character in the end of files
 
 The following statements are recommendations, but highly encouraged:
 
