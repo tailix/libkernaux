@@ -29,6 +29,8 @@ struct KernAux_Mbr_Entry {
 }
 KERNAUX_PACKING_ATTR;
 
+KERNAUX_STATIC_TEST_STRUCT_SIZE(KernAux_Mbr_Entry, 16);
+
 struct KernAux_Mbr_Info {
     uint32_t disk_id;
     uint16_t reserved;
@@ -37,11 +39,21 @@ struct KernAux_Mbr_Info {
 }
 KERNAUX_PACKING_ATTR;
 
+KERNAUX_STATIC_TEST_STRUCT_SIZE(
+    KernAux_Mbr_Info,
+    8 + KERNAUX_MBR_ENTRIES * sizeof(struct KernAux_Mbr_Entry)
+);
+
 struct KernAux_Mbr {
     uint8_t bootstrap[KERNAUX_MBR_BOOTSTRAP_SIZE];
     struct KernAux_Mbr_Info info;
 }
 KERNAUX_PACKING_ATTR;
+
+KERNAUX_STATIC_TEST_STRUCT_SIZE(
+    KernAux_Mbr,
+    KERNAUX_MBR_BOOTSTRAP_SIZE + sizeof(struct KernAux_Mbr_Info)
+);
 
 KERNAUX_PACKING_END
 
