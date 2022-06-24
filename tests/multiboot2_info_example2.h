@@ -1,6 +1,6 @@
-#ifdef __TINYC__
-#pragma pack(push, 1)
-#endif
+#include <kernaux/macro.h>
+
+#include <kernaux/macro/packing_start.run>
 
 static const struct {
     struct KernAux_Multiboot2_Info multiboot2_info;
@@ -105,7 +105,7 @@ static const struct {
     uint8_t _align11[4];
 
     struct KernAux_Multiboot2_ITag_None tag_none;
-} multiboot2_info_example2 = {
+} KERNAUX_PACKING_ATTR multiboot2_info_example2 = {
     .multiboot2_info = {
         .total_size = sizeof(multiboot2_info_example2),
         .reserved1 = 0,
@@ -370,6 +370,4 @@ static const struct {
     },
 };
 
-#ifdef __TINYC__
-#pragma pack(pop)
-#endif
+#include <kernaux/macro/packing_end.run>

@@ -2,6 +2,7 @@
 #include "config.h"
 #endif
 
+#include <kernaux/macro.h>
 #include <kernaux/multiboot2.h>
 
 #include <assert.h>
@@ -9,9 +10,7 @@
 #include "multiboot2_info_example1.h"
 #include "multiboot2_info_example2.h"
 
-#ifdef __TINYC__
-#pragma pack(push, 1)
-#endif
+#include <kernaux/macro/packing_start.run>
 
 /************
  * Tag_None *
@@ -45,7 +44,7 @@ static const struct KernAux_Multiboot2_ITag_None tag_none_invalid_size = {
 static const struct {
     struct KernAux_Multiboot2_ITag_BootCmdLine tag;
     char cmdline[1];
-} tag_boot_cmd_line_with_empty_cmdline_valid = {
+} KERNAUX_PACKING_ATTR tag_boot_cmd_line_with_empty_cmdline_valid = {
     .tag = {
         .base = {
             .type = KERNAUX_MULTIBOOT2_ITAG_BOOT_CMD_LINE,
@@ -58,7 +57,7 @@ static const struct {
 static const struct {
     struct KernAux_Multiboot2_ITag_BootCmdLine tag;
     char cmdline[14];
-} tag_boot_cmd_line_with_some_cmdline_valid = {
+} KERNAUX_PACKING_ATTR tag_boot_cmd_line_with_some_cmdline_valid = {
     .tag = {
         .base = {
             .type = KERNAUX_MULTIBOOT2_ITAG_BOOT_CMD_LINE,
@@ -71,7 +70,7 @@ static const struct {
 static const struct {
     struct KernAux_Multiboot2_ITag_BootCmdLine tag;
     char cmdline[1];
-} tag_boot_cmd_line_invalid_type = {
+} KERNAUX_PACKING_ATTR tag_boot_cmd_line_invalid_type = {
     .tag = {
         .base = {
             .type = KERNAUX_MULTIBOOT2_ITAG_NONE,
@@ -84,7 +83,7 @@ static const struct {
 static const struct {
     struct KernAux_Multiboot2_ITag_BootCmdLine tag;
     char cmdline[1];
-} tag_boot_cmd_line_with_empty_cmdline_invalid_size = {
+} KERNAUX_PACKING_ATTR tag_boot_cmd_line_with_empty_cmdline_invalid_size = {
     .tag = {
         .base = {
             .type = KERNAUX_MULTIBOOT2_ITAG_BOOT_CMD_LINE,
@@ -97,7 +96,7 @@ static const struct {
 static const struct {
     struct KernAux_Multiboot2_ITag_BootCmdLine tag;
     char cmdline[14];
-} tag_boot_cmd_line_with_some_cmdline_invalid_size = {
+} KERNAUX_PACKING_ATTR tag_boot_cmd_line_with_some_cmdline_invalid_size = {
     .tag = {
         .base = {
             .type = KERNAUX_MULTIBOOT2_ITAG_BOOT_CMD_LINE,
@@ -114,7 +113,7 @@ static const struct {
 static const struct {
     struct KernAux_Multiboot2_ITag_BootLoaderName tag;
     char name[1];
-} tag_boot_loader_name_with_empty_name_valid = {
+} KERNAUX_PACKING_ATTR tag_boot_loader_name_with_empty_name_valid = {
     .tag = {
         .base = {
             .type = KERNAUX_MULTIBOOT2_ITAG_BOOT_LOADER_NAME,
@@ -127,7 +126,7 @@ static const struct {
 static const struct {
     struct KernAux_Multiboot2_ITag_BootLoaderName tag;
     char name[14];
-} tag_boot_loader_name_with_some_name_valid = {
+} KERNAUX_PACKING_ATTR tag_boot_loader_name_with_some_name_valid = {
     .tag = {
         .base = {
             .type = KERNAUX_MULTIBOOT2_ITAG_BOOT_LOADER_NAME,
@@ -140,7 +139,7 @@ static const struct {
 static const struct {
     struct KernAux_Multiboot2_ITag_BootLoaderName tag;
     char name[1];
-} tag_boot_loader_name_invalid_type = {
+} KERNAUX_PACKING_ATTR tag_boot_loader_name_invalid_type = {
     .tag = {
         .base = {
             .type = KERNAUX_MULTIBOOT2_ITAG_NONE,
@@ -153,7 +152,7 @@ static const struct {
 static const struct {
     struct KernAux_Multiboot2_ITag_BootLoaderName tag;
     char name[1];
-} tag_boot_loader_name_with_empty_name_invalid_size = {
+} KERNAUX_PACKING_ATTR tag_boot_loader_name_with_empty_name_invalid_size = {
     .tag = {
         .base = {
             .type = KERNAUX_MULTIBOOT2_ITAG_BOOT_LOADER_NAME,
@@ -166,7 +165,7 @@ static const struct {
 static const struct {
     struct KernAux_Multiboot2_ITag_BootLoaderName tag;
     char name[14];
-} tag_boot_loader_name_with_some_name_invalid_size = {
+} KERNAUX_PACKING_ATTR tag_boot_loader_name_with_some_name_invalid_size = {
     .tag = {
         .base = {
             .type = KERNAUX_MULTIBOOT2_ITAG_BOOT_LOADER_NAME,
@@ -183,7 +182,7 @@ static const struct {
 static const struct {
     struct KernAux_Multiboot2_ITag_Module tag;
     char cmdline[1];
-} tag_module_with_empty_name_valid = {
+} KERNAUX_PACKING_ATTR tag_module_with_empty_name_valid = {
     .tag = {
         .base = {
             .type = KERNAUX_MULTIBOOT2_ITAG_MODULE,
@@ -198,7 +197,7 @@ static const struct {
 static const struct {
     struct KernAux_Multiboot2_ITag_Module tag;
     char cmdline[14];
-} tag_module_with_some_name_valid = {
+} KERNAUX_PACKING_ATTR tag_module_with_some_name_valid = {
     .tag = {
         .base = {
             .type = KERNAUX_MULTIBOOT2_ITAG_MODULE,
@@ -213,7 +212,7 @@ static const struct {
 static const struct {
     struct KernAux_Multiboot2_ITag_Module tag;
     char cmdline[1];
-} tag_module_invalid_type = {
+} KERNAUX_PACKING_ATTR tag_module_invalid_type = {
     .tag = {
         .base = {
             .type = KERNAUX_MULTIBOOT2_ITAG_NONE,
@@ -228,7 +227,7 @@ static const struct {
 static const struct {
     struct KernAux_Multiboot2_ITag_Module tag;
     char cmdline[1];
-} tag_module_with_empty_name_invalid_size = {
+} KERNAUX_PACKING_ATTR tag_module_with_empty_name_invalid_size = {
     .tag = {
         .base = {
             .type = KERNAUX_MULTIBOOT2_ITAG_MODULE,
@@ -243,7 +242,7 @@ static const struct {
 static const struct {
     struct KernAux_Multiboot2_ITag_Module tag;
     char cmdline[14];
-} tag_module_with_some_name_invalid_size = {
+} KERNAUX_PACKING_ATTR tag_module_with_some_name_invalid_size = {
     .tag = {
         .base = {
             .type = KERNAUX_MULTIBOOT2_ITAG_MODULE,
@@ -258,7 +257,7 @@ static const struct {
 static const struct {
     struct KernAux_Multiboot2_ITag_Module tag;
     char cmdline[14];
-} tag_module_with_equal_start_end_invalid = {
+} KERNAUX_PACKING_ATTR tag_module_with_equal_start_end_invalid = {
     .tag = {
         .base = {
             .type = KERNAUX_MULTIBOOT2_ITAG_MODULE,
@@ -273,7 +272,7 @@ static const struct {
 static const struct {
     struct KernAux_Multiboot2_ITag_Module tag;
     char cmdline[14];
-} tag_module_with_reversed_start_end_invalid = {
+} KERNAUX_PACKING_ATTR tag_module_with_reversed_start_end_invalid = {
     .tag = {
         .base = {
             .type = KERNAUX_MULTIBOOT2_ITAG_MODULE,
@@ -373,7 +372,7 @@ tag_memory_map_with_empty_data_valid = {
 static const struct {
     struct KernAux_Multiboot2_ITag_MemoryMap tag;
     unsigned char data[8 * 2];
-} tag_memory_map_with_some_small_data_items_valid = {
+} KERNAUX_PACKING_ATTR tag_memory_map_with_some_small_data_items_valid = {
     .tag = {
         .base = {
             .type = KERNAUX_MULTIBOOT2_ITAG_MEMORY_MAP,
@@ -387,7 +386,7 @@ static const struct {
 static const struct {
     struct KernAux_Multiboot2_ITag_MemoryMap tag;
     unsigned char data[64 * 2];
-} tag_memory_map_with_some_large_data_items_valid = {
+} KERNAUX_PACKING_ATTR tag_memory_map_with_some_large_data_items_valid = {
     .tag = {
         .base = {
             .type = KERNAUX_MULTIBOOT2_ITAG_MEMORY_MAP,
@@ -421,7 +420,7 @@ tag_memory_map_with_empty_data_invalid_size = {
 static const struct {
     struct KernAux_Multiboot2_ITag_MemoryMap tag;
     unsigned char data[64 * 2 + 1];
-} tag_memory_map_with_some_large_data_items_invalid_size = {
+} KERNAUX_PACKING_ATTR tag_memory_map_with_some_large_data_items_invalid_size = {
     .tag = {
         .base = {
             .type = KERNAUX_MULTIBOOT2_ITAG_MEMORY_MAP,
@@ -455,7 +454,7 @@ tag_memory_map_with_empty_data_invalid_entry_size_not_mul8 = {
 static const struct {
     struct KernAux_Multiboot2_ITag_MemoryMap tag;
     unsigned char data[9 * 2];
-} tag_memory_map_with_some_small_data_items_invalid_entry_size_not_mul8 = {
+} KERNAUX_PACKING_ATTR tag_memory_map_with_some_small_data_items_invalid_entry_size_not_mul8 = {
     .tag = {
         .base = {
             .type = KERNAUX_MULTIBOOT2_ITAG_MEMORY_MAP,
@@ -469,7 +468,7 @@ static const struct {
 static const struct {
     struct KernAux_Multiboot2_ITag_MemoryMap tag;
     unsigned char data[63 * 2];
-} tag_memory_map_with_some_large_data_items_invalid_entry_size_not_mul8 = {
+} KERNAUX_PACKING_ATTR tag_memory_map_with_some_large_data_items_invalid_entry_size_not_mul8 = {
     .tag = {
         .base = {
             .type = KERNAUX_MULTIBOOT2_ITAG_MEMORY_MAP,
@@ -549,7 +548,7 @@ tag_elf_symbols_with_zero_ent_size_valid = {
 static const struct {
     struct KernAux_Multiboot2_Info multiboot2_info;
     struct KernAux_Multiboot2_ITag_None tag_none;
-} multiboot2_empty_valid = {
+} KERNAUX_PACKING_ATTR multiboot2_empty_valid = {
     .multiboot2_info = {
         .total_size = 8 + 8,
         .reserved1 = 0,
@@ -566,7 +565,7 @@ static const struct {
     struct KernAux_Multiboot2_Info multiboot2_info;
     struct KernAux_Multiboot2_ITag_BasicMemoryInfo tag_basic_memory_info;
     struct KernAux_Multiboot2_ITag_None tag_none;
-} multiboot2_with_some_additional_tag_valid = {
+} KERNAUX_PACKING_ATTR multiboot2_with_some_additional_tag_valid = {
     .multiboot2_info = {
         .total_size = 8 + 16 + 8,
         .reserved1 = 0,
@@ -593,7 +592,7 @@ static const struct {
     struct KernAux_Multiboot2_ITag_BIOSBootDevice tag_bios_boot_device;
     unsigned char _align1[4];
     struct KernAux_Multiboot2_ITag_None tag_none;
-} multiboot2_with_more_additional_tags_valid = {
+} KERNAUX_PACKING_ATTR multiboot2_with_more_additional_tags_valid = {
     .multiboot2_info = {
         .total_size = 8 + 16 + (20 + 4) + 8,
         .reserved1 = 0,
@@ -626,7 +625,7 @@ static const struct {
 static const struct {
     struct KernAux_Multiboot2_Info multiboot2_info;
     struct KernAux_Multiboot2_ITag_None tag_none;
-} multiboot2_empty_invalid_size = {
+} KERNAUX_PACKING_ATTR multiboot2_empty_invalid_size = {
     .multiboot2_info = {
         .total_size = 8,
         .reserved1 = 0,
@@ -648,7 +647,7 @@ multiboot2_without_none_tag_invalid = {
 static const struct {
     struct KernAux_Multiboot2_Info multiboot2_info;
     struct KernAux_Multiboot2_ITag_BasicMemoryInfo tag_basic_memory_info;
-} multiboot2_with_invalid_last_tag_invalid = {
+} KERNAUX_PACKING_ATTR multiboot2_with_invalid_last_tag_invalid = {
     .multiboot2_info = {
         .total_size = 8 + 16,
         .reserved1 = 0,
@@ -670,7 +669,7 @@ static const struct {
     struct KernAux_Multiboot2_ITag_BIOSBootDevice tag_bios_boot_device;
     unsigned char _align1[4];
     struct KernAux_Multiboot2_ITag_None tag_none2;
-} multiboot2_with_early_none_tag_invalid = {
+} KERNAUX_PACKING_ATTR multiboot2_with_early_none_tag_invalid = {
     .multiboot2_info = {
         .total_size = 8 + 16 + 8 + (20 + 4) + 8,
         .reserved1 = 0,
@@ -712,7 +711,7 @@ static const struct {
     struct KernAux_Multiboot2_ITag_BIOSBootDevice tag_bios_boot_device;
     unsigned char _align1[4];
     struct KernAux_Multiboot2_ITag_None tag_none;
-} multiboot2_with_more_additional_tags_invalid_size_too_big = {
+} KERNAUX_PACKING_ATTR multiboot2_with_more_additional_tags_invalid_size_too_big = {
     .multiboot2_info = {
         .total_size = 8 + 16 + (20 + 4) + 8 + 1,
         .reserved1 = 0,
@@ -748,7 +747,7 @@ static const struct {
     struct KernAux_Multiboot2_ITag_BIOSBootDevice tag_bios_boot_device;
     unsigned char _align1[4];
     struct KernAux_Multiboot2_ITag_None tag_none;
-} multiboot2_with_more_additional_tags_invalid_size_too_small = {
+} KERNAUX_PACKING_ATTR multiboot2_with_more_additional_tags_invalid_size_too_small = {
     .multiboot2_info = {
         .total_size = 8 + 16 + (20 + 4) + 8 - 1,
         .reserved1 = 0,
@@ -778,9 +777,7 @@ static const struct {
     },
 };
 
-#ifdef __TINYC__
-#pragma pack(pop)
-#endif
+#include <kernaux/macro/packing_end.run>
 
 /********
  * main *
