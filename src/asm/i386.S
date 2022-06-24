@@ -2,12 +2,28 @@
 #include "config.h"
 #endif
 
+.global kernaux_asm_i386_flush_gdt
 .global kernaux_asm_i386_flush_idt
 .global kernaux_asm_i386_read_cr0
 .global kernaux_asm_i386_read_cr4
 .global kernaux_asm_i386_write_cr0
 .global kernaux_asm_i386_write_cr3
 .global kernaux_asm_i386_write_cr4
+
+kernaux_asm_i386_flush_gdt:
+    mov 4(%esp), %eax
+    mov 8(%esp), %edx
+    lgdt (%eax)
+    mov %edx, %ds
+    mov %edx, %es
+    mov %edx, %fs
+    mov %edx, %gs
+    mov %edx, %ss
+    pushl 12(%esp)
+    push $.flush
+    ljmp *(%esp)
+  .flush:
+    ret
 
 kernaux_asm_i386_flush_idt:
     mov 4(%esp), %eax

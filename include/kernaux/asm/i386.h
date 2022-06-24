@@ -15,6 +15,11 @@ inline static void kernaux_asm_i386_outportb(uint16_t port, uint8_t  value);
 inline static void kernaux_asm_i386_outportw(uint16_t port, uint16_t value);
 inline static void kernaux_asm_i386_outportd(uint16_t port, uint32_t value);
 
+void kernaux_asm_i386_flush_gdt(
+    volatile uint32_t value,
+    volatile uint32_t data_selector,
+    volatile uint32_t code_selector
+);
 void kernaux_asm_i386_flush_idt(volatile uint32_t value);
 
 uint32_t kernaux_asm_i386_read_cr0();
