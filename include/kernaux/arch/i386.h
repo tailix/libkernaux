@@ -5,6 +5,8 @@
 extern "C" {
 #endif
 
+#include <kernaux/macro.h>
+
 #include <stdint.h>
 
 #define KERNAUX_ARCH_I386_PAGE_SIZE     (1024 * 4)        // 4 KiB
@@ -49,6 +51,8 @@ extern "C" {
 #define KERNAUX_ARCH_I386_CR4_PGE ((uint32_t)0x00000080) // 7: Page Global Enabled
 // TODO: bits 8-31
 
+#include <kernaux/macro/packing_start.run>
+
 // Global or local descriptor table entry
 // TODO: validate this according to spec
 struct KernAux_Arch_I386_DTE {
@@ -68,7 +72,9 @@ struct KernAux_Arch_I386_DTE {
     unsigned gran                   : 1;
     unsigned base_high              : 8;
 }
-__attribute__((packed));
+KERNAUX_PACKING_ATTR;
+
+KERNAUX_STATIC_TEST_STRUCT_SIZE(KernAux_Arch_I386_DTE, 8);
 
 /**
  * @brief Task state segment
@@ -119,7 +125,9 @@ struct KernAux_Arch_I386_TSS {
     unsigned _zero11     : 16;
     unsigned io_map_base : 16;
 }
-__attribute__((packed));
+KERNAUX_PACKING_ATTR;
+
+KERNAUX_STATIC_TEST_STRUCT_SIZE(KernAux_Arch_I386_TSS, 104);
 
 // Page directory entry
 // TODO: validate this according to spec
@@ -135,7 +143,9 @@ struct KernAux_Arch_I386_PDE {
     unsigned available1     : 4;
     unsigned addr           : 20;
 }
-__attribute__((packed));
+KERNAUX_PACKING_ATTR;
+
+KERNAUX_STATIC_TEST_STRUCT_SIZE(KernAux_Arch_I386_PDE, 4);
 
 // Page table entry
 // TODO: validate this according to spec
@@ -152,19 +162,27 @@ struct KernAux_Arch_I386_PTE {
     unsigned available      : 3;
     unsigned addr           : 20;
 }
-__attribute__((packed));
+KERNAUX_PACKING_ATTR;
+
+KERNAUX_STATIC_TEST_STRUCT_SIZE(KernAux_Arch_I386_PDE, 4);
 
 // Page directory
 struct KernAux_Arch_I386_PageDir {
     struct KernAux_Arch_I386_PDE pdes[KERNAUX_ARCH_I386_PAGE_DIR_ENTRIES_COUNT];
 }
-__attribute__((packed));
+KERNAUX_PACKING_ATTR;
+
+KERNAUX_STATIC_TEST_STRUCT_SIZE(KernAux_Arch_I386_PageDir, KERNAUX_ARCH_I386_PAGE_SIZE);
 
 // Page table
 struct KernAux_Arch_I386_PageTable {
     struct KernAux_Arch_I386_PTE ptes[KERNAUX_ARCH_I386_PAGE_TABLE_ENTRIES_COUNT];
 }
-__attribute__((packed));
+KERNAUX_PACKING_ATTR;
+
+KERNAUX_STATIC_TEST_STRUCT_SIZE(KernAux_Arch_I386_PageTable, KERNAUX_ARCH_I386_PAGE_SIZE);
+
+#include <kernaux/macro/packing_end.run>
 
 #ifdef __cplusplus
 }

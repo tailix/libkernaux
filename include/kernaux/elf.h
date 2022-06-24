@@ -5,7 +5,11 @@
 extern "C" {
 #endif
 
+#include <kernaux/macro.h>
+
 #include <stdbool.h>
+
+#include <kernaux/macro/packing_start.run>
 
 struct KernAux_ELF_Header {
     unsigned magic_0x7f     : 8;
@@ -32,7 +36,9 @@ struct KernAux_ELF_Header {
     unsigned sect_entr_num  : 16;
     unsigned sect_names_idx : 16;
 }
-__attribute__((packed));
+KERNAUX_PACKING_ATTR;
+
+KERNAUX_STATIC_TEST_STRUCT_SIZE(KernAux_ELF_Header, 52);
 
 struct KernAux_ELF_ProgramEntry {
     unsigned type      : 32;
@@ -44,7 +50,9 @@ struct KernAux_ELF_ProgramEntry {
     unsigned flags     : 32;
     unsigned align     : 32;
 }
-__attribute__((packed));
+KERNAUX_PACKING_ATTR;
+
+KERNAUX_STATIC_TEST_STRUCT_SIZE(KernAux_ELF_ProgramEntry, 32);
 
 struct KernAux_ELF_SectionEntry {
     unsigned name        : 32;
@@ -58,13 +66,19 @@ struct KernAux_ELF_SectionEntry {
     unsigned alignment   : 32;
     unsigned ent_size    : 32;
 }
-__attribute__((packed));
+KERNAUX_PACKING_ATTR;
+
+KERNAUX_STATIC_TEST_STRUCT_SIZE(KernAux_ELF_SectionEntry, 40);
 
 struct KernAux_ELF_RelocationEntry {
     unsigned virt_addr : 32;
     unsigned info      : 32;
 }
-__attribute__((packed));
+KERNAUX_PACKING_ATTR;
+
+KERNAUX_STATIC_TEST_STRUCT_SIZE(KernAux_ELF_RelocationEntry, 8);
+
+#include <kernaux/macro/packing_end.run>
 
 typedef struct KernAux_ELF_ProgramEntry KernAux_ELF_ProgramTable[];
 
