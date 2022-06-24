@@ -29,6 +29,7 @@ lib_LTLIBRARIES = libkernaux.la
 
 libkernaux_la_LIBADD =
 libkernaux_la_SOURCES = \
+	src/arch/i386.c \
 	src/assert.c \
 	src/libc.h \
 	src/generic/malloc.c \
