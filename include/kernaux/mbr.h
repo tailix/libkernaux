@@ -5,6 +5,8 @@
 extern "C" {
 #endif
 
+#include <kernaux/macro.h>
+
 #include <stdbool.h>
 #include <stdint.h>
 
@@ -15,6 +17,8 @@ extern "C" {
 #define KERNAUX_MBR_BOOTSTRAP_SIZE \
     (KERNAUX_MBR_SIZE - sizeof(struct KernAux_Mbr_Info))
 
+KERNAUX_PACKING_START
+
 struct KernAux_Mbr_Entry {
     uint8_t  drive_attributes;
     unsigned first_sector_chs_addr : 24;
@@ -23,7 +27,7 @@ struct KernAux_Mbr_Entry {
     uint32_t first_sector_lba_addr;
     uint32_t sectors_count;
 }
-__attribute__((packed));
+KERNAUX_PACKING_ATTR;
 
 struct KernAux_Mbr_Info {
     uint32_t disk_id;
@@ -31,13 +35,15 @@ struct KernAux_Mbr_Info {
     struct KernAux_Mbr_Entry entries[KERNAUX_MBR_ENTRIES];
     uint16_t magic;
 }
-__attribute__((packed));
+KERNAUX_PACKING_ATTR;
 
 struct KernAux_Mbr {
     uint8_t bootstrap[KERNAUX_MBR_BOOTSTRAP_SIZE];
     struct KernAux_Mbr_Info info;
 }
-__attribute__((packed));
+KERNAUX_PACKING_ATTR;
+
+KERNAUX_PACKING_END
 
 bool KernAux_Mbr_is_valid(const struct KernAux_Mbr *mbr);
 bool KernAux_Mbr_Info_is_valid(const struct KernAux_Mbr_Info *mbr_info);
