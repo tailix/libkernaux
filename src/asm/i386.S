@@ -4,6 +4,7 @@
 
 .global kernaux_asm_i386_flush_gdt
 .global kernaux_asm_i386_flush_idt
+.global kernaux_asm_i386_flush_tss
 .global kernaux_asm_i386_read_cr0
 .global kernaux_asm_i386_read_cr4
 .global kernaux_asm_i386_write_cr0
@@ -28,6 +29,11 @@ kernaux_asm_i386_flush_gdt:
 kernaux_asm_i386_flush_idt:
     mov 4(%esp), %eax
     lidt (%eax)
+    ret
+
+kernaux_asm_i386_flush_tss:
+    mov 4(%esp), %ax
+    ltr %ax
     ret
 
 kernaux_asm_i386_read_cr0:
