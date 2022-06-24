@@ -11,6 +11,9 @@ Prohibitions:
 
 * Don't commit binary files
 * Don't commit configuration files of your editor or IDE
+* Don't use encodings other than ASCII and UTF-8
+* Don't use alphabets other than Latin
+* Don't use languages other than English
 * Don't use tabulations (I don't hate tabs, but people can not use them
   properly)
 * Don't leave trailing whitespaces
