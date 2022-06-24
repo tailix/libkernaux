@@ -7,26 +7,31 @@ Common
 * If you change the behavior (even just fix a bug) of **libkernaux** (stable) or
   [libc](/libc), add a record to [ChangeLog](/ChangeLog).
 
+* Don't commit binary files
+* Don't commit configuration files of your editor or IDE
+
+### Programming mistakes
+
 * Avoid stupid errors with:
-  * `NULL` pointers and `nil`/`None`/whatever objects
-  * Type sizes (like `long` on 32-bit and 64-bit)
-  * Integer arithmetic overflow
-  * Bit shift
-  * Endianness (byte order)
-  * Thread safety
-  * Undefined behavior
-  * Logical expressions (tautology, whatever)
-  * Checking for an error (return value, pointer argument, whatever)
-  * Use of not fully initialized data
-  * Not reading beyond a buffer, array or string
-    * The index of the last item, which is less than the buffer size
-    * Negative indices
-    * The terminating null character in a string
-  * Allowed values of arguments
-  * Possible values of parameters
-  * Operator precedence
-  * Default case in switch statements
-  * Braces (curly brackets) around code blocks
+* `NULL` pointers and `nil`/`None`/whatever objects
+* Type sizes (like `long` on 32-bit and 64-bit)
+* Integer arithmetic overflow
+* Bit shift
+* Endianness (byte order)
+* Thread safety
+* Undefined behavior
+* Logical expressions (tautology, whatever)
+* Checking for an error (return value, pointer argument, whatever)
+* Use of not fully initialized data
+* Not reading beyond a buffer, array or string
+  * The index of the last item, which is less than the buffer size
+  * Negative indices
+  * The terminating null character in a string
+* Allowed values of arguments
+* Possible values of parameters
+* Operator precedence
+* Default case in switch statements
+* Braces (curly brackets) around code blocks
 
 
 
