@@ -18,7 +18,7 @@ extern "C" {
 #   endif
 #endif // KERNAUX_ACCESS_PRIVATE
 
-#ifdef __TINY_C__
+#ifdef __TINYC__
 #   define KERNAUX_PACKING_START #pragma pack(push, 1)
 #   define KERNAUX_PACKING_END   #pragma pack(pop)
 #   define KERNAUX_PACKING_ATTR
