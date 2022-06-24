@@ -1,3 +1,7 @@
+2022-06-24  Alex Kotov  <kotovalexarian@gmail.com>
+
+	* configure.ac: Added packages "arch-*" and "asm"
+
 2022-06-23  Alex Kotov  <kotovalexarian@gmail.com>
 
 	* configure.ac: Added package "drivers"
