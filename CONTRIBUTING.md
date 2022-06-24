@@ -8,10 +8,13 @@ Common
   [libc](/libc), add a record to [ChangeLog](/ChangeLog).
 
 * Avoid stupid errors with:
-  * NULL pointers
+  * `NULL` pointers and `nil`/`None`/whatever objects
   * Type sizes (like `long` on 32-bit and 64-bit)
+  * Integer arithmetic overflow
+  * Bit shift
   * Endianness (byte order)
   * Thread safety
+  * Checking for an error (return value, pointer argument, whatever)
   * Allowed values of arguments
   * Possible values of parameters
   * Default case in switch statements
