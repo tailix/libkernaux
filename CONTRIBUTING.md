@@ -7,6 +7,15 @@ Common
 * If you change the behavior (even just fix a bug) of **libkernaux** (stable) or
   [libc](/libc), add a record to [ChangeLog](/ChangeLog).
 
+* Avoid stupid errors with:
+  * NULL pointers
+  * Type sizes (like `long` on 32-bit and 64-bit)
+  * Endianness (byte order)
+  * Thread safety
+  * Allowed values of arguments
+  * Possible values of parameters
+  * Default case in switch statements
+
 
 
 C language
