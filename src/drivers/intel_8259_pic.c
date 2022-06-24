@@ -21,10 +21,7 @@
 #define IRQS_COUNT 8
 #define IRQS_TOTAL 16
 
-#undef AVAILABLE
-#define NOT_AVAILABLE_MSG "Intel 8259-compatible PIC is not available"
-#ifdef ASM_I386
-#   define AVAILABLE
+#if defined(ASM_I386)
 #   define inportb  kernaux_asm_i386_inportb
 #   define outportb kernaux_asm_i386_outportb
 #endif
@@ -34,30 +31,18 @@ static unsigned char slave_start  = 8;
 
 void kernaux_drivers_intel_8259_pic_enable_all()
 {
-#ifndef AVAILABLE
-    KERNAUX_PANIC(NOT_AVAILABLE_MSG);
-#else
     outportb(MASTER_DATA_PORT, 0);
     outportb(SLAVE_DATA_PORT,  0);
-#endif
 }
 
 void kernaux_drivers_intel_8259_pic_disable_all()
 {
-#ifndef AVAILABLE
-    KERNAUX_PANIC(NOT_AVAILABLE_MSG);
-#else
     outportb(MASTER_DATA_PORT, 0xFF);
     outportb(SLAVE_DATA_PORT,  0xFF);
-#endif
 }
 
 void kernaux_drivers_intel_8259_pic_enable(const unsigned char number)
 {
-#ifndef AVAILABLE
-    (void)number;
-    KERNAUX_PANIC(NOT_AVAILABLE_MSG);
-#else
     KERNAUX_ASSERT(number < IRQS_TOTAL);
 
     if (number < IRQS_COUNT) {
@@ -67,15 +52,10 @@ void kernaux_drivers_intel_8259_pic_enable(const unsigned char number)
         const uint8_t mask = inportb(SLAVE_DATA_PORT);
         outportb(SLAVE_DATA_PORT, mask & ~(1 << (number - IRQS_COUNT)));
     }
-#endif
 }
 
 void kernaux_drivers_intel_8259_pic_disable(const unsigned char number)
 {
-#ifndef AVAILABLE
-    (void)number;
-    KERNAUX_PANIC(NOT_AVAILABLE_MSG);
-#else
     KERNAUX_ASSERT(number < IRQS_TOTAL);
 
     if (number < IRQS_COUNT) {
@@ -85,16 +65,12 @@ void kernaux_drivers_intel_8259_pic_disable(const unsigned char number)
         const uint8_t mask = inportb(SLAVE_DATA_PORT);
         outportb(SLAVE_DATA_PORT, mask | (1 << (number - IRQS_COUNT)));
     }
-#endif
 }
 
 void kernaux_drivers_intel_8259_pic_remap(
     const unsigned char new_master_start,
     const unsigned char new_slave_start
 ) {
-#ifndef AVAILABLE
-    KERNAUX_PANIC(NOT_AVAILABLE_MSG);
-#else
     master_start = new_master_start;
     slave_start  = new_slave_start;
 
@@ -121,14 +97,10 @@ void kernaux_drivers_intel_8259_pic_remap(
     // Restore masks
     outportb(MASTER_DATA_PORT, master_mask);
     outportb(SLAVE_DATA_PORT,  slave_mask);
-#endif
 }
 
 void kernaux_drivers_intel_8259_pic_eoi(const unsigned char number)
 {
-#ifndef AVAILABLE
-    KERNAUX_PANIC(NOT_AVAILABLE_MSG);
-#else
     KERNAUX_ASSERT(number < IRQS_TOTAL);
 
     const bool to_slave =
@@ -138,5 +110,4 @@ void kernaux_drivers_intel_8259_pic_eoi(const unsigned char number)
 
     if (to_slave)  outportb(SLAVE_COMMAND_PORT,  0x20);
     if (to_master) outportb(MASTER_COMMAND_PORT, 0x20);
-#endif
 }
