@@ -17,8 +17,13 @@ Common
   * Undefined behavior
   * Checking for an error (return value, pointer argument, whatever)
   * Use of not fully initialized data
+  * Not reading beyond a buffer, array or string
+    * The index of the last item, which is less than the buffer size
+    * Negative indices
+    * The terminating null character in a string
   * Allowed values of arguments
   * Possible values of parameters
+  * Operator precedence
   * Default case in switch statements
   * Braces (curly brackets) around code blocks
 
