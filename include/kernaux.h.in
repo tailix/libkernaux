@@ -10,6 +10,10 @@
 #include <kernaux/generic/malloc.h>
 #include <kernaux/generic/mutex.h>
 
+@comment_line_arch_i386@#include <kernaux/arch/i386.h>
+@comment_line_arch_riscv64@#include <kernaux/arch/riscv64.h>
+@comment_line_arch_x86_64@#include <kernaux/arch/x86_64.h>
+
 @comment_line_cmdline@#include <kernaux/cmdline.h>
 @comment_line_elf@#include <kernaux/elf.h>
 @comment_line_free_list@#include <kernaux/free_list.h>
@@ -23,7 +27,3 @@
 @comment_line_printf_fmt@#include <kernaux/printf_fmt.h>
 @comment_line_stack_trace@#include <kernaux/stack_trace.h>
 @comment_line_units@#include <kernaux/units.h>
-
-#include <kernaux/arch/i386.h>
-#include <kernaux/arch/riscv64.h>
-#include <kernaux/arch/x86_64.h>
