@@ -12,6 +12,8 @@ Common
 
 ### Programming mistakes
 
+* Always check documentation, manuals and specifications
+
 Avoid stupid errors with:
 
 * `NULL` pointers and `nil`/`None`/whatever objects
