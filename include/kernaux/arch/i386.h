@@ -49,9 +49,9 @@ extern "C" {
 #define KERNAUX_ARCH_I386_CR4_PGE ((uint32_t)0x00000080) // 7: Page Global Enabled
 // TODO: bits 8-31
 
-// Global descriptor table entry
+// Global or local descriptor table entry
 // TODO: validate this according to spec
-struct KernAux_Arch_I386_GDTE {
+struct KernAux_Arch_I386_DTE {
     unsigned limit_low              : 16;
     unsigned base_low               : 24;
     unsigned accessed               : 1;
