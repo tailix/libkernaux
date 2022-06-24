@@ -29,7 +29,6 @@ lib_LTLIBRARIES = libkernaux.la
 
 libkernaux_la_LIBADD =
 libkernaux_la_SOURCES = \
-	src/arch/i386.c \
 	src/assert.c \
 	src/libc.h \
 	src/generic/malloc.c \
@@ -41,6 +40,14 @@ libkernaux_la_SOURCES = \
 
 if WITH_LIBC
 libkernaux_la_LIBADD += libc/libc.la
+endif
+
+#######
+# ARCH #
+#######
+
+if ASM_I386
+libkernaux_la_SOURCES += src/arch/i386.c
 endif
 
 #######
