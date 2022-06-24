@@ -27,18 +27,6 @@ if ASM_X86_64
 nobase_include_HEADERS += kernaux/asm/x86_64.h
 endif
 
-###########
-# Drivers #
-###########
-
-if WITH_DRIVERS
-nobase_include_HEADERS += \
-	kernaux/drivers/console.h \
-	kernaux/drivers/framebuffer.h \
-	kernaux/drivers/intel_8253_pit.h \
-	kernaux/drivers/intel_8259_pic.h
-endif
-
 ####################
 # Default packages #
 ####################
@@ -79,3 +67,21 @@ endif
 if WITH_UNITS
 nobase_include_HEADERS += kernaux/units.h
 endif
+
+###########
+# Drivers #
+###########
+
+if WITH_DRIVERS
+nobase_include_HEADERS += \
+	kernaux/drivers/console.h \
+	kernaux/drivers/framebuffer.h \
+	kernaux/drivers/intel_8259_pic.h
+
+# Intel 8253-compatible programmable interval timer
+
+if ASM_I386
+nobase_include_HEADERS += kernaux/drivers/intel_8253_pit.h
+endif
+
+endif # WITH_DRIVERS

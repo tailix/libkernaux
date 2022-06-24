@@ -12,6 +12,8 @@
 extern "C" {
 #endif
 
+void kernaux_drivers_intel_8253_pit_initialize(unsigned int freq);
+
 #ifdef __cplusplus
 }
 #endif
