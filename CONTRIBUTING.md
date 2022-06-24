@@ -7,8 +7,13 @@ Common
 * If you change the behavior (even just fix a bug) of **libkernaux** (stable) or
   [libc](/libc), add a record to [ChangeLog](/ChangeLog).
 
+Prohibitions:
+
 * Don't commit binary files
 * Don't commit configuration files of your editor or IDE
+* Don't use tabulations
+* Don't leave trailing whitespaces
+* Don't forget the newline character the the end of files
 
 The following statements are recommendations, but highly encouraged:
 
