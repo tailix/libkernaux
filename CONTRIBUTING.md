@@ -21,6 +21,8 @@ Common
 C language
 ----------
 
+Use **cppcheck**.
+
 * Name regular functions (*not methods*) and variables in lower snake case
   (example: `foo_bar`).
 * Name macros in upper snake case (example: `FOO_BAR`).
