@@ -16,10 +16,11 @@ Common
   * Thread safety
   * Undefined behavior
   * Checking for an error (return value, pointer argument, whatever)
+  * Use of not fully initialized data
   * Allowed values of arguments
   * Possible values of parameters
   * Default case in switch statements
-  * Use of not fully initialized data
+  * Braces (curly brackets) around code blocks
 
 
 
@@ -92,6 +93,21 @@ FooBar_init(foobar);
 
 // Use:
 FooBar_do_something(foobar);
+```
+
+* Only omit braces (curly brackets) if the statement of a block is placed on the
+  same line as conditional statement:
+
+```c
+// Good:
+if (foo) return bar;
+if (foo) {
+    return bar;
+}
+
+// Bad:
+if (foo)
+    return bar;
 ```
 
 
