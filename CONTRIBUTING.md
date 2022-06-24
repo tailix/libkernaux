@@ -121,6 +121,7 @@ FooBar_init(foobar);
 FooBar_do_something(foobar);
 ```
 
+* Mark variables and parameters with `const` if you don't plan to modify them
 * Only omit braces (curly brackets) of a block if it's statement is placed on
   the same line as conditional statement:
 
@@ -147,6 +148,8 @@ Nothing here yet.
 
 Ruby
 ----
+
+* Freeze objects if you don't plan to modify them
 
 ### Matz's Ruby interpreter
 
