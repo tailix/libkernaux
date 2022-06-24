@@ -12,7 +12,8 @@ Common
 
 ### Programming mistakes
 
-* Avoid stupid errors with:
+Avoid stupid errors with:
+
 * `NULL` pointers and `nil`/`None`/whatever objects
 * Type sizes (like `long` on 32-bit and 64-bit)
 * Integer arithmetic overflow
