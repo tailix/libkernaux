@@ -93,29 +93,29 @@ AS_IF([test "$enable_tests_all" = yes], do_enable_tests_all)
 
 AC_DEFUN([do_without_arch_all],
 [
-if test -z "$arch_i386";    then with_arch_i386=no;    fi
-if test -z "$arch_riscv64"; then with_arch_riscv64=no; fi
-if test -z "$arch_x86_64";  then with_arch_x86_64=no;  fi
+if test -z "$with_arch_i386";    then with_arch_i386=no;    fi
+if test -z "$with_arch_riscv64"; then with_arch_riscv64=no; fi
+if test -z "$with_arch_x86_64";  then with_arch_x86_64=no;  fi
 ])
 AS_IF([test "$with_arch_all" = no], do_without_arch_all)
 
 AC_DEFUN([do_without_all],
 [
-if test -z "$arch_i386";        then with_arch_i386=no;    fi
-if test -z "$arch_riscv64";     then with_arch_riscv64=no; fi
-if test -z "$arch_x86_64";      then with_arch_x86_64=no;  fi
-if test -z "$with_cmdline";     then with_cmdline=no;      fi
-if test -z "$with_elf";         then with_elf=no;          fi
-if test -z "$with_free_list";   then with_free_list=no;    fi
-if test -z "$with_io";          then with_io=no;           fi
-if test -z "$with_mbr";         then with_mbr=no;          fi
-if test -z "$with_memmap";      then with_memmap=no;       fi
-if test -z "$with_multiboot2";  then with_multiboot2=no;   fi
-if test -z "$with_ntoa";        then with_ntoa=no;         fi
-if test -z "$with_pfa";         then with_pfa=no;          fi
-if test -z "$with_printf";      then with_printf=no;       fi
-if test -z "$with_printf_fmt";  then with_printf_fmt=no;   fi
-if test -z "$with_units";       then with_units=no;        fi
+if test -z "$with_arch_i386";    then with_arch_i386=no;    fi
+if test -z "$with_arch_riscv64"; then with_arch_riscv64=no; fi
+if test -z "$with_arch_x86_64";  then with_arch_x86_64=no;  fi
+if test -z "$with_cmdline";      then with_cmdline=no;      fi
+if test -z "$with_elf";          then with_elf=no;          fi
+if test -z "$with_free_list";    then with_free_list=no;    fi
+if test -z "$with_io";           then with_io=no;           fi
+if test -z "$with_mbr";          then with_mbr=no;          fi
+if test -z "$with_memmap";       then with_memmap=no;       fi
+if test -z "$with_multiboot2";   then with_multiboot2=no;   fi
+if test -z "$with_ntoa";         then with_ntoa=no;         fi
+if test -z "$with_pfa";          then with_pfa=no;          fi
+if test -z "$with_printf";       then with_printf=no;       fi
+if test -z "$with_printf_fmt";   then with_printf_fmt=no;   fi
+if test -z "$with_units";        then with_units=no;        fi
 ])
 AS_IF([test "$with_all" = no], do_without_all)
 
