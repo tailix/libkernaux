@@ -2,13 +2,18 @@ Common
 ------
 
 * Add your name to [COPYING](/COPYING).
-* **Don't** add your name to `AUTHORS` - it's for maintainers.
+* Don't add your name to `AUTHORS` - it's for maintainers.
 * Add copyright notice in the beginning of changed files except the headers.
 * If you change the behavior (even just fix a bug) of **libkernaux** (stable) or
   [libc](/libc), add a record to [ChangeLog](/ChangeLog).
 
 * Don't commit binary files
 * Don't commit configuration files of your editor or IDE
+
+The following statements are recommendations, but highly encouraged:
+
+* Write documentation
+* Write tests
 
 ### Programming mistakes
 
