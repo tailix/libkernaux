@@ -21,24 +21,24 @@ cmdline_LDADD = $(top_builddir)/libkernaux.la
 cmdline_SOURCES = main.c cmdline.c
 endif
 
-##############
-# print_file #
-##############
+###############
+# printf_file #
+###############
 
 if WITH_PRINTF
-TESTS += print_file
-print_file_LDADD = $(top_builddir)/libkernaux.la
-print_file_SOURCES = main.c print_file.c
+TESTS += printf_file
+printf_file_LDADD = $(top_builddir)/libkernaux.la
+printf_file_SOURCES = main.c printf_file.c
 endif
 
-#################
-# print_file_va #
-#################
+##################
+# printf_file_va #
+##################
 
 if WITH_PRINTF
-TESTS += print_file_va
-print_file_va_LDADD = $(top_builddir)/libkernaux.la
-print_file_va_SOURCES = main.c print_file_va.c
+TESTS += printf_file_va
+printf_file_va_LDADD = $(top_builddir)/libkernaux.la
+printf_file_va_SOURCES = main.c printf_file_va.c
 endif
 
 ################
