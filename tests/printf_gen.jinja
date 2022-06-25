@@ -4,10 +4,6 @@
 
 #include <kernaux/printf.h>
 
-#ifdef WITH_IO
-#include <kernaux/io.h>
-#endif
-
 #include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -17,8 +13,6 @@
 
 static char buffer[BUFFER_SIZE];
 static size_t buffer_index;
-
-#ifdef WITH_IO
 
 static const char *const data = "foobar";
 
@@ -34,14 +28,11 @@ static void test_putchar(const char chr, void *const arg)
     buffer[buffer_index++] = chr;
 }
 
-#endif // WITH_IO
-
 static void test(const char *const expected, const char *const format, ...)
 {
     va_list va;
     int result;
 
-#ifdef WITH_IO
     memset(buffer, '\0', sizeof(buffer));
     buffer_index = 0;
     va_start(va, format);
@@ -50,7 +41,6 @@ static void test(const char *const expected, const char *const format, ...)
     va_end(va);
     assert((size_t)result == strlen(expected));
     assert(strcmp(expected, buffer) == 0);
-#endif
 
     memset(buffer, '\0', sizeof(buffer));
     buffer_index = 0;
@@ -63,13 +53,11 @@ static void test(const char *const expected, const char *const format, ...)
 
 void test_main()
 {
-#ifdef WITH_IO
     memset(buffer, '\0', sizeof(buffer));
     buffer_index = 0;
     struct KernAux_OldFile file = KernAux_OldFile_create(test_putchar);
     kernaux_fprintf(&file, (char*)data, "Hello, World!");
     assert(strcmp("Hello, World!", buffer) == 0);
-#endif
 
     {% for case in cases %}
     {% if case.float %}

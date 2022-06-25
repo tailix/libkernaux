@@ -44,7 +44,6 @@ zero). Work-in-progress APIs can change at any time.
     * [Example: Assert](/examples/assert.c)
     * [Example: Panic](/examples/panic.c)
   * Stack trace *(planned)*
-  * [Input/output](/include/kernaux/io.h) (*work in progress*)
   * Architecture-specific code (*work in progress*)
     * [Declarations](/include/kernaux/arch/)
     * [Functions](/include/kernaux/asm/)
@@ -166,7 +165,6 @@ explicitly included, use `--without-all`.
 * `--with[out]-asm` - kernel assembler helpers
 * `--with[out]-cmdline` - command line parser
 * `--with[out]-free-list` - free list memory allocator
-* `--with[out]-io` - input/output
 * `--with[out]-memmap` - memory map
 * `--with[out]-ntoa` - itoa/ftoa
 * `--with[out]-printf` - printf
