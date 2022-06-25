@@ -79,7 +79,7 @@ int kernaux_fprintf(const KernAux_File file, const char* format, ...)
 
     va_list va;
     va_start(va, format);
-    const out_fct_wrap_type out_fct_wrap = { file_putc, file };
+    const out_fct_wrap_type out_fct_wrap = { file_putc, (void*)file };
     const int ret = _vsnprintf(_out_fct, (char*)(uintptr_t)&out_fct_wrap, (size_t)-1, format, va);
     va_end(va);
     return ret;
@@ -90,7 +90,7 @@ int kernaux_vfprintf(const KernAux_File file, const char* format, va_list va)
     KERNAUX_ASSERT(file);
     KERNAUX_ASSERT(format);
 
-    const out_fct_wrap_type out_fct_wrap = { file_putc, file };
+    const out_fct_wrap_type out_fct_wrap = { file_putc, (void*)file };
     return _vsnprintf(_out_fct, (char*)(uintptr_t)&out_fct_wrap, (size_t)-1, format, va);
 }
 

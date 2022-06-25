@@ -55,7 +55,7 @@ void kernaux_drivers_console_printf(const char *format, ...)
 
     va_list va;
     va_start(va, format);
-    kernaux_vfprintf(&file, NULL, format, va);
+    kernaux_vfprintf(&file, format, va);
     va_end(va);
 }
 #endif
