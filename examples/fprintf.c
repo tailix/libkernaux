@@ -22,7 +22,7 @@ static void my_putchar(const char chr, void *arg)
 
 void example_main()
 {
-    struct KernAux_File file = KernAux_File_create(my_putchar);
+    struct KernAux_OldFile file = KernAux_OldFile_create(my_putchar);
     const int result = kernaux_fprintf(
         &file,
         (char*)data,
