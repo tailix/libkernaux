@@ -3,8 +3,8 @@
  *
  * Copyright (c) 2011      Nicholas J. Kain
  * Copyright (c) 2011-2012 Rich Felker
- * Copyright (c) 2020-2022 Alex Kotov
  * Copyright (c) 2022      Alexander Monakov
+ * Copyright (c) 2022      Alex Kotov
  */
 
 #ifdef HAVE_CONFIG_H

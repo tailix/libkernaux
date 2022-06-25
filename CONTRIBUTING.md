@@ -2,15 +2,72 @@ Common
 ------
 
 * Add your name to [COPYING](/COPYING).
-* **Don't** add your name to `AUTHORS` - it's for maintainers.
+* Don't add your name to `AUTHORS` - it's for maintainers.
 * Add copyright notice in the beginning of changed files except the headers.
 * If you change the behavior (even just fix a bug) of **libkernaux** (stable) or
   [libc](/libc), add a record to [ChangeLog](/ChangeLog).
+
+Prohibitions:
+
+* Don't commit binary files
+* Don't commit configuration files of your editor or IDE
+* Don't use encodings other than ASCII and UTF-8
+* Don't use alphabets other than Latin
+* Don't use languages other than English
+* Don't use tabulations (I don't hate tabs, but people can not use them
+  properly)
+* Don't leave trailing whitespaces
+* Don't forget the newline character in the end of files
+
+The following statements are recommendations, but highly encouraged:
+
+* Write documentation
+* Write tests
+* Keep lines less than 80 characters long for better experience on split screen
+
+### Programming mistakes
+
+* Always check documentation, manuals and specifications
+
+Avoid stupid errors with:
+
+* Manual memory management
+  * `malloc` may return `NULL`
+  * Memory leak (forget to `free`)
+  * Use after `free`/`realloc`
+  * Double `free`/`realloc`
+  * `free`ing/`realloc`ating unallocated memory
+  * Changing the original pointer to the allocated memory (use `const`!)
+* `NULL` pointers and `nil`/`None`/whatever objects
+* Division by zero
+* Pointer arithmetic - consider type size
+* Type sizes (like `long` on 32-bit and 64-bit)
+* Integer arithmetic overflow
+* Bit shift
+* Endianness (byte order)
+* Data packing
+* Data alignment
+* Thread safety
+* Undefined behavior
+* Logical expressions (tautology, whatever)
+* Checking for an error (return value, pointer argument, whatever)
+* Use of not fully initialized data
+* Not reading beyond a buffer, array or string
+  * The index of the last item, which is less than the buffer size
+  * Negative indices
+  * The terminating null character in a string
+* Allowed values of arguments
+* Possible values of parameters
+* Operator precedence
+* Default case in switch statements
+* Braces (curly brackets) around code blocks
 
 
 
 C language
 ----------
+
+Use **cppcheck**.
 
 * Name regular functions (*not methods*) and variables in lower snake case
   (example: `foo_bar`).
@@ -78,6 +135,22 @@ FooBar_init(foobar);
 FooBar_do_something(foobar);
 ```
 
+* Mark variables and parameters with `const` if you don't plan to modify them
+* Only omit braces (curly brackets) of a block if it's statement is placed on
+  the same line as conditional statement:
+
+```c
+// Good:
+if (foo) return bar;
+if (foo) {
+    return bar;
+}
+
+// Bad:
+if (foo)
+    return bar;
+```
+
 
 
 Python
@@ -89,6 +162,8 @@ Nothing here yet.
 
 Ruby
 ----
+
+* Freeze objects if you don't plan to modify them
 
 ### Matz's Ruby interpreter
 

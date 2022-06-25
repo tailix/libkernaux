@@ -48,7 +48,7 @@ zero). Work-in-progress APIs can change at any time.
     * [Declarations](/include/kernaux/arch/)
     * [Functions](/include/kernaux/asm/)
 * Generic types
-  * [File](/include/kernaux/generic/file.h) (*work in progress*)
+  * [File](/include/kernaux/generic/file.h) (*non-breaking since* **?.?.?**)
     * [Example](/examples/generic_file.c)
   * [Memory allocator](/include/kernaux/generic/malloc.h) (*non-breaking since* **?.?.?**)
     * [Example](/examples/generic_malloc.c)
@@ -62,7 +62,7 @@ zero). Work-in-progress APIs can change at any time.
     * [Example](/examples/pfa.c)
 * Data formats
   * [ELF](/include/kernaux/elf.h) (*work in progress*)
-  * [Master Boot Record](/include/kernaux/mbr.h) (*work in progress*)
+  * [MBR](/include/kernaux/mbr.h) (*work in progress*)
   * [Multiboot 2 (GRUB 2)](/include/kernaux/multiboot2.h) (*work in progress*)
 * Utilities
   * [Measurement units utils](/include/kernaux/units.h) (*work in progress*)
@@ -70,17 +70,15 @@ zero). Work-in-progress APIs can change at any time.
   * [Memory map](/include/kernaux/memmap.h.in) (*non-breaking since* **0.4.0**)
     * [Example](/examples/memmap.c)
   * [printf format parser](/include/kernaux/printf_fmt.h) (*work in progress*)
-    * Code from [https://github.com/mpaland/printf](https://github.com/mpaland/printf). Thank you!
     * [Example](/examples/printf_fmt.c)
 * Usual functions
   * [itoa/ftoa replacement](/include/kernaux/ntoa.h) (*non-breaking since* **0.4.0**)
     * [Example](/examples/ntoa.c)
   * [printf replacement](/include/kernaux/printf.h.in) (*non-breaking since* **?.?.?**)
-    * Code from [https://github.com/mpaland/printf](https://github.com/mpaland/printf). Thank you!
-    * [Example: fprintf](/examples/fprintf.c)
-    * [Example: vfprintf](/examples/fprintf_va.c)
-    * [Example: snprintf](/examples/snprintf.c)
-    * [Example: vsnprintf](/examples/snprintf_va.c)
+    * [Example: fprintf](/examples/printf_file.c)
+    * [Example: vfprintf](/examples/printf_file_va.c)
+    * [Example: snprintf](/examples/printf_str.c)
+    * [Example: vsnprintf](/examples/printf_str_va.c)
 * libc replacement (*work in progress*)
   * [ctype.h](/libc/include/ctype.h)
   * [inttypes.h](/libc/include/inttypes.h)
