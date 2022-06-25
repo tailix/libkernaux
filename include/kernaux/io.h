@@ -5,14 +5,14 @@
 extern "C" {
 #endif
 
-typedef void (*KernAux_File_Out)(char c, void *arg);
+typedef void (*KernAux_OldFile_Out)(char c, void *arg);
 
-typedef struct KernAux_File {
-    KernAux_File_Out out;
-} *KernAux_File;
+typedef struct KernAux_OldFile {
+    KernAux_OldFile_Out out;
+} *KernAux_OldFile;
 
-struct KernAux_File KernAux_File_create(KernAux_File_Out out);
-void KernAux_File_init(KernAux_File file, KernAux_File_Out out);
+struct KernAux_OldFile KernAux_OldFile_create(KernAux_OldFile_Out out);
+void KernAux_OldFile_init(KernAux_OldFile file, KernAux_OldFile_Out out);
 
 #ifdef __cplusplus
 }

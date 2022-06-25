@@ -24,7 +24,7 @@ static int my_printf(const char *const format, ...)
 {
     va_list va;
     va_start(va, format);
-    struct KernAux_File file = KernAux_File_create(my_putchar);
+    struct KernAux_OldFile file = KernAux_OldFile_create(my_putchar);
     const int result = kernaux_vfprintf(&file, (char*)data, format, va);
     va_end(va);
     return result;

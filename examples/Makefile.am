@@ -45,6 +45,14 @@ fprintf_va_SOURCES = main.c fprintf_va.c
 endif
 endif
 
+################
+# generic_file #
+################
+
+TESTS += generic_file
+generic_file_LDADD = $(top_builddir)/libkernaux.la
+generic_file_SOURCES = main.c generic_file.c
+
 ##################
 # generic_malloc #
 ##################

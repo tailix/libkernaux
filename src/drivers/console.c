@@ -56,8 +56,8 @@ void kernaux_drivers_console_printf(const char *format, ...)
 
     va_list va;
     va_start(va, format);
-    struct KernAux_File file =
-        KernAux_File_create(kernaux_drivers_console_printf_putc);
+    struct KernAux_OldFile file =
+        KernAux_OldFile_create(kernaux_drivers_console_printf_putc);
     kernaux_vfprintf(&file, NULL, format, va);
     va_end(va);
 }

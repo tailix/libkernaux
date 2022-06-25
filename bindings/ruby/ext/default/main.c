@@ -22,10 +22,6 @@ void Init_default()
     init_version();
     init_assert();
 
-#ifdef KERNAUX_VERSION_WITH_IO
-    init_io();
-#endif // KERNAUX_VERSION_WITH_IO
-
 #ifdef KERNAUX_VERSION_WITH_CMDLINE
     init_cmdline();
 #endif // KERNAUX_VERSION_WITH_CMDLINE
