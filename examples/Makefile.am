@@ -26,11 +26,9 @@ endif
 ###########
 
 if WITH_PRINTF
-if WITH_IO
 TESTS += fprintf
 fprintf_LDADD = $(top_builddir)/libkernaux.la
 fprintf_SOURCES = main.c fprintf.c
-endif
 endif
 
 ##############
@@ -38,11 +36,9 @@ endif
 ##############
 
 if WITH_PRINTF
-if WITH_IO
 TESTS += fprintf_va
 fprintf_va_LDADD = $(top_builddir)/libkernaux.la
 fprintf_va_SOURCES = main.c fprintf_va.c
-endif
 endif
 
 ################

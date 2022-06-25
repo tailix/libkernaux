@@ -10,7 +10,7 @@ extern "C" {
 typedef void (*KernAux_Mutex_Lock  )(void *mutex);
 typedef void (*KernAux_Mutex_Unlock)(void *mutex);
 
-typedef struct KernAux_Mutex {
+typedef const struct KernAux_Mutex {
     KernAux_Mutex_Lock   KERNAUX_PROTECTED_FIELD(lock);
     KernAux_Mutex_Unlock KERNAUX_PROTECTED_FIELD(unlock);
 } *KernAux_Mutex;
