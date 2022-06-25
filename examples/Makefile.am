@@ -21,24 +21,24 @@ cmdline_LDADD = $(top_builddir)/libkernaux.la
 cmdline_SOURCES = main.c cmdline.c
 endif
 
-###########
-# fprintf #
-###########
+##############
+# print_file #
+##############
 
 if WITH_PRINTF
-TESTS += fprintf
-fprintf_LDADD = $(top_builddir)/libkernaux.la
-fprintf_SOURCES = main.c fprintf.c
+TESTS += print_file
+print_file_LDADD = $(top_builddir)/libkernaux.la
+print_file_SOURCES = main.c print_file.c
 endif
 
-##############
-# fprintf_va #
-##############
+#################
+# print_file_va #
+#################
 
 if WITH_PRINTF
-TESTS += fprintf_va
-fprintf_va_LDADD = $(top_builddir)/libkernaux.la
-fprintf_va_SOURCES = main.c fprintf_va.c
+TESTS += print_file_va
+print_file_va_LDADD = $(top_builddir)/libkernaux.la
+print_file_va_SOURCES = main.c print_file_va.c
 endif
 
 ################
@@ -113,24 +113,24 @@ printf_fmt_LDADD = $(top_builddir)/libkernaux.la
 printf_fmt_SOURCES = main.c printf_fmt.c
 endif
 
-############
-# snprintf #
-############
+##############
+# printf_str #
+##############
 
 if WITH_PRINTF
-TESTS += snprintf
-snprintf_LDADD = $(top_builddir)/libkernaux.la
-snprintf_SOURCES = main.c snprintf.c
+TESTS += printf_str
+printf_str_LDADD = $(top_builddir)/libkernaux.la
+printf_str_SOURCES = main.c printf_str.c
 endif
 
-###############
-# snprintf_va #
-###############
+#################
+# printf_str_va #
+#################
 
 if WITH_PRINTF
-TESTS += snprintf_va
-snprintf_va_LDADD = $(top_builddir)/libkernaux.la
-snprintf_va_SOURCES = main.c snprintf_va.c
+TESTS += printf_str_va
+printf_str_va_LDADD = $(top_builddir)/libkernaux.la
+printf_str_va_SOURCES = main.c printf_str_va.c
 endif
 
 ###############
