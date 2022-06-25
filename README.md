@@ -75,7 +75,7 @@ zero). Work-in-progress APIs can change at any time.
 * Usual functions
   * [itoa/ftoa replacement](/include/kernaux/ntoa.h) (*non-breaking since* **0.4.0**)
     * [Example](/examples/ntoa.c)
-  * [printf replacement](/include/kernaux/printf.h.in) (*non-breaking since* **0.4.0**)
+  * [printf replacement](/include/kernaux/printf.h.in) (*non-breaking since* **?.?.?**)
     * Code from [https://github.com/mpaland/printf](https://github.com/mpaland/printf). Thank you!
     * [Example: fprintf](/examples/fprintf.c)
     * [Example: vfprintf](/examples/fprintf_va.c)
