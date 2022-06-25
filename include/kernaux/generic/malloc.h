@@ -14,7 +14,7 @@ typedef void  (*KernAux_Malloc_Free)   (void *malloc, void *ptr);
 typedef void *(*KernAux_Malloc_Malloc) (void *malloc, size_t size);
 typedef void *(*KernAux_Malloc_Realloc)(void *malloc, void *ptr, size_t size);
 
-typedef struct KernAux_Malloc {
+typedef const struct KernAux_Malloc {
     KernAux_Malloc_Calloc  KERNAUX_PROTECTED_FIELD(calloc);
     KernAux_Malloc_Free    KERNAUX_PROTECTED_FIELD(free);
     KernAux_Malloc_Malloc  KERNAUX_PROTECTED_FIELD(malloc);

@@ -12,7 +12,7 @@ int KernAux_File_putc(const KernAux_File file, const int c)
     KERNAUX_ASSERT(file);
     KERNAUX_ASSERT(file->putc);
 
-    return file->putc(file, c);
+    return file->putc((void*)file, c);
 }
 
 int KernAux_File_puts(const KernAux_File file, const char *const s)
@@ -23,7 +23,7 @@ int KernAux_File_puts(const KernAux_File file, const char *const s)
     if (!s) return 0;
 
     // Inherited implementation
-    if (file->puts) return file->puts(file, s);
+    if (file->puts) return file->puts((void*)file, s);
 
     // Default implementation
     size_t ccount = 0;
@@ -45,7 +45,7 @@ int KernAux_File_write(
     if (count == 0 || !buffer) return 0;
 
     // Inherited implementation
-    if (file->write) return file->write(file, buffer, count);
+    if (file->write) return file->write((void*)file, buffer, count);
 
     // Default implementation
     size_t ccount = 0;
