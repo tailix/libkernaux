@@ -7,6 +7,8 @@ extern "C" {
 
 #include <kernaux/macro.h>
 
+#define KERNAUX_EOF (-1)
+
 typedef int (*KernAux_File_Putc)(void *file, int c);
 
 typedef struct KernAux_File {
