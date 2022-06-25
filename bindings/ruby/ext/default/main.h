@@ -15,10 +15,6 @@ extern VALUE rb_KernAux_Error;
 void init_version();
 void init_assert();
 
-#ifdef KERNAUX_VERSION_WITH_IO
-void init_io();
-#endif // KERNAUX_VERSION_WITH_IO
-
 #ifdef KERNAUX_VERSION_WITH_CMDLINE
 void init_cmdline();
 #endif // KERNAUX_VERSION_WITH_CMDLINE
