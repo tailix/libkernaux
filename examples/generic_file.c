@@ -28,7 +28,7 @@ struct MyFile MyFile_create(char *ptr, size_t size);
 // my_file.c
 //===========
 
-static int MyFile_putc(void *file, int c);
+static int MyFile_putc(void *file, unsigned char c);
 
 struct MyFile MyFile_create(char *const ptr, const size_t size)
 {
@@ -42,13 +42,12 @@ struct MyFile MyFile_create(char *const ptr, const size_t size)
     return my_file;
 }
 
-int MyFile_putc(void *const file, const int c)
+int MyFile_putc(void *const file, const unsigned char c)
 {
     MyFile my_file = file;
     if (my_file->pos >= my_file->size) return KERNAUX_EOF;
-    const unsigned char uc = c;
-    my_file->ptr[my_file->pos++] = (char)uc;
-    return uc;
+    my_file->ptr[my_file->pos++] = c;
+    return c;
 }
 
 //========

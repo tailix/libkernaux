@@ -11,7 +11,7 @@ extern "C" {
 
 #define KERNAUX_EOF (-1)
 
-typedef int (*KernAux_File_Putc) (void *file, int c);
+typedef int (*KernAux_File_Putc) (void *file, unsigned char c);
 typedef int (*KernAux_File_Puts) (void *file, const char *s);
 typedef int (*KernAux_File_Write)(void *file, const void *buffer, size_t count);
 
