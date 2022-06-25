@@ -13,7 +13,7 @@ typedef struct KernAux_File {
     KernAux_File_Putc KERNAUX_PROTECTED_FIELD(putc);
 } *KernAux_File;
 
-int KernAux_File_Putc(KernAux_File file, int c);
+int KernAux_File_putc(KernAux_File file, int c);
 
 #ifdef __cplusplus
 }
