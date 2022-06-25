@@ -1,3 +1,6 @@
+#define KERNAUX_ACCESS_PROTECTED
+
+#include <kernaux/generic/file.h>
 #include <kernaux/printf.h>
 
 #include <assert.h>
@@ -7,24 +10,27 @@
 
 #define BUFFER_SIZE 1024
 
-static const char *const data = "foobar";
-
 static char buffer[BUFFER_SIZE];
 static size_t buffer_index = 0;
 
-static void my_putchar(const char chr, void *arg)
+static int my_putc(__attribute__((unused)) void *const file, unsigned char c)
 {
-    assert(arg == data);
     if (buffer_index >= BUFFER_SIZE) abort();
-    buffer[buffer_index++] = chr;
+    buffer[buffer_index++] = c;
+    return 1;
 }
+
+static const struct KernAux_File file = {
+    .putc = my_putc,
+    .puts = NULL,
+    .write = NULL,
+};
 
 static int my_printf(const char *const format, ...)
 {
     va_list va;
     va_start(va, format);
-    struct KernAux_OldFile file = KernAux_OldFile_create(my_putchar);
-    const int result = kernaux_vfprintf(&file, (char*)data, format, va);
+    const int result = kernaux_vfprintf(&file, format, va);
     va_end(va);
     return result;
 }
