@@ -3,6 +3,7 @@
 	* configure.ac: Removed package "io"
 	* include/kernaux/generic/file.h: Added
 	* include/kernaux/io.h: Removed
+	* include/kernaux/printf.h: Use new file API
 
 2022-06-24  Alex Kotov  <kotovalexarian@gmail.com>
 
