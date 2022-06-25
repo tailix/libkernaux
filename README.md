@@ -44,7 +44,6 @@ zero). Work-in-progress APIs can change at any time.
     * [Example: Assert](/examples/assert.c)
     * [Example: Panic](/examples/panic.c)
   * [Stack trace](/include/kernaux/stack_trace.h) *(work in progress)*
-  * [Input/output](/include/kernaux/io.h) (*work in progress*)
   * Architecture-specific code (*work in progress*)
     * [Declarations](/include/kernaux/arch/)
     * [Functions](/include/kernaux/asm/)
@@ -76,7 +75,7 @@ zero). Work-in-progress APIs can change at any time.
 * Usual functions
   * [itoa/ftoa replacement](/include/kernaux/ntoa.h) (*non-breaking since* **0.4.0**)
     * [Example](/examples/ntoa.c)
-  * [printf replacement](/include/kernaux/printf.h.in) (*non-breaking since* **0.4.0**)
+  * [printf replacement](/include/kernaux/printf.h.in) (*non-breaking since* **?.?.?**)
     * Code from [https://github.com/mpaland/printf](https://github.com/mpaland/printf). Thank you!
     * [Example: fprintf](/examples/fprintf.c)
     * [Example: vfprintf](/examples/fprintf_va.c)
@@ -166,7 +165,6 @@ explicitly included, use `--without-all`.
 * `--with[out]-asm` - kernel assembler helpers
 * `--with[out]-cmdline` - command line parser
 * `--with[out]-free-list` - free list memory allocator
-* `--with[out]-io` - input/output
 * `--with[out]-memmap` - memory map
 * `--with[out]-ntoa` - itoa/ftoa
 * `--with[out]-printf` - printf
