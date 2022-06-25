@@ -2,7 +2,7 @@
  * The code was taken from musl libc.
  *
  * Copyright (c) 2011-2015 Rich Felker
- * Copyright (c) 2020-2022 Alex Kotov
+ * Copyright (c) 2022      Alex Kotov
  */
 
 #ifdef HAVE_CONFIG_H

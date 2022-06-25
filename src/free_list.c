@@ -2,7 +2,7 @@
  * The code was inspired by the Embedded Artistry's libmemory.
  *
  * Copyright (c) 2017-2022 Embedded Artistry LLC
- * Copyright (c) 2020-2022 Alex Kotov
+ * Copyright (c) 2022      Alex Kotov
  */
 
 #ifdef HAVE_CONFIG_H

@@ -82,48 +82,48 @@ KERNAUX_STATIC_TEST_STRUCT_SIZE(KernAux_Arch_I386_DTE, 8);
  */
 struct KernAux_Arch_I386_TSS {
     // 0x00
-    unsigned prev_tss    : 16;
-    unsigned _zero0      : 16;
+    uint16_t prev_tss;
+    uint16_t _zero0;
     // 0x04
-    unsigned esp0        : 32;
-    unsigned ss0         : 16;
-    unsigned _zero1      : 16;
-    unsigned esp1        : 32;
-    unsigned ss1         : 16;
-    unsigned _zero2      : 16;
-    unsigned esp2        : 32;
-    unsigned ss2         : 16;
-    unsigned _zero3      : 16;
+    uint32_t esp0;
+    uint16_t ss0;
+    uint16_t _zero1;
+    uint32_t esp1;
+    uint16_t ss1;
+    uint16_t _zero2;
+    uint32_t esp2;
+    uint16_t ss2;
+    uint16_t _zero3;
     // 0x1c
-    unsigned cr3         : 32;
-    unsigned eip         : 32;
-    unsigned eflags      : 32;
-    unsigned eax         : 32;
-    unsigned ecx         : 32;
-    unsigned edx         : 32;
-    unsigned ebx         : 32;
-    unsigned esp         : 32;
-    unsigned ebp         : 32;
-    unsigned esi         : 32;
-    unsigned edi         : 32;
+    uint32_t cr3;
+    uint32_t eip;
+    uint32_t eflags;
+    uint32_t eax;
+    uint32_t ecx;
+    uint32_t edx;
+    uint32_t ebx;
+    uint32_t esp;
+    uint32_t ebp;
+    uint32_t esi;
+    uint32_t edi;
     // 0x48
-    unsigned es          : 16;
-    unsigned _zero4      : 16;
-    unsigned cs          : 16;
-    unsigned _zero5      : 16;
-    unsigned ss          : 16;
-    unsigned _zero6      : 16;
-    unsigned ds          : 16;
-    unsigned _zero7      : 16;
-    unsigned fs          : 16;
-    unsigned _zero8      : 16;
-    unsigned gs          : 16;
-    unsigned _zero9      : 16;
-    unsigned ldt         : 16;
-    unsigned _zero10     : 16;
+    uint16_t es;
+    uint16_t _zero4;
+    uint16_t cs;
+    uint16_t _zero5;
+    uint16_t ss;
+    uint16_t _zero6;
+    uint16_t ds;
+    uint16_t _zero7;
+    uint16_t fs;
+    uint16_t _zero8;
+    uint16_t gs;
+    uint16_t _zero9;
+    uint16_t ldt;
+    uint16_t _zero10;
     // 0x64
-    unsigned _zero11     : 16;
-    unsigned io_map_base : 16;
+    uint16_t _zero11;
+    uint16_t io_map_base;
 }
 KERNAUX_PACKING_ATTR;
 

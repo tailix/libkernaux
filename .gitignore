@@ -108,8 +108,6 @@
 
 /examples/assert
 /examples/cmdline
-/examples/fprintf
-/examples/fprintf_va
 /examples/generic_file
 /examples/generic_malloc
 /examples/generic_mutex
@@ -117,9 +115,11 @@
 /examples/ntoa
 /examples/panic
 /examples/pfa
+/examples/printf_file
+/examples/printf_file_va
 /examples/printf_fmt
-/examples/snprintf
-/examples/snprintf_va
+/examples/printf_str
+/examples/printf_str_va
 /examples/units_human
 
 /tests/multiboot2_header_print1
