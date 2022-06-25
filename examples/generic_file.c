@@ -34,6 +34,7 @@ struct MyFile MyFile_create(char *const ptr, const size_t size)
 {
     struct MyFile my_file;
     my_file.file.putc = MyFile_putc;
+    my_file.file.puts = NULL; // "puts" has a default implementation
     my_file.ptr = ptr;
     my_file.size = size;
     my_file.pos = 0;
@@ -64,8 +65,8 @@ void example_main()
     struct MyFile my_file = MyFile_create(buffer, sizeof(buffer));
 
     // Write "Hello, World!" to the file
-    for (const char *s = hello; *s; ++s) {
-        const int result = KernAux_File_putc(&my_file.file, *s);
+    {
+        const int result = KernAux_File_puts(&my_file.file, hello);
         assert(result != KERNAUX_EOF);
     }
 
