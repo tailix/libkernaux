@@ -71,7 +71,7 @@ static size_t _etoa(out_fct_type out, char* buffer, size_t idx, size_t maxlen, d
 
 #ifdef WITH_IO
 
-int kernaux_fprintf(const KernAux_File file, void* arg, const char* format, ...)
+int kernaux_fprintf(const KernAux_OldFile file, void* arg, const char* format, ...)
 {
     KERNAUX_ASSERT(file);
     KERNAUX_ASSERT(format);
@@ -84,7 +84,7 @@ int kernaux_fprintf(const KernAux_File file, void* arg, const char* format, ...)
     return ret;
 }
 
-int kernaux_vfprintf(const KernAux_File file, void* arg, const char* format, va_list va)
+int kernaux_vfprintf(const KernAux_OldFile file, void* arg, const char* format, va_list va)
 {
     KERNAUX_ASSERT(file);
     KERNAUX_ASSERT(format);

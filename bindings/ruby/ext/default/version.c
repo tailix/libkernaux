@@ -1,7 +1,6 @@
 #include "main.h"
 
 static VALUE rb_KernAux_Version_with_cmdlineQN(VALUE self);
-static VALUE rb_KernAux_Version_with_ioQN(VALUE self);
 static VALUE rb_KernAux_Version_with_ntoaQN(VALUE self);
 static VALUE rb_KernAux_Version_with_printfQN(VALUE self);
 
@@ -14,8 +13,6 @@ void init_version()
 
     rb_define_singleton_method(rb_KernAux_Version, "with_cmdline?",
                                rb_KernAux_Version_with_cmdlineQN, 0);
-    rb_define_singleton_method(rb_KernAux_Version, "with_io?",
-                               rb_KernAux_Version_with_ioQN, 0);
     rb_define_singleton_method(rb_KernAux_Version, "with_ntoa?",
                                rb_KernAux_Version_with_ntoaQN, 0);
     rb_define_singleton_method(rb_KernAux_Version, "with_printf?",
@@ -25,15 +22,6 @@ void init_version()
 VALUE rb_KernAux_Version_with_cmdlineQN(VALUE self)
 {
 #ifdef KERNAUX_VERSION_WITH_CMDLINE
-    return Qtrue;
-#else
-    return Qfalse;
-#endif
-}
-
-VALUE rb_KernAux_Version_with_ioQN(VALUE self)
-{
-#ifdef KERNAUX_VERSION_WITH_IO
     return Qtrue;
 #else
     return Qfalse;

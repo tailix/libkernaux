@@ -49,6 +49,8 @@ zero). Work-in-progress APIs can change at any time.
     * [Declarations](/include/kernaux/arch/)
     * [Functions](/include/kernaux/asm/)
 * Generic types
+  * [File](/include/kernaux/generic/file.h) (*work in progress*)
+    * [Example](/examples/generic_file.c)
   * [Memory allocator](/include/kernaux/generic/malloc.h) (*non-breaking since* **?.?.?**)
     * [Example](/examples/generic_malloc.c)
   * [Mutex](/include/kernaux/generic/mutex.h) (*non-breaking since* **?.?.?**)
