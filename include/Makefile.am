@@ -56,9 +56,6 @@ endif
 if WITH_FREE_LIST
 nobase_include_HEADERS += kernaux/free_list.h
 endif
-if WITH_IO
-nobase_include_HEADERS += kernaux/io.h
-endif
 if WITH_MBR
 nobase_include_HEADERS += kernaux/mbr.h
 endif

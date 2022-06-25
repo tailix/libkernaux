@@ -80,9 +80,6 @@ endif
 if WITH_FREE_LIST
 libkernaux_la_SOURCES += src/free_list.c
 endif
-if WITH_IO
-libkernaux_la_SOURCES += src/io.c
-endif
 if WITH_MBR
 libkernaux_la_SOURCES += src/mbr.c
 endif
