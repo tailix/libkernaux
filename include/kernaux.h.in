@@ -18,7 +18,6 @@
 @comment_line_cmdline@#include <kernaux/cmdline.h>
 @comment_line_elf@#include <kernaux/elf.h>
 @comment_line_free_list@#include <kernaux/free_list.h>
-@comment_line_io@#include <kernaux/io.h>
 @comment_line_mbr@#include <kernaux/mbr.h>
 @comment_line_memmap@#include <kernaux/memmap.h>
 @comment_line_multiboot2@#include <kernaux/multiboot2.h>

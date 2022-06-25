@@ -10,7 +10,7 @@ void KernAux_Mutex_lock(const KernAux_Mutex mutex)
     KERNAUX_ASSERT(mutex);
     KERNAUX_ASSERT(mutex->lock);
 
-    mutex->lock(mutex);
+    mutex->lock((void*)mutex);
 }
 
 void KernAux_Mutex_unlock(const KernAux_Mutex mutex)
@@ -18,5 +18,5 @@ void KernAux_Mutex_unlock(const KernAux_Mutex mutex)
     KERNAUX_ASSERT(mutex);
     KERNAUX_ASSERT(mutex->unlock);
 
-    mutex->unlock(mutex);
+    mutex->unlock((void*)mutex);
 }
