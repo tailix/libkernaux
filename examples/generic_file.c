@@ -35,6 +35,7 @@ struct MyFile MyFile_create(char *const ptr, const size_t size)
     struct MyFile my_file;
     my_file.file.putc = MyFile_putc;
     my_file.file.puts = NULL; // "puts" has a default implementation
+    my_file.file.write = NULL; // "write" has a default implementation
     my_file.ptr = ptr;
     my_file.size = size;
     my_file.pos = 0;
@@ -45,7 +46,9 @@ int MyFile_putc(void *const file, const int c)
 {
     MyFile my_file = file;
     if (my_file->pos >= my_file->size) return KERNAUX_EOF;
-    return my_file->ptr[my_file->pos++] = (char)c;
+    const unsigned char uc = c;
+    my_file->ptr[my_file->pos++] = (char)uc;
+    return uc;
 }
 
 //========
@@ -76,5 +79,15 @@ void example_main()
         assert(result != KERNAUX_EOF);
     }
 
+    char data[6];
+    memset(data, 0xff, sizeof(data));
+
+    // Write random data to the file
+    {
+        const int result = KernAux_File_write(&my_file.file, data, sizeof(data));
+        assert(result != KERNAUX_EOF);
+    }
+
     assert(strcmp(buffer, hello) == 0);
+    assert(memcmp(&buffer[14], data, sizeof(data)) == 0);
 }
