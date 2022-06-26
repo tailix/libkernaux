@@ -15,7 +15,10 @@ static void test_default();
 static void test_calloc();
 static void test_calloc_nomem();
 static void test_calloc_overflow();
+static void test_realloc_free();
 static void test_cross_zone_defrag();
+
+static size_t nodes_count(KernAux_FreeList free_list);
 
 void test_main()
 {
@@ -23,7 +26,21 @@ void test_main()
     test_calloc();
     test_calloc_nomem();
     test_calloc_overflow();
+    test_realloc_free();
     test_cross_zone_defrag();
+}
+
+size_t nodes_count(const KernAux_FreeList free_list)
+{
+    size_t nodes_count = 0;
+    for (
+        KernAux_FreeList_Node item_node = free_list->head;
+        item_node;
+        item_node = item_node->next
+    ) {
+        ++nodes_count;
+    }
+    return nodes_count;
 }
 
 void test_default()
@@ -104,6 +121,22 @@ void test_calloc_overflow()
     }
 }
 
+void test_realloc_free()
+{
+    char zone[1000];
+    struct KernAux_FreeList free_list = KernAux_FreeList_create(NULL);
+    KernAux_FreeList_add_zone(&free_list, zone, sizeof(zone));
+
+    void *const ptr1 = KernAux_Malloc_malloc(&free_list.malloc, 900);
+    assert(ptr1 != NULL);
+
+    void *const ptr2 = KernAux_Malloc_realloc(&free_list.malloc, ptr1, 0);
+    assert(ptr2 == NULL);
+
+    void *const ptr3 = KernAux_Malloc_malloc(&free_list.malloc, 900);
+    assert(ptr3 != NULL);
+}
+
 void test_cross_zone_defrag()
 {
     char zone[1000];
@@ -111,14 +144,5 @@ void test_cross_zone_defrag()
     KernAux_FreeList_add_zone(&free_list, &zone[0],   500);
     KernAux_FreeList_add_zone(&free_list, &zone[500], 500);
 
-    size_t nodes_count = 0;
-    for (
-        KernAux_FreeList_Node item_node = free_list.head;
-        item_node;
-        item_node = item_node->next
-    ) {
-        ++nodes_count;
-    }
-
-    assert(nodes_count == 1);
+    assert(nodes_count(&free_list) == 1);
 }
