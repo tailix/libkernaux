@@ -17,6 +17,7 @@ static void test_cross_zone_defrag();
 static void test_calloc();
 static void test_calloc_nomem();
 static void test_calloc_overflow();
+static void test_calloc_zero();
 
 static void test_realloc_alloc();
 static void test_realloc_free();
@@ -31,6 +32,7 @@ void test_main()
     test_calloc();
     test_calloc_nomem();
     test_calloc_overflow();
+    test_calloc_zero();
 
     test_realloc_alloc();
     test_realloc_free();
@@ -135,6 +137,17 @@ void test_calloc_overflow()
         void *const ptr = KernAux_Malloc_calloc(&free_list.malloc, SIZE_MAX, 2);
         assert(ptr == NULL);
     }
+}
+
+void test_calloc_zero()
+{
+    char zone[1000];
+    struct KernAux_FreeList free_list = KernAux_FreeList_create(NULL);
+    KernAux_FreeList_add_zone(&free_list, zone, sizeof(zone));
+    void *const ptr1 = KernAux_Malloc_calloc(&free_list.malloc, 0, 900);
+    assert(ptr1 == NULL);
+    void *const ptr2 = KernAux_Malloc_calloc(&free_list.malloc, 900, 0);
+    assert(ptr2 == NULL);
 }
 
 void test_realloc_alloc()
