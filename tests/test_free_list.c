@@ -8,11 +8,13 @@
 
 #include <assert.h>
 #include <stddef.h>
+#include <stdint.h>
 #include <string.h>
 
 static void test_default();
 static void test_calloc();
 static void test_calloc_nomem();
+static void test_calloc_overflow();
 static void test_cross_zone_defrag();
 
 void test_main()
@@ -20,6 +22,7 @@ void test_main()
     test_default();
     test_calloc();
     test_calloc_nomem();
+    test_calloc_overflow();
     test_cross_zone_defrag();
 }
 
@@ -84,6 +87,21 @@ void test_calloc_nomem()
     KernAux_FreeList_add_zone(&free_list, zone, sizeof(zone));
     void *const ptr = KernAux_Malloc_calloc(&free_list.malloc, 1, sizeof(zone));
     assert(ptr == NULL);
+}
+
+void test_calloc_overflow()
+{
+    char zone[1000];
+    struct KernAux_FreeList free_list = KernAux_FreeList_create(NULL);
+    KernAux_FreeList_add_zone(&free_list, zone, SIZE_MAX);
+    {
+        void *const ptr = KernAux_Malloc_calloc(&free_list.malloc, 2, SIZE_MAX);
+        assert(ptr == NULL);
+    }
+    {
+        void *const ptr = KernAux_Malloc_calloc(&free_list.malloc, SIZE_MAX, 2);
+        assert(ptr == NULL);
+    }
 }
 
 void test_cross_zone_defrag()
