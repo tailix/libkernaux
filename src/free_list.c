@@ -23,10 +23,10 @@
 #define MIN_ZONE_SIZE (2 * NODE_HEADER_SIZE)
 #define MIN_SPLIT_SIZE (NODE_HEADER_SIZE + 16)
 
-//#define ALIGN_MASK(align) ((align) - 1) // align should be a power of 2
-//#define ALIGN_UP(val, align) (((val) + ALIGN_MASK(align)) & ~ALIGN_MASK(align))
+#define ALIGN_MASK(align) ((align) - 1) // align should be a power of 2
+#define ALIGN_UP(val, align) (((val) + ALIGN_MASK(align)) & ~ALIGN_MASK(align))
 
-//#define PTR_ALIGNMENT (sizeof(void*)) // TODO: align node to this value
+#define PTR_ALIGNMENT (sizeof(void*)) // TODO: align node to this value
 
 #define LOCK(free_list)                               \
     do {                                              \
@@ -90,7 +90,9 @@ void KernAux_FreeList_add_zone(
 
     LOCK(free_list);
 
-    KernAux_FreeList_Node new_node = ptr;
+    KernAux_FreeList_Node new_node =
+        (KernAux_FreeList_Node)ALIGN_UP((uintptr_t)ptr, PTR_ALIGNMENT);
+    new_node->orig_ptr = ptr;
     new_node->size = size;
 
     KernAux_FreeList_Node prev_node = NULL;
@@ -159,13 +161,15 @@ block_added:
     UNLOCK(free_list);
 }
 
-void *KernAux_FreeList_malloc(void *const malloc, const size_t size)
+void *KernAux_FreeList_malloc(void *const malloc, size_t size)
 {
     const KernAux_FreeList free_list = malloc;
     KERNAUX_ASSERT(free_list);
     KERNAUX_ASSERT(size);
 
     LOCK(free_list);
+
+    size = ALIGN_UP(size, PTR_ALIGNMENT);
 
     KernAux_FreeList_Node node = NULL;
 
@@ -183,9 +187,18 @@ void *KernAux_FreeList_malloc(void *const malloc, const size_t size)
     if (node) {
         // Can we split the block?
         if (node->size - size >= MIN_SPLIT_SIZE) {
+            node->size = NODE_HEADER_SIZE + size;
+
             KernAux_FreeList_Node new_node =
                 (KernAux_FreeList_Node)(((uintptr_t)&node->block) + size);
-            node->size = NODE_HEADER_SIZE + size;
+
+            KERNAUX_ASSERT(
+                ((uintptr_t)new_node)
+                ==
+                ALIGN_UP((uintptr_t)new_node, PTR_ALIGNMENT)
+            );
+
+            new_node->orig_ptr = new_node;
             new_node->size = node->size - size - NODE_HEADER_SIZE;
             KernAux_FreeList_insert(free_list, new_node, node, node->next);
         }
@@ -240,7 +253,9 @@ void KernAux_FreeList_defrag(const KernAux_FreeList free_list)
     ) {
         const KernAux_FreeList_Node node = item_node->prev;
         if (!node) continue;
-        if (((uintptr_t)node) + node->size != (uintptr_t)item_node) continue;
+        if (((uintptr_t)node) + node->size != (uintptr_t)item_node->orig_ptr) {
+            continue;
+        }
 
         node->size += item_node->size;
         KernAux_FreeList_remove(free_list, item_node);

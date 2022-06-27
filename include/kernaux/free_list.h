@@ -12,6 +12,7 @@ extern "C" {
 #include <stddef.h>
 
 typedef struct KernAux_FreeList_Node {
+    void                         *KERNAUX_PRIVATE_FIELD(orig_ptr);
     struct KernAux_FreeList_Node *KERNAUX_PRIVATE_FIELD(next);
     struct KernAux_FreeList_Node *KERNAUX_PRIVATE_FIELD(prev);
     size_t                        KERNAUX_PRIVATE_FIELD(size);
