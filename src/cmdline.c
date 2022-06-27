@@ -91,6 +91,20 @@ bool kernaux_cmdline_file(
  * Implementation: main internal function *
  ******************************************/
 
+#define CHECK_TOO_MANY_ARGS do {                     \
+    if (argv_count_max && *argc >= argv_count_max) { \
+        strcpy(error_msg, "too many args");          \
+        goto fail;                                   \
+    }                                                \
+} while (0)
+
+#define CHECK_BUFFER_OVERFLOW do {                  \
+    if (buffer_size && buffer_pos >= buffer_size) { \
+        strcpy(error_msg, "buffer overflow");       \
+        goto fail;                                  \
+    }                                               \
+} while (0)
+
 bool kernaux_cmdline_common(
     const char *const cmdline,
     char *const error_msg,
@@ -130,34 +144,18 @@ bool kernaux_cmdline_common(
             } else if (cur == ' ') {
                 state = WHITESPACE;
             } else if (cur == '\\') {
-                if (argv_count_max && *argc >= argv_count_max) {
-                    strcpy(error_msg, "too many args");
-                    goto fail;
-                }
-
+                CHECK_TOO_MANY_ARGS;
                 state = BACKSLASH;
                 if (argv && buffer) argv[*argc] = &buffer[buffer_pos];
                 ++(*argc);
             } else if (cur == '"') {
-                if (argv_count_max && *argc >= argv_count_max) {
-                    strcpy(error_msg, "too many args");
-                    goto fail;
-                }
-
+                CHECK_TOO_MANY_ARGS;
                 state = QUOTE;
                 if (argv && buffer) argv[*argc] = &buffer[buffer_pos];
                 ++(*argc);
             } else {
-                if (argv_count_max && *argc >= argv_count_max) {
-                    strcpy(error_msg, "too many args");
-                    goto fail;
-                }
-
-                if (buffer_size && buffer_pos >= buffer_size) {
-                    strcpy(error_msg, "buffer overflow");
-                    goto fail;
-                }
-
+                CHECK_TOO_MANY_ARGS;
+                CHECK_BUFFER_OVERFLOW;
                 state = TOKEN;
                 if (argv && buffer) {
                     argv[*argc] = &buffer[buffer_pos];
@@ -176,34 +174,18 @@ bool kernaux_cmdline_common(
             } else if (cur == ' ') {
                 // do nothing
             } else if (cur == '\\') {
-                if (argv_count_max && *argc >= argv_count_max) {
-                    strcpy(error_msg, "too many args");
-                    goto fail;
-                }
-
+                CHECK_TOO_MANY_ARGS;
                 state = BACKSLASH;
                 if (argv && buffer) argv[*argc] = &buffer[buffer_pos];
                 ++(*argc);
             } else if (cur == '"') {
-                if (argv_count_max && *argc >= argv_count_max) {
-                    strcpy(error_msg, "too many args");
-                    goto fail;
-                }
-
+                CHECK_TOO_MANY_ARGS;
                 state = QUOTE;
                 if (argv && buffer) argv[*argc] = &buffer[buffer_pos];
                 ++(*argc);
             } else {
-                if (argv_count_max && *argc >= argv_count_max) {
-                    strcpy(error_msg, "too many args");
-                    goto fail;
-                }
-
-                if (buffer_size && buffer_pos >= buffer_size) {
-                    strcpy(error_msg, "buffer overflow");
-                    goto fail;
-                }
-
+                CHECK_TOO_MANY_ARGS;
+                CHECK_BUFFER_OVERFLOW;
                 state = TOKEN;
                 if (argv && buffer) {
                     argv[*argc] = &buffer[buffer_pos];
@@ -218,11 +200,7 @@ bool kernaux_cmdline_common(
 
         case TOKEN:
             if (cur == '\0') {
-                if (buffer_size && buffer_pos >= buffer_size) {
-                    strcpy(error_msg, "buffer overflow");
-                    goto fail;
-                }
-
+                CHECK_BUFFER_OVERFLOW;
                 state = FINAL;
                 if (buffer) buffer[buffer_pos++] = arg_terminator;
                 if (file) {
@@ -231,11 +209,7 @@ bool kernaux_cmdline_common(
                     }
                 }
             } else if (cur == ' ') {
-                if (buffer_size && buffer_pos >= buffer_size) {
-                    strcpy(error_msg, "buffer overflow");
-                    goto fail;
-                }
-
+                CHECK_BUFFER_OVERFLOW;
                 state = WHITESPACE;
                 if (buffer) buffer[buffer_pos++] = arg_terminator;
                 if (file) {
@@ -249,11 +223,7 @@ bool kernaux_cmdline_common(
                 strcpy(error_msg, "unescaped quotation mark");
                 goto fail;
             } else {
-                if (buffer_size && buffer_pos >= buffer_size) {
-                    strcpy(error_msg, "buffer overflow");
-                    goto fail;
-                }
-
+                CHECK_BUFFER_OVERFLOW;
                 if (buffer) buffer[buffer_pos++] = cur;
                 if (file) {
                     if (KernAux_File_putc(file, cur) == KERNAUX_EOF) goto fail;
@@ -266,11 +236,7 @@ bool kernaux_cmdline_common(
                 strcpy(error_msg, "EOL after backslash");
                 goto fail;
             } else {
-                if (buffer_size && buffer_pos >= buffer_size) {
-                    strcpy(error_msg, "buffer overflow");
-                    goto fail;
-                }
-
+                CHECK_BUFFER_OVERFLOW;
                 state = TOKEN;
                 if (buffer) buffer[buffer_pos++] = cur;
                 if (file) {
@@ -286,11 +252,7 @@ bool kernaux_cmdline_common(
             } else if (cur == '\\') {
                 state = QUOTE_BACKSLASH;
             } else if (cur == '"') {
-                if (buffer_size && buffer_pos >= buffer_size) {
-                    strcpy(error_msg, "buffer overflow");
-                    goto fail;
-                }
-
+                CHECK_BUFFER_OVERFLOW;
                 state = WHITESPACE;
                 if (buffer) buffer[buffer_pos++] = arg_terminator;
                 if (file) {
@@ -299,11 +261,7 @@ bool kernaux_cmdline_common(
                     }
                 }
             } else {
-                if (buffer_size && buffer_pos >= buffer_size) {
-                    strcpy(error_msg, "buffer overflow");
-                    goto fail;
-                }
-
+                CHECK_BUFFER_OVERFLOW;
                 if (buffer) buffer[buffer_pos++] = cur;
                 if (file) {
                     if (KernAux_File_putc(file, cur) == KERNAUX_EOF) goto fail;
@@ -316,11 +274,7 @@ bool kernaux_cmdline_common(
                 strcpy(error_msg, "EOL after backslash inside quote");
                 goto fail;
             } else {
-                if (buffer_size && buffer_pos >= buffer_size) {
-                    strcpy(error_msg, "buffer overflow");
-                    goto fail;
-                }
-
+                CHECK_BUFFER_OVERFLOW;
                 state = QUOTE;
                 if (buffer) buffer[buffer_pos++] = cur;
                 if (file) {
