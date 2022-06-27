@@ -87,7 +87,7 @@ KernAux::Version.with_cmdline? and RSpec.describe KernAux, '.cmdline' do
 
     specify do
       expect { cmdline }.to \
-        raise_error described_class::CmdlineError, 'buffer overflow'
+        raise_error described_class::CmdlineError, 'EOF or buffer overflow'
     end
   end
 
