@@ -17,6 +17,21 @@ enum State {
     QUOTE_BACKSLASH,
 };
 
+static bool kernaux_cmdline_common(
+    const char *cmdline,
+    char *error_msg,
+    size_t *argc,
+    char **argv,
+    char *buffer,
+    size_t argv_count_max,
+    size_t buffer_size,
+    KernAux_File file
+);
+
+/*****************************
+ * Implementations: main API *
+ *****************************/
+
 bool kernaux_cmdline(
     const char *const cmdline,
     char *const error_msg,
@@ -32,6 +47,60 @@ bool kernaux_cmdline(
     KERNAUX_ASSERT(argv);
     KERNAUX_ASSERT(argv_count_max > 0);
     KERNAUX_ASSERT(buffer_size > 0);
+
+    return kernaux_cmdline_common(
+        cmdline,
+        error_msg,
+        argc,
+        argv,
+        buffer,
+        argv_count_max,
+        buffer_size,
+        NULL
+    );
+}
+
+bool kernaux_cmdline_file(
+    const char *const cmdline,
+    char *const error_msg,
+    size_t *const argc,
+    const KernAux_File file
+) {
+    KERNAUX_ASSERT(cmdline);
+    KERNAUX_ASSERT(error_msg);
+    KERNAUX_ASSERT(argc);
+    KERNAUX_ASSERT(file);
+
+    return kernaux_cmdline_common(
+        cmdline,
+        error_msg,
+        argc,
+        NULL,
+        NULL,
+        0,
+        0,
+        file
+    );
+}
+
+/******************************************
+ * Implementation: main internal function *
+ ******************************************/
+
+bool kernaux_cmdline_common(
+    const char *const cmdline,
+    char *const error_msg,
+    size_t *const argc,
+    char **const argv,
+    char *const buffer,
+    const size_t argv_count_max,
+    const size_t buffer_size,
+    const KernAux_File file
+) {
+    KERNAUX_ASSERT(cmdline);
+    KERNAUX_ASSERT(error_msg);
+    KERNAUX_ASSERT(argc);
+    (void)file;
 
     memset(error_msg, '\0', KERNAUX_CMDLINE_ERROR_MSG_SIZE_MAX);
     *argc = 0;
@@ -222,18 +291,5 @@ fail:
     *argc = 0;
     memset(argv, 0, sizeof(char*) * argv_count_max);
     memset(buffer, '\0', buffer_size);
-    return false;
-}
-
-bool kernaux_cmdline_file(
-    const char *const cmdline,
-    char *const error_msg,
-    size_t *const argc,
-    const KernAux_File file
-) {
-    (void)cmdline;
-    (void)error_msg;
-    (void)argc;
-    (void)file;
     return false;
 }
