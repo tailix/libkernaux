@@ -245,7 +245,7 @@ bool kernaux_cmdline_iter(
 ) {
     switch (*state) {
     case FINAL:
-        break; // Case break; loop break after switch.
+        break;
 
     case INITIAL:
         if (cur == '\0') {
