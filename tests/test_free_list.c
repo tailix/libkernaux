@@ -22,6 +22,7 @@ static void test_calloc_zero();
 static void test_realloc_alloc();
 static void test_realloc_free();
 static void test_realloc_memcpy();
+static void test_realloc_increase();
 
 static size_t nodes_count(KernAux_FreeList free_list);
 
@@ -40,6 +41,7 @@ void test_main()
     test_realloc_alloc();
     test_realloc_free();
     test_realloc_memcpy();
+    test_realloc_increase();
 }
 
 size_t nodes_count(const KernAux_FreeList free_list)
@@ -197,4 +199,24 @@ void test_realloc_memcpy()
 
     assert(strcmp(ptr2, hello) == 0);
     assert(strcmp(&ptr2[400 - strlen(hello) - 1], hello) == 0);
+}
+
+void test_realloc_increase()
+{
+    char zone[1000];
+    struct KernAux_FreeList free_list = KernAux_FreeList_create(NULL);
+    KernAux_FreeList_add_zone(&free_list, zone, sizeof(zone));
+
+    char *const ptr1 = KernAux_Malloc_malloc(&free_list.malloc, 300);
+    assert(ptr1 != NULL);
+
+    memset(ptr1, 0, 300);
+    strcpy(ptr1, hello);
+    strcpy(&ptr1[300 - strlen(hello) - 1], hello);
+
+    char *const ptr2 = KernAux_Malloc_realloc(&free_list.malloc, ptr1, 500);
+    assert(ptr2 != NULL);
+
+    assert(strcmp(ptr2, hello) == 0);
+    assert(strcmp(&ptr2[300 - strlen(hello) - 1], hello) == 0);
 }
