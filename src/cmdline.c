@@ -25,9 +25,10 @@ static bool kernaux_cmdline_common(
     char arg_terminator,
     char **argv,
     char *buffer,
-    size_t argv_count_max,
-    size_t buffer_size,
-    KernAux_File file
+    KernAux_File file,
+    size_t *arg_idxs,
+    size_t arg_count_max,
+    size_t buffer_size
 );
 
 /*****************************
@@ -40,14 +41,14 @@ bool kernaux_cmdline(
     size_t *const argc,
     char **const argv,
     char *const buffer,
-    const size_t argv_count_max,
+    const size_t arg_count_max,
     const size_t buffer_size
 ) {
     KERNAUX_ASSERT(cmdline);
     KERNAUX_ASSERT(error_msg);
     KERNAUX_ASSERT(argc);
     KERNAUX_ASSERT(argv);
-    KERNAUX_ASSERT(argv_count_max > 0);
+    KERNAUX_ASSERT(arg_count_max > 0);
     KERNAUX_ASSERT(buffer_size > 0);
 
     return kernaux_cmdline_common(
@@ -57,9 +58,10 @@ bool kernaux_cmdline(
         '\0', // arg_terminator
         argv,
         buffer,
-        argv_count_max,
-        buffer_size,
-        NULL
+        NULL,
+        NULL,
+        arg_count_max,
+        buffer_size
     );
 }
 
@@ -67,12 +69,15 @@ bool kernaux_cmdline_file(
     const char *const cmdline,
     char *const error_msg,
     size_t *const argc,
-    const KernAux_File file
+    const KernAux_File file,
+    size_t *arg_idxs,
+    size_t arg_count_max
 ) {
     KERNAUX_ASSERT(cmdline);
     KERNAUX_ASSERT(error_msg);
     KERNAUX_ASSERT(argc);
     KERNAUX_ASSERT(file);
+    KERNAUX_ASSERT(arg_idxs == NULL || arg_count_max > 0);
 
     return kernaux_cmdline_common(
         cmdline,
@@ -81,9 +86,10 @@ bool kernaux_cmdline_file(
         '\0', // arg_terminator
         NULL,
         NULL,
-        0,
-        0,
-        file
+        file,
+        arg_idxs,
+        arg_count_max,
+        0
     );
 }
 
@@ -91,52 +97,67 @@ bool kernaux_cmdline_file(
  * Implementation: main internal function *
  ******************************************/
 
+#define CLEAR do {                                                        \
+    *argc = 0;                                                            \
+    if (argv)     memset(argv,     0,    sizeof(char*) * arg_count_max);  \
+    if (buffer)   memset(buffer,   '\0', buffer_size);                    \
+    if (arg_idxs) memset(arg_idxs, 0,    sizeof(size_t) * arg_count_max); \
+} while (0)
+
 #define FAIL(msg) do {      \
     strcpy(error_msg, msg); \
     goto fail;              \
 } while (0)
 
 #define PUT_CHAR(char) do {                                 \
-    if (buffer_size && buffer_pos >= buffer_size) {         \
+    if (buffer_size && buffer_or_file_pos >= buffer_size) { \
         FAIL("EOF or buffer overflow");                     \
     }                                                       \
     if (buffer) {                                           \
-        buffer[buffer_pos++] = char;                        \
+        buffer[buffer_or_file_pos] = char;                  \
     }                                                       \
     if (file) {                                             \
         if (KernAux_File_putc(file, char) == KERNAUX_EOF) { \
             FAIL("EOF or buffer overflow");                 \
         }                                                   \
     }                                                       \
+    ++buffer_or_file_pos;                                   \
 } while (0)
 
-#define PUT_ARG do {                                 \
-    if (argv_count_max && *argc >= argv_count_max) { \
-        FAIL("too many args");                       \
-    }                                                \
-    if (argv && buffer) {                            \
-        argv[*argc] = &buffer[buffer_pos];           \
-    }                                                \
-    ++(*argc);                                       \
+#define PUT_ARG do {                               \
+    if (arg_count_max && *argc >= arg_count_max) { \
+        FAIL("too many args");                     \
+    }                                              \
+    if (argv && buffer) {                          \
+        argv[*argc] = &buffer[buffer_or_file_pos]; \
+    }                                              \
+    if (arg_idxs) {                                \
+        arg_idxs[*argc] = buffer_or_file_pos;      \
+    }                                              \
+    ++(*argc);                                     \
 } while (0)
 
 #define PUT_ARG_AND_CHAR(char) do {                         \
-    if (argv_count_max && *argc >= argv_count_max) {        \
+    if (arg_count_max && *argc >= arg_count_max) {          \
         FAIL("too many args");                              \
     }                                                       \
-    if (buffer_size && buffer_pos >= buffer_size) {         \
+    if (buffer_size && buffer_or_file_pos >= buffer_size) { \
         FAIL("EOF or buffer overflow");                     \
     }                                                       \
     if (argv && buffer) {                                   \
-        argv[*argc] = &buffer[buffer_pos];                  \
-        buffer[buffer_pos++] = char;                        \
+        argv[*argc] = &buffer[buffer_or_file_pos];          \
+        buffer[buffer_or_file_pos] = char;                  \
     }                                                       \
     if (file) {                                             \
         if (KernAux_File_putc(file, char) == KERNAUX_EOF) { \
             FAIL("EOF or buffer overflow");                 \
         }                                                   \
     }                                                       \
+    if (arg_idxs) {                                         \
+        arg_idxs[*argc] = buffer_or_file_pos;               \
+    }                                                       \
     ++(*argc);                                              \
+    ++buffer_or_file_pos;                                   \
 } while (0)
 
 bool kernaux_cmdline_common(
@@ -146,23 +167,23 @@ bool kernaux_cmdline_common(
     char arg_terminator,
     char **const argv,
     char *const buffer,
-    const size_t argv_count_max,
-    const size_t buffer_size,
-    const KernAux_File file
+    const KernAux_File file,
+    size_t *const arg_idxs,
+    const size_t arg_count_max,
+    const size_t buffer_size
 ) {
     KERNAUX_ASSERT(cmdline);
     KERNAUX_ASSERT(error_msg);
     KERNAUX_ASSERT(argc);
+    (void)arg_idxs;
 
     memset(error_msg, '\0', KERNAUX_CMDLINE_ERROR_MSG_SIZE_MAX);
-    *argc = 0;
-    if (argv) memset(argv, 0, sizeof(char*) * argv_count_max);
-    if (buffer) memset(buffer, '\0', buffer_size);
+    CLEAR;
 
     if (cmdline[0] == '\0') return true;
 
     enum State state = INITIAL;
-    size_t buffer_pos = 0;
+    size_t buffer_or_file_pos = 0;
 
     for (size_t index = 0; ; ++index) {
         const char cur = cmdline[index];
@@ -259,8 +280,6 @@ bool kernaux_cmdline_common(
     return true;
 
 fail:
-    *argc = 0;
-    if (argv) memset(argv, 0, sizeof(char*) * argv_count_max);
-    if (buffer) memset(buffer, '\0', buffer_size);
+    CLEAR;
     return false;
 }

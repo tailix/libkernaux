@@ -51,46 +51,46 @@
   result: ['foo', 'bar', 'car']
 
 - cmdline: 'foo bar car'
-  argv_count_max: 3
+  arg_count_max: 3
   result: ['foo', 'bar', 'car']
 - cmdline: 'foo bar car'
   buffer_size: 12
   result: ['foo', 'bar', 'car']
 - cmdline: 'foo bar car'
-  argv_count_max: 3
+  arg_count_max: 3
   buffer_size: 12
   result: ['foo', 'bar', 'car']
 
 - cmdline: 'foo bar car'
-  argv_count_max: 2
+  arg_count_max: 2
   error: 'too many args'
 - cmdline: 'foo bar car'
   buffer_size: 11
   error: 'EOF or buffer overflow'
 - cmdline: 'foo bar car'
-  argv_count_max: 2
+  arg_count_max: 2
   buffer_size: 11
   error: 'too many args'
 
 - cmdline: '\"foo\" \"bar\" \"car\"'
-  argv_count_max: 3
+  arg_count_max: 3
   result: ['foo', 'bar', 'car']
 - cmdline: '\"foo\" \"bar\" \"car\"'
   buffer_size: 12
   result: ['foo', 'bar', 'car']
 - cmdline: '\"foo\" \"bar\" \"car\"'
-  argv_count_max: 3
+  arg_count_max: 3
   buffer_size: 12
   result: ['foo', 'bar', 'car']
 
 - cmdline: '\"foo\" \"bar\" \"car\"'
-  argv_count_max: 2
+  arg_count_max: 2
   error: 'too many args'
 - cmdline: '\"foo\" \"bar\" \"car\"'
   buffer_size: 11
   error: 'EOF or buffer overflow'
 - cmdline: '\"foo\" \"bar\" \"car\"'
-  argv_count_max: 2
+  arg_count_max: 2
   buffer_size: 11
   error: 'too many args'
 

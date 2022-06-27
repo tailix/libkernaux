@@ -13,7 +13,7 @@ extern "C" {
         argc: *mut size_t,
         argv: *mut *mut c_char,
         buffer: *mut c_char,
-        argv_count_max: size_t,
+        arg_count_max: size_t,
         buffer_size: size_t,
     ) -> bool;
 }
@@ -24,7 +24,7 @@ mod tests {
 
     use std::ffi::{CStr, CString};
 
-    const ARGV_COUNT_MAX: usize = 100;
+    const ARG_COUNT_MAX: usize = 100;
     const BUFFER_SIZE: usize = 4096;
 
     #[test]
@@ -34,8 +34,8 @@ mod tests {
         let mut error_msg: [c_char; ERROR_MSG_SIZE_MAX] =
             [0; ERROR_MSG_SIZE_MAX];
         let mut argc: size_t = 0;
-        let mut argv: [*mut c_char; ARGV_COUNT_MAX] =
-            [0 as *mut c_char; ARGV_COUNT_MAX];
+        let mut argv: [*mut c_char; ARG_COUNT_MAX] =
+            [0 as *mut c_char; ARG_COUNT_MAX];
         let mut buffer: [c_char; BUFFER_SIZE] = [0; BUFFER_SIZE];
 
         unsafe {
@@ -45,7 +45,7 @@ mod tests {
                 &mut argc,
                 argv.as_mut_ptr(),
                 buffer.as_mut_ptr(),
-                ARGV_COUNT_MAX,
+                ARG_COUNT_MAX,
                 BUFFER_SIZE,
             ));
         }
