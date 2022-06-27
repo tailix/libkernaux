@@ -224,3 +224,16 @@ fail:
     memset(buffer, '\0', buffer_size);
     return false;
 }
+
+bool kernaux_cmdline_file(
+    const char *const cmdline,
+    char *const error_msg,
+    size_t *const argc,
+    const KernAux_File file
+) {
+    (void)cmdline;
+    (void)error_msg;
+    (void)argc;
+    (void)file;
+    return false;
+}

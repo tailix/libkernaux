@@ -22,6 +22,16 @@ cmdline_SOURCES = main.c cmdline.c
 endif
 
 ################
+# cmdline_file #
+################
+
+if WITH_CMDLINE
+TESTS += cmdline_file
+cmdline_file_LDADD = $(top_builddir)/libkernaux.la
+cmdline_file_SOURCES = main.c cmdline_file.c
+endif
+
+################
 # generic_file #
 ################
 

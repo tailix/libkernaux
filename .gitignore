@@ -108,6 +108,7 @@
 
 /examples/assert
 /examples/cmdline
+/examples/cmdline_file
 /examples/generic_file
 /examples/generic_malloc
 /examples/generic_mutex

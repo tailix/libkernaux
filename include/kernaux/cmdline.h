@@ -5,6 +5,8 @@
 extern "C" {
 #endif
 
+#include <kernaux/generic/file.h>
+
 #include <stdbool.h>
 #include <stddef.h>
 
@@ -20,6 +22,13 @@ bool kernaux_cmdline(
     char *buffer,
     size_t argv_count_max,
     size_t buffer_size
+);
+
+bool kernaux_cmdline_file(
+    const char *cmdline,
+    char *error_msg,
+    size_t *argc,
+    KernAux_File file
 );
 
 #ifdef __cplusplus

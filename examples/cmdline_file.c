@@ -13,12 +13,12 @@ static char buffer[4096];
 static size_t file_pos = 0;
 
 static struct KernAux_File file = {
-    .putc = file_putc,
-    .puts = NULL,
-    .write = NULL,
+    .KERNAUX_PROTECTED_FIELD(putc) = file_putc,
+    .KERNAUX_PROTECTED_FIELD(puts) = NULL,
+    .KERNAUX_PROTECTED_FIELD(write) = NULL,
 };
 
-int file_putc(void *file, unsigned char c)
+int file_putc(__attribute__((unused)) void *file, unsigned char c)
 {
     if (file_pos >= sizeof(buffer)) return KERNAUX_EOF;
     buffer[file_pos++] = c;
