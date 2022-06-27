@@ -32,8 +32,8 @@ static bool kernaux_cmdline_common(
 );
 
 static bool kernaux_cmdline_iter(
-    enum State *state,
     char cur,
+    enum State *state,
     size_t *buffer_or_file_pos,
     char *error_msg,
     size_t *argc,
@@ -146,8 +146,8 @@ bool kernaux_cmdline_common(
 
     for (size_t index = 0; state != FINAL; ++index) {
         const bool result = kernaux_cmdline_iter(
-            &state,
             cmdline[index],
+            &state,
             &buffer_or_file_pos,
             error_msg,
             argc,
@@ -230,8 +230,8 @@ fail:
 } while (0)
 
 bool kernaux_cmdline_iter(
-    enum State *const state,
     const char cur,
+    enum State *const state,
     size_t *const buffer_or_file_pos,
     char *const error_msg,
     size_t *const argc,
