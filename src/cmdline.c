@@ -46,9 +46,9 @@ static bool kernaux_cmdline_iter(
     size_t buffer_size
 );
 
-/*****************************
- * Implementations: main API *
- *****************************/
+/*******************************
+ * Implementations: public API *
+ *******************************/
 
 bool kernaux_cmdline(
     const char *const cmdline,
@@ -108,9 +108,9 @@ bool kernaux_cmdline_file(
     );
 }
 
-/******************************************
- * Implementation: main internal function *
- ******************************************/
+/*********************************
+ * Implementation: main function *
+ *********************************/
 
 #define CLEAR do {                                                        \
     *argc = 0;                                                            \
@@ -169,9 +169,9 @@ fail:
     return false;
 }
 
-/***********************************************
- * Implementation: iteration internal function *
- ***********************************************/
+/**************************************
+ * Implementation: iteration function *
+ **************************************/
 
 #define FAIL(msg) do {      \
     strcpy(error_msg, msg); \
