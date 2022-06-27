@@ -108,6 +108,33 @@ bool kernaux_cmdline_file(
     }                                               \
 } while (0)
 
+#define PUT_CHAR(char) do {                                          \
+    if (argv && buffer) {                                            \
+        buffer[buffer_pos++] = char;                                 \
+    }                                                                \
+    if (file) {                                                      \
+        if (KernAux_File_putc(file, char) == KERNAUX_EOF) goto fail; \
+    }                                                                \
+} while (0)
+
+#define PUT_ARG do {                       \
+    if (argv && buffer) {                  \
+        argv[*argc] = &buffer[buffer_pos]; \
+    }                                      \
+    ++(*argc);                             \
+} while (0)
+
+#define PUT_ARG_AND_CHAR(char) do {                                  \
+    if (argv && buffer) {                                            \
+        argv[*argc] = &buffer[buffer_pos];                           \
+        buffer[buffer_pos++] = char;                                 \
+    }                                                                \
+    if (file) {                                                      \
+        if (KernAux_File_putc(file, char) == KERNAUX_EOF) goto fail; \
+    }                                                                \
+    ++(*argc);                                                       \
+} while (0)
+
 bool kernaux_cmdline_common(
     const char *const cmdline,
     char *const error_msg,
@@ -149,25 +176,16 @@ bool kernaux_cmdline_common(
             } else if (cur == '\\') {
                 CHECK_TOO_MANY_ARGS;
                 state = BACKSLASH;
-                if (argv && buffer) argv[*argc] = &buffer[buffer_pos];
-                ++(*argc);
+                PUT_ARG;
             } else if (cur == '"') {
                 CHECK_TOO_MANY_ARGS;
                 state = QUOTE;
-                if (argv && buffer) argv[*argc] = &buffer[buffer_pos];
-                ++(*argc);
+                PUT_ARG;
             } else {
                 CHECK_TOO_MANY_ARGS;
                 CHECK_BUFFER_OVERFLOW;
                 state = TOKEN;
-                if (argv && buffer) {
-                    argv[*argc] = &buffer[buffer_pos];
-                    buffer[buffer_pos++] = cur;
-                }
-                if (file) {
-                    if (KernAux_File_putc(file, cur) == KERNAUX_EOF) goto fail;
-                }
-                ++(*argc);
+                PUT_ARG_AND_CHAR(cur);
             }
             break;
 
@@ -190,14 +208,7 @@ bool kernaux_cmdline_common(
                 CHECK_TOO_MANY_ARGS;
                 CHECK_BUFFER_OVERFLOW;
                 state = TOKEN;
-                if (argv && buffer) {
-                    argv[*argc] = &buffer[buffer_pos];
-                    buffer[buffer_pos++] = cur;
-                }
-                if (file) {
-                    if (KernAux_File_putc(file, cur) == KERNAUX_EOF) goto fail;
-                }
-                ++(*argc);
+                PUT_ARG_AND_CHAR(cur);
             }
             break;
 
@@ -205,31 +216,18 @@ bool kernaux_cmdline_common(
             if (cur == '\0') {
                 CHECK_BUFFER_OVERFLOW;
                 state = FINAL;
-                if (buffer) buffer[buffer_pos++] = arg_terminator;
-                if (file) {
-                    if (KernAux_File_putc(file, arg_terminator) == KERNAUX_EOF) {
-                        goto fail;
-                    }
-                }
+                PUT_CHAR(arg_terminator);
             } else if (cur == ' ') {
                 CHECK_BUFFER_OVERFLOW;
                 state = WHITESPACE;
-                if (buffer) buffer[buffer_pos++] = arg_terminator;
-                if (file) {
-                    if (KernAux_File_putc(file, arg_terminator) == KERNAUX_EOF) {
-                        goto fail;
-                    }
-                }
+                PUT_CHAR(arg_terminator);
             } else if (cur == '\\') {
                 state = BACKSLASH;
             } else if (cur == '"') {
                 FAIL("unescaped quotation mark");
             } else {
                 CHECK_BUFFER_OVERFLOW;
-                if (buffer) buffer[buffer_pos++] = cur;
-                if (file) {
-                    if (KernAux_File_putc(file, cur) == KERNAUX_EOF) goto fail;
-                }
+                PUT_CHAR(cur);
             }
             break;
 
@@ -239,10 +237,7 @@ bool kernaux_cmdline_common(
             } else {
                 CHECK_BUFFER_OVERFLOW;
                 state = TOKEN;
-                if (buffer) buffer[buffer_pos++] = cur;
-                if (file) {
-                    if (KernAux_File_putc(file, cur) == KERNAUX_EOF) goto fail;
-                }
+                PUT_CHAR(cur);
             }
             break;
 
@@ -254,18 +249,10 @@ bool kernaux_cmdline_common(
             } else if (cur == '"') {
                 CHECK_BUFFER_OVERFLOW;
                 state = WHITESPACE;
-                if (buffer) buffer[buffer_pos++] = arg_terminator;
-                if (file) {
-                    if (KernAux_File_putc(file, arg_terminator) == KERNAUX_EOF) {
-                        goto fail;
-                    }
-                }
+                PUT_CHAR(arg_terminator);
             } else {
                 CHECK_BUFFER_OVERFLOW;
-                if (buffer) buffer[buffer_pos++] = cur;
-                if (file) {
-                    if (KernAux_File_putc(file, cur) == KERNAUX_EOF) goto fail;
-                }
+                PUT_CHAR(cur);
             }
             break;
 
@@ -275,10 +262,7 @@ bool kernaux_cmdline_common(
             } else {
                 CHECK_BUFFER_OVERFLOW;
                 state = QUOTE;
-                if (buffer) buffer[buffer_pos++] = cur;
-                if (file) {
-                    if (KernAux_File_putc(file, cur) == KERNAUX_EOF) goto fail;
-                }
+                PUT_CHAR(cur);
             }
             break;
         }
