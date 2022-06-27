@@ -1,6 +1,7 @@
 #include <kernaux/cmdline.h>
 
 #include <assert.h>
+#include <stddef.h>
 #include <string.h>
 
 #define ARGV_COUNT_MAX 100
