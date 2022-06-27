@@ -96,6 +96,13 @@ bool kernaux_cmdline_file(
  * Implementation: main internal function *
  ******************************************/
 
+#define CLEAR do {                                                         \
+    *argc = 0;                                                             \
+    if (argv)     memset(argv,     0,    sizeof(char*) * argv_count_max);  \
+    if (buffer)   memset(buffer,   '\0', buffer_size);                     \
+    if (arg_idxs) memset(arg_idxs, 0,    sizeof(size_t) * argv_count_max); \
+} while (0)
+
 #define FAIL(msg) do {      \
     strcpy(error_msg, msg); \
     goto fail;              \
@@ -162,10 +169,7 @@ bool kernaux_cmdline_common(
     (void)arg_idxs;
 
     memset(error_msg, '\0', KERNAUX_CMDLINE_ERROR_MSG_SIZE_MAX);
-    *argc = 0;
-    if (argv) memset(argv, 0, sizeof(char*) * argv_count_max);
-    if (buffer) memset(buffer, '\0', buffer_size);
-    if (arg_idxs) memset(arg_idxs, 0, sizeof(size_t) * argv_count_max);
+    CLEAR;
 
     if (cmdline[0] == '\0') return true;
 
@@ -267,9 +271,6 @@ bool kernaux_cmdline_common(
     return true;
 
 fail:
-    *argc = 0;
-    if (argv) memset(argv, 0, sizeof(char*) * argv_count_max);
-    if (buffer) memset(buffer, '\0', buffer_size);
-    if (arg_idxs) memset(arg_idxs, 0, sizeof(size_t) * argv_count_max);
+    CLEAR;
     return false;
 }
