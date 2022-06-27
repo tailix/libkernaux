@@ -147,9 +147,9 @@
 /tests/test_ntoa_assert
 /tests/test_pfa
 /tests/test_pfa_assert
+/tests/test_printf
 /tests/test_printf_fmt_gen
 /tests/test_printf_fmt_gen.c
 /tests/test_printf_gen
 /tests/test_printf_gen.c
-/tests/test_printf_reg
 /tests/test_units_human
