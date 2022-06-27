@@ -6,7 +6,7 @@
 #include <kernaux/cmdline.h>
 #include <kernaux/generic/file.h>
 
-#include "libc.h"
+#include <string.h>
 
 enum State {
     INITIAL,
