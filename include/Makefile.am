@@ -11,7 +11,8 @@ nobase_include_HEADERS = \
 	kernaux/version.h \
 	kernaux/generic/file.h \
 	kernaux/generic/malloc.h \
-	kernaux/generic/mutex.h
+	kernaux/generic/mutex.h \
+	kernaux/memory_file.h
 
 ########
 # ARCH #

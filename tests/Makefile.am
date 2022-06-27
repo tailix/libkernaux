@@ -290,6 +290,18 @@ test_pfa_assert_SOURCES = \
 endif
 endif
 
+###############
+# test_printf #
+###############
+
+if WITH_PRINTF
+TESTS += test_printf
+test_printf_LDADD = $(top_builddir)/libkernaux.la
+test_printf_SOURCES = \
+	main.c \
+	test_printf.c
+endif
+
 #######################
 # test_printf_fmt_gen #
 #######################
@@ -334,18 +346,6 @@ CLEANFILES += test_printf_gen.c
 
 test_printf_gen.c: printf_gen.py printf_gen.jinja $(top_srcdir)/common/printf.yml $(top_srcdir)/common/printf_orig.yml
 	python3 printf_gen.py
-
-###################
-# test_printf_reg #
-###################
-
-if WITH_PRINTF
-TESTS += test_printf_reg
-test_printf_reg_LDADD = $(top_builddir)/libkernaux.la
-test_printf_reg_SOURCES = \
-	main.c \
-	test_printf_reg.c
-endif
 
 ####################
 # test_stack_trace #

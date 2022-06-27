@@ -47,6 +47,8 @@ zero). Work-in-progress APIs can change at any time.
   * Architecture-specific code (*work in progress*)
     * [Declarations](/include/kernaux/arch/)
     * [Functions](/include/kernaux/asm/)
+  * [Memory file](/include/kernaux/memory_file.h) (*non-breaking since* **?.?.?**)
+    * [Example](/examples/memory_file.c)
 * Generic types
   * [File](/include/kernaux/generic/file.h) (*non-breaking since* **?.?.?**)
     * [Example](/examples/generic_file.c)
@@ -57,7 +59,8 @@ zero). Work-in-progress APIs can change at any time.
 * Algorithms
   * [Free list memory allocator](/include/kernaux/free_list.h) (*non-breaking since* **?.?.?**)
   * [Simple command line parser](/include/kernaux/cmdline.h) (*non-breaking since* **0.2.0**)
-    * [Example](/examples/cmdline.c)
+    * [Example: buffer](/examples/cmdline.c)
+    * [Example: file](/examples/cmdline_file.c)
   * [Page Frame Allocator](/include/kernaux/pfa.h) (*work in progress*)
     * [Example](/examples/pfa.c)
 * Data formats

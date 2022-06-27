@@ -6,6 +6,7 @@
 #include <kernaux/assert.h>
 #include <kernaux/macro.h>
 #include <kernaux/version.h>
+#include <kernaux/memory_file.h>
 
 #include <kernaux/generic/file.h>
 #include <kernaux/generic/malloc.h>

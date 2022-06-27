@@ -65,7 +65,7 @@ if KernAux::Version.with_cmdline?
   end
 
   assert 'when args cause buffer overflow' do
-    assert_raise KernAux::CmdlineError, 'buffer overflow' do
+    assert_raise KernAux::CmdlineError, 'EOF or buffer overflow' do
       KernAux.cmdline 'a' * 4096
     end
   end
