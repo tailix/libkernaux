@@ -100,11 +100,11 @@ KernAux::Version.with_cmdline? and RSpec.describe KernAux, '.cmdline' do
       end
 
       cmdline = escape_str.call test['cmdline']
-      argv_count_max = test['argv_count_max']
+      arg_count_max = test['arg_count_max']
       buffer_size = test['buffer_size']
       result = test['result']&.map(&escape_str)
 
-      next unless argv_count_max.nil? && buffer_size.nil? && !result.nil?
+      next unless arg_count_max.nil? && buffer_size.nil? && !result.nil?
 
       it "transforms #{cmdline.inspect} to #{result.inspect}" do
         expect(described_class.cmdline(cmdline)).to eq result

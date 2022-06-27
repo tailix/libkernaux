@@ -10,7 +10,7 @@ extern "C" {
 
 void test(
     const char *cmdline,
-    size_t argv_count_max,
+    size_t arg_count_max,
     size_t buffer_size,
 
     bool expected_result,

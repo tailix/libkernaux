@@ -20,7 +20,7 @@ bool kernaux_cmdline(
     size_t *argc,
     char **argv,
     char *buffer,
-    size_t argv_count_max,
+    size_t arg_count_max,
     size_t buffer_size
 );
 
@@ -30,7 +30,7 @@ bool kernaux_cmdline_file(
     size_t *argc,
     KernAux_File file,
     size_t *arg_idxs,
-    size_t argv_count_max
+    size_t arg_count_max
 );
 
 #ifdef __cplusplus

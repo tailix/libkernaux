@@ -79,11 +79,11 @@ if KernAux::Version.with_cmdline?
       end
 
       cmdline = escape_str.call test['cmdline']
-      argv_count_max = test['argv_count_max']
+      arg_count_max = test['arg_count_max']
       buffer_size = test['buffer_size']
       result = test['result']&.map(&escape_str)
 
-      next unless argv_count_max.nil? && buffer_size.nil? && !result.nil?
+      next unless arg_count_max.nil? && buffer_size.nil? && !result.nil?
 
       assert "transforms #{cmdline.inspect} to #{result.inspect}" do
         assert_equal KernAux.cmdline(cmdline), result

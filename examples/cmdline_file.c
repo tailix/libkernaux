@@ -5,7 +5,7 @@
 #include <stddef.h>
 #include <string.h>
 
-#define ARGV_COUNT_MAX 100
+#define ARG_COUNT_MAX 100
 #define BUFFER_SIZE 4096
 
 static const char *const cmdline = "foo bar\\ baz \"car cdr\"";
@@ -14,7 +14,7 @@ void example_main()
 {
     char error_msg[KERNAUX_CMDLINE_ERROR_MSG_SIZE_MAX];
     size_t argc;
-    size_t argv[ARGV_COUNT_MAX];
+    size_t argv[ARG_COUNT_MAX];
     char buffer[BUFFER_SIZE];
 
     struct KernAux_MemoryFile memory_file =
@@ -26,7 +26,7 @@ void example_main()
         &argc,
         &memory_file.file,
         argv,
-        ARGV_COUNT_MAX
+        ARG_COUNT_MAX
     ));
 
     assert(strcmp(error_msg, "") == 0);

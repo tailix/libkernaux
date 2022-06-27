@@ -8,7 +8,7 @@
 #include <mruby/presym.h>
 #include <mruby/string.h>
 
-#define ARGV_COUNT_MAX 256
+#define ARG_COUNT_MAX 256
 #define BUFFER_SIZE 4096
 
 #ifdef KERNAUX_VERSION_WITH_CMDLINE
@@ -34,7 +34,7 @@ mrb_value rb_KernAux_cmdline(mrb_state *const mrb, mrb_value self)
     mrb_get_args(mrb, "z", &str);
     size_t argc;
     char error_msg[KERNAUX_CMDLINE_ERROR_MSG_SIZE_MAX];
-    char **const argv = malloc(sizeof(char*) * ARGV_COUNT_MAX);
+    char **const argv = malloc(sizeof(char*) * ARG_COUNT_MAX);
     char *const buffer = malloc(BUFFER_SIZE);
 
     const bool status = kernaux_cmdline(
@@ -43,7 +43,7 @@ mrb_value rb_KernAux_cmdline(mrb_state *const mrb, mrb_value self)
         &argc,
         argv,
         buffer,
-        ARGV_COUNT_MAX,
+        ARG_COUNT_MAX,
         BUFFER_SIZE
     );
 

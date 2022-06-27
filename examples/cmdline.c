@@ -4,7 +4,7 @@
 #include <stddef.h>
 #include <string.h>
 
-#define ARGV_COUNT_MAX 100
+#define ARG_COUNT_MAX 100
 #define BUFFER_SIZE 4096
 
 static const char *const cmdline = "foo bar\\ baz \"car cdr\"";
@@ -13,7 +13,7 @@ void example_main()
 {
     char error_msg[KERNAUX_CMDLINE_ERROR_MSG_SIZE_MAX];
     size_t argc;
-    char *argv[ARGV_COUNT_MAX];
+    char *argv[ARG_COUNT_MAX];
     char buffer[BUFFER_SIZE];
 
     assert(kernaux_cmdline(
@@ -22,7 +22,7 @@ void example_main()
         &argc,
         argv,
         buffer,
-        ARGV_COUNT_MAX,
+        ARG_COUNT_MAX,
         BUFFER_SIZE
     ));
 

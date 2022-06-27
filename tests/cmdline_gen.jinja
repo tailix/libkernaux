@@ -23,7 +23,7 @@ void test_main()
 
         test(
             {{ escape_str(case.cmdline) }},
-            {{ escape_int(case.argv_count_max or 0) }},
+            {{ escape_int(case.arg_count_max or 0) }},
             {{ escape_int(case.buffer_size or 0) }},
             {% if not case.error %}
                 true,
