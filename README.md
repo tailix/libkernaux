@@ -66,18 +66,18 @@ zero). Work-in-progress APIs can change at any time.
 * Data formats
   * [ELF](/include/kernaux/elf.h) (*work in progress*)
   * [MBR](/include/kernaux/mbr.h) (*work in progress*)
-  * [Multiboot 2 (GRUB 2)](/include/kernaux/multiboot2.h) (*work in progress*)
+  * [Multiboot 2 (GRUB 2)](/include/kernaux/multiboot2.h.in) (*work in progress*)
 * Utilities
   * [Measurement units utils](/include/kernaux/units.h) (*work in progress*)
     * [Example: To human](/examples/units_human.c)
-  * [Memory map](/include/kernaux/memmap.h.in) (*non-breaking since* **0.4.0**)
+  * [Memory map](/include/kernaux/memmap.h) (*non-breaking since* **0.4.0**)
     * [Example](/examples/memmap.c)
   * [printf format parser](/include/kernaux/printf_fmt.h) (*work in progress*)
     * [Example](/examples/printf_fmt.c)
 * Usual functions
   * [itoa/ftoa replacement](/include/kernaux/ntoa.h) (*non-breaking since* **0.4.0**)
     * [Example](/examples/ntoa.c)
-  * [printf replacement](/include/kernaux/printf.h.in) (*non-breaking since* **?.?.?**)
+  * [printf replacement](/include/kernaux/printf.h) (*non-breaking since* **?.?.?**)
     * [Example: fprintf](/examples/printf_file.c)
     * [Example: vfprintf](/examples/printf_file_va.c)
     * [Example: snprintf](/examples/printf_str.c)
