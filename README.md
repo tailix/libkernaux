@@ -48,6 +48,7 @@ zero). Work-in-progress APIs can change at any time.
     * [Declarations](/include/kernaux/arch/)
     * [Functions](/include/kernaux/asm/)
   * [Memory file](/include/kernaux/memory_file.h) (*non-breaking since* **?.?.?**)
+    * [Example](/examples/memory_file.c)
 * Generic types
   * [File](/include/kernaux/generic/file.h) (*non-breaking since* **?.?.?**)
     * [Example](/examples/generic_file.c)
