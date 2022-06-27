@@ -109,7 +109,7 @@ bool kernaux_cmdline_file(
 } while (0)
 
 #define PUT_CHAR(char) do {                                          \
-    if (argv && buffer) {                                            \
+    if (buffer) {                                                    \
         buffer[buffer_pos++] = char;                                 \
     }                                                                \
     if (file) {                                                      \
