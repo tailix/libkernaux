@@ -14,13 +14,13 @@ extern "C" {
 typedef struct KernAux_FreeList_Node {
     struct KernAux_FreeList_Node *KERNAUX_PRIVATE_FIELD(next);
     struct KernAux_FreeList_Node *KERNAUX_PRIVATE_FIELD(prev);
-    size_t KERNAUX_PRIVATE_FIELD(size);
-    char *KERNAUX_PRIVATE_FIELD(block);
+    size_t                        KERNAUX_PRIVATE_FIELD(size);
+    char                         *KERNAUX_PRIVATE_FIELD(block);
 } *KernAux_FreeList_Node;
 
 typedef struct KernAux_FreeList {
     struct KernAux_Malloc malloc;
-    KernAux_Mutex KERNAUX_PRIVATE_FIELD(mutex);
+    KernAux_Mutex         KERNAUX_PRIVATE_FIELD(mutex);
     KernAux_FreeList_Node KERNAUX_PRIVATE_FIELD(head);
 } *KernAux_FreeList;
 
