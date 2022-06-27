@@ -77,6 +77,7 @@ bool kernaux_cmdline_file(
     KERNAUX_ASSERT(error_msg);
     KERNAUX_ASSERT(argc);
     KERNAUX_ASSERT(file);
+    KERNAUX_ASSERT(arg_idxs == NULL || arg_count_max > 0);
 
     return kernaux_cmdline_common(
         cmdline,
