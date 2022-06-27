@@ -1,5 +1,5 @@
 #include <kernaux/cmdline.h>
-#include <kernaux/generic/file.h>
+#include <kernaux/memory_file.h>
 
 #include <assert.h>
 #include <stddef.h>
@@ -7,34 +7,20 @@
 
 static const char *const cmdline = "foo bar\\ baz \"car cdr\"";
 
-static int file_putc(void *file, unsigned char c);
-
 static char buffer[4096];
-static size_t file_pos = 0;
-
-static struct KernAux_File file = {
-    .KERNAUX_PROTECTED_FIELD(putc) = file_putc,
-    .KERNAUX_PROTECTED_FIELD(puts) = NULL,
-    .KERNAUX_PROTECTED_FIELD(write) = NULL,
-};
-
-int file_putc(__attribute__((unused)) void *file, unsigned char c)
-{
-    if (file_pos >= sizeof(buffer)) return KERNAUX_EOF;
-    buffer[file_pos++] = c;
-    return c;
-}
 
 void example_main()
 {
     char error_msg[KERNAUX_CMDLINE_ERROR_MSG_SIZE_MAX];
     size_t argc;
+    struct KernAux_MemoryFile memory_file =
+        KernAux_MemoryFile_create(buffer, sizeof(buffer), NULL);
 
     assert(kernaux_cmdline_file(
         cmdline,
         error_msg,
         &argc,
-        &file
+        &memory_file.file
     ));
 
     assert(strcmp(error_msg, "") == 0);
