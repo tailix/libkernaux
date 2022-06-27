@@ -22,6 +22,7 @@ static bool kernaux_cmdline_common(
     const char *cmdline,
     char *error_msg,
     size_t *argc,
+    char arg_terminator,
     char **argv,
     char *buffer,
     size_t argv_count_max,
@@ -53,6 +54,7 @@ bool kernaux_cmdline(
         cmdline,
         error_msg,
         argc,
+        '\0', // arg_terminator
         argv,
         buffer,
         argv_count_max,
@@ -76,6 +78,7 @@ bool kernaux_cmdline_file(
         cmdline,
         error_msg,
         argc,
+        '\0', // arg_terminator
         NULL,
         NULL,
         0,
@@ -92,6 +95,7 @@ bool kernaux_cmdline_common(
     const char *const cmdline,
     char *const error_msg,
     size_t *const argc,
+    char arg_terminator,
     char **const argv,
     char *const buffer,
     const size_t argv_count_max,
@@ -220,9 +224,11 @@ bool kernaux_cmdline_common(
                 }
 
                 state = FINAL;
-                if (buffer) buffer[buffer_pos++] = '\0';
+                if (buffer) buffer[buffer_pos++] = arg_terminator;
                 if (file) {
-                    if (KernAux_File_putc(file, '\0') == KERNAUX_EOF) goto fail;
+                    if (KernAux_File_putc(file, arg_terminator) == KERNAUX_EOF) {
+                        goto fail;
+                    }
                 }
             } else if (cur == ' ') {
                 if (buffer_size && buffer_pos >= buffer_size) {
@@ -231,9 +237,11 @@ bool kernaux_cmdline_common(
                 }
 
                 state = WHITESPACE;
-                if (buffer) buffer[buffer_pos++] = '\0';
+                if (buffer) buffer[buffer_pos++] = arg_terminator;
                 if (file) {
-                    if (KernAux_File_putc(file, '\0') == KERNAUX_EOF) goto fail;
+                    if (KernAux_File_putc(file, arg_terminator) == KERNAUX_EOF) {
+                        goto fail;
+                    }
                 }
             } else if (cur == '\\') {
                 state = BACKSLASH;
@@ -284,9 +292,11 @@ bool kernaux_cmdline_common(
                 }
 
                 state = WHITESPACE;
-                if (buffer) buffer[buffer_pos++] = '\0';
+                if (buffer) buffer[buffer_pos++] = arg_terminator;
                 if (file) {
-                    if (KernAux_File_putc(file, '\0') == KERNAUX_EOF) goto fail;
+                    if (KernAux_File_putc(file, arg_terminator) == KERNAUX_EOF) {
+                        goto fail;
+                    }
                 }
             } else {
                 if (buffer_size && buffer_pos >= buffer_size) {
