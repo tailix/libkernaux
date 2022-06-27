@@ -5,6 +5,7 @@
 extern "C" {
 #endif
 
+#include <stddef.h>
 #include <stdint.h>
 
 #define KERNAUX_CONTAINER_OF(ptr, type, member) \
