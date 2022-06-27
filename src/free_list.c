@@ -13,6 +13,7 @@
 #include <kernaux/free_list.h>
 #include <kernaux/generic/malloc.h>
 #include <kernaux/generic/mutex.h>
+#include <kernaux/macro.h>
 
 #include <stddef.h>
 #include <stdint.h>
@@ -21,8 +22,6 @@
 #define NODE_HEADER_SIZE (offsetof(struct KernAux_FreeList_Node, block))
 #define MIN_ZONE_SIZE (2 * NODE_HEADER_SIZE)
 #define MIN_SPLIT_SIZE (NODE_HEADER_SIZE + 16)
-
-#define CONTAINER_OF(ptr, type, member) ((type*)((uintptr_t)(ptr) - offsetof(type, member)))
 
 //#define ALIGN_MASK(align) ((align) - 1) // align should be a power of 2
 //#define ALIGN_UP(val, align) (((val) + ALIGN_MASK(align)) & ~ALIGN_MASK(align))
@@ -131,7 +130,7 @@ void KernAux_FreeList_free(void *const malloc, void *const ptr)
     LOCK(free_list);
 
     KernAux_FreeList_Node node =
-        CONTAINER_OF(ptr, struct KernAux_FreeList_Node, block);
+        KERNAUX_CONTAINER_OF(ptr, struct KernAux_FreeList_Node, block);
     KernAux_FreeList_Node last_node = NULL;
 
     for (
@@ -216,7 +215,7 @@ void *KernAux_FreeList_realloc(
     LOCK(free_list);
 
     KernAux_FreeList_Node node =
-        CONTAINER_OF(old_ptr, struct KernAux_FreeList_Node, block);
+        KERNAUX_CONTAINER_OF(old_ptr, struct KernAux_FreeList_Node, block);
     const size_t old_size = node->size - NODE_HEADER_SIZE;
 
     void *new_ptr = KernAux_FreeList_malloc(free_list, new_size);
