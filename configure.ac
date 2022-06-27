@@ -32,7 +32,6 @@ AC_CONFIG_FILES([
   include/kernaux.h
   include/kernaux/drivers/console.h
   include/kernaux/multiboot2.h
-  include/kernaux/printf.h
   include/kernaux/version.h
   tests/Makefile
 ])
