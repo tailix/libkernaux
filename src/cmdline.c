@@ -109,18 +109,18 @@ bool kernaux_cmdline_file(
 } while (0)
 
 #define PUT_CHAR(char) do {                                 \
-    if (buffer_size && buffer_pos >= buffer_size) {         \
+    if (buffer_size && buffer_or_file_pos >= buffer_size) { \
         FAIL("EOF or buffer overflow");                     \
     }                                                       \
     if (buffer) {                                           \
-        buffer[buffer_pos] = char;                          \
+        buffer[buffer_or_file_pos] = char;                  \
     }                                                       \
     if (file) {                                             \
         if (KernAux_File_putc(file, char) == KERNAUX_EOF) { \
             FAIL("EOF or buffer overflow");                 \
         }                                                   \
     }                                                       \
-    ++buffer_pos;                                           \
+    ++buffer_or_file_pos;                                   \
 } while (0)
 
 #define PUT_ARG do {                                 \
@@ -128,10 +128,10 @@ bool kernaux_cmdline_file(
         FAIL("too many args");                       \
     }                                                \
     if (argv && buffer) {                            \
-        argv[*argc] = &buffer[buffer_pos];           \
+        argv[*argc] = &buffer[buffer_or_file_pos];   \
     }                                                \
     if (arg_idxs) {                                  \
-        arg_idxs[*argc] = buffer_pos;                \
+        arg_idxs[*argc] = buffer_or_file_pos;        \
     }                                                \
     ++(*argc);                                       \
 } while (0)
@@ -140,12 +140,12 @@ bool kernaux_cmdline_file(
     if (argv_count_max && *argc >= argv_count_max) {        \
         FAIL("too many args");                              \
     }                                                       \
-    if (buffer_size && buffer_pos >= buffer_size) {         \
+    if (buffer_size && buffer_or_file_pos >= buffer_size) { \
         FAIL("EOF or buffer overflow");                     \
     }                                                       \
     if (argv && buffer) {                                   \
-        argv[*argc] = &buffer[buffer_pos];                  \
-        buffer[buffer_pos] = char;                          \
+        argv[*argc] = &buffer[buffer_or_file_pos];          \
+        buffer[buffer_or_file_pos] = char;                  \
     }                                                       \
     if (file) {                                             \
         if (KernAux_File_putc(file, char) == KERNAUX_EOF) { \
@@ -153,10 +153,10 @@ bool kernaux_cmdline_file(
         }                                                   \
     }                                                       \
     if (arg_idxs) {                                         \
-        arg_idxs[*argc] = buffer_pos;                       \
+        arg_idxs[*argc] = buffer_or_file_pos;               \
     }                                                       \
     ++(*argc);                                              \
-    ++buffer_pos;                                           \
+    ++buffer_or_file_pos;                                   \
 } while (0)
 
 bool kernaux_cmdline_common(
@@ -182,7 +182,7 @@ bool kernaux_cmdline_common(
     if (cmdline[0] == '\0') return true;
 
     enum State state = INITIAL;
-    size_t buffer_pos = 0;
+    size_t buffer_or_file_pos = 0;
 
     for (size_t index = 0; ; ++index) {
         const char cur = cmdline[index];
