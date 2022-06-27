@@ -26,7 +26,7 @@
 #define ALIGN_MASK(align) ((align) - 1) // align should be a power of 2
 #define ALIGN_UP(val, align) (((val) + ALIGN_MASK(align)) & ~ALIGN_MASK(align))
 
-#define PTR_ALIGNMENT (sizeof(void*)) // TODO: align node to this value
+#define PTR_ALIGNMENT (sizeof(void*))
 
 #define LOCK(free_list)                               \
     do {                                              \
