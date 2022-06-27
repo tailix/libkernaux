@@ -96,16 +96,18 @@ bool kernaux_cmdline_file(
     goto fail;              \
 } while (0)
 
-#define PUT_CHAR(char) do {                                          \
-    if (buffer_size && buffer_pos >= buffer_size) {                  \
-        FAIL("buffer overflow");                                     \
-    }                                                                \
-    if (buffer) {                                                    \
-        buffer[buffer_pos++] = char;                                 \
-    }                                                                \
-    if (file) {                                                      \
-        if (KernAux_File_putc(file, char) == KERNAUX_EOF) goto fail; \
-    }                                                                \
+#define PUT_CHAR(char) do {                                 \
+    if (buffer_size && buffer_pos >= buffer_size) {         \
+        FAIL("buffer overflow");                            \
+    }                                                       \
+    if (buffer) {                                           \
+        buffer[buffer_pos++] = char;                        \
+    }                                                       \
+    if (file) {                                             \
+        if (KernAux_File_putc(file, char) == KERNAUX_EOF) { \
+            FAIL("end of file");                            \
+        }                                                   \
+    }                                                       \
 } while (0)
 
 #define PUT_ARG do {                                 \
@@ -118,21 +120,23 @@ bool kernaux_cmdline_file(
     ++(*argc);                                       \
 } while (0)
 
-#define PUT_ARG_AND_CHAR(char) do {                                  \
-    if (argv_count_max && *argc >= argv_count_max) {                 \
-        FAIL("too many args");                                       \
-    }                                                                \
-    if (buffer_size && buffer_pos >= buffer_size) {                  \
-        FAIL("buffer overflow");                                     \
-    }                                                                \
-    if (argv && buffer) {                                            \
-        argv[*argc] = &buffer[buffer_pos];                           \
-        buffer[buffer_pos++] = char;                                 \
-    }                                                                \
-    if (file) {                                                      \
-        if (KernAux_File_putc(file, char) == KERNAUX_EOF) goto fail; \
-    }                                                                \
-    ++(*argc);                                                       \
+#define PUT_ARG_AND_CHAR(char) do {                         \
+    if (argv_count_max && *argc >= argv_count_max) {        \
+        FAIL("too many args");                              \
+    }                                                       \
+    if (buffer_size && buffer_pos >= buffer_size) {         \
+        FAIL("buffer overflow");                            \
+    }                                                       \
+    if (argv && buffer) {                                   \
+        argv[*argc] = &buffer[buffer_pos];                  \
+        buffer[buffer_pos++] = char;                        \
+    }                                                       \
+    if (file) {                                             \
+        if (KernAux_File_putc(file, char) == KERNAUX_EOF) { \
+            FAIL("end of file");                            \
+        }                                                   \
+    }                                                       \
+    ++(*argc);                                              \
 } while (0)
 
 bool kernaux_cmdline_common(
