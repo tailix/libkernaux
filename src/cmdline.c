@@ -91,17 +91,20 @@ bool kernaux_cmdline_file(
  * Implementation: main internal function *
  ******************************************/
 
+#define FAIL(msg) do {      \
+    strcpy(error_msg, msg); \
+    goto fail;              \
+} while (0)
+
 #define CHECK_TOO_MANY_ARGS do {                     \
     if (argv_count_max && *argc >= argv_count_max) { \
-        strcpy(error_msg, "too many args");          \
-        goto fail;                                   \
+        FAIL("too many args");                       \
     }                                                \
 } while (0)
 
 #define CHECK_BUFFER_OVERFLOW do {                  \
     if (buffer_size && buffer_pos >= buffer_size) { \
-        strcpy(error_msg, "buffer overflow");       \
-        goto fail;                                  \
+        FAIL("buffer overflow");                    \
     }                                               \
 } while (0)
 
@@ -220,8 +223,7 @@ bool kernaux_cmdline_common(
             } else if (cur == '\\') {
                 state = BACKSLASH;
             } else if (cur == '"') {
-                strcpy(error_msg, "unescaped quotation mark");
-                goto fail;
+                FAIL("unescaped quotation mark");
             } else {
                 CHECK_BUFFER_OVERFLOW;
                 if (buffer) buffer[buffer_pos++] = cur;
@@ -233,8 +235,7 @@ bool kernaux_cmdline_common(
 
         case BACKSLASH:
             if (cur == '\0') {
-                strcpy(error_msg, "EOL after backslash");
-                goto fail;
+                FAIL("EOL after backslash");
             } else {
                 CHECK_BUFFER_OVERFLOW;
                 state = TOKEN;
@@ -247,8 +248,7 @@ bool kernaux_cmdline_common(
 
         case QUOTE:
             if (cur == '\0') {
-                strcpy(error_msg, "EOL inside quote");
-                goto fail;
+                FAIL("EOL inside quote");
             } else if (cur == '\\') {
                 state = QUOTE_BACKSLASH;
             } else if (cur == '"') {
@@ -271,8 +271,7 @@ bool kernaux_cmdline_common(
 
         case QUOTE_BACKSLASH:
             if (cur == '\0') {
-                strcpy(error_msg, "EOL after backslash inside quote");
-                goto fail;
+                FAIL("EOL after backslash inside quote");
             } else {
                 CHECK_BUFFER_OVERFLOW;
                 state = QUOTE;
