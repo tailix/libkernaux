@@ -149,7 +149,6 @@ bool kernaux_cmdline_common(
     KERNAUX_ASSERT(cmdline);
     KERNAUX_ASSERT(error_msg);
     KERNAUX_ASSERT(argc);
-    (void)file;
 
     memset(error_msg, '\0', KERNAUX_CMDLINE_ERROR_MSG_SIZE_MAX);
     *argc = 0;
