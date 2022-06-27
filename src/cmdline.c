@@ -197,13 +197,11 @@ bool kernaux_cmdline_common(
             } else if (cur == '\\') {
                 CHECK_TOO_MANY_ARGS;
                 state = BACKSLASH;
-                if (argv && buffer) argv[*argc] = &buffer[buffer_pos];
-                ++(*argc);
+                PUT_ARG;
             } else if (cur == '"') {
                 CHECK_TOO_MANY_ARGS;
                 state = QUOTE;
-                if (argv && buffer) argv[*argc] = &buffer[buffer_pos];
-                ++(*argc);
+                PUT_ARG;
             } else {
                 CHECK_TOO_MANY_ARGS;
                 CHECK_BUFFER_OVERFLOW;
