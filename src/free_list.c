@@ -43,7 +43,6 @@
         }                                             \
     } while (0)
 
-static void *KernAux_FreeList_calloc (void *malloc, size_t nmemb, size_t size);
 static void  KernAux_FreeList_free   (void *malloc, void *ptr);
 static void *KernAux_FreeList_malloc (void *malloc, size_t size);
 static void *KernAux_FreeList_realloc(void *malloc, void *ptr, size_t size);
@@ -73,7 +72,7 @@ void KernAux_FreeList_init(
 ) {
     KERNAUX_ASSERT(free_list);
 
-    free_list->malloc.calloc  = KernAux_FreeList_calloc;
+    free_list->malloc.calloc  = NULL;
     free_list->malloc.free    = KernAux_FreeList_free;
     free_list->malloc.malloc  = KernAux_FreeList_malloc;
     free_list->malloc.realloc = KernAux_FreeList_realloc;
@@ -123,35 +122,16 @@ block_found:
     UNLOCK(free_list);
 }
 
-void *KernAux_FreeList_calloc(
-    void *const malloc,
-    const size_t nmemb,
-    const size_t size
-) {
-    KERNAUX_ASSERT(malloc);
-
-    const size_t total_size = nmemb * size;
-    KERNAUX_ASSERT(total_size >= nmemb);
-    KERNAUX_ASSERT(total_size >= size);
-    KERNAUX_ASSERT(total_size / nmemb == size);
-
-    void *const ptr = KernAux_FreeList_malloc(malloc, total_size);
-    if (ptr) memset(ptr, 0, total_size);
-    return ptr;
-}
-
 void KernAux_FreeList_free(void *const malloc, void *const ptr)
 {
     const KernAux_FreeList free_list = malloc;
-
     KERNAUX_ASSERT(free_list);
-    if (!ptr) return;
+    KERNAUX_ASSERT(ptr);
 
     LOCK(free_list);
 
     KernAux_FreeList_Node node =
         CONTAINER_OF(ptr, struct KernAux_FreeList_Node, block);
-
     KernAux_FreeList_Node last_node = NULL;
 
     for (
@@ -183,9 +163,8 @@ block_added:
 void *KernAux_FreeList_malloc(void *const malloc, const size_t size)
 {
     const KernAux_FreeList free_list = malloc;
-
     KERNAUX_ASSERT(free_list);
-    if (size == 0) return NULL;
+    KERNAUX_ASSERT(size);
 
     LOCK(free_list);
 
@@ -226,18 +205,29 @@ void *KernAux_FreeList_malloc(void *const malloc, const size_t size)
 
 void *KernAux_FreeList_realloc(
     void *const malloc,
-    void *const ptr,
-    const size_t size
+    void *const old_ptr,
+    const size_t new_size
 ) {
     const KernAux_FreeList free_list = malloc;
     KERNAUX_ASSERT(free_list);
+    KERNAUX_ASSERT(old_ptr);
+    KERNAUX_ASSERT(new_size);
 
-    KERNAUX_ASSERT(0); // TODO
-    (void)free_list;
-    (void)ptr;
-    (void)size;
+    LOCK(free_list);
 
-    return NULL;
+    KernAux_FreeList_Node node =
+        CONTAINER_OF(old_ptr, struct KernAux_FreeList_Node, block);
+    const size_t old_size = node->size - NODE_HEADER_SIZE;
+
+    void *new_ptr = KernAux_FreeList_malloc(free_list, new_size);
+
+    if (new_ptr) {
+        const size_t min_size = old_size < new_size ? old_size : new_size;
+        memcpy(new_ptr, old_ptr, min_size);
+    }
+
+    UNLOCK(free_list);
+    return new_ptr;
 }
 
 void KernAux_FreeList_defrag(const KernAux_FreeList free_list)
