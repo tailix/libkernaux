@@ -96,19 +96,10 @@ bool kernaux_cmdline_file(
     goto fail;              \
 } while (0)
 
-#define CHECK_TOO_MANY_ARGS do {                     \
-    if (argv_count_max && *argc >= argv_count_max) { \
-        FAIL("too many args");                       \
-    }                                                \
-} while (0)
-
-#define CHECK_BUFFER_OVERFLOW do {                  \
-    if (buffer_size && buffer_pos >= buffer_size) { \
-        FAIL("buffer overflow");                    \
-    }                                               \
-} while (0)
-
 #define PUT_CHAR(char) do {                                          \
+    if (buffer_size && buffer_pos >= buffer_size) {                  \
+        FAIL("buffer overflow");                                     \
+    }                                                                \
     if (buffer) {                                                    \
         buffer[buffer_pos++] = char;                                 \
     }                                                                \
@@ -117,14 +108,23 @@ bool kernaux_cmdline_file(
     }                                                                \
 } while (0)
 
-#define PUT_ARG do {                       \
-    if (argv && buffer) {                  \
-        argv[*argc] = &buffer[buffer_pos]; \
-    }                                      \
-    ++(*argc);                             \
+#define PUT_ARG do {                                 \
+    if (argv_count_max && *argc >= argv_count_max) { \
+        FAIL("too many args");                       \
+    }                                                \
+    if (argv && buffer) {                            \
+        argv[*argc] = &buffer[buffer_pos];           \
+    }                                                \
+    ++(*argc);                                       \
 } while (0)
 
 #define PUT_ARG_AND_CHAR(char) do {                                  \
+    if (argv_count_max && *argc >= argv_count_max) {                 \
+        FAIL("too many args");                                       \
+    }                                                                \
+    if (buffer_size && buffer_pos >= buffer_size) {                  \
+        FAIL("buffer overflow");                                     \
+    }                                                                \
     if (argv && buffer) {                                            \
         argv[*argc] = &buffer[buffer_pos];                           \
         buffer[buffer_pos++] = char;                                 \
@@ -174,16 +174,12 @@ bool kernaux_cmdline_common(
             } else if (cur == ' ') {
                 state = WHITESPACE;
             } else if (cur == '\\') {
-                CHECK_TOO_MANY_ARGS;
                 state = BACKSLASH;
                 PUT_ARG;
             } else if (cur == '"') {
-                CHECK_TOO_MANY_ARGS;
                 state = QUOTE;
                 PUT_ARG;
             } else {
-                CHECK_TOO_MANY_ARGS;
-                CHECK_BUFFER_OVERFLOW;
                 state = TOKEN;
                 PUT_ARG_AND_CHAR(cur);
             }
@@ -195,16 +191,12 @@ bool kernaux_cmdline_common(
             } else if (cur == ' ') {
                 // do nothing
             } else if (cur == '\\') {
-                CHECK_TOO_MANY_ARGS;
                 state = BACKSLASH;
                 PUT_ARG;
             } else if (cur == '"') {
-                CHECK_TOO_MANY_ARGS;
                 state = QUOTE;
                 PUT_ARG;
             } else {
-                CHECK_TOO_MANY_ARGS;
-                CHECK_BUFFER_OVERFLOW;
                 state = TOKEN;
                 PUT_ARG_AND_CHAR(cur);
             }
@@ -212,11 +204,9 @@ bool kernaux_cmdline_common(
 
         case TOKEN:
             if (cur == '\0') {
-                CHECK_BUFFER_OVERFLOW;
                 state = FINAL;
                 PUT_CHAR(arg_terminator);
             } else if (cur == ' ') {
-                CHECK_BUFFER_OVERFLOW;
                 state = WHITESPACE;
                 PUT_CHAR(arg_terminator);
             } else if (cur == '\\') {
@@ -224,7 +214,6 @@ bool kernaux_cmdline_common(
             } else if (cur == '"') {
                 FAIL("unescaped quotation mark");
             } else {
-                CHECK_BUFFER_OVERFLOW;
                 PUT_CHAR(cur);
             }
             break;
@@ -233,7 +222,6 @@ bool kernaux_cmdline_common(
             if (cur == '\0') {
                 FAIL("EOL after backslash");
             } else {
-                CHECK_BUFFER_OVERFLOW;
                 state = TOKEN;
                 PUT_CHAR(cur);
             }
@@ -245,11 +233,9 @@ bool kernaux_cmdline_common(
             } else if (cur == '\\') {
                 state = QUOTE_BACKSLASH;
             } else if (cur == '"') {
-                CHECK_BUFFER_OVERFLOW;
                 state = WHITESPACE;
                 PUT_CHAR(arg_terminator);
             } else {
-                CHECK_BUFFER_OVERFLOW;
                 PUT_CHAR(cur);
             }
             break;
@@ -258,7 +244,6 @@ bool kernaux_cmdline_common(
             if (cur == '\0') {
                 FAIL("EOL after backslash inside quote");
             } else {
-                CHECK_BUFFER_OVERFLOW;
                 state = QUOTE;
                 PUT_CHAR(cur);
             }
