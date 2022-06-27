@@ -150,6 +150,7 @@ void test(
     char *error_msg = malloc(KERNAUX_CMDLINE_ERROR_MSG_SIZE_MAX);
     size_t argc = 1234;
     char **const argv = malloc(sizeof(char*) * argv_count_max);
+    size_t *arg_idxs = malloc(sizeof(size_t) * argv_count_max);
     char *const buffer = malloc(buffer_size);
 
     assert(error_msg);
@@ -158,7 +159,8 @@ void test(
 
     {
         memset(error_msg, 'x', KERNAUX_CMDLINE_ERROR_MSG_SIZE_MAX);
-        memset(argv,      'x', sizeof(char*) * argv_count_max);
+        memset(argv,      0,   sizeof(char*) * argv_count_max);
+        memset(arg_idxs,  0,   sizeof(size_t) * argv_count_max);
         memset(buffer,    'x', buffer_size);
 
         assert(
@@ -187,9 +189,10 @@ void test(
         }
     }
 
-    if (strcmp(expected_error_msg, "too many args") != 0) {
+    {
         memset(error_msg, 'x', KERNAUX_CMDLINE_ERROR_MSG_SIZE_MAX);
-        memset(argv,      'x', sizeof(char*) * argv_count_max);
+        memset(argv,      0,   sizeof(char*) * argv_count_max);
+        memset(arg_idxs,  0,   sizeof(size_t) * argv_count_max);
         memset(buffer,    'x', buffer_size);
 
         struct KernAux_MemoryFile memory_file =
@@ -200,7 +203,9 @@ void test(
                 cmdline,
                 error_msg,
                 &argc,
-                &memory_file.file
+                &memory_file.file,
+                arg_idxs,
+                argv_count_max
             ) == !!expected_result
         );
 
@@ -218,5 +223,6 @@ void test(
 
     free(error_msg);
     free(argv);
+    free(arg_idxs);
     free(buffer);
 }
