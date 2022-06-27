@@ -113,13 +113,14 @@ bool kernaux_cmdline_file(
         FAIL("EOF or buffer overflow");                     \
     }                                                       \
     if (buffer) {                                           \
-        buffer[buffer_pos++] = char;                        \
+        buffer[buffer_pos] = char;                          \
     }                                                       \
     if (file) {                                             \
         if (KernAux_File_putc(file, char) == KERNAUX_EOF) { \
             FAIL("EOF or buffer overflow");                 \
         }                                                   \
     }                                                       \
+    ++buffer_pos;                                           \
 } while (0)
 
 #define PUT_ARG do {                                 \
@@ -128,6 +129,9 @@ bool kernaux_cmdline_file(
     }                                                \
     if (argv && buffer) {                            \
         argv[*argc] = &buffer[buffer_pos];           \
+    }                                                \
+    if (arg_idxs) {                                  \
+        arg_idxs[*argc] = buffer_pos;                \
     }                                                \
     ++(*argc);                                       \
 } while (0)
@@ -141,14 +145,18 @@ bool kernaux_cmdline_file(
     }                                                       \
     if (argv && buffer) {                                   \
         argv[*argc] = &buffer[buffer_pos];                  \
-        buffer[buffer_pos++] = char;                        \
+        buffer[buffer_pos] = char;                          \
     }                                                       \
     if (file) {                                             \
         if (KernAux_File_putc(file, char) == KERNAUX_EOF) { \
             FAIL("EOF or buffer overflow");                 \
         }                                                   \
     }                                                       \
+    if (arg_idxs) {                                         \
+        arg_idxs[*argc] = buffer_pos;                       \
+    }                                                       \
     ++(*argc);                                              \
+    ++buffer_pos;                                           \
 } while (0)
 
 bool kernaux_cmdline_common(
