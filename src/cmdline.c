@@ -4,6 +4,7 @@
 
 #include <kernaux/assert.h>
 #include <kernaux/cmdline.h>
+#include <kernaux/generic/file.h>
 
 #include "libc.h"
 
@@ -104,8 +105,8 @@ bool kernaux_cmdline_common(
 
     memset(error_msg, '\0', KERNAUX_CMDLINE_ERROR_MSG_SIZE_MAX);
     *argc = 0;
-    memset(argv, 0, sizeof(char*) * argv_count_max);
-    memset(buffer, '\0', buffer_size);
+    if (argv) memset(argv, 0, sizeof(char*) * argv_count_max);
+    if (buffer) memset(buffer, '\0', buffer_size);
 
     if (cmdline[0] == '\0') return true;
 
@@ -131,7 +132,8 @@ bool kernaux_cmdline_common(
                 }
 
                 state = BACKSLASH;
-                argv[(*argc)++] = &buffer[buffer_pos];
+                if (argv && buffer) argv[*argc] = &buffer[buffer_pos];
+                ++(*argc);
             } else if (cur == '"') {
                 if (*argc >= argv_count_max) {
                     strcpy(error_msg, "too many args");
@@ -139,7 +141,8 @@ bool kernaux_cmdline_common(
                 }
 
                 state = QUOTE;
-                argv[(*argc)++] = &buffer[buffer_pos];
+                if (argv && buffer) argv[*argc] = &buffer[buffer_pos];
+                ++(*argc);
             } else {
                 if (*argc >= argv_count_max) {
                     strcpy(error_msg, "too many args");
@@ -152,8 +155,14 @@ bool kernaux_cmdline_common(
                 }
 
                 state = TOKEN;
-                argv[(*argc)++] = &buffer[buffer_pos];
-                buffer[buffer_pos++] = cur;
+                if (argv && buffer) {
+                    argv[*argc] = &buffer[buffer_pos];
+                    buffer[buffer_pos++] = cur;
+                }
+                if (file) {
+                    if (KernAux_File_putc(file, cur) == KERNAUX_EOF) goto fail;
+                }
+                ++(*argc);
             }
             break;
 
@@ -169,7 +178,8 @@ bool kernaux_cmdline_common(
                 }
 
                 state = BACKSLASH;
-                argv[(*argc)++] = &buffer[buffer_pos];
+                if (argv && buffer) argv[*argc] = &buffer[buffer_pos];
+                ++(*argc);
             } else if (cur == '"') {
                 if (*argc >= argv_count_max) {
                     strcpy(error_msg, "too many args");
@@ -177,7 +187,8 @@ bool kernaux_cmdline_common(
                 }
 
                 state = QUOTE;
-                argv[(*argc)++] = &buffer[buffer_pos];
+                if (argv && buffer) argv[*argc] = &buffer[buffer_pos];
+                ++(*argc);
             } else {
                 if (*argc >= argv_count_max) {
                     strcpy(error_msg, "too many args");
@@ -190,8 +201,14 @@ bool kernaux_cmdline_common(
                 }
 
                 state = TOKEN;
-                argv[(*argc)++] = &buffer[buffer_pos];
-                buffer[buffer_pos++] = cur;
+                if (argv && buffer) {
+                    argv[*argc] = &buffer[buffer_pos];
+                    buffer[buffer_pos++] = cur;
+                }
+                if (file) {
+                    if (KernAux_File_putc(file, cur) == KERNAUX_EOF) goto fail;
+                }
+                ++(*argc);
             }
             break;
 
@@ -203,7 +220,10 @@ bool kernaux_cmdline_common(
                 }
 
                 state = FINAL;
-                buffer[buffer_pos++] = '\0';
+                if (buffer) buffer[buffer_pos++] = '\0';
+                if (file) {
+                    if (KernAux_File_putc(file, '\0') == KERNAUX_EOF) goto fail;
+                }
             } else if (cur == ' ') {
                 if (buffer_pos >= buffer_size) {
                     strcpy(error_msg, "buffer overflow");
@@ -211,7 +231,10 @@ bool kernaux_cmdline_common(
                 }
 
                 state = WHITESPACE;
-                buffer[buffer_pos++] = '\0';
+                if (buffer) buffer[buffer_pos++] = '\0';
+                if (file) {
+                    if (KernAux_File_putc(file, '\0') == KERNAUX_EOF) goto fail;
+                }
             } else if (cur == '\\') {
                 state = BACKSLASH;
             } else if (cur == '"') {
@@ -223,7 +246,10 @@ bool kernaux_cmdline_common(
                     goto fail;
                 }
 
-                buffer[buffer_pos++] = cur;
+                if (buffer) buffer[buffer_pos++] = cur;
+                if (file) {
+                    if (KernAux_File_putc(file, cur) == KERNAUX_EOF) goto fail;
+                }
             }
             break;
 
@@ -238,7 +264,10 @@ bool kernaux_cmdline_common(
                 }
 
                 state = TOKEN;
-                buffer[buffer_pos++] = cur;
+                if (buffer) buffer[buffer_pos++] = cur;
+                if (file) {
+                    if (KernAux_File_putc(file, cur) == KERNAUX_EOF) goto fail;
+                }
             }
             break;
 
@@ -255,14 +284,20 @@ bool kernaux_cmdline_common(
                 }
 
                 state = WHITESPACE;
-                buffer[buffer_pos++] = '\0';
+                if (buffer) buffer[buffer_pos++] = '\0';
+                if (file) {
+                    if (KernAux_File_putc(file, '\0') == KERNAUX_EOF) goto fail;
+                }
             } else {
                 if (buffer_pos >= buffer_size) {
                     strcpy(error_msg, "buffer overflow");
                     goto fail;
                 }
 
-                buffer[buffer_pos++] = cur;
+                if (buffer) buffer[buffer_pos++] = cur;
+                if (file) {
+                    if (KernAux_File_putc(file, cur) == KERNAUX_EOF) goto fail;
+                }
             }
             break;
 
@@ -277,7 +312,10 @@ bool kernaux_cmdline_common(
                 }
 
                 state = QUOTE;
-                buffer[buffer_pos++] = cur;
+                if (buffer) buffer[buffer_pos++] = cur;
+                if (file) {
+                    if (KernAux_File_putc(file, cur) == KERNAUX_EOF) goto fail;
+                }
             }
             break;
         }
@@ -289,7 +327,7 @@ bool kernaux_cmdline_common(
 
 fail:
     *argc = 0;
-    memset(argv, 0, sizeof(char*) * argv_count_max);
-    memset(buffer, '\0', buffer_size);
+    if (argv) memset(argv, 0, sizeof(char*) * argv_count_max);
+    if (buffer) memset(buffer, '\0', buffer_size);
     return false;
 }
