@@ -213,10 +213,8 @@ void test(
         assert(argc == expected_argc);
 
         if (expected_argv) {
-            const char *arg = buffer;
             for (size_t index = 0; index < argc; ++index) {
-                assert(strcmp(expected_argv[index], arg) == 0);
-                arg += strlen(arg) + 1;
+                assert(strcmp(&buffer[arg_idxs[index]], expected_argv[index]) == 0);
             }
         }
     }
