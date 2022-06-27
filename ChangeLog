@@ -1,6 +1,7 @@
 2022-06-27  Alex Kotov  <kotovalexarian@gmail.com>
 
 	* include/kernaux/memory_file.h: Added
+	* include/kernaux/cmdline: Added function "kernaux_cmdline_file"
 
 2022-06-25  Alex Kotov  <kotovalexarian@gmail.com>
 

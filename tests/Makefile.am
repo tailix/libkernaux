@@ -65,7 +65,9 @@ TESTS += test_cmdline
 test_cmdline_LDADD = $(top_builddir)/libkernaux.la
 test_cmdline_SOURCES = \
 	main.c \
-	test_cmdline.c
+	test_cmdline.c \
+	cmdline_test.h \
+	cmdline_test.c
 endif
 
 ####################
@@ -81,7 +83,9 @@ test_cmdline_gen_SOURCES = \
 	test_cmdline_gen.c \
 	cmdline_gen.py \
 	cmdline_gen.jinja \
-	$(top_srcdir)/common/cmdline.yml
+	$(top_srcdir)/common/cmdline.yml \
+	cmdline_test.h \
+	cmdline_test.c
 endif
 endif
 

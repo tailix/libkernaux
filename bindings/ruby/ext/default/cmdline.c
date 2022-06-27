@@ -2,12 +2,12 @@
 
 #ifdef KERNAUX_VERSION_WITH_CMDLINE
 
-#define ARGV_COUNT_MAX 256
+#define ARG_COUNT_MAX 256
 #define BUFFER_SIZE 4096
 
 struct Data {
     char error_msg[KERNAUX_CMDLINE_ERROR_MSG_SIZE_MAX];
-    char *argv[ARGV_COUNT_MAX];
+    char *argv[ARG_COUNT_MAX];
     char buffer[BUFFER_SIZE];
 };
 
@@ -64,7 +64,7 @@ VALUE rb_KernAux_cmdline(const VALUE self_rb, VALUE cmdline_rb)
         &argc,
         data->argv,
         data->buffer,
-        ARGV_COUNT_MAX,
+        ARG_COUNT_MAX,
         BUFFER_SIZE
     );
 
