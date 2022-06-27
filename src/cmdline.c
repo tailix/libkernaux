@@ -4,6 +4,7 @@
 
 #include <kernaux/assert.h>
 #include <kernaux/cmdline.h>
+#include <kernaux/generic/file.h>
 
 #include "libc.h"
 
@@ -16,6 +17,22 @@ enum State {
     QUOTE,
     QUOTE_BACKSLASH,
 };
+
+static bool kernaux_cmdline_common(
+    const char *cmdline,
+    char *error_msg,
+    size_t *argc,
+    char arg_terminator,
+    char **argv,
+    char *buffer,
+    size_t argv_count_max,
+    size_t buffer_size,
+    KernAux_File file
+);
+
+/*****************************
+ * Implementations: main API *
+ *****************************/
 
 bool kernaux_cmdline(
     const char *const cmdline,
@@ -33,10 +50,114 @@ bool kernaux_cmdline(
     KERNAUX_ASSERT(argv_count_max > 0);
     KERNAUX_ASSERT(buffer_size > 0);
 
+    return kernaux_cmdline_common(
+        cmdline,
+        error_msg,
+        argc,
+        '\0', // arg_terminator
+        argv,
+        buffer,
+        argv_count_max,
+        buffer_size,
+        NULL
+    );
+}
+
+bool kernaux_cmdline_file(
+    const char *const cmdline,
+    char *const error_msg,
+    size_t *const argc,
+    const KernAux_File file
+) {
+    KERNAUX_ASSERT(cmdline);
+    KERNAUX_ASSERT(error_msg);
+    KERNAUX_ASSERT(argc);
+    KERNAUX_ASSERT(file);
+
+    return kernaux_cmdline_common(
+        cmdline,
+        error_msg,
+        argc,
+        '\0', // arg_terminator
+        NULL,
+        NULL,
+        0,
+        0,
+        file
+    );
+}
+
+/******************************************
+ * Implementation: main internal function *
+ ******************************************/
+
+#define FAIL(msg) do {      \
+    strcpy(error_msg, msg); \
+    goto fail;              \
+} while (0)
+
+#define PUT_CHAR(char) do {                                 \
+    if (buffer_size && buffer_pos >= buffer_size) {         \
+        FAIL("EOF or buffer overflow");                     \
+    }                                                       \
+    if (buffer) {                                           \
+        buffer[buffer_pos++] = char;                        \
+    }                                                       \
+    if (file) {                                             \
+        if (KernAux_File_putc(file, char) == KERNAUX_EOF) { \
+            FAIL("EOF or buffer overflow");                 \
+        }                                                   \
+    }                                                       \
+} while (0)
+
+#define PUT_ARG do {                                 \
+    if (argv_count_max && *argc >= argv_count_max) { \
+        FAIL("too many args");                       \
+    }                                                \
+    if (argv && buffer) {                            \
+        argv[*argc] = &buffer[buffer_pos];           \
+    }                                                \
+    ++(*argc);                                       \
+} while (0)
+
+#define PUT_ARG_AND_CHAR(char) do {                         \
+    if (argv_count_max && *argc >= argv_count_max) {        \
+        FAIL("too many args");                              \
+    }                                                       \
+    if (buffer_size && buffer_pos >= buffer_size) {         \
+        FAIL("EOF or buffer overflow");                     \
+    }                                                       \
+    if (argv && buffer) {                                   \
+        argv[*argc] = &buffer[buffer_pos];                  \
+        buffer[buffer_pos++] = char;                        \
+    }                                                       \
+    if (file) {                                             \
+        if (KernAux_File_putc(file, char) == KERNAUX_EOF) { \
+            FAIL("EOF or buffer overflow");                 \
+        }                                                   \
+    }                                                       \
+    ++(*argc);                                              \
+} while (0)
+
+bool kernaux_cmdline_common(
+    const char *const cmdline,
+    char *const error_msg,
+    size_t *const argc,
+    char arg_terminator,
+    char **const argv,
+    char *const buffer,
+    const size_t argv_count_max,
+    const size_t buffer_size,
+    const KernAux_File file
+) {
+    KERNAUX_ASSERT(cmdline);
+    KERNAUX_ASSERT(error_msg);
+    KERNAUX_ASSERT(argc);
+
     memset(error_msg, '\0', KERNAUX_CMDLINE_ERROR_MSG_SIZE_MAX);
     *argc = 0;
-    memset(argv, 0, sizeof(char*) * argv_count_max);
-    memset(buffer, '\0', buffer_size);
+    if (argv) memset(argv, 0, sizeof(char*) * argv_count_max);
+    if (buffer) memset(buffer, '\0', buffer_size);
 
     if (cmdline[0] == '\0') return true;
 
@@ -56,35 +177,14 @@ bool kernaux_cmdline(
             } else if (cur == ' ') {
                 state = WHITESPACE;
             } else if (cur == '\\') {
-                if (*argc >= argv_count_max) {
-                    strcpy(error_msg, "too many args");
-                    goto fail;
-                }
-
                 state = BACKSLASH;
-                argv[(*argc)++] = &buffer[buffer_pos];
+                PUT_ARG;
             } else if (cur == '"') {
-                if (*argc >= argv_count_max) {
-                    strcpy(error_msg, "too many args");
-                    goto fail;
-                }
-
                 state = QUOTE;
-                argv[(*argc)++] = &buffer[buffer_pos];
+                PUT_ARG;
             } else {
-                if (*argc >= argv_count_max) {
-                    strcpy(error_msg, "too many args");
-                    goto fail;
-                }
-
-                if (buffer_pos >= buffer_size) {
-                    strcpy(error_msg, "buffer overflow");
-                    goto fail;
-                }
-
                 state = TOKEN;
-                argv[(*argc)++] = &buffer[buffer_pos];
-                buffer[buffer_pos++] = cur;
+                PUT_ARG_AND_CHAR(cur);
             }
             break;
 
@@ -94,121 +194,61 @@ bool kernaux_cmdline(
             } else if (cur == ' ') {
                 // do nothing
             } else if (cur == '\\') {
-                if (*argc >= argv_count_max) {
-                    strcpy(error_msg, "too many args");
-                    goto fail;
-                }
-
                 state = BACKSLASH;
-                argv[(*argc)++] = &buffer[buffer_pos];
+                PUT_ARG;
             } else if (cur == '"') {
-                if (*argc >= argv_count_max) {
-                    strcpy(error_msg, "too many args");
-                    goto fail;
-                }
-
                 state = QUOTE;
-                argv[(*argc)++] = &buffer[buffer_pos];
+                PUT_ARG;
             } else {
-                if (*argc >= argv_count_max) {
-                    strcpy(error_msg, "too many args");
-                    goto fail;
-                }
-
-                if (buffer_pos >= buffer_size) {
-                    strcpy(error_msg, "buffer overflow");
-                    goto fail;
-                }
-
                 state = TOKEN;
-                argv[(*argc)++] = &buffer[buffer_pos];
-                buffer[buffer_pos++] = cur;
+                PUT_ARG_AND_CHAR(cur);
             }
             break;
 
         case TOKEN:
             if (cur == '\0') {
-                if (buffer_pos >= buffer_size) {
-                    strcpy(error_msg, "buffer overflow");
-                    goto fail;
-                }
-
                 state = FINAL;
-                buffer[buffer_pos++] = '\0';
+                PUT_CHAR(arg_terminator);
             } else if (cur == ' ') {
-                if (buffer_pos >= buffer_size) {
-                    strcpy(error_msg, "buffer overflow");
-                    goto fail;
-                }
-
                 state = WHITESPACE;
-                buffer[buffer_pos++] = '\0';
+                PUT_CHAR(arg_terminator);
             } else if (cur == '\\') {
                 state = BACKSLASH;
             } else if (cur == '"') {
-                strcpy(error_msg, "unescaped quotation mark");
-                goto fail;
+                FAIL("unescaped quotation mark");
             } else {
-                if (buffer_pos >= buffer_size) {
-                    strcpy(error_msg, "buffer overflow");
-                    goto fail;
-                }
-
-                buffer[buffer_pos++] = cur;
+                PUT_CHAR(cur);
             }
             break;
 
         case BACKSLASH:
             if (cur == '\0') {
-                strcpy(error_msg, "EOL after backslash");
-                goto fail;
+                FAIL("EOL after backslash");
             } else {
-                if (buffer_pos >= buffer_size) {
-                    strcpy(error_msg, "buffer overflow");
-                    goto fail;
-                }
-
                 state = TOKEN;
-                buffer[buffer_pos++] = cur;
+                PUT_CHAR(cur);
             }
             break;
 
         case QUOTE:
             if (cur == '\0') {
-                strcpy(error_msg, "EOL inside quote");
-                goto fail;
+                FAIL("EOL inside quote");
             } else if (cur == '\\') {
                 state = QUOTE_BACKSLASH;
             } else if (cur == '"') {
-                if (buffer_pos >= buffer_size) {
-                    strcpy(error_msg, "buffer overflow");
-                    goto fail;
-                }
-
                 state = WHITESPACE;
-                buffer[buffer_pos++] = '\0';
+                PUT_CHAR(arg_terminator);
             } else {
-                if (buffer_pos >= buffer_size) {
-                    strcpy(error_msg, "buffer overflow");
-                    goto fail;
-                }
-
-                buffer[buffer_pos++] = cur;
+                PUT_CHAR(cur);
             }
             break;
 
         case QUOTE_BACKSLASH:
             if (cur == '\0') {
-                strcpy(error_msg, "EOL after backslash inside quote");
-                goto fail;
+                FAIL("EOL after backslash inside quote");
             } else {
-                if (buffer_pos >= buffer_size) {
-                    strcpy(error_msg, "buffer overflow");
-                    goto fail;
-                }
-
                 state = QUOTE;
-                buffer[buffer_pos++] = cur;
+                PUT_CHAR(cur);
             }
             break;
         }
@@ -220,7 +260,7 @@ bool kernaux_cmdline(
 
 fail:
     *argc = 0;
-    memset(argv, 0, sizeof(char*) * argv_count_max);
-    memset(buffer, '\0', buffer_size);
+    if (argv) memset(argv, 0, sizeof(char*) * argv_count_max);
+    if (buffer) memset(buffer, '\0', buffer_size);
     return false;
 }
