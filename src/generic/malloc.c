@@ -6,11 +6,11 @@
 #include <kernaux/generic/malloc.h>
 
 #include <stddef.h>
+#include <string.h>
 
 void *KernAux_Malloc_calloc(KernAux_Malloc malloc, size_t nmemb, size_t size)
 {
     KERNAUX_ASSERT(malloc);
-    KERNAUX_ASSERT(malloc->calloc);
 
     // Common implementation
     const size_t total_size = nmemb * size;
@@ -18,7 +18,12 @@ void *KernAux_Malloc_calloc(KernAux_Malloc malloc, size_t nmemb, size_t size)
     if (total_size / nmemb != size) return NULL;
 
     // Inherited implementation
-    return malloc->calloc((void*)malloc, nmemb, size);
+    if (malloc->calloc) return malloc->calloc((void*)malloc, nmemb, size);
+
+    // Default implementation
+    void *const ptr = KernAux_Malloc_malloc(malloc, total_size);
+    if (ptr) memset(ptr, 0, total_size);
+    return ptr;
 }
 
 void KernAux_Malloc_free(KernAux_Malloc malloc, void *ptr)

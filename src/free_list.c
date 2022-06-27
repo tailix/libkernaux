@@ -43,7 +43,6 @@
         }                                             \
     } while (0)
 
-static void *KernAux_FreeList_calloc (void *malloc, size_t nmemb, size_t size);
 static void  KernAux_FreeList_free   (void *malloc, void *ptr);
 static void *KernAux_FreeList_malloc (void *malloc, size_t size);
 static void *KernAux_FreeList_realloc(void *malloc, void *ptr, size_t size);
@@ -73,7 +72,7 @@ void KernAux_FreeList_init(
 ) {
     KERNAUX_ASSERT(free_list);
 
-    free_list->malloc.calloc  = KernAux_FreeList_calloc;
+    free_list->malloc.calloc  = NULL;
     free_list->malloc.free    = KernAux_FreeList_free;
     free_list->malloc.malloc  = KernAux_FreeList_malloc;
     free_list->malloc.realloc = KernAux_FreeList_realloc;
@@ -121,23 +120,6 @@ block_found:
     KernAux_FreeList_defrag(free_list);
 
     UNLOCK(free_list);
-}
-
-void *KernAux_FreeList_calloc(
-    void *const malloc,
-    const size_t nmemb,
-    const size_t size
-) {
-    KERNAUX_ASSERT(malloc);
-
-    const size_t total_size = nmemb * size;
-    KERNAUX_ASSERT(total_size >= nmemb);
-    KERNAUX_ASSERT(total_size >= size);
-    KERNAUX_ASSERT(total_size / nmemb == size);
-
-    void *const ptr = KernAux_FreeList_malloc(malloc, total_size);
-    if (ptr) memset(ptr, 0, total_size);
-    return ptr;
 }
 
 void KernAux_FreeList_free(void *const malloc, void *const ptr)
