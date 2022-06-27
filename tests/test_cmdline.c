@@ -52,15 +52,15 @@ void test_main()
     test("\\\\\\\\\\\\ \\\\\\\\\\\\ \\\\\\\\\\\\", 3, 12, true, "", 3, argv_backslashX3_X3);
     test("\\\"\\\"\\\" \\\"\\\"\\\" \\\"\\\"\\\"", 3, 12, true, "", 3, argv_quotmarkX3_X3);
 
-    test("\\ \\ \\  \\ \\ \\  \\ \\ \\ ",          2, 0,  false, "too many args",   0, NULL);
-    test("\\\\\\\\\\\\ \\\\\\\\\\\\ \\\\\\\\\\\\", 2, 0,  false, "too many args",   0, NULL);
-    test("\\\"\\\"\\\" \\\"\\\"\\\" \\\"\\\"\\\"", 2, 0,  false, "too many args",   0, NULL);
-    test("\\ \\ \\  \\ \\ \\  \\ \\ \\ ",          0, 11, false, "buffer overflow", 0, NULL);
-    test("\\\\\\\\\\\\ \\\\\\\\\\\\ \\\\\\\\\\\\", 0, 11, false, "buffer overflow", 0, NULL);
-    test("\\\"\\\"\\\" \\\"\\\"\\\" \\\"\\\"\\\"", 0, 11, false, "buffer overflow", 0, NULL);
-    test("\\ \\ \\  \\ \\ \\  \\ \\ \\ ",          2, 11, false, "too many args",   0, NULL);
-    test("\\\\\\\\\\\\ \\\\\\\\\\\\ \\\\\\\\\\\\", 2, 11, false, "too many args",   0, NULL);
-    test("\\\"\\\"\\\" \\\"\\\"\\\" \\\"\\\"\\\"", 2, 11, false, "too many args",   0, NULL);
+    test("\\ \\ \\  \\ \\ \\  \\ \\ \\ ",          2, 0,  false, "too many args",          0, NULL);
+    test("\\\\\\\\\\\\ \\\\\\\\\\\\ \\\\\\\\\\\\", 2, 0,  false, "too many args",          0, NULL);
+    test("\\\"\\\"\\\" \\\"\\\"\\\" \\\"\\\"\\\"", 2, 0,  false, "too many args",          0, NULL);
+    test("\\ \\ \\  \\ \\ \\  \\ \\ \\ ",          0, 11, false, "EOF or buffer overflow", 0, NULL);
+    test("\\\\\\\\\\\\ \\\\\\\\\\\\ \\\\\\\\\\\\", 0, 11, false, "EOF or buffer overflow", 0, NULL);
+    test("\\\"\\\"\\\" \\\"\\\"\\\" \\\"\\\"\\\"", 0, 11, false, "EOF or buffer overflow", 0, NULL);
+    test("\\ \\ \\  \\ \\ \\  \\ \\ \\ ",          2, 11, false, "too many args",          0, NULL);
+    test("\\\\\\\\\\\\ \\\\\\\\\\\\ \\\\\\\\\\\\", 2, 11, false, "too many args",          0, NULL);
+    test("\\\"\\\"\\\" \\\"\\\"\\\" \\\"\\\"\\\"", 2, 11, false, "too many args",          0, NULL);
 
     test("\\",     0, 0, false, "EOL after backslash", 0, NULL);
     test(" \\",    0, 0, false, "EOL after backslash", 0, NULL);
@@ -129,7 +129,7 @@ void test_main()
         memset(buffer, 'a', 4096);
         buffer[4096] = '\0';
         // 4096 of "a"
-        test(buffer, 256, 4096, false, "buffer overflow", 0, NULL);
+        test(buffer, 256, 4096, false, "EOF or buffer overflow", 0, NULL);
         free(buffer);
     }
 }
@@ -204,12 +204,7 @@ void test(
             ) == !!expected_result
         );
 
-        if (strcmp(expected_error_msg, "buffer overflow") == 0) {
-            assert(strcmp(error_msg, "end of file") == 0);
-        } else {
-            assert(strcmp(error_msg, expected_error_msg) == 0);
-        }
-
+        assert(strcmp(error_msg, expected_error_msg) == 0);
         assert(argc == expected_argc);
 
         if (expected_argv) {

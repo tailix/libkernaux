@@ -131,12 +131,7 @@ void test(
             ) == !!expected_result
         );
 
-        if (strcmp(expected_error_msg, "buffer overflow") == 0) {
-            assert(strcmp(error_msg, "end of file") == 0);
-        } else {
-            assert(strcmp(error_msg, expected_error_msg) == 0);
-        }
-
+        assert(strcmp(error_msg, expected_error_msg) == 0);
         assert(argc == expected_argc);
 
         if (expected_argv) {
