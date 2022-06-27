@@ -5,6 +5,11 @@
 extern "C" {
 #endif
 
+#include <stdint.h>
+
+#define KERNAUX_CONTAINER_OF(ptr, type, member) \
+    ((type*)((uintptr_t)(ptr) - offsetof(type, member)))
+
 #ifdef KERNAUX_ACCESS_PRIVATE
 #   define KERNAUX_PRIVATE_FIELD(id) id
 #   define KERNAUX_PROTECTED_FIELD(id) id
