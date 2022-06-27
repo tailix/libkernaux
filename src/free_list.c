@@ -215,31 +215,17 @@ void *KernAux_FreeList_realloc(
 
     LOCK(free_list);
 
-    void *new_ptr = NULL;
-
     KernAux_FreeList_Node node =
         CONTAINER_OF(old_ptr, struct KernAux_FreeList_Node, block);
-    KernAux_FreeList_Node last_node = NULL;
+    const size_t old_size = node->size - NODE_HEADER_SIZE;
 
-    for (
-        KernAux_FreeList_Node item_node = free_list->head;
-        item_node;
-        item_node = item_node->next
-    ) {
-        if (item_node > node) break;
-        last_node = item_node;
+    void *new_ptr = KernAux_FreeList_malloc(free_list, new_size);
+
+    if (new_ptr) {
+        const size_t min_size = old_size < new_size ? old_size : new_size;
+        memcpy(new_ptr, old_ptr, min_size);
     }
 
-    if (!last_node) goto finish;
-    const size_t old_size = last_node->size - NODE_HEADER_SIZE;
-
-    new_ptr = KernAux_FreeList_malloc(free_list, new_size);
-    if (!new_ptr) goto finish;
-
-    const size_t min_size = old_size < new_size ? old_size : new_size;
-    memcpy(new_ptr, old_ptr, min_size);
-
-finish:
     UNLOCK(free_list);
     return new_ptr;
 }
