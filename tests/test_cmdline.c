@@ -3,6 +3,7 @@
 #endif
 
 #include <kernaux/cmdline.h>
+#include <kernaux/memory_file.h>
 
 #include <assert.h>
 #include <stdbool.h>
@@ -155,33 +156,69 @@ void test(
     assert(argv);
     assert(buffer);
 
-    memset(error_msg, 'x', KERNAUX_CMDLINE_ERROR_MSG_SIZE_MAX);
-    memset(argv,      'x', sizeof(char*) * argv_count_max);
-    memset(buffer,    'x', buffer_size);
+    {
+        memset(error_msg, 'x', KERNAUX_CMDLINE_ERROR_MSG_SIZE_MAX);
+        memset(argv,      'x', sizeof(char*) * argv_count_max);
+        memset(buffer,    'x', buffer_size);
 
-    assert(
-        kernaux_cmdline(
-            cmdline,
-            error_msg,
-            &argc,
-            argv,
-            buffer,
-            argv_count_max,
-            buffer_size
-        ) == !!expected_result
-    );
+        assert(
+            kernaux_cmdline(
+                cmdline,
+                error_msg,
+                &argc,
+                argv,
+                buffer,
+                argv_count_max,
+                buffer_size
+            ) == !!expected_result
+        );
 
-    assert(strcmp(error_msg, expected_error_msg) == 0);
-    assert(argc == expected_argc);
+        assert(strcmp(error_msg, expected_error_msg) == 0);
+        assert(argc == expected_argc);
 
-    if (expected_argv) {
-        for (size_t index = 0; index < argc; ++index) {
-            assert(strcmp(argv[index], expected_argv[index]) == 0);
+        if (expected_argv) {
+            for (size_t index = 0; index < argc; ++index) {
+                assert(strcmp(argv[index], expected_argv[index]) == 0);
+            }
+        }
+
+        for (size_t index = argc; index < argv_count_max; ++index) {
+            assert(argv[index] == NULL);
         }
     }
 
-    for (size_t index = argc; index < argv_count_max; ++index) {
-        assert(argv[index] == NULL);
+    if (strcmp(expected_error_msg, "too many args") != 0) {
+        memset(error_msg, 'x', KERNAUX_CMDLINE_ERROR_MSG_SIZE_MAX);
+        memset(argv,      'x', sizeof(char*) * argv_count_max);
+        memset(buffer,    'x', buffer_size);
+
+        struct KernAux_MemoryFile memory_file =
+            KernAux_MemoryFile_create(buffer, buffer_size, NULL);
+
+        assert(
+            kernaux_cmdline_file(
+                cmdline,
+                error_msg,
+                &argc,
+                &memory_file.file
+            ) == !!expected_result
+        );
+
+        if (strcmp(expected_error_msg, "buffer overflow") == 0) {
+            assert(strcmp(error_msg, "end of file") == 0);
+        } else {
+            assert(strcmp(error_msg, expected_error_msg) == 0);
+        }
+
+        assert(argc == expected_argc);
+
+        if (expected_argv) {
+            const char *arg = buffer;
+            for (size_t index = 0; index < argc; ++index) {
+                assert(strcmp(expected_argv[index], arg) == 0);
+                arg += strlen(arg) + 1;
+            }
+        }
     }
 
     free(error_msg);
