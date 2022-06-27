@@ -28,7 +28,7 @@ static bool kernaux_cmdline_common(
     size_t argv_count_max,
     size_t buffer_size,
     KernAux_File file,
-    size_t *argv_idxs
+    size_t *arg_idxs
 );
 
 /*****************************
@@ -70,7 +70,7 @@ bool kernaux_cmdline_file(
     char *const error_msg,
     size_t *const argc,
     const KernAux_File file,
-    size_t *argv_idxs,
+    size_t *arg_idxs,
     size_t argv_count_max
 ) {
     KERNAUX_ASSERT(cmdline);
@@ -88,7 +88,7 @@ bool kernaux_cmdline_file(
         argv_count_max,
         0,
         file,
-        argv_idxs
+        arg_idxs
     );
 }
 
@@ -154,12 +154,12 @@ bool kernaux_cmdline_common(
     const size_t argv_count_max,
     const size_t buffer_size,
     const KernAux_File file,
-    size_t *argv_idxs
+    size_t *arg_idxs
 ) {
     KERNAUX_ASSERT(cmdline);
     KERNAUX_ASSERT(error_msg);
     KERNAUX_ASSERT(argc);
-    (void)argv_idxs;
+    (void)arg_idxs;
 
     memset(error_msg, '\0', KERNAUX_CMDLINE_ERROR_MSG_SIZE_MAX);
     *argc = 0;

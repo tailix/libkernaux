@@ -29,7 +29,7 @@ bool kernaux_cmdline_file(
     char *error_msg,
     size_t *argc,
     KernAux_File file,
-    size_t *argv_idxs,
+    size_t *arg_idxs,
     size_t argv_count_max
 );
 
