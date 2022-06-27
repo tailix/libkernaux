@@ -58,7 +58,8 @@ zero). Work-in-progress APIs can change at any time.
 * Algorithms
   * [Free list memory allocator](/include/kernaux/free_list.h) (*non-breaking since* **?.?.?**)
   * [Simple command line parser](/include/kernaux/cmdline.h) (*non-breaking since* **0.2.0**)
-    * [Example](/examples/cmdline.c)
+    * [Example: buffer](/examples/cmdline.c)
+    * [Example: file](/examples/cmdline_file.c)
   * [Page Frame Allocator](/include/kernaux/pfa.h) (*work in progress*)
     * [Example](/examples/pfa.c)
 * Data formats
