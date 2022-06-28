@@ -65,68 +65,6 @@ void test(
         }
     }
 
-    {
-        memset(error_msg, 'x', KERNAUX_CMDLINE_ERROR_MSG_SIZE_MAX);
-        memset(argv,      0,   sizeof(char*) * arg_count_max);
-        memset(arg_idxs,  0,   sizeof(size_t) * arg_count_max);
-        memset(buffer,    'x', buffer_size);
-
-        struct KernAux_MemoryFile memory_file =
-            KernAux_MemoryFile_create(buffer, buffer_size, NULL);
-
-        assert(
-            kernaux_cmdline_file(
-                cmdline,
-                error_msg,
-                &argc,
-                &memory_file.file,
-                arg_idxs,
-                arg_count_max
-            ) == !!expected_result
-        );
-
-        assert(strcmp(error_msg, expected_error_msg) == 0);
-        assert(argc == expected_argc);
-
-        if (expected_argv) {
-            for (size_t index = 0; index < argc; ++index) {
-                assert(strcmp(&buffer[arg_idxs[index]], expected_argv[index]) == 0);
-            }
-        }
-    }
-
-    if (strcmp(expected_error_msg, "too many args") != 0) {
-        memset(error_msg, 'x', KERNAUX_CMDLINE_ERROR_MSG_SIZE_MAX);
-        memset(argv,      0,   sizeof(char*) * arg_count_max);
-        memset(arg_idxs,  0,   sizeof(size_t) * arg_count_max);
-        memset(buffer,    'x', buffer_size);
-
-        struct KernAux_MemoryFile memory_file =
-            KernAux_MemoryFile_create(buffer, buffer_size, NULL);
-
-        assert(
-            kernaux_cmdline_file(
-                cmdline,
-                error_msg,
-                &argc,
-                &memory_file.file,
-                NULL,
-                0
-            ) == !!expected_result
-        );
-
-        assert(strcmp(error_msg, expected_error_msg) == 0);
-        assert(argc == expected_argc);
-
-        if (expected_argv) {
-            const char *arg = buffer;
-            for (size_t index = 0; index < argc; ++index) {
-                assert(strcmp(expected_argv[index], arg) == 0);
-                arg += strlen(arg) + 1;
-            }
-        }
-    }
-
     free(error_msg);
     free(argv);
     free(arg_idxs);
