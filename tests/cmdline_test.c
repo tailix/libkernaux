@@ -1,7 +1,6 @@
 #include "cmdline_test.h"
 
 #include <kernaux/cmdline.h>
-#include <kernaux/memory_file.h>
 
 #include <assert.h>
 #include <stdlib.h>

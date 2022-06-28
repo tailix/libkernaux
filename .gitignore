@@ -112,7 +112,6 @@
 /examples/generic_mutex
 /examples/macro_container_of
 /examples/memmap
-/examples/memory_file
 /examples/ntoa
 /examples/panic
 /examples/pfa

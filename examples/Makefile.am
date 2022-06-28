@@ -63,14 +63,6 @@ memmap_LDADD = $(top_builddir)/libkernaux.la
 memmap_SOURCES = main.c memmap.c
 endif
 
-###############
-# memory_file #
-###############
-
-TESTS += memory_file
-memory_file_LDADD = $(top_builddir)/libkernaux.la
-memory_file_SOURCES = main.c memory_file.c
-
 ########
 # ntoa #
 ########
