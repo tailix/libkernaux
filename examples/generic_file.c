@@ -47,7 +47,7 @@ struct MyFile MyFile_create(char *const ptr, const size_t size)
 
 int MyFile_putc(void *const file, const unsigned char c)
 {
-    MyFile my_file = file;
+    const MyFile my_file = file;
     if (my_file->pos >= my_file->size) return KERNAUX_EOF;
     my_file->ptr[my_file->pos++] = c;
     return c;

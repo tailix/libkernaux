@@ -44,13 +44,13 @@ struct MyMutex MyMutex_create()
 
 void MyMutex_lock(void *const mutex)
 {
-    MyMutex my_mutex = mutex;
+    const MyMutex my_mutex = mutex;
     pthread_mutex_lock(&my_mutex->pthread_mutex);
 }
 
 void MyMutex_unlock(void *const mutex)
 {
-    MyMutex my_mutex = mutex;
+    const MyMutex my_mutex = mutex;
     pthread_mutex_unlock(&my_mutex->pthread_mutex);
 }
 
