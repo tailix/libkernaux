@@ -33,8 +33,7 @@ libkernaux_la_SOURCES = \
 	src/libc.h \
 	src/generic/file.c \
 	src/generic/malloc.c \
-	src/generic/mutex.c \
-	src/memory_file.c
+	src/generic/mutex.c
 
 ########
 # libc #

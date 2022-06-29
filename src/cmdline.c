@@ -81,34 +81,6 @@ bool kernaux_cmdline(
     );
 }
 
-bool kernaux_cmdline_file(
-    const char *const cmdline,
-    char *const error_msg,
-    size_t *const argc,
-    const KernAux_File file,
-    size_t *arg_idxs,
-    size_t arg_count_max
-) {
-    KERNAUX_ASSERT(cmdline);
-    KERNAUX_ASSERT(error_msg);
-    KERNAUX_ASSERT(argc);
-    KERNAUX_ASSERT(file);
-    KERNAUX_ASSERT(arg_idxs == NULL || arg_count_max > 0);
-
-    return kernaux_cmdline_common(
-        cmdline,
-        error_msg,
-        argc,
-        '\0', // arg_terminator
-        NULL,
-        NULL,
-        file,
-        arg_idxs,
-        arg_count_max,
-        0
-    );
-}
-
 /*********************************
  * Implementation: main function *
  *********************************/
