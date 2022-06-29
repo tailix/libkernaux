@@ -22,16 +22,6 @@ cmdline_SOURCES = main.c cmdline.c
 endif
 
 ################
-# cmdline_file #
-################
-
-if WITH_CMDLINE
-TESTS += cmdline_file
-cmdline_file_LDADD = $(top_builddir)/libkernaux.la
-cmdline_file_SOURCES = main.c cmdline_file.c
-endif
-
-################
 # generic_file #
 ################
 
@@ -72,14 +62,6 @@ TESTS += memmap
 memmap_LDADD = $(top_builddir)/libkernaux.la
 memmap_SOURCES = main.c memmap.c
 endif
-
-###############
-# memory_file #
-###############
-
-TESTS += memory_file
-memory_file_LDADD = $(top_builddir)/libkernaux.la
-memory_file_SOURCES = main.c memory_file.c
 
 ########
 # ntoa #
