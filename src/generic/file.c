@@ -25,6 +25,43 @@ int KernAux_File_putc(const KernAux_File file, const int c)
     return file->putc((void*)file, c);
 }
 
+bool KernAux_File_gets(
+    const KernAux_File file,
+    void *const buffer,
+    size_t *const count
+) {
+    KERNAUX_ASSERT(file);
+    KERNAUX_ASSERT(buffer);
+    KERNAUX_ASSERT(count);
+    // Reserve space for the terminating null character
+    KERNAUX_ASSERT(*count > 0);
+
+    // Common implementation
+    if (*count == 1) {
+        *((char*)buffer) = '\0';
+        return true;
+    }
+
+    // Inherited implementation
+    if (file->gets) return file->gets((void*)file, buffer, count);
+
+    // Default implementation
+    size_t index = 0;
+    for (char *ss = buffer; index < *count - 1; ++ss, ++index) {
+        const int c = KernAux_File_getc(file);
+        if (c == KERNAUX_EOF) {
+            ((char*)buffer)[index] = '\0';
+            *count = index + 1;
+            return false;
+        }
+        if (c == '\0' || c == '\n') break;
+        *ss = c;
+    }
+    ((char*)buffer)[index] = '\0';
+    *count = index + 1;
+    return true;
+}
+
 bool KernAux_File_puts(const KernAux_File file, const char *const s)
 {
     KERNAUX_ASSERT(file);
