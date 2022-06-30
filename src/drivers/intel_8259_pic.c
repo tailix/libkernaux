@@ -4,6 +4,7 @@
 
 #include <kernaux/assert.h>
 #include <kernaux/drivers/intel_8259_pic.h>
+#include <kernaux/macro.h>
 
 #ifdef ASM_I386
 #include <kernaux/asm/i386.h>
@@ -47,10 +48,10 @@ void kernaux_drivers_intel_8259_pic_enable(const unsigned char number)
 
     if (number < IRQS_COUNT) {
         const uint8_t mask = inportb(MASTER_DATA_PORT);
-        outportb(MASTER_DATA_PORT, mask & ~(1 << number));
+        outportb(MASTER_DATA_PORT, mask & ~KERNAUX_BITS8(number));
     } else {
         const uint8_t mask = inportb(SLAVE_DATA_PORT);
-        outportb(SLAVE_DATA_PORT, mask & ~(1 << (number - IRQS_COUNT)));
+        outportb(SLAVE_DATA_PORT, mask & ~KERNAUX_BITS8((number - IRQS_COUNT)));
     }
 }
 
@@ -60,10 +61,10 @@ void kernaux_drivers_intel_8259_pic_disable(const unsigned char number)
 
     if (number < IRQS_COUNT) {
         const uint8_t mask = inportb(MASTER_DATA_PORT);
-        outportb(MASTER_DATA_PORT, mask | (1 << number));
+        outportb(MASTER_DATA_PORT, mask | KERNAUX_BITS8(number));
     } else {
         const uint8_t mask = inportb(SLAVE_DATA_PORT);
-        outportb(SLAVE_DATA_PORT, mask | (1 << (number - IRQS_COUNT)));
+        outportb(SLAVE_DATA_PORT, mask | KERNAUX_BITS8((number - IRQS_COUNT)));
     }
 }
 
