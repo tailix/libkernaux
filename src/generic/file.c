@@ -58,16 +58,16 @@ bool KernAux_File_read(
     if (file->read) return file->read((void*)file, buffer, count);
 
     // Default implementation
-    size_t ccount = 0;
-    for (char *ss = buffer; ccount < *count; ++ss, ++ccount) {
+    size_t index = 0;
+    for (char *ss = buffer; index < *count; ++ss, ++index) {
         const int c = KernAux_File_getc(file);
         if (c == KERNAUX_EOF) {
-            *count = ccount;
+            *count = index;
             return false;
         }
         *ss = c;
     }
-    *count = ccount;
+    *count = index;
     return true;
 }
 
@@ -86,8 +86,8 @@ bool KernAux_File_write(
     if (file->write) return file->write((void*)file, buffer, count);
 
     // Default implementation
-    size_t ccount = 0;
-    for (const char *ss = buffer; ccount < count; ++ss, ++ccount) {
+    size_t index = 0;
+    for (const char *ss = buffer; index < count; ++ss, ++index) {
         if (KernAux_File_putc(file, *ss) == KERNAUX_EOF) return false;
     }
     return true;
