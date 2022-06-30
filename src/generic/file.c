@@ -48,10 +48,11 @@ bool KernAux_File_read(
     size_t *const count
 ) {
     KERNAUX_ASSERT(file);
+    KERNAUX_ASSERT(buffer);
     KERNAUX_ASSERT(count);
 
     // Common implementation
-    if (*count == 0 || !buffer) return true;
+    if (*count == 0) return true;
 
     // Inherited implementation
     if (file->read) return file->read((void*)file, buffer, count);
@@ -74,9 +75,10 @@ bool KernAux_File_write(
     const size_t count
 ) {
     KERNAUX_ASSERT(file);
+    KERNAUX_ASSERT(buffer);
 
     // Common implementation
-    if (count == 0 || !buffer) return true;
+    if (count == 0) return true;
 
     // Inherited implementation
     if (file->write) return file->write((void*)file, buffer, count);
