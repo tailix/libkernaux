@@ -105,6 +105,7 @@ void example_main()
     assert(strcmp(buffer, hello) == 0);
     assert(memcmp(&buffer[14], data, sizeof(data)) == 0);
 
+    // Seek to the beginning of the file
     KernAux_File_rewind(&my_file.file);
 
     assert(KernAux_File_getc(&my_file.file) == 'H');
