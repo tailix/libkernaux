@@ -97,7 +97,8 @@ void example_main()
     assert(KernAux_File_putc(&my_file.file, '\0') != KERNAUX_EOF);
 
     char data[6];
-    memset(data, 0xff, sizeof(data));
+    memset(&data[0], 0xf0, 3);
+    memset(&data[3], 0xff, 3);
 
     // Write random data to the file
     assert(KernAux_File_write(&my_file.file, data, sizeof(data)) == true);
@@ -122,9 +123,9 @@ void example_main()
     assert(KernAux_File_getc(&my_file.file) == 'd');
     assert(KernAux_File_getc(&my_file.file) == '!');
     assert(KernAux_File_getc(&my_file.file) == '\0');
-    assert(KernAux_File_getc(&my_file.file) == 0xff);
-    assert(KernAux_File_getc(&my_file.file) == 0xff);
-    assert(KernAux_File_getc(&my_file.file) == 0xff);
+    assert(KernAux_File_getc(&my_file.file) == 0xf0);
+    assert(KernAux_File_getc(&my_file.file) == 0xf0);
+    assert(KernAux_File_getc(&my_file.file) == 0xf0);
     assert(KernAux_File_getc(&my_file.file) == 0xff);
     assert(KernAux_File_getc(&my_file.file) == 0xff);
     assert(KernAux_File_getc(&my_file.file) == 0xff);
