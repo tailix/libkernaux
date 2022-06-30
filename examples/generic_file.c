@@ -41,6 +41,7 @@ struct MyFile MyFile_create(char *const ptr, const size_t size)
     struct MyFile my_file;
     my_file.file.getc = MyFile_getc;
     my_file.file.putc = MyFile_putc;
+    my_file.file.gets = NULL; // "gets" has a default implementation
     my_file.file.puts = NULL; // "puts" has a default implementation
     my_file.file.read = NULL; // "read" has a default implementation
     my_file.file.write = NULL; // "write" has a default implementation
@@ -114,26 +115,17 @@ void example_main()
     // Seek to the beginning of the file
     KernAux_File_rewind(&my_file.file);
 
-    assert(KernAux_File_getc(&my_file.file) == 'H');
-    assert(KernAux_File_getc(&my_file.file) == 'e');
-    assert(KernAux_File_getc(&my_file.file) == 'l');
-    assert(KernAux_File_getc(&my_file.file) == 'l');
-    assert(KernAux_File_getc(&my_file.file) == 'o');
-    assert(KernAux_File_getc(&my_file.file) == ',');
-    assert(KernAux_File_getc(&my_file.file) == ' ');
-    assert(KernAux_File_getc(&my_file.file) == 'W');
-    assert(KernAux_File_getc(&my_file.file) == 'o');
-    assert(KernAux_File_getc(&my_file.file) == 'r');
-    assert(KernAux_File_getc(&my_file.file) == 'l');
-    assert(KernAux_File_getc(&my_file.file) == 'd');
-    assert(KernAux_File_getc(&my_file.file) == '!');
-    assert(KernAux_File_getc(&my_file.file) == '\0');
+    // Read a line from the file
+    count = 14;
+    assert(KernAux_File_gets(&my_file.file, tmp_buffer, &count) == true);
+    assert(count == 14);
 
     // Read random data from the file
     count = 6;
     assert(KernAux_File_read(&my_file.file, &tmp_buffer[14], &count) == true);
     assert(count == 6);
 
+    assert(strcmp(tmp_buffer, hello) == 0);
     assert(memcmp(&tmp_buffer[14], data, sizeof(data)) == 0);
 
     // Read a single character from the file
