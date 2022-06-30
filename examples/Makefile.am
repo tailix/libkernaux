@@ -45,6 +45,14 @@ TESTS += generic_mutex
 generic_mutex_LDADD = $(top_builddir)/libkernaux.la
 generic_mutex_SOURCES = main.c generic_mutex.c
 
+##############
+# macro_bits #
+##############
+
+TESTS += macro_bits
+macro_bits_LDADD = $(top_builddir)/libkernaux.la
+macro_bits_SOURCES = main.c macro_bits.c
+
 ######################
 # macro_container_of #
 ######################
