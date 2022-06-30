@@ -42,6 +42,7 @@ struct MyFile MyFile_create(char *const ptr, const size_t size)
     my_file.file.getc = MyFile_getc;
     my_file.file.putc = MyFile_putc;
     my_file.file.puts = NULL; // "puts" has a default implementation
+    my_file.file.read = NULL; // "read" has a default implementation
     my_file.file.write = NULL; // "write" has a default implementation
     my_file.file.rewind = MyFile_rewind;
     my_file.ptr = ptr;
@@ -86,6 +87,7 @@ static const char *const hello = "Hello, World!";
 void example_main()
 {
     char buffer[20];
+    char tmp_buffer[20];
 
     // Create file
     struct MyFile my_file = MyFile_create(buffer, sizeof(buffer));
@@ -123,11 +125,14 @@ void example_main()
     assert(KernAux_File_getc(&my_file.file) == 'd');
     assert(KernAux_File_getc(&my_file.file) == '!');
     assert(KernAux_File_getc(&my_file.file) == '\0');
-    assert(KernAux_File_getc(&my_file.file) == 0xf0);
-    assert(KernAux_File_getc(&my_file.file) == 0xf0);
-    assert(KernAux_File_getc(&my_file.file) == 0xf0);
-    assert(KernAux_File_getc(&my_file.file) == 0xff);
-    assert(KernAux_File_getc(&my_file.file) == 0xff);
-    assert(KernAux_File_getc(&my_file.file) == 0xff);
+
+    // Read random data from the file
+    size_t count = 6;
+    assert(KernAux_File_read(&my_file.file, tmp_buffer, &count) == true);
+    assert(count == 6);
+
+    assert(memcmp(&tmp_buffer[14], data, sizeof(data)) == 0);
+
+    // Read a single character from the file
     assert(KernAux_File_getc(&my_file.file) == KERNAUX_EOF);
 }
