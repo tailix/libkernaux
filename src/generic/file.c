@@ -64,3 +64,11 @@ int KernAux_File_write(
     const int icount = ccount;
     return icount >= 0 ? icount : 0;
 }
+
+void KernAux_File_rewind(const KernAux_File file)
+{
+    KERNAUX_ASSERT(file);
+    KERNAUX_ASSERT(file->rewind);
+
+    file->rewind((void*)file);
+}
