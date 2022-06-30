@@ -7,12 +7,13 @@ extern "C" {
 
 #include <kernaux/macro.h>
 
+#include <stdbool.h>
 #include <stddef.h>
 
 typedef int  (*KernAux_File_Getc)  (void *file);
 typedef int  (*KernAux_File_Putc)  (void *file, unsigned char c);
-typedef int  (*KernAux_File_Puts)  (void *file, const char *s);
-typedef int  (*KernAux_File_Write) (void *file, const void *buffer, size_t count);
+typedef bool (*KernAux_File_Puts)  (void *file, const char *s);
+typedef bool (*KernAux_File_Write) (void *file, const void *buffer, size_t count);
 typedef void (*KernAux_File_Rewind)(void *file);
 
 typedef const struct KernAux_File {
@@ -25,8 +26,8 @@ typedef const struct KernAux_File {
 
 int  KernAux_File_getc  (KernAux_File file);
 int  KernAux_File_putc  (KernAux_File file, int c);
-int  KernAux_File_puts  (KernAux_File file, const char *s);
-int  KernAux_File_write (KernAux_File file, const void *buffer, size_t count);
+bool KernAux_File_puts  (KernAux_File file, const char *s);
+bool KernAux_File_write (KernAux_File file, const void *buffer, size_t count);
 void KernAux_File_rewind(KernAux_File file);
 
 #ifdef __cplusplus

@@ -91,26 +91,16 @@ void example_main()
     struct MyFile my_file = MyFile_create(buffer, sizeof(buffer));
 
     // Write "Hello, World!" to the file
-    {
-        const int result = KernAux_File_puts(&my_file.file, hello);
-        assert(result != KERNAUX_EOF);
-    }
+    assert(KernAux_File_puts(&my_file.file, hello) == true);
 
     // Write null character to the file
-    {
-        const int result = KernAux_File_putc(&my_file.file, '\0');
-        assert(result != KERNAUX_EOF);
-    }
+    assert(KernAux_File_putc(&my_file.file, '\0') != KERNAUX_EOF);
 
     char data[6];
     memset(data, 0xff, sizeof(data));
 
     // Write random data to the file
-    {
-        const int result =
-            KernAux_File_write(&my_file.file, data, sizeof(data));
-        assert(result != KERNAUX_EOF);
-    }
+    assert(KernAux_File_write(&my_file.file, data, sizeof(data)) == true);
 
     assert(strcmp(buffer, hello) == 0);
     assert(memcmp(&buffer[14], data, sizeof(data)) == 0);
