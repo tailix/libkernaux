@@ -8,6 +8,8 @@ extern "C" {
 #include <stddef.h>
 #include <stdint.h>
 
+#define KERNAUX_EOF (-1)
+
 #define KERNAUX_CONTAINER_OF(ptr, type, member) \
     ((type*)((uintptr_t)(ptr) - offsetof(type, member)))
 
