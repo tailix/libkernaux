@@ -128,7 +128,7 @@ void example_main()
 
     // Read random data from the file
     size_t count = 6;
-    assert(KernAux_File_read(&my_file.file, tmp_buffer, &count) == true);
+    assert(KernAux_File_read(&my_file.file, &tmp_buffer[14], &count) == true);
     assert(count == 6);
 
     assert(memcmp(&tmp_buffer[14], data, sizeof(data)) == 0);
