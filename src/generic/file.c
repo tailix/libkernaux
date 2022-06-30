@@ -4,6 +4,7 @@
 
 #include <kernaux/assert.h>
 #include <kernaux/generic/file.h>
+#include <kernaux/macro.h>
 
 #include <stddef.h>
 

@@ -29,6 +29,7 @@ struct MyFile MyFile_create(char *ptr, size_t size);
 //===========
 
 #include <kernaux/generic/file.h>
+#include <kernaux/macro.h>
 #include <stddef.h>
 
 static int MyFile_putc(void *file, unsigned char c);
