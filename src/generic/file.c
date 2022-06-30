@@ -47,19 +47,18 @@ bool KernAux_File_gets(
 
     // Default implementation
     size_t index = 0;
-    for (char *ss = buffer; index < *count - 1; ++ss, ++index) {
+    for (char *ss = buffer; index < *count; ++ss, ++index) {
         const int c = KernAux_File_getc(file);
-        if (c == KERNAUX_EOF) {
-            ((char*)buffer)[index] = '\0';
+        if (c == KERNAUX_EOF || c == '\0' || c == '\n') {
+            *ss = '\0';
             *count = index + 1;
-            return false;
+            return true;
         }
-        if (c == '\0' || c == '\n') break;
         *ss = c;
     }
     ((char*)buffer)[index] = '\0';
-    *count = index + 1;
-    return true;
+    *count = index;
+    return false;
 }
 
 bool KernAux_File_puts(const KernAux_File file, const char *const s)
