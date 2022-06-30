@@ -5,6 +5,7 @@
 #include <kernaux/assert.h>
 #include <kernaux/cmdline.h>
 #include <kernaux/generic/file.h>
+#include <kernaux/macro.h>
 
 #include <stddef.h>
 #include <string.h>
