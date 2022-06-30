@@ -8,6 +8,14 @@
 
 #include <stddef.h>
 
+int KernAux_File_getc(const KernAux_File file)
+{
+    KERNAUX_ASSERT(file);
+    KERNAUX_ASSERT(file->getc);
+
+    return file->getc((void*)file);
+}
+
 int KernAux_File_putc(const KernAux_File file, const int c)
 {
     KERNAUX_ASSERT(file);
