@@ -42,6 +42,32 @@ bool KernAux_File_puts(const KernAux_File file, const char *const s)
     return true;
 }
 
+bool KernAux_File_read(
+    const KernAux_File file,
+    void *const buffer,
+    size_t *const count
+) {
+    KERNAUX_ASSERT(file);
+    KERNAUX_ASSERT(count);
+
+    // Common implementation
+    if (*count == 0 || !buffer) return true;
+
+    // Inherited implementation
+    if (file->read) return file->read((void*)file, buffer, count);
+
+    // Default implementation
+    size_t ccount = 0;
+    for (char *ss = buffer; ccount < *count; ++ss, ++ccount) {
+        if ((*ss = KernAux_File_getc(file)) == KERNAUX_EOF) {
+            *count = ccount;
+            return false;
+        }
+    }
+    *count = ccount;
+    return true;
+}
+
 bool KernAux_File_write(
     const KernAux_File file,
     const void *const buffer,
