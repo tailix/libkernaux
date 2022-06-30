@@ -41,9 +41,9 @@ struct MyFile MyFile_create(char *const ptr, const size_t size)
     struct MyFile my_file;
     my_file.file.getc = MyFile_getc;
     my_file.file.putc = MyFile_putc;
-    my_file.file.gets = NULL; // "gets" has a default implementation
-    my_file.file.puts = NULL; // "puts" has a default implementation
-    my_file.file.read = NULL; // "read" has a default implementation
+    my_file.file.gets  = NULL; // "gets"  has a default implementation
+    my_file.file.puts  = NULL; // "puts"  has a default implementation
+    my_file.file.read  = NULL; // "read"  has a default implementation
     my_file.file.write = NULL; // "write" has a default implementation
     my_file.file.rewind = MyFile_rewind;
     my_file.ptr = ptr;
@@ -89,7 +89,12 @@ void example_main()
 {
     char buffer[20];
     char tmp_buffer[20];
-    size_t count = 0;
+    size_t count;
+
+    char data[6];
+    memset(&data[0], 0xf0, 3);
+    memset(&data[3], 0xff, 3);
+
 
     // Create file
     struct MyFile my_file = MyFile_create(buffer, sizeof(buffer));
@@ -100,17 +105,10 @@ void example_main()
     // Write null character to the file
     assert(KernAux_File_putc(&my_file.file, '\0') != KERNAUX_EOF);
 
-    char data[6];
-    memset(&data[0], 0xf0, 3);
-    memset(&data[3], 0xff, 3);
-
     // Write random data to the file
     count = sizeof(data);
     assert(KernAux_File_write(&my_file.file, data, &count) == true);
     assert(count == sizeof(data));
-
-    assert(strcmp(buffer, hello) == 0);
-    assert(memcmp(&buffer[14], data, sizeof(data)) == 0);
 
     // Seek to the beginning of the file
     KernAux_File_rewind(&my_file.file);
@@ -125,9 +123,12 @@ void example_main()
     assert(KernAux_File_read(&my_file.file, &tmp_buffer[14], &count) == true);
     assert(count == 6);
 
-    assert(strcmp(tmp_buffer, hello) == 0);
-    assert(memcmp(&tmp_buffer[14], data, sizeof(data)) == 0);
-
     // Read a single character from the file
     assert(KernAux_File_getc(&my_file.file) == KERNAUX_EOF);
+
+
+    assert(strcmp(&buffer[0], hello) == 0);
+    assert(memcmp(&buffer[14], data, sizeof(data)) == 0);
+    assert(strcmp(&tmp_buffer[0], hello) == 0);
+    assert(memcmp(&tmp_buffer[14], data, sizeof(data)) == 0);
 }
