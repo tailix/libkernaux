@@ -60,10 +60,12 @@ bool KernAux_File_read(
     // Default implementation
     size_t ccount = 0;
     for (char *ss = buffer; ccount < *count; ++ss, ++ccount) {
-        if ((*ss = KernAux_File_getc(file)) == KERNAUX_EOF) {
+        const int c = KernAux_File_getc(file);
+        if (c == KERNAUX_EOF) {
             *count = ccount;
             return false;
         }
+        *ss = c;
     }
     *count = ccount;
     return true;
