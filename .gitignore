@@ -110,6 +110,7 @@
 /examples/generic_file
 /examples/generic_malloc
 /examples/generic_mutex
+/examples/macro_bits
 /examples/macro_container_of
 /examples/memmap
 /examples/ntoa

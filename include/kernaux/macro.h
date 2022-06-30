@@ -11,6 +11,13 @@ extern "C" {
 #define KERNAUX_CONTAINER_OF(ptr, type, member) \
     ((type*)((uintptr_t)(ptr) - offsetof(type, member)))
 
+#define KERNAUX_BITS(n) (1u << (n))
+
+#define KERNAUX_BITS8(n)  ((uint8_t )(((uint8_t )1) << (n)))
+#define KERNAUX_BITS16(n) ((uint16_t)(((uint16_t)1) << (n)))
+#define KERNAUX_BITS32(n) ((uint32_t)(((uint32_t)1) << (n)))
+#define KERNAUX_BITS64(n) ((uint64_t)(((uint64_t)1) << (n)))
+
 #ifdef KERNAUX_ACCESS_PRIVATE
 #   define KERNAUX_PRIVATE_FIELD(id) id
 #   define KERNAUX_PROTECTED_FIELD(id) id
