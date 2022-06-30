@@ -32,8 +32,9 @@ struct MyFile MyFile_create(char *ptr, size_t size);
 #include <kernaux/macro.h>
 #include <stddef.h>
 
-static int MyFile_getc(void *file);
-static int MyFile_putc(void *file, unsigned char c);
+static int  MyFile_getc  (void *file);
+static int  MyFile_putc  (void *file, unsigned char c);
+static void MyFile_rewind(void *file);
 
 struct MyFile MyFile_create(char *const ptr, const size_t size)
 {
@@ -42,6 +43,7 @@ struct MyFile MyFile_create(char *const ptr, const size_t size)
     my_file.file.putc = MyFile_putc;
     my_file.file.puts = NULL; // "puts" has a default implementation
     my_file.file.write = NULL; // "write" has a default implementation
+    my_file.file.rewind = MyFile_rewind;
     my_file.ptr = ptr;
     my_file.size = size;
     my_file.pos = 0;
@@ -64,6 +66,12 @@ int MyFile_putc(void *const file, const unsigned char c)
     return c;
 }
 
+void MyFile_rewind(void *const file)
+{
+    const MyFile my_file = file;
+    my_file->pos = 0;
+}
+
 //========
 // main.c
 //========
@@ -79,60 +87,55 @@ void example_main()
 {
     char buffer[20];
 
+    // Create file
+    struct MyFile my_file = MyFile_create(buffer, sizeof(buffer));
+
+    // Write "Hello, World!" to the file
     {
-        // Create file
-        struct MyFile my_file = MyFile_create(buffer, sizeof(buffer));
-
-        // Write "Hello, World!" to the file
-        {
-            const int result = KernAux_File_puts(&my_file.file, hello);
-            assert(result != KERNAUX_EOF);
-        }
-
-        // Write null character to the file
-        {
-            const int result = KernAux_File_putc(&my_file.file, '\0');
-            assert(result != KERNAUX_EOF);
-        }
-
-        char data[6];
-        memset(data, 0xff, sizeof(data));
-
-        // Write random data to the file
-        {
-            const int result =
-                KernAux_File_write(&my_file.file, data, sizeof(data));
-            assert(result != KERNAUX_EOF);
-        }
-
-        assert(strcmp(buffer, hello) == 0);
-        assert(memcmp(&buffer[14], data, sizeof(data)) == 0);
+        const int result = KernAux_File_puts(&my_file.file, hello);
+        assert(result != KERNAUX_EOF);
     }
 
+    // Write null character to the file
     {
-        // Create file
-        struct MyFile my_file = MyFile_create(buffer, sizeof(buffer));
-
-        assert(KernAux_File_getc(&my_file.file) == 'H');
-        assert(KernAux_File_getc(&my_file.file) == 'e');
-        assert(KernAux_File_getc(&my_file.file) == 'l');
-        assert(KernAux_File_getc(&my_file.file) == 'l');
-        assert(KernAux_File_getc(&my_file.file) == 'o');
-        assert(KernAux_File_getc(&my_file.file) == ',');
-        assert(KernAux_File_getc(&my_file.file) == ' ');
-        assert(KernAux_File_getc(&my_file.file) == 'W');
-        assert(KernAux_File_getc(&my_file.file) == 'o');
-        assert(KernAux_File_getc(&my_file.file) == 'r');
-        assert(KernAux_File_getc(&my_file.file) == 'l');
-        assert(KernAux_File_getc(&my_file.file) == 'd');
-        assert(KernAux_File_getc(&my_file.file) == '!');
-        assert(KernAux_File_getc(&my_file.file) == '\0');
-        assert(KernAux_File_getc(&my_file.file) == 0xff);
-        assert(KernAux_File_getc(&my_file.file) == 0xff);
-        assert(KernAux_File_getc(&my_file.file) == 0xff);
-        assert(KernAux_File_getc(&my_file.file) == 0xff);
-        assert(KernAux_File_getc(&my_file.file) == 0xff);
-        assert(KernAux_File_getc(&my_file.file) == 0xff);
-        assert(KernAux_File_getc(&my_file.file) == KERNAUX_EOF);
+        const int result = KernAux_File_putc(&my_file.file, '\0');
+        assert(result != KERNAUX_EOF);
     }
+
+    char data[6];
+    memset(data, 0xff, sizeof(data));
+
+    // Write random data to the file
+    {
+        const int result =
+            KernAux_File_write(&my_file.file, data, sizeof(data));
+        assert(result != KERNAUX_EOF);
+    }
+
+    assert(strcmp(buffer, hello) == 0);
+    assert(memcmp(&buffer[14], data, sizeof(data)) == 0);
+
+    KernAux_File_rewind(&my_file.file);
+
+    assert(KernAux_File_getc(&my_file.file) == 'H');
+    assert(KernAux_File_getc(&my_file.file) == 'e');
+    assert(KernAux_File_getc(&my_file.file) == 'l');
+    assert(KernAux_File_getc(&my_file.file) == 'l');
+    assert(KernAux_File_getc(&my_file.file) == 'o');
+    assert(KernAux_File_getc(&my_file.file) == ',');
+    assert(KernAux_File_getc(&my_file.file) == ' ');
+    assert(KernAux_File_getc(&my_file.file) == 'W');
+    assert(KernAux_File_getc(&my_file.file) == 'o');
+    assert(KernAux_File_getc(&my_file.file) == 'r');
+    assert(KernAux_File_getc(&my_file.file) == 'l');
+    assert(KernAux_File_getc(&my_file.file) == 'd');
+    assert(KernAux_File_getc(&my_file.file) == '!');
+    assert(KernAux_File_getc(&my_file.file) == '\0');
+    assert(KernAux_File_getc(&my_file.file) == 0xff);
+    assert(KernAux_File_getc(&my_file.file) == 0xff);
+    assert(KernAux_File_getc(&my_file.file) == 0xff);
+    assert(KernAux_File_getc(&my_file.file) == 0xff);
+    assert(KernAux_File_getc(&my_file.file) == 0xff);
+    assert(KernAux_File_getc(&my_file.file) == 0xff);
+    assert(KernAux_File_getc(&my_file.file) == KERNAUX_EOF);
 }
