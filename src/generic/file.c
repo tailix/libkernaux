@@ -74,20 +74,20 @@ bool KernAux_File_read(
 bool KernAux_File_write(
     const KernAux_File file,
     const void *const buffer,
-    const size_t count
+    size_t *const count
 ) {
     KERNAUX_ASSERT(file);
     KERNAUX_ASSERT(buffer);
 
     // Common implementation
-    if (count == 0) return true;
+    if (*count == 0) return true;
 
     // Inherited implementation
     if (file->write) return file->write((void*)file, buffer, count);
 
     // Default implementation
     size_t index = 0;
-    for (const char *ss = buffer; index < count; ++ss, ++index) {
+    for (const char *ss = buffer; index < *count; ++ss, ++index) {
         if (KernAux_File_putc(file, *ss) == KERNAUX_EOF) return false;
     }
     return true;

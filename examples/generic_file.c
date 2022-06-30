@@ -88,6 +88,7 @@ void example_main()
 {
     char buffer[20];
     char tmp_buffer[20];
+    size_t count = 0;
 
     // Create file
     struct MyFile my_file = MyFile_create(buffer, sizeof(buffer));
@@ -103,7 +104,9 @@ void example_main()
     memset(&data[3], 0xff, 3);
 
     // Write random data to the file
-    assert(KernAux_File_write(&my_file.file, data, sizeof(data)) == true);
+    count = sizeof(data);
+    assert(KernAux_File_write(&my_file.file, data, &count) == true);
+    assert(count == sizeof(data));
 
     assert(strcmp(buffer, hello) == 0);
     assert(memcmp(&buffer[14], data, sizeof(data)) == 0);
@@ -127,7 +130,7 @@ void example_main()
     assert(KernAux_File_getc(&my_file.file) == '\0');
 
     // Read random data from the file
-    size_t count = 6;
+    count = 6;
     assert(KernAux_File_read(&my_file.file, &tmp_buffer[14], &count) == true);
     assert(count == 6);
 
