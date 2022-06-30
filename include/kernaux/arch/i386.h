@@ -28,27 +28,27 @@ extern "C" {
     KERNAUX_ARCH_I386_ADDR_TO_PDE_ADDR(addr)
 
 // CR0 bits
-#define KERNAUX_ARCH_I386_CR0_PE ((uint32_t)0x00000001) // 0:  Protected Mode Enable
-#define KERNAUX_ARCH_I386_CR0_MP ((uint32_t)0x00000002) // 1:  Monitor co-processor
-#define KERNAUX_ARCH_I386_CR0_EM ((uint32_t)0x00000004) // 2:  x87 FPU Emulation
-#define KERNAUX_ARCH_I386_CR0_TS ((uint32_t)0x00000008) // 3:  Task switched
-#define KERNAUX_ARCH_I386_CR0_ET ((uint32_t)0x00000010) // 4:  Extension type
-#define KERNAUX_ARCH_I386_CR0_NE ((uint32_t)0x00000020) // 5:  Numeric error
-#define KERNAUX_ARCH_I386_CR0_WP ((uint32_t)0x00010000) // 16: Write protect
-#define KERNAUX_ARCH_I386_CR0_AM ((uint32_t)0x00040000) // 18: Alignment mask
-#define KERNAUX_ARCH_I386_CR0_NW ((uint32_t)0x20000000) // 29: Not-write trough
-#define KERNAUX_ARCH_I386_CR0_CD ((uint32_t)0x40000000) // 30: Cache disable
-#define KERNAUX_ARCH_I386_CR0_PG ((uint32_t)0x80000000) // 31: Paging
+#define KERNAUX_ARCH_I386_CR0_PE KERNAUX_BITS32(0)  // 0:  Protected Mode Enable
+#define KERNAUX_ARCH_I386_CR0_MP KERNAUX_BITS32(1)  // 1:  Monitor co-processor
+#define KERNAUX_ARCH_I386_CR0_EM KERNAUX_BITS32(2)  // 2:  x87 FPU Emulation
+#define KERNAUX_ARCH_I386_CR0_TS KERNAUX_BITS32(3)  // 3:  Task switched
+#define KERNAUX_ARCH_I386_CR0_ET KERNAUX_BITS32(4)  // 4:  Extension type
+#define KERNAUX_ARCH_I386_CR0_NE KERNAUX_BITS32(5)  // 5:  Numeric error
+#define KERNAUX_ARCH_I386_CR0_WP KERNAUX_BITS32(16) // 16: Write protect
+#define KERNAUX_ARCH_I386_CR0_AM KERNAUX_BITS32(18) // 18: Alignment mask
+#define KERNAUX_ARCH_I386_CR0_NW KERNAUX_BITS32(29) // 29: Not-write trough
+#define KERNAUX_ARCH_I386_CR0_CD KERNAUX_BITS32(30) // 30: Cache disable
+#define KERNAUX_ARCH_I386_CR0_PG KERNAUX_BITS32(31) // 31: Paging
 
 // Some CR4 bits
-#define KERNAUX_ARCH_I386_CR4_VME ((uint32_t)0x00000001) // 0: Virtual 8086 Mode Extensions
-#define KERNAUX_ARCH_I386_CR4_PVI ((uint32_t)0x00000002) // 1: Protected-mode Virtual Interrupts
-#define KERNAUX_ARCH_I386_CR4_TSD ((uint32_t)0x00000004) // 2: Time Stamp Disable
-#define KERNAUX_ARCH_I386_CR4_DE  ((uint32_t)0x00000008) // 3: Debugging Extensions
-#define KERNAUX_ARCH_I386_CR4_PSE ((uint32_t)0x00000010) // 4: Page Size Extension
-#define KERNAUX_ARCH_I386_CR4_PAE ((uint32_t)0x00000020) // 5: Physical Address Extension
-#define KERNAUX_ARCH_I386_CR4_MCE ((uint32_t)0x00000040) // 6: Machine Check Exception
-#define KERNAUX_ARCH_I386_CR4_PGE ((uint32_t)0x00000080) // 7: Page Global Enabled
+#define KERNAUX_ARCH_I386_CR4_VME KERNAUX_BITS32(0) // 0: Virtual 8086 Mode Extensions
+#define KERNAUX_ARCH_I386_CR4_PVI KERNAUX_BITS32(1) // 1: Protected-mode Virtual Interrupts
+#define KERNAUX_ARCH_I386_CR4_TSD KERNAUX_BITS32(2) // 2: Time Stamp Disable
+#define KERNAUX_ARCH_I386_CR4_DE  KERNAUX_BITS32(3) // 3: Debugging Extensions
+#define KERNAUX_ARCH_I386_CR4_PSE KERNAUX_BITS32(4) // 4: Page Size Extension
+#define KERNAUX_ARCH_I386_CR4_PAE KERNAUX_BITS32(5) // 5: Physical Address Extension
+#define KERNAUX_ARCH_I386_CR4_MCE KERNAUX_BITS32(6) // 6: Machine Check Exception
+#define KERNAUX_ARCH_I386_CR4_PGE KERNAUX_BITS32(7) // 7: Page Global Enabled
 // TODO: bits 8-31
 
 #include <kernaux/macro/packing_start.run>
