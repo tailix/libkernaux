@@ -1,3 +1,11 @@
+2022-06-30  Alex Kotov  <kotovalexarian@gmail.com>
+
+	* include/kernaux/macro.h: Added macros "KERNAUX_BITS[8|16|32|64]"
+
+2022-06-27  Alex Kotov  <kotovalexarian@gmail.com>
+
+	* include/kernaux/macro.h: Added macro "KERNAUX_CONTAINER_OF"
+
 2022-06-25  Alex Kotov  <kotovalexarian@gmail.com>
 
 	* configure.ac: Removed package "io"

@@ -38,15 +38,15 @@ We use [semantic versioning](https://semver.org) for stable APIs. Stable APIs
 can only change when major version number is increased (or minor while major is
 zero). Work-in-progress APIs can change at any time.
 
-* Runtime environment
+* Basic features
   * [Feature macros](/include/kernaux/version.h.in) (*work in progress*)
+  * [Macros](/include/kernaux/macro.h) (*non-breaking since* **?.?.?**)
+    * [Example: CONTAINER_OF](/examples/macro_container_of.c)
+    * [Example: BITS](/examples/macro_bits.c)
   * [Assertions](/include/kernaux/assert.h) (*non-breaking since* **0.4.0**)
     * [Example: Assert](/examples/assert.c)
     * [Example: Panic](/examples/panic.c)
   * Stack trace *(planned)*
-  * Architecture-specific code (*work in progress*)
-    * [Declarations](/include/kernaux/arch/)
-    * [Functions](/include/kernaux/asm/)
 * Generic types
   * [File](/include/kernaux/generic/file.h) (*non-breaking since* **?.?.?**)
     * [Example](/examples/generic_file.c)
@@ -86,6 +86,9 @@ zero). Work-in-progress APIs can change at any time.
   * [stdlib.h](/libc/include/stdlib.h)
   * [string.h](/libc/include/string.h)
   * [sys/types.h](/libc/include/sys/types.h)
+* Architecture-specific code (*work in progress*)
+  * [Declarations](/include/kernaux/arch/)
+  * [Functions](/include/kernaux/asm/)
 * Device drivers (for debugging only)
   * [Serial console](/include/kernaux/drivers/console.h) (*work in progress*)
   * [Framebuffer](/include/kernaux/drivers/framebuffer.h) (*planned*)

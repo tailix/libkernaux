@@ -3,6 +3,7 @@
 #endif
 
 #include <kernaux/assert.h>
+#include <kernaux/macro.h>
 #include <kernaux/pfa.h>
 
 #include "libc.h"
@@ -10,7 +11,7 @@
 #define PAGE_INDEX(page_addr) ((page_addr) / KERNAUX_PFA_PAGE_SIZE)
 
 #define FLAG_INDEX_FROM_INDEX(page_index) ((page_index) / 8)
-#define FLAG_MASK_FROM_INDEX(page_index) (1 << ((page_index) % 8))
+#define FLAG_MASK_FROM_INDEX(page_index) KERNAUX_BITS((page_index) % 8)
 
 #define FLAG_INDEX_FROM_ADDR(page_addr) \
     (FLAG_INDEX_FROM_INDEX(PAGE_INDEX(page_addr)))
