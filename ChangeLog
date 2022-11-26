@@ -1,3 +1,7 @@
+2022-11-26  Alex Kotov  <kotovalexarian@gmail.com>
+
+	* include/kernaux/printf.h: Change API
+
 2022-06-30  Alex Kotov  <kotovalexarian@gmail.com>
 
 	* include/kernaux/macro.h: Added macros "KERNAUX_BITS[8|16|32|64]"
@@ -10,7 +14,6 @@
 
 	* configure.ac: Removed package "io"
 	* include/kernaux/io.h: Removed
-	* include/kernaux/printf.h: Use new file API
 
 2022-06-24  Alex Kotov  <kotovalexarian@gmail.com>
 
