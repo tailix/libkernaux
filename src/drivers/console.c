@@ -71,7 +71,7 @@ void kernaux_drivers_console_write(const char *const data, const size_t size)
 }
 
 #ifdef WITH_PRINTF
-void file_putc(unsigned char c, void *arg __attribute__((unused)))
+void file_putc(char c, void *arg __attribute__((unused)))
 {
     kernaux_drivers_console_putc(c);
 }
