@@ -40,7 +40,7 @@ zero). Work-in-progress APIs can change at any time.
 
 * Basic features
   * [Feature macros](/include/kernaux/version.h.in) (*work in progress*)
-  * [Macros](/include/kernaux/macro.h) (*non-breaking since* **?.?.?**)
+  * [Macros](/include/kernaux/macro.h) (*non-breaking since* **0.5.0**)
     * [Example: CONTAINER_OF](/examples/macro_container_of.c)
     * [Example: BITS](/examples/macro_bits.c)
   * [Assertions](/include/kernaux/assert.h) (*non-breaking since* **0.4.0**)
@@ -48,12 +48,12 @@ zero). Work-in-progress APIs can change at any time.
     * [Example: Panic](/examples/panic.c)
   * Stack trace *(planned)*
 * Generic types
-  * [Memory allocator](/include/kernaux/generic/malloc.h) (*non-breaking since* **?.?.?**)
+  * [Memory allocator](/include/kernaux/generic/malloc.h) (*non-breaking since* **0.5.0**)
     * [Example](/examples/generic_malloc.c)
-  * [Mutex](/include/kernaux/generic/mutex.h) (*non-breaking since* **?.?.?**)
+  * [Mutex](/include/kernaux/generic/mutex.h) (*non-breaking since* **0.5.0**)
     * [Example](/examples/generic_mutex.c)
 * Algorithms
-  * [Free list memory allocator](/include/kernaux/free_list.h) (*non-breaking since* **?.?.?**)
+  * [Free list memory allocator](/include/kernaux/free_list.h) (*non-breaking since* **0.5.0**)
   * [Simple command line parser](/include/kernaux/cmdline.h) (*non-breaking since* **0.2.0**)
     * [Example](/examples/cmdline.c)
   * [Page Frame Allocator](/include/kernaux/pfa.h) (*work in progress*)
@@ -72,7 +72,7 @@ zero). Work-in-progress APIs can change at any time.
 * Usual functions
   * [itoa/ftoa replacement](/include/kernaux/ntoa.h) (*non-breaking since* **0.4.0**)
     * [Example](/examples/ntoa.c)
-  * [printf replacement](/include/kernaux/printf.h) (*non-breaking since* **?.?.?**)
+  * [printf replacement](/include/kernaux/printf.h) (*non-breaking since* **0.5.0**)
     * [Example: fprintf](/examples/printf_file.c)
     * [Example: vfprintf](/examples/printf_file_va.c)
     * [Example: snprintf](/examples/printf_str.c)

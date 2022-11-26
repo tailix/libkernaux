@@ -3,6 +3,39 @@ Releases
 
 
 
+0.5.0 (2022-11-26)
+------------------
+
+138 files changed, 2962 insertions(+), 1741 deletions(-)
+
+### Breaking changes
+
+* `./configure` - feature `--with[out]-io` has been removed.
+* `<kernaux/io.h>` - the header has been removed.
+* `<kernaux/printf.h>` - the API of the functions functions "[v]fprintf" has
+  been changed.
+
+### New features
+
+* `./configure` - package `--with[out]-asm` has been added.
+* `./configure` - packages `--with[out]-arch-(all|i386|riscv64|x86-64)` have
+  been added.
+* `./configure` - package `--with[out]-drivers` has been added.
+* `./configure` - package `--with[out]-free-list` has been added.
+* `<kernaux/free_list.h>` - new header. It's a free list memory allocator.
+* `<kernaux/macro.h>` - new header. It's a set of macros.
+* `<kernaux/macro.h>` - macro `KERNAUX_PRIVATE_FIELD` has been added.
+* `<kernaux/macro.h>` - macro `KERNAUX_PROTECTED_FIELD` has been added.
+* `<kernaux/macro.h>` - macros `KERNAUX_BITS[8|16|32|64]` have been added.
+* `<kernaux/macro.h>` - macros `KERNAUX_CONTAINER_OF` have been added.
+* `<kernaux/generic/malloc.h>` - new header. It's a generic memory allocator
+  interface.
+* `<kernaux/generic/mutex.h>` - new header. It's a generic mutex interface.
+* Definition `KERNAUX_ACCESS_PRIVATE` has been added.
+* Definition `KERNAUX_ACCESS_PROTECTED` has been added.
+
+
+
 0.4.0 (2022-06-16)
 ------------------
 
