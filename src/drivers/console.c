@@ -19,7 +19,7 @@
 #include <stddef.h>
 
 #ifdef WITH_PRINTF
-static void file_putc(unsigned char c, void *arg);
+static void file_putc(char c, void *arg);
 #endif
 
 void kernaux_drivers_console_putc(const char c __attribute__((unused)))
