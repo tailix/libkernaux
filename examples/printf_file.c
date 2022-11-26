@@ -23,7 +23,7 @@ void example_main()
 {
     const int result = kernaux_fprintf(
         my_putchar,
-        data,
+        (void*)data,
         "Hello, %s! Session ID: %u.",
         "Alex",
         123
