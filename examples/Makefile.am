@@ -21,14 +21,6 @@ cmdline_LDADD = $(top_builddir)/libkernaux.la
 cmdline_SOURCES = main.c cmdline.c
 endif
 
-################
-# generic_file #
-################
-
-TESTS += generic_file
-generic_file_LDADD = $(top_builddir)/libkernaux.la
-generic_file_SOURCES = main.c generic_file.c
-
 ##################
 # generic_malloc #
 ##################

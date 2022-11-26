@@ -14,7 +14,6 @@
 #endif
 
 #include <kernaux/assert.h>
-#include <kernaux/generic/file.h>
 #include <kernaux/printf.h>
 #include <kernaux/printf_fmt.h>
 
@@ -53,8 +52,6 @@ typedef struct {
 
 static int _vsnprintf(out_fct_type out, char* buffer, const size_t maxlen, const char* format, va_list va);
 
-static void file_putc(char c, void *arg);
-
 static inline void _out_buffer(char character, void* buffer, size_t idx, size_t maxlen);
 static inline void _out_null(char character, void* buffer, size_t idx, size_t maxlen);
 static inline void _out_fct(char character, void* buffer, size_t idx, size_t maxlen);
@@ -72,25 +69,25 @@ static size_t _etoa(out_fct_type out, char* buffer, size_t idx, size_t maxlen, d
  * Implementations: main API *
  *****************************/
 
-int kernaux_fprintf(const KernAux_File file, const char* format, ...)
+int kernaux_fprintf(void (*out)(char, void*), void *data, const char* format, ...)
 {
-    KERNAUX_ASSERT(file);
+    KERNAUX_ASSERT(out);
     KERNAUX_ASSERT(format);
 
     va_list va;
     va_start(va, format);
-    const out_fct_wrap_type out_fct_wrap = { file_putc, (void*)file };
+    const out_fct_wrap_type out_fct_wrap = { out, data };
     const int ret = _vsnprintf(_out_fct, (char*)(uintptr_t)&out_fct_wrap, (size_t)-1, format, va);
     va_end(va);
     return ret;
 }
 
-int kernaux_vfprintf(const KernAux_File file, const char* format, va_list va)
+int kernaux_vfprintf(void (*out)(char, void*), void *data, const char* format, va_list va)
 {
-    KERNAUX_ASSERT(file);
+    KERNAUX_ASSERT(out);
     KERNAUX_ASSERT(format);
 
-    const out_fct_wrap_type out_fct_wrap = { file_putc, (void*)file };
+    const out_fct_wrap_type out_fct_wrap = { out, data };
     return _vsnprintf(_out_fct, (char*)(uintptr_t)&out_fct_wrap, (size_t)-1, format, va);
 }
 
@@ -124,16 +121,6 @@ int kernaux_sprintf(char* buffer, const char* format, ...)
     const int ret = _vsnprintf(_out_buffer, buffer, (size_t)-1, format, va);
     va_end(va);
     return ret;
-}
-
-/***************************
- * Implementation: file IO *
- ***************************/
-
-void file_putc(const char c, void *const arg)
-{
-    KernAux_File file = arg;
-    KernAux_File_putc(file, c);
 }
 
 /******************************************

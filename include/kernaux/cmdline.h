@@ -5,8 +5,6 @@
 extern "C" {
 #endif
 
-#include <kernaux/generic/file.h>
-
 #include <stdbool.h>
 #include <stddef.h>
 
