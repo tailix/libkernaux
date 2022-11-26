@@ -79,6 +79,7 @@ zero). Work-in-progress APIs can change at any time.
     * [Example: vsnprintf](/examples/printf_str_va.c)
 * libc replacement (*work in progress*)
   * [ctype.h](/libc/include/ctype.h)
+  * [errno.h](/libc/include/errno.h)
   * [inttypes.h](/libc/include/inttypes.h)
   * [setjmp.h](/libc/include/setjmp.h)
   * [stdlib.h](/libc/include/stdlib.h)
