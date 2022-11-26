@@ -4,7 +4,6 @@
 
 #include <kernaux/assert.h>
 #include <kernaux/drivers/console.h>
-#include <kernaux/generic/file.h>
 
 #ifdef ASM_I386
 #include <kernaux/asm/i386.h>
@@ -20,13 +19,7 @@
 #include <stddef.h>
 
 #ifdef WITH_PRINTF
-static int file_putc(void *file, unsigned char c);
-
-static const struct KernAux_File file = {
-    .putc = file_putc,
-    .puts = NULL,
-    .write = NULL,
-};
+static void file_putc(unsigned char c, void *arg);
 #endif
 
 void kernaux_drivers_console_putc(const char c __attribute__((unused)))
@@ -55,7 +48,7 @@ void kernaux_drivers_console_printf(const char *format, ...)
 
     va_list va;
     va_start(va, format);
-    kernaux_vfprintf(&file, format, va);
+    kernaux_vfprintf(file_putc, NULL, format, va);
     va_end(va);
 }
 #endif
@@ -78,9 +71,8 @@ void kernaux_drivers_console_write(const char *const data, const size_t size)
 }
 
 #ifdef WITH_PRINTF
-int file_putc(__attribute__((unused)) void *const file, const unsigned char c)
+void file_putc(unsigned char c, void *arg __attribute__((unused)))
 {
     kernaux_drivers_console_putc(c);
-    return 1;
 }
 #endif
