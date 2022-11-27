@@ -1,3 +1,7 @@
+2022-11-27  Alex Kotov  <kotovalexarian@gmail.com>
+
+	* src/free_list.c: Bug fixed
+
 2022-11-26  Alex Kotov  <kotovalexarian@gmail.com>
 
 	libkernaux 0.5.0 released
