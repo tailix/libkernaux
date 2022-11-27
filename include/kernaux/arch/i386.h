@@ -53,6 +53,16 @@ extern "C" {
 
 #include <kernaux/macro/packing_start.run>
 
+// Global, local or interrupt descriptor table register
+// TODO: validate this according to spec
+struct KernAux_Arch_I386_DTR {
+    uint16_t size;
+    uint32_t offset;
+}
+KERNAUX_PACKING_ATTR;
+
+KERNAUX_STATIC_TEST_STRUCT_SIZE(KernAux_Arch_I386_DTR, 6);
+
 // Global or local descriptor table entry
 // TODO: validate this according to spec
 struct KernAux_Arch_I386_DTE {
