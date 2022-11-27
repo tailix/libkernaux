@@ -2,20 +2,76 @@
 #include "config.h"
 #endif
 
+#include <kernaux/libc.h>
+
 #include <ctype.h>
 #include <stdbool.h>
 #include <stdlib.h>
+#include <string.h>
 
-// TODO: stub
-void exit(const int status __attribute__((unused)))
+void exit(const int status)
 {
-    for (;;);
+    // Custom implementation
+    kernaux_libc.exit(status);
 }
 
-// TODO: stub
 void abort()
 {
-    exit(EXIT_FAILURE);
+    // Custom implementation
+    if (kernaux_libc.abort) {
+        kernaux_libc.abort();
+    }
+    // Default implementation
+    else {
+        exit(EXIT_FAILURE);
+    }
+}
+
+void *calloc(const size_t nmemb, const size_t size)
+{
+    // Common implementation
+    const size_t total_size = nmemb * size;
+    if (!total_size) return NULL;
+    if (total_size / nmemb != size) return NULL;
+
+    // Custom implementation
+    if (kernaux_libc.calloc) return kernaux_libc.calloc(nmemb, size);
+
+    // Default implementation
+    void *const ptr = malloc(total_size);
+    if (ptr) memset(ptr, 0, total_size);
+    return ptr;
+}
+
+void free(void *const ptr)
+{
+    // Common implementation
+    if (!ptr) return;
+
+    // Custom implementation
+    kernaux_libc.free(ptr);
+}
+
+void *malloc(const size_t size)
+{
+    // Common implementation
+    if (!size) return NULL;
+
+    // Custom implementation
+    return kernaux_libc.malloc(size);
+}
+
+void *realloc(void *const ptr, const size_t size)
+{
+    // Common implementation
+    if (!ptr) return malloc(size);
+    if (!size) {
+        free(ptr);
+        return NULL;
+    }
+
+    // Custom implementation
+    return kernaux_libc.realloc(ptr, size);
 }
 
 int atoi(const char *str)
