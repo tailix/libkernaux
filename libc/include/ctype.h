@@ -10,6 +10,9 @@ int islower(int c);
 int isspace(int c);
 int isupper(int c);
 
+int tolower(int c);
+int toupper(int c);
+
 #ifdef __cplusplus
 }
 #endif

@@ -23,3 +23,13 @@ int isupper(const int c)
 {
     return (unsigned)c - 'A' < 26;
 }
+
+int tolower(const int c)
+{
+    return isupper(c) ? (c + ('a' - 'A')) : c;
+}
+
+int toupper(const int c)
+{
+    return islower(c) ? (c - ('a' - 'A')) : c;
+}
