@@ -157,38 +157,38 @@ void test_hello_and_mrb_state()
     print_nodes(&free_list);
 
     {
-        char *const hello = KernAux_Malloc_malloc(&free_list.malloc, 100);
+        char *const str = KernAux_Malloc_malloc(&free_list.malloc, 100);
         printf(
             "KernAux_Malloc_malloc(&free_list.malloc, 100) = %p\n",
-            (void*)hello
+            (void*)str
         );
         print_nodes(&free_list);
 
-        assert(hello);
+        assert(str);
 
-        KernAux_Malloc_free(&free_list.malloc, hello);
+        KernAux_Malloc_free(&free_list.malloc, str);
         printf(
-            "KernAux_Malloc_free(&free_list.malloc, hello = %p)\n",
-            (void*)hello
+            "KernAux_Malloc_free(&free_list.malloc, str = %p)\n",
+            (void*)str
         );
         print_nodes(&free_list);
     }
 
     {
-        char *const hello =
+        char *const str =
             KernAux_Malloc_realloc(&free_list.malloc, NULL, 100);
         printf(
             "KernAux_Malloc_realloc(&free_list.malloc, NULL, 100) = %p\n",
-            (void*)hello
+            (void*)str
         );
         print_nodes(&free_list);
 
-        assert(hello);
+        assert(str);
 
-        KernAux_Malloc_free(&free_list.malloc, hello);
+        KernAux_Malloc_free(&free_list.malloc, str);
         printf(
-            "KernAux_Malloc_free(&free_list.malloc, hello = %p)\n",
-            (void*)hello
+            "KernAux_Malloc_free(&free_list.malloc, str = %p)\n",
+            (void*)str
         );
         print_nodes(&free_list);
     }
