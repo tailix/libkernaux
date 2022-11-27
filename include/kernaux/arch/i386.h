@@ -74,6 +74,17 @@ struct KernAux_Arch_I386_DTE {
 }
 KERNAUX_PACKING_ATTR;
 
+// Interrupt descriptor table entry
+// TODO: validate this according to spec
+struct KernAux_Arch_I386_IDTE {
+    uint16_t offset_low;
+    uint16_t selector;
+    uint8_t  _zero0;
+    uint8_t  flags;
+    uint16_t offset_high;
+}
+KERNAUX_PACKING_ATTR;
+
 KERNAUX_STATIC_TEST_STRUCT_SIZE(KernAux_Arch_I386_DTE, 8);
 
 /**
