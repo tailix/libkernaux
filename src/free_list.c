@@ -187,8 +187,6 @@ void *KernAux_FreeList_malloc(void *const malloc, size_t size)
     if (node) {
         // Can we split the block?
         if (node->size - size >= MIN_SPLIT_SIZE) {
-            node->size = NODE_HEADER_SIZE + size;
-
             KernAux_FreeList_Node new_node =
                 (KernAux_FreeList_Node)(((uintptr_t)&node->block) + size);
 
@@ -200,6 +198,7 @@ void *KernAux_FreeList_malloc(void *const malloc, size_t size)
 
             new_node->orig_ptr = new_node;
             new_node->size = node->size - size - NODE_HEADER_SIZE;
+            node->size = NODE_HEADER_SIZE + size;
             KernAux_FreeList_insert(free_list, new_node, node, node->next);
         }
 
