@@ -11,6 +11,7 @@ endif
 libc_la_SOURCES = \
 	src/ctype.c \
 	src/errno.c \
+	src/kernaux.c \
 	src/stdlib.c \
 	src/string.c
 
