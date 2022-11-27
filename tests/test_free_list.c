@@ -9,6 +9,7 @@
 #include <assert.h>
 #include <stddef.h>
 #include <stdint.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -28,6 +29,7 @@ static void test_realloc_increase();
 static void test_realloc_decrease();
 
 static size_t nodes_count(KernAux_FreeList free_list);
+static void print_nodes(KernAux_FreeList free_list);
 
 static const char *const hello = "Hello, World!";
 
@@ -60,6 +62,29 @@ size_t nodes_count(const KernAux_FreeList free_list)
         ++nodes_count;
     }
     return nodes_count;
+}
+
+void print_nodes(const KernAux_FreeList free_list)
+{
+    printf("\n\n\n");
+    printf("========================================\n");
+    printf("free_list:       %p\n", (void*)free_list);
+    printf("free_list->head: %p\n", (void*)free_list->head);
+    for (
+        KernAux_FreeList_Node item_node = free_list->head;
+        item_node;
+        item_node = item_node->next
+    ) {
+        printf("----------------------------------------\n");
+        printf("item_node:           %p\n",  (void*)item_node);
+        printf("item_node->orig_ptr: %p\n",  (void*)item_node->orig_ptr);
+        printf("item_node->next:     %p\n",  (void*)item_node->next);
+        printf("item_node->prev:     %p\n",  (void*)item_node->prev);
+        printf("&item_node->block:   %p\n",  (void*)&item_node->block);
+        printf("item_node->size:     %lu\n", item_node->size);
+    }
+    printf("========================================\n");
+    printf("\n\n\n");
 }
 
 void test_default()
@@ -120,31 +145,70 @@ void test_hello_and_mrb_state()
     assert(zone);
 
     struct KernAux_FreeList free_list = KernAux_FreeList_create(NULL);
+    printf("KernAux_FreeList_create(NULL) = %p\n", (void*)&free_list);
+    print_nodes(&free_list);
+
     KernAux_FreeList_add_zone(&free_list, zone, 1024 * 128);
+    printf(
+        "KernAux_FreeList_add_zone(&free_list, zone = %p, 1024 * 128 = %i)\n",
+        zone,
+        1024 * 128
+    );
+    print_nodes(&free_list);
 
     {
         char *const hello = KernAux_Malloc_malloc(&free_list.malloc, 100);
+        printf("KernAux_Malloc_malloc(&free_list.malloc, 100) = %p\n", hello);
+        print_nodes(&free_list);
+
         assert(hello);
+
         KernAux_Malloc_free(&free_list.malloc, hello);
+        printf("KernAux_Malloc_free(&free_list.malloc, hello = %p)\n", hello);
+        print_nodes(&free_list);
     }
 
     {
         char *const hello =
             KernAux_Malloc_realloc(&free_list.malloc, NULL, 100);
+        printf(
+            "KernAux_Malloc_realloc(&free_list.malloc, NULL, 100) = %p\n",
+            hello
+        );
+        print_nodes(&free_list);
+
         assert(hello);
+
         KernAux_Malloc_free(&free_list.malloc, hello);
+        printf("KernAux_Malloc_free(&free_list.malloc, hello = %p)\n", hello);
+        print_nodes(&free_list);
     }
 
     {
         char *const mrb = KernAux_Malloc_malloc(&free_list.malloc, 6356);
+        printf("KernAux_Malloc_malloc(&free_list.malloc, 6356) = %p\n", mrb);
+        print_nodes(&free_list);
+
         assert(mrb);
+
         KernAux_Malloc_free(&free_list.malloc, mrb);
+        printf("KernAux_Malloc_free(&free_list.malloc, mrb = %p)\n", mrb);
+        print_nodes(&free_list);
     }
 
     {
         char *const mrb = KernAux_Malloc_realloc(&free_list.malloc, NULL, 6356);
+        printf(
+            "KernAux_Malloc_realloc(&free_list.malloc, NULL, 6356) = %p\n",
+            mrb
+        );
+        print_nodes(&free_list);
+
         assert(mrb);
+
         KernAux_Malloc_free(&free_list.malloc, mrb);
+        printf("KernAux_Malloc_free(&free_list.malloc, mrb = %p)\n", mrb);
+        print_nodes(&free_list);
     }
 
     free(zone);
