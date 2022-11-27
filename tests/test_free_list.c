@@ -81,7 +81,7 @@ void print_nodes(const KernAux_FreeList free_list)
         printf("item_node->next:     %p\n",  (void*)item_node->next);
         printf("item_node->prev:     %p\n",  (void*)item_node->prev);
         printf("&item_node->block:   %p\n",  (void*)&item_node->block);
-        printf("item_node->size:     %lu\n", item_node->size);
+        printf("item_node->size:     %lu\n", (unsigned long)item_node->size);
     }
     printf("========================================\n");
     printf("\n\n\n");
