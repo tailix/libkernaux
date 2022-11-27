@@ -9,10 +9,12 @@
 #include <assert.h>
 #include <stddef.h>
 #include <stdint.h>
+#include <stdlib.h>
 #include <string.h>
 
 static void test_default();
 static void test_cross_zone_defrag();
+static void test_hello_and_mrb_state();
 
 static void test_calloc();
 static void test_calloc_nomem();
@@ -33,6 +35,7 @@ void test_main()
 {
     test_default();
     test_cross_zone_defrag();
+    test_hello_and_mrb_state();
 
     test_calloc();
     test_calloc_nomem();
@@ -109,6 +112,42 @@ void test_cross_zone_defrag()
     KernAux_FreeList_add_zone(&free_list, &zone[500], 500);
 
     assert(nodes_count(&free_list) == 1);
+}
+
+void test_hello_and_mrb_state()
+{
+    char *const zone = malloc(1024 * 128); // 128 KiB
+    assert(zone);
+
+    struct KernAux_FreeList free_list = KernAux_FreeList_create(NULL);
+    KernAux_FreeList_add_zone(&free_list, zone, 1024 * 128);
+
+    {
+        char *const hello = KernAux_Malloc_malloc(&free_list.malloc, 100);
+        assert(hello);
+        KernAux_Malloc_free(&free_list.malloc, hello);
+    }
+
+    {
+        char *const hello =
+            KernAux_Malloc_realloc(&free_list.malloc, NULL, 100);
+        assert(hello);
+        KernAux_Malloc_free(&free_list.malloc, hello);
+    }
+
+    {
+        char *const mrb = KernAux_Malloc_malloc(&free_list.malloc, 6356);
+        assert(mrb);
+        KernAux_Malloc_free(&free_list.malloc, mrb);
+    }
+
+    {
+        char *const mrb = KernAux_Malloc_realloc(&free_list.malloc, NULL, 6356);
+        assert(mrb);
+        KernAux_Malloc_free(&free_list.malloc, mrb);
+    }
+
+    free(zone);
 }
 
 void test_calloc()
