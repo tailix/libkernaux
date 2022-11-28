@@ -7,6 +7,11 @@
 
 void kernaux_drivers_shutdown_halt()
 {
+#ifdef ASM_X86
+    // Disable interrupts
+    __asm__ __volatile__("cli");
+#endif
+
     volatile int x = 0;
     for (;;) ++x;
 }
