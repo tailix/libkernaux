@@ -95,7 +95,8 @@ endif
 if WITH_DRIVERS
 nobase_include_HEADERS += \
 	kernaux/drivers/console.h \
-	kernaux/drivers/framebuffer.h
+	kernaux/drivers/framebuffer.h \
+	kernaux/drivers/qemu.h
 
 # Intel 8253-compatible programmable interval timer
 
