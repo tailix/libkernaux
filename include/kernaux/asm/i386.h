@@ -6,6 +6,7 @@ extern "C" {
 #endif
 
 #include <kernaux/arch/i386.h>
+#include <kernaux/asm/x86.h>
 
 inline static uint8_t  kernaux_asm_i386_inportb(uint16_t port);
 inline static uint16_t kernaux_asm_i386_inportw(uint16_t port);

@@ -5,6 +5,7 @@
 extern "C" {
 #endif
 
+#include <kernaux/arch/x86.h>
 #include <kernaux/macro.h>
 
 #include <stdint.h>

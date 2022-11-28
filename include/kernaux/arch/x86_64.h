@@ -5,6 +5,8 @@
 extern "C" {
 #endif
 
+#include <kernaux/arch/x86.h>
+
 #ifdef __cplusplus
 }
 #endif
