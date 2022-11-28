@@ -220,6 +220,9 @@ dnl Packages (disabled by default)
 AM_CONDITIONAL([WITH_DRIVERS],        [test "$with_drivers"        = yes])
 AM_CONDITIONAL([WITH_LIBC],           [test "$with_libc"           = yes])
 
+dnl Packages (virtual)
+AM_CONDITIONAL([WITH_ARCH_X86],       [test "$with_arch_i386" = yes -o "$with_arch_x86_64" = yes])
+
 
 
 ####################
@@ -266,6 +269,10 @@ AS_IF([test "$with_units",         = yes], [AC_DEFINE([WITH_UNITS],          [1]
 dnl Packages (disabled by default)
 AS_IF([test "$with_drivers"        = yes], [AC_DEFINE([WITH_DRIVERS],        [1], [with drivers])])
 AS_IF([test "$with_libc"           = yes], [AC_DEFINE([WITH_LIBC],           [1], [with libc replacement])])
+
+dnl Packages (virtual)
+AS_IF([test "$with_arch_i386"      = yes], [AC_DEFINE([WITH_ARCH_X86],       [1], [with architecture x86])])
+AS_IF([test "$with_arch_x86_64"    = yes], [AC_DEFINE([WITH_ARCH_X86],       [1], [with architecture x86])])
 
 dnl Additional
 AS_IF([test "$enable_debug"        = yes], [AC_DEFINE([KERNAUX_DEBUG],       [1], [enabled debugging])])
