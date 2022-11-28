@@ -17,10 +17,9 @@
 #include <kernaux/printf.h>
 #include <kernaux/printf_fmt.h>
 
-#include "libc.h"
-
 #include <stdbool.h>
 #include <stdint.h>
+#include <string.h>
 
 // import float.h for DBL_MAX
 #ifdef ENABLE_FLOAT

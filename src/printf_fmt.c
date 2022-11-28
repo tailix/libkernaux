@@ -12,11 +12,11 @@
 #include <kernaux/assert.h>
 #include <kernaux/printf_fmt.h>
 
-#include "libc.h"
-
+#include <ctype.h>
 #include <stdbool.h>
 #include <stddef.h>
 #include <stdint.h>
+#include <stdlib.h>
 
 static unsigned int _atoi(const char** str);
 
