@@ -5,6 +5,8 @@
 extern "C" {
 #endif
 
+void kernaux_drivers_qemu_poweroff();
+
 #ifdef __cplusplus
 }
 #endif
