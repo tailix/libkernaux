@@ -118,7 +118,8 @@ endif
 if WITH_DRIVERS
 libkernaux_la_SOURCES += \
 	src/drivers/console.c \
-	src/drivers/framebuffer.c
+	src/drivers/framebuffer.c \
+	src/drivers/qemu.c
 
 # Intel 8253-compatible programmable interval timer
 
