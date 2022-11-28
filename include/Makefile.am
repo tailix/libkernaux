@@ -26,6 +26,10 @@ if WITH_ARCH_X86_64
 nobase_include_HEADERS += kernaux/arch/x86_64.h
 endif
 
+if WITH_ARCH_X86
+nobase_include_HEADERS += kernaux/arch/x86.h
+endif
+
 #######
 # ASM #
 #######
@@ -39,6 +43,10 @@ nobase_include_HEADERS += kernaux/asm/riscv64.h
 endif
 if ASM_X86_64
 nobase_include_HEADERS += kernaux/asm/x86_64.h
+endif
+
+if ASM_X86
+nobase_include_HEADERS += kernaux/asm/x86.h
 endif
 endif
 

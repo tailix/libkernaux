@@ -5,7 +5,7 @@
 extern "C" {
 #endif
 
-#include <stdint.h>
+#include <kernaux/arch/x86.h>
 
 #ifdef __cplusplus
 }

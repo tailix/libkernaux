@@ -24,11 +24,8 @@ static void file_putc(char c, void *arg);
 
 void kernaux_drivers_console_putc(const char c __attribute__((unused)))
 {
-#ifdef ASM_I386
-    kernaux_asm_i386_outportb(0x3f8, c);
-#endif
-#ifdef ASM_X86_64
-    kernaux_asm_x86_64_outportb(0x3f8, c);
+#ifdef ASM_X86
+    kernaux_asm_x86_outportb(0x3f8, c);
 #endif
 }
 
