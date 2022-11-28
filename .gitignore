@@ -126,6 +126,7 @@
 /tests/multiboot2_header_print2
 /tests/multiboot2_info_print1
 /tests/multiboot2_info_print2
+/tests/test_arch_i386
 /tests/test_cmdline
 /tests/test_cmdline_gen
 /tests/test_cmdline_gen.c
