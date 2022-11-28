@@ -35,7 +35,7 @@ API
 ### Headers
 
 We use [semantic versioning](https://semver.org) for stable APIs. Stable APIs
-can only change when major version number is increased (or minor while major is
+may only change when major version number is increased (or minor while major is
 zero). Work-in-progress APIs can change at any time.
 
 * Basic features
