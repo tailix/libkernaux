@@ -37,7 +37,8 @@ struct KernAux_PrintfFmt_Spec KernAux_PrintfFmt_Spec_create_out(
 ) {
     KERNAUX_ASSERT(format);
 
-    const struct KernAux_PrintfFmt_Spec spec = KernAux_PrintfFmt_Spec_create(*format);
+    const struct KernAux_PrintfFmt_Spec spec =
+        KernAux_PrintfFmt_Spec_create(*format);
     *format = spec.format_limit;
     return spec;
 }
@@ -50,7 +51,8 @@ struct KernAux_PrintfFmt_Spec KernAux_PrintfFmt_Spec_create_out_new(
     KERNAUX_ASSERT(new_format);
 
     *new_format = NULL;
-    const struct KernAux_PrintfFmt_Spec spec = KernAux_PrintfFmt_Spec_create(format);
+    const struct KernAux_PrintfFmt_Spec spec =
+        KernAux_PrintfFmt_Spec_create(format);
     *new_format = spec.format_limit;
     return spec;
 }
@@ -115,11 +117,26 @@ void parse_flags(const Spec spec, const char **const format)
     bool running = true;
     do {
         switch (**format) {
-            case '0': spec->flags |= KERNAUX_PRINTF_FMT_FLAGS_ZEROPAD; ++(*format); break;
-            case '-': spec->flags |= KERNAUX_PRINTF_FMT_FLAGS_LEFT;    ++(*format); break;
-            case '+': spec->flags |= KERNAUX_PRINTF_FMT_FLAGS_PLUS;    ++(*format); break;
-            case ' ': spec->flags |= KERNAUX_PRINTF_FMT_FLAGS_SPACE;   ++(*format); break;
-            case '#': spec->flags |= KERNAUX_PRINTF_FMT_FLAGS_HASH;    ++(*format); break;
+            case '0':
+                spec->flags |= KERNAUX_PRINTF_FMT_FLAGS_ZEROPAD;
+                ++(*format);
+                break;
+            case '-':
+                spec->flags |= KERNAUX_PRINTF_FMT_FLAGS_LEFT;
+                ++(*format);
+                break;
+            case '+':
+                spec->flags |= KERNAUX_PRINTF_FMT_FLAGS_PLUS;
+                ++(*format);
+                break;
+            case ' ':
+                spec->flags |= KERNAUX_PRINTF_FMT_FLAGS_SPACE;
+                ++(*format);
+                break;
+            case '#':
+                spec->flags |= KERNAUX_PRINTF_FMT_FLAGS_HASH;
+                ++(*format);
+                break;
             default: running = false; break;
         }
     } while (running);
@@ -189,15 +206,27 @@ void parse_length(const Spec spec, const char **const format)
             }
             break;
         case 't':
-            spec->flags |= (sizeof(ptrdiff_t) == sizeof(long) ? KERNAUX_PRINTF_FMT_FLAGS_LONG : KERNAUX_PRINTF_FMT_FLAGS_LONG_LONG);
+            if (sizeof(ptrdiff_t) == sizeof(long)) {
+                spec->flags |= KERNAUX_PRINTF_FMT_FLAGS_LONG;
+            } else {
+                spec->flags |= KERNAUX_PRINTF_FMT_FLAGS_LONG_LONG;
+            }
             ++(*format);
             break;
         case 'j':
-            spec->flags |= (sizeof(intmax_t) == sizeof(long) ? KERNAUX_PRINTF_FMT_FLAGS_LONG : KERNAUX_PRINTF_FMT_FLAGS_LONG_LONG);
+            if (sizeof(ptrdiff_t) == sizeof(long)) {
+                spec->flags |= KERNAUX_PRINTF_FMT_FLAGS_LONG;
+            } else {
+                spec->flags |= KERNAUX_PRINTF_FMT_FLAGS_LONG_LONG;
+            }
             ++(*format);
             break;
         case 'z':
-            spec->flags |= (sizeof(size_t) == sizeof(long) ? KERNAUX_PRINTF_FMT_FLAGS_LONG : KERNAUX_PRINTF_FMT_FLAGS_LONG_LONG);
+            if (sizeof(ptrdiff_t) == sizeof(long)) {
+                spec->flags |= KERNAUX_PRINTF_FMT_FLAGS_LONG;
+            } else {
+                spec->flags |= KERNAUX_PRINTF_FMT_FLAGS_LONG_LONG;
+            }
             ++(*format);
             break;
         default:
@@ -228,7 +257,8 @@ void parse_type(const Spec spec, const char **const format)
                 spec->base = 2u;
             } else {
                 spec->base = 10u;
-                spec->flags &= ~KERNAUX_PRINTF_FMT_FLAGS_HASH; // no hash for dec format
+                // no hash for dec format
+                spec->flags &= ~KERNAUX_PRINTF_FMT_FLAGS_HASH;
             }
             // uppercase
             if (**format == 'X') {
@@ -237,7 +267,8 @@ void parse_type(const Spec spec, const char **const format)
 
             // no plus or space flag for u, x, X, o, b
             if ((**format != 'i') && (**format != 'd')) {
-                spec->flags &= ~(KERNAUX_PRINTF_FMT_FLAGS_PLUS | KERNAUX_PRINTF_FMT_FLAGS_SPACE);
+                spec->flags &= ~(KERNAUX_PRINTF_FMT_FLAGS_PLUS |
+                                 KERNAUX_PRINTF_FMT_FLAGS_SPACE);
             }
 
             // ignore '0' flag when precision is given
@@ -257,7 +288,9 @@ void parse_type(const Spec spec, const char **const format)
 #ifdef ENABLE_FLOAT
         case 'f':
         case 'F':
-            if (**format == 'F') spec->flags |= KERNAUX_PRINTF_FMT_FLAGS_UPPERCASE;
+            if (**format == 'F') {
+                spec->flags |= KERNAUX_PRINTF_FMT_FLAGS_UPPERCASE;
+            }
             spec->type = KERNAUX_PRINTF_FMT_TYPE_FLOAT;
             ++(*format);
             break;
@@ -266,8 +299,12 @@ void parse_type(const Spec spec, const char **const format)
         case 'E':
         case 'g':
         case 'G':
-            if ((**format == 'g')||(**format == 'G')) spec->flags |= KERNAUX_PRINTF_FMT_FLAGS_ADAPT_EXP;
-            if ((**format == 'E')||(**format == 'G')) spec->flags |= KERNAUX_PRINTF_FMT_FLAGS_UPPERCASE;
+            if ((**format == 'g') || (**format == 'G')) {
+                spec->flags |= KERNAUX_PRINTF_FMT_FLAGS_ADAPT_EXP;
+            }
+            if ((**format == 'E') || (**format == 'G')) {
+                spec->flags |= KERNAUX_PRINTF_FMT_FLAGS_UPPERCASE;
+            }
             spec->type = KERNAUX_PRINTF_FMT_TYPE_EXP;
             ++(*format);
             break;
@@ -285,7 +322,8 @@ void parse_type(const Spec spec, const char **const format)
 
         case 'p':
             spec->width = sizeof(void*) * 2u;
-            spec->flags |= KERNAUX_PRINTF_FMT_FLAGS_ZEROPAD | KERNAUX_PRINTF_FMT_FLAGS_UPPERCASE;
+            spec->flags |= KERNAUX_PRINTF_FMT_FLAGS_ZEROPAD |
+                           KERNAUX_PRINTF_FMT_FLAGS_UPPERCASE;
             spec->type = KERNAUX_PRINTF_FMT_TYPE_PTR;
             ++(*format);
             break;
