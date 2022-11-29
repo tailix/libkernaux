@@ -4,6 +4,7 @@
 	"KERNAUX_PACKED"
 	* include/kernaux/macro.h: Add macros "KERNAUX_UNUSED", "KERNAUX_NORETURN",
 	"KERNAUX_RETURNS_TWICE", "KERNAUX_ASM"
+	* include/kernaux/printf_fmt.h: Make stable
 
 2022-11-27  Alex Kotov  <kotovalexarian@gmail.com>
 

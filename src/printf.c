@@ -150,9 +150,7 @@ int _vsnprintf(out_fct_type out, char* buffer, const size_t maxlen, const char* 
             format++;
         }
 
-        struct KernAux_PrintfFmt_Spec spec = KernAux_PrintfFmt_Spec_create();
-
-        format = KernAux_PrintfFmt_Spec_parse(&spec, format);
+        struct KernAux_PrintfFmt_Spec spec = KernAux_PrintfFmt_Spec_create_out(&format);
 
         if (spec.set_width) {
             KernAux_PrintfFmt_Spec_set_width(&spec, va_arg(va, int));

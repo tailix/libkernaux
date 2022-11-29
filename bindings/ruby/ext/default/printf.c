@@ -85,9 +85,7 @@ VALUE rb_KernAux_snprintf1(
     while (*fmt && *fmt != '%') ++fmt;
     if (*(fmt++) != '%') rb_raise(rb_eArgError, "invalid format");
 
-    struct KernAux_PrintfFmt_Spec spec = KernAux_PrintfFmt_Spec_create();
-
-    fmt = KernAux_PrintfFmt_Spec_parse(&spec, fmt);
+    struct KernAux_PrintfFmt_Spec spec = KernAux_PrintfFmt_Spec_create_out(&fmt);
 
     while (*fmt) {
         if (*(fmt++) == '%') rb_raise(rb_eArgError, "invalid format");

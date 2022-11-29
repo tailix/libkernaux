@@ -56,9 +56,7 @@ mrb_value rb_KernAux_snprintf1(mrb_state *const mrb, mrb_value self)
     while (*fmt && *fmt != '%') ++fmt;
     if (*(fmt++) != '%') mrb_raise(mrb, E_ARGUMENT_ERROR, "invalid format");
 
-    struct KernAux_PrintfFmt_Spec spec = KernAux_PrintfFmt_Spec_create();
-
-    fmt = KernAux_PrintfFmt_Spec_parse(&spec, fmt);
+    struct KernAux_PrintfFmt_Spec spec = KernAux_PrintfFmt_Spec_create_out(&fmt);
 
     while (*fmt) {
         if (*(fmt++) == '%') mrb_raise(mrb, E_ARGUMENT_ERROR, "invalid format");
