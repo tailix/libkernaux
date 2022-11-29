@@ -18,11 +18,13 @@
 #include <stddef.h>
 #include <stdint.h>
 
-static void parse_flags(struct KernAux_PrintfFmt_Spec *spec, const char **format);
-static void parse_width(struct KernAux_PrintfFmt_Spec *spec, const char **format);
-static void parse_precision(struct KernAux_PrintfFmt_Spec *spec, const char **format);
-static void parse_length(struct KernAux_PrintfFmt_Spec *spec, const char **format);
-static void parse_type(struct KernAux_PrintfFmt_Spec *spec, const char **format);
+typedef struct KernAux_PrintfFmt_Spec *Spec;
+
+static void parse_flags    (Spec spec, const char **format);
+static void parse_width    (Spec spec, const char **format);
+static void parse_precision(Spec spec, const char **format);
+static void parse_length   (Spec spec, const char **format);
+static void parse_type     (Spec spec, const char **format);
 
 static unsigned int _atoi(const char** str);
 
@@ -30,8 +32,9 @@ static unsigned int _atoi(const char** str);
  * Public function implementations *
  ***********************************/
 
-struct KernAux_PrintfFmt_Spec KernAux_PrintfFmt_Spec_create_out(const char **const format)
-{
+struct KernAux_PrintfFmt_Spec KernAux_PrintfFmt_Spec_create_out(
+    const char **const format
+) {
     KERNAUX_ASSERT(format);
 
     const struct KernAux_PrintfFmt_Spec spec = KernAux_PrintfFmt_Spec_create(*format);
@@ -39,8 +42,10 @@ struct KernAux_PrintfFmt_Spec KernAux_PrintfFmt_Spec_create_out(const char **con
     return spec;
 }
 
-struct KernAux_PrintfFmt_Spec KernAux_PrintfFmt_Spec_create_out_new(const char *const format, const char **const new_format)
-{
+struct KernAux_PrintfFmt_Spec KernAux_PrintfFmt_Spec_create_out_new(
+    const char *const format,
+    const char **const new_format
+) {
     KERNAUX_ASSERT(format);
     KERNAUX_ASSERT(new_format);
 
@@ -78,7 +83,7 @@ struct KernAux_PrintfFmt_Spec KernAux_PrintfFmt_Spec_create(const char *format)
     return spec;
 }
 
-void KernAux_PrintfFmt_Spec_set_width(struct KernAux_PrintfFmt_Spec *const spec, const int width)
+void KernAux_PrintfFmt_Spec_set_width(const Spec spec, const int width)
 {
     KERNAUX_ASSERT(spec);
 
@@ -90,7 +95,7 @@ void KernAux_PrintfFmt_Spec_set_width(struct KernAux_PrintfFmt_Spec *const spec,
     }
 }
 
-void KernAux_PrintfFmt_Spec_set_precision(struct KernAux_PrintfFmt_Spec *const spec, const int precision)
+void KernAux_PrintfFmt_Spec_set_precision(const Spec spec, const int precision)
 {
     KERNAUX_ASSERT(spec);
 
@@ -101,7 +106,7 @@ void KernAux_PrintfFmt_Spec_set_precision(struct KernAux_PrintfFmt_Spec *const s
  * Private function implementations *
  ************************************/
 
-void parse_flags(struct KernAux_PrintfFmt_Spec *const spec, const char **const format)
+void parse_flags(const Spec spec, const char **const format)
 {
     KERNAUX_ASSERT(spec);
     KERNAUX_ASSERT(format);
@@ -120,7 +125,7 @@ void parse_flags(struct KernAux_PrintfFmt_Spec *const spec, const char **const f
     } while (running);
 }
 
-void parse_width(struct KernAux_PrintfFmt_Spec *const spec, const char **const format)
+void parse_width(const Spec spec, const char **const format)
 {
     KERNAUX_ASSERT(spec);
     KERNAUX_ASSERT(format);
@@ -137,7 +142,7 @@ void parse_width(struct KernAux_PrintfFmt_Spec *const spec, const char **const f
     }
 }
 
-void parse_precision(struct KernAux_PrintfFmt_Spec *const spec, const char **const format)
+void parse_precision(const Spec spec, const char **const format)
 {
     KERNAUX_ASSERT(spec);
     KERNAUX_ASSERT(format);
@@ -160,7 +165,7 @@ void parse_precision(struct KernAux_PrintfFmt_Spec *const spec, const char **con
     }
 }
 
-void parse_length(struct KernAux_PrintfFmt_Spec *const spec, const char **const format)
+void parse_length(const Spec spec, const char **const format)
 {
     KERNAUX_ASSERT(spec);
     KERNAUX_ASSERT(format);
@@ -200,7 +205,7 @@ void parse_length(struct KernAux_PrintfFmt_Spec *const spec, const char **const 
     }
 }
 
-void parse_type(struct KernAux_PrintfFmt_Spec *const spec, const char **const format)
+void parse_type(const Spec spec, const char **const format)
 {
     KERNAUX_ASSERT(spec);
     KERNAUX_ASSERT(format);
