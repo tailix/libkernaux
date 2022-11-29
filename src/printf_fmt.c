@@ -30,12 +30,13 @@ static unsigned int _atoi(const char** str);
  * Public function implementations *
  ***********************************/
 
-struct KernAux_PrintfFmt_Spec KernAux_PrintfFmt_Spec_create()
+struct KernAux_PrintfFmt_Spec KernAux_PrintfFmt_Spec_create(const char *format)
 {
+    KERNAUX_ASSERT(format);
+
     struct KernAux_PrintfFmt_Spec spec;
 
-    spec.format_start = NULL;
-    spec.format_limit = NULL;
+    spec.format_start = format;
 
     spec.flags = 0u;
     spec.width = 0u;
@@ -46,25 +47,15 @@ struct KernAux_PrintfFmt_Spec KernAux_PrintfFmt_Spec_create()
     spec.set_width = false;
     spec.set_precision = false;
 
+    parse_flags(&spec, &format);
+    parse_width(&spec, &format);
+    parse_precision(&spec, &format);
+    parse_length(&spec, &format);
+    parse_type(&spec, &format);
+
+    spec.format_limit = format;
+
     return spec;
-}
-
-const char *KernAux_PrintfFmt_Spec_parse(struct KernAux_PrintfFmt_Spec *spec, const char *format)
-{
-    KERNAUX_ASSERT(spec);
-    KERNAUX_ASSERT(format);
-
-    spec->format_start = format;
-
-    parse_flags(spec, &format);
-    parse_width(spec, &format);
-    parse_precision(spec, &format);
-    parse_length(spec, &format);
-    parse_type(spec, &format);
-
-    spec->format_limit = format;
-
-    return format;
 }
 
 void KernAux_PrintfFmt_Spec_set_width(struct KernAux_PrintfFmt_Spec *const spec, const int width)

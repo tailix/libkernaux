@@ -5,11 +5,9 @@
 void example_main()
 {
     {
-        const char *format = "s";
+        const char *const format = "s";
 
-        struct KernAux_PrintfFmt_Spec spec = KernAux_PrintfFmt_Spec_create();
-
-        format = KernAux_PrintfFmt_Spec_parse(&spec, format);
+        struct KernAux_PrintfFmt_Spec spec = KernAux_PrintfFmt_Spec_create(format);
 
         if (spec.set_width) {
             // Actually this line won't be executed.
@@ -19,6 +17,9 @@ void example_main()
             // Actually this line won't be executed.
             KernAux_PrintfFmt_Spec_set_precision(&spec, 0);
         }
+
+        assert(spec.format_start == format);
+        assert(spec.format_limit == &format[1]);
 
         assert(spec.flags == 0);
         assert(spec.width == 0);
@@ -28,11 +29,9 @@ void example_main()
     }
 
     {
-        const char *format = "012.34f";
+        const char *const format = "012.34f";
 
-        struct KernAux_PrintfFmt_Spec spec = KernAux_PrintfFmt_Spec_create();
-
-        format = KernAux_PrintfFmt_Spec_parse(&spec, format);
+        struct KernAux_PrintfFmt_Spec spec = KernAux_PrintfFmt_Spec_create(format);
 
         if (spec.set_width) {
             // Actually this line won't be executed.
@@ -42,6 +41,9 @@ void example_main()
             // Actually this line won't be executed.
             KernAux_PrintfFmt_Spec_set_precision(&spec, 0);
         }
+
+        assert(spec.format_start == format);
+        assert(spec.format_limit == &format[7]);
 
         assert(
             spec.flags ==
@@ -59,10 +61,7 @@ void example_main()
     {
         const char *const format = " *.*ld";
 
-        struct KernAux_PrintfFmt_Spec spec = KernAux_PrintfFmt_Spec_create();
-
-        // Returning value may be ignored.
-        KernAux_PrintfFmt_Spec_parse(&spec, format);
+        struct KernAux_PrintfFmt_Spec spec = KernAux_PrintfFmt_Spec_create(format);
 
         if (spec.set_width) {
             KernAux_PrintfFmt_Spec_set_width(&spec, 12);
@@ -70,6 +69,9 @@ void example_main()
         if (spec.set_precision) {
             KernAux_PrintfFmt_Spec_set_precision(&spec, 34);
         }
+
+        assert(spec.format_start == format);
+        assert(spec.format_limit == &format[6]);
 
         assert(
             spec.flags ==
