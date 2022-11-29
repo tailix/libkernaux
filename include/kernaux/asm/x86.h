@@ -6,6 +6,7 @@ extern "C" {
 #endif
 
 #include <kernaux/arch/x86.h>
+#include <kernaux/macro.h>
 
 #include <stdint.h>
 
@@ -20,37 +21,37 @@ inline static void kernaux_asm_x86_outportd(uint16_t port, uint32_t value);
 uint8_t kernaux_asm_x86_inportb(const uint16_t port)
 {
     register uint8_t result;
-    __asm__ volatile("inb %1, %0" : "=a" (result) : "dN" (port));
+    KERNAUX_ASM("inb %1, %0" : "=a" (result) : "dN" (port));
     return result;
 }
 
 uint16_t kernaux_asm_x86_inportw(const uint16_t port)
 {
     register uint16_t result;
-    __asm__ volatile("inw %1, %0" : "=a" (result) : "dN" (port));
+    KERNAUX_ASM("inw %1, %0" : "=a" (result) : "dN" (port));
     return result;
 }
 
 uint32_t kernaux_asm_x86_inportd(const uint16_t port)
 {
     register uint32_t result;
-    __asm__ volatile("inl %1, %0" : "=a" (result) : "dN" (port));
+    KERNAUX_ASM("inl %1, %0" : "=a" (result) : "dN" (port));
     return result;
 }
 
 void kernaux_asm_x86_outportb(const uint16_t port, const uint8_t value)
 {
-    __asm__ volatile("outb %1, %0" : : "dN" (port), "a" (value));
+    KERNAUX_ASM("outb %1, %0" : : "dN" (port), "a" (value));
 }
 
 void kernaux_asm_x86_outportw(const uint16_t port, const uint16_t value)
 {
-    __asm__ volatile("outw %1, %0" : : "dN" (port), "a" (value));
+    KERNAUX_ASM("outw %1, %0" : : "dN" (port), "a" (value));
 }
 
 void kernaux_asm_x86_outportd(const uint16_t port, const uint32_t value)
 {
-    __asm__ volatile("outl %1, %0" : : "dN" (port), "a" (value));
+    KERNAUX_ASM("outl %1, %0" : : "dN" (port), "a" (value));
 }
 
 #ifdef __cplusplus

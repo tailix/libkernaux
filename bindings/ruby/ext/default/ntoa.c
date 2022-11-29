@@ -138,7 +138,7 @@ VALUE rb_KernAux_itoa(const int argc, const VALUE *argv, const VALUE self)
 }
 
 VALUE rb_KernAux_utoa2(
-    const VALUE self_rb __attribute__((unused)),
+    const VALUE self_rb KERNAUX_UNUSED,
     const VALUE number_rb
 ) {
     const uint64_t number = NUM2ULL(number_rb);
@@ -151,7 +151,7 @@ VALUE rb_KernAux_utoa2(
 }
 
 VALUE rb_KernAux_itoa2(
-    const VALUE self_rb __attribute__((unused)),
+    const VALUE self_rb KERNAUX_UNUSED,
     const VALUE number_rb
 ) {
     const int64_t number = NUM2LL(number_rb);
@@ -161,7 +161,7 @@ VALUE rb_KernAux_itoa2(
 }
 
 VALUE rb_KernAux_utoa8(
-    const VALUE self_rb __attribute__((unused)),
+    const VALUE self_rb KERNAUX_UNUSED,
     const VALUE number_rb
 ) {
     const uint64_t number = NUM2ULL(number_rb);
@@ -174,7 +174,7 @@ VALUE rb_KernAux_utoa8(
 }
 
 VALUE rb_KernAux_itoa8(
-    const VALUE self_rb __attribute__((unused)),
+    const VALUE self_rb KERNAUX_UNUSED,
     const VALUE number_rb
 ) {
     const int64_t number = NUM2LL(number_rb);
@@ -184,7 +184,7 @@ VALUE rb_KernAux_itoa8(
 }
 
 VALUE rb_KernAux_utoa10(
-    const VALUE self_rb __attribute__((unused)),
+    const VALUE self_rb KERNAUX_UNUSED,
     const VALUE number_rb
 ) {
     const uint64_t number = NUM2ULL(number_rb);
@@ -197,7 +197,7 @@ VALUE rb_KernAux_utoa10(
 }
 
 VALUE rb_KernAux_itoa10(
-    const VALUE self_rb __attribute__((unused)),
+    const VALUE self_rb KERNAUX_UNUSED,
     const VALUE number_rb
 ) {
     const int64_t number = NUM2LL(number_rb);
@@ -207,7 +207,7 @@ VALUE rb_KernAux_itoa10(
 }
 
 VALUE rb_KernAux_utoa16(
-    const VALUE self_rb __attribute__((unused)),
+    const VALUE self_rb KERNAUX_UNUSED,
     const VALUE number_rb
 ) {
     const uint64_t number = NUM2ULL(number_rb);
@@ -220,7 +220,7 @@ VALUE rb_KernAux_utoa16(
 }
 
 VALUE rb_KernAux_itoa16(
-    const VALUE self_rb __attribute__((unused)),
+    const VALUE self_rb KERNAUX_UNUSED,
     const VALUE number_rb
 ) {
     const int64_t number = NUM2LL(number_rb);

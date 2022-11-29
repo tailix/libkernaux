@@ -36,7 +36,7 @@ struct KernAux_ELF_Header {
     unsigned sect_entr_num  : 16;
     unsigned sect_names_idx : 16;
 }
-KERNAUX_PACKING_ATTR;
+KERNAUX_PACKED;
 
 KERNAUX_STATIC_TEST_STRUCT_SIZE(KernAux_ELF_Header, 52);
 
@@ -50,7 +50,7 @@ struct KernAux_ELF_ProgramEntry {
     unsigned flags     : 32;
     unsigned align     : 32;
 }
-KERNAUX_PACKING_ATTR;
+KERNAUX_PACKED;
 
 KERNAUX_STATIC_TEST_STRUCT_SIZE(KernAux_ELF_ProgramEntry, 32);
 
@@ -66,7 +66,7 @@ struct KernAux_ELF_SectionEntry {
     unsigned alignment   : 32;
     unsigned ent_size    : 32;
 }
-KERNAUX_PACKING_ATTR;
+KERNAUX_PACKED;
 
 KERNAUX_STATIC_TEST_STRUCT_SIZE(KernAux_ELF_SectionEntry, 40);
 
@@ -74,7 +74,7 @@ struct KernAux_ELF_RelocationEntry {
     unsigned virt_addr : 32;
     unsigned info      : 32;
 }
-KERNAUX_PACKING_ATTR;
+KERNAUX_PACKED;
 
 KERNAUX_STATIC_TEST_STRUCT_SIZE(KernAux_ELF_RelocationEntry, 8);
 

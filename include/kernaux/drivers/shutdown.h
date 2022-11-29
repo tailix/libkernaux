@@ -5,7 +5,9 @@
 extern "C" {
 #endif
 
-__attribute__((noreturn))
+#include <kernaux/macro.h>
+
+KERNAUX_NORETURN
 void kernaux_drivers_shutdown_halt();
 void kernaux_drivers_shutdown_poweroff();
 

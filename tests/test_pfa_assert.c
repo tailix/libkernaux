@@ -3,6 +3,7 @@
 #endif
 
 #include <kernaux/assert.h>
+#include <kernaux/macro.h>
 #include <kernaux/pfa.h>
 
 #include <assert.h>
@@ -14,12 +15,9 @@ static unsigned int count = 0;
 static jmp_buf jmpbuf;
 
 static void assert_cb(
-    __attribute__((unused))
-    const char *const file,
-    __attribute__((unused))
-    const int line,
-    __attribute__((unused))
-    const char *const str
+    const char *const file KERNAUX_UNUSED,
+    const int line KERNAUX_UNUSED,
+    const char *const str KERNAUX_UNUSED
 ) {
     ++count;
     longjmp(jmpbuf, 1);
