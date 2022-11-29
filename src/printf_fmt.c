@@ -33,22 +33,17 @@ static unsigned int _atoi(const char** str);
 struct KernAux_PrintfFmt_Spec KernAux_PrintfFmt_Spec_create()
 {
     struct KernAux_PrintfFmt_Spec spec;
-    KernAux_PrintfFmt_Spec_init(&spec);
+
+    spec.flags = 0u;
+    spec.width = 0u;
+    spec.precision = 0u;
+    spec.type = KERNAUX_PRINTF_FMT_TYPE_NONE;
+    spec.base = 0;
+
+    spec.set_width = false;
+    spec.set_precision = false;
+
     return spec;
-}
-
-void KernAux_PrintfFmt_Spec_init(struct KernAux_PrintfFmt_Spec *const spec)
-{
-    KERNAUX_ASSERT(spec);
-
-    spec->flags = 0u;
-    spec->width = 0u;
-    spec->precision = 0u;
-    spec->type = KERNAUX_PRINTF_FMT_TYPE_NONE;
-    spec->base = 0;
-
-    spec->set_width = false;
-    spec->set_precision = false;
 }
 
 const char *KernAux_PrintfFmt_Spec_parse(struct KernAux_PrintfFmt_Spec *spec, const char *format)
