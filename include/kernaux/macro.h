@@ -12,8 +12,9 @@ extern "C" {
  * Attributes *
  **************/
 
-#define KERNAUX_UNUSED   __attribute__((unused))
-#define KERNAUX_NORETURN __attribute__((noreturn))
+#define KERNAUX_UNUSED        __attribute__((unused))
+#define KERNAUX_NORETURN      __attribute__((noreturn))
+#define KERNAUX_RETURNS_TWICE __attribute__((returns_twice))
 
 #ifdef __TINYC__
 #   define KERNAUX_PACKED
