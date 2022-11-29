@@ -8,6 +8,10 @@ extern "C" {
 #include <stddef.h>
 #include <stdint.h>
 
+/**************
+ * Attributes *
+ **************/
+
 #define KERNAUX_UNUSED __attribute__((unused))
 
 #ifdef __TINYC__
@@ -15,6 +19,10 @@ extern "C" {
 #else
 #   define KERNAUX_PACKED __attribute__((packed))
 #endif
+
+/**************
+ * Visibility *
+ **************/
 
 #ifdef KERNAUX_ACCESS_PRIVATE
 #   define KERNAUX_PRIVATE_FIELD(id) id
@@ -29,6 +37,10 @@ extern "C" {
 #   endif
 #endif // KERNAUX_ACCESS_PRIVATE
 
+/*********************
+ * Static assertions *
+ *********************/
+
 #define KERNAUX_STATIC_TEST_STRUCT_SIZE(name, size) \
 __attribute__((unused))                             \
 static const int                                    \
@@ -36,7 +48,15 @@ _kernaux_static_test_struct_size_##name[            \
     sizeof(struct name) == (size) ? 1 : -1          \
 ]
 
+/*****************
+ * Simple values *
+ *****************/
+
 #define KERNAUX_EOF (-1)
+
+/*********************
+ * Calculated values *
+ *********************/
 
 #define KERNAUX_CONTAINER_OF(ptr, type, member) \
     ((type*)((uintptr_t)(ptr) - offsetof(type, member)))
