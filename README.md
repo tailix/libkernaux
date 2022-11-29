@@ -68,7 +68,7 @@ zero). Work-in-progress APIs can change at any time.
     * [Example: To human](/examples/units_human.c)
   * [Memory map](/include/kernaux/memmap.h) (*non-breaking since* **0.4.0**)
     * [Example](/examples/memmap.c)
-  * [printf format parser](/include/kernaux/printf_fmt.h) (*work in progress*)
+  * [printf format parser](/include/kernaux/printf_fmt.h) (*non-breaking since* **?.?.?**)
     * [Example](/examples/printf_fmt.c)
 * Usual functions
   * [itoa/ftoa replacement](/include/kernaux/ntoa.h) (*non-breaking since* **0.4.0**)
