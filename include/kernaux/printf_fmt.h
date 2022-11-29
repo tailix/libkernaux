@@ -49,6 +49,8 @@ struct KernAux_PrintfFmt_Spec {
 };
 
 struct KernAux_PrintfFmt_Spec KernAux_PrintfFmt_Spec_create(const char *format);
+struct KernAux_PrintfFmt_Spec KernAux_PrintfFmt_Spec_create_out(const char **format);
+struct KernAux_PrintfFmt_Spec KernAux_PrintfFmt_Spec_create_out_new(const char *format, const char **new_format);
 
 void KernAux_PrintfFmt_Spec_set_width(struct KernAux_PrintfFmt_Spec *spec, int width);
 void KernAux_PrintfFmt_Spec_set_precision(struct KernAux_PrintfFmt_Spec *spec, int precision);

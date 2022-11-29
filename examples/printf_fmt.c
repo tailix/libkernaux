@@ -1,6 +1,7 @@
 #include <kernaux/printf_fmt.h>
 
 #include <assert.h>
+#include <stddef.h>
 
 void example_main()
 {
@@ -29,9 +30,9 @@ void example_main()
     }
 
     {
-        const char *const format = "012.34f";
+        const char *format = "012.34f";
 
-        struct KernAux_PrintfFmt_Spec spec = KernAux_PrintfFmt_Spec_create(format);
+        struct KernAux_PrintfFmt_Spec spec = KernAux_PrintfFmt_Spec_create_out(&format);
 
         if (spec.set_width) {
             // Actually this line won't be executed.
@@ -42,8 +43,8 @@ void example_main()
             KernAux_PrintfFmt_Spec_set_precision(&spec, 0);
         }
 
-        assert(spec.format_start == format);
-        assert(spec.format_limit == &format[7]);
+        assert(spec.format_start == &format[-7]);
+        assert(spec.format_limit == format);
 
         assert(
             spec.flags ==
@@ -60,8 +61,9 @@ void example_main()
 
     {
         const char *const format = " *.*ld";
+        const char *new_format = NULL;
 
-        struct KernAux_PrintfFmt_Spec spec = KernAux_PrintfFmt_Spec_create(format);
+        struct KernAux_PrintfFmt_Spec spec = KernAux_PrintfFmt_Spec_create_out_new(format, &new_format);
 
         if (spec.set_width) {
             KernAux_PrintfFmt_Spec_set_width(&spec, 12);
@@ -72,6 +74,7 @@ void example_main()
 
         assert(spec.format_start == format);
         assert(spec.format_limit == &format[6]);
+        assert(new_format == &format[6]);
 
         assert(
             spec.flags ==
