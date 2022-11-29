@@ -27,7 +27,7 @@ struct KernAux_Mbr_Entry {
     uint32_t first_sector_lba_addr;
     uint32_t sectors_count;
 }
-KERNAUX_PACKING_ATTR;
+KERNAUX_PACKED;
 
 KERNAUX_STATIC_TEST_STRUCT_SIZE(KernAux_Mbr_Entry, 16);
 
@@ -37,7 +37,7 @@ struct KernAux_Mbr_Info {
     struct KernAux_Mbr_Entry entries[KERNAUX_MBR_ENTRIES];
     uint16_t magic;
 }
-KERNAUX_PACKING_ATTR;
+KERNAUX_PACKED;
 
 KERNAUX_STATIC_TEST_STRUCT_SIZE(
     KernAux_Mbr_Info,
@@ -48,7 +48,7 @@ struct KernAux_Mbr {
     uint8_t bootstrap[KERNAUX_MBR_BOOTSTRAP_SIZE];
     struct KernAux_Mbr_Info info;
 }
-KERNAUX_PACKING_ATTR;
+KERNAUX_PACKED;
 
 KERNAUX_STATIC_TEST_STRUCT_SIZE(
     KernAux_Mbr,

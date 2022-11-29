@@ -1,50 +1,15 @@
-2022-06-30  Alex Kotov  <kotovalexarian@gmail.com>
+2022-11-29  Alex Kotov  <kotovalexarian@gmail.com>
 
-	* include/kernaux/macro.h: Added macros "KERNAUX_BITS[8|16|32|64]"
+	* include/kernaux/macro.h: Rename macro "KERNAUX_PACKING_ATTR" to
+	"KERNAUX_PACKED"
+	* include/kernaux/macro.h: Add macros "KERNAUX_UNUSED", "KERNAUX_NORETURN",
+	"KERNAUX_RETURNS_TWICE", "KERNAUX_ASM"
+	* include/kernaux/printf_fmt.h: Make stable
 
-2022-06-27  Alex Kotov  <kotovalexarian@gmail.com>
+2022-11-26  Alex Kotov  <kotovalexarian@gmail.com>
 
-	* include/kernaux/macro.h: Added macro "KERNAUX_CONTAINER_OF"
-
-2022-06-25  Alex Kotov  <kotovalexarian@gmail.com>
-
-	* configure.ac: Removed package "io"
-	* include/kernaux/generic/file.h: Added
-	* include/kernaux/io.h: Removed
-	* include/kernaux/printf.h: Use new file API
-
-2022-06-24  Alex Kotov  <kotovalexarian@gmail.com>
-
-	* configure.ac: Added packages "arch-*" and "asm"
-
-2022-06-23  Alex Kotov  <kotovalexarian@gmail.com>
-
-	* configure.ac: Added package "drivers"
+	libkernaux 0.5.0 released
 
 2022-06-22  Alex Kotov  <kotovalexarian@gmail.com>
 
-	* include/kernaux/free_list.h: Finished
 	* include/kernaux/stack_trace.h: Added
-
-2022-06-21  Alex Kotov  <kotovalexarian@gmail.com>
-
-	* include/kernaux/generic/malloc.h: Added
-
-2022-06-20  Alex Kotov  <kotovalexarian@gmail.com>
-
-	* include/kernaux/generic/mutex.h: Mutex moved here
-	* include/kernaux/macro.h: Definitions "KERNAUX_ACCESS_*" made stable
-	* include/kernaux/macro.h: Macro "KERNAUX_PROTECTED_FIELD" added
-
-2022-06-18  Alex Kotov  <kotovalexarian@gmail.com>
-
-	* include/kernaux/mutex.h: Added
-
-2022-06-17  Alex Kotov  <kotovalexarian@gmail.com>
-
-	* configure.ac: Added package "free-list"
-	* include/kernaux/free_list.h: Added
-
-2022-06-16  Alex Kotov  <kotovalexarian@gmail.com>
-
-	libkernaux 0.4.0 released

@@ -4,7 +4,7 @@
 
 #define KERNAUX_ACCESS_PROTECTED
 
-#include <kernaux/generic/file.h>
+#include <kernaux/macro.h>
 #include <kernaux/printf.h>
 
 #include <assert.h>
@@ -15,10 +15,12 @@
 
 #define BUFFER_SIZE 1024
 
+static const char *const data = "foobar";
+
 static char buffer[BUFFER_SIZE];
 static size_t buffer_index;
 
-static int test_putc(__attribute__((unused)) void *const file, unsigned char c)
+static void test_putc(char c, KERNAUX_UNUSED void *arg)
 {
     if (buffer_index >= BUFFER_SIZE) {
         printf("Buffer overflow!\n");
@@ -26,14 +28,7 @@ static int test_putc(__attribute__((unused)) void *const file, unsigned char c)
     }
 
     buffer[buffer_index++] = c;
-    return 1;
 }
-
-static const struct KernAux_File file = {
-    .putc = test_putc,
-    .puts = NULL,
-    .write = NULL,
-};
 
 static void test(const char *const expected, const char *const format, ...)
 {
@@ -43,7 +38,7 @@ static void test(const char *const expected, const char *const format, ...)
     memset(buffer, '\0', sizeof(buffer));
     buffer_index = 0;
     va_start(va, format);
-    result = kernaux_vfprintf(&file, format, va);
+    result = kernaux_vfprintf(test_putc, (void*)data, format, va);
     va_end(va);
     assert((size_t)result == strlen(expected));
     assert(strcmp(expected, buffer) == 0);
@@ -61,7 +56,7 @@ void test_main()
 {
     memset(buffer, '\0', sizeof(buffer));
     buffer_index = 0;
-    kernaux_fprintf(&file, "Hello, World!");
+    kernaux_fprintf(test_putc, (void*)data, "Hello, World!");
     assert(strcmp("Hello, World!", buffer) == 0);
 
     {% for case in cases %}

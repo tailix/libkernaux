@@ -9,7 +9,6 @@ nobase_include_HEADERS = \
 	kernaux/macro/packing_start.run \
 	kernaux/macro/packing_end.run \
 	kernaux/version.h \
-	kernaux/generic/file.h \
 	kernaux/generic/malloc.h \
 	kernaux/generic/mutex.h
 
@@ -27,6 +26,10 @@ if WITH_ARCH_X86_64
 nobase_include_HEADERS += kernaux/arch/x86_64.h
 endif
 
+if WITH_ARCH_X86
+nobase_include_HEADERS += kernaux/arch/x86.h
+endif
+
 #######
 # ASM #
 #######
@@ -40,6 +43,10 @@ nobase_include_HEADERS += kernaux/asm/riscv64.h
 endif
 if ASM_X86_64
 nobase_include_HEADERS += kernaux/asm/x86_64.h
+endif
+
+if ASM_X86
+nobase_include_HEADERS += kernaux/asm/x86.h
 endif
 endif
 
@@ -91,7 +98,9 @@ endif
 if WITH_DRIVERS
 nobase_include_HEADERS += \
 	kernaux/drivers/console.h \
-	kernaux/drivers/framebuffer.h
+	kernaux/drivers/framebuffer.h \
+	kernaux/drivers/shutdown.h \
+	kernaux/drivers/qemu.h
 
 # Intel 8253-compatible programmable interval timer
 

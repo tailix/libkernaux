@@ -63,6 +63,8 @@ if KernAux::Version.with_printf?
                   else
                     raise "Unknown format: #{args.inspect}"
                   end
+                elsif item.is_a?(Float) && item.round == item
+                  item.round
                 else
                   item
                 end

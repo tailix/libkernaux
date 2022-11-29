@@ -5,20 +5,19 @@
 extern "C" {
 #endif
 
-#include <kernaux/generic/file.h>
-
 #include <stdarg.h>
 #include <stddef.h>
 
 /**
  * Tiny [v]fprintf implementation
- * \param file An output file
+ * \param out An output function
+ * \param data Additional data for the output function
  * \param format A string that specifies the format of the output
  * \param va A value identifying a variable arguments list
  * \return The number of characters that are sent to the output function, not counting the terminating null character
  */
-int  kernaux_fprintf(KernAux_File file, const char* format, ...);
-int kernaux_vfprintf(KernAux_File file, const char* format, va_list va);
+int  kernaux_fprintf(void (*out)(char, void*), void *data, const char* format, ...);
+int kernaux_vfprintf(void (*out)(char, void*), void *data, const char* format, va_list va);
 
 /**
  * Tiny [v]snprintf implementation

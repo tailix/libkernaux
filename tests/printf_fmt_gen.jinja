@@ -5,6 +5,9 @@
 #include <kernaux/printf_fmt.h>
 
 #include <assert.h>
+#include <string.h>
+
+#include <stdio.h>
 
 void test_main()
 {
@@ -12,9 +15,7 @@ void test_main()
     {
         const char *const format = {{ escape_str(case.in.format) }};
 
-        struct KernAux_PrintfFmt_Spec spec = KernAux_PrintfFmt_Spec_create();
-
-        KernAux_PrintfFmt_Spec_parse(&spec, format);
+        struct KernAux_PrintfFmt_Spec spec = KernAux_PrintfFmt_Spec_create(format);
 
         if (spec.set_width) {
             KernAux_PrintfFmt_Spec_set_width(&spec, {{ none_to_zero(case.in.width) }});
@@ -22,6 +23,8 @@ void test_main()
         if (spec.set_precision) {
             KernAux_PrintfFmt_Spec_set_precision(&spec, {{ none_to_zero(case.in.precision) }});
         }
+
+        assert(spec.format_start == format);
 
         assert(spec.flags == {{ escape_flags(case.out.flags) }});
         assert(spec.width == {{ case.out.width }});

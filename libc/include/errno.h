@@ -1,9 +1,13 @@
-#ifndef KERNAUX_INCLUDED_ARCH_RISCV64
-#define KERNAUX_INCLUDED_ARCH_RISCV64
+#ifndef _ERRNO_H
+#define _ERRNO_H 1
 
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+#define ERANGE 1
+
+extern int errno;
 
 #ifdef __cplusplus
 }

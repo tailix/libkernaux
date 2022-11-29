@@ -56,6 +56,18 @@ multiboot2_info_print2_SOURCES = \
 	multiboot2_info_example2.h
 endif
 
+##################
+# test_arch_i386 #
+##################
+
+if WITH_ARCH_I386
+TESTS += test_arch_i386
+test_arch_i386_LDADD = $(top_builddir)/libkernaux.la
+test_arch_i386_SOURCES = \
+	main.c \
+	test_arch_i386.c
+endif
+
 ################
 # test_cmdline #
 ################

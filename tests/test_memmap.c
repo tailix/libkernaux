@@ -5,6 +5,7 @@
 #define KERNAUX_ACCESS_PRIVATE
 
 #include <kernaux/assert.h>
+#include <kernaux/macro.h>
 #include <kernaux/memmap.h>
 
 #include <assert.h>
@@ -21,8 +22,8 @@ static const char *assert_last_file = NULL;
 
 static void assert_cb(
     const char *const file,
-    __attribute__((unused)) const int line,
-    __attribute__((unused)) const char *const msg
+    const int line KERNAUX_UNUSED,
+    const char *const msg KERNAUX_UNUSED
 ) {
     ++assert_count_ctr;
     assert_last_file = file;
