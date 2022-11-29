@@ -21,10 +21,7 @@ void kernaux_stack_trace_snprint(char *buffer, size_t buffer_size)
     KERNAUX_ASSERT(buffer);
     KERNAUX_ASSERT(buffer_size > 0);
 
-#ifndef ASM_X86
-    (void)buffer_size; // unused
-    buffer[0] = '\0'; // empty string
-#else
+#ifdef ASM_X86
     size_t *ptr = NULL;
 
 #if defined(ASM_I386)
@@ -54,5 +51,8 @@ void kernaux_stack_trace_snprint(char *buffer, size_t buffer_size)
         if (!old_bp) break;
         ptr = (void*)old_bp;
     }
+#else
+    (void)buffer_size; // unused
+    buffer[0] = '\0'; // empty string
 #endif // ASM_X86
 }
