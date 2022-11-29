@@ -36,9 +36,9 @@ extern "C" {
 #endif // KERNAUX_ACCESS_PRIVATE
 
 #ifdef __TINYC__
-#   define KERNAUX_PACKING_ATTR
+#   define KERNAUX_PACKED
 #else
-#   define KERNAUX_PACKING_ATTR __attribute__((packed))
+#   define KERNAUX_PACKED __attribute__((packed))
 #endif
 
 #define KERNAUX_STATIC_TEST_STRUCT_SIZE(name, size) \

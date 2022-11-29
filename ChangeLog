@@ -1,5 +1,7 @@
 2022-11-29  Alex Kotov  <kotovalexarian@gmail.com>
 
+	* include/kernaux/macro.h: Rename macro "KERNAUX_PACKING_ATTR" to
+	"KERNAUX_PACKED"
 	* include/kernaux/macro.h: Add macro "KERNAUX_UNUSED"
 
 2022-11-26  Alex Kotov  <kotovalexarian@gmail.com>

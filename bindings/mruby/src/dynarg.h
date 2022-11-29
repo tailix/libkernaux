@@ -20,7 +20,7 @@ struct DynArg {
         unsigned long long ull;
     } __attribute__((packed)) arg;
 }
-KERNAUX_PACKING_ATTR;
+KERNAUX_PACKED;
 
 #include <kernaux/macro/packing_end.run>
 

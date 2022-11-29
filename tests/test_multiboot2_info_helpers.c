@@ -15,7 +15,7 @@
 static const struct {
     struct KernAux_Multiboot2_Info multiboot2_info;
     struct KernAux_Multiboot2_ITag_None tag_none;
-} KERNAUX_PACKING_ATTR multiboot2_without_boot_cmd_line = {
+} KERNAUX_PACKED multiboot2_without_boot_cmd_line = {
     .multiboot2_info = {
         .total_size = sizeof(multiboot2_without_boot_cmd_line),
         .reserved1 = 0,
@@ -39,7 +39,7 @@ static const struct {
     unsigned char _align1[2];
 
     struct KernAux_Multiboot2_ITag_None tag_none;
-} KERNAUX_PACKING_ATTR multiboot2_with_some_boot_cmd_line = {
+} KERNAUX_PACKED multiboot2_with_some_boot_cmd_line = {
     .multiboot2_info = {
         .total_size = sizeof(multiboot2_with_some_boot_cmd_line),
         .reserved1 = 0,
@@ -81,7 +81,7 @@ static const struct {
     unsigned char _align2[3];
 
     struct KernAux_Multiboot2_ITag_None tag_none;
-} KERNAUX_PACKING_ATTR multiboot2_with_two_boot_cmd_lines = {
+} KERNAUX_PACKED multiboot2_with_two_boot_cmd_lines = {
     .multiboot2_info = {
         .total_size = sizeof(multiboot2_with_two_boot_cmd_lines),
         .reserved1 = 0,
