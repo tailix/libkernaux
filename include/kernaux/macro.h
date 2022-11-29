@@ -8,9 +8,9 @@ extern "C" {
 #include <stddef.h>
 #include <stdint.h>
 
-/**************
- * Attributes *
- **************/
+/*********************
+ * Language features *
+ *********************/
 
 #define KERNAUX_UNUSED        __attribute__((unused))
 #define KERNAUX_NORETURN      __attribute__((noreturn))
@@ -21,6 +21,8 @@ extern "C" {
 #else
 #   define KERNAUX_PACKED __attribute__((packed))
 #endif
+
+#define KERNAUX_ASM(args) do { __asm__ __volatile__(args); } do (0)
 
 /**************
  * Visibility *
