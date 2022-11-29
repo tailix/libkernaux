@@ -8,6 +8,8 @@ extern "C" {
 #include <stddef.h>
 #include <stdint.h>
 
+#define KERNAUX_UNUSED __attribute__((unused))
+
 #define KERNAUX_EOF (-1)
 
 #define KERNAUX_CONTAINER_OF(ptr, type, member) \

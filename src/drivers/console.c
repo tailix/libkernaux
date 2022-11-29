@@ -22,7 +22,7 @@
 static void file_putc(char c, void *arg);
 #endif
 
-void kernaux_drivers_console_putc(const char c __attribute__((unused)))
+void kernaux_drivers_console_putc(const char c KERNAUX_UNUSED)
 {
 #ifdef ASM_X86
     kernaux_asm_x86_outportb(0x3f8, c);
@@ -68,7 +68,7 @@ void kernaux_drivers_console_write(const char *const data, const size_t size)
 }
 
 #ifdef WITH_PRINTF
-void file_putc(char c, void *arg __attribute__((unused)))
+void file_putc(char c, void *arg KERNAUX_UNUSED)
 {
     kernaux_drivers_console_putc(c);
 }

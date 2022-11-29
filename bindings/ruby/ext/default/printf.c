@@ -68,7 +68,7 @@ void init_printf()
 VALUE rb_KernAux_snprintf1(
     const int argc,
     const VALUE *const argv_rb,
-    const VALUE self __attribute__((unused))
+    const VALUE self KERNAUX_UNUSED
 ) {
     if (argc < 2 || argc > 5) rb_raise(rb_eArgError, "expected 2, 3, 4 or 5 args");
 

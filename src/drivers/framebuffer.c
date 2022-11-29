@@ -4,5 +4,5 @@
 
 #include <kernaux/drivers/framebuffer.h>
 
-__attribute__((unused))
+KERNAUX_UNUSED
 static const int foobar = 0;

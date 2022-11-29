@@ -4,6 +4,7 @@
 
 #define KERNAUX_ACCESS_PROTECTED
 
+#include <kernaux/macro.h>
 #include <kernaux/printf.h>
 
 #include <assert.h>
@@ -19,7 +20,7 @@ static const char *const data = "foobar";
 static char buffer[BUFFER_SIZE];
 static size_t buffer_index;
 
-static void test_putc(char c, __attribute__((unused)) void *arg)
+static void test_putc(char c, KERNAUX_UNUSED void *arg)
 {
     if (buffer_index >= BUFFER_SIZE) {
         printf("Buffer overflow!\n");
