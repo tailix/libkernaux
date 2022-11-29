@@ -16,12 +16,26 @@
 
 #include <stddef.h>
 
-void kernaux_stack_trace_snprint(char *buffer, size_t buffer_size)
+#ifdef ASM_X86
+static void snprint_x86(char *buffer, size_t buffer_size);
+#endif
+
+void kernaux_stack_trace_snprint(char *const buffer, const size_t buffer_size)
 {
     KERNAUX_ASSERT(buffer);
     KERNAUX_ASSERT(buffer_size > 0);
 
 #ifdef ASM_X86
+    snprint_x86(buffer, buffer_size);
+#else
+    (void)buffer_size; // unused
+    buffer[0] = '\0'; // empty string
+#endif
+}
+
+#ifdef ASM_X86
+void snprint_x86(char *buffer, size_t buffer_size)
+{
     size_t *ptr = NULL;
 
 #if defined(ASM_I386)
@@ -51,8 +65,5 @@ void kernaux_stack_trace_snprint(char *buffer, size_t buffer_size)
         if (!old_bp) break;
         ptr = (void*)old_bp;
     }
-#else
-    (void)buffer_size; // unused
-    buffer[0] = '\0'; // empty string
-#endif // ASM_X86
 }
+#endif
