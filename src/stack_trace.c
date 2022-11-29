@@ -10,6 +10,7 @@
 #endif
 
 #include <kernaux/assert.h>
+#include <kernaux/macro.h>
 #include <kernaux/printf.h>
 #include <kernaux/stack_trace.h>
 
@@ -25,15 +26,11 @@ void kernaux_stack_trace_snprint(char *buffer, size_t buffer_size)
     buffer[0] = '\0'; // empty string
 #else
     size_t *ptr = NULL;
-    __asm__ volatile(
 #if defined(ASM_I386)
-        "movl %%ebp, %0"
+    KERNAUX_ASM("movl %%ebp, %0" : "=g"(ptr) :: "memory");
 #elif defined(ASM_X86_64)
-        "movq %%rbp, %0"
+    KERNAUX_ASM("movq %%rbp, %0" : "=g"(ptr) :: "memory");
 #endif
-        : "=g"(ptr)
-        :: "memory"
-    );
 
     for (size_t index = 0;; ++index) {
         size_t old_bp   = ptr[0];
