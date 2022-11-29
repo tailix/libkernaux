@@ -18,11 +18,11 @@
 #include <stddef.h>
 #include <stdint.h>
 
-static void KernAux_PrintfFmt_Spec_parse_flags(struct KernAux_PrintfFmt_Spec *spec, const char **format);
-static void KernAux_PrintfFmt_Spec_parse_width(struct KernAux_PrintfFmt_Spec *spec, const char **format);
-static void KernAux_PrintfFmt_Spec_parse_precision(struct KernAux_PrintfFmt_Spec *spec, const char **format);
-static void KernAux_PrintfFmt_Spec_parse_length(struct KernAux_PrintfFmt_Spec *spec, const char **format);
-static void KernAux_PrintfFmt_Spec_parse_type(struct KernAux_PrintfFmt_Spec *spec, const char **format);
+static void parse_flags(struct KernAux_PrintfFmt_Spec *spec, const char **format);
+static void parse_width(struct KernAux_PrintfFmt_Spec *spec, const char **format);
+static void parse_precision(struct KernAux_PrintfFmt_Spec *spec, const char **format);
+static void parse_length(struct KernAux_PrintfFmt_Spec *spec, const char **format);
+static void parse_type(struct KernAux_PrintfFmt_Spec *spec, const char **format);
 
 static unsigned int _atoi(const char** str);
 
@@ -52,16 +52,16 @@ const char *KernAux_PrintfFmt_Spec_parse(struct KernAux_PrintfFmt_Spec *spec, co
     KERNAUX_ASSERT(spec);
     KERNAUX_ASSERT(format);
 
-    KernAux_PrintfFmt_Spec_parse_flags(spec, &format);
-    KernAux_PrintfFmt_Spec_parse_width(spec, &format);
-    KernAux_PrintfFmt_Spec_parse_precision(spec, &format);
-    KernAux_PrintfFmt_Spec_parse_length(spec, &format);
-    KernAux_PrintfFmt_Spec_parse_type(spec, &format);
+    parse_flags(spec, &format);
+    parse_width(spec, &format);
+    parse_precision(spec, &format);
+    parse_length(spec, &format);
+    parse_type(spec, &format);
 
     return format;
 }
 
-void KernAux_PrintfFmt_Spec_parse_flags(struct KernAux_PrintfFmt_Spec *const spec, const char **const format)
+void parse_flags(struct KernAux_PrintfFmt_Spec *const spec, const char **const format)
 {
     KERNAUX_ASSERT(spec);
     KERNAUX_ASSERT(format);
@@ -80,7 +80,7 @@ void KernAux_PrintfFmt_Spec_parse_flags(struct KernAux_PrintfFmt_Spec *const spe
     } while (running);
 }
 
-void KernAux_PrintfFmt_Spec_parse_width(struct KernAux_PrintfFmt_Spec *const spec, const char **const format)
+void parse_width(struct KernAux_PrintfFmt_Spec *const spec, const char **const format)
 {
     KERNAUX_ASSERT(spec);
     KERNAUX_ASSERT(format);
@@ -97,7 +97,7 @@ void KernAux_PrintfFmt_Spec_parse_width(struct KernAux_PrintfFmt_Spec *const spe
     }
 }
 
-void KernAux_PrintfFmt_Spec_parse_precision(struct KernAux_PrintfFmt_Spec *const spec, const char **const format)
+void parse_precision(struct KernAux_PrintfFmt_Spec *const spec, const char **const format)
 {
     KERNAUX_ASSERT(spec);
     KERNAUX_ASSERT(format);
@@ -120,7 +120,7 @@ void KernAux_PrintfFmt_Spec_parse_precision(struct KernAux_PrintfFmt_Spec *const
     }
 }
 
-void KernAux_PrintfFmt_Spec_parse_length(struct KernAux_PrintfFmt_Spec *const spec, const char **const format)
+void parse_length(struct KernAux_PrintfFmt_Spec *const spec, const char **const format)
 {
     KERNAUX_ASSERT(spec);
     KERNAUX_ASSERT(format);
@@ -160,7 +160,7 @@ void KernAux_PrintfFmt_Spec_parse_length(struct KernAux_PrintfFmt_Spec *const sp
     }
 }
 
-void KernAux_PrintfFmt_Spec_parse_type(struct KernAux_PrintfFmt_Spec *const spec, const char **const format)
+void parse_type(struct KernAux_PrintfFmt_Spec *const spec, const char **const format)
 {
     KERNAUX_ASSERT(spec);
     KERNAUX_ASSERT(format);
