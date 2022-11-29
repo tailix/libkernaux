@@ -7,6 +7,8 @@ extern "C" {
 
 #include <stdbool.h>
 
+#include <kernaux/macro.h>
+
 #include <kernaux/macro/packing_start.run>
 
 struct DynArg {
