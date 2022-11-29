@@ -22,7 +22,7 @@ extern "C" {
 #   define KERNAUX_PACKED __attribute__((packed))
 #endif
 
-#define KERNAUX_ASM(args) do { __asm__ __volatile__(args); } do (0)
+#define KERNAUX_ASM(...) do { __asm__ __volatile__(__VA_ARGS__); } while (0)
 
 /**************
  * Visibility *
