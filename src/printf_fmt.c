@@ -18,6 +18,12 @@
 #include <stddef.h>
 #include <stdint.h>
 
+static void KernAux_PrintfFmt_Spec_parse_flags(struct KernAux_PrintfFmt_Spec *spec, const char **format);
+static void KernAux_PrintfFmt_Spec_parse_width(struct KernAux_PrintfFmt_Spec *spec, const char **format);
+static void KernAux_PrintfFmt_Spec_parse_precision(struct KernAux_PrintfFmt_Spec *spec, const char **format);
+static void KernAux_PrintfFmt_Spec_parse_length(struct KernAux_PrintfFmt_Spec *spec, const char **format);
+static void KernAux_PrintfFmt_Spec_parse_type(struct KernAux_PrintfFmt_Spec *spec, const char **format);
+
 static unsigned int _atoi(const char** str);
 
 struct KernAux_PrintfFmt_Spec KernAux_PrintfFmt_Spec_create()

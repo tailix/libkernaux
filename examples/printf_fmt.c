@@ -32,12 +32,7 @@ void example_main()
 
         struct KernAux_PrintfFmt_Spec spec = KernAux_PrintfFmt_Spec_create();
 
-        // Parsing of each part may be done separately.
-        KernAux_PrintfFmt_Spec_parse_flags(&spec, &format);
-        KernAux_PrintfFmt_Spec_parse_width(&spec, &format);
-        KernAux_PrintfFmt_Spec_parse_precision(&spec, &format);
-        KernAux_PrintfFmt_Spec_parse_length(&spec, &format);
-        KernAux_PrintfFmt_Spec_parse_type(&spec, &format);
+        format = KernAux_PrintfFmt_Spec_parse(&spec, format);
 
         if (spec.set_width) {
             // Actually this line won't be executed.
