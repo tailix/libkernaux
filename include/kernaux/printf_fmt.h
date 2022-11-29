@@ -35,6 +35,9 @@ enum KernAux_PrintfFmt_Type {
 };
 
 struct KernAux_PrintfFmt_Spec {
+    const char *format_start;
+    const char *format_limit;
+
     unsigned int flags;
     unsigned int width;
     unsigned int precision;

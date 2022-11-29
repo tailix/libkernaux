@@ -34,6 +34,9 @@ struct KernAux_PrintfFmt_Spec KernAux_PrintfFmt_Spec_create()
 {
     struct KernAux_PrintfFmt_Spec spec;
 
+    spec.format_start = NULL;
+    spec.format_limit = NULL;
+
     spec.flags = 0u;
     spec.width = 0u;
     spec.precision = 0u;
@@ -51,11 +54,15 @@ const char *KernAux_PrintfFmt_Spec_parse(struct KernAux_PrintfFmt_Spec *spec, co
     KERNAUX_ASSERT(spec);
     KERNAUX_ASSERT(format);
 
+    spec->format_start = format;
+
     parse_flags(spec, &format);
     parse_width(spec, &format);
     parse_precision(spec, &format);
     parse_length(spec, &format);
     parse_type(spec, &format);
+
+    spec->format_limit = format;
 
     return format;
 }
