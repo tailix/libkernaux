@@ -18,7 +18,7 @@ struct DynArg {
         long long ll;
         const char *str;
         unsigned long long ull;
-    } __attribute__((packed)) arg;
+    } KERNAUX_PACKED arg;
 }
 KERNAUX_PACKED;
 
