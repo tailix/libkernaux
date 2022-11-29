@@ -7,6 +7,8 @@ extern "C" {
 
 #include <stdbool.h>
 
+#include <kernaux/macro/packing_start.run>
+
 struct DynArg {
     bool use_dbl;
     double dbl;
@@ -17,7 +19,10 @@ struct DynArg {
         const char *str;
         unsigned long long ull;
     } __attribute__((packed)) arg;
-};
+}
+KERNAUX_PACKING_ATTR;
+
+#include <kernaux/macro/packing_end.run>
 
 struct DynArg DynArg_create();
 void DynArg_init(struct DynArg *dynarg);
