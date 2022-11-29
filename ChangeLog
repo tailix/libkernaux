@@ -2,7 +2,7 @@
 
 	* include/kernaux/macro.h: Rename macro "KERNAUX_PACKING_ATTR" to
 	"KERNAUX_PACKED"
-	* include/kernaux/macro.h: Add macro "KERNAUX_UNUSED"
+	* include/kernaux/macro.h: Add macros "KERNAUX_UNUSED", "KERNAUX_NORETURN"
 
 2022-11-26  Alex Kotov  <kotovalexarian@gmail.com>
 
