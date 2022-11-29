@@ -60,7 +60,7 @@ struct KernAux_Arch_I386_DTR {
     uint16_t size;
     uint32_t offset;
 }
-KERNAUX_PACKING_ATTR;
+KERNAUX_PACKED;
 
 KERNAUX_STATIC_TEST_STRUCT_SIZE(KernAux_Arch_I386_DTR, 6);
 
@@ -83,7 +83,7 @@ struct KernAux_Arch_I386_DTE {
     unsigned gran                   : 1;
     unsigned base_high              : 8;
 }
-KERNAUX_PACKING_ATTR;
+KERNAUX_PACKED;
 
 // Interrupt descriptor table entry
 // TODO: validate this according to spec
@@ -94,7 +94,7 @@ typedef struct KernAux_Arch_I386_IDTE {
     uint8_t  flags;
     uint16_t offset_high;
 }
-KERNAUX_PACKING_ATTR
+KERNAUX_PACKED
 *KernAux_Arch_I386_IDTE;
 
 KERNAUX_STATIC_TEST_STRUCT_SIZE(KernAux_Arch_I386_DTE, 8);
@@ -153,7 +153,7 @@ struct KernAux_Arch_I386_TSS {
     uint16_t _zero11;
     uint16_t io_map_base;
 }
-KERNAUX_PACKING_ATTR;
+KERNAUX_PACKED;
 
 KERNAUX_STATIC_TEST_STRUCT_SIZE(KernAux_Arch_I386_TSS, 104);
 
@@ -171,7 +171,7 @@ struct KernAux_Arch_I386_PDE {
     unsigned available1     : 4;
     unsigned addr           : 20;
 }
-KERNAUX_PACKING_ATTR;
+KERNAUX_PACKED;
 
 KERNAUX_STATIC_TEST_STRUCT_SIZE(KernAux_Arch_I386_PDE, 4);
 
@@ -190,7 +190,7 @@ struct KernAux_Arch_I386_PTE {
     unsigned available      : 3;
     unsigned addr           : 20;
 }
-KERNAUX_PACKING_ATTR;
+KERNAUX_PACKED;
 
 KERNAUX_STATIC_TEST_STRUCT_SIZE(KernAux_Arch_I386_PDE, 4);
 
@@ -198,7 +198,7 @@ KERNAUX_STATIC_TEST_STRUCT_SIZE(KernAux_Arch_I386_PDE, 4);
 struct KernAux_Arch_I386_PageDir {
     struct KernAux_Arch_I386_PDE pdes[KERNAUX_ARCH_I386_PAGE_DIR_ENTRIES_COUNT];
 }
-KERNAUX_PACKING_ATTR;
+KERNAUX_PACKED;
 
 KERNAUX_STATIC_TEST_STRUCT_SIZE(KernAux_Arch_I386_PageDir, KERNAUX_ARCH_I386_PAGE_SIZE);
 
@@ -206,7 +206,7 @@ KERNAUX_STATIC_TEST_STRUCT_SIZE(KernAux_Arch_I386_PageDir, KERNAUX_ARCH_I386_PAG
 struct KernAux_Arch_I386_PageTable {
     struct KernAux_Arch_I386_PTE ptes[KERNAUX_ARCH_I386_PAGE_TABLE_ENTRIES_COUNT];
 }
-KERNAUX_PACKING_ATTR;
+KERNAUX_PACKED;
 
 KERNAUX_STATIC_TEST_STRUCT_SIZE(KernAux_Arch_I386_PageTable, KERNAUX_ARCH_I386_PAGE_SIZE);
 

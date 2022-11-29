@@ -34,7 +34,7 @@ static const struct {
     struct KernAux_Multiboot2_HTag_RelocatableHeader tag_relocatable_header;
 
     struct KernAux_Multiboot2_HTag_None tag_none;
-} KERNAUX_PACKING_ATTR multiboot2_header_example2 = {
+} KERNAUX_PACKED multiboot2_header_example2 = {
     .multiboot2_header = {
         .magic = KERNAUX_MULTIBOOT2_HEADER_MAGIC,
         .arch = KERNAUX_MULTIBOOT2_HEADER_ARCH_I386,

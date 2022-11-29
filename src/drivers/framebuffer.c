@@ -3,6 +3,7 @@
 #endif
 
 #include <kernaux/drivers/framebuffer.h>
+#include <kernaux/macro.h>
 
-__attribute__((unused))
+KERNAUX_UNUSED
 static const int foobar = 0;
