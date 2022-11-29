@@ -27,6 +27,9 @@ void example_main()
         assert(spec.precision == 0);
         assert(spec.type == KERNAUX_PRINTF_FMT_TYPE_STR);
         assert(spec.base == 0);
+
+        assert(!spec.set_width);
+        assert(!spec.set_precision);
     }
 
     {
@@ -57,6 +60,9 @@ void example_main()
         assert(spec.precision == 34);
         assert(spec.type == KERNAUX_PRINTF_FMT_TYPE_FLOAT);
         assert(spec.base == 0);
+
+        assert(!spec.set_width);
+        assert(!spec.set_precision);
     }
 
     {
@@ -88,5 +94,8 @@ void example_main()
         assert(spec.precision == 34);
         assert(spec.type == KERNAUX_PRINTF_FMT_TYPE_INT);
         assert(spec.base == 10);
+
+        assert(spec.set_width);
+        assert(spec.set_precision);
     }
 }
