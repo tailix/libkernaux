@@ -39,13 +39,12 @@ struct KernAux_PrintfFmt_Spec KernAux_PrintfFmt_Spec_create_out(const char **con
     return spec;
 }
 
-struct KernAux_PrintfFmt_Spec KernAux_PrintfFmt_Spec_create_out_new(const char *format, const char **const new_format)
+struct KernAux_PrintfFmt_Spec KernAux_PrintfFmt_Spec_create_out_new(const char *const format, const char **const new_format)
 {
     KERNAUX_ASSERT(format);
     KERNAUX_ASSERT(new_format);
 
     *new_format = NULL;
-
     const struct KernAux_PrintfFmt_Spec spec = KernAux_PrintfFmt_Spec_create(format);
     *new_format = spec.format_limit;
     return spec;
