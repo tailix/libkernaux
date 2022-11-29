@@ -26,6 +26,7 @@ void kernaux_stack_trace_snprint(char *buffer, size_t buffer_size)
     buffer[0] = '\0'; // empty string
 #else
     size_t *ptr = NULL;
+
 #if defined(ASM_I386)
     KERNAUX_ASM("movl %%ebp, %0" : "=g"(ptr) :: "memory");
 #elif defined(ASM_X86_64)
