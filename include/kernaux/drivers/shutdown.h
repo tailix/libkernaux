@@ -7,9 +7,8 @@ extern "C" {
 
 #include <kernaux/macro.h>
 
-KERNAUX_NORETURN
-void kernaux_drivers_shutdown_halt();
-void kernaux_drivers_shutdown_poweroff();
+KERNAUX_NORETURN void kernaux_drivers_shutdown_halt();
+KERNAUX_NORETURN void kernaux_drivers_shutdown_poweroff();
 
 #ifdef __cplusplus
 }
