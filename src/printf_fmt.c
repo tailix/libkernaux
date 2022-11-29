@@ -26,6 +26,10 @@ static void parse_type(struct KernAux_PrintfFmt_Spec *spec, const char **format)
 
 static unsigned int _atoi(const char** str);
 
+/***********************************
+ * Public function implementations *
+ ***********************************/
+
 struct KernAux_PrintfFmt_Spec KernAux_PrintfFmt_Spec_create()
 {
     struct KernAux_PrintfFmt_Spec spec;
@@ -79,6 +83,10 @@ void KernAux_PrintfFmt_Spec_set_precision(struct KernAux_PrintfFmt_Spec *const s
 
     spec->precision = precision > 0 ? (unsigned int)precision : 0u;
 }
+
+/************************************
+ * Private function implementations *
+ ************************************/
 
 void parse_flags(struct KernAux_PrintfFmt_Spec *const spec, const char **const format)
 {
