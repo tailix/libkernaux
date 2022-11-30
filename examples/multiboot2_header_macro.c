@@ -10,6 +10,7 @@ __attribute__((aligned(KERNAUX_MULTIBOOT2_HEADER_ALIGN)))
 const struct {
     struct KernAux_Multiboot2_Header header;
     // Here is where the macros are used:
+    KERNAUX_MULTIBOOT2_HFIELDS_INFO_REQ_ODD(tag_info_req, 1, _align1)
     KERNAUX_MULTIBOOT2_HFIELDS_COMMON(tag_none, None)
 }
 KERNAUX_PACKED
@@ -22,6 +23,18 @@ multiboot2_header = {
             KERNAUX_MULTIBOOT2_HEADER_ARCH_I386,
             sizeof(multiboot2_header)
         ),
+    },
+    .tag_info_req = {
+        .tag = {
+            .base = {
+                .type = KERNAUX_MULTIBOOT2_HTAG_INFO_REQ,
+                .flags = KERNAUX_MULTIBOOT2_HTAG_BASE_FLAG_OPTIONAL,
+                .size = sizeof(multiboot2_header.tag_info_req),
+            },
+        },
+        .mbi_tag_types = {
+            KERNAUX_MULTIBOOT2_ITAG_ELF_SYMBOLS,
+        },
     },
     .tag_none = {
         .tag = {
