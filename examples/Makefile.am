@@ -71,6 +71,16 @@ memmap_LDADD = $(top_builddir)/libkernaux.la
 memmap_SOURCES = main.c memmap.c
 endif
 
+###########################
+# multiboot2_header_macro #
+###########################
+
+if WITH_MULTIBOOT2
+TESTS += multiboot2_header_macro
+multiboot2_header_macro_LDADD = $(top_builddir)/libkernaux.la
+multiboot2_header_macro_SOURCES = main.c multiboot2_header_macro.c
+endif
+
 ########
 # ntoa #
 ########
