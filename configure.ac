@@ -305,9 +305,9 @@ AS_IF([test "$with_units"        = no], [AC_SUBST([comment_line_units],        [
 # Set build flags #
 ###################
 
-AC_DEFUN([do_enable_freestanding],  [CFLAGS="$CFLAGS -nostdlib -ffreestanding -fno-pic -fno-stack-protector "])
-AC_DEFUN([do_disable_freestanding], [CFLAGS="$CFLAGS -fpic "])
-AS_IF([test "$enable_freestanding" = yes], do_enable_freestanding, do_disable_freestanding)
+AS_IF([test "$enable_freestanding" = yes],
+  [CFLAGS="$CFLAGS -nostdlib -ffreestanding -fno-pic -fno-stack-protector "],
+  [CFLAGS="$CFLAGS -fpic "])
 
 
 
