@@ -1,6 +1,4 @@
-#include <kernaux/macro.h>
 #include <kernaux/multiboot2.h>
-#include <kernaux/multiboot2/header_macro.h>
 
 #include <assert.h>
 
