@@ -2,7 +2,7 @@
 # For GNU/Linux CI see GitHub Actions.
 
 freebsd_instance:
-  image_family: freebsd-13-0
+  image_family: freebsd-13-1
 
 main_freebsd_task:
   name: Main (FreeBSD)

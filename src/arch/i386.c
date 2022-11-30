@@ -4,6 +4,11 @@
 
 #include <kernaux/arch/i386.h>
 
-__attribute__((unused))
-static const int
-TSS_validation[sizeof(struct KernAux_Arch_I386_TSS) == 104 ? 1 : -1];
+void KernAux_Arch_I386_IDTE_set_offset(
+    const KernAux_Arch_I386_IDTE idte,
+    const uint32_t address
+)
+{
+    idte->offset_low  = 0xFFFF & address;
+    idte->offset_high = 0xFFFF & (address >> 16);
+}

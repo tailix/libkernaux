@@ -4,7 +4,6 @@
 
 #include <kernaux/assert.h>
 #include <kernaux/cmdline.h>
-#include <kernaux/generic/file.h>
 #include <kernaux/macro.h>
 
 #include <stddef.h>
@@ -27,7 +26,6 @@ static bool kernaux_cmdline_common(
     char arg_terminator,
     char **argv,
     char *buffer,
-    KernAux_File file,
     size_t *arg_idxs,
     size_t arg_count_max,
     size_t buffer_size
@@ -42,7 +40,6 @@ static bool kernaux_cmdline_iter(
     char arg_terminator,
     char **argv,
     char *buffer,
-    KernAux_File file,
     size_t *arg_idxs,
     size_t arg_count_max,
     size_t buffer_size
@@ -76,7 +73,6 @@ bool kernaux_cmdline(
         argv,
         buffer,
         NULL,
-        NULL,
         arg_count_max,
         buffer_size
     );
@@ -100,7 +96,6 @@ bool kernaux_cmdline_common(
     char arg_terminator,
     char **const argv,
     char *const buffer,
-    const KernAux_File file,
     size_t *const arg_idxs,
     const size_t arg_count_max,
     const size_t buffer_size
@@ -128,7 +123,6 @@ bool kernaux_cmdline_common(
             arg_terminator,
             argv,
             buffer,
-            file,
             arg_idxs,
             arg_count_max,
             buffer_size
@@ -159,11 +153,6 @@ fail:
     if (buffer) {                                            \
         buffer[*buffer_or_file_pos] = char;                  \
     }                                                        \
-    if (file) {                                              \
-        if (KernAux_File_putc(file, char) == KERNAUX_EOF) {  \
-            FAIL("EOF or buffer overflow");                  \
-        }                                                    \
-    }                                                        \
     ++(*buffer_or_file_pos);                                 \
 } while (0)
 
@@ -191,11 +180,6 @@ fail:
         argv[*argc] = &buffer[*buffer_or_file_pos];          \
         buffer[*buffer_or_file_pos] = char;                  \
     }                                                        \
-    if (file) {                                              \
-        if (KernAux_File_putc(file, char) == KERNAUX_EOF) {  \
-            FAIL("EOF or buffer overflow");                  \
-        }                                                    \
-    }                                                        \
     if (arg_idxs) {                                          \
         arg_idxs[*argc] = *buffer_or_file_pos;               \
     }                                                        \
@@ -212,7 +196,6 @@ bool kernaux_cmdline_iter(
     char arg_terminator,
     char **const argv,
     char *const buffer,
-    const KernAux_File file,
     size_t *const arg_idxs,
     const size_t arg_count_max,
     const size_t buffer_size

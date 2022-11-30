@@ -8,17 +8,25 @@ extern "C" {
 #include <stddef.h>
 #include <stdint.h>
 
-#define KERNAUX_EOF (-1)
+/*********************
+ * Language features *
+ *********************/
 
-#define KERNAUX_CONTAINER_OF(ptr, type, member) \
-    ((type*)((uintptr_t)(ptr) - offsetof(type, member)))
+#define KERNAUX_UNUSED        __attribute__((unused))
+#define KERNAUX_NORETURN      __attribute__((noreturn))
+#define KERNAUX_RETURNS_TWICE __attribute__((returns_twice))
 
-#define KERNAUX_BITS(n) (1u << (n))
+#ifdef __TINYC__
+#   define KERNAUX_PACKED
+#else
+#   define KERNAUX_PACKED __attribute__((packed))
+#endif
 
-#define KERNAUX_BITS8(n)  ((uint8_t )(((uint8_t )1) << (n)))
-#define KERNAUX_BITS16(n) ((uint16_t)(((uint16_t)1) << (n)))
-#define KERNAUX_BITS32(n) ((uint32_t)(((uint32_t)1) << (n)))
-#define KERNAUX_BITS64(n) ((uint64_t)(((uint64_t)1) << (n)))
+#define KERNAUX_ASM(...) do { __asm__ __volatile__(__VA_ARGS__); } while (0)
+
+/**************
+ * Visibility *
+ **************/
 
 #ifdef KERNAUX_ACCESS_PRIVATE
 #   define KERNAUX_PRIVATE_FIELD(id) id
@@ -33,11 +41,9 @@ extern "C" {
 #   endif
 #endif // KERNAUX_ACCESS_PRIVATE
 
-#ifdef __TINYC__
-#   define KERNAUX_PACKING_ATTR
-#else
-#   define KERNAUX_PACKING_ATTR __attribute__((packed))
-#endif
+/*********************
+ * Static assertions *
+ *********************/
 
 #define KERNAUX_STATIC_TEST_STRUCT_SIZE(name, size) \
 __attribute__((unused))                             \
@@ -45,6 +51,26 @@ static const int                                    \
 _kernaux_static_test_struct_size_##name[            \
     sizeof(struct name) == (size) ? 1 : -1          \
 ]
+
+/*****************
+ * Simple values *
+ *****************/
+
+#define KERNAUX_EOF (-1)
+
+/*********************
+ * Calculated values *
+ *********************/
+
+#define KERNAUX_CONTAINER_OF(ptr, type, member) \
+    ((type*)((uintptr_t)(ptr) - offsetof(type, member)))
+
+#define KERNAUX_BITS(n) (1u << (n))
+
+#define KERNAUX_BITS8(n)  ((uint8_t )(((uint8_t )1) << (n)))
+#define KERNAUX_BITS16(n) ((uint16_t)(((uint16_t)1) << (n)))
+#define KERNAUX_BITS32(n) ((uint32_t)(((uint32_t)1) << (n)))
+#define KERNAUX_BITS64(n) ((uint64_t)(((uint64_t)1) << (n)))
 
 #ifdef __cplusplus
 }

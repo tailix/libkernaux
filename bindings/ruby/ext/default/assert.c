@@ -40,7 +40,7 @@ VALUE rb_KernAux_assert_cb_EQ(const VALUE self, const VALUE assert_cb_rb)
 }
 
 VALUE rb_KernAux_assert_do(
-    const VALUE self_rb __attribute__((unused)),
+    const VALUE self_rb KERNAUX_UNUSED,
     VALUE file_rb,
     const VALUE line_rb,
     VALUE msg_rb
