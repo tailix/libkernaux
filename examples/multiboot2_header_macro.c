@@ -7,12 +7,42 @@
 #include <kernaux/macro/packing_start.run>
 
 __attribute__((aligned(KERNAUX_MULTIBOOT2_HEADER_ALIGN)))
-const struct {
+static const struct {
     struct KernAux_Multiboot2_Header header;
-    // Here is where the macros are used:
-    KERNAUX_MULTIBOOT2_HFIELDS_INFO_REQ_EVEN(tag_info_req_even, 2)
-    KERNAUX_MULTIBOOT2_HFIELDS_INFO_REQ_ODD(tag_info_req_odd, 1, _align1)
-    KERNAUX_MULTIBOOT2_HFIELDS_COMMON(tag_none, None)
+    // This macro may be used to create the tag
+    // of type "KernAux_Multiboot2_HTag_InfoReq"
+    // when the number of requested information
+    // tag types is even (n % 2 == 0).
+    KERNAUX_MULTIBOOT2_HFIELDS_INFO_REQ_EVEN(
+        // This is the name of the structure field.
+        tag_info_req_even,
+        // This is the number of requested information tag types.
+        // IT MUST BE EVEN!!! (n % 2 == 0)
+        2
+    )
+    // This macro may be used to create the tag
+    // of type "KernAux_Multiboot2_HTag_InfoReq"
+    // when the number of requested information
+    // tag types is odd (n % 2 == 1).
+    KERNAUX_MULTIBOOT2_HFIELDS_INFO_REQ_ODD(
+        // This is the name of the structure field.
+        tag_info_req_odd,
+        // This is the number of requested information tag types.
+        // IT MUST BE ODD!!! (n % 2 == 1)
+        1,
+        // This is the name of the additional structure field
+        // which will be used to align the following tags properly.
+        // You may not assign it with value.
+        _align1
+    )
+    // This macro may be used for all other header tag types.
+    KERNAUX_MULTIBOOT2_HFIELDS_COMMON(
+        // This is the name of the structure field.
+        tag_none,
+        // This is the type of the structure field
+        // without the "KernAux_Multiboot2_HTag_" prefix.
+        None
+    )
 }
 KERNAUX_PACKED
 multiboot2_header = {
