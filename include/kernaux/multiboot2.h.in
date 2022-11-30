@@ -7,6 +7,7 @@ extern "C" {
 
 #include <kernaux/macro.h>
 @comment_line_memmap@#include <kernaux/memmap.h>
+#include <kernaux/multiboot2/header_macro.h>
 
 #include <stdint.h>
 #include <stdbool.h>
