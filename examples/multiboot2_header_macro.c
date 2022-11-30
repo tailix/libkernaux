@@ -30,7 +30,7 @@ static const struct {
         1,
         // This is the name of the additional structure field
         // which will be used to align the following tags properly.
-        // You may not assign it with value.
+        // You may keep it unassigned.
         _align1
     )
     // This macro may be used for all other header tag types.
