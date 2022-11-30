@@ -113,6 +113,7 @@
 /examples/macro_container_of
 /examples/macro_packing
 /examples/memmap
+/examples/multiboot2_header_macro
 /examples/ntoa
 /examples/panic
 /examples/pfa

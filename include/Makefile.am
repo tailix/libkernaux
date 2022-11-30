@@ -70,7 +70,9 @@ if WITH_MEMMAP
 nobase_include_HEADERS += kernaux/memmap.h
 endif
 if WITH_MULTIBOOT2
-nobase_include_HEADERS += kernaux/multiboot2.h
+nobase_include_HEADERS += \
+	kernaux/multiboot2.h \
+	kernaux/multiboot2/header_macro.h
 endif
 if WITH_NTOA
 nobase_include_HEADERS += kernaux/ntoa.h
