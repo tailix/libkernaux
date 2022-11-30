@@ -8,9 +8,26 @@ extern "C" {
 #include <kernaux/macro.h>
 #include <kernaux/multiboot2.h>
 
+#include <stdint.h>
+
 #define KERNAUX_MULTIBOOT2_HFIELDS_COMMON(name, type) \
     struct {                                          \
         struct KernAux_Multiboot2_HTag_##type tag;    \
+    } KERNAUX_PACKED name;
+
+#define KERNAUX_MULTIBOOT2_HFIELDS_INFO_REQ_ODD        \
+    (name, data_name, align_name, mbi_tag_types_count) \
+    struct {                                           \
+        struct KernAux_Multiboot2_HTag_InfoReq tag;    \
+        uint32_t data_name[mbi_tag_types_count];       \
+    } KERNAUX_PACKED name;                             \
+    uint8_t align_name[4];
+
+#define KERNAUX_MULTIBOOT2_HFIELDS_INFO_REQ_EVEN       \
+    (name, data_name, align_name, mbi_tag_types_count) \
+    struct {                                           \
+        struct KernAux_Multiboot2_HTag_InfoReq tag;    \
+        uint32_t data_name[mbi_tag_types_count];       \
     } KERNAUX_PACKED name;
 
 #ifdef __cplusplus
