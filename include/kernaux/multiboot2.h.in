@@ -15,7 +15,13 @@ extern "C" {
 #define KERNAUX_MULTIBOOT2_HEADER_MAGIC 0xe85250d6
 #define KERNAUX_MULTIBOOT2_INFO_MAGIC   0x36d76289
 
-#define KERNAUX_MULTIBOOT2_HEADER_ALIGN 4
+// @see https://www.gnu.org/software/grub/manual/multiboot2/multiboot.html#OS-image-format
+#define KERNAUX_MULTIBOOT2_HEADER_ALIGN 8
+// @see https://www.gnu.org/software/grub/manual/multiboot2/multiboot.html#Basic-tags-structure
+#define KERNAUX_MULTIBOOT2_INFO_ALIGN   8
+// @see https://www.gnu.org/software/grub/manual/multiboot2/multiboot.html#Header-tags
+// @see https://www.gnu.org/software/grub/manual/multiboot2/multiboot.html#Basic-tags-structure
+#define KERNAUX_MULTIBOOT2_TAG_ALIGN    8
 
 #define KERNAUX_MULTIBOOT2_HEADER_CHECKSUM(arch, total_size) \
     ((uint32_t)(-(                                           \
@@ -25,8 +31,6 @@ extern "C" {
     )))
 
 #define KERNAUX_MULTIBOOT2_DATA(ptr) (((uint8_t*)(ptr)) + sizeof(*(ptr)))
-
-#define KERNAUX_MULTIBOOT2_TAG_ALIGN 8
 
 #define KERNAUX_MULTIBOOT2_HTAG_NEXT(tag_base) \
     ((struct KernAux_Multiboot2_HTagBase*)KERNAUX_MULTIBOOT2_TAG_NEXT(tag_base))
