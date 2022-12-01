@@ -37,6 +37,7 @@ static void before_assert()
 static void expect_assert()
 {
 #ifdef ENABLE_DEBUG
+    // cppcheck-suppress assignmentInAssert
     assert(assert_count_ctr == ++assert_count_exp);
     assert(strstr(assert_last_file, "src/memmap.c") != NULL);
     assert_last_file = NULL;

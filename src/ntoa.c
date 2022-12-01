@@ -49,6 +49,7 @@ char *kernaux_utoa(uint64_t value, char *buffer, int base, const char *prefix)
     while (value > 0) {
         const char mod = value % base;
         *(pos++) = mod < 10 ? mod + '0' : mod - 10 + alpha;
+        // cppcheck-suppress zerodivcond
         value /= base;
     }
     char *const result = pos;

@@ -244,6 +244,7 @@ int _vsnprintf(out_fct_type out, char* buffer, const size_t maxlen, const char* 
             case KERNAUX_PRINTF_FMT_TYPE_PTR:
             {
                 const bool is_ll = sizeof(uintptr_t) == sizeof(long long);
+                // cppcheck-suppress knownConditionTrueFalse
                 if (is_ll) {
                     idx = _ntoa_long_long(out, buffer, idx, maxlen, (uintptr_t)va_arg(va, void*), false, 16u, spec.precision, spec.width, spec.flags);
                 } else {
@@ -481,6 +482,7 @@ size_t _ftoa(out_fct_type out, char* buffer, size_t idx, size_t maxlen, double v
 
     if (prec == 0u) {
         diff = value - (double)whole;
+        // cppcheck-suppress redundantCondition
         if ((!(diff < 0.5) || (diff > 0.5)) && (whole & 1)) {
             // exactly 0.5 and ODD, then round up
             // 1.5 -> 2, but 2.5 -> 2

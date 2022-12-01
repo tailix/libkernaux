@@ -42,6 +42,7 @@ static void test_utoa_assert(char *const buffer, const int base)
     if (setjmp(jmpbuf) == 0) {
         kernaux_utoa(0, buffer, base, NULL);
     } else {
+        // cppcheck-suppress assignmentInAssert
         assert(assert_count_ctr == ++assert_count_exp);
         assert(strstr(assert_last_file, "src/ntoa.c") != NULL);
         assert(assert_last_line != 0);
@@ -58,6 +59,7 @@ static void test_itoa_assert(char *const buffer, const int base)
     if (setjmp(jmpbuf) == 0) {
         kernaux_itoa(0, buffer, base, NULL);
     } else {
+        // cppcheck-suppress assignmentInAssert
         assert(assert_count_ctr == ++assert_count_exp);
         assert(strstr(assert_last_file, "src/ntoa.c") != NULL);
         assert(assert_last_line != 0);
@@ -96,6 +98,7 @@ void test_main()
             kernaux_utoa(123, buffer, 'd', TOO_LONG_PREFIX);
         } else {
             assert(strcmp(buffer, VALID_LONG_PREFIX) == 0);
+            // cppcheck-suppress assignmentInAssert
             assert(assert_count_ctr == ++assert_count_exp);
             assert(strstr(assert_last_file, "src/ntoa.c") != NULL);
             assert(assert_last_line != 0);
@@ -131,6 +134,7 @@ void test_main()
             kernaux_itoa(123, buffer, 'd', TOO_LONG_PREFIX);
         } else {
             assert(strcmp(buffer, VALID_LONG_PREFIX) == 0);
+            // cppcheck-suppress assignmentInAssert
             assert(assert_count_ctr == ++assert_count_exp);
             assert(strstr(assert_last_file, "src/ntoa.c") != NULL);
             assert(assert_last_line != 0);
