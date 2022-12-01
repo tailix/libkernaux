@@ -62,6 +62,13 @@ Avoid stupid errors with:
 * Default case in switch statements
 * Braces (curly brackets) around code blocks
 
+### Things to review periodically
+
+* `git grep -i fixme`
+* `git grep -i todo`
+* `git grep -i cppcheck-suppress`
+* `git grep -i rubocop:disable`
+
 
 
 C language
