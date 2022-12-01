@@ -1,3 +1,7 @@
+2022-12-01  Alex Kotov  <kotovalexarian@gmail.com>
+
+	* src/printf.c: Fix a bug with too big float precision
+
 2022-11-30  Alex Kotov  <kotovalexarian@gmail.com>
 
 	* configure.ac: Fix CFLAGS setting

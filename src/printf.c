@@ -456,11 +456,9 @@ size_t _ftoa(out_fct_type out, char* buffer, size_t idx, size_t maxlen, double v
     char buf[PRINTF_FTOA_BUFFER_SIZE];
     size_t len = 0u;
 
+    const unsigned int orig_prec = prec;
     // limit precision to 9, cause a prec >= 10 can lead to overflow errors
-    while ((len < PRINTF_FTOA_BUFFER_SIZE) && (prec > 9u)) {
-        buf[len++] = '0';
-        prec--;
-    }
+    if (prec > 9u) prec = 9u;
 
     int whole = (int)value;
     double tmp = (value - whole) * pow10[prec];
@@ -534,6 +532,24 @@ size_t _ftoa(out_fct_type out, char* buffer, size_t idx, size_t maxlen, double v
         } else if (flags & KERNAUX_PRINTF_FMT_FLAGS_SPACE) {
             buf[len++] = ' ';
         }
+    }
+
+    // This slows down the algorighm, but
+    // only if the precision was more than 9.
+    if (orig_prec > prec) {
+        const size_t space_left = PRINTF_FTOA_BUFFER_SIZE - len;
+        const size_t zeroes_wanted = orig_prec - prec;
+        const size_t delta =
+            space_left < zeroes_wanted ? space_left : zeroes_wanted;
+
+        for (size_t rev_index = 0; rev_index < len; ++rev_index) {
+            const size_t index = len - 1 - rev_index;
+            buf[index + delta] = buf[index];
+        }
+
+        len += delta;
+
+        for (size_t index = 0; index < delta; ++index) buf[index] = '0';
     }
 
     return _out_rev(out, buffer, idx, maxlen, buf, len, width, flags);
