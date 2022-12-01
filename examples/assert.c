@@ -25,6 +25,7 @@ int main()
 {
     kernaux_assert_cb = assert_cb;
 
+    // cppcheck-suppress duplicateExpression
     KERNAUX_ASSERT(1 == 1);
 
     assert(count == 0);
@@ -32,6 +33,7 @@ int main()
     assert(last_line == 0);
     assert(last_str == NULL);
 
+    // cppcheck-suppress duplicateExpression
     KERNAUX_ASSERT(1 != 1);
 
     assert(count == 1);
@@ -39,6 +41,7 @@ int main()
     assert(last_line == __LINE__ - 4);
     assert(strcmp(last_str, "1 != 1") == 0);
 
+    // cppcheck-suppress staticStringCompare
     KERNAUX_ASSERT(strcmp("qwe", "rty") == 0);
 
     assert(count == 2);

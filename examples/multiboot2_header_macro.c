@@ -11,6 +11,8 @@ static const struct {
     // of type "KernAux_Multiboot2_HTag_InfoReq"
     // when the number of requested information
     // tag types is even (n % 2 == 0).
+    //
+    // cppcheck-suppress unknownMacro
     KERNAUX_MULTIBOOT2_HFIELDS_INFO_REQ_EVEN(
         // This is the name of the structure field.
         tag_info_req_even,
@@ -22,6 +24,8 @@ static const struct {
     // of type "KernAux_Multiboot2_HTag_InfoReq"
     // when the number of requested information
     // tag types is odd (n % 2 == 1).
+    //
+    // cppcheck-suppress unknownMacro
     KERNAUX_MULTIBOOT2_HFIELDS_INFO_REQ_ODD(
         // This is the name of the structure field.
         tag_info_req_odd,
@@ -34,6 +38,8 @@ static const struct {
         _align1
     )
     // This macro may be used for all other header tag types.
+    //
+    // cppcheck-suppress unknownMacro
     KERNAUX_MULTIBOOT2_HFIELDS_COMMON(
         // This is the name of the structure field.
         tag_none,

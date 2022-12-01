@@ -6,7 +6,7 @@
 #include <kernaux/macro.h>
 #include <kernaux/pfa.h>
 
-#include "libc.h"
+#include <string.h>
 
 #define PAGE_INDEX(page_addr) ((page_addr) / KERNAUX_PFA_PAGE_SIZE)
 

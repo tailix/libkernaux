@@ -1,6 +1,7 @@
 #include <kernaux/macro.h>
 
 #include <assert.h>
+#include <string.h>
 
 struct Foo {
     const char *hello;
@@ -29,5 +30,6 @@ void example_main()
 
     assert(bar_ptr->a == 143);
     assert(bar_ptr->b == 820794098);
+    assert(strcmp(bar_ptr->foo.hello, "Hello, World!") == 0);
     assert(bar_ptr->c == 10981);
 }

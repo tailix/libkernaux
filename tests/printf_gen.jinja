@@ -40,6 +40,10 @@ static void test(const char *const expected, const char *const format, ...)
     va_start(va, format);
     result = kernaux_vfprintf(test_putc, (void*)data, format, va);
     va_end(va);
+
+    printf("Exp: %s\n", expected);
+    printf("Got: %s\n\n", buffer);
+
     assert((size_t)result == strlen(expected));
     assert(strcmp(expected, buffer) == 0);
 
@@ -48,6 +52,7 @@ static void test(const char *const expected, const char *const format, ...)
     va_start(va, format);
     result = kernaux_vsnprintf(buffer, sizeof(buffer), format, va);
     va_end(va);
+
     assert((size_t)result == strlen(expected));
     assert(strcmp(expected, buffer) == 0);
 }
@@ -63,7 +68,6 @@ void test_main()
     {% if case.float %}
 #ifdef ENABLE_FLOAT
     {% endif %}
-    printf("%s\n", {{ escape_str(case.result) }});
     test({{ escape_str(case.result) }}, {{ escape_str(fmt(case.args)) }}{{ values(case.args) }});
     {% if case.float %}
 #endif

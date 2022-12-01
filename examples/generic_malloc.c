@@ -35,12 +35,14 @@ static void *MyMalloc_realloc(void *malloc, void *ptr, size_t size);
 
 struct MyMalloc MyMalloc_create()
 {
-    struct MyMalloc my_malloc;
-    my_malloc.malloc.calloc  = MyMalloc_calloc;
-    my_malloc.malloc.free    = MyMalloc_free;
-    my_malloc.malloc.malloc  = MyMalloc_malloc;
-    my_malloc.malloc.realloc = MyMalloc_realloc;
-    return my_malloc;
+    return (struct MyMalloc){
+        .malloc = {
+            .calloc  = MyMalloc_calloc,
+            .free    = MyMalloc_free,
+            .malloc  = MyMalloc_malloc,
+            .realloc = MyMalloc_realloc,
+        },
+    };
 }
 
 void *MyMalloc_calloc(void *const malloc, const size_t nmemb, const size_t size)
