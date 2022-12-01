@@ -424,10 +424,6 @@ size_t _ntoa_long_long(out_fct_type out, char* buffer, size_t idx, size_t maxlen
 // internal ftoa for fixed decimal floating point
 size_t _ftoa(out_fct_type out, char* buffer, size_t idx, size_t maxlen, double value, unsigned int prec, unsigned int width, unsigned int flags)
 {
-    char buf[PRINTF_FTOA_BUFFER_SIZE];
-    size_t len = 0u;
-    double diff = 0.0;
-
     // powers of 10
     static const double pow10[] = { 1, 10, 100, 1000, 10000, 100000, 1000000, 10000000, 100000000, 1000000000 };
 
@@ -456,6 +452,10 @@ size_t _ftoa(out_fct_type out, char* buffer, size_t idx, size_t maxlen, double v
     if (!(flags & KERNAUX_PRINTF_FMT_FLAGS_PRECISION)) {
         prec = PRINTF_DEFAULT_FLOAT_PRECISION;
     }
+
+    char buf[PRINTF_FTOA_BUFFER_SIZE];
+    size_t len = 0u;
+
     // limit precision to 9, cause a prec >= 10 can lead to overflow errors
     while ((len < PRINTF_FTOA_BUFFER_SIZE) && (prec > 9u)) {
         buf[len++] = '0';
@@ -465,7 +465,7 @@ size_t _ftoa(out_fct_type out, char* buffer, size_t idx, size_t maxlen, double v
     int whole = (int)value;
     double tmp = (value - whole) * pow10[prec];
     unsigned long frac = (unsigned long)tmp;
-    diff = tmp - frac;
+    double diff = tmp - frac;
 
     if (diff > 0.5) {
         ++frac;
