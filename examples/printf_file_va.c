@@ -12,7 +12,7 @@ static const char *const data = "foobar";
 static char buffer[BUFFER_SIZE];
 static size_t buffer_index = 0;
 
-static void my_putchar(const char chr, void *arg)
+static void my_putchar(const char chr, void *const arg)
 {
     assert(arg == data);
     if (buffer_index >= BUFFER_SIZE) abort();

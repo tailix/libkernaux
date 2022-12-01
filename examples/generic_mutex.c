@@ -35,9 +35,12 @@ static void MyMutex_unlock(void *mutex);
 
 struct MyMutex MyMutex_create()
 {
-    struct MyMutex my_mutex;
-    my_mutex.mutex.lock   = MyMutex_lock;
-    my_mutex.mutex.unlock = MyMutex_unlock;
+    struct MyMutex my_mutex = {
+        .mutex = {
+            .lock   = MyMutex_lock,
+            .unlock = MyMutex_unlock,
+        },
+    };
     if (pthread_mutex_init(&my_mutex.pthread_mutex, NULL) != 0) abort();
     return my_mutex;
 }
