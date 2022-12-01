@@ -333,6 +333,16 @@ AC_C_INLINE
 AC_CHECK_HEADER_STDBOOL
 AC_CHECK_HEADERS([stdarg.h stddef.h stdint.h])
 
+AM_PATH_PYTHON([3.8],, [:])
+
+
+
+#############
+# Test args #
+#############
+
+AS_IF([test "$enable_tests_python" = yes -a "$PYTHON" = ':'], AC_MSG_ERROR([Python is required]))
+
 
 
 ######################

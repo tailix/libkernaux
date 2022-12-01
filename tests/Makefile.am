@@ -104,7 +104,7 @@ endif
 CLEANFILES += test_cmdline_gen.c
 
 test_cmdline_gen.c: cmdline_gen.py cmdline_gen.jinja $(top_srcdir)/common/cmdline.yml
-	python3 cmdline_gen.py
+	$(PYTHON) cmdline_gen.py
 
 ############
 # test_elf #
@@ -338,7 +338,7 @@ endif
 CLEANFILES += test_printf_fmt_gen.c
 
 test_printf_fmt_gen.c: printf_fmt_gen.py printf_fmt_gen.jinja $(top_srcdir)/common/printf_fmt.yml
-	python3 printf_fmt_gen.py
+	$(PYTHON) printf_fmt_gen.py
 
 ###################
 # test_printf_gen #
@@ -361,7 +361,7 @@ endif
 CLEANFILES += test_printf_gen.c
 
 test_printf_gen.c: printf_gen.py printf_gen.jinja $(top_srcdir)/common/printf.yml $(top_srcdir)/common/printf_orig.yml
-	python3 printf_gen.py
+	$(PYTHON) printf_gen.py
 
 ####################
 # test_units_human #
