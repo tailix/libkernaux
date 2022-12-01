@@ -37,7 +37,7 @@ void mrb_mruby_kernaux_gem_init(mrb_state *const mrb)
 #endif // KERNAUX_VERSION_WITH_PRINTF
 }
 
-void current_mrb_start(mrb_state *mrb)
+void current_mrb_start(mrb_state *const mrb)
 {
     mrb_assert(mrb_stack_count < MRB_STACK_SIZE - 1);
     mrb_assert(mrb_stack[mrb_stack_count] == NULL);
@@ -46,7 +46,7 @@ void current_mrb_start(mrb_state *mrb)
     mrb_stack[mrb_stack_count++] = mrb;
 }
 
-void current_mrb_finish(mrb_state *mrb)
+void current_mrb_finish(mrb_state *const mrb)
 {
     mrb_assert(mrb_stack_count > 0);
     mrb_assert(mrb_stack[mrb_stack_count - 1] != NULL);
