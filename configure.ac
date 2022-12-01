@@ -344,14 +344,24 @@ AC_CACHE_CHECK([for Python YAML],
      PYTHON_YAML=yes
    fi])
 
+AC_CACHE_CHECK([for Python Jinja 2],
+  [libkernaux_cv_shell_pythonjinja2_exists],
+  [libkernaux_cv_shell_pythonjinja2_exists=no
+   PYTHON_JINJA2=no
+   if test "$($PYTHON -c 'import jinja2; print(jinja2.__package__)')" = 'jinja2'; then
+     libkernaux_cv_shell_pythonjinja2_exists=yes
+     PYTHON_JINJA2=yes
+   fi])
+
 
 
 #############
 # Test args #
 #############
 
-AS_IF([test "$enable_tests_python" = yes -a "$PYTHON" = ':'],         AC_MSG_ERROR([Python is required]))
-AS_IF([test "$enable_tests_python" = yes -a "$PYTHON_YAML" != 'yes'], AC_MSG_ERROR([Python YAML is required]))
+AS_IF([test "$enable_tests_python" = yes -a "$PYTHON" = ':'],           AC_MSG_ERROR([Python is required]))
+AS_IF([test "$enable_tests_python" = yes -a "$PYTHON_YAML" != 'yes'],   AC_MSG_ERROR([Python YAML is required]))
+AS_IF([test "$enable_tests_python" = yes -a "$PYTHON_JINJA2" != 'yes'], AC_MSG_ERROR([Python Jinja 2 is required]))
 
 
 
