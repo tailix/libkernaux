@@ -30,6 +30,8 @@ char *kernaux_utoa(uint64_t value, char *buffer, int base, const char *prefix)
     }
 
     KERNAUX_ASSERT(base >= 2 && base <= 36);
+    // cppcheck doesn't understand assertions
+    if (base == 0) return;
 
     // Write prefix
     if (prefix) {
@@ -49,7 +51,7 @@ char *kernaux_utoa(uint64_t value, char *buffer, int base, const char *prefix)
     while (value > 0) {
         const char mod = value % base;
         *(pos++) = mod < 10 ? mod + '0' : mod - 10 + alpha;
-        value /=  base;
+        value /= base;
     }
     char *const result = pos;
     *(pos--) = '\0';
