@@ -139,7 +139,7 @@ jobs:
         run: sudo apt-get --yes install cppcheck
       - name: cppcheck source code
         # TODO: don't suppress "src/printf.c"
-        run: cppcheck --quiet --error-exitcode=1 --std=c99 --enable=warning,style,performance,portability --suppress='*:src/printf.c' include/ libc/ src/
+        run: cppcheck --quiet --error-exitcode=1 --std=c99 --enable=warning,style,performance,portability --suppress='*:src/printf.c' --suppress='zerodivcond:src/ntoa.c' include/ libc/ src/
       - name: cppcheck examples
         run: cppcheck --quiet --error-exitcode=1 --std=c99 --enable=warning,style,performance,portability --suppress=duplicateExpression --suppress=staticStringCompare examples/
       - name: cppcheck tests

@@ -30,7 +30,6 @@ char *kernaux_utoa(uint64_t value, char *buffer, int base, const char *prefix)
     }
 
     KERNAUX_ASSERT(base >= 2 && base <= 36);
-    if (base == 0) base = 10; // fallback
 
     // Write prefix
     if (prefix) {
