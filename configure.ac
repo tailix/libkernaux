@@ -339,18 +339,22 @@ AC_CACHE_CHECK([for Python YAML],
   [libkernaux_cv_shell_pythonyaml_exists],
   [libkernaux_cv_shell_pythonyaml_exists=no
    PYTHON_YAML=no
-   if test "$($PYTHON -c 'import yaml; print(yaml.__package__)')" = 'yaml'; then
-     libkernaux_cv_shell_pythonyaml_exists=yes
-     PYTHON_YAML=yes
+   if test "$PYTHON" != ':'; then
+     if test "$($PYTHON -c 'import yaml; print(yaml.__package__)')" = 'yaml'; then
+       libkernaux_cv_shell_pythonyaml_exists=yes
+       PYTHON_YAML=yes
+     fi
    fi])
 
 AC_CACHE_CHECK([for Python Jinja 2],
   [libkernaux_cv_shell_pythonjinja2_exists],
   [libkernaux_cv_shell_pythonjinja2_exists=no
    PYTHON_JINJA2=no
-   if test "$($PYTHON -c 'import jinja2; print(jinja2.__package__)')" = 'jinja2'; then
-     libkernaux_cv_shell_pythonjinja2_exists=yes
-     PYTHON_JINJA2=yes
+   if test "$PYTHON" != ':'; then
+     if test "$($PYTHON -c 'import jinja2; print(jinja2.__package__)')" = 'jinja2'; then
+       libkernaux_cv_shell_pythonjinja2_exists=yes
+       PYTHON_JINJA2=yes
+     fi
    fi])
 
 
