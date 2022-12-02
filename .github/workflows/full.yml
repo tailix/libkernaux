@@ -1,5 +1,10 @@
 name: Full kernels
 
+# TODO: change this
+on:
+  push:
+    branches: [maintenance]
+
 jobs:
   default:
     runs-on: ubuntu-latest
