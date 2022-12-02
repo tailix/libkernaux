@@ -86,7 +86,7 @@ endif
 # test_cmdline_gen #
 ####################
 
-if ENABLE_TESTS_PYTHON
+if ENABLE_CHECKS_PYTHON
 if WITH_CMDLINE
 TESTS += test_cmdline_gen
 test_cmdline_gen_LDADD = $(top_builddir)/libkernaux.la
@@ -322,7 +322,7 @@ endif
 # test_printf_fmt_gen #
 #######################
 
-if ENABLE_TESTS_PYTHON
+if ENABLE_CHECKS_PYTHON
 if WITH_PRINTF_FMT
 TESTS += test_printf_fmt_gen
 test_printf_fmt_gen_LDADD = $(top_builddir)/libkernaux.la
@@ -344,7 +344,7 @@ test_printf_fmt_gen.c: printf_fmt_gen.py printf_fmt_gen.jinja $(top_srcdir)/comm
 # test_printf_gen #
 ###################
 
-if ENABLE_TESTS_PYTHON
+if ENABLE_CHECKS_PYTHON
 if WITH_PRINTF
 TESTS += test_printf_gen
 test_printf_gen_LDADD = $(top_builddir)/libkernaux.la

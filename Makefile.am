@@ -12,7 +12,7 @@ endif
 
 SUBDIRS += .
 
-if ENABLE_TESTS
+if ENABLE_CHECKS
 SUBDIRS += examples tests
 endif
 
