@@ -1,3 +1,8 @@
+2022-12-02  Alex Kotov  <kotovalexarian@gmail.com>
+
+	* configure.ac: Rename args "--enable-tests*" to "--enable-checks*"
+	* configure.ac: Add arg "--enable-checks-cppcheck"
+
 2022-12-01  Alex Kotov  <kotovalexarian@gmail.com>
 
 	* src/printf.c: Fix a bug with too big float precision

@@ -136,9 +136,9 @@ stable options.
 
 #### Features
 
-* `--enable-tests` - enable usual tests and examples
-* `--enable-tests-all` - enable all tests
-* `--enable-tests-python` - enable tests that require Python 3 with YAML and
+* `--enable-checks` - enable usual tests and examples
+* `--enable-checks-all` - enable all tests
+* `--enable-checks-python` - enable tests that require Python 3 with YAML and
   Jinja2
 
 #### Packages
@@ -192,7 +192,7 @@ environment.
 
 ```
 ./autogen.sh # if present
-./configure --enable-tests # or --enable-tests-all, but see prerequisites
+./configure --enable-checks # or --enable-checks-all, but see prerequisites
 make
 ```
 
