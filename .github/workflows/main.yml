@@ -16,7 +16,7 @@ jobs:
       - name: autogen
         run: ./autogen.sh
       - name: configure
-        run: ./configure
+        run: ./configure --enable-checks-cppcheck
       - name: cppcheck
         run: make check-cppcheck
 
