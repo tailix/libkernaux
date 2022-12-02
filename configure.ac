@@ -335,6 +335,8 @@ AC_CHECK_HEADERS([stdarg.h stddef.h stdint.h])
 
 AM_PATH_PYTHON([3.8],, [:])
 
+AC_PATH_PROGS([CPPCHECK], [cppcheck], [:])
+
 AC_CACHE_CHECK([for Python YAML],
   [libkernaux_cv_shell_pythonyaml_exists],
   [libkernaux_cv_shell_pythonyaml_exists=no
@@ -366,6 +368,14 @@ AC_CACHE_CHECK([for Python Jinja 2],
 AS_IF([test "$enable_tests_python" = yes -a "$PYTHON" = ':'],           AC_MSG_ERROR([Python is required]))
 AS_IF([test "$enable_tests_python" = yes -a "$PYTHON_YAML" != 'yes'],   AC_MSG_ERROR([Python YAML is required]))
 AS_IF([test "$enable_tests_python" = yes -a "$PYTHON_JINJA2" != 'yes'], AC_MSG_ERROR([Python Jinja 2 is required]))
+
+
+
+#########################
+# Automake conditionals #
+#########################
+
+AM_CONDITIONAL([HAS_CPPCHECK], [test "$CPPCHECK" != ':'])
 
 
 

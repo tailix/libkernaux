@@ -7,6 +7,19 @@ on:
     branches: [master]
 
 jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: dependencies
+        run: sudo apt-get --yes install cppcheck
+      - name: autogen
+        run: ./autogen.sh
+      - name: configure
+        run: ./configure
+      - name: cppcheck
+        run: make check-cppcheck
+
   test:
     runs-on: ubuntu-latest
     strategy:
@@ -130,12 +143,3 @@ jobs:
         run: cd "libkernaux-$(cat VERSION)" && make check || (./test-suite-log && false)
       - name: install
         run: cd "libkernaux-$(cat VERSION)" && sudo make install
-
-  cppcheck:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: dependencies
-        run: sudo apt-get --yes install cppcheck
-      - name: cppcheck
-        run: cppcheck --quiet --error-exitcode=1 --std=c99 --enable=warning,style,performance,portability --inline-suppr examples/ include/ libc/ src/ tests/
