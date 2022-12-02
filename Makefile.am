@@ -12,7 +12,7 @@ endif
 
 SUBDIRS += .
 
-if ENABLE_TESTS
+if ENABLE_CHECKS
 SUBDIRS += examples tests
 endif
 
@@ -23,6 +23,22 @@ AM_CFLAGS += -DKERNAUX_ACCESS_PRIVATE
 
 lib_LTLIBRARIES = libkernaux.la
 
+##########
+# Checks #
+##########
+
+MY_CHECKS =
+check: $(MY_CHECKS)
+
+if ENABLE_CHECKS_CPPCHECK
+MY_CHECKS += check-cppcheck
+check-cppcheck:
+	$(CPPCHECK) $(CPPCHECK_ARGS) $(CPPCHECK_PATHS)
+
+CPPCHECK_ARGS = --quiet --error-exitcode=1 --std=c99 --inline-suppr --enable=warning,style,performance,portability
+CPPCHECK_PATHS = examples/ include/ libc/ src/ tests/
+endif
+
 ##################
 # Required files #
 ##################
@@ -30,7 +46,6 @@ lib_LTLIBRARIES = libkernaux.la
 libkernaux_la_LIBADD =
 libkernaux_la_SOURCES = \
 	src/assert.c \
-	src/libc.h \
 	src/generic/malloc.c \
 	src/generic/mutex.c
 

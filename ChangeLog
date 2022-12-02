@@ -1,3 +1,12 @@
+2022-12-02  Alex Kotov  <kotovalexarian@gmail.com>
+
+	* configure.ac: Rename args "--enable-tests*" to "--enable-checks*"
+	* configure.ac: Add arg "--enable-checks-cppcheck"
+
+2022-12-01  Alex Kotov  <kotovalexarian@gmail.com>
+
+	* src/printf.c: Fix a bug with too big float precision
+
 2022-11-30  Alex Kotov  <kotovalexarian@gmail.com>
 
 	* configure.ac: Fix CFLAGS setting
@@ -9,6 +18,10 @@
 	* include/kernaux/macro.h: Add macros "KERNAUX_UNUSED", "KERNAUX_NORETURN",
 	"KERNAUX_RETURNS_TWICE", "KERNAUX_ASM"
 	* include/kernaux/printf_fmt.h: Make stable
+
+2022-11-27  Alex Kotov  <kotovalexarian@gmail.com>
+
+	* src/free_list.c: Bug fixed
 
 2022-11-26  Alex Kotov  <kotovalexarian@gmail.com>
 

@@ -86,7 +86,7 @@ endif
 # test_cmdline_gen #
 ####################
 
-if ENABLE_TESTS_PYTHON
+if ENABLE_CHECKS_PYTHON
 if WITH_CMDLINE
 TESTS += test_cmdline_gen
 test_cmdline_gen_LDADD = $(top_builddir)/libkernaux.la
@@ -104,7 +104,7 @@ endif
 CLEANFILES += test_cmdline_gen.c
 
 test_cmdline_gen.c: cmdline_gen.py cmdline_gen.jinja $(top_srcdir)/common/cmdline.yml
-	python3 cmdline_gen.py
+	$(PYTHON) cmdline_gen.py
 
 ############
 # test_elf #
@@ -322,7 +322,7 @@ endif
 # test_printf_fmt_gen #
 #######################
 
-if ENABLE_TESTS_PYTHON
+if ENABLE_CHECKS_PYTHON
 if WITH_PRINTF_FMT
 TESTS += test_printf_fmt_gen
 test_printf_fmt_gen_LDADD = $(top_builddir)/libkernaux.la
@@ -338,13 +338,13 @@ endif
 CLEANFILES += test_printf_fmt_gen.c
 
 test_printf_fmt_gen.c: printf_fmt_gen.py printf_fmt_gen.jinja $(top_srcdir)/common/printf_fmt.yml
-	python3 printf_fmt_gen.py
+	$(PYTHON) printf_fmt_gen.py
 
 ###################
 # test_printf_gen #
 ###################
 
-if ENABLE_TESTS_PYTHON
+if ENABLE_CHECKS_PYTHON
 if WITH_PRINTF
 TESTS += test_printf_gen
 test_printf_gen_LDADD = $(top_builddir)/libkernaux.la
@@ -361,7 +361,7 @@ endif
 CLEANFILES += test_printf_gen.c
 
 test_printf_gen.c: printf_gen.py printf_gen.jinja $(top_srcdir)/common/printf.yml $(top_srcdir)/common/printf_orig.yml
-	python3 printf_gen.py
+	$(PYTHON) printf_gen.py
 
 ####################
 # test_stack_trace #

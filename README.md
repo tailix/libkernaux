@@ -35,7 +35,7 @@ API
 ### Headers
 
 We use [semantic versioning](https://semver.org) for stable APIs. Stable APIs
-can only change when major version number is increased (or minor while major is
+may only change when major version number is increased (or minor while major is
 zero). Work-in-progress APIs can change at any time.
 
 * Basic features
@@ -136,9 +136,9 @@ stable options.
 
 #### Features
 
-* `--enable-tests` - enable usual tests and examples
-* `--enable-tests-all` - enable all tests
-* `--enable-tests-python` - enable tests that require Python 3 with YAML and
+* `--enable-checks` - enable usual tests and examples
+* `--enable-checks-all` - enable all tests
+* `--enable-checks-python` - enable tests that require Python 3 with YAML and
   Jinja2
 
 #### Packages
@@ -193,7 +193,7 @@ environment.
 
 ```
 ./autogen.sh # if present
-./configure --enable-tests # or --enable-tests-all, but see prerequisites
+./configure --enable-checks # or --enable-checks-all, but see prerequisites
 make
 ```
 

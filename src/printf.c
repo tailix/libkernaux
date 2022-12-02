@@ -17,10 +17,9 @@
 #include <kernaux/printf.h>
 #include <kernaux/printf_fmt.h>
 
-#include "libc.h"
-
 #include <stdbool.h>
 #include <stdint.h>
+#include <string.h>
 
 // import float.h for DBL_MAX
 #ifdef ENABLE_FLOAT
@@ -245,6 +244,7 @@ int _vsnprintf(out_fct_type out, char* buffer, const size_t maxlen, const char* 
             case KERNAUX_PRINTF_FMT_TYPE_PTR:
             {
                 const bool is_ll = sizeof(uintptr_t) == sizeof(long long);
+                // cppcheck-suppress knownConditionTrueFalse
                 if (is_ll) {
                     idx = _ntoa_long_long(out, buffer, idx, maxlen, (uintptr_t)va_arg(va, void*), false, 16u, spec.precision, spec.width, spec.flags);
                 } else {
@@ -425,10 +425,6 @@ size_t _ntoa_long_long(out_fct_type out, char* buffer, size_t idx, size_t maxlen
 // internal ftoa for fixed decimal floating point
 size_t _ftoa(out_fct_type out, char* buffer, size_t idx, size_t maxlen, double value, unsigned int prec, unsigned int width, unsigned int flags)
 {
-    char buf[PRINTF_FTOA_BUFFER_SIZE];
-    size_t len = 0u;
-    double diff = 0.0;
-
     // powers of 10
     static const double pow10[] = { 1, 10, 100, 1000, 10000, 100000, 1000000, 10000000, 100000000, 1000000000 };
 
@@ -457,16 +453,18 @@ size_t _ftoa(out_fct_type out, char* buffer, size_t idx, size_t maxlen, double v
     if (!(flags & KERNAUX_PRINTF_FMT_FLAGS_PRECISION)) {
         prec = PRINTF_DEFAULT_FLOAT_PRECISION;
     }
+
+    char buf[PRINTF_FTOA_BUFFER_SIZE];
+    size_t len = 0u;
+
+    const unsigned int orig_prec = prec;
     // limit precision to 9, cause a prec >= 10 can lead to overflow errors
-    while ((len < PRINTF_FTOA_BUFFER_SIZE) && (prec > 9u)) {
-        buf[len++] = '0';
-        prec--;
-    }
+    if (prec > 9u) prec = 9u;
 
     int whole = (int)value;
     double tmp = (value - whole) * pow10[prec];
     unsigned long frac = (unsigned long)tmp;
-    diff = tmp - frac;
+    double diff = tmp - frac;
 
     if (diff > 0.5) {
         ++frac;
@@ -484,6 +482,7 @@ size_t _ftoa(out_fct_type out, char* buffer, size_t idx, size_t maxlen, double v
 
     if (prec == 0u) {
         diff = value - (double)whole;
+        // cppcheck-suppress redundantCondition
         if ((!(diff < 0.5) || (diff > 0.5)) && (whole & 1)) {
             // exactly 0.5 and ODD, then round up
             // 1.5 -> 2, but 2.5 -> 2
@@ -535,6 +534,24 @@ size_t _ftoa(out_fct_type out, char* buffer, size_t idx, size_t maxlen, double v
         } else if (flags & KERNAUX_PRINTF_FMT_FLAGS_SPACE) {
             buf[len++] = ' ';
         }
+    }
+
+    // This slows down the algorighm, but
+    // only if the precision was more than 9.
+    if (orig_prec > prec) {
+        const size_t space_left = PRINTF_FTOA_BUFFER_SIZE - len;
+        const size_t zeroes_wanted = orig_prec - prec;
+        const size_t delta =
+            space_left < zeroes_wanted ? space_left : zeroes_wanted;
+
+        for (size_t rev_index = 0; rev_index < len; ++rev_index) {
+            const size_t index = len - 1 - rev_index;
+            buf[index + delta] = buf[index];
+        }
+
+        len += delta;
+
+        for (size_t index = 0; index < delta; ++index) buf[index] = '0';
     }
 
     return _out_rev(out, buffer, idx, maxlen, buf, len, width, flags);

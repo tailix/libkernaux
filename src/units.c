@@ -6,7 +6,7 @@
 #include <kernaux/ntoa.h>
 #include <kernaux/units.h>
 
-#include "libc.h"
+#include <string.h>
 
 #define TMP_BUFFER_SIZE (64)
 
