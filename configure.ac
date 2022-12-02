@@ -38,6 +38,14 @@ AC_CONFIG_FILES([
 
 
 
+#######################
+# Initialize Automake #
+#######################
+
+AM_INIT_AUTOMAKE([1.16 subdir-objects])
+
+
+
 ###############
 # Define args #
 ###############
@@ -313,14 +321,6 @@ AS_IF([test "$with_units"        = no], [AC_SUBST([comment_line_units],        [
 AS_IF([test "$enable_freestanding" = yes],
   [CFLAGS="$CFLAGS -nostdlib -ffreestanding -fno-pic -fno-stack-protector "],
   [CFLAGS="$CFLAGS -fpic "])
-
-
-
-#######################
-# Initialize Automake #
-#######################
-
-AM_INIT_AUTOMAKE([1.16 subdir-objects])
 
 
 
