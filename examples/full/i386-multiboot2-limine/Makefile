@@ -1,17 +1,18 @@
 all: test
 
-CCPREFIX = ../../vendor/cross/root/bin/i386-elf-
+REPO = ../../..
+
+CCPREFIX = $(REPO)/vendor/cross/root/bin/i386-elf-
 
 AS = $(CCPREFIX)as
 CC = $(CCPREFIX)gcc
 
-LIBKERNAUX_SRC   = ../..
-LIBKERNAUX_BUILD = ../../build/dev-cross-i386
-LIBKERNAUX_DEST  = ../../dest/dev-cross-i386
+LIBKERNAUX_BUILD = $(REPO)/build/dev-cross-i386
+LIBKERNAUX_DEST  = $(REPO)/dest/dev-cross-i386
 
 DIFF = diff
 GRUB_FILE = grub-file
-LIMINE = ../../vendor/limine/build/bin
+LIMINE = $(REPO)/vendor/limine/build/bin
 QEMU = qemu-system-x86_64 -serial stdio -display none
 XORRISO = xorriso
 

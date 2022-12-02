@@ -1,13 +1,14 @@
 all: run
 
-CCPREFIX = ../../vendor/cross/root/bin/riscv64-elf-
+REPO = ../../..
+
+CCPREFIX = $(REPO)/vendor/cross/root/bin/riscv64-elf-
 
 AS = $(CCPREFIX)as
 CC = $(CCPREFIX)gcc
 
-LIBKERNAUX_SRC   = ../..
-LIBKERNAUX_BUILD = ../../build/dev-cross-riscv64
-LIBKERNAUX_DEST  = ../../dest/dev-cross-riscv64
+LIBKERNAUX_BUILD = $(REPO)/build/dev-cross-riscv64
+LIBKERNAUX_DEST  = $(REPO)/dest/dev-cross-riscv64
 
 QEMU = qemu-system-riscv64 -serial stdio -display none
 
@@ -32,7 +33,7 @@ run: $(KERNEL)
 clean:
 	rm -f $(KERNEL) $(OBJS)
 
-$(KERNEL): $(LINKERSCR) $(OBJS) build-libkernaux.a
+$(KERNEL): $(LINKERSCR) build-libkernaux.a $(OBJS)
 	$(CC) -T $(LINKERSCR) -o $@ $(OBJS) -nostdlib -lkernaux -lgcc -Wl,-L$(LIBKERNAUX_DEST)/lib
 
 build-libkernaux.a:
