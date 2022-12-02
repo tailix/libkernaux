@@ -12,6 +12,8 @@ jobs:
       CROSS_COMPILE: 'riscv64-linux-gnu-'
     steps:
       - uses: actions/checkout@v2
+        with:
+          submodules: true
       - name: dependencies
         run: sudo apt-get --yes install crossbuild-essential-riscv64
       - working-directory: vendor/u-boot
