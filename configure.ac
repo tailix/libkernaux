@@ -7,9 +7,9 @@ LT_PREREQ([2.4.6])
 
 
 
-#######################
-# Initialize Autoconf #
-#######################
+##################################
+# Initialize Autoconf & Automake #
+##################################
 
 AC_INIT([libkernaux],
   m4_normalize(m4_include([VERSION])),
@@ -35,12 +35,6 @@ AC_CONFIG_FILES([
   include/kernaux/version.h
   tests/Makefile
 ])
-
-
-
-#######################
-# Initialize Automake #
-#######################
 
 AM_INIT_AUTOMAKE([1.16 subdir-objects])
 
