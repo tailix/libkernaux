@@ -30,7 +30,7 @@ lib_LTLIBRARIES = libkernaux.la
 MY_CHECKS =
 check: $(MY_CHECKS)
 
-if HAS_CPPCHECK
+if ENABLE_CHECKS_CPPCHECK
 MY_CHECKS += check-cppcheck
 check-cppcheck:
 	$(CPPCHECK) $(CPPCHECK_ARGS) $(CPPCHECK_PATHS)
