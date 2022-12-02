@@ -17,8 +17,8 @@ jobs:
         run: ./autogen.sh
       - name: configure
         run: ./configure --enable-checks-cppcheck
-      - name: cppcheck
-        run: make check-cppcheck
+      - name: check
+        run: make check
 
   test:
     runs-on: ubuntu-latest
