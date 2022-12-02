@@ -135,8 +135,7 @@ if WITH_DRIVERS
 libkernaux_la_SOURCES += \
 	src/drivers/console.c \
 	src/drivers/framebuffer.c \
-	src/drivers/shutdown.c \
-	src/drivers/qemu.c
+	src/drivers/shutdown.c
 
 # Intel 8253-compatible programmable interval timer
 
