@@ -24,15 +24,14 @@ GRUBCFG = $(ROOTFS)/boot/grub/grub.cfg
 KERNEL  = $(ROOTFS)/boot/kernel
 
 CFLAGS = \
-	-std=c99                      \
-	-pedantic                     \
-	-Wall                         \
-	-Wextra                       \
-	-Werror                       \
-	-ffreestanding                \
-	-fno-stack-protector          \
-	-I$(LIBKERNAUX_SRC)/include   \
-	-I$(LIBKERNAUX_BUILD)/include
+	-std=c99                     \
+	-pedantic                    \
+	-Wall                        \
+	-Wextra                      \
+	-Werror                      \
+	-ffreestanding               \
+	-fno-stack-protector         \
+	-I$(LIBKERNAUX_DEST)/include
 
 OBJS = main.c.o multiboot2.c.o start.S.o
 

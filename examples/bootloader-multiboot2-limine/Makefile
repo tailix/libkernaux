@@ -39,15 +39,14 @@ FULL_LIMINE_ELTORITO = $(ROOTFS)/$(REL_LIMINE_ELTORITO)
 FULL_LIMINE_SYS      = $(ROOTFS)/$(REL_LIMINE_SYS)
 
 CFLAGS = \
-	-std=c99                      \
-	-pedantic                     \
-	-Wall                         \
-	-Wextra                       \
-	-Werror                       \
-	-ffreestanding                \
-	-fno-stack-protector          \
-	-I$(LIBKERNAUX_SRC)/include   \
-	-I$(LIBKERNAUX_BUILD)/include
+	-std=c99                     \
+	-pedantic                    \
+	-Wall                        \
+	-Wextra                      \
+	-Werror                      \
+	-ffreestanding               \
+	-fno-stack-protector         \
+	-I$(LIBKERNAUX_DEST)/include
 
 OBJS = main.c.o multiboot2.c.o start.S.o
 

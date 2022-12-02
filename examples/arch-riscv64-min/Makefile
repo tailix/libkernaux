@@ -5,6 +5,7 @@ CCPREFIX = ../../vendor/cross/root/bin/riscv64-elf-
 AS = $(CCPREFIX)as
 CC = $(CCPREFIX)gcc
 
+LIBKERNAUX_SRC   = ../..
 LIBKERNAUX_BUILD = ../../build/dev-cross-riscv64
 LIBKERNAUX_DEST  = ../../dest/dev-cross-riscv64
 
@@ -14,13 +15,14 @@ KERNEL = kernel.elf
 LINKERSCR = linker.ld
 
 CFLAGS = \
-	-std=c99        \
-	-pedantic       \
-	-Wall           \
-	-Wextra         \
-	-Werror         \
-	-ffreestanding  \
-	-mcmodel=medany
+	-std=c99                     \
+	-pedantic                    \
+	-Wall                        \
+	-Wextra                      \
+	-Werror                      \
+	-ffreestanding               \
+	-mcmodel=medany              \
+	-I$(LIBKERNAUX_DEST)/include
 
 OBJS = main.c.o start.S.o
 

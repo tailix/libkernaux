@@ -1,11 +1,9 @@
 #include <stdarg.h>
 #include <stdint.h>
 
-#include <kernaux/asm/x86.h>
 #include <kernaux/drivers/console.h>
+#include <kernaux/drivers/shutdown.h>
 #include <kernaux/multiboot2.h>
-
-void poweroff();
 
 extern const struct KernAux_Multiboot2_Header multiboot2_header;
 
@@ -46,13 +44,8 @@ void main(
     );
 }
 
-void poweroff()
-{
-    kernaux_asm_x86_outportw(0x604, 0x2000);
-}
-
 void panic(const char *const str)
 {
     kernaux_drivers_console_printf("panic: %s\n", str);
-    poweroff();
+    kernaux_drivers_shutdown_poweroff();
 }
