@@ -5,6 +5,7 @@
 #include <kernaux/stack_trace.h>
 
 #include <assert.h>
+#include <stdio.h>
 #include <string.h>
 
 #define MIN_SIZE 20
@@ -27,10 +28,15 @@ static const void *max_addresses[MAX_SIZE];
             KernAux_StackTrace_Frame_has_more(&frame); \
             KernAux_StackTrace_Frame_use_next(&frame) \
         ) { \
-            assert(lower##_count < upper##_SIZE - 1); \
-            lower##_addresses[lower##_count++] = \
+            assert(lower##_count < upper##_SIZE); \
+            lower##_addresses[lower##_count] = \
                 KernAux_StackTrace_Frame_get_ptr(&frame); \
+            printf("%lu: 0x%p\n", \
+                   lower##_count, lower##_addresses[lower##_count]); \
+            ++lower##_count; \
         } \
+\
+        putchar('\n'); \
     } while (0)
 
 void test_main()
