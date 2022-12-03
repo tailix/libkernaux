@@ -41,6 +41,8 @@ static const void *max_addresses[MAX_SIZE];
         putchar('\n'); \
     } while (0)
 
+static void test1();
+
 void test_main()
 {
     PREPARE("test_main (initial)", min, MIN);
@@ -50,4 +52,14 @@ void test_main()
     for (size_t index = 1; index < max_count; ++index) {
         assert(max_addresses[index] == min_addresses[index]);
     }
+
+    test1();
+    for (size_t index = 2; index < max_count; ++index) {
+        assert(max_addresses[index] == min_addresses[index - 1]);
+    }
+}
+
+void test1()
+{
+    PREPARE("test1", max, MAX);
 }
