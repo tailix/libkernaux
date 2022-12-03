@@ -1,4 +1,4 @@
-include $(top_srcdir)/shared.am
+include $(top_srcdir)/make/shared.am
 
 ACLOCAL_AMFLAGS = -I m4
 EXTRA_DIST = autogen.sh CONTRIBUTING.md sha256sums.txt
