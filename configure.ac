@@ -54,6 +54,7 @@ AC_ARG_ENABLE([split-libc],      AS_HELP_STRING([--enable-split-libc],      [spl
 AC_ARG_ENABLE([checks],          AS_HELP_STRING([--enable-checks],          [enable usual tests and examples]))
 AC_ARG_ENABLE([checks-all],      AS_HELP_STRING([--enable-checks-all],      [enable all checks]))
 AC_ARG_ENABLE([checks-cppcheck], AS_HELP_STRING([--enable-checks-cppcheck], [enable cppcheck]))
+AC_ARG_ENABLE([checks-pthreads], AS_HELP_STRING([--enable-checks-pthreads], [enable tests that require pthreads]))
 AC_ARG_ENABLE([checks-python],   AS_HELP_STRING([--enable-checks-python],   [enable tests that require Python 3 with YAML and Jinja2]))
 
 dnl Packages (enabled by default)
@@ -88,6 +89,7 @@ AC_DEFUN([do_enable_checks_all],
 [
 if test -z "$enable_checks";          then enable_checks=yes;          fi
 if test -z "$enable_checks_cppcheck"; then enable_checks_cppcheck=yes; fi
+if test -z "$enable_checks_pthreads"; then enable_checks_pthreads=yes; fi
 if test -z "$enable_checks_python";   then enable_checks_python=yes;   fi
 ])
 AS_IF([test "$enable_checks_all" = yes], do_enable_checks_all)
@@ -137,6 +139,7 @@ AS_IF([test "$enable_split_libc"      = yes], [enable_split_libc=yes],      [ena
 AS_IF([test "$enable_checks"          = yes], [enable_checks=yes],          [enable_checks=no])
 AS_IF([test "$enable_checks_all"      = yes], [enable_checks_all=yes],      [enable_checks_all=no])
 AS_IF([test "$enable_checks_cppcheck" = yes], [enable_checks_cppcheck=yes], [enable_checks_cppcheck=no])
+AS_IF([test "$enable_checks_pthreads" = yes], [enable_checks_pthreads=yes], [enable_checks_pthreads=no])
 AS_IF([test "$enable_checks_python"   = yes], [enable_checks_python=yes],   [enable_checks_python=no])
 
 dnl Packages (enabled by default)
@@ -167,10 +170,8 @@ AS_IF([test "$with_libc"              = yes], [with_libc=yes],              [wit
 # Test args #
 #############
 
-AS_IF([test "$enable_checks"        = yes -a "$enable_freestanding" = yes], AC_MSG_ERROR([can not build freestanding tests]))
-AS_IF([test "$enable_checks_python" = yes -a "$enable_freestanding" = yes], AC_MSG_ERROR([can not build freestanding tests]))
-AS_IF([test "$enable_checks"        = yes -a "$with_libc"           = yes], AC_MSG_ERROR([can not use package `libc' with tests]))
-AS_IF([test "$enable_checks_python" = yes -a "$with_libc"           = yes], AC_MSG_ERROR([can not use package `libc' with tests]))
+AS_IF([test "$enable_checks" = yes -a "$enable_freestanding" = yes], AC_MSG_ERROR([can not build freestanding tests]))
+AS_IF([test "$enable_checks" = yes -a "$with_libc"           = yes], AC_MSG_ERROR([can not use package `libc' with tests]))
 
 AS_IF([test "$with_printf" = yes -a "$with_ntoa"       = no], AC_MSG_ERROR([package `printf' requires package `ntoa']))
 AS_IF([test "$with_printf" = yes -a "$with_printf_fmt" = no], AC_MSG_ERROR([package `printf' requires package `printf-fmt']))
@@ -200,6 +201,7 @@ AM_CONDITIONAL([ENABLE_FREESTANDING],    [test "$enable_freestanding"    = yes])
 AM_CONDITIONAL([ENABLE_SPLIT_LIBC],      [test "$enable_split_libc"      = yes])
 AM_CONDITIONAL([ENABLE_CHECKS],          [test "$enable_checks"          = yes])
 AM_CONDITIONAL([ENABLE_CHECKS_CPPCHECK], [test "$enable_checks_cppcheck" = yes])
+AM_CONDITIONAL([ENABLE_CHECKS_PTHREADS], [test "$enable_checks_pthreads" = yes])
 AM_CONDITIONAL([ENABLE_CHECKS_PYTHON],   [test "$enable_checks_python"   = yes])
 
 dnl Packages (enabled by default)
@@ -250,6 +252,7 @@ AS_IF([test "$enable_split_libc"      = yes], [AC_DEFINE([ENABLE_SPLIT_LIBC],   
 AS_IF([test "$enable_freestanding"    = yes], [AC_DEFINE([ENABLE_FREESTANDING],    [1], [build for freestanding environment])])
 AS_IF([test "$enable_checks"          = yes], [AC_DEFINE([ENABLE_CHECKS],          [1], [enabled usual tests and examples])])
 AS_IF([test "$enable_checks_cppcheck" = yes], [AC_DEFINE([ENABLE_CHECKS_CPPCHECK], [1], [enabled cppcheck])])
+AS_IF([test "$enable_checks_pthreads" = yes], [AC_DEFINE([ENABLE_CHECKS_PTHREADS], [1], [enabled tests that require pthreads])])
 AS_IF([test "$enable_checks_python"   = yes], [AC_DEFINE([ENABLE_CHECKS_PYTHON],   [1], [enabled tests that require Python 3 with YAML and Jinja2])])
 
 dnl Packages (enabled by default)
@@ -324,12 +327,29 @@ AM_PROG_AS
 AC_PROG_CC
 AC_PROG_CC_C99
 AC_C_INLINE
-AC_CHECK_HEADER_STDBOOL
-AC_CHECK_HEADERS([stdarg.h stddef.h stdint.h])
+
+AC_HEADER_STDBOOL
+AS_IF([test "$enable_checks" = yes -a "$ac_cv_header_stdbool_h" != yes],
+  [AC_MSG_ERROR([the header is required])])
+
+AC_CHECK_HEADERS([stdarg.h stddef.h stdint.h],,
+  [AC_MSG_ERROR([the headers are required])])
+
+AS_IF([test "$enable_checks" = yes],
+  [AC_CHECK_HEADERS([assert.h setjmp.h stdio.h stdlib.h string.h],,
+    [AC_MSG_ERROR([the headers are required])])])
+
+AS_IF([test "$enable_checks" = yes -a "$enable_checks_pthreads" = yes],
+  [AC_CHECK_HEADERS([pthread.h],,
+    [AC_MSG_ERROR([the header is required])])])
 
 AM_PATH_PYTHON([3.8],, [:])
+AS_IF([test "$enable_checks_python" = yes -a "$enable_checks" = yes -a "$PYTHON" = ':'],
+  [AC_MSG_ERROR([Python is required])])
 
 AC_PATH_PROGS([CPPCHECK], [cppcheck], [:])
+AS_IF([test "$enable_checks_cppcheck" = yes -a "$CPPCHECK" = ':'],
+  [AC_MSG_ERROR([cppcheck is required])])
 
 AC_CACHE_CHECK([for Python YAML],
   [libkernaux_cv_shell_pythonyaml_exists],
@@ -341,6 +361,8 @@ AC_CACHE_CHECK([for Python YAML],
        PYTHON_YAML=yes
      fi
    fi])
+AS_IF([test "$enable_checks_python" = yes -a "$enable_checks" = yes -a "$PYTHON_YAML" != 'yes'],
+  [AC_MSG_ERROR([Python YAML is required])])
 
 AC_CACHE_CHECK([for Python Jinja 2],
   [libkernaux_cv_shell_pythonjinja2_exists],
@@ -352,17 +374,8 @@ AC_CACHE_CHECK([for Python Jinja 2],
        PYTHON_JINJA2=yes
      fi
    fi])
-
-
-
-#############
-# Test args #
-#############
-
-AS_IF([test "$enable_checks_cppcheck" = yes -a "$CPPCHECK" = ':'],         AC_MSG_ERROR([cppcheck is required]))
-AS_IF([test "$enable_checks_python"   = yes -a "$PYTHON" = ':'],           AC_MSG_ERROR([Python is required]))
-AS_IF([test "$enable_checks_python"   = yes -a "$PYTHON_YAML" != 'yes'],   AC_MSG_ERROR([Python YAML is required]))
-AS_IF([test "$enable_checks_python"   = yes -a "$PYTHON_JINJA2" != 'yes'], AC_MSG_ERROR([Python Jinja 2 is required]))
+AS_IF([test "$enable_checks_python" = yes -a "$enable_checks" = yes -a "$PYTHON_JINJA2" != 'yes'],
+  [AC_MSG_ERROR([Python Jinja 2 is required])])
 
 
 
