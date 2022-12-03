@@ -69,6 +69,10 @@ Avoid stupid errors with:
 * `git grep -i cppcheck-suppress`
 * `git grep -i rubocop:disable`
 
+### Complicated topics
+
+* [Assertions & __attribute__((nonnull))](doc/assert_and_nonnull.md)
+
 
 
 C language
