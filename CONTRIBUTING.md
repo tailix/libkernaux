@@ -71,7 +71,7 @@ Avoid stupid errors with:
 
 ### Complicated topics
 
-* [Assertions & __attribute__((nonnull))](doc/assert_and_nonnull.md)
+* [Assertions & \_\_attribute\_\_((nonnull))](doc/assert_and_nonnull.md)
 
 
 

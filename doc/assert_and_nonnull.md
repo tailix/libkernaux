@@ -1,2 +1,2 @@
-Assertions & __attribute__((nonnull))
-=====================================
+Assertions & \_\_attribute\_\_((nonnull))
+=========================================
