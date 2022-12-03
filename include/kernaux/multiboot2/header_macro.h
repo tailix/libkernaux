@@ -22,7 +22,7 @@ extern "C" {
         struct KernAux_Multiboot2_HTag_InfoReq tag;  \
         uint32_t mbi_tag_types[mbi_tag_types_count]; \
     } KERNAUX_PACKED name;                           \
-    uint8_t align_name[4];
+    uint8_t align_name[4] KERNAUX_UNUSED;
 
 #define KERNAUX_MULTIBOOT2_HFIELDS_INFO_REQ_EVEN(    \
     name, mbi_tag_types_count                        \
