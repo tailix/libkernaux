@@ -33,8 +33,9 @@ static const void *max_addresses[MAX_SIZE];
             assert(lower##_count < upper##_SIZE); \
             lower##_addresses[lower##_count] = \
                 KernAux_StackTrace_Frame_get_ptr(&frame); \
-            printf("  %lu: 0x%p\n", \
-                   lower##_count, lower##_addresses[lower##_count]); \
+            printf("  %llu: 0x%p\n", \
+                   (unsigned long long)lower##_count, \
+                   lower##_addresses[lower##_count]); \
             ++lower##_count; \
         } \
 \
