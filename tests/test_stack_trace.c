@@ -43,6 +43,12 @@ static const void *max_addresses[MAX_SIZE];
 
 static void test1();
 
+static void test5_1();
+static void test5_2();
+static void test5_3();
+static void test5_4();
+static void test5_5();
+
 void test_main()
 {
     PREPARE("test_main (initial)", min, MIN);
@@ -57,9 +63,17 @@ void test_main()
     for (size_t index = 2; index < max_count; ++index) {
         assert(max_addresses[index] == min_addresses[index - 1]);
     }
+
+    test5_1();
+    for (size_t index = 6; index < max_count; ++index) {
+        assert(max_addresses[index] == min_addresses[index - 5]);
+    }
 }
 
-void test1()
-{
-    PREPARE("test1", max, MAX);
-}
+void test1() { PREPARE("test1", max, MAX); }
+
+void test5_1() { test5_2(); }
+void test5_2() { test5_3(); }
+void test5_3() { test5_4(); }
+void test5_4() { test5_5(); }
+void test5_5() { PREPARE("test5_5", max, MAX); }
