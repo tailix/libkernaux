@@ -17,8 +17,10 @@ static const void *min_addresses[MIN_SIZE];
 static size_t max_count = 0;
 static const void *max_addresses[MAX_SIZE];
 
-#define PREPARE(lower, upper) \
+#define PREPARE(descr, lower, upper) \
     do { \
+        printf("%s:\n", (descr)); \
+\
         lower##_count = 0; \
         memset(lower##_addresses, 0, sizeof(lower##_addresses)); \
 \
@@ -31,7 +33,7 @@ static const void *max_addresses[MAX_SIZE];
             assert(lower##_count < upper##_SIZE); \
             lower##_addresses[lower##_count] = \
                 KernAux_StackTrace_Frame_get_ptr(&frame); \
-            printf("%lu: 0x%p\n", \
+            printf("  %lu: 0x%p\n", \
                    lower##_count, lower##_addresses[lower##_count]); \
             ++lower##_count; \
         } \
@@ -49,9 +51,9 @@ void test_main()
     printf("KernAux_StackTrace_Frame_create: %p\n\n",
            (const void*)(uintptr_t)KernAux_StackTrace_Frame_create);
 
-    PREPARE(min, MIN);
+    PREPARE("test_main (initial)", min, MIN);
 
-    PREPARE(max, MAX);
+    PREPARE("test_main (compare)", max, MAX);
     assert(max_count == min_count);
     for (size_t index = 1; index < max_count; ++index) {
         assert(max_addresses[index] == min_addresses[index]);
