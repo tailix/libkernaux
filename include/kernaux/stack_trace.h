@@ -17,7 +17,7 @@ typedef struct KernAux_StackTrace_Frame {
 
 struct KernAux_StackTrace_Frame KernAux_StackTrace_Frame_create();
 
-bool KernAux_StackTrace_Frame_has_more(KernAux_StackTrace_Frame frame);
+bool KernAux_StackTrace_Frame_has_next(KernAux_StackTrace_Frame frame);
 void KernAux_StackTrace_Frame_use_next(KernAux_StackTrace_Frame frame);
 
 const void *KernAux_StackTrace_Frame_get_ptr(KernAux_StackTrace_Frame frame);

@@ -27,7 +27,7 @@ static const void *max_addresses[MAX_SIZE];
         for ( \
             struct KernAux_StackTrace_Frame frame = \
                 KernAux_StackTrace_Frame_create(); \
-            KernAux_StackTrace_Frame_has_more(&frame); \
+            KernAux_StackTrace_Frame_has_next(&frame); \
             KernAux_StackTrace_Frame_use_next(&frame) \
         ) { \
             assert(lower##_count < upper##_SIZE); \

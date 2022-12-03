@@ -30,7 +30,7 @@ struct KernAux_StackTrace_Frame KernAux_StackTrace_Frame_create()
     return frame;
 }
 
-bool KernAux_StackTrace_Frame_has_more(const KernAux_StackTrace_Frame frame)
+bool KernAux_StackTrace_Frame_has_next(const KernAux_StackTrace_Frame frame)
 {
     KERNAUX_ASSERT(frame);
 
