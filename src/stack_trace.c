@@ -22,11 +22,13 @@ struct KernAux_StackTrace_Frame KernAux_StackTrace_Frame_create()
     struct KernAux_StackTrace_Frame frame = { .cur_ptr = NULL };
 
 #if defined(ASM_I386)
-    const size_t *cur_ptr = frame.cur_ptr;
+    const size_t *cur_ptr;
     KERNAUX_ASM("movl %%ebp, %0" : "=g" (cur_ptr) :: "memory");
+    frame.cur_ptr = cur_ptr;
 #elif defined(ASM_X86_64)
-    const size_t *cur_ptr = frame.cur_ptr;
+    const size_t *cur_ptr;
     KERNAUX_ASM("movq %%rbp, %0" : "=g" (cur_ptr) :: "memory");
+    frame.cur_ptr = cur_ptr;
 #endif
 
     return frame;

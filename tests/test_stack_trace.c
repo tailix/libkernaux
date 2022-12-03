@@ -39,6 +39,7 @@ static const void *max_addresses[MAX_SIZE];
             ++lower##_count; \
         } \
 \
+        assert(lower##_count >= 2); \
         putchar('\n'); \
     } while (0)
 
