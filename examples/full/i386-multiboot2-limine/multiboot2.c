@@ -1,13 +1,16 @@
 #include <kernaux/multiboot2.h>
 
+#include <kernaux/macro/packing_start.run>
+
 // TODO: add more tags
-__attribute__((section(".multiboot2"), used))
-__attribute__((aligned(KERNAUX_MULTIBOOT2_HEADER_ALIGN)))
+KERNAUX_SECTION(".multiboot2")
+KERNAUX_USED
+KERNAUX_ALIGNED(KERNAUX_MULTIBOOT2_HEADER_ALIGN)
 const struct {
     struct KernAux_Multiboot2_Header multiboot2_header;
     struct KernAux_Multiboot2_HTag_None tag_none;
 }
-__attribute__((packed))
+KERNAUX_PACKED
 multiboot2_header = {
     .multiboot2_header = {
         .magic = KERNAUX_MULTIBOOT2_HEADER_MAGIC,
@@ -26,3 +29,5 @@ multiboot2_header = {
         },
     },
 };
+
+#include <kernaux/macro/packing_end.run>

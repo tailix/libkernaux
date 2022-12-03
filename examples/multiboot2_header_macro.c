@@ -4,7 +4,7 @@
 
 #include <kernaux/macro/packing_start.run>
 
-__attribute__((aligned(KERNAUX_MULTIBOOT2_HEADER_ALIGN)))
+KERNAUX_ALIGNED(KERNAUX_MULTIBOOT2_HEADER_ALIGN)
 static const struct {
     struct KernAux_Multiboot2_Header header;
     // This macro may be used to create the tag

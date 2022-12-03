@@ -4,6 +4,7 @@
 
 #include <kernaux/assert.h>
 #include <kernaux/drivers/console.h>
+#include <kernaux/macro.h>
 
 #ifdef ASM_I386
 #include <kernaux/asm/i386.h>
@@ -22,10 +23,12 @@
 static void file_putc(char c, void *arg);
 #endif
 
-void kernaux_drivers_console_putc(const char c KERNAUX_UNUSED)
+void kernaux_drivers_console_putc(const char c)
 {
-#ifdef ASM_X86
+#if defined(ASM_X86)
     kernaux_asm_x86_outportb(0x3f8, c);
+#else
+    (void)c;
 #endif
 }
 

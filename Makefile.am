@@ -1,4 +1,5 @@
-include $(top_srcdir)/shared.am
+include $(top_srcdir)/make/shared.am
+include $(top_srcdir)/make/checks.am
 
 ACLOCAL_AMFLAGS = -I m4
 EXTRA_DIST = autogen.sh CONTRIBUTING.md sha256sums.txt
@@ -22,22 +23,6 @@ libc/libc.la:
 AM_CFLAGS += -DKERNAUX_ACCESS_PRIVATE
 
 lib_LTLIBRARIES = libkernaux.la
-
-##########
-# Checks #
-##########
-
-MY_CHECKS =
-check: $(MY_CHECKS)
-
-if ENABLE_CHECKS_CPPCHECK
-MY_CHECKS += check-cppcheck
-check-cppcheck:
-	$(CPPCHECK) $(CPPCHECK_ARGS) $(CPPCHECK_PATHS)
-
-CPPCHECK_ARGS = --quiet --error-exitcode=1 --std=c99 --inline-suppr --enable=warning,style,performance,portability
-CPPCHECK_PATHS = examples/ include/ libc/ src/ tests/
-endif
 
 ##################
 # Required files #
@@ -135,8 +120,7 @@ if WITH_DRIVERS
 libkernaux_la_SOURCES += \
 	src/drivers/console.c \
 	src/drivers/framebuffer.c \
-	src/drivers/shutdown.c \
-	src/drivers/qemu.c
+	src/drivers/shutdown.c
 
 # Intel 8253-compatible programmable interval timer
 

@@ -17,8 +17,8 @@ jobs:
         run: ./autogen.sh
       - name: configure
         run: ./configure --enable-checks-cppcheck
-      - name: cppcheck
-        run: make check-cppcheck
+      - name: check
+        run: make check
 
   test:
     runs-on: ubuntu-latest
@@ -38,7 +38,7 @@ jobs:
       - name: make
         run: make
       - name: check
-        run: make check || (./test-suite-log && false)
+        run: make check || (./make/test-suite-log && false)
       - name: install
         run: sudo make install
 
@@ -80,7 +80,7 @@ jobs:
       - name: make
         run: make
       - name: check
-        run: make check || (./test-suite-log && false)
+        run: make check || (./make/test-suite-log && false)
       - name: install
         run: sudo make install
 
@@ -103,7 +103,7 @@ jobs:
       - name: make
         run: make
       - name: check
-        run: make check || (./test-suite-log && false)
+        run: make check || (./make/test-suite-log && false)
       - name: install
         run: sudo make install
 
@@ -140,6 +140,6 @@ jobs:
       - name: make
         run: cd "libkernaux-$(cat VERSION)" && make
       - name: check
-        run: cd "libkernaux-$(cat VERSION)" && make check || (./test-suite-log && false)
+        run: cd "libkernaux-$(cat VERSION)" && make check || (./make/test-suite-log && false)
       - name: install
         run: cd "libkernaux-$(cat VERSION)" && sudo make install
