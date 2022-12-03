@@ -13,13 +13,11 @@ extern "C" {
  *********************/
 
 #define KERNAUX_NORETURN      __attribute__((noreturn))
-#define KERNAUX_NOTNULL_ALL   __attribute__((nonnull))
 #define KERNAUX_RETURNS_TWICE __attribute__((returns_twice))
 #define KERNAUX_UNUSED        __attribute__((unused))
 #define KERNAUX_USED          __attribute__((used))
 
 #define KERNAUX_ALIGNED(num)      __attribute__((aligned(num)))
-#define KERNAUX_NOTNULL(...)      __attribute__((nonnull(__VA_ARGS__)))
 #define KERNAUX_PRINTF(fmt, rest) __attribute__((format(printf, fmt, rest)))
 #define KERNAUX_SECTION(name)     __attribute__((section(name)))
 
