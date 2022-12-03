@@ -5,8 +5,6 @@
 extern "C" {
 #endif
 
-#include <kernaux/macro.h>
-
 #include <stdint.h>
 
 #define KERNAUX_NTOA_MAX_PREFIX_LEN 100
@@ -50,30 +48,20 @@ extern "C" {
 // "-0x8000000000000000"
 #define KERNAUX_ITOA16_BUFFER_SIZE (17 + 2 + 1)
 
-char *kernaux_utoa(uint64_t value, char *buffer, int base, const char *prefix)
-KERNAUX_NOTNULL(2);
-char *kernaux_itoa(int64_t  value, char *buffer, int base, const char *prefix)
-KERNAUX_NOTNULL(2);
+char *kernaux_utoa(uint64_t value, char *buffer, int base, const char *prefix);
+char *kernaux_itoa(int64_t  value, char *buffer, int base, const char *prefix);
 
-char *kernaux_utoa2(uint64_t value, char *buffer)
-KERNAUX_NOTNULL_ALL;
-char *kernaux_itoa2(int64_t  value, char *buffer)
-KERNAUX_NOTNULL_ALL;
+char *kernaux_utoa2(uint64_t value, char *buffer);
+char *kernaux_itoa2(int64_t  value, char *buffer);
 
-char *kernaux_utoa8(uint64_t value, char *buffer)
-KERNAUX_NOTNULL_ALL;
-char *kernaux_itoa8(int64_t  value, char *buffer)
-KERNAUX_NOTNULL_ALL;
+char *kernaux_utoa8(uint64_t value, char *buffer);
+char *kernaux_itoa8(int64_t  value, char *buffer);
 
-char *kernaux_utoa10(uint64_t value, char *buffer)
-KERNAUX_NOTNULL_ALL;
-char *kernaux_itoa10(int64_t  value, char *buffer)
-KERNAUX_NOTNULL_ALL;
+char *kernaux_utoa10(uint64_t value, char *buffer);
+char *kernaux_itoa10(int64_t  value, char *buffer);
 
-char *kernaux_utoa16(uint64_t value, char *buffer)
-KERNAUX_NOTNULL_ALL;
-char *kernaux_itoa16(int64_t  value, char *buffer)
-KERNAUX_NOTNULL_ALL;
+char *kernaux_utoa16(uint64_t value, char *buffer);
+char *kernaux_itoa16(int64_t  value, char *buffer);
 
 #ifdef __cplusplus
 }
