@@ -3,6 +3,35 @@ Releases
 
 
 
+0.6.0 (2022-12-04)
+------------------
+
+121 files changed, 1444 insertions(+), 1806 deletions(-)
+
+### Breaking changes
+
+* `./configure` - features `--enable-tests*` have been renamed
+  to `--enable-checks*`.
+* `<kernaux/macro.h>` - macro `KERNAUX_PACKING_ATTR` has been renamed
+  to `KERNAUX_PACKED`.
+
+### New features
+
+* `./configure` - feature `--enable-checks-cppcheck` has been added.
+* `Makefile` - task `check-cppcheck` has been added.
+* `<kernaux/macro.h>` - macros `KERNAUX_ALIGNED`, `KERNAUX_ASM`,
+  `KERNAUX_NORETURN`, `KERNAUX_PRINTF`, `KERNAUX_RETURNS_TWICE`,
+  `KERNAUX_SECTION`, `KERNAUX_UNUSED`, `KERNAUX_USED` have been added.
+* `<kernaux/printf_fmt.h>` - new header. It's printf format parser.
+
+### Other changes
+
+* `<kernaux/free_list.h>` - fix a bug that was making the allocator unusable.
+* `<kernaux/printf.h>` - fix displaying floating-point numbers with big
+  precision.
+
+
+
 0.5.0 (2022-11-26)
 ------------------
 
@@ -10,9 +39,9 @@ Releases
 
 ### Breaking changes
 
-* `./configure` - feature `--with[out]-io` has been removed.
+* `./configure` - package `--with[out]-io` has been removed.
 * `<kernaux/io.h>` - the header has been removed.
-* `<kernaux/printf.h>` - the API of the functions functions "[v]fprintf" has
+* `<kernaux/printf.h>` - the API of the functions functions `[v]fprintf` has
   been changed.
 
 ### New features
@@ -49,7 +78,7 @@ Releases
 * `<kernaux/libc.h>` - header has been removed.
 * `<kernaux/ntoa.h>` - API has been completely changed.
 * `<kernaux/printf.h>` - Easter egg has been removed.
-* `<kernaux/printf.h>` - functions "[v]printf" have been renamed to "[v]fprintf",
+* `<kernaux/printf.h>` - functions `[v]printf` have been renamed to `[v]fprintf`,
   API has been changed.
 
 ### New features

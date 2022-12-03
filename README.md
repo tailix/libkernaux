@@ -40,7 +40,7 @@ zero). Work-in-progress APIs can change at any time.
 
 * Basic features
   * [Feature macros](/include/kernaux/version.h.in) (*work in progress*)
-  * [Macros](/include/kernaux/macro.h) (*non-breaking since* **?.?.?**)
+  * [Macros](/include/kernaux/macro.h) (*non-breaking since* **0.6.0**)
     * [Example: packing](/examples/macro_packing.c)
     * [Example: CONTAINER_OF](/examples/macro_container_of.c)
     * [Example: BITS](/examples/macro_bits.c)
@@ -69,7 +69,7 @@ zero). Work-in-progress APIs can change at any time.
     * [Example: To human](/examples/units_human.c)
   * [Memory map](/include/kernaux/memmap.h) (*non-breaking since* **0.4.0**)
     * [Example](/examples/memmap.c)
-  * [printf format parser](/include/kernaux/printf_fmt.h) (*non-breaking since* **?.?.?**)
+  * [printf format parser](/include/kernaux/printf_fmt.h) (*non-breaking since* **0.6.0**)
     * [Example](/examples/printf_fmt.c)
 * Usual functions
   * [itoa/ftoa replacement](/include/kernaux/ntoa.h) (*non-breaking since* **0.4.0**)
