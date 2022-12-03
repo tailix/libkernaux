@@ -16,6 +16,8 @@ extern "C" {
 #define KERNAUX_NORETURN      __attribute__((noreturn))
 #define KERNAUX_RETURNS_TWICE __attribute__((returns_twice))
 
+#define KERNAUX_PRINTF(fmt, rest) __attribute__((format(printf, fmt, rest)))
+
 #ifdef __TINYC__
 #   define KERNAUX_PACKED
 #else
