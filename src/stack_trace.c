@@ -19,7 +19,7 @@
 
 struct KernAux_StackTrace_Frame KernAux_StackTrace_Frame_create()
 {
-    struct KernAux_StackTrace_Frame frame;
+    struct KernAux_StackTrace_Frame frame = { .ptr = NULL };
 
 #if defined(ASM_I386)
     KERNAUX_ASM("movl %%ebp, %0" : "=g"((const size_t*)frame.ptr) :: "memory");
