@@ -1,6 +1,0 @@
-/image.iso
-/output.txt
-/rootfs/boot/kernel
-/rootfs/boot/limine-cd.bin
-/rootfs/boot/limine-eltorito-efi.bin
-/rootfs/boot/limine.sys

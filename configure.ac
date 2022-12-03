@@ -30,7 +30,6 @@ AC_CONFIG_FILES([
   libc/Makefile
   libc/include/Makefile
   include/kernaux.h
-  include/kernaux/drivers/console.h
   include/kernaux/multiboot2.h
   include/kernaux/version.h
   tests/Makefile
@@ -78,7 +77,6 @@ AC_ARG_WITH(  [stack-trace],     AS_HELP_STRING([--without-stack-trace],    [wit
 AC_ARG_WITH(  [units],           AS_HELP_STRING([--without-units],          [without measurement units utils]))
 
 dnl Packages (disabled by default)
-AC_ARG_WITH(  [drivers],         AS_HELP_STRING([--with-drivers],           [with drivers]))
 AC_ARG_WITH(  [libc],            AS_HELP_STRING([--with-libc],              [with libc replacement]))
 
 
@@ -164,7 +162,6 @@ AS_IF([test "$with_stack_trace"       = no ], [with_stack_trace=no],        [wit
 AS_IF([test "$with_units"             = no ], [with_units=no],              [with_units=yes])
 
 dnl Packages (disabled by default)
-AS_IF([test "$with_drivers"           = yes], [with_drivers=yes],           [with_drivers=no])
 AS_IF([test "$with_libc"              = yes], [with_libc=yes],              [with_libc=no])
 
 
@@ -228,7 +225,6 @@ AM_CONDITIONAL([WITH_STACK_TRACE],       [test "$with_stack_trace"       = yes])
 AM_CONDITIONAL([WITH_UNITS],             [test "$with_units"             = yes])
 
 dnl Packages (disabled by default)
-AM_CONDITIONAL([WITH_DRIVERS],           [test "$with_drivers"           = yes])
 AM_CONDITIONAL([WITH_LIBC],              [test "$with_libc"              = yes])
 
 dnl Packages (virtual)
@@ -280,7 +276,6 @@ AS_IF([test "$with_stack_trace"       = yes], [AC_DEFINE([WITH_STACK_TRACE],    
 AS_IF([test "$with_units",            = yes], [AC_DEFINE([WITH_UNITS],             [1], [with measurement units utils])])
 
 dnl Packages (disabled by default)
-AS_IF([test "$with_drivers"           = yes], [AC_DEFINE([WITH_DRIVERS],           [1], [with drivers])])
 AS_IF([test "$with_libc"              = yes], [AC_DEFINE([WITH_LIBC],              [1], [with libc replacement])])
 
 dnl Packages (virtual)

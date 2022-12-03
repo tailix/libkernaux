@@ -90,12 +90,6 @@ zero). Work-in-progress APIs can change at any time.
 * Architecture-specific code (*work in progress*)
   * [Declarations](/include/kernaux/arch/)
   * [Functions](/include/kernaux/asm/)
-* Device drivers (for debugging only)
-  * [Serial console](/include/kernaux/drivers/console.h) (*work in progress*)
-  * [Framebuffer](/include/kernaux/drivers/framebuffer.h) (*planned*)
-  * [Intel 8253-compatible PIT](/include/kernaux/drivers/intel_8253_pit.h) (*work in progress*)
-  * [Intel 8259-compatible PIC](/include/kernaux/drivers/intel_8259_pic.h) (*work in progress*)
-  * USB (*planned*)
 
 ### Definitions
 
@@ -144,7 +138,6 @@ stable options.
 
 #### Packages
 
-* `--with-drivers` - device drivers
 * `--with-libc` - provides the replacement for some standard C functions.
   Useful in freestanding environment, where no libc is present.
 
@@ -212,7 +205,6 @@ without it in `$PATH`:
 ./configure \
   --host='i386-elf' \
   --enable-freestanding \
-  --with-drivers \
   --with-libc \
   AR="$(which i386-elf-ar)" \
   CC="$(which i386-elf-gcc)" \
