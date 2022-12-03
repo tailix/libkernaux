@@ -12,7 +12,7 @@ extern "C" {
 #include <stdint.h>
 
 typedef struct KernAux_StackTrace_Frame {
-    const void *KERNAUX_PRIVATE_FIELD(ptr);
+    const void *KERNAUX_PRIVATE_FIELD(cur_ptr);
 } *KernAux_StackTrace_Frame;
 
 struct KernAux_StackTrace_Frame KernAux_StackTrace_Frame_create();

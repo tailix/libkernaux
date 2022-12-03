@@ -19,12 +19,14 @@
 
 struct KernAux_StackTrace_Frame KernAux_StackTrace_Frame_create()
 {
-    struct KernAux_StackTrace_Frame frame = { .ptr = NULL };
+    struct KernAux_StackTrace_Frame frame = { .cur_ptr = NULL };
 
 #if defined(ASM_I386)
-    KERNAUX_ASM("movl %%ebp, %0" : "=g"((const size_t*)frame.ptr) :: "memory");
+    KERNAUX_ASM("movl %%ebp, %0"
+                : "=g"((const size_t*)frame.cur_ptr) :: "memory");
 #elif defined(ASM_X86_64)
-    KERNAUX_ASM("movq %%rbp, %0" : "=g"((const size_t*)frame.ptr) :: "memory");
+    KERNAUX_ASM("movq %%rbp, %0"
+                : "=g"((const size_t*)frame.cur_ptr) :: "memory");
 #endif
 
     return frame;
@@ -34,11 +36,11 @@ bool KernAux_StackTrace_Frame_has_next(const KernAux_StackTrace_Frame frame)
 {
     KERNAUX_ASSERT(frame);
 
-    if (!frame->ptr) return false;
+    if (!frame->cur_ptr) return false;
 
 #if defined(ASM_X86)
-    const size_t *const ptr = frame->ptr;
-    return ptr[1];
+    const size_t *const cur_ptr = frame->cur_ptr;
+    return cur_ptr[1];
 #else
     return false;
 #endif
@@ -48,11 +50,11 @@ void KernAux_StackTrace_Frame_use_next(const KernAux_StackTrace_Frame frame)
 {
     KERNAUX_ASSERT(frame);
 
-    if (!frame->ptr) return;
+    if (!frame->cur_ptr) return;
 
 #if defined(ASM_X86)
-    const size_t *const ptr = frame->ptr;
-    frame->ptr = (const void*)ptr[0];
+    const size_t *const cur_ptr = frame->cur_ptr;
+    frame->cur_ptr = (const void*)cur_ptr[0];
 #endif
 }
 
@@ -62,8 +64,8 @@ const void *KernAux_StackTrace_Frame_get_ptr(
     KERNAUX_ASSERT(frame);
 
 #if defined(ASM_X86)
-    const size_t *const ptr = frame->ptr;
-    return (const void*)ptr[1];
+    const size_t *const cur_ptr = frame->cur_ptr;
+    return (const void*)cur_ptr[1];
 #else
     return NULL;
 #endif
