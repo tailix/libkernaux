@@ -3,7 +3,8 @@
 #include <kernaux/macro/packing_start.run>
 
 // TODO: add more tags
-__attribute__((section(".multiboot2"), used))
+__attribute__((section(".multiboot2")))
+KERNAUX_USED
 KERNAUX_ALIGNED(KERNAUX_MULTIBOOT2_HEADER_ALIGN)
 const struct {
     struct KernAux_Multiboot2_Header multiboot2_header;

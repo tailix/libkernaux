@@ -12,6 +12,7 @@ extern "C" {
  * Language features *
  *********************/
 
+#define KERNAUX_USED          __attribute__((used)
 #define KERNAUX_UNUSED        __attribute__((unused))
 #define KERNAUX_NORETURN      __attribute__((noreturn))
 #define KERNAUX_RETURNS_TWICE __attribute__((returns_twice))

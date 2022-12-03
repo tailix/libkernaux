@@ -1,6 +1,7 @@
 2022-12-03  Alex Kotov  <kotovalexarian@gmail.com>
 
-	* include/kernaux/macro.h: Add macros "KERNAUX_ALIGNED", "KERNAUX_PRINTF"
+	* include/kernaux/macro.h: Add macros "KERNAUX_ALIGNED", "KERNAUX_PRINTF",
+	"KERNAUX_USED"
 
 2022-12-02  Alex Kotov  <kotovalexarian@gmail.com>
 
