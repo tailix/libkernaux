@@ -43,14 +43,6 @@ static const void *max_addresses[MAX_SIZE];
 
 void test_main()
 {
-    int main();
-    printf("main:                            %p\n",
-           (const void*)(uintptr_t)main);
-    printf("test_main:                       %p\n",
-           (const void*)(uintptr_t)test_main);
-    printf("KernAux_StackTrace_Frame_create: %p\n\n",
-           (const void*)(uintptr_t)KernAux_StackTrace_Frame_create);
-
     PREPARE("test_main (initial)", min, MIN);
 
     PREPARE("test_main (compare)", max, MAX);
