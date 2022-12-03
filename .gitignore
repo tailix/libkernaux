@@ -41,7 +41,11 @@
 # Custom
 
 /Makefile.in
+/examples/Makefile.in
 /include/Makefile.in
+/libc/Makefile.in
+/libc/include/Makefile.in
+/tests/Makefile.in
 
 ########################
 # To build out of root #
@@ -98,7 +102,11 @@
 # Custom
 
 /Makefile
+/examples/Makefile
 /include/Makefile
+/libc/Makefile
+/libc/include/Makefile
+/tests/Makefile
 
 /include/kernaux.h
 /include/kernaux/multiboot2.h
