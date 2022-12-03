@@ -8,7 +8,7 @@ if [ -f "$REPO/Makefile" ]; then make -C "$REPO" distclean; fi
 ARCH='riscv64'
 HOST="$ARCH-elf"
 TARGET='riscv64-linux-gnu'
-PREFIX="/opt/libkernaux/$ARCH"
+PREFIX="/opt/tailix/libkernaux/$ARCH"
 
 export     AR="$TARGET-ar"
 export     CC="$TARGET-gcc"
