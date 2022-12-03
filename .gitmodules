@@ -2,15 +2,6 @@
 	path = vendor/cross
 	url = https://github.com/tailix/cross.git
 	ignore = dirty
-[submodule "vendor/limine"]
-	path = vendor/limine
-	url = https://github.com/limine-bootloader/limine.git
-[submodule "vendor/opensbi"]
-	path = vendor/opensbi
-	url = https://github.com/riscv-software-src/opensbi.git
-[submodule "vendor/u-boot"]
-	path = vendor/u-boot
-	url = https://source.denx.de/u-boot/u-boot.git
 [submodule "vendor/mruby"]
 	path = vendor/mruby
 	url = https://github.com/mruby/mruby.git
