@@ -53,7 +53,7 @@ void test_main()
 
     PREPARE(max, MAX);
     assert(max_count == min_count);
-    for (size_t index = 0; index < max_count; ++index) {
+    for (size_t index = 1; index < max_count; ++index) {
         assert(max_addresses[index] == min_addresses[index]);
     }
 }
