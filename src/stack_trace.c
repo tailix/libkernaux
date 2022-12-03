@@ -34,6 +34,8 @@ bool KernAux_StackTrace_Frame_has_more(const KernAux_StackTrace_Frame frame)
 {
     KERNAUX_ASSERT(frame);
 
+    if (!frame->ptr) return false;
+
 #if defined(ASM_X86)
     const size_t *const ptr = frame->ptr;
     return ptr[1];
