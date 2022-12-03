@@ -1,3 +1,7 @@
+2022-12-03  Alex Kotov  <kotovalexarian@gmail.com>
+
+	* include/kernaux/macro.h: Add macro "KERNAUX_PRINTF"
+
 2022-12-02  Alex Kotov  <kotovalexarian@gmail.com>
 
 	* configure.ac: Rename args "--enable-tests*" to "--enable-checks*"
