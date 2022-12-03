@@ -2,9 +2,9 @@
 #include "config.h"
 #endif
 
-#include <kernaux/assert.h>
 #include <kernaux/cmdline.h>
 #include <kernaux/macro.h>
+#include <kernaux/panic.h>
 
 #include <stddef.h>
 #include <string.h>

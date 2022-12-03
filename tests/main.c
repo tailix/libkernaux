@@ -2,7 +2,7 @@
 #include "config.h"
 #endif
 
-#include <kernaux/assert.h>
+#include <kernaux/panic.h>
 
 #include <stdio.h>
 #include <stdlib.h>

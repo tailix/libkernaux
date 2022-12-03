@@ -2,8 +2,8 @@
 #include "config.h"
 #endif
 
-#include <kernaux/assert.h>
 #include <kernaux/multiboot2.h>
+#include <kernaux/panic.h>
 
 #include <stddef.h>
 #include <stdint.h>

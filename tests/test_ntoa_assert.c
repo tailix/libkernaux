@@ -2,8 +2,8 @@
 #include "config.h"
 #endif
 
-#include <kernaux/assert.h>
 #include <kernaux/ntoa.h>
+#include <kernaux/panic.h>
 
 #include <assert.h>
 #include <setjmp.h>

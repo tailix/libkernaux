@@ -2,8 +2,8 @@
 #include "config.h"
 #endif
 
-#include <kernaux/assert.h>
 #include <kernaux/elf.h>
+#include <kernaux/panic.h>
 
 bool KernAux_ELF_Header_is_valid(
     const struct KernAux_ELF_Header *const header
