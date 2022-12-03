@@ -177,7 +177,6 @@ AS_IF([test "$enable_checks_python" = yes -a "$with_libc"           = yes], AC_M
 
 AS_IF([test "$with_printf"      = yes -a "$with_ntoa"       = no], AC_MSG_ERROR([package `printf' requires package `ntoa']))
 AS_IF([test "$with_printf"      = yes -a "$with_printf_fmt" = no], AC_MSG_ERROR([package `printf' requires package `printf-fmt']))
-AS_IF([test "$with_stack_trace" = yes -a "$with_printf"     = no], AC_MSG_ERROR([package `stack-trace' requires package `printf']))
 AS_IF([test "$with_units"       = yes -a "$with_ntoa"       = no], AC_MSG_ERROR([package `units' requires package `ntoa']))
 
 

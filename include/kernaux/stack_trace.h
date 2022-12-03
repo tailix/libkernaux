@@ -5,9 +5,22 @@
 extern "C" {
 #endif
 
-#include <stddef.h>
+#include <kernaux/macro.h>
 
-void kernaux_stack_trace_snprint(char *buffer, size_t buffer_size);
+#include <stdbool.h>
+#include <stddef.h>
+#include <stdint.h>
+
+typedef struct KernAux_StackTrace_Frame {
+    const void *KERNAUX_PRIVATE_FIELD(ptr);
+} *KernAux_StackTrace_Frame;
+
+struct KernAux_StackTrace_Frame KernAux_StackTrace_Frame_create();
+
+bool KernAux_StackTrace_Frame_has_more(KernAux_StackTrace_Frame frame);
+void KernAux_StackTrace_Frame_use_next(KernAux_StackTrace_Frame frame);
+
+const void *KernAux_StackTrace_Frame_get_ptr(KernAux_StackTrace_Frame frame);
 
 #ifdef __cplusplus
 }
