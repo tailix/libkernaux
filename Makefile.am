@@ -33,9 +33,10 @@ check: $(MY_CHECKS)
 if ENABLE_CHECKS_CPPCHECK
 MY_CHECKS += check-cppcheck
 check-cppcheck:
-	$(CPPCHECK) $(CPPCHECK_ARGS) $(CPPCHECK_PATHS)
+	$(CPPCHECK) $(CPPCHECK_ARGS) $(CPPCHECK_INC) $(CPPCHECK_PATHS)
 
 CPPCHECK_ARGS = --quiet --error-exitcode=1 --std=c99 --inline-suppr --enable=warning,style,performance,portability
+CPPCHECK_INC = -I$(top_builddir)/include -I$(top_srcdir)/include
 CPPCHECK_PATHS = examples/ include/ libc/ src/ tests/
 endif
 
