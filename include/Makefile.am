@@ -4,13 +4,13 @@
 
 nobase_include_HEADERS = \
 	kernaux.h \
-	kernaux/assert.h \
+	kernaux/generic/malloc.h \
+	kernaux/generic/mutex.h \
 	kernaux/macro.h \
 	kernaux/macro/packing_start.run \
 	kernaux/macro/packing_end.run \
-	kernaux/version.h \
-	kernaux/generic/malloc.h \
-	kernaux/generic/mutex.h
+	kernaux/panic.h \
+	kernaux/version.h
 
 ########
 # ARCH #

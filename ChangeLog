@@ -1,5 +1,6 @@
 2022-12-03  Alex Kotov  <kotovalexarian@gmail.com>
 
+	* include/kernaux/assert.h: Rename to "include/kernaux/panic.h"
 	* include/kernaux/macro.h: Add macros "KERNAUX_ALIGNED", "KERNAUX_PRINTF",
 	"KERNAUX_USED", "KERNAUX_SECTION"
 

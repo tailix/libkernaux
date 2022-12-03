@@ -1,5 +1,5 @@
-#ifndef KERNAUX_INCLUDED_ASSERT
-#define KERNAUX_INCLUDED_ASSERT
+#ifndef KERNAUX_INCLUDED_PANIC
+#define KERNAUX_INCLUDED_PANIC
 
 #ifdef __cplusplus
 extern "C" {

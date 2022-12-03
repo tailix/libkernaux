@@ -3,8 +3,8 @@
     contain architecture-specific assembly functions.
 */
 
-#include <kernaux/assert.h>
 #include <kernaux/macro.h>
+#include <kernaux/panic.h>
 #include <kernaux/version.h>
 
 #include <kernaux/generic/malloc.h>
