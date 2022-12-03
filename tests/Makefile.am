@@ -1,4 +1,4 @@
-include $(top_srcdir)/shared.am
+include $(top_srcdir)/make/shared.am
 
 CLEANFILES =
 TESTS =

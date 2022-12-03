@@ -1,4 +1,4 @@
-include $(top_srcdir)/shared.am
+include $(top_srcdir)/make/shared.am
 
 TESTS =
 noinst_PROGRAMS = $(TESTS)

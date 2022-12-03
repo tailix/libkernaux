@@ -138,6 +138,7 @@ stable options.
 
 * `--enable-checks` - enable usual tests and examples
 * `--enable-checks-all` - enable all tests
+* `--enable-checks-cppcheck` - enable cppcheck
 * `--enable-checks-python` - enable tests that require Python 3 with YAML and
   Jinja2
 

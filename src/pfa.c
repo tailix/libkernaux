@@ -42,6 +42,7 @@ static void KernAux_PFA_mark(
 void KernAux_PFA_initialize(const KernAux_PFA pfa)
 {
     KERNAUX_ASSERT(pfa);
+    // cppcheck-suppress ctunullpointer
     memset(pfa->flags, 0, sizeof(pfa->flags));
 }
 
@@ -50,6 +51,7 @@ bool KernAux_PFA_is_available(const KernAux_PFA pfa, const size_t page_addr)
     KERNAUX_ASSERT(pfa);
     KERNAUX_ASSERT(page_addr % KERNAUX_PFA_PAGE_SIZE == 0);
 
+    // cppcheck-suppress ctunullpointer
     return GET_FLAG_FROM_ADDR(pfa, page_addr);
 }
 

@@ -14,9 +14,7 @@ _kernel_stack_end:
 
 .global _start
 
-.type _start,   @function
-.type main,     @function
-.type poweroff, @function
+.type _start, @function
 
 _start:
     mov $_kernel_stack_end, %esp // Initialize stack
@@ -24,7 +22,6 @@ _start:
     push %ebx // Multiboot information pointer
     push %eax // Multiboot magic number
     call main
-
-    call poweroff
+    call kernaux_drivers_shutdown_poweroff
 
 .size _start, . - _start

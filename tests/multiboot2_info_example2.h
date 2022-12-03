@@ -105,7 +105,9 @@ static const struct {
     uint8_t _align11[4];
 
     struct KernAux_Multiboot2_ITag_None tag_none;
-} KERNAUX_PACKED multiboot2_info_example2 = {
+}
+KERNAUX_PACKED
+multiboot2_info_example2 = {
     .multiboot2_info = {
         .total_size = sizeof(multiboot2_info_example2),
         .reserved1 = 0,
