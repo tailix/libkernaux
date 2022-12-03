@@ -4,7 +4,7 @@
 
 // TODO: add more tags
 __attribute__((section(".multiboot2"), used))
-__attribute__((aligned(KERNAUX_MULTIBOOT2_HEADER_ALIGN)))
+KERNAUX_ALIGNED(KERNAUX_MULTIBOOT2_HEADER_ALIGN)
 const struct {
     struct KernAux_Multiboot2_Header multiboot2_header;
     struct KernAux_Multiboot2_HTag_None tag_none;
