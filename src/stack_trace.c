@@ -65,6 +65,8 @@ const void *KernAux_StackTrace_Frame_get_ptr(
 ) {
     KERNAUX_ASSERT(frame);
 
+    if (!frame->cur_ptr) return NULL;
+
 #if defined(ASM_X86)
     const size_t *const cur_ptr = frame->cur_ptr;
     return (const void*)cur_ptr[1];
