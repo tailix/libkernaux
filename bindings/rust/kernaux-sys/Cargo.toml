@@ -1,6 +1,6 @@
 [package]
 name = "kernaux-sys"
-version = "0.6.0"
+version = "0.6.1"
 authors = ["Alex Kotov <kotovalexarian@gmail.com>"]
 edition = "2021"
 description = "Unsafe no-std binding to libkernaux - auxiliary library for kernel development"

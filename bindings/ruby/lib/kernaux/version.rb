@@ -2,7 +2,7 @@
 
 module KernAux
   # Gem version.
-  VERSION = '0.6.0'
+  VERSION = '0.6.1'
 
   ##
   # This module includes functions to determine if specific features are

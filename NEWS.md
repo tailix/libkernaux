@@ -3,6 +3,19 @@ Releases
 
 
 
+0.6.1 (2022-12-05)
+------------------
+
+12 files changed, 111 insertions(+), 110 deletions(-)
+
+### Other changes
+
+* `./configure` - fix a bug with building for a freestanding environment
+* `Makefile` - fix cppcheck in out-of-root builds
+* `Makefile` - fix Python tests if out-of-root builds
+
+
+
 0.6.0 (2022-12-04)
 ------------------
 
