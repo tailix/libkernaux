@@ -1,6 +1,8 @@
 2022-12-05  Alex Kotov  <kotovalexarian@gmail.com>
 
 	* configure.ac: Fix a bug with building for a freestanding environment
+	* tests/Makefile.am: Fix Python tests in out-of-root builds
+	* make/checks.am: Fix cppcheck in out-of-root builds
 
 2022-12-04  Alex Kotov  <kotovalexarian@gmail.com>
 
