@@ -15,7 +15,7 @@ Install
 Add the following to your `Gemfile`:
 
 ```ruby
-gem 'kernaux', '~> 0.6.0'
+gem 'kernaux', '~> 0.6.1'
 ```
 
 Or add the following to your `*.gemspec`:
@@ -23,7 +23,7 @@ Or add the following to your `*.gemspec`:
 ```ruby
 Gem::Specification.new do |spec|
   # ...
-  spec.add_runtime_dependency 'kernaux', '~> 0.6.0'
+  spec.add_runtime_dependency 'kernaux', '~> 0.6.1'
   # ...
 end
 ```
