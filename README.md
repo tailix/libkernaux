@@ -164,6 +164,7 @@ explicitly included, use `--without-all`.
 * `--with[out]-memmap` - memory map
 * `--with[out]-ntoa` - itoa/ftoa
 * `--with[out]-printf` - printf
+* `--with[out]-printf-fmt` - printf format parser
 
 
 
