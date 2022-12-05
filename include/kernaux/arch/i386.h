@@ -67,7 +67,7 @@ KERNAUX_STATIC_TEST_STRUCT_SIZE(KernAux_Arch_I386_DTR, 6);
 // Global or local descriptor table entry
 // TODO: validate this according to spec
 struct KernAux_Arch_I386_DTE {
-    unsigned limit_low              : 16;
+    uint16_t limit_low;
     unsigned base_low               : 24;
     unsigned accessed               : 1;
     unsigned read_write             : 1;
@@ -81,7 +81,7 @@ struct KernAux_Arch_I386_DTE {
     unsigned always_0               : 1;
     unsigned big                    : 1;
     unsigned gran                   : 1;
-    unsigned base_high              : 8;
+    uint8_t base_high;
 }
 KERNAUX_PACKED;
 
