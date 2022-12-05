@@ -21,3 +21,7 @@ ntoa = []
 version = "0.2.113"
 default-features = false
 features = ["extra_traits"]
+
+[dev-dependencies]
+serde = { version = "1.0.149", features = ["derive"] }
+serde_yaml = "0.9.14"
