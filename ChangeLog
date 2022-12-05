@@ -1,3 +1,7 @@
+2022-12-05  Alex Kotov  <kotovalexarian@gmail.com>
+
+	* configure.ac: Fix a bug with building for a freestanding environment
+
 2022-12-04  Alex Kotov  <kotovalexarian@gmail.com>
 
 	libkernaux 0.6.0 released
