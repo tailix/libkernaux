@@ -85,6 +85,8 @@ struct KernAux_Arch_I386_DTE {
 }
 KERNAUX_PACKED;
 
+KERNAUX_STATIC_TEST_STRUCT_SIZE(KernAux_Arch_I386_DTE, 8);
+
 // Interrupt descriptor table entry
 // TODO: validate this according to spec
 typedef struct KernAux_Arch_I386_IDTE {
@@ -97,7 +99,7 @@ typedef struct KernAux_Arch_I386_IDTE {
 KERNAUX_PACKED
 *KernAux_Arch_I386_IDTE;
 
-KERNAUX_STATIC_TEST_STRUCT_SIZE(KernAux_Arch_I386_DTE, 8);
+KERNAUX_STATIC_TEST_STRUCT_SIZE(KernAux_Arch_I386_IDTE, 8);
 
 void KernAux_Arch_I386_IDTE_set_offset(
     KernAux_Arch_I386_IDTE idte,
