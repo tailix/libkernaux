@@ -1,32 +1,19 @@
 from jinja2 import Environment, FileSystemLoader
 from os import path
-from yaml import SafeLoader, safe_load
+from sys import argv
+from yaml import safe_load
 
-CASES_ORIG_FILENAME = 'printf_orig.yml'
-CASES_REG_FILENAME  = 'printf.yml'
-TEMPLATE_FILENAME   = 'printf_gen.jinja'
-TEST_FILENAME       = 'test_printf_gen.c'
-
-ROOT_DIRPATH = path.dirname(path.dirname(path.join(path.abspath(__file__))))
-
-COMMON_DIRPATH = path.join(ROOT_DIRPATH, 'common')
-TESTS_DIRPATH  = path.join(ROOT_DIRPATH, 'tests')
-
-CASES_ORIG_FILEPATH = path.join(COMMON_DIRPATH, CASES_ORIG_FILENAME)
-CASES_REG_FILEPATH  = path.join(COMMON_DIRPATH, CASES_REG_FILENAME)
-TEST_FILEPATH       = path.join(TESTS_DIRPATH, TEST_FILENAME)
-
-def main():
-    cases_orig = safe_load(open(CASES_ORIG_FILEPATH))
-    cases_reg  = safe_load(open(CASES_REG_FILEPATH))
+def main(test_filepath, template_filepath, cases_reg_filepath, cases_orig_filepath):
+    cases_reg  = safe_load(open(cases_reg_filepath))
+    cases_orig = safe_load(open(cases_orig_filepath))
 
     cases = cases_reg + cases_orig
 
     jinja_env = Environment(
         keep_trailing_newline=True,
-        loader=FileSystemLoader(TESTS_DIRPATH),
+        loader=FileSystemLoader(path.dirname(template_filepath)),
     )
-    jinja_template = jinja_env.get_template(TEMPLATE_FILENAME)
+    jinja_template = jinja_env.get_template(path.basename(template_filepath))
 
     result = jinja_template.render(
         cases=cases,
@@ -35,7 +22,7 @@ def main():
         values=values,
     )
 
-    with open(TEST_FILEPATH, 'w') as f:
+    with open(test_filepath, 'w') as f:
         f.write(result)
 
 def escape_char(c):
@@ -77,4 +64,25 @@ def values(args):
     return values
 
 if __name__ == '__main__':
-    main()
+    print(argv)
+
+    template_filepath   = argv[1]
+    cases_reg_filepath  = argv[2]
+    cases_orig_filepath = argv[3]
+    test_filepath       = argv[4]
+
+    print('test_filepath:       %s' % test_filepath)
+    print('template_filepath:   %s' % template_filepath)
+    print('cases_reg_filepath:  %s' % cases_reg_filepath)
+    print('cases_orig_filepath: %s' % cases_orig_filepath)
+
+    if path.exists(test_filepath) and not path.isfile(test_filepath):
+        raise RuntimeError('invalid test file path')
+    if not path.isfile(template_filepath):
+        raise RuntimeError('invalid template file path')
+    if not path.isfile(cases_reg_filepath):
+        raise RuntimeError('invalid regular cases file path')
+    if not path.isfile(cases_orig_filepath):
+        raise RuntimeError('invalid original cases file path')
+
+    main(test_filepath, template_filepath, cases_reg_filepath, cases_orig_filepath)
