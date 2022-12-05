@@ -58,10 +58,10 @@ enum KernAux_Multiboot2_Header_Arch {
 };
 
 struct KernAux_Multiboot2_Header {
-    unsigned magic                           : 32;
+    uint32_t magic;
     enum KernAux_Multiboot2_Header_Arch arch : 32;
-    unsigned total_size                      : 32;
-    unsigned checksum                        : 32;
+    uint32_t total_size;
+    uint32_t checksum;
 }
 KERNAUX_PACKED;
 
@@ -83,8 +83,8 @@ enum KernAux_Multiboot2_HTag {
 
 struct KernAux_Multiboot2_HTagBase {
     enum KernAux_Multiboot2_HTag type : 16;
-    unsigned flags                    : 16;
-    unsigned size                     : 32;
+    uint16_t flags;
+    uint32_t size;
 }
 KERNAUX_PACKED;
 
@@ -95,8 +95,8 @@ KERNAUX_STATIC_TEST_STRUCT_SIZE(KernAux_Multiboot2_HTagBase, 8);
  ****************************/
 
 struct KernAux_Multiboot2_Info {
-    unsigned total_size : 32;
-    unsigned reserved1  : 32;
+    uint32_t total_size;
+    uint32_t reserved1;
 }
 KERNAUX_PACKED;
 
@@ -129,7 +129,7 @@ enum KernAux_Multiboot2_ITag {
 
 struct KernAux_Multiboot2_ITagBase {
     enum KernAux_Multiboot2_ITag type : 32;
-    unsigned size                     : 32;
+    uint32_t size;
 }
 KERNAUX_PACKED;
 
@@ -150,10 +150,10 @@ enum KernAux_Multiboot2_HTag_RelocatableHeader_Preference {
  ********************************/
 
 struct KernAux_Multiboot2_ITag_MemoryMap_EntryBase {
-    unsigned long long base_addr : 64;
-    unsigned long long length    : 64;
-    unsigned type                : 32;
-    unsigned reserved1           : 32;
+    uint64_t base_addr;
+    uint64_t length;
+    uint32_t type;
+    uint32_t reserved1;
 }
 KERNAUX_PACKED;
 
@@ -186,10 +186,10 @@ struct KernAux_Multiboot2_HTag_Addr {
     // size = 24
     struct KernAux_Multiboot2_HTagBase base;
 
-    unsigned header_addr   : 32;
-    unsigned load_addr     : 32;
-    unsigned load_end_addr : 32;
-    unsigned bss_end_addr  : 32;
+    uint32_t header_addr;
+    uint32_t load_addr;
+    uint32_t load_end_addr;
+    uint32_t bss_end_addr;
 }
 KERNAUX_PACKED;
 
@@ -200,7 +200,7 @@ struct KernAux_Multiboot2_HTag_EntryAddr {
     // size = 12
     struct KernAux_Multiboot2_HTagBase base;
 
-    unsigned entry_addr : 32;
+    uint32_t entry_addr;
 }
 KERNAUX_PACKED;
 
@@ -211,7 +211,7 @@ struct KernAux_Multiboot2_HTag_Flags {
     // size = 12
     struct KernAux_Multiboot2_HTagBase base;
 
-    unsigned console_flags : 32;
+    uint32_t console_flags;
 }
 KERNAUX_PACKED;
 
@@ -222,9 +222,9 @@ struct KernAux_Multiboot2_HTag_Framebuffer {
     // size = 20
     struct KernAux_Multiboot2_HTagBase base;
 
-    unsigned width  : 32;
-    unsigned height : 32;
-    unsigned depth  : 32;
+    uint32_t width;
+    uint32_t height;
+    uint32_t depth;
 }
 KERNAUX_PACKED;
 
@@ -253,7 +253,7 @@ struct KernAux_Multiboot2_HTag_EFII386EntryAddr {
     // size = 12
     struct KernAux_Multiboot2_HTagBase base;
 
-    unsigned entry_addr : 32;
+    uint32_t entry_addr;
 }
 KERNAUX_PACKED;
 
@@ -264,7 +264,7 @@ struct KernAux_Multiboot2_HTag_EFIAmd64EntryAddr {
     // size = 12
     struct KernAux_Multiboot2_HTagBase base;
 
-    unsigned entry_addr : 32;
+    uint32_t entry_addr;
 }
 KERNAUX_PACKED;
 
@@ -275,9 +275,9 @@ struct KernAux_Multiboot2_HTag_RelocatableHeader {
     // size = 24
     struct KernAux_Multiboot2_HTagBase base;
 
-    unsigned min_addr                                                     : 32;
-    unsigned max_addr                                                     : 32;
-    unsigned align                                                        : 32;
+    uint32_t min_addr;
+    uint32_t max_addr;
+    uint32_t align;
     enum KernAux_Multiboot2_HTag_RelocatableHeader_Preference preferences : 32;
 }
 KERNAUX_PACKED;
@@ -320,8 +320,8 @@ struct KernAux_Multiboot2_ITag_Module {
     // size > 16
     struct KernAux_Multiboot2_ITagBase base;
 
-    unsigned mod_start : 32;
-    unsigned mod_end   : 32;
+    uint32_t mod_start;
+    uint32_t mod_end;
 }
 KERNAUX_PACKED;
 
@@ -332,8 +332,8 @@ struct KernAux_Multiboot2_ITag_BasicMemoryInfo {
     // size = 16
     struct KernAux_Multiboot2_ITagBase base;
 
-    unsigned mem_lower : 32;
-    unsigned mem_upper : 32;
+    uint32_t mem_lower;
+    uint32_t mem_upper;
 }
 KERNAUX_PACKED;
 
@@ -344,9 +344,9 @@ struct KernAux_Multiboot2_ITag_BIOSBootDevice {
     // size = 20
     struct KernAux_Multiboot2_ITagBase base;
 
-    unsigned bios_dev      : 32;
-    unsigned partition     : 32;
-    unsigned sub_partition : 32;
+    uint32_t bios_dev;
+    uint32_t partition;
+    uint32_t sub_partition;
 }
 KERNAUX_PACKED;
 
@@ -357,8 +357,8 @@ struct KernAux_Multiboot2_ITag_MemoryMap {
     // size > 16
     struct KernAux_Multiboot2_ITagBase base;
 
-    unsigned entry_size    : 32;
-    unsigned entry_version : 32;
+    uint32_t entry_size;
+    uint32_t entry_version;
 }
 KERNAUX_PACKED;
 
@@ -369,12 +369,12 @@ struct KernAux_Multiboot2_ITag_VBEInfo {
     // size = 784
     struct KernAux_Multiboot2_ITagBase base;
 
-    unsigned vbe_mode          : 16;
-    unsigned vbe_interface_seg : 16;
-    unsigned vbe_interface_off : 16;
-    unsigned vbe_interface_len : 16;
-    unsigned char vbe_control_info[512];
-    unsigned char vbe_mode_info[256];
+    uint16_t vbe_mode;
+    uint16_t vbe_interface_seg;
+    uint16_t vbe_interface_off;
+    uint16_t vbe_interface_len;
+    uint8_t vbe_control_info[512];
+    uint8_t vbe_mode_info[256];
 }
 KERNAUX_PACKED;
 
@@ -385,13 +385,13 @@ struct KernAux_Multiboot2_ITag_FramebufferInfo {
     // size > 31
     struct KernAux_Multiboot2_ITagBase base;
 
-    unsigned long long framebuffer_addr : 64;
-    unsigned framebuffer_pitch          : 32;
-    unsigned framebuffer_width          : 32;
-    unsigned framebuffer_height         : 32;
-    unsigned framebuffer_bpp            : 8;
-    unsigned framebuffer_type           : 8;
-    unsigned reserved1                  : 8;
+    uint64_t framebuffer_addr;
+    uint32_t framebuffer_pitch;
+    uint32_t framebuffer_width;
+    uint32_t framebuffer_height;
+    uint8_t framebuffer_bpp;
+    uint8_t framebuffer_type;
+    uint8_t reserved1;
 }
 KERNAUX_PACKED;
 
@@ -402,10 +402,10 @@ struct KernAux_Multiboot2_ITag_ELFSymbols {
     // size > 16
     struct KernAux_Multiboot2_ITagBase base;
 
-    unsigned num       : 16;
-    unsigned ent_size  : 16;
-    unsigned shndx     : 16;
-    unsigned reserved1 : 16;
+    uint16_t num;
+    uint16_t ent_size;
+    uint16_t shndx;
+    uint16_t reserved1;
 }
 KERNAUX_PACKED;
 
@@ -416,15 +416,15 @@ struct KernAux_Multiboot2_ITag_APMTable {
     // size = 28
     struct KernAux_Multiboot2_ITagBase base;
 
-    unsigned version     : 16;
-    unsigned cseg        : 16;
-    unsigned offset      : 32;
-    unsigned cseg_16     : 16;
-    unsigned dseg        : 16;
-    unsigned flags       : 16;
-    unsigned cseg_len    : 16;
-    unsigned cseg_16_len : 16;
-    unsigned dseg_len    : 16;
+    uint16_t version;
+    uint16_t cseg;
+    uint32_t offset;
+    uint16_t cseg_16;
+    uint16_t dseg;
+    uint16_t flags;
+    uint16_t cseg_len;
+    uint16_t cseg_16_len;
+    uint16_t dseg_len;
 }
 KERNAUX_PACKED;
 
@@ -435,7 +435,7 @@ struct KernAux_Multiboot2_ITag_EFI32bitSystemTablePtr {
     // size = 12
     struct KernAux_Multiboot2_ITagBase base;
 
-    unsigned pointer : 32;
+    uint32_t pointer;
 }
 KERNAUX_PACKED;
 
@@ -446,7 +446,7 @@ struct KernAux_Multiboot2_ITag_EFI64bitSystemTablePtr {
     // size = 16
     struct KernAux_Multiboot2_ITagBase base;
 
-    unsigned long long pointer : 64;
+    uint64_t pointer;
 }
 KERNAUX_PACKED;
 
@@ -457,9 +457,9 @@ struct KernAux_Multiboot2_ITag_SMBIOSTables {
     // size > 16
     struct KernAux_Multiboot2_ITagBase base;
 
-    unsigned major : 8;
-    unsigned minor : 8;
-    unsigned char reserved1[6];
+    uint8_t major;
+    uint8_t minor;
+    uint8_t reserved1[6];
 }
 KERNAUX_PACKED;
 
@@ -497,8 +497,8 @@ struct KernAux_Multiboot2_ITag_EFIMemoryMap {
     // size > 16
     struct KernAux_Multiboot2_ITagBase base;
 
-    unsigned descriptor_size    : 32;
-    unsigned descriptor_version : 32;
+    uint32_t descriptor_size;
+    uint32_t descriptor_version;
 }
 KERNAUX_PACKED;
 
@@ -521,7 +521,7 @@ struct KernAux_Multiboot2_ITag_EFI32bitImageHandlePtr {
     // size = 12
     struct KernAux_Multiboot2_ITagBase base;
 
-    unsigned pointer : 32;
+    uint32_t pointer;
 }
 KERNAUX_PACKED;
 
@@ -535,7 +535,7 @@ struct KernAux_Multiboot2_ITag_EFI64bitImageHandlePtr {
     // size = 16
     struct KernAux_Multiboot2_ITagBase base;
 
-    unsigned long long pointer : 64;
+    uint64_t pointer;
 }
 KERNAUX_PACKED;
 
@@ -549,7 +549,7 @@ struct KernAux_Multiboot2_ITag_ImageLoadBasePhysAddr {
     // size = 12
     struct KernAux_Multiboot2_ITagBase base;
 
-    unsigned load_base_addr : 32;
+    uint32_t load_base_addr;
 }
 KERNAUX_PACKED;
 
