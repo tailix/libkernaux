@@ -43,7 +43,7 @@ jobs:
         run: sudo make install
 
   cross:
-    runs-on: ubuntu-20.04 # focal, because it's in ".github/sources.list"
+    runs-on: ubuntu-22.04 # jammy, because it's in ".github/sources.list"
     strategy:
       matrix:
         cross:

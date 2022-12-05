@@ -210,36 +210,6 @@ without it in `$PATH`:
   RANLIB="$(which i386-elf-ranlib)"
 ```
 
-You can see the following messages. It's
-[a bug](https://savannah.gnu.org/support/index.php?110393) in **autoconf**, just
-ignore it.
-
-```
-checking for _Bool... no
-checking stdarg.h usability... no
-checking stdarg.h presence... yes
-configure: WARNING: stdarg.h: present but cannot be compiled
-configure: WARNING: stdarg.h:     check for missing prerequisite headers?
-configure: WARNING: stdarg.h: see the Autoconf documentation
-configure: WARNING: stdarg.h:     section "Present But Cannot Be Compiled"
-configure: WARNING: stdarg.h: proceeding with the compiler's result
-configure: WARNING:     ## ---------------------------------------------------------- ##
-configure: WARNING:     ## Report this to https://github.com/tailix/libkernaux/issues ##
-configure: WARNING:     ## ---------------------------------------------------------- ##
-checking for stdarg.h... no
-checking stddef.h usability... no
-checking stddef.h presence... yes
-configure: WARNING: stddef.h: present but cannot be compiled
-configure: WARNING: stddef.h:     check for missing prerequisite headers?
-configure: WARNING: stddef.h: see the Autoconf documentation
-configure: WARNING: stddef.h:     section "Present But Cannot Be Compiled"
-configure: WARNING: stddef.h: proceeding with the compiler's result
-configure: WARNING:     ## ---------------------------------------------------------- ##
-configure: WARNING:     ## Report this to https://github.com/tailix/libkernaux/issues ##
-configure: WARNING:     ## ---------------------------------------------------------- ##
-checking for stddef.h... no
-```
-
 To install into specific directory use full path: `DESTDIR="$(pwd)/dest" make
 install` instead of `DESTDIR=dest make install`.
 
