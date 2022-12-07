@@ -8,6 +8,7 @@ extern "C" {
 #include <kernaux/arch/x86.h>
 #include <kernaux/macro.h>
 
+#include <stdbool.h>
 #include <stdint.h>
 
 #define KERNAUX_ARCH_I386_PAGE_SIZE     (1024 * 4)        // 4 KiB
@@ -28,6 +29,8 @@ extern "C" {
 #define KERNAUX_ARCH_I386_ADDR_TO_PTE_ADDR(addr) \
     KERNAUX_ARCH_I386_ADDR_TO_PDE_ADDR(addr)
 
+#include <kernaux/macro/packing_start.run>
+
 // CR0 bits
 #define KERNAUX_ARCH_I386_CR0_PE KERNAUX_BITS32(0)  // 0:  Protected Mode Enable
 #define KERNAUX_ARCH_I386_CR0_MP KERNAUX_BITS32(1)  // 1:  Monitor co-processor
@@ -41,6 +44,27 @@ extern "C" {
 #define KERNAUX_ARCH_I386_CR0_CD KERNAUX_BITS32(30) // 30: Cache disable
 #define KERNAUX_ARCH_I386_CR0_PG KERNAUX_BITS32(31) // 31: Paging
 
+union KernAux_Arch_I386_CR0 {
+    uint32_t number;
+    struct {
+        bool     pe : 1; // 0:  Protected Mode Enable
+        bool     mp : 1; // 1:  Monitor co-processor
+        bool     em : 1; // 2:  x87 FPU Emulation
+        bool     ts : 1; // 3:  Task switched
+        bool     et : 1; // 4:  Extension type
+        bool     ne : 1; // 5:  Numeric error
+        unsigned __ : 21;
+        bool     wp : 1; // 16: Write protect
+        bool     am : 1; // 18: Alignment mask
+        bool     nw : 1; // 29: Not-write trough
+        bool     cd : 1; // 30: Cache disable
+        bool     pg : 1; // 31: Paging
+    } bitfields;
+}
+KERNAUX_PACKED;
+
+KERNAUX_STATIC_TEST_UNION_SIZE(KernAux_Arch_I386_CR0, 4);
+
 // Some CR4 bits
 #define KERNAUX_ARCH_I386_CR4_VME KERNAUX_BITS32(0) // 0: Virtual 8086 Mode Extensions
 #define KERNAUX_ARCH_I386_CR4_PVI KERNAUX_BITS32(1) // 1: Protected-mode Virtual Interrupts
@@ -52,7 +76,23 @@ extern "C" {
 #define KERNAUX_ARCH_I386_CR4_PGE KERNAUX_BITS32(7) // 7: Page Global Enabled
 // TODO: bits 8-31
 
-#include <kernaux/macro/packing_start.run>
+union KernAux_Arch_I386_CR4 {
+    uint32_t number;
+    struct {
+        bool     vme : 1; // 0: Virtual 8086 Mode Extensions
+        bool     pvi : 1; // 1: Protected-mode Virtual Interrupts
+        bool     tsd : 1; // 2: Time Stamp Disable
+        bool     de  : 1; // 3: Debugging Extensions
+        bool     pse : 1; // 4: Page Size Extension
+        bool     pae : 1; // 5: Physical Address Extension
+        bool     mce : 1; // 6: Machine Check Exception
+        bool     pge : 1; // 7: Page Global Enabled
+        unsigned ___ : 24;
+    } bitfields;
+}
+KERNAUX_PACKED;
+
+KERNAUX_STATIC_TEST_UNION_SIZE(KernAux_Arch_I386_CR4, 4);
 
 // Global, local or interrupt descriptor table register
 // TODO: validate this according to spec
