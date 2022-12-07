@@ -46,6 +46,7 @@ extern "C" {
 
 union KernAux_Arch_I386_CR0 {
     uint32_t number;
+#ifdef KERNAUX_BITFIELDS
     struct {
         bool     pe : 1; // 0:  Protected Mode Enable
         bool     mp : 1; // 1:  Monitor co-processor
@@ -60,6 +61,7 @@ union KernAux_Arch_I386_CR0 {
         bool     cd : 1; // 30: Cache disable
         bool     pg : 1; // 31: Paging
     } bitfields;
+#endif
 }
 KERNAUX_PACKED;
 
@@ -78,6 +80,7 @@ KERNAUX_STATIC_TEST_UNION_SIZE(KernAux_Arch_I386_CR0, 4);
 
 union KernAux_Arch_I386_CR4 {
     uint32_t number;
+#ifdef KERNAUX_BITFIELDS
     struct {
         bool     vme : 1; // 0: Virtual 8086 Mode Extensions
         bool     pvi : 1; // 1: Protected-mode Virtual Interrupts
@@ -89,6 +92,7 @@ union KernAux_Arch_I386_CR4 {
         bool     pge : 1; // 7: Page Global Enabled
         unsigned ___ : 24;
     } bitfields;
+#endif
 }
 KERNAUX_PACKED;
 
@@ -203,6 +207,7 @@ KERNAUX_STATIC_TEST_STRUCT_SIZE(KernAux_Arch_I386_TSS, 104);
 // TODO: validate this according to spec
 union KernAux_Arch_I386_PDE {
     uint32_t number;
+#ifdef KERNAUX_BITFIELDS
     struct {
         unsigned present        : 1;
         unsigned writable       : 1;
@@ -215,6 +220,7 @@ union KernAux_Arch_I386_PDE {
         unsigned available1     : 4;
         unsigned addr           : 20;
     } bitfields;
+#endif
 }
 KERNAUX_PACKED;
 
@@ -224,6 +230,7 @@ KERNAUX_STATIC_TEST_UNION_SIZE(KernAux_Arch_I386_PDE, 4);
 // TODO: validate this according to spec
 union KernAux_Arch_I386_PTE {
     uint32_t number;
+#ifdef KERNAUX_BITFIELDS
     struct {
         unsigned present        : 1;
         unsigned writable       : 1;
@@ -237,6 +244,7 @@ union KernAux_Arch_I386_PTE {
         unsigned available      : 3;
         unsigned addr           : 20;
     } bitfields;
+#endif
 }
 KERNAUX_PACKED;
 
