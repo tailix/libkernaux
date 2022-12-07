@@ -161,44 +161,50 @@ KERNAUX_STATIC_TEST_STRUCT_SIZE(KernAux_Arch_I386_TSS, 104);
 
 // Page directory entry
 // TODO: validate this according to spec
-struct KernAux_Arch_I386_PDE {
-    unsigned present        : 1;
-    unsigned writable       : 1;
-    unsigned user           : 1;
-    unsigned write_through  : 1;
-    unsigned cache_disabled : 1;
-    unsigned accessed       : 1;
-    unsigned available0     : 1;
-    unsigned page_size      : 1;
-    unsigned available1     : 4;
-    unsigned addr           : 20;
+union KernAux_Arch_I386_PDE {
+    uint32_t number;
+    struct {
+        unsigned present        : 1;
+        unsigned writable       : 1;
+        unsigned user           : 1;
+        unsigned write_through  : 1;
+        unsigned cache_disabled : 1;
+        unsigned accessed       : 1;
+        unsigned available0     : 1;
+        unsigned page_size      : 1;
+        unsigned available1     : 4;
+        unsigned addr           : 20;
+    } bitfields;
 }
 KERNAUX_PACKED;
 
-KERNAUX_STATIC_TEST_STRUCT_SIZE(KernAux_Arch_I386_PDE, 4);
+KERNAUX_STATIC_TEST_UNION_SIZE(KernAux_Arch_I386_PDE, 4);
 
 // Page table entry
 // TODO: validate this according to spec
-struct KernAux_Arch_I386_PTE {
-    unsigned present        : 1;
-    unsigned writable       : 1;
-    unsigned user           : 1;
-    unsigned write_through  : 1;
-    unsigned cache_disabled : 1;
-    unsigned accessed       : 1;
-    unsigned dirty          : 1;
-    unsigned attr_table     : 1;
-    unsigned global         : 1;
-    unsigned available      : 3;
-    unsigned addr           : 20;
+union KernAux_Arch_I386_PTE {
+    uint32_t number;
+    struct {
+        unsigned present        : 1;
+        unsigned writable       : 1;
+        unsigned user           : 1;
+        unsigned write_through  : 1;
+        unsigned cache_disabled : 1;
+        unsigned accessed       : 1;
+        unsigned dirty          : 1;
+        unsigned attr_table     : 1;
+        unsigned global         : 1;
+        unsigned available      : 3;
+        unsigned addr           : 20;
+    } bitfields;
 }
 KERNAUX_PACKED;
 
-KERNAUX_STATIC_TEST_STRUCT_SIZE(KernAux_Arch_I386_PDE, 4);
+KERNAUX_STATIC_TEST_UNION_SIZE(KernAux_Arch_I386_PTE, 4);
 
 // Page directory
 struct KernAux_Arch_I386_PageDir {
-    struct KernAux_Arch_I386_PDE pdes[KERNAUX_ARCH_I386_PAGE_DIR_ENTRIES_COUNT];
+    union KernAux_Arch_I386_PDE pdes[KERNAUX_ARCH_I386_PAGE_DIR_ENTRIES_COUNT];
 }
 KERNAUX_PACKED;
 
@@ -206,7 +212,7 @@ KERNAUX_STATIC_TEST_STRUCT_SIZE(KernAux_Arch_I386_PageDir, KERNAUX_ARCH_I386_PAG
 
 // Page table
 struct KernAux_Arch_I386_PageTable {
-    struct KernAux_Arch_I386_PTE ptes[KERNAUX_ARCH_I386_PAGE_TABLE_ENTRIES_COUNT];
+    union KernAux_Arch_I386_PTE ptes[KERNAUX_ARCH_I386_PAGE_TABLE_ENTRIES_COUNT];
 }
 KERNAUX_PACKED;
 
