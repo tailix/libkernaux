@@ -31,18 +31,6 @@ extern "C" {
 
 #include <kernaux/macro/packing_start.run>
 
-#define KERNAUX_ARCH_I386_CR0_PE KERNAUX_BITS32(0)  // Protection Enable
-#define KERNAUX_ARCH_I386_CR0_MP KERNAUX_BITS32(1)  // Monitor Coprocessor
-#define KERNAUX_ARCH_I386_CR0_EM KERNAUX_BITS32(2)  // Emulation (x87 FPU)
-#define KERNAUX_ARCH_I386_CR0_TS KERNAUX_BITS32(3)  // Task Switched
-#define KERNAUX_ARCH_I386_CR0_ET KERNAUX_BITS32(4)  // Extension Type
-#define KERNAUX_ARCH_I386_CR0_NE KERNAUX_BITS32(5)  // Numeric Error
-#define KERNAUX_ARCH_I386_CR0_WP KERNAUX_BITS32(16) // Write Protect
-#define KERNAUX_ARCH_I386_CR0_AM KERNAUX_BITS32(18) // Alignment Mask
-#define KERNAUX_ARCH_I386_CR0_NW KERNAUX_BITS32(29) // Not Write-trough
-#define KERNAUX_ARCH_I386_CR0_CD KERNAUX_BITS32(30) // Cache Disable
-#define KERNAUX_ARCH_I386_CR0_PG KERNAUX_BITS32(31) // Paging
-
 /**
  * @brief CR0 bits
  *
@@ -78,26 +66,17 @@ KERNAUX_PACKED;
 
 KERNAUX_STATIC_TEST_UNION_SIZE(KernAux_Arch_I386_CR0, 4);
 
-#define KERNAUX_ARCH_I386_CR4_VME        KERNAUX_BITS32(0)  // Virtual-8086 Mode Extensions
-#define KERNAUX_ARCH_I386_CR4_PVI        KERNAUX_BITS32(1)  // Protected-Mode Virtual Interrupts
-#define KERNAUX_ARCH_I386_CR4_TSD        KERNAUX_BITS32(2)  // Time Stamp Disable
-#define KERNAUX_ARCH_I386_CR4_DE         KERNAUX_BITS32(3)  // Debugging Extensions
-#define KERNAUX_ARCH_I386_CR4_PSE        KERNAUX_BITS32(4)  // Page Size Extension
-#define KERNAUX_ARCH_I386_CR4_PAE        KERNAUX_BITS32(5)  // Physical Address Extension
-#define KERNAUX_ARCH_I386_CR4_MCE        KERNAUX_BITS32(6)  // Machine-Check Exception
-#define KERNAUX_ARCH_I386_CR4_PGE        KERNAUX_BITS32(7)  // Page Global Enable
-#define KERNAUX_ARCH_I386_CR4_PCE        KERNAUX_BITS32(8)  // Performance-Monitoring Counter Enabled
-#define KERNAUX_ARCH_I386_CR4_OSFXSR     KERNAUX_BITS32(9)  // Operating System Support for FXSAVE and FXRSTOR instructions
-#define KERNAUX_ARCH_I386_CR4_OSXMMEXCPT KERNAUX_BITS32(10) // Operating System Support for Unmasked SIMD Floating-Point Exceptions
-#define KERNAUX_ARCH_I386_CR4_UMIP       KERNAUX_BITS32(11) // User-Mode Instruction Prevention
-#define KERNAUX_ARCH_I386_CR4_VMXE       KERNAUX_BITS32(13) // VME (Virtual Machine Extensions) Enable
-#define KERNAUX_ARCH_I386_CR4_SMXE       KERNAUX_BITS32(14) // SME (Safer Mode Extensions) Enable
-#define KERNAUX_ARCH_I386_CR4_FSGSBASE   KERNAUX_BITS32(16) // FSGSBASE Enable (enable the instructions RDFSBASE, RDGSBASE, WRFSBASE, and WRGSBASE)
-#define KERNAUX_ARCH_I386_CR4_PCIDE      KERNAUX_BITS32(17) // PCID Enable
-#define KERNAUX_ARCH_I386_CR4_OSXSAVE    KERNAUX_BITS32(18) // XSAVE and Processor Extended States Enable
-#define KERNAUX_ARCH_I386_CR4_SMEP       KERNAUX_BITS32(20) // SMEP (Supervisor Mode Execution Protection) Enable
-#define KERNAUX_ARCH_I386_CR4_SMAP       KERNAUX_BITS32(21) // SMAP (Supervisor Mode Access Prevention) Enable
-#define KERNAUX_ARCH_I386_CR4_PKE        KERNAUX_BITS32(22) // Protection Key Enable
+#define KERNAUX_ARCH_I386_CR0_PE KERNAUX_BITS32(0)  // Protection Enable
+#define KERNAUX_ARCH_I386_CR0_MP KERNAUX_BITS32(1)  // Monitor Coprocessor
+#define KERNAUX_ARCH_I386_CR0_EM KERNAUX_BITS32(2)  // Emulation (x87 FPU)
+#define KERNAUX_ARCH_I386_CR0_TS KERNAUX_BITS32(3)  // Task Switched
+#define KERNAUX_ARCH_I386_CR0_ET KERNAUX_BITS32(4)  // Extension Type
+#define KERNAUX_ARCH_I386_CR0_NE KERNAUX_BITS32(5)  // Numeric Error
+#define KERNAUX_ARCH_I386_CR0_WP KERNAUX_BITS32(16) // Write Protect
+#define KERNAUX_ARCH_I386_CR0_AM KERNAUX_BITS32(18) // Alignment Mask
+#define KERNAUX_ARCH_I386_CR0_NW KERNAUX_BITS32(29) // Not Write-trough
+#define KERNAUX_ARCH_I386_CR0_CD KERNAUX_BITS32(30) // Cache Disable
+#define KERNAUX_ARCH_I386_CR0_PG KERNAUX_BITS32(31) // Paging
 
 /**
  * @brief CR4 bits
@@ -144,6 +123,27 @@ union KernAux_Arch_I386_CR4 {
 KERNAUX_PACKED;
 
 KERNAUX_STATIC_TEST_UNION_SIZE(KernAux_Arch_I386_CR4, 4);
+
+#define KERNAUX_ARCH_I386_CR4_VME        KERNAUX_BITS32(0)  // Virtual-8086 Mode Extensions
+#define KERNAUX_ARCH_I386_CR4_PVI        KERNAUX_BITS32(1)  // Protected-Mode Virtual Interrupts
+#define KERNAUX_ARCH_I386_CR4_TSD        KERNAUX_BITS32(2)  // Time Stamp Disable
+#define KERNAUX_ARCH_I386_CR4_DE         KERNAUX_BITS32(3)  // Debugging Extensions
+#define KERNAUX_ARCH_I386_CR4_PSE        KERNAUX_BITS32(4)  // Page Size Extension
+#define KERNAUX_ARCH_I386_CR4_PAE        KERNAUX_BITS32(5)  // Physical Address Extension
+#define KERNAUX_ARCH_I386_CR4_MCE        KERNAUX_BITS32(6)  // Machine-Check Exception
+#define KERNAUX_ARCH_I386_CR4_PGE        KERNAUX_BITS32(7)  // Page Global Enable
+#define KERNAUX_ARCH_I386_CR4_PCE        KERNAUX_BITS32(8)  // Performance-Monitoring Counter Enabled
+#define KERNAUX_ARCH_I386_CR4_OSFXSR     KERNAUX_BITS32(9)  // Operating System Support for FXSAVE and FXRSTOR instructions
+#define KERNAUX_ARCH_I386_CR4_OSXMMEXCPT KERNAUX_BITS32(10) // Operating System Support for Unmasked SIMD Floating-Point Exceptions
+#define KERNAUX_ARCH_I386_CR4_UMIP       KERNAUX_BITS32(11) // User-Mode Instruction Prevention
+#define KERNAUX_ARCH_I386_CR4_VMXE       KERNAUX_BITS32(13) // VME (Virtual Machine Extensions) Enable
+#define KERNAUX_ARCH_I386_CR4_SMXE       KERNAUX_BITS32(14) // SME (Safer Mode Extensions) Enable
+#define KERNAUX_ARCH_I386_CR4_FSGSBASE   KERNAUX_BITS32(16) // FSGSBASE Enable (enable the instructions RDFSBASE, RDGSBASE, WRFSBASE, and WRGSBASE)
+#define KERNAUX_ARCH_I386_CR4_PCIDE      KERNAUX_BITS32(17) // PCID Enable
+#define KERNAUX_ARCH_I386_CR4_OSXSAVE    KERNAUX_BITS32(18) // XSAVE and Processor Extended States Enable
+#define KERNAUX_ARCH_I386_CR4_SMEP       KERNAUX_BITS32(20) // SMEP (Supervisor Mode Execution Protection) Enable
+#define KERNAUX_ARCH_I386_CR4_SMAP       KERNAUX_BITS32(21) // SMAP (Supervisor Mode Access Prevention) Enable
+#define KERNAUX_ARCH_I386_CR4_PKE        KERNAUX_BITS32(22) // Protection Key Enable
 
 // Global, local or interrupt descriptor table register
 // TODO: validate this according to spec
