@@ -114,6 +114,8 @@ jobs:
         debug: ['--disable-debug', '--enable-debug']
     steps:
       - uses: actions/checkout@v2
+      - name: apt update
+        run: sudo apt-get --yes update
       - name: dependencies
         run: sudo apt-get --yes install crossbuild-essential-i386
       - name: autogen
