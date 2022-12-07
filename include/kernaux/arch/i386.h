@@ -60,7 +60,7 @@ union KernAux_Arch_I386_CR0 {
         bool     nw : 1; // 29: Not-write trough
         bool     cd : 1; // 30: Cache disable
         bool     pg : 1; // 31: Paging
-    } bitfields;
+    } KERNAUX_PACKED bitfields;
 #endif
 }
 KERNAUX_PACKED;
@@ -91,7 +91,7 @@ union KernAux_Arch_I386_CR4 {
         bool     mce : 1; // 6: Machine Check Exception
         bool     pge : 1; // 7: Page Global Enabled
         unsigned ___ : 24;
-    } bitfields;
+    } KERNAUX_PACKED bitfields;
 #endif
 }
 KERNAUX_PACKED;
@@ -219,7 +219,7 @@ union KernAux_Arch_I386_PDE {
         unsigned page_size      : 1;
         unsigned available1     : 4;
         unsigned addr           : 20;
-    } bitfields;
+    } KERNAUX_PACKED bitfields;
 #endif
 }
 KERNAUX_PACKED;
@@ -243,7 +243,7 @@ union KernAux_Arch_I386_PTE {
         unsigned global         : 1;
         unsigned available      : 3;
         unsigned addr           : 20;
-    } bitfields;
+    } KERNAUX_PACKED bitfields;
 #endif
 }
 KERNAUX_PACKED;
