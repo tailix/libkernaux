@@ -8,6 +8,7 @@ extern "C" {
 #include <kernaux/arch/x86.h>
 #include <kernaux/macro.h>
 
+#include <stdbool.h>
 #include <stdint.h>
 
 #define KERNAUX_ARCH_I386_PAGE_SIZE     (1024 * 4)        // 4 KiB
@@ -28,31 +29,34 @@ extern "C" {
 #define KERNAUX_ARCH_I386_ADDR_TO_PTE_ADDR(addr) \
     KERNAUX_ARCH_I386_ADDR_TO_PDE_ADDR(addr)
 
-// CR0 bits
-#define KERNAUX_ARCH_I386_CR0_PE KERNAUX_BITS32(0)  // 0:  Protected Mode Enable
-#define KERNAUX_ARCH_I386_CR0_MP KERNAUX_BITS32(1)  // 1:  Monitor co-processor
-#define KERNAUX_ARCH_I386_CR0_EM KERNAUX_BITS32(2)  // 2:  x87 FPU Emulation
-#define KERNAUX_ARCH_I386_CR0_TS KERNAUX_BITS32(3)  // 3:  Task switched
-#define KERNAUX_ARCH_I386_CR0_ET KERNAUX_BITS32(4)  // 4:  Extension type
-#define KERNAUX_ARCH_I386_CR0_NE KERNAUX_BITS32(5)  // 5:  Numeric error
-#define KERNAUX_ARCH_I386_CR0_WP KERNAUX_BITS32(16) // 16: Write protect
-#define KERNAUX_ARCH_I386_CR0_AM KERNAUX_BITS32(18) // 18: Alignment mask
-#define KERNAUX_ARCH_I386_CR0_NW KERNAUX_BITS32(29) // 29: Not-write trough
-#define KERNAUX_ARCH_I386_CR0_CD KERNAUX_BITS32(30) // 30: Cache disable
-#define KERNAUX_ARCH_I386_CR0_PG KERNAUX_BITS32(31) // 31: Paging
-
-// Some CR4 bits
-#define KERNAUX_ARCH_I386_CR4_VME KERNAUX_BITS32(0) // 0: Virtual 8086 Mode Extensions
-#define KERNAUX_ARCH_I386_CR4_PVI KERNAUX_BITS32(1) // 1: Protected-mode Virtual Interrupts
-#define KERNAUX_ARCH_I386_CR4_TSD KERNAUX_BITS32(2) // 2: Time Stamp Disable
-#define KERNAUX_ARCH_I386_CR4_DE  KERNAUX_BITS32(3) // 3: Debugging Extensions
-#define KERNAUX_ARCH_I386_CR4_PSE KERNAUX_BITS32(4) // 4: Page Size Extension
-#define KERNAUX_ARCH_I386_CR4_PAE KERNAUX_BITS32(5) // 5: Physical Address Extension
-#define KERNAUX_ARCH_I386_CR4_MCE KERNAUX_BITS32(6) // 6: Machine Check Exception
-#define KERNAUX_ARCH_I386_CR4_PGE KERNAUX_BITS32(7) // 7: Page Global Enabled
-// TODO: bits 8-31
-
 #include <kernaux/macro/packing_start.run>
+
+/**
+ * @brief CR0 bits
+ *
+ * @details
+ * Contains system control flags that control
+ * operating mode and states of the processor.
+ *
+ * @see https://en.wikipedia.org/wiki/Control_register#CR0
+ * @see https://wiki.osdev.org/CPU_Registers_x86#CR0
+ */
+KERNAUX_ARCH_X86_DEFINE_CR0(I386, uint32_t);
+KERNAUX_STATIC_TEST_UNION_SIZE(KernAux_Arch_I386_CR0, 4);
+
+/**
+ * @brief CR4 bits
+ *
+ * @details
+ * Contains a group of flags that enable several architectural extensions,
+ * and indicate operating system or executive support for specific processor
+ * capabilities.
+ *
+ * @see https://en.wikipedia.org/wiki/Control_register#CR4
+ * @see https://wiki.osdev.org/CPU_Registers_x86#CR4
+ */
+KERNAUX_ARCH_X86_DEFINE_CR4(I386, uint32_t);
+KERNAUX_STATIC_TEST_UNION_SIZE(KernAux_Arch_I386_CR4, 4);
 
 // Global, local or interrupt descriptor table register
 // TODO: validate this according to spec
@@ -67,7 +71,7 @@ KERNAUX_STATIC_TEST_STRUCT_SIZE(KernAux_Arch_I386_DTR, 6);
 // Global or local descriptor table entry
 // TODO: validate this according to spec
 struct KernAux_Arch_I386_DTE {
-    unsigned limit_low              : 16;
+    uint16_t limit_low;
     unsigned base_low               : 24;
     unsigned accessed               : 1;
     unsigned read_write             : 1;
@@ -81,9 +85,11 @@ struct KernAux_Arch_I386_DTE {
     unsigned always_0               : 1;
     unsigned big                    : 1;
     unsigned gran                   : 1;
-    unsigned base_high              : 8;
+    uint8_t base_high;
 }
 KERNAUX_PACKED;
+
+KERNAUX_STATIC_TEST_STRUCT_SIZE(KernAux_Arch_I386_DTE, 8);
 
 // Interrupt descriptor table entry
 // TODO: validate this according to spec
@@ -97,7 +103,7 @@ typedef struct KernAux_Arch_I386_IDTE {
 KERNAUX_PACKED
 *KernAux_Arch_I386_IDTE;
 
-KERNAUX_STATIC_TEST_STRUCT_SIZE(KernAux_Arch_I386_DTE, 8);
+KERNAUX_STATIC_TEST_STRUCT_SIZE(KernAux_Arch_I386_IDTE, 8);
 
 void KernAux_Arch_I386_IDTE_set_offset(
     KernAux_Arch_I386_IDTE idte,
@@ -159,44 +165,54 @@ KERNAUX_STATIC_TEST_STRUCT_SIZE(KernAux_Arch_I386_TSS, 104);
 
 // Page directory entry
 // TODO: validate this according to spec
-struct KernAux_Arch_I386_PDE {
-    unsigned present        : 1;
-    unsigned writable       : 1;
-    unsigned user           : 1;
-    unsigned write_through  : 1;
-    unsigned cache_disabled : 1;
-    unsigned accessed       : 1;
-    unsigned available0     : 1;
-    unsigned page_size      : 1;
-    unsigned available1     : 4;
-    unsigned addr           : 20;
+union KernAux_Arch_I386_PDE {
+    uint32_t number;
+#ifdef KERNAUX_BITFIELDS
+    struct {
+        unsigned present        : 1;
+        unsigned writable       : 1;
+        unsigned user           : 1;
+        unsigned write_through  : 1;
+        unsigned cache_disabled : 1;
+        unsigned accessed       : 1;
+        unsigned available0     : 1;
+        unsigned page_size      : 1;
+        unsigned available1     : 4;
+        unsigned addr           : 20;
+    } KERNAUX_PACKED bitfields;
+#endif
 }
 KERNAUX_PACKED;
 
-KERNAUX_STATIC_TEST_STRUCT_SIZE(KernAux_Arch_I386_PDE, 4);
+KERNAUX_STATIC_TEST_UNION_SIZE(KernAux_Arch_I386_PDE, 4);
 
 // Page table entry
 // TODO: validate this according to spec
-struct KernAux_Arch_I386_PTE {
-    unsigned present        : 1;
-    unsigned writable       : 1;
-    unsigned user           : 1;
-    unsigned write_through  : 1;
-    unsigned cache_disabled : 1;
-    unsigned accessed       : 1;
-    unsigned dirty          : 1;
-    unsigned attr_table     : 1;
-    unsigned global         : 1;
-    unsigned available      : 3;
-    unsigned addr           : 20;
+union KernAux_Arch_I386_PTE {
+    uint32_t number;
+#ifdef KERNAUX_BITFIELDS
+    struct {
+        unsigned present        : 1;
+        unsigned writable       : 1;
+        unsigned user           : 1;
+        unsigned write_through  : 1;
+        unsigned cache_disabled : 1;
+        unsigned accessed       : 1;
+        unsigned dirty          : 1;
+        unsigned attr_table     : 1;
+        unsigned global         : 1;
+        unsigned available      : 3;
+        unsigned addr           : 20;
+    } KERNAUX_PACKED bitfields;
+#endif
 }
 KERNAUX_PACKED;
 
-KERNAUX_STATIC_TEST_STRUCT_SIZE(KernAux_Arch_I386_PDE, 4);
+KERNAUX_STATIC_TEST_UNION_SIZE(KernAux_Arch_I386_PTE, 4);
 
 // Page directory
 struct KernAux_Arch_I386_PageDir {
-    struct KernAux_Arch_I386_PDE pdes[KERNAUX_ARCH_I386_PAGE_DIR_ENTRIES_COUNT];
+    union KernAux_Arch_I386_PDE pdes[KERNAUX_ARCH_I386_PAGE_DIR_ENTRIES_COUNT];
 }
 KERNAUX_PACKED;
 
@@ -204,7 +220,7 @@ KERNAUX_STATIC_TEST_STRUCT_SIZE(KernAux_Arch_I386_PageDir, KERNAUX_ARCH_I386_PAG
 
 // Page table
 struct KernAux_Arch_I386_PageTable {
-    struct KernAux_Arch_I386_PTE ptes[KERNAUX_ARCH_I386_PAGE_TABLE_ENTRIES_COUNT];
+    union KernAux_Arch_I386_PTE ptes[KERNAUX_ARCH_I386_PAGE_TABLE_ENTRIES_COUNT];
 }
 KERNAUX_PACKED;
 
