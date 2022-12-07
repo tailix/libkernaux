@@ -80,7 +80,7 @@ extern "C" {
             bool     smep       : 1; /* 20: SMEP (Supervisor Mode Execution Protection) Enable */ \
             bool     smap       : 1; /* 21: SMAP (Supervisor Mode Access Prevention) Enable    */ \
             bool     pke        : 1; /* 22: Protection Key Enable                              */ \
-            unsigned _3         : 10;                                                             \
+            unsigned _3         : 9;                                                              \
         } KERNAUX_PACKED bitfields;                                                               \
     } KERNAUX_PACKED
 #endif
