@@ -6,6 +6,7 @@ extern "C" {
 #endif
 
 #include <kernaux/arch/x86.h>
+#include <kernaux/arch/x86-paging.h>
 #include <kernaux/macro.h>
 
 #include <stdbool.h>

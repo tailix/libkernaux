@@ -27,7 +27,7 @@ nobase_include_HEADERS += kernaux/arch/x86_64.h
 endif
 
 if WITH_ARCH_X86
-nobase_include_HEADERS += kernaux/arch/x86.h
+nobase_include_HEADERS += kernaux/arch/x86.h kernaux/arch/x86-paging.h
 endif
 
 #######
