@@ -37,19 +37,20 @@ void KernAux_Arch_I386_IDTE_init_intr(
     uint16_t cs_selector,
     uint8_t dpl
 );
-
 void KernAux_Arch_I386_IDTE_init_task(
     KernAux_Arch_I386_IDTE idte,
     uint16_t tss_selector,
     uint8_t dpl
 );
-
 void KernAux_Arch_I386_IDTE_init_trap(
     KernAux_Arch_I386_IDTE idte,
     uint32_t offset,
     uint16_t cs_selector,
     uint8_t dpl
 );
+
+void
+KernAux_Arch_I386_IDTE_set_offset(KernAux_Arch_I386_IDTE idte, uint32_t offset);
 
 #ifdef __cplusplus
 }

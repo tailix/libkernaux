@@ -7,11 +7,6 @@
 
 #include <string.h>
 
-#define SET_OFFSET do { \
-    idte->offset_low  |= 0xffffu & offset;         \
-    idte->offset_high |= 0xffffu & (offset >> 16); \
-} while (0)
-
 #define DPL (0x60u & (dpl << 5))
 
 void KernAux_Arch_I386_IDTE_init_intr(
@@ -23,7 +18,7 @@ void KernAux_Arch_I386_IDTE_init_intr(
     KERNAUX_ASSERT(idte);
 
     memset(idte, 0, sizeof(*idte));
-    SET_OFFSET;
+    KernAux_Arch_I386_IDTE_set_offset(idte, offset);
     idte->selector = cs_selector;
     idte->flags |= 0x80u | DPL | 0xeu; // 1-00-01110
 }
@@ -49,7 +44,17 @@ void KernAux_Arch_I386_IDTE_init_trap(
     KERNAUX_ASSERT(idte);
 
     memset(idte, 0, sizeof(*idte));
-    SET_OFFSET;
+    KernAux_Arch_I386_IDTE_set_offset(idte, offset);
     idte->selector = cs_selector;
     idte->flags |= 0x80u | DPL | 0x14u; // 1-00-10100
+}
+
+void KernAux_Arch_I386_IDTE_set_offset(
+    const KernAux_Arch_I386_IDTE idte,
+    const uint32_t offset
+) {
+    KERNAUX_ASSERT(idte);
+
+    idte->offset_low  |= 0xffffu & offset;
+    idte->offset_high |= 0xffffu & (offset >> 16);
 }
