@@ -112,13 +112,21 @@ void test_idte_get_dpl()
 
     idte.flags = 0; // 0-00-00000
     assert(KernAux_Arch_I386_IDTE_dpl(&idte) == 0);
+    idte.flags = 0x80; // 1-00-00000
+    assert(KernAux_Arch_I386_IDTE_dpl(&idte) == 0);
 
     idte.flags = 0x20; // 0-01-00000
+    assert(KernAux_Arch_I386_IDTE_dpl(&idte) == 1);
+    idte.flags = 0xa0; // 1-01-00000
     assert(KernAux_Arch_I386_IDTE_dpl(&idte) == 1);
 
     idte.flags = 0x40; // 0-10-00000
     assert(KernAux_Arch_I386_IDTE_dpl(&idte) == 2);
+    idte.flags = 0xc0; // 1-10-00000
+    assert(KernAux_Arch_I386_IDTE_dpl(&idte) == 2);
 
     idte.flags = 0x60; // 0-11-00000
+    assert(KernAux_Arch_I386_IDTE_dpl(&idte) == 3);
+    idte.flags = 0xe0; // 1-11-00000
     assert(KernAux_Arch_I386_IDTE_dpl(&idte) == 3);
 }
