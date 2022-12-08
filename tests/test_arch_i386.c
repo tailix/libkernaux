@@ -11,6 +11,7 @@ static void test_idte_init_intr();
 static void test_idte_init_task();
 static void test_idte_init_trap();
 static void test_idte_get_and_set_offset();
+static void test_idte_get_dpl();
 
 void test_main()
 {
@@ -18,6 +19,7 @@ void test_main()
     test_idte_init_task();
     test_idte_init_trap();
     test_idte_get_and_set_offset();
+    test_idte_get_dpl();
 }
 
 void test_idte_init_intr()
@@ -96,4 +98,22 @@ void test_idte_get_and_set_offset()
     assert(idte.offset_high == 0x1234);
     assert(idte.offset_low  == 0x5678);
     assert(KernAux_Arch_I386_IDTE_offset(&idte) == 0x12345678);
+}
+
+void test_idte_get_dpl()
+{
+    struct KernAux_Arch_I386_IDTE idte;
+    memset(&idte, 0, sizeof(idte));
+
+    idte.flags = 0; // 0-00-00000
+    assert(KernAux_Arch_I386_IDTE_dpl(&idte) == 0);
+
+    idte.flags = 0x20; // 0-01-00000
+    assert(KernAux_Arch_I386_IDTE_dpl(&idte) == 1);
+
+    idte.flags = 0x40; // 0-10-00000
+    assert(KernAux_Arch_I386_IDTE_dpl(&idte) == 2);
+
+    idte.flags = 0x60; // 0-11-00000
+    assert(KernAux_Arch_I386_IDTE_dpl(&idte) == 3);
 }
