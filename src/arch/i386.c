@@ -55,6 +55,6 @@ void KernAux_Arch_I386_IDTE_set_offset(
 ) {
     KERNAUX_ASSERT(idte);
 
-    idte->offset_low  |= 0xffffu & offset;
-    idte->offset_high |= 0xffffu & (offset >> 16);
+    idte->offset_low  = 0xffffu & offset;
+    idte->offset_high = 0xffffu & (offset >> 16);
 }
