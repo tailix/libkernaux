@@ -32,7 +32,7 @@ void KernAux_Arch_I386_IDTE_init_task(
 
     memset(idte, 0, sizeof(*idte));
     idte->selector = tss_selector;
-    idte->flags |= 0x80u | DPL | 0x1eu; // 1-00-11110
+    idte->flags |= 0x80u | DPL | 0x5u; // 1-00-00101
 }
 
 void KernAux_Arch_I386_IDTE_init_trap(
@@ -46,7 +46,7 @@ void KernAux_Arch_I386_IDTE_init_trap(
     memset(idte, 0, sizeof(*idte));
     KernAux_Arch_I386_IDTE_set_offset(idte, offset);
     idte->selector = cs_selector;
-    idte->flags |= 0x80u | DPL | 0x14u; // 1-00-10100
+    idte->flags |= 0x80u | DPL | 0xfu; // 1-00-01111
 }
 
 void KernAux_Arch_I386_IDTE_set_offset(
