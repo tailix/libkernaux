@@ -49,6 +49,7 @@ void KernAux_Arch_I386_IDTE_init_trap(
     uint8_t dpl
 );
 
+uint32_t KernAux_Arch_I386_IDTE_offset(KernAux_Arch_I386_IDTE idte);
 void
 KernAux_Arch_I386_IDTE_set_offset(KernAux_Arch_I386_IDTE idte, uint32_t offset);
 

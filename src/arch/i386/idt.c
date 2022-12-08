@@ -49,6 +49,13 @@ void KernAux_Arch_I386_IDTE_init_trap(
     idte->flags |= 0x80u | DPL | 0xfu; // 1-00-01111
 }
 
+uint32_t KernAux_Arch_I386_IDTE_offset(const KernAux_Arch_I386_IDTE idte)
+{
+    KERNAUX_ASSERT(idte);
+
+    return (idte->offset_high << 16) | idte->offset_low;
+}
+
 void KernAux_Arch_I386_IDTE_set_offset(
     const KernAux_Arch_I386_IDTE idte,
     const uint32_t offset
