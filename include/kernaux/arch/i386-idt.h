@@ -11,26 +11,45 @@ extern "C" {
 
 #include <kernaux/macro/packing_start.run>
 
-// Interrupt descriptor table entry
-// TODO: validate this according to spec
+/**
+ * @brief Interrupt Descriptor Table entry
+ *
+ * @see https://en.wikibooks.org/wiki/X86_Assembly/Advanced_Interrupts#The_Interrupt_Descriptor_Table
+ */
 typedef struct KernAux_Arch_I386_IDTE {
     uint16_t offset_low;
     uint16_t selector;
-    uint8_t  _zero0;
+    uint8_t  _;
     uint8_t  flags;
     uint16_t offset_high;
 }
 KERNAUX_PACKED
+KERNAUX_ALIGNED(8)
 *KernAux_Arch_I386_IDTE;
 
 KERNAUX_STATIC_TEST_STRUCT_SIZE(KernAux_Arch_I386_IDTE, 8);
 
-void KernAux_Arch_I386_IDTE_set_offset(
+#include <kernaux/macro/packing_end.run>
+
+void KernAux_Arch_I386_IDTE_init_intr(
     KernAux_Arch_I386_IDTE idte,
-    uint32_t address
+    uint32_t offset,
+    uint16_t cs_selector,
+    uint8_t dpl
 );
 
-#include <kernaux/macro/packing_end.run>
+void KernAux_Arch_I386_IDTE_init_task(
+    KernAux_Arch_I386_IDTE idte,
+    uint16_t tss_selector,
+    uint8_t dpl
+);
+
+void KernAux_Arch_I386_IDTE_init_trap(
+    KernAux_Arch_I386_IDTE idte,
+    uint32_t offset,
+    uint16_t cs_selector,
+    uint8_t dpl
+);
 
 #ifdef __cplusplus
 }
