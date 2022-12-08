@@ -47,7 +47,7 @@ endif
 #######
 
 if WITH_ARCH_I386
-libkernaux_la_SOURCES += src/arch/i386.c
+libkernaux_la_SOURCES += src/arch/i386/idt.c
 endif
 
 #######
