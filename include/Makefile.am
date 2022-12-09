@@ -9,6 +9,7 @@ nobase_include_HEADERS = \
 	kernaux/macro/packing_start.run \
 	kernaux/macro/packing_end.run \
 	kernaux/version.h \
+	kernaux/generic/display.h \
 	kernaux/generic/malloc.h \
 	kernaux/generic/mutex.h
 
