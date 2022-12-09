@@ -31,6 +31,7 @@ lib_LTLIBRARIES = libkernaux.la
 libkernaux_la_LIBADD =
 libkernaux_la_SOURCES = \
 	src/assert.c \
+	src/generic/formatter.c \
 	src/generic/malloc.c \
 	src/generic/mutex.c
 
