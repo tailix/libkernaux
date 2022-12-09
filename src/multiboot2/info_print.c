@@ -284,7 +284,7 @@ void KernAux_Multiboot2_ITag_MemoryMap_print(
         index < (tag->base.size - sizeof(*tag)) / tag->entry_size;
         ++index
     ) {
-        PRINTLNF("    entry %lu", index);
+        PRINTLNF(INT_IF("    entry %u", "    entry %lu"), index);
         PRINTLNF(
             INT_IF("      base addr: %llu", "      base addr: %lu"),
             entries[index].base_addr
