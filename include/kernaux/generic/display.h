@@ -1,0 +1,32 @@
+#ifndef KERNAUX_INCLUDED_DISPLAY
+#define KERNAUX_INCLUDED_DISPLAY
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+#include <kernaux/macro.h>
+
+#include <stddef.h>
+
+typedef void (*KernAux_Display_Putc  )(void *display, char c);
+typedef void (*KernAux_Display_Printf)(void *display, const char *format, ...) KERNAUX_PRINTF(2, 3);
+
+typedef const struct KernAux_Display {
+    KernAux_Display_Putc   KERNAUX_PROTECTED_FIELD(putc);
+    KernAux_Display_Printf KERNAUX_PROTECTED_FIELD(printf);
+} *KernAux_Display;
+
+void KernAux_Display_putc    (KernAux_Display display, char c);
+void KernAux_Display_print   (KernAux_Display display, const char *s);
+void KernAux_Display_println (KernAux_Display display, const char *s);
+void KernAux_Display_write   (KernAux_Display display, const char *data, size_t size);
+void KernAux_Display_writeln (KernAux_Display display, const char *data, size_t size);
+void KernAux_Display_printf  (KernAux_Display display, const char *format, ...);
+void KernAux_Display_printlnf(KernAux_Display display, const char *format, ...);
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif
