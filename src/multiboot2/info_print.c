@@ -8,6 +8,9 @@
 #include <stddef.h>
 #include <stdint.h>
 
+// TODO: create macro for this
+#define INT_IF(a, b) (sizeof(int) == sizeof(long) ? (a) : (b))
+
 #define PRINTLN(s) KernAux_Display_println(display, s)
 #define PRINTLNF(format, ...) \
     KernAux_Display_printlnf(display, format, __VA_ARGS__)
@@ -50,7 +53,7 @@ void KernAux_Multiboot2_ITagBase_print(
 
     PRINTLN("Multiboot 2 info tag");
 
-    printlnf("  type: %u (%s)",
+    PRINTLNF("  type: %u (%s)",
         tag_base->type,
         KernAux_Multiboot2_ITag_to_str(tag_base->type)
     );
@@ -123,7 +126,10 @@ void KernAux_Multiboot2_ITagBase_print(
             const struct KernAux_Multiboot2_ITag_FramebufferInfo *const tag_fb =
                 (struct KernAux_Multiboot2_ITag_FramebufferInfo*)tag_base;
 
-            PRINTLNF("  framebuffer addr: %llu", tag_fb->framebuffer_addr);
+            PRINTLNF(
+                INT_IF("  framebuffer addr: %llu", "  framebuffer addr: %lu"),
+                tag_fb->framebuffer_addr
+            );
             PRINTLNF("  framebuffer pitch: %u",  tag_fb->framebuffer_pitch);
             PRINTLNF("  framebuffer width: %u",  tag_fb->framebuffer_width);
             PRINTLNF("  framebuffer height: %u", tag_fb->framebuffer_height);
@@ -279,8 +285,14 @@ void KernAux_Multiboot2_ITag_MemoryMap_print(
         ++index
     ) {
         PRINTLNF("    entry %lu", index);
-        PRINTLNF("      base addr: %llu", entries[index].base_addr);
-        PRINTLNF("      length: %llu",    entries[index].length);
+        PRINTLNF(
+            INT_IF("      base addr: %llu", "      base addr: %lu"),
+            entries[index].base_addr
+        );
+        PRINTLNF(
+            INT_IF("      length: %llu", "      length: %lu"),
+            entries[index].length
+        );
         PRINTLNF("      type: %u",        entries[index].type);
         PRINTLNF("      reserved1: %u",   entries[index].reserved1);
     }
