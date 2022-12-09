@@ -49,6 +49,7 @@ zero). Work-in-progress APIs can change at any time.
     * [Example: Panic](/examples/panic.c)
   * Stack trace *(planned)*
 * Generic types
+  * [Display](/include/kernaux/generic/display.h) (*non-breaking since* **?.?.?**)
   * [Memory allocator](/include/kernaux/generic/malloc.h) (*non-breaking since* **0.5.0**)
     * [Example](/examples/generic_malloc.c)
   * [Mutex](/include/kernaux/generic/mutex.h) (*non-breaking since* **0.5.0**)
