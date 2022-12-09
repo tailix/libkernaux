@@ -67,12 +67,11 @@ void KernAux_Display_printf(
     ...
 ) {
     KERNAUX_ASSERT(display);
-    KERNAUX_ASSERT(display->printf);
 
-    // Inherited implementation
+    // Default implementation
     va_list va;
     va_start(va, format);
-    display->printf((void*)display, format, va);
+    KernAux_Display_vprintf(display, format, va);
     va_end(va);
 }
 
@@ -82,12 +81,35 @@ void KernAux_Display_printlnf(
     ...
 ) {
     KERNAUX_ASSERT(display);
-    KERNAUX_ASSERT(display->putc);
 
     // Default implementation
     va_list va;
     va_start(va, format);
-    KernAux_Display_printf(display, format, va);
+    KernAux_Display_vprintlnf(display, format, va);
     va_end(va);
+}
+
+void KernAux_Display_vprintf(
+    const KernAux_Display display,
+    const char *const format,
+    va_list va
+) {
+    KERNAUX_ASSERT(display);
+    KERNAUX_ASSERT(display->vprintf);
+
+    // Inherited implementation
+    display->vprintf((void*)display, format, va);
+}
+
+void KernAux_Display_vprintlnf(
+    const KernAux_Display display,
+    const char *const format,
+    va_list va
+) {
+    KERNAUX_ASSERT(display);
+    KERNAUX_ASSERT(display->putc);
+
+    // Default implementation
+    KernAux_Display_vprintf(display, format, va);
     display->putc((void*)display, '\n');
 }

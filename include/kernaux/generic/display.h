@@ -10,12 +10,12 @@ extern "C" {
 #include <stdarg.h>
 #include <stddef.h>
 
-typedef void (*KernAux_Display_Putc  )(void *display, char c);
-typedef void (*KernAux_Display_Printf)(void *display, const char *format, ...) KERNAUX_PRINTF(2, 3);
+typedef void (*KernAux_Display_Putc   )(void *display, char c);
+typedef void (*KernAux_Display_Vprintf)(void *display, const char *format, ...) KERNAUX_PRINTF(2, 3);
 
 typedef const struct KernAux_Display {
-    KernAux_Display_Putc   KERNAUX_PROTECTED_FIELD(putc);
-    KernAux_Display_Printf KERNAUX_PROTECTED_FIELD(printf);
+    KernAux_Display_Putc    KERNAUX_PROTECTED_FIELD(putc);
+    KernAux_Display_Vprintf KERNAUX_PROTECTED_FIELD(vprintf);
 } *KernAux_Display;
 
 void KernAux_Display_putc     (KernAux_Display display, char c);
