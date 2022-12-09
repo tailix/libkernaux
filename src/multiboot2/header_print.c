@@ -9,7 +9,9 @@
 #include <stddef.h>
 #include <stdint.h>
 
-#define DISPLAY(func, ...) KernAux_Display_##func(display, __VA_ARGS__)
+#define PRINTLN(s) KernAux_Display_println(display, s)
+#define PRINTLNF(format, ...) \
+    KernAux_Display_printlnf(display, format, __VA_ARGS__)
 
 void KernAux_Multiboot2_Header_print(
     const struct KernAux_Multiboot2_Header *const multiboot2_header,
@@ -18,15 +20,14 @@ void KernAux_Multiboot2_Header_print(
     KERNAUX_ASSERT(multiboot2_header);
     KERNAUX_ASSERT(display);
 
-    DISPLAY(println, "Multiboot 2 header");
-    DISPLAY(printlnf, "  magic: %u", multiboot2_header->magic);
-    DISPLAY(printlnf,
-        "  arch: %u (%s)",
+    PRINTLN("Multiboot 2 header");
+    PRINTLNF("  magic: %u", multiboot2_header->magic);
+    PRINTLNF("  arch: %u (%s)",
         multiboot2_header->arch,
         KernAux_Multiboot2_Header_Arch_to_str(multiboot2_header->arch)
     );
-    DISPLAY(printlnf, "  size: %u", multiboot2_header->total_size);
-    DISPLAY(printlnf, "  checksum: %u", multiboot2_header->checksum);
+    PRINTLNF("  size: %u", multiboot2_header->total_size);
+    PRINTLNF("  checksum: %u", multiboot2_header->checksum);
 
     const struct KernAux_Multiboot2_HTagBase *tag_base =
         (struct KernAux_Multiboot2_HTagBase*)
@@ -53,17 +54,15 @@ void KernAux_Multiboot2_HTagBase_print(
 
     if (!KernAux_Multiboot2_HTagBase_is_valid(tag_base)) return;
 
-    DISPLAY(println, "Multiboot 2 header tag");
+    PRINTLN("Multiboot 2 header tag");
 
-    DISPLAY(
-        printlnf,
-        "  type: %u (%s)",
+    PRINTLNF("  type: %u (%s)",
         tag_base->type,
         KernAux_Multiboot2_HTag_to_str(tag_base->type)
     );
 
-    DISPLAY(printlnf, "  flags: %u", tag_base->flags);
-    DISPLAY(printlnf, "  size: %u", tag_base->size);
+    PRINTLNF("  flags: %u", tag_base->flags);
+    PRINTLNF("  size: %u", tag_base->size);
 
     switch (tag_base->type) {
     case KERNAUX_MULTIBOOT2_HTAG_NONE:
