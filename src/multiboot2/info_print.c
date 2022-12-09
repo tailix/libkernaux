@@ -178,7 +178,7 @@ void KernAux_Multiboot2_ITagBase_print(
             PRINTLNF("  major: %u", tag_smbios->major);
             PRINTLNF("  minor: %u", tag_smbios->minor);
 
-            PRINTLNF("  reserved1: {%u, %u, %u, %u, %u, %u}\n",
+            PRINTLNF("  reserved1: {%u, %u, %u, %u, %u, %u}",
                 tag_smbios->reserved1[0],
                 tag_smbios->reserved1[1],
                 tag_smbios->reserved1[2],
@@ -241,7 +241,7 @@ void KernAux_Multiboot2_ITag_BootCmdLine_print(
         return;
     }
 
-    PRINTLNF("  cmdline: %s\n", KERNAUX_MULTIBOOT2_DATA(tag));
+    PRINTLNF("  cmdline: %s", KERNAUX_MULTIBOOT2_DATA(tag));
 }
 
 void KernAux_Multiboot2_ITag_BootLoaderName_print(
