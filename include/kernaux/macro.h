@@ -5,7 +5,6 @@
 extern "C" {
 #endif
 
-#include <limits.h>
 #include <stddef.h>
 #include <stdint.h>
 
@@ -84,37 +83,6 @@ _kernaux_static_test_union_size_##name[             \
 #define KERNAUX_BITS16(n) ((uint16_t)(((uint16_t)1) << (n)))
 #define KERNAUX_BITS32(n) ((uint32_t)(((uint32_t)1) << (n)))
 #define KERNAUX_BITS64(n) ((uint64_t)(((uint64_t)1) << (n)))
-
-/*****************************************
- * Macros for printing format specifiers *
- *****************************************/
-
-// Each variable argument is always adjusted to take at least 32 bits
-// (at least on the platforms which we support).
-#define KERNAUX_PRIu8  "u"
-#define KERNAUX_PRIi8  "i"
-#define KERNAUX_PRIu16 "u"
-#define KERNAUX_PRIi16 "i"
-
-#if ULONG_MAX > UINT_MAX
-// 64-bit arch
-#define KERNAUX_PRIu32 "u"
-#define KERNAUX_PRIu64 "lu"
-#else
-// 32-bit arch
-#define KERNAUX_PRIu32 "u"
-#define KERNAUX_PRIu64 "llu"
-#endif
-
-#if LONG_MAX > INT_MAX
-// 64-bit arch
-#define KERNAUX_PRIi32 "i"
-#define KERNAUX_PRIi64 "li"
-#else
-// 32-bit arch
-#define KERNAUX_PRIi32 "i"
-#define KERNAUX_PRIi64 "lli"
-#endif
 
 #ifdef __cplusplus
 }
