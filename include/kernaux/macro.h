@@ -97,17 +97,21 @@ _kernaux_static_test_union_size_##name[             \
 #define KERNAUX_PRIi16 "i"
 
 #if ULONG_MAX > UINT_MAX
+// 64-bit arch
 #define KERNAUX_PRIu32 "u"
 #define KERNAUX_PRIu64 "lu"
 #else
+// 32-bit arch
 #define KERNAUX_PRIu32 "u"
 #define KERNAUX_PRIu64 "llu"
 #endif
 
 #if LONG_MAX > INT_MAX
+// 64-bit arch
 #define KERNAUX_PRIi32 "i"
 #define KERNAUX_PRIi64 "li"
 #else
+// 32-bit arch
 #define KERNAUX_PRIi32 "i"
 #define KERNAUX_PRIi64 "lli"
 #endif
