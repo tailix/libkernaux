@@ -265,7 +265,7 @@ void KernAux_Multiboot2_ITagBase_print(
         {
             KERNAUX_CAST_CONST(
                 unsigned long,
-                load_base_addr, 
+                load_base_addr,
                 ((struct KernAux_Multiboot2_ITag_ImageLoadBasePhysAddr*)
                     tag_base)->load_base_addr
             );
