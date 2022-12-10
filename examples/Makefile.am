@@ -69,6 +69,14 @@ TESTS += macro_packing
 macro_packing_LDADD = $(top_builddir)/libkernaux.la
 macro_packing_SOURCES = main.c macro_packing.c
 
+#############
+# macro_pri #
+#############
+
+TESTS += macro_pri
+macro_pri_LDADD = $(top_builddir)/libkernaux.la
+macro_pri_SOURCES = main.c macro_pri.c
+
 ##########
 # memmap #
 ##########

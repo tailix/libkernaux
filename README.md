@@ -44,6 +44,7 @@ zero). Work-in-progress APIs can change at any time.
     * [Example: packing](/examples/macro_packing.c)
     * [Example: CONTAINER_OF](/examples/macro_container_of.c)
     * [Example: BITS](/examples/macro_bits.c)
+    * [Example: PRI(u|i)(8|16|32|64)](/examples/macro_pri.c)
   * [Assertions](/include/kernaux/assert.h) (*non-breaking since* **0.4.0**)
     * [Example: Assert](/examples/assert.c)
     * [Example: Panic](/examples/panic.c)
