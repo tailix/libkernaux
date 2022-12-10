@@ -100,7 +100,7 @@ _kernaux_static_test_union_size_##name[             \
 #define KERNAUX_PRIu32 "u"
 #define KERNAUX_PRIu64 "lu"
 #else
-#define KERNAUX_PRIu32 "lu"
+#define KERNAUX_PRIu32 "u"
 #define KERNAUX_PRIu64 "llu"
 #endif
 
@@ -108,7 +108,7 @@ _kernaux_static_test_union_size_##name[             \
 #define KERNAUX_PRIi32 "i"
 #define KERNAUX_PRIi64 "li"
 #else
-#define KERNAUX_PRIi32 "li"
+#define KERNAUX_PRIi32 "i"
 #define KERNAUX_PRIi64 "lli"
 #endif
 
