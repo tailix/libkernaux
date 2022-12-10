@@ -23,9 +23,8 @@ void KernAux_Multiboot2_Info_print(
     KERNAUX_ASSERT(multiboot2_info);
     KERNAUX_ASSERT(display);
 
-    unsigned long total_size, reserved1;
-    KERNAUX_SAFECAST_TO_UL(total_size, multiboot2_info->total_size);
-    KERNAUX_SAFECAST_TO_UL(reserved1,  multiboot2_info->reserved1);
+    KERNAUX_CAST_CONST(unsigned long, total_size, multiboot2_info->total_size);
+    KERNAUX_CAST_CONST(unsigned long, reserved1,  multiboot2_info->reserved1);
 
     PRINTLN("Multiboot 2 info");
     PRINTLNF("  size: %lu", total_size);
@@ -63,8 +62,7 @@ void KernAux_Multiboot2_ITagBase_print(
         KernAux_Multiboot2_ITag_to_str(tag_base->type)
     );
 
-    unsigned long size;
-    KERNAUX_SAFECAST_TO_UL(size, tag_base->size);
+    KERNAUX_CAST_CONST(unsigned long, size, tag_base->size);
     PRINTLNF("  size: %lu", size);
 
     switch (tag_base->type) {
@@ -87,9 +85,8 @@ void KernAux_Multiboot2_ITagBase_print(
             const struct KernAux_Multiboot2_ITag_Module *const tag_module =
                 (struct KernAux_Multiboot2_ITag_Module*)tag_base;
 
-            unsigned long mod_start, mod_end;
-            KERNAUX_SAFECAST_TO_UL(mod_start, tag_module->mod_start);
-            KERNAUX_SAFECAST_TO_UL(mod_end,   tag_module->mod_end);
+            KERNAUX_CAST_CONST(unsigned long, mod_start, tag_module->mod_start);
+            KERNAUX_CAST_CONST(unsigned long, mod_end,   tag_module->mod_end);
 
             PRINTLNF("  start: %lu", mod_start);
             PRINTLNF("  end: %lu", mod_end);
@@ -101,9 +98,8 @@ void KernAux_Multiboot2_ITagBase_print(
             const struct KernAux_Multiboot2_ITag_BasicMemoryInfo *const tag_bmi =
                 (struct KernAux_Multiboot2_ITag_BasicMemoryInfo*)tag_base;
 
-            unsigned long mem_lower, mem_upper;
-            KERNAUX_SAFECAST_TO_UL(mem_lower, tag_bmi->mem_lower);
-            KERNAUX_SAFECAST_TO_UL(mem_upper, tag_bmi->mem_upper);
+            KERNAUX_CAST_CONST(unsigned long, mem_lower, tag_bmi->mem_lower);
+            KERNAUX_CAST_CONST(unsigned long, mem_upper, tag_bmi->mem_upper);
 
             PRINTLNF("  mem lower: %lu", mem_lower);
             PRINTLNF("  mem upper: %lu", mem_upper);
@@ -114,10 +110,9 @@ void KernAux_Multiboot2_ITagBase_print(
             const struct KernAux_Multiboot2_ITag_BIOSBootDevice *const tag_bbd =
                 (struct KernAux_Multiboot2_ITag_BIOSBootDevice*)tag_base;
 
-            unsigned long bios_dev, partition, sub_partition;
-            KERNAUX_SAFECAST_TO_UL(bios_dev,      tag_bbd->bios_dev);
-            KERNAUX_SAFECAST_TO_UL(partition,     tag_bbd->partition);
-            KERNAUX_SAFECAST_TO_UL(sub_partition, tag_bbd->sub_partition);
+            KERNAUX_CAST_CONST(unsigned long, bios_dev,      tag_bbd->bios_dev);
+            KERNAUX_CAST_CONST(unsigned long, partition,     tag_bbd->partition);
+            KERNAUX_CAST_CONST(unsigned long, sub_partition, tag_bbd->sub_partition);
 
             PRINTLNF("  bios dev: %lu", bios_dev);
             PRINTLNF("  partition: %lu", partition);
@@ -135,11 +130,10 @@ void KernAux_Multiboot2_ITagBase_print(
             const struct KernAux_Multiboot2_ITag_VBEInfo *const tag_vbe =
                 (struct KernAux_Multiboot2_ITag_VBEInfo*)tag_base;
 
-            unsigned long vbe_mode, vbe_interface_seg, vbe_interface_off, vbe_interface_len;
-            KERNAUX_SAFECAST_TO_UL(vbe_mode,          tag_vbe->vbe_mode);
-            KERNAUX_SAFECAST_TO_UL(vbe_interface_seg, tag_vbe->vbe_interface_seg);
-            KERNAUX_SAFECAST_TO_UL(vbe_interface_off, tag_vbe->vbe_interface_off);
-            KERNAUX_SAFECAST_TO_UL(vbe_interface_len, tag_vbe->vbe_interface_len);
+            KERNAUX_CAST_CONST(unsigned long, vbe_mode,          tag_vbe->vbe_mode);
+            KERNAUX_CAST_CONST(unsigned long, vbe_interface_seg, tag_vbe->vbe_interface_seg);
+            KERNAUX_CAST_CONST(unsigned long, vbe_interface_off, tag_vbe->vbe_interface_off);
+            KERNAUX_CAST_CONST(unsigned long, vbe_interface_len, tag_vbe->vbe_interface_len);
 
             PRINTLNF("  VBE mode: %lu",          vbe_mode);
             PRINTLNF("  VBE interface seg: %lu", vbe_interface_seg);
@@ -152,17 +146,13 @@ void KernAux_Multiboot2_ITagBase_print(
             const struct KernAux_Multiboot2_ITag_FramebufferInfo *const tag_fb =
                 (struct KernAux_Multiboot2_ITag_FramebufferInfo*)tag_base;
 
-            unsigned long long framebuffer_addr;
-            unsigned long framebuffer_pitch, framebuffer_width,
-                          framebuffer_height, framebuffer_bpp,
-                          framebuffer_type, reserved1;
-            KERNAUX_SAFECAST_TO_ULL(framebuffer_addr,   tag_fb->framebuffer_addr);
-            KERNAUX_SAFECAST_TO_UL (framebuffer_pitch,  tag_fb->framebuffer_pitch);
-            KERNAUX_SAFECAST_TO_UL (framebuffer_width,  tag_fb->framebuffer_width);
-            KERNAUX_SAFECAST_TO_UL (framebuffer_height, tag_fb->framebuffer_height);
-            KERNAUX_SAFECAST_TO_UL (framebuffer_bpp,    tag_fb->framebuffer_bpp);
-            KERNAUX_SAFECAST_TO_UL (framebuffer_type,   tag_fb->framebuffer_type);
-            KERNAUX_SAFECAST_TO_UL (reserved1,          tag_fb->reserved1);
+            KERNAUX_CAST_CONST(unsigned long long, framebuffer_addr,   tag_fb->framebuffer_addr);
+            KERNAUX_CAST_CONST(unsigned long,      framebuffer_pitch,  tag_fb->framebuffer_pitch);
+            KERNAUX_CAST_CONST(unsigned long,      framebuffer_width,  tag_fb->framebuffer_width);
+            KERNAUX_CAST_CONST(unsigned long,      framebuffer_height, tag_fb->framebuffer_height);
+            KERNAUX_CAST_CONST(unsigned long,      framebuffer_bpp,    tag_fb->framebuffer_bpp);
+            KERNAUX_CAST_CONST(unsigned long,      framebuffer_type,   tag_fb->framebuffer_type);
+            KERNAUX_CAST_CONST(unsigned long,      reserved1,          tag_fb->reserved1);
 
             PRINTLNF("  framebuffer addr: %llu",  framebuffer_addr);
             PRINTLNF("  framebuffer pitch: %lu",  framebuffer_pitch);
@@ -184,17 +174,15 @@ void KernAux_Multiboot2_ITagBase_print(
             const struct KernAux_Multiboot2_ITag_APMTable *const tag_apm =
                 (struct KernAux_Multiboot2_ITag_APMTable*)tag_base;
 
-            unsigned long version, cseg, offset, cseg_16, dseg, flags, cseg_len,
-                          cseg_16_len, dseg_len;
-            KERNAUX_SAFECAST_TO_UL(version,     tag_apm->version);
-            KERNAUX_SAFECAST_TO_UL(cseg,        tag_apm->cseg);
-            KERNAUX_SAFECAST_TO_UL(offset,      tag_apm->offset);
-            KERNAUX_SAFECAST_TO_UL(cseg_16,     tag_apm->cseg_16);
-            KERNAUX_SAFECAST_TO_UL(dseg,        tag_apm->dseg);
-            KERNAUX_SAFECAST_TO_UL(flags,       tag_apm->flags);
-            KERNAUX_SAFECAST_TO_UL(cseg_len,    tag_apm->cseg_len);
-            KERNAUX_SAFECAST_TO_UL(cseg_16_len, tag_apm->cseg_16_len);
-            KERNAUX_SAFECAST_TO_UL(dseg_len,    tag_apm->dseg_len);
+            KERNAUX_CAST_CONST(unsigned long, version,     tag_apm->version);
+            KERNAUX_CAST_CONST(unsigned long, cseg,        tag_apm->cseg);
+            KERNAUX_CAST_CONST(unsigned long, offset,      tag_apm->offset);
+            KERNAUX_CAST_CONST(unsigned long, cseg_16,     tag_apm->cseg_16);
+            KERNAUX_CAST_CONST(unsigned long, dseg,        tag_apm->dseg);
+            KERNAUX_CAST_CONST(unsigned long, flags,       tag_apm->flags);
+            KERNAUX_CAST_CONST(unsigned long, cseg_len,    tag_apm->cseg_len);
+            KERNAUX_CAST_CONST(unsigned long, cseg_16_len, tag_apm->cseg_16_len);
+            KERNAUX_CAST_CONST(unsigned long, dseg_len,    tag_apm->dseg_len);
 
             PRINTLNF("  version: %lu",     version);
             PRINTLNF("  cseg: %lu",        cseg);
@@ -222,17 +210,14 @@ void KernAux_Multiboot2_ITagBase_print(
             const struct KernAux_Multiboot2_ITag_SMBIOSTables *const tag_smbios =
                 (struct KernAux_Multiboot2_ITag_SMBIOSTables*)tag_base;
 
-            unsigned long major, minor,
-                          reserved0, reserved1, reserved2,
-                          reserved3, reserved4, reserved5;
-            KERNAUX_SAFECAST_TO_UL(major,     tag_smbios->major);
-            KERNAUX_SAFECAST_TO_UL(minor,     tag_smbios->minor);
-            KERNAUX_SAFECAST_TO_UL(reserved0, tag_smbios->reserved1[0]);
-            KERNAUX_SAFECAST_TO_UL(reserved1, tag_smbios->reserved1[1]);
-            KERNAUX_SAFECAST_TO_UL(reserved2, tag_smbios->reserved1[2]);
-            KERNAUX_SAFECAST_TO_UL(reserved3, tag_smbios->reserved1[3]);
-            KERNAUX_SAFECAST_TO_UL(reserved4, tag_smbios->reserved1[4]);
-            KERNAUX_SAFECAST_TO_UL(reserved5, tag_smbios->reserved1[5]);
+            KERNAUX_CAST_CONST(unsigned long, major,     tag_smbios->major);
+            KERNAUX_CAST_CONST(unsigned long, minor,     tag_smbios->minor);
+            KERNAUX_CAST_CONST(unsigned long, reserved0, tag_smbios->reserved1[0]);
+            KERNAUX_CAST_CONST(unsigned long, reserved1, tag_smbios->reserved1[1]);
+            KERNAUX_CAST_CONST(unsigned long, reserved2, tag_smbios->reserved1[2]);
+            KERNAUX_CAST_CONST(unsigned long, reserved3, tag_smbios->reserved1[3]);
+            KERNAUX_CAST_CONST(unsigned long, reserved4, tag_smbios->reserved1[4]);
+            KERNAUX_CAST_CONST(unsigned long, reserved5, tag_smbios->reserved1[5]);
 
             PRINTLNF("  major: %lu", major);
             PRINTLNF("  minor: %lu", minor);
@@ -278,8 +263,8 @@ void KernAux_Multiboot2_ITagBase_print(
         break;
     case KERNAUX_MULTIBOOT2_ITAG_IMAGE_LOAD_BASE_PHYS_ADDR:
         {
-            unsigned long load_base_addr;
-            KERNAUX_SAFECAST_TO_UL(
+            KERNAUX_CAST_CONST(
+                unsigned long,
                 load_base_addr, 
                 ((struct KernAux_Multiboot2_ITag_ImageLoadBasePhysAddr*)
                     tag_base)->load_base_addr
@@ -332,9 +317,8 @@ void KernAux_Multiboot2_ITag_MemoryMap_print(
         return;
     }
 
-    unsigned long entry_size, entry_version;
-    KERNAUX_SAFECAST_TO_UL(entry_size,    tag->entry_size);
-    KERNAUX_SAFECAST_TO_UL(entry_version, tag->entry_version);
+    KERNAUX_CAST_CONST(unsigned long, entry_size,    tag->entry_size);
+    KERNAUX_CAST_CONST(unsigned long, entry_version, tag->entry_version);
 
     PRINTLNF("  entry size: %lu",    entry_size);
     PRINTLNF("  entry version: %lu", entry_version);
@@ -349,12 +333,10 @@ void KernAux_Multiboot2_ITag_MemoryMap_print(
         index < (tag->base.size - sizeof(*tag)) / tag->entry_size;
         ++index
     ) {
-        unsigned long long base_addr, length;
-        unsigned long type, reserved1;
-        KERNAUX_SAFECAST_TO_ULL(base_addr, entries[index].base_addr);
-        KERNAUX_SAFECAST_TO_ULL(length,    entries[index].length);
-        KERNAUX_SAFECAST_TO_ULL(type,      entries[index].type);
-        KERNAUX_SAFECAST_TO_ULL(reserved1, entries[index].reserved1);
+        KERNAUX_CAST_CONST(unsigned long long, base_addr, entries[index].base_addr);
+        KERNAUX_CAST_CONST(unsigned long long, length,    entries[index].length);
+        KERNAUX_CAST_CONST(unsigned long,      type,      entries[index].type);
+        KERNAUX_CAST_CONST(unsigned long,      reserved1, entries[index].reserved1);
 
         PRINTLNF("    entry %zu", index);
         PRINTLNF("      base addr: %llu", base_addr);
@@ -376,11 +358,10 @@ void KernAux_Multiboot2_ITag_ELFSymbols_print(
         return;
     }
 
-    unsigned long num, ent_size, shndx, reserved1;
-    KERNAUX_SAFECAST_TO_UL(num,       tag->num);
-    KERNAUX_SAFECAST_TO_UL(ent_size,  tag->ent_size);
-    KERNAUX_SAFECAST_TO_UL(shndx,     tag->shndx);
-    KERNAUX_SAFECAST_TO_UL(reserved1, tag->reserved1);
+    KERNAUX_CAST_CONST(unsigned long, num,       tag->num);
+    KERNAUX_CAST_CONST(unsigned long, ent_size,  tag->ent_size);
+    KERNAUX_CAST_CONST(unsigned long, shndx,     tag->shndx);
+    KERNAUX_CAST_CONST(unsigned long, reserved1, tag->reserved1);
 
     PRINTLNF("  num: %lu",       num);
     PRINTLNF("  entsize: %lu",   ent_size);

@@ -21,10 +21,9 @@ void KernAux_Multiboot2_Header_print(
     KERNAUX_ASSERT(multiboot2_header);
     KERNAUX_ASSERT(display);
 
-    unsigned long magic, total_size, checksum;
-    KERNAUX_SAFECAST_TO_UL(magic,      multiboot2_header->magic);
-    KERNAUX_SAFECAST_TO_UL(total_size, multiboot2_header->total_size);
-    KERNAUX_SAFECAST_TO_UL(checksum,   multiboot2_header->checksum);
+    KERNAUX_CAST_CONST(unsigned long, magic,      multiboot2_header->magic);
+    KERNAUX_CAST_CONST(unsigned long, total_size, multiboot2_header->total_size);
+    KERNAUX_CAST_CONST(unsigned long, checksum,   multiboot2_header->checksum);
 
     PRINTLN("Multiboot 2 header");
     PRINTLNF("  magic: %lu", magic);
@@ -60,9 +59,8 @@ void KernAux_Multiboot2_HTagBase_print(
 
     if (!KernAux_Multiboot2_HTagBase_is_valid(tag_base)) return;
 
-    unsigned long flags, size;
-    KERNAUX_SAFECAST_TO_UL(flags, tag_base->flags);
-    KERNAUX_SAFECAST_TO_UL(size,  tag_base->size);
+    KERNAUX_CAST_CONST(unsigned long, flags, tag_base->flags);
+    KERNAUX_CAST_CONST(unsigned long, size,  tag_base->size);
 
     PRINTLN("Multiboot 2 header tag");
     PRINTLNF("  type: %u (%s)",

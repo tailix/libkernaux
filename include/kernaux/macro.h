@@ -88,7 +88,7 @@ _kernaux_static_test_union_size_##name[             \
  * Safe type casting *
  *********************/
 
-#define _KERNAUX_SAFECAST_TO(type, name, value) do { \
+#define KERNAUX_CAST_CONST(type, name, value) \
     KERNAUX_UNUSED                                         \
     static const int _kernaux_static_test_cast_pos_##name[ \
         sizeof(value) <= sizeof(type) ? 1 : -1             \
@@ -97,18 +97,7 @@ _kernaux_static_test_union_size_##name[             \
     static const int _kernaux_static_test_cast_neg_##name[ \
         sizeof(-(value)) <= sizeof(type) ? 1 : -1          \
     ];                                                     \
-    name = (type)(value);                                  \
-} while (0)
-
-#define KERNAUX_SAFECAST_TO_UL(name, value) \
-    _KERNAUX_SAFECAST_TO(unsigned long, name, value)
-#define KERNAUX_SAFECAST_TO_L(name, value) \
-    _KERNAUX_SAFECAST_TO(signed   long, name, value)
-
-#define KERNAUX_SAFECAST_TO_ULL(name, value) \
-    _KERNAUX_SAFECAST_TO(unsigned long long, name, value)
-#define KERNAUX_SAFECAST_TO_LL(name, value) \
-    _KERNAUX_SAFECAST_TO(signed   long long, name, value)
+    const type name = (type)(value);
 
 #ifdef __cplusplus
 }
