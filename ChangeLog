@@ -1,6 +1,6 @@
 2022-12-10  Alex Kotov  <kotovalexarian@gmail.com>
 
-	* include/kernaux/macro.h: Macro "KERNAUX_CAST_CONST" has been added
+	* include/kernaux/macro.h: Macros "KERNAUX_CAST_(VAR|CONST)" have been added
 
 2022-12-09  Alex Kotov  <kotovalexarian@gmail.com>
 
