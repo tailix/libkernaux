@@ -20,6 +20,7 @@ CPPCHECK_INC = \
   -I$(top_srcdir)/include
 
 CPPCHECK_SUPPRESS = \
+  --suppress='constArgument:$(top_srcdir)/examples/*' \
   --suppress='unusedStructMember:$(top_srcdir)/examples/multiboot2_header_macro.c' \
   --suppress='unusedStructMember:$(top_srcdir)/tests/test_multiboot2_info_*.c'
 
