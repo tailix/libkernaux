@@ -4,6 +4,7 @@
 
 #include <kernaux/assert.h>
 #include <kernaux/generic/display.h>
+#include <kernaux/macro.h>
 #include <kernaux/multiboot2.h>
 
 #include <stddef.h>
@@ -20,14 +21,18 @@ void KernAux_Multiboot2_Header_print(
     KERNAUX_ASSERT(multiboot2_header);
     KERNAUX_ASSERT(display);
 
+    KERNAUX_CAST_CONST(unsigned long, magic,      multiboot2_header->magic);
+    KERNAUX_CAST_CONST(unsigned long, total_size, multiboot2_header->total_size);
+    KERNAUX_CAST_CONST(unsigned long, checksum,   multiboot2_header->checksum);
+
     PRINTLN("Multiboot 2 header");
-    PRINTLNF("  magic: %u", multiboot2_header->magic);
+    PRINTLNF("  magic: %lu", magic);
     PRINTLNF("  arch: %u (%s)",
         multiboot2_header->arch,
         KernAux_Multiboot2_Header_Arch_to_str(multiboot2_header->arch)
     );
-    PRINTLNF("  size: %u", multiboot2_header->total_size);
-    PRINTLNF("  checksum: %u", multiboot2_header->checksum);
+    PRINTLNF("  size: %lu", total_size);
+    PRINTLNF("  checksum: %lu", checksum);
 
     const struct KernAux_Multiboot2_HTagBase *tag_base =
         (struct KernAux_Multiboot2_HTagBase*)
@@ -54,15 +59,16 @@ void KernAux_Multiboot2_HTagBase_print(
 
     if (!KernAux_Multiboot2_HTagBase_is_valid(tag_base)) return;
 
-    PRINTLN("Multiboot 2 header tag");
+    KERNAUX_CAST_CONST(unsigned long, flags, tag_base->flags);
+    KERNAUX_CAST_CONST(unsigned long, size,  tag_base->size);
 
+    PRINTLN("Multiboot 2 header tag");
     PRINTLNF("  type: %u (%s)",
         tag_base->type,
         KernAux_Multiboot2_HTag_to_str(tag_base->type)
     );
-
-    PRINTLNF("  flags: %u", tag_base->flags);
-    PRINTLNF("  size: %u", tag_base->size);
+    PRINTLNF("  flags: %lu", flags);
+    PRINTLNF("  size: %lu", size);
 
     switch (tag_base->type) {
     case KERNAUX_MULTIBOOT2_HTAG_NONE:

@@ -53,6 +53,14 @@ TESTS += macro_bits
 macro_bits_LDADD = $(top_builddir)/libkernaux.la
 macro_bits_SOURCES = main.c macro_bits.c
 
+##############
+# macro_cast #
+##############
+
+TESTS += macro_cast
+macro_cast_LDADD = $(top_builddir)/libkernaux.la
+macro_cast_SOURCES = main.c macro_cast.c
+
 ######################
 # macro_container_of #
 ######################

@@ -84,6 +84,27 @@ _kernaux_static_test_union_size_##name[             \
 #define KERNAUX_BITS32(n) ((uint32_t)(((uint32_t)1) << (n)))
 #define KERNAUX_BITS64(n) ((uint64_t)(((uint64_t)1) << (n)))
 
+/*********************
+ * Safe type casting *
+ *********************/
+
+#define KERNAUX_CAST_VAR(type, name, value) \
+    {                                                          \
+        KERNAUX_UNUSED                                         \
+        static const int _kernaux_static_test_cast_pos_##name[ \
+            sizeof(value) <= sizeof(type) ? 1 : -1             \
+        ];                                                     \
+        KERNAUX_UNUSED                                         \
+        static const int _kernaux_static_test_cast_neg_##name[ \
+            sizeof(-(value)) <= sizeof(type) ? 1 : -1          \
+        ];                                                     \
+    }                                                          \
+    type name = (type)(value);                                 \
+    do {} while (0)
+
+#define KERNAUX_CAST_CONST(type, name, value) \
+    KERNAUX_CAST_VAR(const type, name, value)
+
 #ifdef __cplusplus
 }
 #endif

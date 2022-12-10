@@ -83,6 +83,7 @@
 /examples/generic_malloc
 /examples/generic_mutex
 /examples/macro_bits
+/examples/macro_cast
 /examples/macro_container_of
 /examples/macro_packing
 /examples/memmap

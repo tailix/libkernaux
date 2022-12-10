@@ -42,6 +42,7 @@ zero). Work-in-progress APIs can change at any time.
   * [Feature macros](/include/kernaux/version.h.in) (*work in progress*)
   * [Macros](/include/kernaux/macro.h) (*non-breaking since* **0.6.0**)
     * [Example: packing](/examples/macro_packing.c)
+    * [Example: CAST\_\*](/examples/macro_cast.c);
     * [Example: CONTAINER_OF](/examples/macro_container_of.c)
     * [Example: BITS](/examples/macro_bits.c)
   * [Assertions](/include/kernaux/assert.h) (*non-breaking since* **0.4.0**)
