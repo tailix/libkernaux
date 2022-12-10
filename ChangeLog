@@ -1,3 +1,8 @@
+2022-12-10  Alex Kotov  <kotovalexarian@gmail.com>
+
+	* include/kernaux/macro.h: Macros "KERNAUX_PRI(u|i)(8|16|32|64)" have been
+	added
+
 2022-12-09  Alex Kotov  <kotovalexarian@gmail.com>
 
 	* include/kernaux/generic/display.h: The header has been added
