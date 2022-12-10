@@ -19,7 +19,7 @@ void example_main()
     KERNAUX_CAST_CONST(long, sl, value);
     assert(sl == 123);
 
-    // const [signed] long long sll = ([signed] long long)value;
+    // [signed] long long sll = ([signed] long long)value;
     KERNAUX_CAST_VAR(long long, sll, value);
     assert(sll == 123);
 }
