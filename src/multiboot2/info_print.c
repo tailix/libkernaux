@@ -291,8 +291,7 @@ void KernAux_Multiboot2_ITag_MemoryMap_print(
         index < (tag->base.size - sizeof(*tag)) / tag->entry_size;
         ++index
     ) {
-        // FIXME: size_t, not uint64_t
-        PRINTLNF("    entry %lu", index);
+        PRINTLNF("    entry %zu", index);
         PRINTLNF("      base addr: %"KERNAUX_PRIu64, entries[index].base_addr);
         PRINTLNF("      length: %"KERNAUX_PRIu64,    entries[index].length);
         PRINTLNF("      type: %"KERNAUX_PRIu32,      entries[index].type);
