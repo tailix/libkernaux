@@ -1,4 +1,5 @@
 #include <kernaux/macro.h>
+#include <kernaux/spinlock.h>
 
 #include <assert.h>
 #include <pthread.h>
@@ -9,11 +10,14 @@
 #define TOTAL_COUNT (THREADS_COUNT * INCR_COUNT)
 
 static unsigned long long count = 0;
+static struct KernAux_Spinlock spinlock;
 
 static void *work(void *const arg KERNAUX_UNUSED)
 {
     for (unsigned long i = 0; i < INCR_COUNT; ++i) {
+        KernAux_Mutex_lock(&spinlock.mutex);
         ++count;
+        KernAux_Mutex_unlock(&spinlock.mutex);
     }
 
     return NULL;
@@ -21,6 +25,7 @@ static void *work(void *const arg KERNAUX_UNUSED)
 
 void example_main()
 {
+    KernAux_Spinlock_init(&spinlock);
     pthread_t threads[THREADS_COUNT];
     for (unsigned long i = 0; i < THREADS_COUNT; ++i) {
         assert(!pthread_create(&threads[i], NULL, work, NULL));

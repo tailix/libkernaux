@@ -16,6 +16,7 @@ typedef struct KernAux_Spinlock {
 } *KernAux_Spinlock;
 
 struct KernAux_Spinlock KernAux_Spinlock_create();
+void KernAux_Spinlock_init(KernAux_Spinlock spinlock);
 
 #ifdef __cplusplus
 }

@@ -14,13 +14,18 @@ static void KernAux_Spinlock_unlock(void *mutex);
 
 struct KernAux_Spinlock KernAux_Spinlock_create()
 {
-    return (struct KernAux_Spinlock){
-        .mutex = {
-            .lock = KernAux_Spinlock_lock,
-            .unlock = KernAux_Spinlock_unlock,
-        },
-        .locked = 0,
-    };
+    struct KernAux_Spinlock spinlock;
+    KernAux_Spinlock_init(&spinlock);
+    return spinlock;
+}
+
+void KernAux_Spinlock_init(const KernAux_Spinlock spinlock)
+{
+    KERNAUX_ASSERT(spinlock);
+
+    spinlock->mutex.lock   = KernAux_Spinlock_lock;
+    spinlock->mutex.unlock = KernAux_Spinlock_unlock;
+    spinlock->locked = 0;
 }
 
 void KernAux_Spinlock_lock(void *const mutex)
