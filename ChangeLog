@@ -1,3 +1,19 @@
+2022-12-11  Alex Kotov  <kotovalexarian@gmail.com>
+
+	* include/kernaux/macro.h: Macro "KERNAUX_STATIC_TEST" has been added
+
+2022-12-10  Alex Kotov  <kotovalexarian@gmail.com>
+
+	* include/kernaux/macro.h: Macros "KERNAUX_CAST_(VAR|CONST)" have been added
+
+2022-12-09  Alex Kotov  <kotovalexarian@gmail.com>
+
+	* include/kernaux/generic/display.h: The header has been added
+
+2022-12-08  Alex Kotov  <kotovalexarian@gmail.com>
+
+	* include/kernaux/*.h: Definition "KERNAUX_BITFIELDS" has been added
+
 2022-12-05  Alex Kotov  <kotovalexarian@gmail.com>
 
 	libkernaux 0.6.1 released

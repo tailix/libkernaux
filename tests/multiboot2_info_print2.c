@@ -2,6 +2,10 @@
 #include "config.h"
 #endif
 
+#define KERNAUX_ACCESS_PROTECTED
+
+#include <kernaux/generic/display.h>
+#include <kernaux/macro.h>
 #include <kernaux/multiboot2.h>
 
 #include <assert.h>
@@ -10,13 +14,21 @@
 
 #include "multiboot2_info_example2.h"
 
-static void my_printf(const char *format, ...)
+static void my_putc(void *display KERNAUX_UNUSED, char c)
 {
-    va_list va;
-    va_start(va, format);
-    vprintf(format, va);
-    va_end(va);
+    putchar(c);
 }
+
+static
+void my_vprintf(void *display KERNAUX_UNUSED, const char *format, va_list va)
+{
+    vprintf(format, va);
+}
+
+static const struct KernAux_Display display = {
+    .putc = my_putc,
+    .vprintf = my_vprintf,
+};
 
 void test_main()
 {
@@ -26,6 +38,6 @@ void test_main()
 
     KernAux_Multiboot2_Info_print(
         &multiboot2_info_example2.multiboot2_info,
-        my_printf
+        &display
     );
 }

@@ -47,41 +47,6 @@
 /libc/include/Makefile.in
 /tests/Makefile.in
 
-########################
-# To build out of root #
-########################
-
-/build/dev-native/*
-!/build/dev-native/config
-/build/dev-cross-i386/*
-!/build/dev-cross-i386/config
-/build/dev-cross-riscv64/*
-!/build/dev-cross-riscv64/config
-/build/dev-cross-x86_64/*
-!/build/dev-cross-x86_64/config
-
-/build/root-native/*
-!/build/root-native/config
-/build/root-cross-i386-linux/*
-!/build/root-cross-i386-linux/config
-/build/root-cross-riscv64-linux/*
-!/build/root-cross-riscv64-linux/config
-/build/root-cross-x86_64-linux/*
-!/build/root-cross-x86_64-linux/config
-
-##########################
-# To install out of root #
-##########################
-
-/dest/dev-native/*
-!/dest/dev-native/.keep
-/dest/dev-cross-i386/*
-!/dest/dev-cross-i386/.keep
-/dest/dev-cross-riscv64/*
-!/dest/dev-cross-riscv64/.keep
-/dest/dev-cross-x86_64/*
-!/dest/dev-cross-x86_64/.keep
-
 ###########################################
 # Only generated when configuring in root #
 ###########################################
@@ -114,11 +79,14 @@
 
 /examples/assert
 /examples/cmdline
+/examples/generic_display
 /examples/generic_malloc
 /examples/generic_mutex
 /examples/macro_bits
+/examples/macro_cast
 /examples/macro_container_of
 /examples/macro_packing
+/examples/macro_static_test
 /examples/memmap
 /examples/multiboot2_header_macro
 /examples/ntoa

@@ -42,13 +42,17 @@ zero). Work-in-progress APIs can change at any time.
   * [Feature macros](/include/kernaux/version.h.in) (*work in progress*)
   * [Macros](/include/kernaux/macro.h) (*non-breaking since* **0.6.0**)
     * [Example: packing](/examples/macro_packing.c)
-    * [Example: CONTAINER_OF](/examples/macro_container_of.c)
+    * [Example: CAST\_\*](/examples/macro_cast.c);
+    * [Example: CONTAINER\_OF](/examples/macro_container_of.c)
     * [Example: BITS](/examples/macro_bits.c)
+    * [Example: STATIC\_TEST\*](/examples/macro_static_test.c)
   * [Assertions](/include/kernaux/assert.h) (*non-breaking since* **0.4.0**)
     * [Example: Assert](/examples/assert.c)
     * [Example: Panic](/examples/panic.c)
   * Stack trace *(planned)*
 * Generic types
+  * [Display](/include/kernaux/generic/display.h) (*non-breaking since* **?.?.?**)
+    * [Example](/examples/generic_display.c)
   * [Memory allocator](/include/kernaux/generic/malloc.h) (*non-breaking since* **0.5.0**)
     * [Example](/examples/generic_malloc.c)
   * [Mutex](/include/kernaux/generic/mutex.h) (*non-breaking since* **0.5.0**)
@@ -100,6 +104,8 @@ zero). Work-in-progress APIs can change at any time.
 * `KERNAUX_ACCESS_PRIVATE` - disable access modifier "private". Don't do this!
 * `KERNAUX_ACCESS_PROTECTED` - disable access modifier "protected". Only do this
   in a file where you implement an inherited type.
+* `KERNAUX_BITFIELDS` - enable bitfields in packed structs. It doesn't follow
+  the C standard and may be incompatible with some compilers.
 
 ### Global variables
 
