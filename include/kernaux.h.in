@@ -20,7 +20,6 @@
 @comment_line_mbr@#include <kernaux/mbr.h>
 @comment_line_memmap@#include <kernaux/memmap.h>
 @comment_line_multiboot2@#include <kernaux/multiboot2.h>
-@comment_line_multiboot2@#include <kernaux/multiboot2/header_macro.h>
 @comment_line_ntoa@#include <kernaux/ntoa.h>
 @comment_line_pfa@#include <kernaux/pfa.h>
 @comment_line_printf@#include <kernaux/printf.h>
