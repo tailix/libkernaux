@@ -86,6 +86,7 @@
 /examples/macro_cast
 /examples/macro_container_of
 /examples/macro_packing
+/examples/macro_static_test
 /examples/memmap
 /examples/multiboot2_header_macro
 /examples/ntoa
