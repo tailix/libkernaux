@@ -169,6 +169,7 @@ explicitly included, use `--without-all`.
 * `--with[out]-free-list` - free list memory allocator
 * `--with[out]-memmap` - memory map
 * `--with[out]-ntoa` - itoa/ftoa
+* `--with[out]-spinlock` - spinlock
 * `--with[out]-printf` - printf
 
 
