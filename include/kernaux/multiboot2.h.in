@@ -857,6 +857,11 @@ void KernAux_Multiboot2_ITag_ELFSymbols_print(
     KernAux_Display display
 );
 
+void KernAux_Multiboot2_ITag_APMTable_print(
+    const struct KernAux_Multiboot2_ITag_APMTable *tag,
+    KernAux_Display display
+);
+
 #ifdef __cplusplus
 }
 #endif

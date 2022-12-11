@@ -120,30 +120,10 @@ void KernAux_Multiboot2_ITagBase_print(
         );
         break;
     case KERNAUX_MULTIBOOT2_ITAG_APM_TABLE:
-        {
-            const struct KernAux_Multiboot2_ITag_APMTable *const tag_apm =
-                (struct KernAux_Multiboot2_ITag_APMTable*)tag_base;
-
-            KERNAUX_CAST_CONST(unsigned long, version,     tag_apm->version);
-            KERNAUX_CAST_CONST(unsigned long, cseg,        tag_apm->cseg);
-            KERNAUX_CAST_CONST(unsigned long, offset,      tag_apm->offset);
-            KERNAUX_CAST_CONST(unsigned long, cseg_16,     tag_apm->cseg_16);
-            KERNAUX_CAST_CONST(unsigned long, dseg,        tag_apm->dseg);
-            KERNAUX_CAST_CONST(unsigned long, flags,       tag_apm->flags);
-            KERNAUX_CAST_CONST(unsigned long, cseg_len,    tag_apm->cseg_len);
-            KERNAUX_CAST_CONST(unsigned long, cseg_16_len, tag_apm->cseg_16_len);
-            KERNAUX_CAST_CONST(unsigned long, dseg_len,    tag_apm->dseg_len);
-
-            PRINTLNF("  version: %lu",     version);
-            PRINTLNF("  cseg: %lu",        cseg);
-            PRINTLNF("  offset: %lu",      offset);
-            PRINTLNF("  cseg 16: %lu",     cseg_16);
-            PRINTLNF("  dseg: %lu",        dseg);
-            PRINTLNF("  flags: %lu",       flags);
-            PRINTLNF("  cseg len: %lu",    cseg_len);
-            PRINTLNF("  cseg 16 len: %lu", cseg_16_len);
-            PRINTLNF("  dseg len: %lu",    dseg_len);
-        }
+        KernAux_Multiboot2_ITag_APMTable_print(
+            (struct KernAux_Multiboot2_ITag_APMTable*)tag_base,
+            display
+        );
         break;
     case KERNAUX_MULTIBOOT2_ITAG_EFI_32BIT_SYSTEM_TABLE_PTR:
         {
@@ -431,4 +411,37 @@ void KernAux_Multiboot2_ITag_ELFSymbols_print(
     PRINTLNF("  reserved1: %lu", reserved1);
 
     // TODO: implement this
+}
+
+void KernAux_Multiboot2_ITag_APMTable_print(
+    const struct KernAux_Multiboot2_ITag_APMTable *const tag,
+    const KernAux_Display display
+) {
+    KERNAUX_ASSERT(tag);
+    KERNAUX_ASSERT(display);
+
+    if (!KernAux_Multiboot2_ITag_APMTable_is_valid(tag)) {
+        PRINTLN("  invalid!");
+        return;
+    }
+
+    KERNAUX_CAST_CONST(unsigned long, version,     tag->version);
+    KERNAUX_CAST_CONST(unsigned long, cseg,        tag->cseg);
+    KERNAUX_CAST_CONST(unsigned long, offset,      tag->offset);
+    KERNAUX_CAST_CONST(unsigned long, cseg_16,     tag->cseg_16);
+    KERNAUX_CAST_CONST(unsigned long, dseg,        tag->dseg);
+    KERNAUX_CAST_CONST(unsigned long, flags,       tag->flags);
+    KERNAUX_CAST_CONST(unsigned long, cseg_len,    tag->cseg_len);
+    KERNAUX_CAST_CONST(unsigned long, cseg_16_len, tag->cseg_16_len);
+    KERNAUX_CAST_CONST(unsigned long, dseg_len,    tag->dseg_len);
+
+    PRINTLNF("  version: %lu",     version);
+    PRINTLNF("  cseg: %lu",        cseg);
+    PRINTLNF("  offset: %lu",      offset);
+    PRINTLNF("  cseg 16: %lu",     cseg_16);
+    PRINTLNF("  dseg: %lu",        dseg);
+    PRINTLNF("  flags: %lu",       flags);
+    PRINTLNF("  cseg len: %lu",    cseg_len);
+    PRINTLNF("  cseg 16 len: %lu", cseg_16_len);
+    PRINTLNF("  dseg len: %lu",    dseg_len);
 }
