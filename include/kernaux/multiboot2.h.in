@@ -832,6 +832,11 @@ void KernAux_Multiboot2_ITag_BasicMemoryInfo_print(
     KernAux_Display display
 );
 
+void KernAux_Multiboot2_ITag_BIOSBootDevice_print(
+    const struct KernAux_Multiboot2_ITag_BIOSBootDevice *tag,
+    KernAux_Display display
+);
+
 void KernAux_Multiboot2_ITag_MemoryMap_print(
     const struct KernAux_Multiboot2_ITag_MemoryMap *tag,
     KernAux_Display display

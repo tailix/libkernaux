@@ -90,18 +90,10 @@ void KernAux_Multiboot2_ITagBase_print(
         );
         break;
     case KERNAUX_MULTIBOOT2_ITAG_BIOS_BOOT_DEVICE:
-        {
-            const struct KernAux_Multiboot2_ITag_BIOSBootDevice *const tag_bbd =
-                (struct KernAux_Multiboot2_ITag_BIOSBootDevice*)tag_base;
-
-            KERNAUX_CAST_CONST(unsigned long, bios_dev,      tag_bbd->bios_dev);
-            KERNAUX_CAST_CONST(unsigned long, partition,     tag_bbd->partition);
-            KERNAUX_CAST_CONST(unsigned long, sub_partition, tag_bbd->sub_partition);
-
-            PRINTLNF("  bios dev: %lu", bios_dev);
-            PRINTLNF("  partition: %lu", partition);
-            PRINTLNF("  sub_partition: %lu", sub_partition);
-        }
+        KernAux_Multiboot2_ITag_BIOSBootDevice_print(
+            (struct KernAux_Multiboot2_ITag_BIOSBootDevice*)tag_base,
+            display
+        );
         break;
     case KERNAUX_MULTIBOOT2_ITAG_MEMORY_MAP:
         KernAux_Multiboot2_ITag_MemoryMap_print(
@@ -326,6 +318,27 @@ void KernAux_Multiboot2_ITag_BasicMemoryInfo_print(
 
     PRINTLNF("  mem lower: %lu", mem_lower);
     PRINTLNF("  mem upper: %lu", mem_upper);
+}
+
+void KernAux_Multiboot2_ITag_BIOSBootDevice_print(
+    const struct KernAux_Multiboot2_ITag_BIOSBootDevice *const tag,
+    const KernAux_Display display
+) {
+    KERNAUX_ASSERT(tag);
+    KERNAUX_ASSERT(display);
+
+    if (!KernAux_Multiboot2_ITag_BIOSBootDevice_is_valid(tag)) {
+        PRINTLN("  invalid!");
+        return;
+    }
+
+    KERNAUX_CAST_CONST(unsigned long, bios_dev,      tag->bios_dev);
+    KERNAUX_CAST_CONST(unsigned long, partition,     tag->partition);
+    KERNAUX_CAST_CONST(unsigned long, sub_partition, tag->sub_partition);
+
+    PRINTLNF("  bios dev: %lu", bios_dev);
+    PRINTLNF("  partition: %lu", partition);
+    PRINTLNF("  sub_partition: %lu", sub_partition);
 }
 
 void KernAux_Multiboot2_ITag_MemoryMap_print(
