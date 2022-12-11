@@ -77,6 +77,14 @@ TESTS += macro_packing
 macro_packing_LDADD = $(top_builddir)/libkernaux.la
 macro_packing_SOURCES = main.c macro_packing.c
 
+#####################
+# macro_static_test #
+#####################
+
+TESTS += macro_static_test
+macro_static_test_LDADD = $(top_builddir)/libkernaux.la
+macro_static_test_SOURCES = main.c macro_static_test.c
+
 ##########
 # memmap #
 ##########
