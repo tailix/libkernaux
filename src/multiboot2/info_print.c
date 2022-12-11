@@ -126,9 +126,10 @@ void KernAux_Multiboot2_ITagBase_print(
         );
         break;
     case KERNAUX_MULTIBOOT2_ITAG_EFI_32BIT_SYSTEM_TABLE_PTR:
-        {
-            // TODO: print
-        }
+        KernAux_Multiboot2_ITag_EFI32bitSystemTablePtr_print(
+            (struct KernAux_Multiboot2_ITag_EFI32bitSystemTablePtr*)tag_base,
+            display
+        );
         break;
     case KERNAUX_MULTIBOOT2_ITAG_EFI_64BIT_SYSTEM_TABLE_PTR:
         {
@@ -444,4 +445,19 @@ void KernAux_Multiboot2_ITag_APMTable_print(
     PRINTLNF("  cseg len: %lu",    cseg_len);
     PRINTLNF("  cseg 16 len: %lu", cseg_16_len);
     PRINTLNF("  dseg len: %lu",    dseg_len);
+}
+
+void KernAux_Multiboot2_ITag_EFI32bitSystemTablePtr_print(
+    const struct KernAux_Multiboot2_ITag_EFI32bitSystemTablePtr *const tag,
+    const KernAux_Display display
+) {
+    KERNAUX_ASSERT(tag);
+    KERNAUX_ASSERT(display);
+
+    if (!KernAux_Multiboot2_ITag_EFI32bitSystemTablePtr_is_valid(tag)) {
+        PRINTLN("  invalid!");
+        return;
+    }
+
+    // TODO: print
 }
