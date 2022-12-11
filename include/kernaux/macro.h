@@ -50,19 +50,16 @@ extern "C" {
  * Static assertions *
  *********************/
 
+#define KERNAUX_STATIC_TEST(name, cond) \
+    KERNAUX_UNUSED \
+    static const int \
+    _kernaux_static_test_##name[(cond) ? 1 : -1]
+
 #define KERNAUX_STATIC_TEST_STRUCT_SIZE(name, size) \
-KERNAUX_UNUSED                                      \
-static const int                                    \
-_kernaux_static_test_struct_size_##name[            \
-    sizeof(struct name) == (size) ? 1 : -1          \
-]
+    KERNAUX_STATIC_TEST(struct_size_##name, sizeof(struct name) == (size))
 
 #define KERNAUX_STATIC_TEST_UNION_SIZE(name, size)  \
-KERNAUX_UNUSED                                      \
-static const int                                    \
-_kernaux_static_test_union_size_##name[             \
-    sizeof(union name) == (size) ? 1 : -1           \
-]
+    KERNAUX_STATIC_TEST(union_size_##name,  sizeof(union  name) == (size))
 
 /*****************
  * Simple values *
@@ -89,17 +86,9 @@ _kernaux_static_test_union_size_##name[             \
  *********************/
 
 #define KERNAUX_CAST_VAR(type, name, value) \
-    {                                                          \
-        KERNAUX_UNUSED                                         \
-        static const int _kernaux_static_test_cast_pos_##name[ \
-            sizeof(value) <= sizeof(type) ? 1 : -1             \
-        ];                                                     \
-        KERNAUX_UNUSED                                         \
-        static const int _kernaux_static_test_cast_neg_##name[ \
-            sizeof(-(value)) <= sizeof(type) ? 1 : -1          \
-        ];                                                     \
-    }                                                          \
-    type name = (type)(value);                                 \
+    KERNAUX_STATIC_TEST(cast_pos_##name, sizeof(value)    <= sizeof(type)); \
+    KERNAUX_STATIC_TEST(cast_neg_##name, sizeof(-(value)) <= sizeof(type)); \
+    type name = (type)(value);                                              \
     do {} while (0)
 
 #define KERNAUX_CAST_CONST(type, name, value) \
