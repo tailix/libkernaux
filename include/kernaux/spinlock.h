@@ -12,7 +12,7 @@ extern "C" {
 
 typedef struct KernAux_Spinlock {
     struct KernAux_Mutex mutex;
-    uint8_t KERNAUX_PRIVATE_FIELD(locked);
+    volatile uint32_t KERNAUX_PRIVATE_FIELD(locked);
 } *KernAux_Spinlock;
 
 struct KernAux_Spinlock KernAux_Spinlock_create();
