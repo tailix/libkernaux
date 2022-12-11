@@ -43,4 +43,11 @@ void KernAux_Spinlock_unlock(void *const mutex)
 {
     const KernAux_Spinlock spinlock = mutex;
     KERNAUX_ASSERT(spinlock);
+
+    KERNAUX_ASM(
+        "xor %%eax, %%eax           \n"
+        "lock xchg %[locked], %%eax \n"
+        : [locked] "=m" (spinlock->locked)
+        :
+    );
 }
