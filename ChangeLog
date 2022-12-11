@@ -1,3 +1,7 @@
+2022-12-11  Alex Kotov  <kotovalexarian@gmail.com>
+
+	* include/kernaux/macro.h: Macro "KERNAUX_STATIC_TEST" has been added
+
 2022-12-10  Alex Kotov  <kotovalexarian@gmail.com>
 
 	* include/kernaux/macro.h: Macros "KERNAUX_CAST_(VAR|CONST)" have been added
