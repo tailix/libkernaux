@@ -144,14 +144,16 @@ void KernAux_Multiboot2_ITagBase_print(
         );
         break;
     case KERNAUX_MULTIBOOT2_ITAG_ACPI_OLD_RSDP:
-        {
-            // TODO: print
-        }
+        KernAux_Multiboot2_ITag_ACPIOldRSDP_print(
+            (struct KernAux_Multiboot2_ITag_ACPIOldRSDP*)tag_base,
+            display
+        );
         break;
     case KERNAUX_MULTIBOOT2_ITAG_ACPI_NEW_RSDP:
-        {
-            // TODO: print
-        }
+        KernAux_Multiboot2_ITag_ACPINewRSDP_print(
+            (struct KernAux_Multiboot2_ITag_ACPINewRSDP*)tag_base,
+            display
+        );
         break;
     case KERNAUX_MULTIBOOT2_ITAG_NETWORKING_INFO:
         {
@@ -489,4 +491,30 @@ void KernAux_Multiboot2_ITag_SMBIOSTables_print(
         reserved0, reserved1, reserved2,
         reserved3, reserved4, reserved5
     );
+}
+
+void KernAux_Multiboot2_ITag_ACPIOldRSDP_print(
+    const struct KernAux_Multiboot2_ITag_ACPIOldRSDP *const tag,
+    const KernAux_Display display
+) {
+    KERNAUX_ASSERT(tag);
+    KERNAUX_ASSERT(display);
+
+    if (!KernAux_Multiboot2_ITag_ACPIOldRSDP_is_valid(tag)) {
+        PRINTLN("  invalid!");
+        return;
+    }
+}
+
+void KernAux_Multiboot2_ITag_ACPINewRSDP_print(
+    const struct KernAux_Multiboot2_ITag_ACPINewRSDP *const tag,
+    const KernAux_Display display
+) {
+    KERNAUX_ASSERT(tag);
+    KERNAUX_ASSERT(display);
+
+    if (!KernAux_Multiboot2_ITag_ACPINewRSDP_is_valid(tag)) {
+        PRINTLN("  invalid!");
+        return;
+    }
 }

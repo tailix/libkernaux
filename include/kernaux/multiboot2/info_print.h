@@ -82,6 +82,16 @@ void KernAux_Multiboot2_ITag_SMBIOSTables_print(
     KernAux_Display display
 );
 
+void KernAux_Multiboot2_ITag_ACPIOldRSDP_print(
+    const struct KernAux_Multiboot2_ITag_ACPIOldRSDP *tag,
+    KernAux_Display display
+);
+
+void KernAux_Multiboot2_ITag_ACPINewRSDP_print(
+    const struct KernAux_Multiboot2_ITag_ACPINewRSDP *tag,
+    KernAux_Display display
+);
+
 #ifdef __cplusplus
 }
 #endif
