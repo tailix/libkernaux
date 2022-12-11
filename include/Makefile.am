@@ -73,8 +73,10 @@ endif
 if WITH_MULTIBOOT2
 nobase_include_HEADERS += \
 	kernaux/multiboot2.h \
+	kernaux/multiboot2/header_is_valid.h \
 	kernaux/multiboot2/header_macro.h \
 	kernaux/multiboot2/header_print.h \
+	kernaux/multiboot2/info_is_valid.h \
 	kernaux/multiboot2/info_print.h
 endif
 if WITH_NTOA
