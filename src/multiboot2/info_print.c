@@ -84,16 +84,10 @@ void KernAux_Multiboot2_ITagBase_print(
         );
         break;
     case KERNAUX_MULTIBOOT2_ITAG_BASIC_MEMORY_INFO:
-        {
-            const struct KernAux_Multiboot2_ITag_BasicMemoryInfo *const tag_bmi =
-                (struct KernAux_Multiboot2_ITag_BasicMemoryInfo*)tag_base;
-
-            KERNAUX_CAST_CONST(unsigned long, mem_lower, tag_bmi->mem_lower);
-            KERNAUX_CAST_CONST(unsigned long, mem_upper, tag_bmi->mem_upper);
-
-            PRINTLNF("  mem lower: %lu", mem_lower);
-            PRINTLNF("  mem upper: %lu", mem_upper);
-        }
+        KernAux_Multiboot2_ITag_BasicMemoryInfo_print(
+            (struct KernAux_Multiboot2_ITag_BasicMemoryInfo*)tag_base,
+            display
+        );
         break;
     case KERNAUX_MULTIBOOT2_ITAG_BIOS_BOOT_DEVICE:
         {
@@ -313,6 +307,25 @@ void KernAux_Multiboot2_ITag_Module_print(
     PRINTLNF("  start: %lu", mod_start);
     PRINTLNF("  end: %lu", mod_end);
     PRINTLNF("  cmdline: %s", KERNAUX_MULTIBOOT2_DATA(tag));
+}
+
+void KernAux_Multiboot2_ITag_BasicMemoryInfo_print(
+    const struct KernAux_Multiboot2_ITag_BasicMemoryInfo *const tag,
+    const KernAux_Display display
+) {
+    KERNAUX_ASSERT(tag);
+    KERNAUX_ASSERT(display);
+
+    if (!KernAux_Multiboot2_ITag_BasicMemoryInfo_is_valid(tag)) {
+        PRINTLN("  invalid!");
+        return;
+    }
+
+    KERNAUX_CAST_CONST(unsigned long, mem_lower, tag->mem_lower);
+    KERNAUX_CAST_CONST(unsigned long, mem_upper, tag->mem_upper);
+
+    PRINTLNF("  mem lower: %lu", mem_lower);
+    PRINTLNF("  mem upper: %lu", mem_upper);
 }
 
 void KernAux_Multiboot2_ITag_MemoryMap_print(
