@@ -77,6 +77,11 @@ void KernAux_Multiboot2_ITag_EFI64bitSystemTablePtr_print(
     KernAux_Display display
 );
 
+void KernAux_Multiboot2_ITag_SMBIOSTables_print(
+    const struct KernAux_Multiboot2_ITag_SMBIOSTables *tag,
+    KernAux_Display display
+);
+
 #ifdef __cplusplus
 }
 #endif

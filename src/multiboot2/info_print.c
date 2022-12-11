@@ -138,28 +138,10 @@ void KernAux_Multiboot2_ITagBase_print(
         );
         break;
     case KERNAUX_MULTIBOOT2_ITAG_SMBIOS_TABLES:
-        {
-            const struct KernAux_Multiboot2_ITag_SMBIOSTables *const tag_smbios =
-                (struct KernAux_Multiboot2_ITag_SMBIOSTables*)tag_base;
-
-            KERNAUX_CAST_CONST(unsigned long, major,     tag_smbios->major);
-            KERNAUX_CAST_CONST(unsigned long, minor,     tag_smbios->minor);
-            KERNAUX_CAST_CONST(unsigned long, reserved0, tag_smbios->reserved1[0]);
-            KERNAUX_CAST_CONST(unsigned long, reserved1, tag_smbios->reserved1[1]);
-            KERNAUX_CAST_CONST(unsigned long, reserved2, tag_smbios->reserved1[2]);
-            KERNAUX_CAST_CONST(unsigned long, reserved3, tag_smbios->reserved1[3]);
-            KERNAUX_CAST_CONST(unsigned long, reserved4, tag_smbios->reserved1[4]);
-            KERNAUX_CAST_CONST(unsigned long, reserved5, tag_smbios->reserved1[5]);
-
-            PRINTLNF("  major: %lu", major);
-            PRINTLNF("  minor: %lu", minor);
-
-            PRINTLNF(
-                "  reserved1: {%lu, %lu, %lu, %lu, %lu, %lu}",
-                reserved0, reserved1, reserved2,
-                reserved3, reserved4, reserved5
-            );
-        }
+        KernAux_Multiboot2_ITag_SMBIOSTables_print(
+            (struct KernAux_Multiboot2_ITag_SMBIOSTables*)tag_base,
+            display
+        );
         break;
     case KERNAUX_MULTIBOOT2_ITAG_ACPI_OLD_RSDP:
         {
@@ -476,4 +458,33 @@ void KernAux_Multiboot2_ITag_EFI64bitSystemTablePtr_print(
     }
 
     // TODO: print
+}
+
+void KernAux_Multiboot2_ITag_SMBIOSTables_print(
+    const struct KernAux_Multiboot2_ITag_SMBIOSTables *const tag,
+    const KernAux_Display display
+) {
+    KERNAUX_ASSERT(tag);
+    KERNAUX_ASSERT(display);
+
+    if (!KernAux_Multiboot2_ITag_SMBIOSTables_is_valid(tag)) {
+        PRINTLN("  invalid!");
+        return;
+    }
+
+    KERNAUX_CAST_CONST(unsigned long, major,     tag->major);
+    KERNAUX_CAST_CONST(unsigned long, minor,     tag->minor);
+    KERNAUX_CAST_CONST(unsigned long, reserved0, tag->reserved1[0]);
+    KERNAUX_CAST_CONST(unsigned long, reserved1, tag->reserved1[1]);
+    KERNAUX_CAST_CONST(unsigned long, reserved2, tag->reserved1[2]);
+    KERNAUX_CAST_CONST(unsigned long, reserved3, tag->reserved1[3]);
+    KERNAUX_CAST_CONST(unsigned long, reserved4, tag->reserved1[4]);
+    KERNAUX_CAST_CONST(unsigned long, reserved5, tag->reserved1[5]);
+
+    PRINTLNF("  major: %lu", major);
+    PRINTLNF("  minor: %lu", minor);
+    PRINTLNF("  reserved1: {%lu, %lu, %lu, %lu, %lu, %lu}",
+        reserved0, reserved1, reserved2,
+        reserved3, reserved4, reserved5
+    );
 }
