@@ -442,7 +442,8 @@ void KernAux_Multiboot2_ITag_EFI32bitSystemTablePtr_print(
         return;
     }
 
-    // TODO: print
+    KERNAUX_CAST_CONST(unsigned long, pointer, tag->pointer);
+    PRINTLNF("  pointer: %lu", pointer);
 }
 
 void KernAux_Multiboot2_ITag_EFI64bitSystemTablePtr_print(
@@ -457,7 +458,8 @@ void KernAux_Multiboot2_ITag_EFI64bitSystemTablePtr_print(
         return;
     }
 
-    // TODO: print
+    KERNAUX_CAST_CONST(unsigned long long, pointer, tag->pointer);
+    PRINTLNF("  pointer: %llu", pointer);
 }
 
 void KernAux_Multiboot2_ITag_SMBIOSTables_print(
