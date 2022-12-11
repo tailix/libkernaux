@@ -102,20 +102,10 @@ void KernAux_Multiboot2_ITagBase_print(
         );
         break;
     case KERNAUX_MULTIBOOT2_ITAG_VBE_INFO:
-        {
-            const struct KernAux_Multiboot2_ITag_VBEInfo *const tag_vbe =
-                (struct KernAux_Multiboot2_ITag_VBEInfo*)tag_base;
-
-            KERNAUX_CAST_CONST(unsigned long, vbe_mode,          tag_vbe->vbe_mode);
-            KERNAUX_CAST_CONST(unsigned long, vbe_interface_seg, tag_vbe->vbe_interface_seg);
-            KERNAUX_CAST_CONST(unsigned long, vbe_interface_off, tag_vbe->vbe_interface_off);
-            KERNAUX_CAST_CONST(unsigned long, vbe_interface_len, tag_vbe->vbe_interface_len);
-
-            PRINTLNF("  VBE mode: %lu",          vbe_mode);
-            PRINTLNF("  VBE interface seg: %lu", vbe_interface_seg);
-            PRINTLNF("  VBE interface off: %lu", vbe_interface_off);
-            PRINTLNF("  VBE interface len: %lu", vbe_interface_len);
-        }
+        KernAux_Multiboot2_ITag_VBEInfo_print(
+            (struct KernAux_Multiboot2_ITag_VBEInfo*)tag_base,
+            display
+        );
         break;
     case KERNAUX_MULTIBOOT2_ITAG_FRAMEBUFFER_INFO:
         {
@@ -380,6 +370,29 @@ void KernAux_Multiboot2_ITag_MemoryMap_print(
         PRINTLNF("      type: %lu",       type);
         PRINTLNF("      reserved1: %lu",  reserved1);
     }
+}
+
+void KernAux_Multiboot2_ITag_VBEInfo_print(
+    const struct KernAux_Multiboot2_ITag_VBEInfo *const tag,
+    const KernAux_Display display
+) {
+    KERNAUX_ASSERT(tag);
+    KERNAUX_ASSERT(display);
+
+    if (!KernAux_Multiboot2_ITag_VBEInfo_is_valid(tag)) {
+        PRINTLN("  invalid!");
+        return;
+    }
+
+    KERNAUX_CAST_CONST(unsigned long, mode,          tag->vbe_mode);
+    KERNAUX_CAST_CONST(unsigned long, interface_seg, tag->vbe_interface_seg);
+    KERNAUX_CAST_CONST(unsigned long, interface_off, tag->vbe_interface_off);
+    KERNAUX_CAST_CONST(unsigned long, interface_len, tag->vbe_interface_len);
+
+    PRINTLNF("  VBE mode: %lu",          mode);
+    PRINTLNF("  VBE interface seg: %lu", interface_seg);
+    PRINTLNF("  VBE interface off: %lu", interface_off);
+    PRINTLNF("  VBE interface len: %lu", interface_len);
 }
 
 void KernAux_Multiboot2_ITag_ELFSymbols_print(
