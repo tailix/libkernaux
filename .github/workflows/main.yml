@@ -43,7 +43,7 @@ jobs:
         run: sudo make install
 
   cross:
-    runs-on: ubuntu-20.04 # focal, because it's in ".github/sources.list"
+    runs-on: ubuntu-22.04 # jammy, because it's in ".github/sources.list"
     strategy:
       matrix:
         cross:
@@ -114,6 +114,8 @@ jobs:
         debug: ['--disable-debug', '--enable-debug']
     steps:
       - uses: actions/checkout@v2
+      - name: apt update
+        run: sudo apt-get --yes update
       - name: dependencies
         run: sudo apt-get --yes install crossbuild-essential-i386
       - name: autogen

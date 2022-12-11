@@ -1,34 +1,23 @@
+2022-12-11  Alex Kotov  <kotovalexarian@gmail.com>
+
+	* include/kernaux/macro.h: Macro "KERNAUX_STATIC_TEST" has been added
+
+2022-12-10  Alex Kotov  <kotovalexarian@gmail.com>
+
+	* include/kernaux/macro.h: Macros "KERNAUX_CAST_(VAR|CONST)" have been added
+
+2022-12-09  Alex Kotov  <kotovalexarian@gmail.com>
+
+	* include/kernaux/generic/display.h: The header has been added
+
+2022-12-08  Alex Kotov  <kotovalexarian@gmail.com>
+
+	* include/kernaux/*.h: Definition "KERNAUX_BITFIELDS" has been added
+
+2022-12-05  Alex Kotov  <kotovalexarian@gmail.com>
+
+	libkernaux 0.6.1 released
+
 2022-12-03  Alex Kotov  <kotovalexarian@gmail.com>
 
 	* include/kernaux/assert.h: Rename to "include/kernaux/panic.h"
-	* include/kernaux/macro.h: Add macros "KERNAUX_ALIGNED", "KERNAUX_PRINTF",
-	"KERNAUX_USED", "KERNAUX_SECTION"
-
-2022-12-02  Alex Kotov  <kotovalexarian@gmail.com>
-
-	* configure.ac: Rename args "--enable-tests*" to "--enable-checks*"
-	* configure.ac: Add arg "--enable-checks-cppcheck"
-
-2022-12-01  Alex Kotov  <kotovalexarian@gmail.com>
-
-	* src/printf.c: Fix a bug with too big float precision
-
-2022-11-30  Alex Kotov  <kotovalexarian@gmail.com>
-
-	* configure.ac: Fix CFLAGS setting
-
-2022-11-29  Alex Kotov  <kotovalexarian@gmail.com>
-
-	* include/kernaux/macro.h: Rename macro "KERNAUX_PACKING_ATTR" to
-	"KERNAUX_PACKED"
-	* include/kernaux/macro.h: Add macros "KERNAUX_UNUSED", "KERNAUX_NORETURN",
-	"KERNAUX_RETURNS_TWICE", "KERNAUX_ASM"
-	* include/kernaux/printf_fmt.h: Make stable
-
-2022-11-27  Alex Kotov  <kotovalexarian@gmail.com>
-
-	* src/free_list.c: Bug fixed
-
-2022-11-26  Alex Kotov  <kotovalexarian@gmail.com>
-
-	libkernaux 0.5.0 released

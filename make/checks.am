@@ -8,9 +8,31 @@ MY_CHECKS += check-cppcheck
 check-cppcheck:
 	$(CPPCHECK) $(CPPCHECK_ARGS) $(CPPCHECK_INC) $(CPPCHECK_SUPPRESS) $(CPPCHECK_PATHS)
 
-CPPCHECK_ARGS = --quiet --error-exitcode=1 --std=c99 --inline-suppr --enable=warning,style,performance,portability
-CPPCHECK_INC = -I$(top_builddir)/include -I$(top_srcdir)/include
-CPPCHECK_SUPPRESS  = --suppress='unusedStructMember:examples/multiboot2_header_macro.c'
-CPPCHECK_SUPPRESS += --suppress='unusedStructMember:tests/test_multiboot2_info_*.c'
-CPPCHECK_PATHS = examples/ include/ libc/ src/ tests/
+CPPCHECK_ARGS = \
+  --quiet            \
+  --error-exitcode=1 \
+  --std=c99          \
+  --inline-suppr     \
+  --enable=warning,style,performance,portability
+
+CPPCHECK_INC = \
+  -I$(top_builddir)/include \
+  -I$(top_srcdir)/include
+
+CPPCHECK_SUPPRESS = \
+  --suppress='constArgument:$(top_srcdir)/examples/macro_cast.c' \
+  --suppress='unusedStructMember:$(top_srcdir)/examples/*.c' \
+  --suppress='unusedStructMember:$(top_srcdir)/tests/test_multiboot2_info_*.c'
+
+CPPCHECK_PATHS = \
+  $(top_builddir)/examples \
+    $(top_srcdir)/examples \
+  $(top_builddir)/include  \
+    $(top_srcdir)/include  \
+  $(top_builddir)/libc     \
+    $(top_srcdir)/libc     \
+  $(top_builddir)/src      \
+    $(top_srcdir)/src      \
+  $(top_builddir)/tests    \
+    $(top_srcdir)/tests
 endif
