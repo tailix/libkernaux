@@ -847,6 +847,11 @@ void KernAux_Multiboot2_ITag_VBEInfo_print(
     KernAux_Display display
 );
 
+void KernAux_Multiboot2_ITag_FramebufferInfo_print(
+    const struct KernAux_Multiboot2_ITag_FramebufferInfo *tag,
+    KernAux_Display display
+);
+
 void KernAux_Multiboot2_ITag_ELFSymbols_print(
     const struct KernAux_Multiboot2_ITag_ELFSymbols *tag,
     KernAux_Display display

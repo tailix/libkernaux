@@ -108,26 +108,10 @@ void KernAux_Multiboot2_ITagBase_print(
         );
         break;
     case KERNAUX_MULTIBOOT2_ITAG_FRAMEBUFFER_INFO:
-        {
-            const struct KernAux_Multiboot2_ITag_FramebufferInfo *const tag_fb =
-                (struct KernAux_Multiboot2_ITag_FramebufferInfo*)tag_base;
-
-            KERNAUX_CAST_CONST(unsigned long long, framebuffer_addr,   tag_fb->framebuffer_addr);
-            KERNAUX_CAST_CONST(unsigned long,      framebuffer_pitch,  tag_fb->framebuffer_pitch);
-            KERNAUX_CAST_CONST(unsigned long,      framebuffer_width,  tag_fb->framebuffer_width);
-            KERNAUX_CAST_CONST(unsigned long,      framebuffer_height, tag_fb->framebuffer_height);
-            KERNAUX_CAST_CONST(unsigned long,      framebuffer_bpp,    tag_fb->framebuffer_bpp);
-            KERNAUX_CAST_CONST(unsigned long,      framebuffer_type,   tag_fb->framebuffer_type);
-            KERNAUX_CAST_CONST(unsigned long,      reserved1,          tag_fb->reserved1);
-
-            PRINTLNF("  framebuffer addr: %llu",  framebuffer_addr);
-            PRINTLNF("  framebuffer pitch: %lu",  framebuffer_pitch);
-            PRINTLNF("  framebuffer width: %lu",  framebuffer_width);
-            PRINTLNF("  framebuffer height: %lu", framebuffer_height);
-            PRINTLNF("  framebuffer bpp: %lu",    framebuffer_bpp);
-            PRINTLNF("  framebuffer type: %lu",   framebuffer_type);
-            PRINTLNF("  reserved1: %lu",          reserved1);
-        }
+        KernAux_Multiboot2_ITag_FramebufferInfo_print(
+            (struct KernAux_Multiboot2_ITag_FramebufferInfo*)tag_base,
+            display
+        );
         break;
     case KERNAUX_MULTIBOOT2_ITAG_ELF_SYMBOLS:
         KernAux_Multiboot2_ITag_ELFSymbols_print(
@@ -393,6 +377,35 @@ void KernAux_Multiboot2_ITag_VBEInfo_print(
     PRINTLNF("  VBE interface seg: %lu", interface_seg);
     PRINTLNF("  VBE interface off: %lu", interface_off);
     PRINTLNF("  VBE interface len: %lu", interface_len);
+}
+
+void KernAux_Multiboot2_ITag_FramebufferInfo_print(
+    const struct KernAux_Multiboot2_ITag_FramebufferInfo *const tag,
+    const KernAux_Display display
+) {
+    KERNAUX_ASSERT(tag);
+    KERNAUX_ASSERT(display);
+
+    if (!KernAux_Multiboot2_ITag_FramebufferInfo_is_valid(tag)) {
+        PRINTLN("  invalid!");
+        return;
+    }
+
+    KERNAUX_CAST_CONST(unsigned long long, addr,      tag->framebuffer_addr);
+    KERNAUX_CAST_CONST(unsigned long,      pitch,     tag->framebuffer_pitch);
+    KERNAUX_CAST_CONST(unsigned long,      width,     tag->framebuffer_width);
+    KERNAUX_CAST_CONST(unsigned long,      height,    tag->framebuffer_height);
+    KERNAUX_CAST_CONST(unsigned long,      bpp,       tag->framebuffer_bpp);
+    KERNAUX_CAST_CONST(unsigned long,      type,      tag->framebuffer_type);
+    KERNAUX_CAST_CONST(unsigned long,      reserved1, tag->reserved1);
+
+    PRINTLNF("  framebuffer addr: %llu",  addr);
+    PRINTLNF("  framebuffer pitch: %lu",  pitch);
+    PRINTLNF("  framebuffer width: %lu",  width);
+    PRINTLNF("  framebuffer height: %lu", height);
+    PRINTLNF("  framebuffer bpp: %lu",    bpp);
+    PRINTLNF("  framebuffer type: %lu",   type);
+    PRINTLNF("  reserved1: %lu",          reserved1);
 }
 
 void KernAux_Multiboot2_ITag_ELFSymbols_print(
