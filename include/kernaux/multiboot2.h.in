@@ -867,6 +867,11 @@ void KernAux_Multiboot2_ITag_EFI32bitSystemTablePtr_print(
     KernAux_Display display
 );
 
+void KernAux_Multiboot2_ITag_EFI64bitSystemTablePtr_print(
+    const struct KernAux_Multiboot2_ITag_EFI64bitSystemTablePtr *tag,
+    KernAux_Display display
+);
+
 #ifdef __cplusplus
 }
 #endif
