@@ -9,9 +9,6 @@
 #include <stddef.h>
 #include <stdint.h>
 
-// TODO: create macro for this
-#define INT_IF(a, b) (sizeof(int) == sizeof(long) ? (a) : (b))
-
 #define PRINTLN(s) KernAux_Display_println(display, s)
 #define PRINTLNF(format, ...) \
     KernAux_Display_printlnf(display, format, __VA_ARGS__)
