@@ -331,7 +331,7 @@ AC_HEADER_STDBOOL
 AS_IF([test "$enable_checks" = yes -a "$ac_cv_header_stdbool_h" != yes],
   [AC_MSG_ERROR([the header is required])])
 
-AC_CHECK_HEADERS([stdarg.h stddef.h stdint.h],,
+AC_CHECK_HEADERS([limits.h stdarg.h stddef.h stdint.h],,
   [AC_MSG_ERROR([the headers are required])])
 
 AS_IF([test "$enable_checks" = yes],

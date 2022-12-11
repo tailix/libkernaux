@@ -5,6 +5,7 @@
 extern "C" {
 #endif
 
+#include <kernaux/arch/i386-idt.h>
 #include <kernaux/arch/x86.h>
 #include <kernaux/arch/x86-paging.h>
 #include <kernaux/macro.h>
@@ -91,25 +92,6 @@ struct KernAux_Arch_I386_DTE {
 KERNAUX_PACKED;
 
 KERNAUX_STATIC_TEST_STRUCT_SIZE(KernAux_Arch_I386_DTE, 8);
-
-// Interrupt descriptor table entry
-// TODO: validate this according to spec
-typedef struct KernAux_Arch_I386_IDTE {
-    uint16_t offset_low;
-    uint16_t selector;
-    uint8_t  _zero0;
-    uint8_t  flags;
-    uint16_t offset_high;
-}
-KERNAUX_PACKED
-*KernAux_Arch_I386_IDTE;
-
-KERNAUX_STATIC_TEST_STRUCT_SIZE(KernAux_Arch_I386_IDTE, 8);
-
-void KernAux_Arch_I386_IDTE_set_offset(
-    KernAux_Arch_I386_IDTE idte,
-    uint32_t address
-);
 
 /**
  * @brief Task state segment
