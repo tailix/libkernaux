@@ -185,6 +185,18 @@ printf_str_va_LDADD = $(top_builddir)/libkernaux.la
 printf_str_va_SOURCES = main.c printf_str_va.c
 endif
 
+############
+# spinlock #
+############
+
+if WITH_SPINLOCK
+if ENABLE_CHECKS_PTHREADS
+TESTS += spinlock
+spinlock_LDADD = $(top_builddir)/libkernaux.la 	-lpthread
+spinlock_SOURCES = main.c spinlock.c
+endif
+endif
+
 ###############
 # units_human #
 ###############

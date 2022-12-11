@@ -97,6 +97,7 @@
 /examples/printf_fmt
 /examples/printf_str
 /examples/printf_str_va
+/examples/spinlock
 /examples/units_human
 
 /tests/multiboot2_header_print1

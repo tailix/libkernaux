@@ -59,10 +59,12 @@ zero). Work-in-progress APIs can change at any time.
     * [Example](/examples/generic_mutex.c)
 * Algorithms
   * [Free list memory allocator](/include/kernaux/free_list.h) (*non-breaking since* **0.5.0**)
-  * [Simple command line parser](/include/kernaux/cmdline.h) (*non-breaking since* **0.2.0**)
-    * [Example](/examples/cmdline.c)
   * [Page Frame Allocator](/include/kernaux/pfa.h) (*work in progress*)
     * [Example](/examples/pfa.c)
+  * [Simple command line parser](/include/kernaux/cmdline.h) (*non-breaking since* **0.2.0**)
+    * [Example](/examples/cmdline.c)
+  * Spinlock
+    * [Example](/examples/spinlock.c)
 * Data formats
   * [ELF](/include/kernaux/elf.h) (*work in progress*)
   * [MBR](/include/kernaux/mbr.h) (*work in progress*)
