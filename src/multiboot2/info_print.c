@@ -78,17 +78,10 @@ void KernAux_Multiboot2_ITagBase_print(
         );
         break;
     case KERNAUX_MULTIBOOT2_ITAG_MODULE:
-        {
-            const struct KernAux_Multiboot2_ITag_Module *const tag_module =
-                (struct KernAux_Multiboot2_ITag_Module*)tag_base;
-
-            KERNAUX_CAST_CONST(unsigned long, mod_start, tag_module->mod_start);
-            KERNAUX_CAST_CONST(unsigned long, mod_end,   tag_module->mod_end);
-
-            PRINTLNF("  start: %lu", mod_start);
-            PRINTLNF("  end: %lu", mod_end);
-            PRINTLNF("  cmdline: %s", KERNAUX_MULTIBOOT2_DATA(tag_module));
-        }
+        KernAux_Multiboot2_ITag_Module_print(
+            (struct KernAux_Multiboot2_ITag_Module*)tag_base,
+            display
+        );
         break;
     case KERNAUX_MULTIBOOT2_ITAG_BASIC_MEMORY_INFO:
         {
@@ -300,6 +293,26 @@ void KernAux_Multiboot2_ITag_BootLoaderName_print(
     }
 
     PRINTLNF("  name: %s", KERNAUX_MULTIBOOT2_DATA(tag));
+}
+
+void KernAux_Multiboot2_ITag_Module_print(
+    const struct KernAux_Multiboot2_ITag_Module *const tag,
+    const KernAux_Display display
+) {
+    KERNAUX_ASSERT(tag);
+    KERNAUX_ASSERT(display);
+
+    if (!KernAux_Multiboot2_ITag_Module_is_valid(tag)) {
+        PRINTLN("  invalid!");
+        return;
+    }
+
+    KERNAUX_CAST_CONST(unsigned long, mod_start, tag->mod_start);
+    KERNAUX_CAST_CONST(unsigned long, mod_end,   tag->mod_end);
+
+    PRINTLNF("  start: %lu", mod_start);
+    PRINTLNF("  end: %lu", mod_end);
+    PRINTLNF("  cmdline: %s", KERNAUX_MULTIBOOT2_DATA(tag));
 }
 
 void KernAux_Multiboot2_ITag_MemoryMap_print(
