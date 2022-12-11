@@ -3,6 +3,7 @@
 #endif
 
 #include <kernaux/assert.h>
+#include <kernaux/generic/display.h>
 #include <kernaux/macro.h>
 #include <kernaux/multiboot2.h>
 
@@ -52,14 +53,13 @@ void KernAux_Multiboot2_ITagBase_print(
 
     if (!KernAux_Multiboot2_ITagBase_is_valid(tag_base)) return;
 
-    PRINTLN("Multiboot 2 info tag");
+    KERNAUX_CAST_CONST(unsigned long, size, tag_base->size);
 
+    PRINTLN("Multiboot 2 info tag");
     PRINTLNF("  type: %u (%s)",
         tag_base->type,
         KernAux_Multiboot2_ITag_to_str(tag_base->type)
     );
-
-    KERNAUX_CAST_CONST(unsigned long, size, tag_base->size);
     PRINTLNF("  size: %lu", size);
 
     switch (tag_base->type) {
