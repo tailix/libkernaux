@@ -109,6 +109,9 @@ endif
 if WITH_PRINTF_FMT
 libkernaux_la_SOURCES += src/printf_fmt.c
 endif
+if WITH_SPINLOCK
+libkernaux_la_SOURCES += src/spinlock.c
+endif
 if WITH_UNITS
 libkernaux_la_SOURCES += src/units.c
 endif

@@ -87,6 +87,9 @@ endif
 if WITH_PRINTF_FMT
 nobase_include_HEADERS += kernaux/printf_fmt.h
 endif
+if WITH_SPINLOCK
+nobase_include_HEADERS += kernaux/spinlock.h
+endif
 if WITH_UNITS
 nobase_include_HEADERS += kernaux/units.h
 endif
