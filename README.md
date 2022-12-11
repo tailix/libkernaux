@@ -40,15 +40,19 @@ zero). Work-in-progress APIs can change at any time.
 
 * Basic features
   * [Feature macros](/include/kernaux/version.h.in) (*work in progress*)
-  * [Macros](/include/kernaux/macro.h) (*non-breaking since* **?.?.?**)
+  * [Macros](/include/kernaux/macro.h) (*non-breaking since* **0.6.0**)
     * [Example: packing](/examples/macro_packing.c)
-    * [Example: CONTAINER_OF](/examples/macro_container_of.c)
+    * [Example: CAST\_\*](/examples/macro_cast.c);
+    * [Example: CONTAINER\_OF](/examples/macro_container_of.c)
     * [Example: BITS](/examples/macro_bits.c)
+    * [Example: STATIC\_TEST\*](/examples/macro_static_test.c)
   * [Assertions](/include/kernaux/assert.h) (*non-breaking since* **0.4.0**)
     * [Example: Assert](/examples/assert.c)
     * [Example: Panic](/examples/panic.c)
   * [Stack trace](/include/kernaux/stack_trace.h) *(work in progress)*
 * Generic types
+  * [Display](/include/kernaux/generic/display.h) (*non-breaking since* **?.?.?**)
+    * [Example](/examples/generic_display.c)
   * [Memory allocator](/include/kernaux/generic/malloc.h) (*non-breaking since* **0.5.0**)
     * [Example](/examples/generic_malloc.c)
   * [Mutex](/include/kernaux/generic/mutex.h) (*non-breaking since* **0.5.0**)
@@ -69,7 +73,7 @@ zero). Work-in-progress APIs can change at any time.
     * [Example: To human](/examples/units_human.c)
   * [Memory map](/include/kernaux/memmap.h) (*non-breaking since* **0.4.0**)
     * [Example](/examples/memmap.c)
-  * [printf format parser](/include/kernaux/printf_fmt.h) (*non-breaking since* **?.?.?**)
+  * [printf format parser](/include/kernaux/printf_fmt.h) (*non-breaking since* **0.6.0**)
     * [Example](/examples/printf_fmt.c)
 * Usual functions
   * [itoa/ftoa replacement](/include/kernaux/ntoa.h) (*non-breaking since* **0.4.0**)
@@ -100,6 +104,8 @@ zero). Work-in-progress APIs can change at any time.
 * `KERNAUX_ACCESS_PRIVATE` - disable access modifier "private". Don't do this!
 * `KERNAUX_ACCESS_PROTECTED` - disable access modifier "protected". Only do this
   in a file where you implement an inherited type.
+* `KERNAUX_BITFIELDS` - enable bitfields in packed structs. It doesn't follow
+  the C standard and may be incompatible with some compilers.
 
 ### Global variables
 
@@ -209,36 +215,6 @@ without it in `$PATH`:
   AR="$(which i386-elf-ar)" \
   CC="$(which i386-elf-gcc)" \
   RANLIB="$(which i386-elf-ranlib)"
-```
-
-You can see the following messages. It's
-[a bug](https://savannah.gnu.org/support/index.php?110393) in **autoconf**, just
-ignore it.
-
-```
-checking for _Bool... no
-checking stdarg.h usability... no
-checking stdarg.h presence... yes
-configure: WARNING: stdarg.h: present but cannot be compiled
-configure: WARNING: stdarg.h:     check for missing prerequisite headers?
-configure: WARNING: stdarg.h: see the Autoconf documentation
-configure: WARNING: stdarg.h:     section "Present But Cannot Be Compiled"
-configure: WARNING: stdarg.h: proceeding with the compiler's result
-configure: WARNING:     ## ---------------------------------------------------------- ##
-configure: WARNING:     ## Report this to https://github.com/tailix/libkernaux/issues ##
-configure: WARNING:     ## ---------------------------------------------------------- ##
-checking for stdarg.h... no
-checking stddef.h usability... no
-checking stddef.h presence... yes
-configure: WARNING: stddef.h: present but cannot be compiled
-configure: WARNING: stddef.h:     check for missing prerequisite headers?
-configure: WARNING: stddef.h: see the Autoconf documentation
-configure: WARNING: stddef.h:     section "Present But Cannot Be Compiled"
-configure: WARNING: stddef.h: proceeding with the compiler's result
-configure: WARNING:     ## ---------------------------------------------------------- ##
-configure: WARNING:     ## Report this to https://github.com/tailix/libkernaux/issues ##
-configure: WARNING:     ## ---------------------------------------------------------- ##
-checking for stddef.h... no
 ```
 
 To install into specific directory use full path: `DESTDIR="$(pwd)/dest" make

@@ -103,8 +103,8 @@ endif
 
 CLEANFILES += test_cmdline_gen.c
 
-test_cmdline_gen.c: cmdline_gen.py cmdline_gen.jinja $(top_srcdir)/common/cmdline.yml
-	$(PYTHON) cmdline_gen.py
+test_cmdline_gen.c: $(top_srcdir)/tests/cmdline_gen.py $(top_srcdir)/tests/cmdline_gen.jinja $(top_srcdir)/common/cmdline.yml
+	$(PYTHON) $+ $@
 
 ############
 # test_elf #
@@ -337,8 +337,8 @@ endif
 
 CLEANFILES += test_printf_fmt_gen.c
 
-test_printf_fmt_gen.c: printf_fmt_gen.py printf_fmt_gen.jinja $(top_srcdir)/common/printf_fmt.yml
-	$(PYTHON) printf_fmt_gen.py
+test_printf_fmt_gen.c: $(top_srcdir)/tests/printf_fmt_gen.py $(top_srcdir)/tests/printf_fmt_gen.jinja $(top_srcdir)/common/printf_fmt.yml
+	$(PYTHON) $+ $@
 
 ###################
 # test_printf_gen #
@@ -360,8 +360,8 @@ endif
 
 CLEANFILES += test_printf_gen.c
 
-test_printf_gen.c: printf_gen.py printf_gen.jinja $(top_srcdir)/common/printf.yml $(top_srcdir)/common/printf_orig.yml
-	$(PYTHON) printf_gen.py
+test_printf_gen.c: $(top_srcdir)/tests/printf_gen.py $(top_srcdir)/tests/printf_gen.jinja $(top_srcdir)/common/printf.yml $(top_srcdir)/common/printf_orig.yml
+	$(PYTHON) $+ $@
 
 ####################
 # test_stack_trace #

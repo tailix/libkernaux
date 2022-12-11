@@ -9,6 +9,7 @@ nobase_include_HEADERS = \
 	kernaux/macro/packing_start.run \
 	kernaux/macro/packing_end.run \
 	kernaux/version.h \
+	kernaux/generic/display.h \
 	kernaux/generic/malloc.h \
 	kernaux/generic/mutex.h
 
@@ -17,7 +18,7 @@ nobase_include_HEADERS = \
 ########
 
 if WITH_ARCH_I386
-nobase_include_HEADERS += kernaux/arch/i386.h
+nobase_include_HEADERS += kernaux/arch/i386.h kernaux/arch/i386-idt.h
 endif
 if WITH_ARCH_RISCV64
 nobase_include_HEADERS += kernaux/arch/riscv64.h

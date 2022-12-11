@@ -21,6 +21,14 @@ cmdline_LDADD = $(top_builddir)/libkernaux.la
 cmdline_SOURCES = main.c cmdline.c
 endif
 
+###################
+# generic_display #
+###################
+
+TESTS += generic_display
+generic_display_LDADD = $(top_builddir)/libkernaux.la
+generic_display_SOURCES = main.c generic_display.c
+
 ##################
 # generic_malloc #
 ##################
@@ -45,6 +53,14 @@ TESTS += macro_bits
 macro_bits_LDADD = $(top_builddir)/libkernaux.la
 macro_bits_SOURCES = main.c macro_bits.c
 
+##############
+# macro_cast #
+##############
+
+TESTS += macro_cast
+macro_cast_LDADD = $(top_builddir)/libkernaux.la
+macro_cast_SOURCES = main.c macro_cast.c
+
 ######################
 # macro_container_of #
 ######################
@@ -60,6 +76,14 @@ macro_container_of_SOURCES = main.c macro_container_of.c
 TESTS += macro_packing
 macro_packing_LDADD = $(top_builddir)/libkernaux.la
 macro_packing_SOURCES = main.c macro_packing.c
+
+#####################
+# macro_static_test #
+#####################
+
+TESTS += macro_static_test
+macro_static_test_LDADD = $(top_builddir)/libkernaux.la
+macro_static_test_SOURCES = main.c macro_static_test.c
 
 ##########
 # memmap #
