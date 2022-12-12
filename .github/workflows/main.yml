@@ -34,7 +34,7 @@ jobs:
       - name: autogen
         run: ./autogen.sh
       - name: configure
-        run: ./configure ${{matrix.debug}} --enable-checks --enable-checks-python CC='${{matrix.cc}}' CFLAGS='${{matrix.opt}}'
+        run: ./configure ${{matrix.debug}} --enable-checks --enable-checks-pthreads --enable-checks-python CC='${{matrix.cc}}' CFLAGS='${{matrix.opt}}'
       - name: make
         run: make
       - name: check
@@ -76,7 +76,7 @@ jobs:
       - name: autogen
         run: ./autogen.sh
       - name: configure
-        run: ./configure --host='${{matrix.cross.arch}}-unknown-elf' --enable-checks --enable-checks-python AR='${{matrix.cross.cprefix}}ar' CC='${{matrix.cross.cprefix}}gcc' LD='${{matrix.cross.cprefix}}ld' RANLIB='${{matrix.cross.cprefix}}ranlib'
+        run: ./configure --host='${{matrix.cross.arch}}-unknown-elf' --enable-checks --enable-checks-pthreads --enable-checks-python AR='${{matrix.cross.cprefix}}ar' CC='${{matrix.cross.cprefix}}gcc' LD='${{matrix.cross.cprefix}}ld' RANLIB='${{matrix.cross.cprefix}}ranlib'
       - name: make
         run: make
       - name: check
@@ -99,7 +99,7 @@ jobs:
       - name: autogen
         run: ./autogen.sh
       - name: configure
-        run: ./configure --enable-debug --enable-checks --enable-checks-python --without-${{matrix.packages.without}} ${{matrix.packages.dependencies}}
+        run: ./configure --enable-debug --enable-checks --enable-checks-pthreads --enable-checks-python --without-${{matrix.packages.without}} ${{matrix.packages.dependencies}}
       - name: make
         run: make
       - name: check
@@ -138,7 +138,7 @@ jobs:
       - name: extract
         run: tar -xzf "libkernaux-$(cat VERSION).tar.gz"
       - name: configure
-        run: cd "libkernaux-$(cat VERSION)" && ./configure --enable-debug --enable-checks --enable-checks-python
+        run: cd "libkernaux-$(cat VERSION)" && ./configure --enable-debug --enable-checks --enable-checks-pthreads --enable-checks-python
       - name: make
         run: cd "libkernaux-$(cat VERSION)" && make
       - name: check

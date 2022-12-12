@@ -1,3 +1,8 @@
+2022-12-12  Alex Kotov  <kotovalexarian@gmail.com>
+
+	* examples/Makefile.am: Fix builds without pthreads
+	* include/: Non-conditional headers (except <kernaux/version.h>)
+
 2022-12-11  Alex Kotov  <kotovalexarian@gmail.com>
 
 	* include/kernaux/macro.h: Macro "KERNAUX_STATIC_TEST" has been added
