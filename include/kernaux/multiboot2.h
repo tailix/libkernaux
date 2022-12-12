@@ -7,7 +7,7 @@ extern "C" {
 
 #include <kernaux/macro.h>
 #include <kernaux/generic/display.h>
-@comment_line_memmap@#include <kernaux/memmap.h>
+#include <kernaux/memmap.h>
 #include <kernaux/multiboot2/header_macro.h>
 
 #include <stdint.h>
@@ -585,10 +585,10 @@ const char *KernAux_Multiboot2_HTag_RelocatableHeader_Preference_to_str(
  * Information conversion functions *
  ************************************/
 
-@comment_line_memmap@bool KernAux_Multiboot2_Info_to_memmap(
-@comment_line_memmap@    const struct KernAux_Multiboot2_Info *multiboot2_info,
-@comment_line_memmap@    KernAux_MemMap memmap
-@comment_line_memmap@);
+bool KernAux_Multiboot2_Info_to_memmap(
+    const struct KernAux_Multiboot2_Info *multiboot2_info,
+    KernAux_MemMap memmap
+);
 
 /***************************
  * Header helper functions *
