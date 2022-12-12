@@ -11,7 +11,7 @@ main_freebsd_task:
     - pkg install --yes autoconf automake libtool
   main_build_script:
     - ./autogen.sh
-    - ./configure --enable-debug --enable-checks CFLAGS='-O3'
+    - ./configure --enable-debug --enable-checks --enable-checks-pthreads CFLAGS='-O3'
     - make
     - sudo make install
   main_test_script:
