@@ -319,10 +319,8 @@ AS_IF([test "$enable_freestanding" = yes],
 ##############
 
 AC_LANG([C])
-
-AM_PROG_AR
 AM_PROG_AS
-AC_PROG_CC
+
 AC_C_INLINE
 
 AC_HEADER_STDBOOL
