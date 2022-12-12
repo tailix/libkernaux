@@ -71,7 +71,7 @@ zero). Work-in-progress APIs can change at any time.
 * Utilities
   * [Measurement units utils](/include/kernaux/units.h) (*work in progress*)
     * [Example: To human](/examples/units_human.c)
-  * [Memory map](/include/kernaux/memmap.h) (*non-breaking since* **0.4.0**)
+  * [Memory map](/include/kernaux/memmap.h) (*non-breaking since* **?.?.?**)
     * [Example](/examples/memmap.c)
   * [printf format parser](/include/kernaux/printf_fmt.h) (*non-breaking since* **0.6.0**)
     * [Example](/examples/printf_fmt.c)
