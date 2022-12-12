@@ -29,7 +29,6 @@ AC_CONFIG_FILES([
   include/Makefile
   libc/Makefile
   libc/include/Makefile
-  include/kernaux/multiboot2.h
   include/kernaux/version.h
   tests/Makefile
 ])
