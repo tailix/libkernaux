@@ -10,6 +10,7 @@
 #include <kernaux/cmdline.h>
 #include <kernaux/elf.h>
 #include <kernaux/free_list.h>
+#include <kernaux/generic/display.h>
 #include <kernaux/generic/malloc.h>
 #include <kernaux/generic/mutex.h>
 #include <kernaux/macro.h>

@@ -25,7 +25,7 @@ nobase_include_HEADERS = \
 	kernaux/multiboot2/header_macro.h \
 	kernaux/ntoa.h                    \
 	kernaux/pfa.h                     \
-	kernaux/printf_fmt.h              \
 	kernaux/printf.h                  \
+	kernaux/printf_fmt.h              \
 	kernaux/units.h                   \
 	kernaux/version.h
