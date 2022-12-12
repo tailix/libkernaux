@@ -73,8 +73,6 @@
 /libc/include/Makefile
 /tests/Makefile
 
-/include/kernaux.h
-/include/kernaux/multiboot2.h
 /include/kernaux/version.h
 
 /examples/assert

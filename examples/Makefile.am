@@ -41,9 +41,11 @@ generic_malloc_SOURCES = main.c generic_malloc.c
 # generic_mutex #
 #################
 
+if ENABLE_CHECKS_PTHREADS
 TESTS += generic_mutex
 generic_mutex_LDADD = $(top_builddir)/libkernaux.la
 generic_mutex_SOURCES = main.c generic_mutex.c
+endif
 
 ##############
 # macro_bits #
