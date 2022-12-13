@@ -9,15 +9,16 @@
 #include <kernaux/memmap.h>
 
 #include <assert.h>
+#include <setjmp.h>
 #include <stdbool.h>
 #include <stddef.h>
 #include <string.h>
 
 static KernAux_MemMap memmap;
 
+static jmp_buf jmpbuf;
 static unsigned int assert_count_exp = 0;
 static unsigned int assert_count_ctr = 0;
-
 static const char *assert_last_file = NULL;
 
 static void assert_cb(
@@ -27,6 +28,8 @@ static void assert_cb(
 ) {
     ++assert_count_ctr;
     assert_last_file = file;
+
+    longjmp(jmpbuf, 1);
 }
 
 static void before_assert()
@@ -52,6 +55,8 @@ static void expect_assert()
 
 void test_main()
 {
+    assert(setjmp(jmpbuf) == 0);
+
     kernaux_assert_cb = assert_cb;
 
     {
@@ -71,7 +76,9 @@ void test_main()
         assert(KernAux_MemMap_entry_by_index(memmap, 0) == NULL);
 
         before_assert();
-        assert(!KernAux_MemMap_finish(memmap));
+        if (setjmp(jmpbuf) == 0) {
+            assert(!KernAux_MemMap_finish(memmap));
+        }
         expect_assert();
     }
 
@@ -183,7 +190,9 @@ void test_main()
         assert(MEMMAP.entries[0].limit == 2);
 
         before_assert();
-        assert(KernAux_MemMap_entry_by_index(memmap, 0) == NULL);
+        if (setjmp(jmpbuf) == 0) {
+            assert(KernAux_MemMap_entry_by_index(memmap, 0) == NULL);
+        }
         expect_assert();
     }
 

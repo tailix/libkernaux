@@ -2,9 +2,11 @@
 #include <kernaux/assert.h>
 
 #include <assert.h>
+#include <setjmp.h>
 #include <stddef.h>
 #include <string.h>
 
+static jmp_buf jmpbuf;
 static unsigned int count = 0;
 static const char *last_file = NULL;
 static int last_line = 0;
@@ -19,30 +21,31 @@ static void assert_cb(
     last_file = file;
     last_line = line;
     last_str = str;
+
+    longjmp(jmpbuf, 1);
 }
 
 int main()
 {
-    KERNAUX_PANIC("foo");
-
-    assert(count == 0);
-    assert(last_file == NULL);
-    assert(last_line == 0);
-    assert(last_str == NULL);
+    assert(setjmp(jmpbuf) == 0);
 
     kernaux_assert_cb = assert_cb;
 
-    KERNAUX_PANIC("bar");
+    if (setjmp(jmpbuf) == 0) {
+        KERNAUX_PANIC("bar");
+    }
 
     assert(count == 1);
     assert(strcmp(last_file, __FILE__) == 0);
-    assert(last_line == __LINE__ - 4);
+    assert(last_line == __LINE__ - 5);
     assert(strcmp(last_str, "bar") == 0);
 
-    KERNAUX_PANIC("car");
+    if (setjmp(jmpbuf) == 0) {
+        KERNAUX_PANIC("car");
+    }
 
     assert(count == 2);
     assert(strcmp(last_file, __FILE__) == 0);
-    assert(last_line == __LINE__ - 4);
+    assert(last_line == __LINE__ - 5);
     assert(strcmp(last_str, "car") == 0);
 }

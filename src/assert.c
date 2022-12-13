@@ -6,7 +6,7 @@
 
 #include <stddef.h>
 
-void (*kernaux_assert_cb)(const char *file, int line, const char *msg) = NULL;
+KernAux_Assert_Cb kernaux_assert_cb = NULL;
 
 void kernaux_assert_do(
     const char *const file,
@@ -14,4 +14,8 @@ void kernaux_assert_do(
     const char *const msg
 ) {
     if (kernaux_assert_cb) kernaux_assert_cb(file, line, msg);
+
+    // Enforce noreturn.
+    volatile int x = 0;
+    for (;;) ++x;
 }
