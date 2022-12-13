@@ -8,10 +8,11 @@ main_freebsd_task:
   name: Main (FreeBSD)
   only_if: $CIRRUS_BRANCH == 'master' || $CIRRUS_BASE_BRANCH == 'master'
   dependencies_script:
-    - pkg install --yes autoconf automake libtool
+    - pkg install --yes autoconf automake cppcheck libtool py39-pip python3
+    - pip install --user Jinja2 PyYAML
   main_build_script:
     - ./autogen.sh
-    - ./configure --enable-debug --enable-checks --enable-checks-pthreads CFLAGS='-O3'
+    - ./configure --enable-debug --enable-checks-all CFLAGS='-O3'
     - make
     - sudo make install
   main_test_script:
