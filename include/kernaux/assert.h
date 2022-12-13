@@ -5,7 +5,7 @@
 extern "C" {
 #endif
 
-#ifdef KERNAUX_DEBUG
+#ifdef KERNAUX_ENABLE_ASSERT
 #define KERNAUX_PANIC(msg) (kernaux_assert_do(__FILE__, __LINE__, msg))
 #define KERNAUX_ASSERT(cond) ((cond) ? (void)0 : KERNAUX_PANIC(#cond))
 #else

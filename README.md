@@ -100,10 +100,10 @@ zero). Work-in-progress APIs can change at any time.
 `#define` the following C preprocessor macros before including `<kernaux.h>` and
 `<kernaux/*.h>` files. They have effect on your code, not the library code.
 
-* `KERNAUX_DEBUG` - enable assertions.
 * `KERNAUX_ACCESS_PRIVATE` - disable access modifier "private". Don't do this!
 * `KERNAUX_ACCESS_PROTECTED` - disable access modifier "protected". Only do this
   in a file where you implement an inherited type.
+* `KERNAUX_ENABLE_ASSERT` - enable assertions.
 * `KERNAUX_BITFIELDS` - enable bitfields in packed structs. It doesn't follow
   the C standard and may be incompatible with some compilers.
 
@@ -115,7 +115,7 @@ void (*kernaux_assert_cb)(const char *file, int line, const char *msg)
 ```
 
 Assertion callback. It's better to always set it to some function which always
-interrupts the execution, even when debugging is disabled. It may for example
+interrupts the execution, even when assertions are disabled. It may for example
 call `abort()` in hosted environment, raise an exception in Ruby, panic in Rust
 or power off the machine in freestanding environment. It may also log the error
 location and message.
@@ -152,7 +152,7 @@ stable options.
 
 #### Features
 
-* `--(enable|disable)-debug` - debugging
+* `--(enable|disable)-assert` - assertions
 * `--(enable|disable)-float` - floating-point arithmetic
 * `--(enable|disable)-werror` - fail on warning (`CFLAGS+='-Werror'`)
 

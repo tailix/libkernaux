@@ -31,7 +31,7 @@ tasks:
   - build: |
       cd libkernaux
       ./autogen.sh
-      ./configure --enable-debug --enable-checks-all CFLAGS='-O3'
+      ./configure --enable-assert --enable-checks-all CFLAGS='-O3'
       make
       doas make install
   - test: |
