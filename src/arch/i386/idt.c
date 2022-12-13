@@ -3,7 +3,7 @@
 #endif
 
 #include <kernaux/arch/i386.h>
-#include <kernaux/assert.h>
+#include <kernaux/panic.h>
 
 #include <string.h>
 
