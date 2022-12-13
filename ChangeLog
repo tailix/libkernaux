@@ -1,3 +1,7 @@
+2022-12-13  Alex Kotov  <kotovalexarian@gmail.com>
+
+	* tests/Makefile.am: Fix FreeBSD builds
+
 2022-12-12  Alex Kotov  <kotovalexarian@gmail.com>
 
 	* examples/Makefile.am: Fix builds without pthreads
