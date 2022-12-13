@@ -1,5 +1,5 @@
 #define KERNAUX_DEBUG
-#include <kernaux/panic.h>
+#include <kernaux/assert.h>
 
 #include <assert.h>
 #include <stddef.h>

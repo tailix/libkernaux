@@ -9,11 +9,11 @@
 #include "config.h"
 #endif
 
+#include <kernaux/assert.h>
 #include <kernaux/free_list.h>
 #include <kernaux/generic/malloc.h>
 #include <kernaux/generic/mutex.h>
 #include <kernaux/macro.h>
-#include <kernaux/panic.h>
 
 #include <stddef.h>
 #include <stdint.h>

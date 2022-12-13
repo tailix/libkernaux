@@ -2,8 +2,8 @@
 #include "config.h"
 #endif
 
+#include <kernaux/assert.h>
 #include <kernaux/memmap.h>
-#include <kernaux/panic.h>
 
 #include <stdbool.h>
 #include <stddef.h>

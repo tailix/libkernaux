@@ -2,8 +2,8 @@
 #include "config.h"
 #endif
 
+#include <kernaux/assert.h>
 #include <kernaux/macro.h>
-#include <kernaux/panic.h>
 #include <kernaux/pfa.h>
 
 #include <string.h>

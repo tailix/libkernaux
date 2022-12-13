@@ -46,7 +46,7 @@ zero). Work-in-progress APIs can change at any time.
     * [Example: CONTAINER\_OF](/examples/macro_container_of.c)
     * [Example: BITS](/examples/macro_bits.c)
     * [Example: STATIC\_TEST\*](/examples/macro_static_test.c)
-  * [Panic & assertions](/include/kernaux/panic.h) (*non-breaking since* **?.?.?**)
+  * [Assertions](/include/kernaux/assert.h) (*non-breaking since* **?.?.?**)
     * [Example: Assert](/examples/assert.c)
     * [Example: Panic](/examples/panic.c)
   * Stack trace *(planned)*
@@ -110,7 +110,7 @@ zero). Work-in-progress APIs can change at any time.
 ### Global variables
 
 ```c
-// in <kernaux/panic.h>
+// in <kernaux/assert.h>
 void (*kernaux_assert_cb)(const char *file, int line, const char *msg)
 ```
 

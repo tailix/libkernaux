@@ -4,9 +4,9 @@
 
 #define KERNAUX_ACCESS_PRIVATE
 
+#include <kernaux/assert.h>
 #include <kernaux/macro.h>
 #include <kernaux/memmap.h>
-#include <kernaux/panic.h>
 
 #include <assert.h>
 #include <stdbool.h>

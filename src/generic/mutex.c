@@ -2,8 +2,8 @@
 #include "config.h"
 #endif
 
+#include <kernaux/assert.h>
 #include <kernaux/generic/mutex.h>
-#include <kernaux/panic.h>
 
 void KernAux_Mutex_lock(const KernAux_Mutex mutex)
 {

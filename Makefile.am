@@ -30,10 +30,10 @@ lib_LTLIBRARIES = libkernaux.la
 
 libkernaux_la_LIBADD =
 libkernaux_la_SOURCES = \
+	src/assert.c \
 	src/generic/display.c \
 	src/generic/malloc.c \
-	src/generic/mutex.c \
-	src/panic.c
+	src/generic/mutex.c
 
 ########
 # libc #
