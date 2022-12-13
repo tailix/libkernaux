@@ -8,7 +8,7 @@ main_freebsd_task:
   name: Main (FreeBSD)
   only_if: $CIRRUS_BRANCH == 'master' || $CIRRUS_BASE_BRANCH == 'master'
   dependencies_script:
-    - pkg install --yes autoconf automake cppcheck libtool libyaml py39-pip python3
+    - pkg install --yes autoconf automake cppcheck libtool libyaml py39-pip py39-wheel python3
     - pip install --user Jinja2 PyYAML
   main_build_script:
     - ./autogen.sh
