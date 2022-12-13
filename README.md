@@ -103,9 +103,9 @@ zero). Work-in-progress APIs can change at any time.
 * `KERNAUX_ACCESS_PRIVATE` - disable access modifier "private". Don't do this!
 * `KERNAUX_ACCESS_PROTECTED` - disable access modifier "protected". Only do this
   in a file where you implement an inherited type.
-* `KERNAUX_ENABLE_ASSERT` - enable assertions.
 * `KERNAUX_BITFIELDS` - enable bitfields in packed structs. It doesn't follow
   the C standard and may be incompatible with some compilers.
+* `KERNAUX_DISABLE_ASSERT` - disable assertions.
 
 ### Global variables
 

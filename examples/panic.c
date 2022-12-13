@@ -1,4 +1,4 @@
-#define KERNAUX_ENABLE_ASSERT
+#undef KERNAUX_DISABLE_ASSERT
 #include <kernaux/assert.h>
 
 #include <assert.h>

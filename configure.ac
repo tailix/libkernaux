@@ -278,7 +278,7 @@ AS_IF([test "$with_arch_i386"         = yes], [AC_DEFINE([WITH_ARCH_X86],       
 AS_IF([test "$with_arch_x86_64"       = yes], [AC_DEFINE([WITH_ARCH_X86],          [1], [with architecture x86])])
 
 dnl Additional
-AS_IF([test "$enable_assert"          = yes], [AC_DEFINE([KERNAUX_ENABLE_ASSERT],  [1], [enabled assertions])])
+AS_IF([test "$enable_assert"          = no ], [AC_DEFINE([KERNAUX_DISABLE_ASSERT], [1], [disabled assertions])])
 
 
 

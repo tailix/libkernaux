@@ -4,7 +4,7 @@
 	* configure.ac: Rename feature "--(enable|disable)-debug" to
 	"--(enable|disable)-assert"
 	* include/kernaux/assert.h: Rename definition "KERNAUX_DEBUG" to
-	"KERNAUX_ENABLE_ASSERT"
+	"KERNAUX_DISABLE_ASSERT"
 
 2022-12-12  Alex Kotov  <kotovalexarian@gmail.com>
 
