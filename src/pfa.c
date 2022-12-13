@@ -41,14 +41,14 @@ static void KernAux_PFA_mark(
 
 void KernAux_PFA_initialize(const KernAux_PFA pfa)
 {
-    KERNAUX_ASSERT(pfa);
+    KERNAUX_NOTNULL(pfa);
     // cppcheck-suppress ctunullpointer
     memset(pfa->flags, 0, sizeof(pfa->flags));
 }
 
 bool KernAux_PFA_is_available(const KernAux_PFA pfa, const size_t page_addr)
 {
-    KERNAUX_ASSERT(pfa);
+    KERNAUX_NOTNULL(pfa);
     KERNAUX_ASSERT(page_addr % KERNAUX_PFA_PAGE_SIZE == 0);
 
     // cppcheck-suppress ctunullpointer
@@ -77,7 +77,7 @@ void KernAux_PFA_mark(
     size_t start,
     size_t end
 ) {
-    KERNAUX_ASSERT(pfa);
+    KERNAUX_NOTNULL(pfa);
     KERNAUX_ASSERT(start < end);
 
     const size_t start_rem = start % KERNAUX_PFA_PAGE_SIZE;
@@ -105,7 +105,7 @@ void KernAux_PFA_mark(
 
 size_t KernAux_PFA_alloc_pages(const KernAux_PFA pfa, size_t mem_size)
 {
-    KERNAUX_ASSERT(pfa);
+    KERNAUX_NOTNULL(pfa);
 
     const size_t mem_rem = mem_size % KERNAUX_PFA_PAGE_SIZE;
 
@@ -144,7 +144,7 @@ void KernAux_PFA_free_pages(
     const size_t page_addr,
     size_t mem_size
 ) {
-    KERNAUX_ASSERT(pfa);
+    KERNAUX_NOTNULL(pfa);
     KERNAUX_ASSERT(page_addr % KERNAUX_PFA_PAGE_SIZE == 0);
 
     const size_t mem_rem = mem_size % KERNAUX_PFA_PAGE_SIZE;

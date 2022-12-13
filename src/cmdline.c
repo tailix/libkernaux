@@ -58,10 +58,10 @@ bool kernaux_cmdline(
     const size_t arg_count_max,
     const size_t buffer_size
 ) {
-    KERNAUX_ASSERT(cmdline);
-    KERNAUX_ASSERT(error_msg);
+    KERNAUX_NOTNULL(cmdline);
+    KERNAUX_NOTNULL(error_msg);
     KERNAUX_ASSERT(argc);
-    KERNAUX_ASSERT(argv);
+    KERNAUX_NOTNULL(argv);
     KERNAUX_ASSERT(arg_count_max > 0);
     KERNAUX_ASSERT(buffer_size > 0);
 
@@ -100,8 +100,8 @@ bool kernaux_cmdline_common(
     const size_t arg_count_max,
     const size_t buffer_size
 ) {
-    KERNAUX_ASSERT(cmdline);
-    KERNAUX_ASSERT(error_msg);
+    KERNAUX_NOTNULL(cmdline);
+    KERNAUX_NOTNULL(error_msg);
     KERNAUX_ASSERT(argc);
     (void)arg_idxs;
 

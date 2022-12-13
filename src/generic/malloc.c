@@ -10,7 +10,7 @@
 
 void *KernAux_Malloc_calloc(KernAux_Malloc malloc, size_t nmemb, size_t size)
 {
-    KERNAUX_ASSERT(malloc);
+    KERNAUX_NOTNULL(malloc);
 
     // Common implementation
     const size_t total_size = nmemb * size;
@@ -28,7 +28,7 @@ void *KernAux_Malloc_calloc(KernAux_Malloc malloc, size_t nmemb, size_t size)
 
 void KernAux_Malloc_free(KernAux_Malloc malloc, void *ptr)
 {
-    KERNAUX_ASSERT(malloc);
+    KERNAUX_NOTNULL(malloc);
     KERNAUX_ASSERT(malloc->free);
 
     // Common implementation
@@ -40,7 +40,7 @@ void KernAux_Malloc_free(KernAux_Malloc malloc, void *ptr)
 
 void *KernAux_Malloc_malloc(KernAux_Malloc malloc, size_t size)
 {
-    KERNAUX_ASSERT(malloc);
+    KERNAUX_NOTNULL(malloc);
     KERNAUX_ASSERT(malloc->malloc);
 
     // Common implementation
@@ -52,7 +52,7 @@ void *KernAux_Malloc_malloc(KernAux_Malloc malloc, size_t size)
 
 void *KernAux_Malloc_realloc(KernAux_Malloc malloc, void *ptr, size_t size)
 {
-    KERNAUX_ASSERT(malloc);
+    KERNAUX_NOTNULL(malloc);
     KERNAUX_ASSERT(malloc->realloc);
 
     // Common implementation

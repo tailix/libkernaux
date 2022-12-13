@@ -69,7 +69,7 @@ void KernAux_FreeList_init(
     const KernAux_FreeList free_list,
     const KernAux_Mutex mutex
 ) {
-    KERNAUX_ASSERT(free_list);
+    KERNAUX_NOTNULL(free_list);
 
     free_list->malloc.calloc  = NULL;
     free_list->malloc.free    = KernAux_FreeList_free;
@@ -84,8 +84,8 @@ void KernAux_FreeList_add_zone(
     void *const ptr,
     const size_t size
 ) {
-    KERNAUX_ASSERT(free_list);
-    KERNAUX_ASSERT(ptr);
+    KERNAUX_NOTNULL(free_list);
+    KERNAUX_NOTNULL(ptr);
     KERNAUX_ASSERT(size >= MIN_ZONE_SIZE);
 
     LOCK(free_list);
@@ -126,8 +126,8 @@ block_found:
 void KernAux_FreeList_free(void *const malloc, void *const ptr)
 {
     const KernAux_FreeList free_list = malloc;
-    KERNAUX_ASSERT(free_list);
-    KERNAUX_ASSERT(ptr);
+    KERNAUX_NOTNULL(free_list);
+    KERNAUX_NOTNULL(ptr);
 
     LOCK(free_list);
 
@@ -164,7 +164,7 @@ block_added:
 void *KernAux_FreeList_malloc(void *const malloc, size_t size)
 {
     const KernAux_FreeList free_list = malloc;
-    KERNAUX_ASSERT(free_list);
+    KERNAUX_NOTNULL(free_list);
     KERNAUX_ASSERT(size);
 
     LOCK(free_list);
@@ -220,8 +220,8 @@ void *KernAux_FreeList_realloc(
     const size_t new_size
 ) {
     const KernAux_FreeList free_list = malloc;
-    KERNAUX_ASSERT(free_list);
-    KERNAUX_ASSERT(old_ptr);
+    KERNAUX_NOTNULL(free_list);
+    KERNAUX_NOTNULL(old_ptr);
     KERNAUX_ASSERT(new_size);
 
     LOCK(free_list);
@@ -243,7 +243,7 @@ void *KernAux_FreeList_realloc(
 
 void KernAux_FreeList_defrag(const KernAux_FreeList free_list)
 {
-    KERNAUX_ASSERT(free_list);
+    KERNAUX_NOTNULL(free_list);
 
     for (
         KernAux_FreeList_Node item_node = free_list->head;
@@ -267,8 +267,8 @@ void KernAux_FreeList_insert(
     const KernAux_FreeList_Node prev,
     const KernAux_FreeList_Node next
 ) {
-    KERNAUX_ASSERT(free_list);
-    KERNAUX_ASSERT(node);
+    KERNAUX_NOTNULL(free_list);
+    KERNAUX_NOTNULL(node);
     KERNAUX_ASSERT(node != prev);
     KERNAUX_ASSERT(node != next);
     KERNAUX_ASSERT(!prev || prev->next == next);
@@ -285,8 +285,8 @@ void KernAux_FreeList_remove(
     const KernAux_FreeList free_list,
     const KernAux_FreeList_Node node
 ) {
-    KERNAUX_ASSERT(free_list);
-    KERNAUX_ASSERT(node);
+    KERNAUX_NOTNULL(free_list);
+    KERNAUX_NOTNULL(node);
     KERNAUX_ASSERT(!node->next || node->next->prev == node);
     KERNAUX_ASSERT(!node->prev || node->prev->next == node);
 

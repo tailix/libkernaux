@@ -18,8 +18,8 @@ void KernAux_Multiboot2_Header_print(
     const struct KernAux_Multiboot2_Header *const multiboot2_header,
     const KernAux_Display display
 ) {
-    KERNAUX_ASSERT(multiboot2_header);
-    KERNAUX_ASSERT(display);
+    KERNAUX_NOTNULL(multiboot2_header);
+    KERNAUX_NOTNULL(display);
 
     KERNAUX_CAST_CONST(unsigned long, magic,      multiboot2_header->magic);
     KERNAUX_CAST_CONST(unsigned long, total_size, multiboot2_header->total_size);
@@ -54,8 +54,8 @@ void KernAux_Multiboot2_HTagBase_print(
     const struct KernAux_Multiboot2_HTagBase *const tag_base,
     const KernAux_Display display
 ) {
-    KERNAUX_ASSERT(tag_base);
-    KERNAUX_ASSERT(display);
+    KERNAUX_NOTNULL(tag_base);
+    KERNAUX_NOTNULL(display);
 
     if (!KernAux_Multiboot2_HTagBase_is_valid(tag_base)) return;
 

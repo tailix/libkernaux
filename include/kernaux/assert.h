@@ -13,6 +13,8 @@ extern "C" {
 #define KERNAUX_ASSERT(cond) ((cond) ? (void)0 : KERNAUX_PANIC(#cond))
 #endif
 
+#define KERNAUX_NOTNULL(cond) KERNAUX_ASSERT(cond)
+
 void kernaux_assert_do(const char *file, int line, const char *msg);
 
 extern void (*kernaux_assert_cb)(const char *file, int line, const char *msg);

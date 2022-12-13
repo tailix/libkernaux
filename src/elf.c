@@ -8,7 +8,7 @@
 bool KernAux_ELF_Header_is_valid(
     const struct KernAux_ELF_Header *const header
 ) {
-    KERNAUX_ASSERT(header);
+    KERNAUX_NOTNULL(header);
 
     if (!(
         header->magic_0x7f     == 0x7f &&

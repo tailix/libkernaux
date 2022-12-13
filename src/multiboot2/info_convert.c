@@ -17,7 +17,7 @@ bool KernAux_Multiboot2_Info_to_memmap(
     const struct KernAux_Multiboot2_Info *multiboot2_info,
     KernAux_MemMap memmap
 ) {
-    KERNAUX_ASSERT(multiboot2_info);
+    KERNAUX_NOTNULL(multiboot2_info);
 
     KernAux_MemMap_init(memmap, 0);
     if (!KernAux_Multiboot2_Info_is_valid(multiboot2_info)) return false;

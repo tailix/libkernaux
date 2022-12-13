@@ -70,8 +70,8 @@ static size_t _etoa(out_fct_type out, char* buffer, size_t idx, size_t maxlen, d
 
 int kernaux_fprintf(void (*out)(char, void*), void *data, const char* format, ...)
 {
-    KERNAUX_ASSERT(out);
-    KERNAUX_ASSERT(format);
+    KERNAUX_NOTNULL(out);
+    KERNAUX_NOTNULL(format);
 
     va_list va;
     va_start(va, format);
@@ -83,8 +83,8 @@ int kernaux_fprintf(void (*out)(char, void*), void *data, const char* format, ..
 
 int kernaux_vfprintf(void (*out)(char, void*), void *data, const char* format, va_list va)
 {
-    KERNAUX_ASSERT(out);
-    KERNAUX_ASSERT(format);
+    KERNAUX_NOTNULL(out);
+    KERNAUX_NOTNULL(format);
 
     const out_fct_wrap_type out_fct_wrap = { out, data };
     return _vsnprintf(_out_fct, (char*)(uintptr_t)&out_fct_wrap, (size_t)-1, format, va);
@@ -92,8 +92,8 @@ int kernaux_vfprintf(void (*out)(char, void*), void *data, const char* format, v
 
 int kernaux_snprintf(char* buffer, size_t count, const char* format, ...)
 {
-    KERNAUX_ASSERT(buffer);
-    KERNAUX_ASSERT(format);
+    KERNAUX_NOTNULL(buffer);
+    KERNAUX_NOTNULL(format);
 
     va_list va;
     va_start(va, format);
@@ -104,16 +104,16 @@ int kernaux_snprintf(char* buffer, size_t count, const char* format, ...)
 
 int kernaux_vsnprintf(char* buffer, size_t count, const char* format, va_list va)
 {
-    KERNAUX_ASSERT(buffer);
-    KERNAUX_ASSERT(format);
+    KERNAUX_NOTNULL(buffer);
+    KERNAUX_NOTNULL(format);
 
     return _vsnprintf(_out_buffer, buffer, count, format, va);
 }
 
 int kernaux_sprintf(char* buffer, const char* format, ...)
 {
-    KERNAUX_ASSERT(buffer);
-    KERNAUX_ASSERT(format);
+    KERNAUX_NOTNULL(buffer);
+    KERNAUX_NOTNULL(format);
 
     va_list va;
     va_start(va, format);
@@ -128,7 +128,7 @@ int kernaux_sprintf(char* buffer, const char* format, ...)
 
 int _vsnprintf(out_fct_type out, char* buffer, const size_t maxlen, const char* format, va_list va)
 {
-    KERNAUX_ASSERT(format);
+    KERNAUX_NOTNULL(format);
 
     size_t idx = 0u;
 

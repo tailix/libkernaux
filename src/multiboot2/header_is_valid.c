@@ -12,7 +12,7 @@
 bool KernAux_Multiboot2_Header_is_valid(
     const struct KernAux_Multiboot2_Header *const multiboot2_header
 ) {
-    KERNAUX_ASSERT(multiboot2_header);
+    KERNAUX_NOTNULL(multiboot2_header);
 
     if (multiboot2_header->magic != KERNAUX_MULTIBOOT2_HEADER_MAGIC) {
         return false;
@@ -86,7 +86,7 @@ bool KernAux_Multiboot2_Header_is_valid(
 bool KernAux_Multiboot2_HTagBase_is_valid(
     const struct KernAux_Multiboot2_HTagBase *tag_base
 ) {
-    KERNAUX_ASSERT(tag_base);
+    KERNAUX_NOTNULL(tag_base);
 
     switch (tag_base->type) {
     case KERNAUX_MULTIBOOT2_HTAG_NONE:
@@ -141,7 +141,7 @@ bool KernAux_Multiboot2_HTagBase_is_valid(
 bool KernAux_Multiboot2_HTag_None_is_valid(
     const struct KernAux_Multiboot2_HTag_None *tag
 ) {
-    KERNAUX_ASSERT(tag);
+    KERNAUX_NOTNULL(tag);
     return (
         tag->base.type == KERNAUX_MULTIBOOT2_HTAG_NONE &&
         tag->base.size == 8
@@ -151,7 +151,7 @@ bool KernAux_Multiboot2_HTag_None_is_valid(
 bool KernAux_Multiboot2_HTag_InfoReq_is_valid(
     const struct KernAux_Multiboot2_HTag_InfoReq *tag
 ) {
-    KERNAUX_ASSERT(tag);
+    KERNAUX_NOTNULL(tag);
     return (
         tag->base.type == KERNAUX_MULTIBOOT2_HTAG_INFO_REQ &&
         tag->base.size > 8 &&
@@ -162,7 +162,7 @@ bool KernAux_Multiboot2_HTag_InfoReq_is_valid(
 bool KernAux_Multiboot2_HTag_Addr_is_valid(
     const struct KernAux_Multiboot2_HTag_Addr *tag
 ) {
-    KERNAUX_ASSERT(tag);
+    KERNAUX_NOTNULL(tag);
     return (
         tag->base.type == KERNAUX_MULTIBOOT2_HTAG_ADDR &&
         tag->base.size == 24
@@ -172,7 +172,7 @@ bool KernAux_Multiboot2_HTag_Addr_is_valid(
 bool KernAux_Multiboot2_HTag_EntryAddr_is_valid(
     const struct KernAux_Multiboot2_HTag_EntryAddr *tag
 ) {
-    KERNAUX_ASSERT(tag);
+    KERNAUX_NOTNULL(tag);
     return (
         tag->base.type == KERNAUX_MULTIBOOT2_HTAG_ENTRY_ADDR &&
         tag->base.size == 12
@@ -182,7 +182,7 @@ bool KernAux_Multiboot2_HTag_EntryAddr_is_valid(
 bool KernAux_Multiboot2_HTag_Flags_is_valid(
     const struct KernAux_Multiboot2_HTag_Flags *tag
 ) {
-    KERNAUX_ASSERT(tag);
+    KERNAUX_NOTNULL(tag);
     return (
         tag->base.type == KERNAUX_MULTIBOOT2_HTAG_FLAGS &&
         tag->base.size == 12
@@ -192,7 +192,7 @@ bool KernAux_Multiboot2_HTag_Flags_is_valid(
 bool KernAux_Multiboot2_HTag_Framebuffer_is_valid(
     const struct KernAux_Multiboot2_HTag_Framebuffer *tag
 ) {
-    KERNAUX_ASSERT(tag);
+    KERNAUX_NOTNULL(tag);
     return (
         tag->base.type == KERNAUX_MULTIBOOT2_HTAG_FRAMEBUFFER &&
         tag->base.size == 20
@@ -202,7 +202,7 @@ bool KernAux_Multiboot2_HTag_Framebuffer_is_valid(
 bool KernAux_Multiboot2_HTag_ModuleAlign_is_valid(
     const struct KernAux_Multiboot2_HTag_ModuleAlign *tag
 ) {
-    KERNAUX_ASSERT(tag);
+    KERNAUX_NOTNULL(tag);
     return (
         tag->base.type == KERNAUX_MULTIBOOT2_HTAG_MODULE_ALIGN &&
         tag->base.size == 8
@@ -212,7 +212,7 @@ bool KernAux_Multiboot2_HTag_ModuleAlign_is_valid(
 bool KernAux_Multiboot2_HTag_EFIBootServices_is_valid(
     const struct KernAux_Multiboot2_HTag_EFIBootServices *tag
 ) {
-    KERNAUX_ASSERT(tag);
+    KERNAUX_NOTNULL(tag);
     return (
         tag->base.type == KERNAUX_MULTIBOOT2_HTAG_EFI_BOOT_SERVICES &&
         tag->base.size == 8
@@ -222,7 +222,7 @@ bool KernAux_Multiboot2_HTag_EFIBootServices_is_valid(
 bool KernAux_Multiboot2_HTag_EFII386EntryAddr_is_valid(
     const struct KernAux_Multiboot2_HTag_EFII386EntryAddr *tag
 ) {
-    KERNAUX_ASSERT(tag);
+    KERNAUX_NOTNULL(tag);
     return (
         tag->base.type == KERNAUX_MULTIBOOT2_HTAG_EFI_I386_ENTRY_ADDR &&
         tag->base.size == 12
@@ -232,7 +232,7 @@ bool KernAux_Multiboot2_HTag_EFII386EntryAddr_is_valid(
 bool KernAux_Multiboot2_HTag_EFIAmd64EntryAddr_is_valid(
     const struct KernAux_Multiboot2_HTag_EFIAmd64EntryAddr *tag
 ) {
-    KERNAUX_ASSERT(tag);
+    KERNAUX_NOTNULL(tag);
     return (
         tag->base.type == KERNAUX_MULTIBOOT2_HTAG_EFI_AMD64_ENTRY_ADDR &&
         tag->base.size == 12
@@ -242,7 +242,7 @@ bool KernAux_Multiboot2_HTag_EFIAmd64EntryAddr_is_valid(
 bool KernAux_Multiboot2_HTag_RelocatableHeader_is_valid(
     const struct KernAux_Multiboot2_HTag_RelocatableHeader *tag
 ) {
-    KERNAUX_ASSERT(tag);
+    KERNAUX_NOTNULL(tag);
 
     if (!(
         tag->base.type == KERNAUX_MULTIBOOT2_HTAG_RELOCATABLE_HEADER &&

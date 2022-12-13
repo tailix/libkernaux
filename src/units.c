@@ -16,7 +16,7 @@ bool kernaux_units_human_raw(
     char *const buffer,
     const size_t buffer_size
 ) {
-    KERNAUX_ASSERT(buffer);
+    KERNAUX_NOTNULL(buffer);
     KERNAUX_ASSERT(buffer_size > 0);
 
     char tmp_buffer[TMP_BUFFER_SIZE];
@@ -56,7 +56,7 @@ bool kernaux_units_human_dec(
     char *const buffer,
     const size_t buffer_size
 ) {
-    KERNAUX_ASSERT(buffer);
+    KERNAUX_NOTNULL(buffer);
     KERNAUX_ASSERT(buffer_size > 0);
 
     char tmp_buffer[TMP_BUFFER_SIZE];

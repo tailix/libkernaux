@@ -20,8 +20,8 @@ void KernAux_Multiboot2_Info_print(
     const struct KernAux_Multiboot2_Info *const multiboot2_info,
     const KernAux_Display display
 ) {
-    KERNAUX_ASSERT(multiboot2_info);
-    KERNAUX_ASSERT(display);
+    KERNAUX_NOTNULL(multiboot2_info);
+    KERNAUX_NOTNULL(display);
 
     KERNAUX_CAST_CONST(unsigned long, total_size, multiboot2_info->total_size);
     KERNAUX_CAST_CONST(unsigned long, reserved1,  multiboot2_info->reserved1);
@@ -50,8 +50,8 @@ void KernAux_Multiboot2_ITagBase_print(
     const struct KernAux_Multiboot2_ITagBase *const tag_base,
     const KernAux_Display display
 ) {
-    KERNAUX_ASSERT(tag_base);
-    KERNAUX_ASSERT(display);
+    KERNAUX_NOTNULL(tag_base);
+    KERNAUX_NOTNULL(display);
 
     if (!KernAux_Multiboot2_ITagBase_is_valid(tag_base)) return;
 
@@ -279,8 +279,8 @@ void KernAux_Multiboot2_ITag_BootCmdLine_print(
     const struct KernAux_Multiboot2_ITag_BootCmdLine *const tag,
     const KernAux_Display display
 ) {
-    KERNAUX_ASSERT(tag);
-    KERNAUX_ASSERT(display);
+    KERNAUX_NOTNULL(tag);
+    KERNAUX_NOTNULL(display);
 
     if (!KernAux_Multiboot2_ITag_BootCmdLine_is_valid(tag)) {
         PRINTLN("  invalid!");
@@ -294,8 +294,8 @@ void KernAux_Multiboot2_ITag_BootLoaderName_print(
     const struct KernAux_Multiboot2_ITag_BootLoaderName *const tag,
     const KernAux_Display display
 ) {
-    KERNAUX_ASSERT(tag);
-    KERNAUX_ASSERT(display);
+    KERNAUX_NOTNULL(tag);
+    KERNAUX_NOTNULL(display);
 
     if (!KernAux_Multiboot2_ITag_BootLoaderName_is_valid(tag)) {
         PRINTLN("  invalid!");
@@ -309,8 +309,8 @@ void KernAux_Multiboot2_ITag_MemoryMap_print(
     const struct KernAux_Multiboot2_ITag_MemoryMap *const tag,
     const KernAux_Display display
 ) {
-    KERNAUX_ASSERT(tag);
-    KERNAUX_ASSERT(display);
+    KERNAUX_NOTNULL(tag);
+    KERNAUX_NOTNULL(display);
 
     if (!KernAux_Multiboot2_ITag_MemoryMap_is_valid(tag)) {
         PRINTLN("  invalid!");
@@ -350,8 +350,8 @@ void KernAux_Multiboot2_ITag_ELFSymbols_print(
     const struct KernAux_Multiboot2_ITag_ELFSymbols *const tag,
     const KernAux_Display display
 ) {
-    KERNAUX_ASSERT(tag);
-    KERNAUX_ASSERT(display);
+    KERNAUX_NOTNULL(tag);
+    KERNAUX_NOTNULL(display);
 
     if (!KernAux_Multiboot2_ITag_ELFSymbols_is_valid(tag)) {
         PRINTLN("  invalid!");
