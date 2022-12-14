@@ -25,10 +25,6 @@ Metrics/BlockLength:
     - 'Rakefile'
     - 'test/**/*.rb'
 
-Metrics/BlockNesting:
-  Exclude:
-    - 'test/printf.rb'
-
 Security/Eval:
   Exclude:
     - 'test/**/*.rb'
