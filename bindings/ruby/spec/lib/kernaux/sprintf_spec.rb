@@ -11,59 +11,30 @@ KernAux::Version.with_printf? and RSpec.describe KernAux, '.sprintf' do
   it { is_expected.to be_frozen }
   it { is_expected.to eq 'Hello, World!' }
 
-  context 'when there are unnecessary arguments at all' do
-    subject(:sprintf) { described_class.sprintf 'Hello!', 'World' }
-
-    specify do
-      expect { sprintf }.to raise_error ArgumentError, 'too many arguments'
-    end
-  end
-
   context 'when there are too many arguments' do
-    subject(:sprintf) { described_class.sprintf 'Hello, %s!', 'World', 'Alex' }
-
-    specify do
-      expect { sprintf }.to raise_error ArgumentError, 'too many arguments'
+    [
+      ['Hello!', 'World!'],
+      ['Hello, %s!', 'World', 'Alex'],
+    ].each do |args|
+      it "raises on #{args.inspect}" do
+        expect { described_class.sprintf(*args) }.to \
+          raise_error ArgumentError, 'too many arguments'
+      end
     end
   end
 
-  context 'when there are no arguments' do
-    subject(:sprintf) { described_class.sprintf }
-
-    specify do
-      expect { sprintf }.to raise_error ArgumentError, 'too few arguments'
-    end
-  end
-
-  context 'when the argument is absent' do
-    subject(:sprintf) { described_class.sprintf 'Hello, %s!' }
-
-    specify do
-      expect { sprintf }.to raise_error ArgumentError, 'too few arguments'
-    end
-  end
-
-  context 'when the arguments after the width are absent' do
-    subject(:sprintf) { described_class.sprintf 'Hello, %*s!', 20 }
-
-    specify do
-      expect { sprintf }.to raise_error ArgumentError, 'too few arguments'
-    end
-  end
-
-  context 'when the arguments after the precision are absent' do
-    subject(:sprintf) { described_class.sprintf 'Hello, %.*s!', 20 }
-
-    specify do
-      expect { sprintf }.to raise_error ArgumentError, 'too few arguments'
-    end
-  end
-
-  context 'when the arguments after the width and the precision are absent' do
-    subject(:sprintf) { described_class.sprintf 'Hello, %*.*s!', 20, 20 }
-
-    specify do
-      expect { sprintf }.to raise_error ArgumentError, 'too few arguments'
+  context 'when there are too few arguments' do
+    [
+      [],
+      ['Hello, %s!'],
+      ['Hello, %*s!', 20],
+      ['Hello, %.*s!', 20],
+      ['Hello, %*.*s!', 20, 20],
+    ].each do |args|
+      it "raises on #{args.inspect}" do
+        expect { described_class.sprintf(*args) }.to \
+          raise_error ArgumentError, 'too few arguments'
+      end
     end
   end
 
