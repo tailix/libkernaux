@@ -25,6 +25,14 @@ Metrics/BlockLength:
     - 'Rakefile'
     - 'test/**/*.rb'
 
+Metrics/BlockNesting:
+  Exclude:
+    - 'test/sprintf.rb'
+
+Performance/CollectionLiteralInLoop:
+  Exclude:
+    - 'test/**/*.rb'
+
 Security/Eval:
   Exclude:
     - 'test/**/*.rb'
