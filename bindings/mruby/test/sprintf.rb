@@ -83,6 +83,7 @@ if KernAux::Version.with_printf?
               format += arg
             else
               format += arg[0]
+              is_int_format = %w[i d u x X o b].any? { |s| arg[0].include? s }
               arg[1..].each do |item|
                 if item.is_a? Array
                   if item.length == 1
@@ -92,7 +93,7 @@ if KernAux::Version.with_printf?
                   else
                     raise "Unknown format: #{args.inspect}"
                   end
-                elsif item.is_a?(Float) && item.round == item
+                elsif is_int_format && item.is_a?(Float)
                   args << item.round
                 else
                   args << item
