@@ -35,6 +35,8 @@ AC_CONFIG_FILES([
 
 AM_INIT_AUTOMAKE([1.16 subdir-objects])
 
+AC_SUBST([PACKAGE_VERSION_SO], m4_normalize(m4_include([VERSION_SO])))
+
 
 
 ###############
@@ -378,7 +380,7 @@ AS_IF([test "$enable_checks_python" = yes -a "$enable_checks" = yes -a "$PYTHON_
 # Initialize Libtool #
 ######################
 
-LT_INIT([disable-shared])
+LT_INIT
 
 
 
