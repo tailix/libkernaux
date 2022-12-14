@@ -31,6 +31,7 @@ VALUE rb_KernAux_sprintf(const int argc, VALUE *const argv, VALUE self)
 {
     if (argc == 0) rb_raise(rb_eArgError, "too few arguments");
 
+    // FIXME: const
     char *format = StringValueCStr(argv[0]);
     int arg_index = 1;
     VALUE result = rb_str_new_literal("");
@@ -42,9 +43,11 @@ VALUE rb_KernAux_sprintf(const int argc, VALUE *const argv, VALUE self)
             continue;
         }
 
+        // FIXME: unnecessary
         const char *const old_format = format;
         ++format;
         struct KernAux_PrintfFmt_Spec spec =
+            // FIXME: no type cast
             KernAux_PrintfFmt_Spec_create_out((const char**)&format);
 
         if (spec.set_width) {

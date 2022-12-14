@@ -6,8 +6,139 @@
 #include <mruby/presym.h>
 #include <mruby/string.h>
 
+#define BUFFER_SIZE 4096
+
 #ifdef KERNAUX_VERSION_WITH_PRINTF
 
-void init_printf(mrb_state *const mrb) {}
+static mrb_value rb_KernAux_sprintf(mrb_state *mrb, mrb_value self);
+
+void init_printf(mrb_state *const mrb)
+{
+    struct RClass *const rb_KernAux = mrb_module_get_id(mrb, MRB_SYM(KernAux));
+
+    mrb_define_class_method(mrb, rb_KernAux, "sprintf", rb_KernAux_sprintf,
+                            MRB_ARGS_REQ(1) | MRB_ARGS_REST());
+}
+
+#define TAKE_ARG \
+    if (arg_index >= argc) { \
+        mrb_raise(mrb, E_ARGUMENT_ERROR, "too few arguments"); \
+    } \
+    mrb_value arg_rb = args[arg_index++]; \
+    do {} while (0)
+
+mrb_value rb_KernAux_sprintf(mrb_state *const mrb, mrb_value self)
+{
+    // FIXME: const
+    char *format;
+    mrb_value *args;
+    mrb_int argc;
+    mrb_get_args(mrb, "z*", &format, &args, &argc);
+
+    int arg_index = 0;
+    mrb_value result = mrb_str_new_lit(mrb, "");
+
+    while (*format) {
+        if (*format != '%') {
+            mrb_str_cat(mrb, result, format, 1);
+            ++format;
+            continue;
+        }
+
+        // FIXME: unnecessary
+        const char *const old_format = format;
+        ++format;
+        struct KernAux_PrintfFmt_Spec spec =
+            // FIXME: no type cast
+            KernAux_PrintfFmt_Spec_create_out((const char**)&format);
+
+        if (spec.set_width) {
+            TAKE_ARG;
+            KernAux_PrintfFmt_Spec_set_width(&spec, mrb_integer(arg_rb));
+        }
+        if (spec.set_precision) {
+            TAKE_ARG;
+            KernAux_PrintfFmt_Spec_set_precision(&spec, mrb_integer(arg_rb));
+        }
+
+        struct DynArg dynarg = DynArg_create();
+
+        if (spec.type == KERNAUX_PRINTF_FMT_TYPE_INT) {
+            TAKE_ARG;
+            DynArg_use_long_long(&dynarg, mrb_integer(arg_rb));
+        } else if (spec.type == KERNAUX_PRINTF_FMT_TYPE_UINT) {
+            TAKE_ARG;
+            DynArg_use_unsigned_long_long(&dynarg, mrb_integer(arg_rb));
+        } else if (spec.type == KERNAUX_PRINTF_FMT_TYPE_FLOAT ||
+                   spec.type == KERNAUX_PRINTF_FMT_TYPE_EXP)
+        {
+            TAKE_ARG;
+            DynArg_use_double(&dynarg, mrb_float(arg_rb));
+        } else if (spec.type == KERNAUX_PRINTF_FMT_TYPE_CHAR) {
+            TAKE_ARG;
+            mrb_ensure_string_type(mrb, arg_rb);
+            DynArg_use_char(&dynarg, *RSTRING_PTR(arg_rb));
+        } else if (spec.type == KERNAUX_PRINTF_FMT_TYPE_STR) {
+            TAKE_ARG;
+            mrb_ensure_string_type(mrb, arg_rb);
+            DynArg_use_str(&dynarg, RSTRING_CSTR(mrb, arg_rb));
+        }
+
+        char buffer[BUFFER_SIZE];
+        int slen;
+
+        // FIXME: it's a hack
+        // TODO: convert printf format spec to string
+        const char tmp = *format;
+        *format = '\0';
+
+        if (spec.set_width) {
+            if (spec.set_precision) {
+                if (dynarg.use_dbl) {
+                    slen = kernaux_snprintf(buffer, BUFFER_SIZE, old_format,
+                                            spec.width, spec.precision,
+                                            dynarg.dbl);
+                } else {
+                    slen = kernaux_snprintf(buffer, BUFFER_SIZE, old_format,
+                                            spec.width, spec.precision,
+                                            dynarg.arg);
+                }
+            } else {
+                if (dynarg.use_dbl) {
+                    slen = kernaux_snprintf(buffer, BUFFER_SIZE, old_format,
+                                            spec.width, dynarg.dbl);
+                } else {
+                    slen = kernaux_snprintf(buffer, BUFFER_SIZE, old_format,
+                                            spec.width, dynarg.arg);
+                }
+            }
+        } else {
+            if (spec.set_precision) {
+                if (dynarg.use_dbl) {
+                    slen = kernaux_snprintf(buffer, BUFFER_SIZE, old_format,
+                                            spec.precision, dynarg.dbl);
+                } else {
+                    slen = kernaux_snprintf(buffer, BUFFER_SIZE, old_format,
+                                            spec.precision, dynarg.arg);
+                }
+            } else {
+                if (dynarg.use_dbl) {
+                    slen = kernaux_snprintf(buffer, BUFFER_SIZE, old_format, dynarg.dbl);
+                } else {
+                    slen = kernaux_snprintf(buffer, BUFFER_SIZE, old_format, dynarg.arg);
+                }
+            }
+        }
+
+        *format = tmp;
+        mrb_str_cat(mrb, result, buffer, slen);
+    }
+
+    if (arg_index < argc) {
+        mrb_raise(mrb, E_ARGUMENT_ERROR, "too many arguments");
+    }
+
+    return mrb_obj_freeze(mrb, result);
+}
 
 #endif // KERNAUX_VERSION_WITH_PRINTF
