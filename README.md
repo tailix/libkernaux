@@ -184,6 +184,7 @@ Tips
 ./configure
 make
 sudo make install
+sudo ldconfig # on GNU/Linux
 ```
 
 This is just a usual library. You can use most of it's APIs in hosted
@@ -210,6 +211,7 @@ without it in `$PATH`:
 ```
 ./configure \
   --host='i386-elf' \
+  --disable-shared \
   --enable-freestanding \
   --with-libc \
   CC="$(which i386-elf-gcc)"
