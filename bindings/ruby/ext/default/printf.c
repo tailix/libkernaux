@@ -5,6 +5,16 @@
 
 #ifdef KERNAUX_VERSION_WITH_PRINTF
 
+/**
+ * Typical `printf`.
+ *
+ * @param format [String] format string
+ * @return [String] formatted output
+ *
+ * @example
+ *   KernAux.sprintf 'foo%*scar%d', 5, 'bar', 123
+ *   #=> "foo  barcar123"
+ */
 static VALUE rb_KernAux_sprintf(int argc, VALUE *argv, VALUE self);
 
 void init_printf()
