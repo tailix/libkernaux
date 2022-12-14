@@ -27,7 +27,11 @@ Metrics/BlockLength:
 
 Metrics/BlockNesting:
   Exclude:
-    - 'test/printf.rb'
+    - 'test/sprintf.rb'
+
+Performance/CollectionLiteralInLoop:
+  Exclude:
+    - 'test/**/*.rb'
 
 Security/Eval:
   Exclude:
