@@ -65,11 +65,11 @@ mrb_value rb_KernAux_sprintf(mrb_state *const mrb, mrb_value self)
 
         if (spec.type == KERNAUX_PRINTF_FMT_TYPE_INT) {
             TAKE_ARG;
-            mrb_ensure_integer_type(mrb, arg_rb);
+            mrb_ensure_int_type(mrb, arg_rb);
             DynArg_use_long_long(&dynarg, mrb_integer(arg_rb));
         } else if (spec.type == KERNAUX_PRINTF_FMT_TYPE_UINT) {
             TAKE_ARG;
-            mrb_ensure_integer_type(mrb, arg_rb);
+            mrb_ensure_int_type(mrb, arg_rb);
             DynArg_use_unsigned_long_long(&dynarg, mrb_integer(arg_rb));
         } else if (spec.type == KERNAUX_PRINTF_FMT_TYPE_FLOAT ||
                    spec.type == KERNAUX_PRINTF_FMT_TYPE_EXP)
