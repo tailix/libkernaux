@@ -28,16 +28,16 @@ if KernAux::Version.with_printf?
     end
 
     # TODO: test with different boxing
-    assert 'integer overflows' do
-      assert_equal 'i:-2147483648', KernAux.sprintf('i:%i',  2**31)
-      assert_equal 'u: 2147483648', KernAux.sprintf('u: %u', 2**31)
-      assert_equal 'i:-2147483647', KernAux.sprintf('i:%i',  2**31 + 1)
-      assert_equal 'u: 2147483649', KernAux.sprintf('u: %u', 2**31 + 1)
-      assert_equal 'i:-1',          KernAux.sprintf('i:%i',  2**32 - 1)
-      assert_equal 'u: 4294967295', KernAux.sprintf('u: %u', 2**32 - 1)
-      assert_equal 'i: 0',          KernAux.sprintf('i: %i', 2**32)
-      assert_equal 'u: 0',          KernAux.sprintf('u: %u', 2**32)
-    end
+    # assert 'integer overflows' do
+    #   assert_equal 'i:-2147483648', KernAux.sprintf('i:%i',  2**31)
+    #   assert_equal 'u: 2147483648', KernAux.sprintf('u: %u', 2**31)
+    #   assert_equal 'i:-2147483647', KernAux.sprintf('i:%i',  2**31 + 1)
+    #   assert_equal 'u: 2147483649', KernAux.sprintf('u: %u', 2**31 + 1)
+    #   assert_equal 'i:-1',          KernAux.sprintf('i:%i',  2**32 - 1)
+    #   assert_equal 'u: 4294967295', KernAux.sprintf('u: %u', 2**32 - 1)
+    #   assert_equal 'i: 0',          KernAux.sprintf('i: %i', 2**32)
+    #   assert_equal 'u: 0',          KernAux.sprintf('u: %u', 2**32)
+    # end
 
     assert 'when there are too many arguments' do
       [
