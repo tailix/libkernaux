@@ -102,6 +102,16 @@ void KernAux_Multiboot2_ITag_EFIMemoryMap_print(
     KernAux_Display display
 );
 
+void KernAux_Multiboot2_ITag_EFI32bitImageHandlePtr_print(
+    const struct KernAux_Multiboot2_ITag_EFI32bitImageHandlePtr *tag,
+    KernAux_Display display
+);
+
+void KernAux_Multiboot2_ITag_EFI64bitImageHandlePtr_print(
+    const struct KernAux_Multiboot2_ITag_EFI64bitImageHandlePtr *tag,
+    KernAux_Display display
+);
+
 #ifdef __cplusplus
 }
 #endif

@@ -170,14 +170,16 @@ void KernAux_Multiboot2_ITagBase_print(
     case KERNAUX_MULTIBOOT2_ITAG_EFI_BOOT_SERVICES_NOT_TERMINATED:
         break;
     case KERNAUX_MULTIBOOT2_ITAG_EFI_32BIT_IMAGE_HANDLE_PTR:
-        {
-            // TODO: print
-        }
+        KernAux_Multiboot2_ITag_EFI32bitImageHandlePtr_print(
+            (struct KernAux_Multiboot2_ITag_EFI32bitImageHandlePtr*)tag_base,
+            display
+        );
         break;
     case KERNAUX_MULTIBOOT2_ITAG_EFI_64BIT_IMAGE_HANDLE_PTR:
-        {
-            // TODO: print
-        }
+        KernAux_Multiboot2_ITag_EFI64bitImageHandlePtr_print(
+            (struct KernAux_Multiboot2_ITag_EFI64bitImageHandlePtr*)tag_base,
+            display
+        );
         break;
     case KERNAUX_MULTIBOOT2_ITAG_IMAGE_LOAD_BASE_PHYS_ADDR:
         {
@@ -551,4 +553,36 @@ void KernAux_Multiboot2_ITag_EFIMemoryMap_print(
 
     PRINTLNF("  descriptor size: %lu",    descr_size);
     PRINTLNF("  descriptor version: %lu", descr_version);
+}
+
+void KernAux_Multiboot2_ITag_EFI32bitImageHandlePtr_print(
+    const struct KernAux_Multiboot2_ITag_EFI32bitImageHandlePtr *tag,
+    KernAux_Display display
+) {
+    KERNAUX_ASSERT(tag);
+    KERNAUX_ASSERT(display);
+
+    if (!KernAux_Multiboot2_ITag_EFI32bitImageHandlePtr_is_valid(tag)) {
+        PRINTLN("  invalid!");
+        return;
+    }
+
+    KERNAUX_CAST_CONST(unsigned long, pointer, tag->pointer);
+    PRINTLNF("  pointer: %lu", pointer);
+}
+
+void KernAux_Multiboot2_ITag_EFI64bitImageHandlePtr_print(
+    const struct KernAux_Multiboot2_ITag_EFI64bitImageHandlePtr *tag,
+    KernAux_Display display
+) {
+    KERNAUX_ASSERT(tag);
+    KERNAUX_ASSERT(display);
+
+    if (!KernAux_Multiboot2_ITag_EFI64bitImageHandlePtr_is_valid(tag)) {
+        PRINTLN("  invalid!");
+        return;
+    }
+
+    KERNAUX_CAST_CONST(unsigned long long, pointer, tag->pointer);
+    PRINTLNF("  pointer: %llu", pointer);
 }
