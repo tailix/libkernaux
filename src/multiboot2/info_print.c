@@ -14,6 +14,12 @@
 #define PRINTLNF(format, ...) \
     do { KernAux_Display_printlnf(display, format, __VA_ARGS__); } while (0)
 
+#define VALIDATE_BASE do { \
+    KERNAUX_ASSERT(tag_base);                                    \
+    KERNAUX_ASSERT(display);                                     \
+    if (!KernAux_Multiboot2_ITagBase_is_valid(tag_base)) return; \
+} while (0)
+
 #define VALIDATE(type) do { \
     KERNAUX_ASSERT(tag);                                         \
     KERNAUX_ASSERT(display);                                     \
@@ -54,10 +60,7 @@ void KernAux_Multiboot2_ITagBase_print(
     const struct KernAux_Multiboot2_ITagBase *const tag_base,
     const KernAux_Display display
 ) {
-    KERNAUX_ASSERT(tag_base);
-    KERNAUX_ASSERT(display);
-
-    if (!KernAux_Multiboot2_ITagBase_is_valid(tag_base)) return;
+    VALIDATE_BASE;
 
     KERNAUX_CAST_CONST(unsigned long, size, tag_base->size);
 
