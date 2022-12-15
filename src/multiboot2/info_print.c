@@ -14,16 +14,20 @@
 #define PRINTLNF(format, ...) \
     do { KernAux_Display_printlnf(display, format, __VA_ARGS__); } while (0)
 
-#define VALIDATE_BASE do { \
-    KERNAUX_ASSERT(tag_base);                                    \
-    KERNAUX_ASSERT(display);                                     \
-    if (!KernAux_Multiboot2_ITagBase_is_valid(tag_base)) return; \
-} while (0)
-
-#define VALIDATE(type) do { \
+#define HEADER(Type) do { \
     KERNAUX_ASSERT(tag);                                         \
     KERNAUX_ASSERT(display);                                     \
-    if (!KernAux_Multiboot2_ITag_##type##_is_valid(tag)) return; \
+                                                                 \
+    if (!KernAux_Multiboot2_ITag_##Type##_is_valid(tag)) return; \
+                                                                 \
+    KERNAUX_CAST_CONST(unsigned long, size, tag->base.size);     \
+                                                                 \
+    PRINTLN("Multiboot 2 info tag");                             \
+    PRINTLNF("  type: %u (%s)",                                  \
+        tag->base.type,                                          \
+        KernAux_Multiboot2_ITag_to_str(tag->base.type)           \
+    );                                                           \
+    PRINTLNF("  size: %lu", size);                               \
 } while (0)
 
 void KernAux_Multiboot2_Info_print(
@@ -60,19 +64,14 @@ void KernAux_Multiboot2_ITagBase_print(
     const struct KernAux_Multiboot2_ITagBase *const tag_base,
     const KernAux_Display display
 ) {
-    VALIDATE_BASE;
-
-    KERNAUX_CAST_CONST(unsigned long, size, tag_base->size);
-
-    PRINTLN("Multiboot 2 info tag");
-    PRINTLNF("  type: %u (%s)",
-        tag_base->type,
-        KernAux_Multiboot2_ITag_to_str(tag_base->type)
-    );
-    PRINTLNF("  size: %lu", size);
+    KERNAUX_ASSERT(tag_base);
 
     switch (tag_base->type) {
     case KERNAUX_MULTIBOOT2_ITAG_NONE:
+        KernAux_Multiboot2_ITag_None_print(
+            (struct KernAux_Multiboot2_ITag_None*)tag_base,
+            display
+        );
         break;
     case KERNAUX_MULTIBOOT2_ITAG_BOOT_CMD_LINE:
         KernAux_Multiboot2_ITag_BootCmdLine_print(
@@ -177,6 +176,11 @@ void KernAux_Multiboot2_ITagBase_print(
         );
         break;
     case KERNAUX_MULTIBOOT2_ITAG_EFI_BOOT_SERVICES_NOT_TERMINATED:
+        KernAux_Multiboot2_ITag_EFIBootServicesNotTerminated_print(
+            (struct KernAux_Multiboot2_ITag_EFIBootServicesNotTerminated*)
+            tag_base,
+            display
+        );
         break;
     case KERNAUX_MULTIBOOT2_ITAG_EFI_32BIT_IMAGE_HANDLE_PTR:
         KernAux_Multiboot2_ITag_EFI32bitImageHandlePtr_print(
@@ -191,24 +195,26 @@ void KernAux_Multiboot2_ITagBase_print(
         );
         break;
     case KERNAUX_MULTIBOOT2_ITAG_IMAGE_LOAD_BASE_PHYS_ADDR:
-        {
-            KERNAUX_CAST_CONST(
-                unsigned long,
-                load_base_addr,
-                ((struct KernAux_Multiboot2_ITag_ImageLoadBasePhysAddr*)
-                    tag_base)->load_base_addr
-            );
-            PRINTLNF("  load base addr: %lu", load_base_addr);
-        }
+        KernAux_Multiboot2_ITag_ImageLoadBasePhysAddr_print(
+            (struct KernAux_Multiboot2_ITag_ImageLoadBasePhysAddr*)tag_base,
+            display
+        );
         break;
     }
+}
+
+void KernAux_Multiboot2_ITag_None_print(
+    const struct KernAux_Multiboot2_ITag_None *const tag,
+    const KernAux_Display display
+) {
+    HEADER(None);
 }
 
 void KernAux_Multiboot2_ITag_BootCmdLine_print(
     const struct KernAux_Multiboot2_ITag_BootCmdLine *const tag,
     const KernAux_Display display
 ) {
-    VALIDATE(BootCmdLine);
+    HEADER(BootCmdLine);
 
     PRINTLNF("  cmdline: %s", KERNAUX_MULTIBOOT2_DATA(tag));
 }
@@ -217,7 +223,7 @@ void KernAux_Multiboot2_ITag_BootLoaderName_print(
     const struct KernAux_Multiboot2_ITag_BootLoaderName *const tag,
     const KernAux_Display display
 ) {
-    VALIDATE(BootLoaderName);
+    HEADER(BootLoaderName);
 
     PRINTLNF("  name: %s", KERNAUX_MULTIBOOT2_DATA(tag));
 }
@@ -226,7 +232,7 @@ void KernAux_Multiboot2_ITag_Module_print(
     const struct KernAux_Multiboot2_ITag_Module *const tag,
     const KernAux_Display display
 ) {
-    VALIDATE(Module);
+    HEADER(Module);
 
     KERNAUX_CAST_CONST(unsigned long, mod_start, tag->mod_start);
     KERNAUX_CAST_CONST(unsigned long, mod_end,   tag->mod_end);
@@ -240,7 +246,7 @@ void KernAux_Multiboot2_ITag_BasicMemoryInfo_print(
     const struct KernAux_Multiboot2_ITag_BasicMemoryInfo *const tag,
     const KernAux_Display display
 ) {
-    VALIDATE(BasicMemoryInfo);
+    HEADER(BasicMemoryInfo);
 
     KERNAUX_CAST_CONST(unsigned long, mem_lower, tag->mem_lower);
     KERNAUX_CAST_CONST(unsigned long, mem_upper, tag->mem_upper);
@@ -253,7 +259,7 @@ void KernAux_Multiboot2_ITag_BIOSBootDevice_print(
     const struct KernAux_Multiboot2_ITag_BIOSBootDevice *const tag,
     const KernAux_Display display
 ) {
-    VALIDATE(BIOSBootDevice);
+    HEADER(BIOSBootDevice);
 
     KERNAUX_CAST_CONST(unsigned long, bios_dev,      tag->bios_dev);
     KERNAUX_CAST_CONST(unsigned long, partition,     tag->partition);
@@ -268,7 +274,7 @@ void KernAux_Multiboot2_ITag_MemoryMap_print(
     const struct KernAux_Multiboot2_ITag_MemoryMap *const tag,
     const KernAux_Display display
 ) {
-    VALIDATE(MemoryMap);
+    HEADER(MemoryMap);
 
     KERNAUX_CAST_CONST(unsigned long, entry_size,    tag->entry_size);
     KERNAUX_CAST_CONST(unsigned long, entry_version, tag->entry_version);
@@ -303,7 +309,7 @@ void KernAux_Multiboot2_ITag_VBEInfo_print(
     const struct KernAux_Multiboot2_ITag_VBEInfo *const tag,
     const KernAux_Display display
 ) {
-    VALIDATE(VBEInfo);
+    HEADER(VBEInfo);
 
     KERNAUX_CAST_CONST(unsigned long, mode,          tag->vbe_mode);
     KERNAUX_CAST_CONST(unsigned long, interface_seg, tag->vbe_interface_seg);
@@ -320,7 +326,7 @@ void KernAux_Multiboot2_ITag_FramebufferInfo_print(
     const struct KernAux_Multiboot2_ITag_FramebufferInfo *const tag,
     const KernAux_Display display
 ) {
-    VALIDATE(FramebufferInfo);
+    HEADER(FramebufferInfo);
 
     KERNAUX_CAST_CONST(unsigned long long, addr,      tag->framebuffer_addr);
     KERNAUX_CAST_CONST(unsigned long,      pitch,     tag->framebuffer_pitch);
@@ -343,7 +349,7 @@ void KernAux_Multiboot2_ITag_ELFSymbols_print(
     const struct KernAux_Multiboot2_ITag_ELFSymbols *const tag,
     const KernAux_Display display
 ) {
-    VALIDATE(ELFSymbols);
+    HEADER(ELFSymbols);
 
     KERNAUX_CAST_CONST(unsigned long, num,       tag->num);
     KERNAUX_CAST_CONST(unsigned long, ent_size,  tag->ent_size);
@@ -362,7 +368,7 @@ void KernAux_Multiboot2_ITag_APMTable_print(
     const struct KernAux_Multiboot2_ITag_APMTable *const tag,
     const KernAux_Display display
 ) {
-    VALIDATE(APMTable);
+    HEADER(APMTable);
 
     KERNAUX_CAST_CONST(unsigned long, version,     tag->version);
     KERNAUX_CAST_CONST(unsigned long, cseg,        tag->cseg);
@@ -389,7 +395,7 @@ void KernAux_Multiboot2_ITag_EFI32bitSystemTablePtr_print(
     const struct KernAux_Multiboot2_ITag_EFI32bitSystemTablePtr *const tag,
     const KernAux_Display display
 ) {
-    VALIDATE(EFI32bitSystemTablePtr);
+    HEADER(EFI32bitSystemTablePtr);
 
     KERNAUX_CAST_CONST(unsigned long, pointer, tag->pointer);
 
@@ -400,7 +406,7 @@ void KernAux_Multiboot2_ITag_EFI64bitSystemTablePtr_print(
     const struct KernAux_Multiboot2_ITag_EFI64bitSystemTablePtr *const tag,
     const KernAux_Display display
 ) {
-    VALIDATE(EFI64bitSystemTablePtr);
+    HEADER(EFI64bitSystemTablePtr);
 
     KERNAUX_CAST_CONST(unsigned long long, pointer, tag->pointer);
 
@@ -411,7 +417,7 @@ void KernAux_Multiboot2_ITag_SMBIOSTables_print(
     const struct KernAux_Multiboot2_ITag_SMBIOSTables *const tag,
     const KernAux_Display display
 ) {
-    VALIDATE(SMBIOSTables);
+    HEADER(SMBIOSTables);
 
     KERNAUX_CAST_CONST(unsigned long, major,     tag->major);
     KERNAUX_CAST_CONST(unsigned long, minor,     tag->minor);
@@ -434,28 +440,28 @@ void KernAux_Multiboot2_ITag_ACPIOldRSDP_print(
     const struct KernAux_Multiboot2_ITag_ACPIOldRSDP *const tag,
     const KernAux_Display display
 ) {
-    VALIDATE(ACPIOldRSDP);
+    HEADER(ACPIOldRSDP);
 }
 
 void KernAux_Multiboot2_ITag_ACPINewRSDP_print(
     const struct KernAux_Multiboot2_ITag_ACPINewRSDP *const tag,
     const KernAux_Display display
 ) {
-    VALIDATE(ACPINewRSDP);
+    HEADER(ACPINewRSDP);
 }
 
 void KernAux_Multiboot2_ITag_NetworkingInfo_print(
     const struct KernAux_Multiboot2_ITag_NetworkingInfo *const tag,
     const KernAux_Display display
 ) {
-    VALIDATE(NetworkingInfo);
+    HEADER(NetworkingInfo);
 }
 
 void KernAux_Multiboot2_ITag_EFIMemoryMap_print(
     const struct KernAux_Multiboot2_ITag_EFIMemoryMap *const tag,
     const KernAux_Display display
 ) {
-    VALIDATE(EFIMemoryMap);
+    HEADER(EFIMemoryMap);
 
     KERNAUX_CAST_CONST(unsigned long, descr_size,    tag->descriptor_size);
     KERNAUX_CAST_CONST(unsigned long, descr_version, tag->descriptor_version);
@@ -464,11 +470,18 @@ void KernAux_Multiboot2_ITag_EFIMemoryMap_print(
     PRINTLNF("  descriptor version: %lu", descr_version);
 }
 
-void KernAux_Multiboot2_ITag_EFI32bitImageHandlePtr_print(
-    const struct KernAux_Multiboot2_ITag_EFI32bitImageHandlePtr *tag,
-    KernAux_Display display
+void KernAux_Multiboot2_ITag_EFIBootServicesNotTerminated_print(
+    const struct KernAux_Multiboot2_ITag_EFIBootServicesNotTerminated *const tag,
+    const KernAux_Display display
 ) {
-    VALIDATE(EFI32bitImageHandlePtr);
+    HEADER(EFIBootServicesNotTerminated);
+}
+
+void KernAux_Multiboot2_ITag_EFI32bitImageHandlePtr_print(
+    const struct KernAux_Multiboot2_ITag_EFI32bitImageHandlePtr *const tag,
+    const KernAux_Display display
+) {
+    HEADER(EFI32bitImageHandlePtr);
 
     KERNAUX_CAST_CONST(unsigned long, pointer, tag->pointer);
 
@@ -476,12 +489,23 @@ void KernAux_Multiboot2_ITag_EFI32bitImageHandlePtr_print(
 }
 
 void KernAux_Multiboot2_ITag_EFI64bitImageHandlePtr_print(
-    const struct KernAux_Multiboot2_ITag_EFI64bitImageHandlePtr *tag,
-    KernAux_Display display
+    const struct KernAux_Multiboot2_ITag_EFI64bitImageHandlePtr *const tag,
+    const KernAux_Display display
 ) {
-    VALIDATE(EFI64bitImageHandlePtr);
+    HEADER(EFI64bitImageHandlePtr);
 
     KERNAUX_CAST_CONST(unsigned long long, pointer, tag->pointer);
 
     PRINTLNF("  pointer: %llu", pointer);
+}
+
+void KernAux_Multiboot2_ITag_ImageLoadBasePhysAddr_print(
+    const struct KernAux_Multiboot2_ITag_ImageLoadBasePhysAddr *const tag,
+    const KernAux_Display display
+) {
+    HEADER(ImageLoadBasePhysAddr);
+
+    KERNAUX_CAST_CONST(unsigned long, load_base_addr, tag->load_base_addr);
+
+    PRINTLNF("  load base addr: %lu", load_base_addr);
 }

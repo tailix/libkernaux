@@ -17,6 +17,11 @@ void KernAux_Multiboot2_ITagBase_print(
     KernAux_Display display
 );
 
+void KernAux_Multiboot2_ITag_None_print(
+    const struct KernAux_Multiboot2_ITag_None *tag,
+    KernAux_Display display
+);
+
 void KernAux_Multiboot2_ITag_BootCmdLine_print(
     const struct KernAux_Multiboot2_ITag_BootCmdLine *tag,
     KernAux_Display display
@@ -102,6 +107,11 @@ void KernAux_Multiboot2_ITag_EFIMemoryMap_print(
     KernAux_Display display
 );
 
+void KernAux_Multiboot2_ITag_EFIBootServicesNotTerminated_print(
+    const struct KernAux_Multiboot2_ITag_EFIBootServicesNotTerminated *tag,
+    KernAux_Display display
+);
+
 void KernAux_Multiboot2_ITag_EFI32bitImageHandlePtr_print(
     const struct KernAux_Multiboot2_ITag_EFI32bitImageHandlePtr *tag,
     KernAux_Display display
@@ -109,6 +119,11 @@ void KernAux_Multiboot2_ITag_EFI32bitImageHandlePtr_print(
 
 void KernAux_Multiboot2_ITag_EFI64bitImageHandlePtr_print(
     const struct KernAux_Multiboot2_ITag_EFI64bitImageHandlePtr *tag,
+    KernAux_Display display
+);
+
+void KernAux_Multiboot2_ITag_ImageLoadBasePhysAddr_print(
+    const struct KernAux_Multiboot2_ITag_ImageLoadBasePhysAddr *tag,
     KernAux_Display display
 );
 
