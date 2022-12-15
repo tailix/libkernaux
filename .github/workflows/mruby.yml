@@ -35,6 +35,8 @@ jobs:
         run: make
       - name: install
         run: sudo make install
+      - name: ldconfig
+        run: sudo ldconfig
       - working-directory: vendor/mruby
         name: test
         run: MRUBY_CONFIG=../../bindings/mruby/build_config.rb rake test
