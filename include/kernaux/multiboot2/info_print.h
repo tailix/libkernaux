@@ -97,6 +97,11 @@ void KernAux_Multiboot2_ITag_NetworkingInfo_print(
     KernAux_Display display
 );
 
+void KernAux_Multiboot2_ITag_EFIMemoryMap_print(
+    const struct KernAux_Multiboot2_ITag_EFIMemoryMap *tag,
+    KernAux_Display display
+);
+
 #ifdef __cplusplus
 }
 #endif

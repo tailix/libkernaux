@@ -253,6 +253,8 @@ static const char output2[] =
     "Multiboot 2 info tag\n"
     "  type: 17 (EFI memory map)\n"
     "  size: 24\n"
+    "  descriptor size: 123\n"
+    "  descriptor version: 1\n"
     "Multiboot 2 info tag\n"
     "  type: 18 (EFI boot services not terminated)\n"
     "  size: 8\n"

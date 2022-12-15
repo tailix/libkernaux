@@ -162,9 +162,10 @@ void KernAux_Multiboot2_ITagBase_print(
         );
         break;
     case KERNAUX_MULTIBOOT2_ITAG_EFI_MEMORY_MAP:
-        {
-            // TODO: print
-        }
+        KernAux_Multiboot2_ITag_EFIMemoryMap_print(
+            (struct KernAux_Multiboot2_ITag_EFIMemoryMap*)tag_base,
+            display
+        );
         break;
     case KERNAUX_MULTIBOOT2_ITAG_EFI_BOOT_SERVICES_NOT_TERMINATED:
         break;
@@ -531,4 +532,23 @@ void KernAux_Multiboot2_ITag_NetworkingInfo_print(
         PRINTLN("  invalid!");
         return;
     }
+}
+
+void KernAux_Multiboot2_ITag_EFIMemoryMap_print(
+    const struct KernAux_Multiboot2_ITag_EFIMemoryMap *const tag,
+    const KernAux_Display display
+) {
+    KERNAUX_ASSERT(tag);
+    KERNAUX_ASSERT(display);
+
+    if (!KernAux_Multiboot2_ITag_EFIMemoryMap_is_valid(tag)) {
+        PRINTLN("  invalid!");
+        return;
+    }
+
+    KERNAUX_CAST_CONST(unsigned long, descr_size,    tag->descriptor_size);
+    KERNAUX_CAST_CONST(unsigned long, descr_version, tag->descriptor_version);
+
+    PRINTLNF("  descriptor size: %lu",    descr_size);
+    PRINTLNF("  descriptor version: %lu", descr_version);
 }
