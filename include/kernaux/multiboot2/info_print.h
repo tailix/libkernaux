@@ -92,6 +92,11 @@ void KernAux_Multiboot2_ITag_ACPINewRSDP_print(
     KernAux_Display display
 );
 
+void KernAux_Multiboot2_ITag_NetworkingInfo_print(
+    const struct KernAux_Multiboot2_ITag_NetworkingInfo *tag,
+    KernAux_Display display
+);
+
 #ifdef __cplusplus
 }
 #endif

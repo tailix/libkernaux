@@ -156,9 +156,10 @@ void KernAux_Multiboot2_ITagBase_print(
         );
         break;
     case KERNAUX_MULTIBOOT2_ITAG_NETWORKING_INFO:
-        {
-            // TODO: print
-        }
+        KernAux_Multiboot2_ITag_NetworkingInfo_print(
+            (struct KernAux_Multiboot2_ITag_NetworkingInfo*)tag_base,
+            display
+        );
         break;
     case KERNAUX_MULTIBOOT2_ITAG_EFI_MEMORY_MAP:
         {
@@ -514,6 +515,19 @@ void KernAux_Multiboot2_ITag_ACPINewRSDP_print(
     KERNAUX_ASSERT(display);
 
     if (!KernAux_Multiboot2_ITag_ACPINewRSDP_is_valid(tag)) {
+        PRINTLN("  invalid!");
+        return;
+    }
+}
+
+void KernAux_Multiboot2_ITag_NetworkingInfo_print(
+    const struct KernAux_Multiboot2_ITag_NetworkingInfo *const tag,
+    const KernAux_Display display
+) {
+    KERNAUX_ASSERT(tag);
+    KERNAUX_ASSERT(display);
+
+    if (!KernAux_Multiboot2_ITag_NetworkingInfo_is_valid(tag)) {
         PRINTLN("  invalid!");
         return;
     }
