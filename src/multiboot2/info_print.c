@@ -216,6 +216,7 @@ void KernAux_Multiboot2_ITag_BootCmdLine_print(
 ) {
     HEADER(BootCmdLine);
 
+    // Print data:
     PRINTLNF("  cmdline: %s", KERNAUX_MULTIBOOT2_DATA(tag));
 }
 
@@ -225,6 +226,7 @@ void KernAux_Multiboot2_ITag_BootLoaderName_print(
 ) {
     HEADER(BootLoaderName);
 
+    // Print data:
     PRINTLNF("  name: %s", KERNAUX_MULTIBOOT2_DATA(tag));
 }
 
@@ -239,6 +241,8 @@ void KernAux_Multiboot2_ITag_Module_print(
 
     PRINTLNF("  start: %lu", mod_start);
     PRINTLNF("  end: %lu", mod_end);
+
+    // Print data:
     PRINTLNF("  cmdline: %s", KERNAUX_MULTIBOOT2_DATA(tag));
 }
 
@@ -282,6 +286,8 @@ void KernAux_Multiboot2_ITag_MemoryMap_print(
     PRINTLNF("  entry size: %lu",    entry_size);
     PRINTLNF("  entry version: %lu", entry_version);
     PRINTLN("  entries:");
+
+    // Print data:
 
     const struct KernAux_Multiboot2_ITag_MemoryMap_EntryBase *const entries =
         (struct KernAux_Multiboot2_ITag_MemoryMap_EntryBase*)
@@ -343,6 +349,8 @@ void KernAux_Multiboot2_ITag_FramebufferInfo_print(
     PRINTLNF("  framebuffer bpp: %lu",    bpp);
     PRINTLNF("  framebuffer type: %lu",   type);
     PRINTLNF("  reserved1: %lu",          reserved1);
+
+    // TODO: Print data?
 }
 
 void KernAux_Multiboot2_ITag_ELFSymbols_print(
@@ -361,7 +369,7 @@ void KernAux_Multiboot2_ITag_ELFSymbols_print(
     PRINTLNF("  shndx: %lu",     shndx);
     PRINTLNF("  reserved1: %lu", reserved1);
 
-    // TODO: implement this
+    // TODO: Print data?
 }
 
 void KernAux_Multiboot2_ITag_APMTable_print(
@@ -434,6 +442,8 @@ void KernAux_Multiboot2_ITag_SMBIOSTables_print(
         reserved0, reserved1, reserved2,
         reserved3, reserved4, reserved5
     );
+
+    // TODO: Print data?
 }
 
 void KernAux_Multiboot2_ITag_ACPIOldRSDP_print(
@@ -441,6 +451,8 @@ void KernAux_Multiboot2_ITag_ACPIOldRSDP_print(
     const KernAux_Display display
 ) {
     HEADER(ACPIOldRSDP);
+
+    // TODO: Print data?
 }
 
 void KernAux_Multiboot2_ITag_ACPINewRSDP_print(
@@ -448,6 +460,8 @@ void KernAux_Multiboot2_ITag_ACPINewRSDP_print(
     const KernAux_Display display
 ) {
     HEADER(ACPINewRSDP);
+
+    // TODO: Print data?
 }
 
 void KernAux_Multiboot2_ITag_NetworkingInfo_print(
@@ -455,6 +469,8 @@ void KernAux_Multiboot2_ITag_NetworkingInfo_print(
     const KernAux_Display display
 ) {
     HEADER(NetworkingInfo);
+
+    // TODO: Print data?
 }
 
 void KernAux_Multiboot2_ITag_EFIMemoryMap_print(
@@ -468,6 +484,8 @@ void KernAux_Multiboot2_ITag_EFIMemoryMap_print(
 
     PRINTLNF("  descriptor size: %lu",    descr_size);
     PRINTLNF("  descriptor version: %lu", descr_version);
+
+    // TODO: Print data?
 }
 
 void KernAux_Multiboot2_ITag_EFIBootServicesNotTerminated_print(
