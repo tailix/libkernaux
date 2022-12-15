@@ -28,6 +28,7 @@ lib_LTLIBRARIES = libkernaux.la
 # Required files #
 ##################
 
+libkernaux_la_LDFLAGS = -version-info @PACKAGE_VERSION_SO@
 libkernaux_la_LIBADD =
 libkernaux_la_SOURCES = \
 	src/assert.c \

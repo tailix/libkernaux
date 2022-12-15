@@ -20,9 +20,11 @@ CPPCHECK_INC = \
   -I$(top_srcdir)/include
 
 CPPCHECK_SUPPRESS = \
-  --suppress='constArgument:$(top_srcdir)/examples/macro_cast.c' \
-  --suppress='unusedStructMember:$(top_srcdir)/examples/*.c' \
-  --suppress='unusedStructMember:$(top_srcdir)/tests/test_multiboot2_info_*.c'
+  --suppress='constArgument:$(top_srcdir)/examples/macro_cast.c'               \
+  --suppress='constParameter:$(top_srcdir)/examples/printf_file*.c'            \
+  --suppress='unusedStructMember:$(top_srcdir)/examples/*.c'                   \
+  --suppress='unusedStructMember:$(top_srcdir)/tests/test_multiboot2_info_*.c' \
+  --suppress='unusedVariable'
 
 CPPCHECK_PATHS = \
   $(top_builddir)/examples \
