@@ -1,208 +1,140 @@
 #include "main.h"
-
 #include "dynarg.h"
 
-#include <stddef.h>
-#include <stdlib.h>
+#define BUFFER_SIZE 4096
 
 #ifdef KERNAUX_VERSION_WITH_PRINTF
 
-/*************
- * ::KernAux *
- *************/
-
-static VALUE rb_KernAux_snprintf1(int argc, const VALUE *argv, VALUE self);
-
-static VALUE rb_KernAux_snprintf1_PROTECT(VALUE userdata);
-
-/************************
- * ::KernAux::Snprintf1 *
- ************************/
-
-static VALUE rb_KernAux_Snprintf1 = Qnil;
-
-static size_t rb_KernAux_Snprintf1_DSIZE(const void *ptr);
-
-const rb_data_type_t rb_KernAux_Snprintf1_DTYPE = {
-    .wrap_struct_name = "KernAux::Snprintf1",
-    .parent = NULL,
-    .data = NULL,
-    .flags = RUBY_TYPED_FREE_IMMEDIATELY,
-    .function = {
-        .dfree = RUBY_DEFAULT_FREE,
-        .dsize = rb_KernAux_Snprintf1_DSIZE,
-        .dmark = NULL,
-        .dcompact = NULL,
-        .reserved = { 0 },
-    },
-};
-
-struct rb_KernAux_Snprintf1_DATA {
-    const struct KernAux_PrintfFmt_Spec *spec;
-    const struct DynArg *dynarg;
-    int size;
-    const char *format;
-    char *str;
-};
-
-/********
- * Main *
- ********/
+/**
+ * Typical `printf`.
+ *
+ * @param format [String] format string
+ * @return [String] formatted output
+ *
+ * @example
+ *   KernAux.sprintf 'foo%*scar%d', 5, 'bar', 123
+ *   #=> "foo  barcar123"
+ */
+static VALUE rb_KernAux_sprintf(int argc, VALUE *argv, VALUE self);
 
 void init_printf()
 {
-    rb_gc_register_mark_object(
-        rb_KernAux_Snprintf1 =
-            // @api private
-            rb_define_class_under(rb_KernAux, "Snprintf1", rb_cObject));
-    rb_funcall(rb_KernAux, rb_intern("private_constant"), 1, ID2SYM(rb_intern("Snprintf1")));
-
-    rb_define_singleton_method(rb_KernAux, "snprintf1",
-                               rb_KernAux_snprintf1, -1);
+    rb_define_singleton_method(rb_KernAux, "sprintf", rb_KernAux_sprintf, -1);
 }
 
-/*************
- * ::KernAux *
- *************/
+#define TAKE_ARG \
+    if (arg_index >= argc) rb_raise(rb_eArgError, "too few arguments"); \
+    VALUE arg_rb = argv[arg_index++]; \
+    do {} while (0)
 
-VALUE rb_KernAux_snprintf1(
-    const int argc,
-    const VALUE *const argv_rb,
-    const VALUE self KERNAUX_UNUSED
-) {
-    if (argc < 2 || argc > 5) rb_raise(rb_eArgError, "expected 2, 3, 4 or 5 args");
+VALUE rb_KernAux_sprintf(const int argc, VALUE *const argv, VALUE self)
+{
+    if (argc == 0) rb_raise(rb_eArgError, "too few arguments");
 
-    const VALUE size_rb = argv_rb[0];
-    VALUE format_rb = argv_rb[1];
+    // FIXME: const
+    char *format = StringValueCStr(argv[0]);
+    int arg_index = 1;
+    VALUE result = rb_str_new_literal("");
 
-    const int size = NUM2INT(size_rb);
-    const char *const format = StringValueCStr(format_rb);
+    while (*format) {
+        if (*format != '%') {
+            rb_str_cat(result, format, 1);
+            ++format;
+            continue;
+        }
 
-    if (size < 0) rb_raise(rb_eRangeError, "expected non-negative size");
+        // FIXME: unnecessary
+        const char *const old_format = format;
+        ++format;
+        struct KernAux_PrintfFmt_Spec spec =
+            // FIXME: no type cast
+            KernAux_PrintfFmt_Spec_create_out((const char**)&format);
 
-    const char *fmt = format;
+        if (spec.set_width) {
+            TAKE_ARG;
+            KernAux_PrintfFmt_Spec_set_width(&spec, NUM2INT(arg_rb));
+        }
+        if (spec.set_precision) {
+            TAKE_ARG;
+            KernAux_PrintfFmt_Spec_set_precision(&spec, NUM2INT(arg_rb));
+        }
 
-    while (*fmt && *fmt != '%') ++fmt;
-    if (*(fmt++) != '%') rb_raise(rb_eArgError, "invalid format");
-
-    struct KernAux_PrintfFmt_Spec spec = KernAux_PrintfFmt_Spec_create_out(&fmt);
-
-    while (*fmt) {
-        if (*(fmt++) == '%') rb_raise(rb_eArgError, "invalid format");
-    }
-
-    int arg_index = 2;
-    if (spec.set_width && argc > arg_index) {
-        KernAux_PrintfFmt_Spec_set_width(&spec, NUM2INT(argv_rb[arg_index++]));
-    }
-    if (spec.set_precision && argc > arg_index) {
-        KernAux_PrintfFmt_Spec_set_precision(&spec, NUM2INT(argv_rb[arg_index++]));
-    }
-
-    struct DynArg dynarg = DynArg_create();
-    if (argc > arg_index) {
-        VALUE arg_rb = argv_rb[arg_index];
+        struct DynArg dynarg = DynArg_create();
 
         if (spec.type == KERNAUX_PRINTF_FMT_TYPE_INT) {
+            TAKE_ARG;
             DynArg_use_long_long(&dynarg, NUM2LL(arg_rb));
         } else if (spec.type == KERNAUX_PRINTF_FMT_TYPE_UINT) {
+            TAKE_ARG;
             DynArg_use_unsigned_long_long(&dynarg, NUM2ULL(arg_rb));
         } else if (spec.type == KERNAUX_PRINTF_FMT_TYPE_FLOAT ||
                    spec.type == KERNAUX_PRINTF_FMT_TYPE_EXP)
         {
+            TAKE_ARG;
             DynArg_use_double(&dynarg, NUM2DBL(arg_rb));
         } else if (spec.type == KERNAUX_PRINTF_FMT_TYPE_CHAR) {
+            TAKE_ARG;
             Check_Type(arg_rb, T_STRING);
             DynArg_use_char(&dynarg, *StringValuePtr(arg_rb));
         } else if (spec.type == KERNAUX_PRINTF_FMT_TYPE_STR) {
+            TAKE_ARG;
             Check_Type(arg_rb, T_STRING);
             DynArg_use_str(&dynarg, StringValueCStr(arg_rb));
         }
-    }
 
-    char *const str = malloc(size);
-    if (!str) rb_raise(rb_eNoMemError, "snprintf1 buffer malloc");
+        char buffer[BUFFER_SIZE];
+        int slen;
 
-    struct rb_KernAux_Snprintf1_DATA *userdata;
-    VALUE userdata_rb = TypedData_Make_Struct(
-        rb_KernAux_Snprintf1,
-        struct rb_KernAux_Snprintf1_DATA,
-        &rb_KernAux_Snprintf1_DTYPE,
-        userdata
-    );
-    if (NIL_P(userdata_rb) || userdata == NULL) {
-        free(str);
-        rb_raise(rb_eNoMemError, "snprintf1 userdata alloc");
-    }
+        // FIXME: it's a hack
+        // TODO: convert printf format spec to string
+        const char tmp = *format;
+        *format = '\0';
 
-    userdata->spec = &spec;
-    userdata->dynarg = &dynarg;
-    userdata->size = size;
-    userdata->format = format;
-    userdata->str = str;
-
-    int state = 0;
-    VALUE result =
-        rb_protect(rb_KernAux_snprintf1_PROTECT, userdata_rb, &state);
-
-    free(str);
-
-    if (state == 0) {
-        return result;
-    } else {
-        rb_jump_tag(state);
-    }
-}
-
-VALUE rb_KernAux_snprintf1_PROTECT(VALUE userdata_rb)
-{
-    const struct rb_KernAux_Snprintf1_DATA *userdata = NULL;
-    TypedData_Get_Struct(
-        userdata_rb,
-        struct rb_KernAux_Snprintf1_DATA,
-        &rb_KernAux_Snprintf1_DTYPE,
-        userdata
-    );
-
-    int slen;
-    if (userdata->spec->set_width) {
-        if (userdata->spec->set_precision) {
-            slen = userdata->dynarg->use_dbl
-                ? kernaux_snprintf(userdata->str, userdata->size, userdata->format, userdata->spec->width, userdata->spec->precision, userdata->dynarg->dbl)
-                : kernaux_snprintf(userdata->str, userdata->size, userdata->format, userdata->spec->width, userdata->spec->precision, userdata->dynarg->arg);
+        if (spec.set_width) {
+            if (spec.set_precision) {
+                if (dynarg.use_dbl) {
+                    slen = kernaux_snprintf(buffer, BUFFER_SIZE, old_format,
+                                            spec.width, spec.precision,
+                                            dynarg.dbl);
+                } else {
+                    slen = kernaux_snprintf(buffer, BUFFER_SIZE, old_format,
+                                            spec.width, spec.precision,
+                                            dynarg.arg);
+                }
+            } else {
+                if (dynarg.use_dbl) {
+                    slen = kernaux_snprintf(buffer, BUFFER_SIZE, old_format,
+                                            spec.width, dynarg.dbl);
+                } else {
+                    slen = kernaux_snprintf(buffer, BUFFER_SIZE, old_format,
+                                            spec.width, dynarg.arg);
+                }
+            }
         } else {
-            slen = userdata->dynarg->use_dbl
-                ? kernaux_snprintf(userdata->str, userdata->size, userdata->format, userdata->spec->width, userdata->dynarg->dbl)
-                : kernaux_snprintf(userdata->str, userdata->size, userdata->format, userdata->spec->width, userdata->dynarg->arg);
+            if (spec.set_precision) {
+                if (dynarg.use_dbl) {
+                    slen = kernaux_snprintf(buffer, BUFFER_SIZE, old_format,
+                                            spec.precision, dynarg.dbl);
+                } else {
+                    slen = kernaux_snprintf(buffer, BUFFER_SIZE, old_format,
+                                            spec.precision, dynarg.arg);
+                }
+            } else {
+                if (dynarg.use_dbl) {
+                    slen = kernaux_snprintf(buffer, BUFFER_SIZE, old_format, dynarg.dbl);
+                } else {
+                    slen = kernaux_snprintf(buffer, BUFFER_SIZE, old_format, dynarg.arg);
+                }
+            }
         }
-    } else {
-        if (userdata->spec->set_precision) {
-            slen = userdata->dynarg->use_dbl
-                ? kernaux_snprintf(userdata->str, userdata->size, userdata->format, userdata->spec->precision, userdata->dynarg->dbl)
-                : kernaux_snprintf(userdata->str, userdata->size, userdata->format, userdata->spec->precision, userdata->dynarg->arg);
-        } else {
-            slen = userdata->dynarg->use_dbl
-                ? kernaux_snprintf(userdata->str, userdata->size, userdata->format, userdata->dynarg->dbl)
-                : kernaux_snprintf(userdata->str, userdata->size, userdata->format, userdata->dynarg->arg);
-        }
+
+        *format = tmp;
+        rb_str_cat(result, buffer, slen);
     }
 
-    const VALUE output_rb =
-        rb_funcall(rb_str_new2(userdata->str), rb_intern_freeze, 0);
+    if (arg_index < argc) rb_raise(rb_eArgError, "too many arguments");
 
-    const VALUE result_rb = rb_ary_new2(2);
-    rb_ary_push(result_rb, output_rb);
-    rb_ary_push(result_rb, INT2NUM(slen));
-    return rb_funcall(result_rb, rb_intern_freeze, 0);
-}
-
-/************************
- * ::KernAux::Snprintf1 *
- ************************/
-
-size_t rb_KernAux_Snprintf1_DSIZE(const void *const ptr)
-{
-    return sizeof(struct rb_KernAux_Snprintf1_DATA);
+    return rb_funcall(result, rb_intern_freeze, 0);
 }
 
 #endif // KERNAUX_VERSION_WITH_PRINTF
