@@ -11,12 +11,9 @@
 #include <stdint.h>
 
 #define VALIDATE(type) do { \
-    KERNAUX_ASSERT(tag);                                   \
-    KERNAUX_ASSERT(display);                               \
-    if (!KernAux_Multiboot2_ITag_##type##_is_valid(tag)) { \
-        PRINTLN("  invalid!");                             \
-        return;                                            \
-    }                                                      \
+    KERNAUX_ASSERT(tag);                                         \
+    KERNAUX_ASSERT(display);                                     \
+    if (!KernAux_Multiboot2_ITag_##type##_is_valid(tag)) return; \
 } while (0)
 
 #define PRINTLN(s) do { KernAux_Display_println(display, s); } while (0)
