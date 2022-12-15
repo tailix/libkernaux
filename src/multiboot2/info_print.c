@@ -10,6 +10,15 @@
 #include <stddef.h>
 #include <stdint.h>
 
+#define VALIDATE(type) do { \
+    KERNAUX_ASSERT(tag);                                   \
+    KERNAUX_ASSERT(display);                               \
+    if (!KernAux_Multiboot2_ITag_##type##_is_valid(tag)) { \
+        PRINTLN("  invalid!");                             \
+        return;                                            \
+    }                                                      \
+} while (0)
+
 #define PRINTLN(s) do { KernAux_Display_println(display, s); } while (0)
 #define PRINTLNF(format, ...) \
     do { KernAux_Display_printlnf(display, format, __VA_ARGS__); } while (0)
@@ -199,13 +208,7 @@ void KernAux_Multiboot2_ITag_BootCmdLine_print(
     const struct KernAux_Multiboot2_ITag_BootCmdLine *const tag,
     const KernAux_Display display
 ) {
-    KERNAUX_ASSERT(tag);
-    KERNAUX_ASSERT(display);
-
-    if (!KernAux_Multiboot2_ITag_BootCmdLine_is_valid(tag)) {
-        PRINTLN("  invalid!");
-        return;
-    }
+    VALIDATE(BootCmdLine);
 
     PRINTLNF("  cmdline: %s", KERNAUX_MULTIBOOT2_DATA(tag));
 }
@@ -214,13 +217,7 @@ void KernAux_Multiboot2_ITag_BootLoaderName_print(
     const struct KernAux_Multiboot2_ITag_BootLoaderName *const tag,
     const KernAux_Display display
 ) {
-    KERNAUX_ASSERT(tag);
-    KERNAUX_ASSERT(display);
-
-    if (!KernAux_Multiboot2_ITag_BootLoaderName_is_valid(tag)) {
-        PRINTLN("  invalid!");
-        return;
-    }
+    VALIDATE(BootLoaderName);
 
     PRINTLNF("  name: %s", KERNAUX_MULTIBOOT2_DATA(tag));
 }
@@ -229,13 +226,7 @@ void KernAux_Multiboot2_ITag_Module_print(
     const struct KernAux_Multiboot2_ITag_Module *const tag,
     const KernAux_Display display
 ) {
-    KERNAUX_ASSERT(tag);
-    KERNAUX_ASSERT(display);
-
-    if (!KernAux_Multiboot2_ITag_Module_is_valid(tag)) {
-        PRINTLN("  invalid!");
-        return;
-    }
+    VALIDATE(Module);
 
     KERNAUX_CAST_CONST(unsigned long, mod_start, tag->mod_start);
     KERNAUX_CAST_CONST(unsigned long, mod_end,   tag->mod_end);
@@ -249,13 +240,7 @@ void KernAux_Multiboot2_ITag_BasicMemoryInfo_print(
     const struct KernAux_Multiboot2_ITag_BasicMemoryInfo *const tag,
     const KernAux_Display display
 ) {
-    KERNAUX_ASSERT(tag);
-    KERNAUX_ASSERT(display);
-
-    if (!KernAux_Multiboot2_ITag_BasicMemoryInfo_is_valid(tag)) {
-        PRINTLN("  invalid!");
-        return;
-    }
+    VALIDATE(BasicMemoryInfo);
 
     KERNAUX_CAST_CONST(unsigned long, mem_lower, tag->mem_lower);
     KERNAUX_CAST_CONST(unsigned long, mem_upper, tag->mem_upper);
@@ -268,13 +253,7 @@ void KernAux_Multiboot2_ITag_BIOSBootDevice_print(
     const struct KernAux_Multiboot2_ITag_BIOSBootDevice *const tag,
     const KernAux_Display display
 ) {
-    KERNAUX_ASSERT(tag);
-    KERNAUX_ASSERT(display);
-
-    if (!KernAux_Multiboot2_ITag_BIOSBootDevice_is_valid(tag)) {
-        PRINTLN("  invalid!");
-        return;
-    }
+    VALIDATE(BIOSBootDevice);
 
     KERNAUX_CAST_CONST(unsigned long, bios_dev,      tag->bios_dev);
     KERNAUX_CAST_CONST(unsigned long, partition,     tag->partition);
@@ -289,13 +268,7 @@ void KernAux_Multiboot2_ITag_MemoryMap_print(
     const struct KernAux_Multiboot2_ITag_MemoryMap *const tag,
     const KernAux_Display display
 ) {
-    KERNAUX_ASSERT(tag);
-    KERNAUX_ASSERT(display);
-
-    if (!KernAux_Multiboot2_ITag_MemoryMap_is_valid(tag)) {
-        PRINTLN("  invalid!");
-        return;
-    }
+    VALIDATE(MemoryMap);
 
     KERNAUX_CAST_CONST(unsigned long, entry_size,    tag->entry_size);
     KERNAUX_CAST_CONST(unsigned long, entry_version, tag->entry_version);
@@ -330,13 +303,7 @@ void KernAux_Multiboot2_ITag_VBEInfo_print(
     const struct KernAux_Multiboot2_ITag_VBEInfo *const tag,
     const KernAux_Display display
 ) {
-    KERNAUX_ASSERT(tag);
-    KERNAUX_ASSERT(display);
-
-    if (!KernAux_Multiboot2_ITag_VBEInfo_is_valid(tag)) {
-        PRINTLN("  invalid!");
-        return;
-    }
+    VALIDATE(VBEInfo);
 
     KERNAUX_CAST_CONST(unsigned long, mode,          tag->vbe_mode);
     KERNAUX_CAST_CONST(unsigned long, interface_seg, tag->vbe_interface_seg);
@@ -353,13 +320,7 @@ void KernAux_Multiboot2_ITag_FramebufferInfo_print(
     const struct KernAux_Multiboot2_ITag_FramebufferInfo *const tag,
     const KernAux_Display display
 ) {
-    KERNAUX_ASSERT(tag);
-    KERNAUX_ASSERT(display);
-
-    if (!KernAux_Multiboot2_ITag_FramebufferInfo_is_valid(tag)) {
-        PRINTLN("  invalid!");
-        return;
-    }
+    VALIDATE(FramebufferInfo);
 
     KERNAUX_CAST_CONST(unsigned long long, addr,      tag->framebuffer_addr);
     KERNAUX_CAST_CONST(unsigned long,      pitch,     tag->framebuffer_pitch);
@@ -382,13 +343,7 @@ void KernAux_Multiboot2_ITag_ELFSymbols_print(
     const struct KernAux_Multiboot2_ITag_ELFSymbols *const tag,
     const KernAux_Display display
 ) {
-    KERNAUX_ASSERT(tag);
-    KERNAUX_ASSERT(display);
-
-    if (!KernAux_Multiboot2_ITag_ELFSymbols_is_valid(tag)) {
-        PRINTLN("  invalid!");
-        return;
-    }
+    VALIDATE(ELFSymbols);
 
     KERNAUX_CAST_CONST(unsigned long, num,       tag->num);
     KERNAUX_CAST_CONST(unsigned long, ent_size,  tag->ent_size);
@@ -407,13 +362,7 @@ void KernAux_Multiboot2_ITag_APMTable_print(
     const struct KernAux_Multiboot2_ITag_APMTable *const tag,
     const KernAux_Display display
 ) {
-    KERNAUX_ASSERT(tag);
-    KERNAUX_ASSERT(display);
-
-    if (!KernAux_Multiboot2_ITag_APMTable_is_valid(tag)) {
-        PRINTLN("  invalid!");
-        return;
-    }
+    VALIDATE(APMTable);
 
     KERNAUX_CAST_CONST(unsigned long, version,     tag->version);
     KERNAUX_CAST_CONST(unsigned long, cseg,        tag->cseg);
@@ -440,13 +389,7 @@ void KernAux_Multiboot2_ITag_EFI32bitSystemTablePtr_print(
     const struct KernAux_Multiboot2_ITag_EFI32bitSystemTablePtr *const tag,
     const KernAux_Display display
 ) {
-    KERNAUX_ASSERT(tag);
-    KERNAUX_ASSERT(display);
-
-    if (!KernAux_Multiboot2_ITag_EFI32bitSystemTablePtr_is_valid(tag)) {
-        PRINTLN("  invalid!");
-        return;
-    }
+    VALIDATE(EFI32bitSystemTablePtr);
 
     KERNAUX_CAST_CONST(unsigned long, pointer, tag->pointer);
 
@@ -457,13 +400,7 @@ void KernAux_Multiboot2_ITag_EFI64bitSystemTablePtr_print(
     const struct KernAux_Multiboot2_ITag_EFI64bitSystemTablePtr *const tag,
     const KernAux_Display display
 ) {
-    KERNAUX_ASSERT(tag);
-    KERNAUX_ASSERT(display);
-
-    if (!KernAux_Multiboot2_ITag_EFI64bitSystemTablePtr_is_valid(tag)) {
-        PRINTLN("  invalid!");
-        return;
-    }
+    VALIDATE(EFI64bitSystemTablePtr);
 
     KERNAUX_CAST_CONST(unsigned long long, pointer, tag->pointer);
 
@@ -474,13 +411,7 @@ void KernAux_Multiboot2_ITag_SMBIOSTables_print(
     const struct KernAux_Multiboot2_ITag_SMBIOSTables *const tag,
     const KernAux_Display display
 ) {
-    KERNAUX_ASSERT(tag);
-    KERNAUX_ASSERT(display);
-
-    if (!KernAux_Multiboot2_ITag_SMBIOSTables_is_valid(tag)) {
-        PRINTLN("  invalid!");
-        return;
-    }
+    VALIDATE(SMBIOSTables);
 
     KERNAUX_CAST_CONST(unsigned long, major,     tag->major);
     KERNAUX_CAST_CONST(unsigned long, minor,     tag->minor);
@@ -503,52 +434,28 @@ void KernAux_Multiboot2_ITag_ACPIOldRSDP_print(
     const struct KernAux_Multiboot2_ITag_ACPIOldRSDP *const tag,
     const KernAux_Display display
 ) {
-    KERNAUX_ASSERT(tag);
-    KERNAUX_ASSERT(display);
-
-    if (!KernAux_Multiboot2_ITag_ACPIOldRSDP_is_valid(tag)) {
-        PRINTLN("  invalid!");
-        return;
-    }
+    VALIDATE(ACPIOldRSDP);
 }
 
 void KernAux_Multiboot2_ITag_ACPINewRSDP_print(
     const struct KernAux_Multiboot2_ITag_ACPINewRSDP *const tag,
     const KernAux_Display display
 ) {
-    KERNAUX_ASSERT(tag);
-    KERNAUX_ASSERT(display);
-
-    if (!KernAux_Multiboot2_ITag_ACPINewRSDP_is_valid(tag)) {
-        PRINTLN("  invalid!");
-        return;
-    }
+    VALIDATE(ACPINewRSDP);
 }
 
 void KernAux_Multiboot2_ITag_NetworkingInfo_print(
     const struct KernAux_Multiboot2_ITag_NetworkingInfo *const tag,
     const KernAux_Display display
 ) {
-    KERNAUX_ASSERT(tag);
-    KERNAUX_ASSERT(display);
-
-    if (!KernAux_Multiboot2_ITag_NetworkingInfo_is_valid(tag)) {
-        PRINTLN("  invalid!");
-        return;
-    }
+    VALIDATE(NetworkingInfo);
 }
 
 void KernAux_Multiboot2_ITag_EFIMemoryMap_print(
     const struct KernAux_Multiboot2_ITag_EFIMemoryMap *const tag,
     const KernAux_Display display
 ) {
-    KERNAUX_ASSERT(tag);
-    KERNAUX_ASSERT(display);
-
-    if (!KernAux_Multiboot2_ITag_EFIMemoryMap_is_valid(tag)) {
-        PRINTLN("  invalid!");
-        return;
-    }
+    VALIDATE(EFIMemoryMap);
 
     KERNAUX_CAST_CONST(unsigned long, descr_size,    tag->descriptor_size);
     KERNAUX_CAST_CONST(unsigned long, descr_version, tag->descriptor_version);
@@ -561,13 +468,7 @@ void KernAux_Multiboot2_ITag_EFI32bitImageHandlePtr_print(
     const struct KernAux_Multiboot2_ITag_EFI32bitImageHandlePtr *tag,
     KernAux_Display display
 ) {
-    KERNAUX_ASSERT(tag);
-    KERNAUX_ASSERT(display);
-
-    if (!KernAux_Multiboot2_ITag_EFI32bitImageHandlePtr_is_valid(tag)) {
-        PRINTLN("  invalid!");
-        return;
-    }
+    VALIDATE(EFI32bitImageHandlePtr);
 
     KERNAUX_CAST_CONST(unsigned long, pointer, tag->pointer);
 
@@ -578,13 +479,7 @@ void KernAux_Multiboot2_ITag_EFI64bitImageHandlePtr_print(
     const struct KernAux_Multiboot2_ITag_EFI64bitImageHandlePtr *tag,
     KernAux_Display display
 ) {
-    KERNAUX_ASSERT(tag);
-    KERNAUX_ASSERT(display);
-
-    if (!KernAux_Multiboot2_ITag_EFI64bitImageHandlePtr_is_valid(tag)) {
-        PRINTLN("  invalid!");
-        return;
-    }
+    VALIDATE(EFI64bitImageHandlePtr);
 
     KERNAUX_CAST_CONST(unsigned long long, pointer, tag->pointer);
 
