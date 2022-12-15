@@ -187,6 +187,7 @@ Tips
 ./configure
 make
 sudo make install
+sudo ldconfig # on GNU/Linux
 ```
 
 This is just a usual library. You can use most of it's APIs in hosted
@@ -213,12 +214,14 @@ without it in `$PATH`:
 ```
 ./configure \
   --host='i386-elf' \
+  --disable-shared \
   --enable-freestanding \
   --with-libc \
-  AR="$(which i386-elf-ar)" \
-  CC="$(which i386-elf-gcc)" \
-  RANLIB="$(which i386-elf-ranlib)"
+  CC="$(which i386-elf-gcc)"
 ```
+
+The variables include `AR`, `AS`, `CC`, `CCAS`, `LD`, `NM`, `OBJDUMP`, `RANLIB`,
+`STRIP`. See the generated `config.log` for more information.
 
 To install into specific directory use full path: `DESTDIR="$(pwd)/dest" make
 install` instead of `DESTDIR=dest make install`.

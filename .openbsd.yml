@@ -1,0 +1,39 @@
+# We use sourcehut CI (https://builds.sr.ht) to test on OpenBSD.
+# For GNU/Linux CI see GitHub Actions.
+
+image: openbsd/7.2
+arch: amd64
+sources:
+  - https://github.com/tailix/libkernaux.git
+packages:
+  - autoconf-2.71
+  - automake-1.16.5
+  - cppcheck
+  - libyaml
+  - m4
+  - py3-pip
+  - py3-wheel
+  - python3
+  - wget
+environment:
+  AUTOCONF_VERSION: '2.71'
+  AUTOMAKE_VERSION: '1.16'
+tasks:
+  - libtool: |
+      wget https://ftpmirror.gnu.org/libtool/libtool-2.4.7.tar.gz
+      tar -xzf libtool-2.4.7.tar.gz
+      cd libtool-2.4.7
+      ./configure
+      make
+      doas make install
+  - dependencies: |
+      pip3 install --user Jinja2 PyYAML
+  - build: |
+      cd libkernaux
+      ./autogen.sh
+      ./configure --enable-debug --enable-checks-all CFLAGS='-O3'
+      make
+      doas make install
+  - test: |
+      cd libkernaux
+      make check
