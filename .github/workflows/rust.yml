@@ -32,6 +32,8 @@ jobs:
         run: make
       - name: install
         run: sudo make install
+      - name: ldconfig
+        run: sudo ldconfig
       - working-directory: bindings/rust
         name: test
         run: cargo test ${{matrix.packages.cargo}}
