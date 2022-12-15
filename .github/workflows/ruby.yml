@@ -33,6 +33,8 @@ jobs:
         run: make
       - name: install
         run: sudo make install
+      - name: ldconfig
+        run: sudo ldconfig
       - working-directory: bindings/ruby
         name: setup
         run: ./bin/setup

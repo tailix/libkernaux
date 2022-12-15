@@ -1,155 +1,147 @@
 #include "main.h"
-
 #include "dynarg.h"
-
-#include <stddef.h>
-#include <stdlib.h>
 
 #include <mruby/array.h>
 #include <mruby/error.h>
 #include <mruby/presym.h>
 #include <mruby/string.h>
 
+#define BUFFER_SIZE 4096
+
 #ifdef KERNAUX_VERSION_WITH_PRINTF
 
-struct snprintf1_userdata {
-    const struct KernAux_PrintfFmt_Spec *spec;
-    const struct DynArg *dynarg;
-    mrb_int size;
-    const char *format;
-    char *str;
-};
-
-static mrb_value rb_KernAux_snprintf1(mrb_state *mrb, mrb_value self);
-
-static mrb_value snprintf1_protect(mrb_state *mrb, void *userdata);
+static mrb_value rb_KernAux_sprintf(mrb_state *mrb, mrb_value self);
 
 void init_printf(mrb_state *const mrb)
 {
     struct RClass *const rb_KernAux = mrb_module_get_id(mrb, MRB_SYM(KernAux));
 
-    mrb_define_class_method(mrb, rb_KernAux, "snprintf1", rb_KernAux_snprintf1,
-                            MRB_ARGS_REQ(2) | MRB_ARGS_OPT(2));
+    mrb_define_class_method(mrb, rb_KernAux, "sprintf", rb_KernAux_sprintf,
+                            MRB_ARGS_REQ(1) | MRB_ARGS_REST());
 }
 
-mrb_value rb_KernAux_snprintf1(mrb_state *const mrb, mrb_value self)
+#define TAKE_ARG \
+    if (arg_index >= argc) { \
+        mrb_raise(mrb, E_ARGUMENT_ERROR, "too few arguments"); \
+    } \
+    mrb_value arg_rb = args[arg_index++]; \
+    do {} while (0)
+
+mrb_value rb_KernAux_sprintf(mrb_state *const mrb, mrb_value self)
 {
-    mrb_int size = 0;
-    const char *format = NULL;
-    mrb_value rest[3];
-    mrb_bool rest_given[3];
-
-    mrb_get_args(
-        mrb,
-        "iz|o?o?o?",
-        &size,
-        &format,
-        &rest[0], &rest_given[0],
-        &rest[1], &rest_given[1],
-        &rest[2], &rest_given[2]
-    );
-
-    if (size < 0) mrb_raise(mrb, E_RANGE_ERROR, "expected non-negative size");
-
-    const char *fmt = format;
-
-    while (*fmt && *fmt != '%') ++fmt;
-    if (*(fmt++) != '%') mrb_raise(mrb, E_ARGUMENT_ERROR, "invalid format");
-
-    struct KernAux_PrintfFmt_Spec spec = KernAux_PrintfFmt_Spec_create_out(&fmt);
-
-    while (*fmt) {
-        if (*(fmt++) == '%') mrb_raise(mrb, E_ARGUMENT_ERROR, "invalid format");
-    }
-
-    int argc = 0;
-    for (int i = 0; i < 3; ++i) if (rest_given[i]) ++argc;
+    // FIXME: const
+    char *format;
+    mrb_value *args;
+    mrb_int argc;
+    mrb_get_args(mrb, "z*", &format, &args, &argc);
 
     int arg_index = 0;
-    if (spec.set_width && argc > arg_index) {
-        KernAux_PrintfFmt_Spec_set_width(&spec, mrb_integer(rest[arg_index++]));
-    }
-    if (spec.set_precision && argc > arg_index) {
-        KernAux_PrintfFmt_Spec_set_precision(&spec, mrb_integer(rest[arg_index++]));
-    }
+    mrb_value result = mrb_str_new_lit(mrb, "");
 
-    struct DynArg dynarg = DynArg_create();
-    if (argc > arg_index) {
-        mrb_value arg_rb = rest[arg_index];
+    while (*format) {
+        if (*format != '%') {
+            mrb_str_cat(mrb, result, format, 1);
+            ++format;
+            continue;
+        }
+
+        // FIXME: unnecessary
+        const char *const old_format = format;
+        ++format;
+        struct KernAux_PrintfFmt_Spec spec =
+            // FIXME: no type cast
+            KernAux_PrintfFmt_Spec_create_out((const char**)&format);
+
+        if (spec.set_width) {
+            TAKE_ARG;
+            KernAux_PrintfFmt_Spec_set_width(&spec, mrb_integer(arg_rb));
+        }
+        if (spec.set_precision) {
+            TAKE_ARG;
+            KernAux_PrintfFmt_Spec_set_precision(&spec, mrb_integer(arg_rb));
+        }
+
+        struct DynArg dynarg = DynArg_create();
 
         if (spec.type == KERNAUX_PRINTF_FMT_TYPE_INT) {
+            TAKE_ARG;
+            mrb_ensure_int_type(mrb, arg_rb);
             DynArg_use_long_long(&dynarg, mrb_integer(arg_rb));
         } else if (spec.type == KERNAUX_PRINTF_FMT_TYPE_UINT) {
-            mrb_int arg = mrb_integer(arg_rb);
-            if (arg < 0) mrb_raise(mrb, E_ARGUMENT_ERROR, "expected non-negative argument");
-            DynArg_use_unsigned_long_long(&dynarg, arg);
+            TAKE_ARG;
+            mrb_ensure_int_type(mrb, arg_rb);
+            DynArg_use_unsigned_long_long(&dynarg, mrb_integer(arg_rb));
         } else if (spec.type == KERNAUX_PRINTF_FMT_TYPE_FLOAT ||
                    spec.type == KERNAUX_PRINTF_FMT_TYPE_EXP)
         {
-            DynArg_use_double(&dynarg, mrb_as_float(mrb, arg_rb));
+            TAKE_ARG;
+            mrb_ensure_float_type(mrb, arg_rb);
+            DynArg_use_double(&dynarg, mrb_float(arg_rb));
         } else if (spec.type == KERNAUX_PRINTF_FMT_TYPE_CHAR) {
-            DynArg_use_char(&dynarg, *RSTRING_CSTR(mrb, arg_rb));
+            TAKE_ARG;
+            mrb_ensure_string_type(mrb, arg_rb);
+            DynArg_use_char(&dynarg, *RSTRING_PTR(arg_rb));
         } else if (spec.type == KERNAUX_PRINTF_FMT_TYPE_STR) {
+            TAKE_ARG;
+            mrb_ensure_string_type(mrb, arg_rb);
             DynArg_use_str(&dynarg, RSTRING_CSTR(mrb, arg_rb));
         }
-    }
 
-    char *const str = malloc(size);
-    if (!str) mrb_raise(mrb, mrb_exc_get_id(mrb, MRB_ERROR_SYM(NoMemoryError)), "snprintf1 buffer malloc");
+        char buffer[BUFFER_SIZE];
+        int slen;
 
-    struct snprintf1_userdata userdata = {
-        .spec = &spec,
-        .dynarg = &dynarg,
-        .size = size,
-        .format = format,
-        .str = str,
-    };
-    mrb_bool error;
-    mrb_value result = mrb_protect_error(mrb, snprintf1_protect, &userdata, &error);
+        // FIXME: it's a hack
+        // TODO: convert printf format spec to string
+        const char tmp = *format;
+        *format = '\0';
 
-    free(str);
-
-    if (error) {
-        mrb_exc_raise(mrb, result);
-    } else {
-        return result;
-    }
-}
-
-mrb_value snprintf1_protect(mrb_state *const mrb, void *const userdata_raw)
-{
-    const struct snprintf1_userdata *const userdata = userdata_raw;
-
-    int slen;
-    if (userdata->spec->set_width) {
-        if (userdata->spec->set_precision) {
-            slen = userdata->dynarg->use_dbl
-                ? kernaux_snprintf(userdata->str, userdata->size, userdata->format, userdata->spec->width, userdata->spec->precision, userdata->dynarg->dbl)
-                : kernaux_snprintf(userdata->str, userdata->size, userdata->format, userdata->spec->width, userdata->spec->precision, userdata->dynarg->arg);
+        if (spec.set_width) {
+            if (spec.set_precision) {
+                if (dynarg.use_dbl) {
+                    slen = kernaux_snprintf(buffer, BUFFER_SIZE, old_format,
+                                            spec.width, spec.precision,
+                                            dynarg.dbl);
+                } else {
+                    slen = kernaux_snprintf(buffer, BUFFER_SIZE, old_format,
+                                            spec.width, spec.precision,
+                                            dynarg.arg);
+                }
+            } else {
+                if (dynarg.use_dbl) {
+                    slen = kernaux_snprintf(buffer, BUFFER_SIZE, old_format,
+                                            spec.width, dynarg.dbl);
+                } else {
+                    slen = kernaux_snprintf(buffer, BUFFER_SIZE, old_format,
+                                            spec.width, dynarg.arg);
+                }
+            }
         } else {
-            slen = userdata->dynarg->use_dbl
-                ? kernaux_snprintf(userdata->str, userdata->size, userdata->format, userdata->spec->width, userdata->dynarg->dbl)
-                : kernaux_snprintf(userdata->str, userdata->size, userdata->format, userdata->spec->width, userdata->dynarg->arg);
+            if (spec.set_precision) {
+                if (dynarg.use_dbl) {
+                    slen = kernaux_snprintf(buffer, BUFFER_SIZE, old_format,
+                                            spec.precision, dynarg.dbl);
+                } else {
+                    slen = kernaux_snprintf(buffer, BUFFER_SIZE, old_format,
+                                            spec.precision, dynarg.arg);
+                }
+            } else {
+                if (dynarg.use_dbl) {
+                    slen = kernaux_snprintf(buffer, BUFFER_SIZE, old_format, dynarg.dbl);
+                } else {
+                    slen = kernaux_snprintf(buffer, BUFFER_SIZE, old_format, dynarg.arg);
+                }
+            }
         }
-    } else {
-        if (userdata->spec->set_precision) {
-            slen = userdata->dynarg->use_dbl
-                ? kernaux_snprintf(userdata->str, userdata->size, userdata->format, userdata->spec->precision, userdata->dynarg->dbl)
-                : kernaux_snprintf(userdata->str, userdata->size, userdata->format, userdata->spec->precision, userdata->dynarg->arg);
-        } else {
-            slen = userdata->dynarg->use_dbl
-                ? kernaux_snprintf(userdata->str, userdata->size, userdata->format, userdata->dynarg->dbl)
-                : kernaux_snprintf(userdata->str, userdata->size, userdata->format, userdata->dynarg->arg);
-        }
+
+        *format = tmp;
+        mrb_str_cat(mrb, result, buffer, slen);
     }
 
-    mrb_value output_rb =
-        mrb_obj_freeze(mrb, mrb_str_cat_cstr(mrb, mrb_str_new_lit(mrb, ""), userdata->str));
+    if (arg_index < argc) {
+        mrb_raise(mrb, E_ARGUMENT_ERROR, "too many arguments");
+    }
 
-    mrb_value values[2];
-    values[0] = output_rb;
-    values[1] = mrb_fixnum_value(slen);
-    return mrb_obj_freeze(mrb, mrb_ary_new_from_values(mrb, 2, values));
+    return mrb_obj_freeze(mrb, result);
 }
 
 #endif // KERNAUX_VERSION_WITH_PRINTF
