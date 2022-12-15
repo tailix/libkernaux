@@ -10,15 +10,15 @@
 #include <stddef.h>
 #include <stdint.h>
 
+#define PRINTLN(s) do { KernAux_Display_println(display, s); } while (0)
+#define PRINTLNF(format, ...) \
+    do { KernAux_Display_printlnf(display, format, __VA_ARGS__); } while (0)
+
 #define VALIDATE(type) do { \
     KERNAUX_ASSERT(tag);                                         \
     KERNAUX_ASSERT(display);                                     \
     if (!KernAux_Multiboot2_ITag_##type##_is_valid(tag)) return; \
 } while (0)
-
-#define PRINTLN(s) do { KernAux_Display_println(display, s); } while (0)
-#define PRINTLNF(format, ...) \
-    do { KernAux_Display_printlnf(display, format, __VA_ARGS__); } while (0)
 
 void KernAux_Multiboot2_Info_print(
     const struct KernAux_Multiboot2_Info *const multiboot2_info,
