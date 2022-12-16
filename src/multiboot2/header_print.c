@@ -200,7 +200,9 @@ void KernAux_Multiboot2_HTag_EntryAddr_print(
 ) {
     HEADER(EntryAddr);
 
-    // TODO: print
+    KERNAUX_CAST_CONST(unsigned long, entry_addr, tag->entry_addr);
+
+    PRINTLNF("  entry addr: %lu", entry_addr);
 }
 
 void KernAux_Multiboot2_HTag_Flags_print(

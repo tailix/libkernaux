@@ -96,7 +96,7 @@ multiboot2_header_example2 = {
             .flags = 0,
             .size = sizeof(multiboot2_header_example2.tag_entry_addr),
         },
-        .entry_addr = 0,
+        .entry_addr = 0xcafebabe,
     },
     .tag_flags = {
         .base = {

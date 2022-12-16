@@ -65,6 +65,7 @@ static const char output2[] =
     "  type: 3 (entry address)\n"
     "  flags: 0\n"
     "  size: 12\n"
+    "  entry addr: 3405691582\n"
     "Multiboot 2 header tag\n"
     "  type: 4 (flags)\n"
     "  flags: 0\n"
