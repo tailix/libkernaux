@@ -23,11 +23,11 @@
     KERNAUX_CAST_CONST(unsigned long, size, tag->base.size);     \
                                                                  \
     PRINTLN("Multiboot 2 info tag");                             \
-    PRINTLNF("  type: %u (%s)",                                  \
+    PRINTLNF("  u32 type: %u (%s)",                              \
         tag->base.type,                                          \
         KernAux_Multiboot2_ITag_to_str(tag->base.type)           \
     );                                                           \
-    PRINTLNF("  size: %lu", size);                               \
+    PRINTLNF("  u32 size: %lu", size);                           \
 } while (0)
 
 void KernAux_Multiboot2_Info_print(
@@ -41,8 +41,8 @@ void KernAux_Multiboot2_Info_print(
     KERNAUX_CAST_CONST(unsigned long, reserved1,  multiboot2_info->reserved1);
 
     PRINTLN("Multiboot 2 info");
-    PRINTLNF("  size: %lu", total_size);
-    PRINTLNF("  reserved1: %lu", reserved1);
+    PRINTLNF("  u32 size: %lu", total_size);
+    PRINTLNF("  u32 reserved1: %lu", reserved1);
 
     const struct KernAux_Multiboot2_ITagBase *tag_base =
         (struct KernAux_Multiboot2_ITagBase*)
@@ -216,7 +216,7 @@ void KernAux_Multiboot2_ITag_BootCmdLine_print(
     HEADER(BootCmdLine);
 
     // Print data:
-    PRINTLNF("  cmdline: %s", KERNAUX_MULTIBOOT2_DATA(tag));
+    PRINTLNF("  char cmdline[]: %s", KERNAUX_MULTIBOOT2_DATA(tag));
 }
 
 void KernAux_Multiboot2_ITag_BootLoaderName_print(
@@ -226,7 +226,7 @@ void KernAux_Multiboot2_ITag_BootLoaderName_print(
     HEADER(BootLoaderName);
 
     // Print data:
-    PRINTLNF("  name: %s", KERNAUX_MULTIBOOT2_DATA(tag));
+    PRINTLNF("  char name[]: %s", KERNAUX_MULTIBOOT2_DATA(tag));
 }
 
 void KernAux_Multiboot2_ITag_Module_print(
@@ -238,11 +238,11 @@ void KernAux_Multiboot2_ITag_Module_print(
     KERNAUX_CAST_CONST(unsigned long, mod_start, tag->mod_start);
     KERNAUX_CAST_CONST(unsigned long, mod_end,   tag->mod_end);
 
-    PRINTLNF("  start: %lu", mod_start);
-    PRINTLNF("  end: %lu", mod_end);
+    PRINTLNF("  u32 start: %lu", mod_start);
+    PRINTLNF("  u32 end: %lu", mod_end);
 
     // Print data:
-    PRINTLNF("  cmdline: %s", KERNAUX_MULTIBOOT2_DATA(tag));
+    PRINTLNF("  char cmdline[]: %s", KERNAUX_MULTIBOOT2_DATA(tag));
 }
 
 void KernAux_Multiboot2_ITag_BasicMemoryInfo_print(
@@ -254,8 +254,8 @@ void KernAux_Multiboot2_ITag_BasicMemoryInfo_print(
     KERNAUX_CAST_CONST(unsigned long, mem_lower, tag->mem_lower);
     KERNAUX_CAST_CONST(unsigned long, mem_upper, tag->mem_upper);
 
-    PRINTLNF("  mem_lower: %lu", mem_lower);
-    PRINTLNF("  mem_upper: %lu", mem_upper);
+    PRINTLNF("  u32 mem_lower: %lu", mem_lower);
+    PRINTLNF("  u32 mem_upper: %lu", mem_upper);
 }
 
 void KernAux_Multiboot2_ITag_BIOSBootDevice_print(
@@ -268,9 +268,9 @@ void KernAux_Multiboot2_ITag_BIOSBootDevice_print(
     KERNAUX_CAST_CONST(unsigned long, partition,     tag->partition);
     KERNAUX_CAST_CONST(unsigned long, sub_partition, tag->sub_partition);
 
-    PRINTLNF("  bios_dev: %lu", bios_dev);
-    PRINTLNF("  partition: %lu", partition);
-    PRINTLNF("  sub_partition: %lu", sub_partition);
+    PRINTLNF("  u32 bios_dev: %lu", bios_dev);
+    PRINTLNF("  u32 partition: %lu", partition);
+    PRINTLNF("  u32 sub_partition: %lu", sub_partition);
 }
 
 void KernAux_Multiboot2_ITag_MemoryMap_print(
@@ -282,8 +282,8 @@ void KernAux_Multiboot2_ITag_MemoryMap_print(
     KERNAUX_CAST_CONST(unsigned long, entry_size,    tag->entry_size);
     KERNAUX_CAST_CONST(unsigned long, entry_version, tag->entry_version);
 
-    PRINTLNF("  entry_size: %lu",    entry_size);
-    PRINTLNF("  entry_version: %lu", entry_version);
+    PRINTLNF("  u32 entry_size: %lu",    entry_size);
+    PRINTLNF("  u32 entry_version: %lu", entry_version);
     PRINTLN("  entries:");
 
     // Print data:
@@ -303,10 +303,10 @@ void KernAux_Multiboot2_ITag_MemoryMap_print(
         KERNAUX_CAST_CONST(unsigned long,      reserved1, entries[index].reserved1);
 
         PRINTLNF("    entry %zu", index);
-        PRINTLNF("      base_addr: %llu", base_addr);
-        PRINTLNF("      length: %llu",    length);
-        PRINTLNF("      type: %lu",       type);
-        PRINTLNF("      reserved1: %lu",  reserved1);
+        PRINTLNF("      u64 base_addr: %llu", base_addr);
+        PRINTLNF("      u64 length: %llu",    length);
+        PRINTLNF("      u32 type: %lu",       type);
+        PRINTLNF("      u32 reserved1: %lu",  reserved1);
     }
 }
 
@@ -321,10 +321,10 @@ void KernAux_Multiboot2_ITag_VBEInfo_print(
     KERNAUX_CAST_CONST(unsigned long, interface_off, tag->vbe_interface_off);
     KERNAUX_CAST_CONST(unsigned long, interface_len, tag->vbe_interface_len);
 
-    PRINTLNF("  vbe_mode: %lu",          mode);
-    PRINTLNF("  vbe_interface_seg: %lu", interface_seg);
-    PRINTLNF("  vbe_interface_off: %lu", interface_off);
-    PRINTLNF("  vbe_interface_len: %lu", interface_len);
+    PRINTLNF("  u16 vbe_mode: %lu",          mode);
+    PRINTLNF("  u16 vbe_interface_seg: %lu", interface_seg);
+    PRINTLNF("  u16 vbe_interface_off: %lu", interface_off);
+    PRINTLNF("  u16 vbe_interface_len: %lu", interface_len);
 }
 
 void KernAux_Multiboot2_ITag_FramebufferInfo_print(
@@ -341,13 +341,13 @@ void KernAux_Multiboot2_ITag_FramebufferInfo_print(
     KERNAUX_CAST_CONST(unsigned long,      type,      tag->framebuffer_type);
     KERNAUX_CAST_CONST(unsigned long,      reserved1, tag->reserved1);
 
-    PRINTLNF("  framebuffer_addr: %llu",  addr);
-    PRINTLNF("  framebuffer_pitch: %lu",  pitch);
-    PRINTLNF("  framebuffer_width: %lu",  width);
-    PRINTLNF("  framebuffer_height: %lu", height);
-    PRINTLNF("  framebuffer_bpp: %lu",    bpp);
-    PRINTLNF("  framebuffer_type: %lu",   type);
-    PRINTLNF("  reserved1: %lu",          reserved1);
+    PRINTLNF("  u64 framebuffer_addr: %llu",  addr);
+    PRINTLNF("  u32 framebuffer_pitch: %lu",  pitch);
+    PRINTLNF("  u32 framebuffer_width: %lu",  width);
+    PRINTLNF("  u32 framebuffer_height: %lu", height);
+    PRINTLNF("  u8 framebuffer_bpp: %lu",    bpp);
+    PRINTLNF("  u8 framebuffer_type: %lu",   type);
+    PRINTLNF("  u8 reserved1: %lu",          reserved1);
 
     // TODO: Print data?
 }
@@ -363,10 +363,10 @@ void KernAux_Multiboot2_ITag_ELFSymbols_print(
     KERNAUX_CAST_CONST(unsigned long, shndx,     tag->shndx);
     KERNAUX_CAST_CONST(unsigned long, reserved1, tag->reserved1);
 
-    PRINTLNF("  num: %lu",       num);
-    PRINTLNF("  entsize: %lu",   ent_size);
-    PRINTLNF("  shndx: %lu",     shndx);
-    PRINTLNF("  reserved1: %lu", reserved1);
+    PRINTLNF("  u16 num: %lu",       num);
+    PRINTLNF("  u16 entsize: %lu",   ent_size);
+    PRINTLNF("  u16 shndx: %lu",     shndx);
+    PRINTLNF("  u16 reserved1: %lu", reserved1);
 
     // TODO: Print data?
 }
@@ -387,15 +387,15 @@ void KernAux_Multiboot2_ITag_APMTable_print(
     KERNAUX_CAST_CONST(unsigned long, cseg_16_len, tag->cseg_16_len);
     KERNAUX_CAST_CONST(unsigned long, dseg_len,    tag->dseg_len);
 
-    PRINTLNF("  version: %lu",     version);
-    PRINTLNF("  cseg: %lu",        cseg);
-    PRINTLNF("  offset: %lu",      offset);
-    PRINTLNF("  cseg_16: %lu",     cseg_16);
-    PRINTLNF("  dseg: %lu",        dseg);
-    PRINTLNF("  flags: %lu",       flags);
-    PRINTLNF("  cseg_len: %lu",    cseg_len);
-    PRINTLNF("  cseg_16_len: %lu", cseg_16_len);
-    PRINTLNF("  dseg_len: %lu",    dseg_len);
+    PRINTLNF("  u16 version: %lu",     version);
+    PRINTLNF("  u16 cseg: %lu",        cseg);
+    PRINTLNF("  u32 offset: %lu",      offset);
+    PRINTLNF("  u16 cseg_16: %lu",     cseg_16);
+    PRINTLNF("  u16 dseg: %lu",        dseg);
+    PRINTLNF("  u16 flags: %lu",       flags);
+    PRINTLNF("  u16 cseg_len: %lu",    cseg_len);
+    PRINTLNF("  u16 cseg_16_len: %lu", cseg_16_len);
+    PRINTLNF("  u16 dseg_len: %lu",    dseg_len);
 }
 
 void KernAux_Multiboot2_ITag_EFI32bitSystemTablePtr_print(
@@ -406,7 +406,7 @@ void KernAux_Multiboot2_ITag_EFI32bitSystemTablePtr_print(
 
     KERNAUX_CAST_CONST(unsigned long, pointer, tag->pointer);
 
-    PRINTLNF("  pointer: %lu", pointer);
+    PRINTLNF("  u32 pointer: %lu", pointer);
 }
 
 void KernAux_Multiboot2_ITag_EFI64bitSystemTablePtr_print(
@@ -417,7 +417,7 @@ void KernAux_Multiboot2_ITag_EFI64bitSystemTablePtr_print(
 
     KERNAUX_CAST_CONST(unsigned long long, pointer, tag->pointer);
 
-    PRINTLNF("  pointer: %llu", pointer);
+    PRINTLNF("  u64 pointer: %llu", pointer);
 }
 
 void KernAux_Multiboot2_ITag_SMBIOSTables_print(
@@ -435,9 +435,9 @@ void KernAux_Multiboot2_ITag_SMBIOSTables_print(
     KERNAUX_CAST_CONST(unsigned long, reserved4, tag->reserved1[4]);
     KERNAUX_CAST_CONST(unsigned long, reserved5, tag->reserved1[5]);
 
-    PRINTLNF("  major: %lu", major);
-    PRINTLNF("  minor: %lu", minor);
-    PRINTLNF("  reserved1: {%lu, %lu, %lu, %lu, %lu, %lu}",
+    PRINTLNF("  u8 major: %lu", major);
+    PRINTLNF("  u8 minor: %lu", minor);
+    PRINTLNF("  u8 reserved1[6]: {%lu, %lu, %lu, %lu, %lu, %lu}",
         reserved0, reserved1, reserved2,
         reserved3, reserved4, reserved5
     );
@@ -481,8 +481,8 @@ void KernAux_Multiboot2_ITag_EFIMemoryMap_print(
     KERNAUX_CAST_CONST(unsigned long, descr_size,    tag->descriptor_size);
     KERNAUX_CAST_CONST(unsigned long, descr_version, tag->descriptor_version);
 
-    PRINTLNF("  descriptor_size: %lu",    descr_size);
-    PRINTLNF("  descriptor_version: %lu", descr_version);
+    PRINTLNF("  u32 descriptor_size: %lu",    descr_size);
+    PRINTLNF("  u32 descriptor_version: %lu", descr_version);
 
     // TODO: Print data?
 }
@@ -502,7 +502,7 @@ void KernAux_Multiboot2_ITag_EFI32bitImageHandlePtr_print(
 
     KERNAUX_CAST_CONST(unsigned long, pointer, tag->pointer);
 
-    PRINTLNF("  pointer: %lu", pointer);
+    PRINTLNF("  u32 pointer: %lu", pointer);
 }
 
 void KernAux_Multiboot2_ITag_EFI64bitImageHandlePtr_print(
@@ -513,7 +513,7 @@ void KernAux_Multiboot2_ITag_EFI64bitImageHandlePtr_print(
 
     KERNAUX_CAST_CONST(unsigned long long, pointer, tag->pointer);
 
-    PRINTLNF("  pointer: %llu", pointer);
+    PRINTLNF("  u64 pointer: %llu", pointer);
 }
 
 void KernAux_Multiboot2_ITag_ImageLoadBasePhysAddr_print(
@@ -524,5 +524,5 @@ void KernAux_Multiboot2_ITag_ImageLoadBasePhysAddr_print(
 
     KERNAUX_CAST_CONST(unsigned long, load_base_addr, tag->load_base_addr);
 
-    PRINTLNF("  load_base_addr: %lu", load_base_addr);
+    PRINTLNF("  u32 load_base_addr: %lu", load_base_addr);
 }
