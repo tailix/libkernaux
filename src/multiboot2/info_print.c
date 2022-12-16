@@ -216,7 +216,7 @@ void KernAux_Multiboot2_ITag_BootCmdLine_print(
     HEADER(BootCmdLine);
 
     // Print data:
-    PRINTLNF("  char cmdline[]: %s", KERNAUX_MULTIBOOT2_DATA(tag));
+    PRINTLNF("  char cmdline[]: \"%s\"", KERNAUX_MULTIBOOT2_DATA(tag));
 }
 
 void KernAux_Multiboot2_ITag_BootLoaderName_print(
@@ -226,7 +226,7 @@ void KernAux_Multiboot2_ITag_BootLoaderName_print(
     HEADER(BootLoaderName);
 
     // Print data:
-    PRINTLNF("  char name[]: %s", KERNAUX_MULTIBOOT2_DATA(tag));
+    PRINTLNF("  char name[]: \"%s\"", KERNAUX_MULTIBOOT2_DATA(tag));
 }
 
 void KernAux_Multiboot2_ITag_Module_print(
@@ -242,7 +242,7 @@ void KernAux_Multiboot2_ITag_Module_print(
     PRINTLNF("  u32 end: %lu", mod_end);
 
     // Print data:
-    PRINTLNF("  char cmdline[]: %s", KERNAUX_MULTIBOOT2_DATA(tag));
+    PRINTLNF("  char cmdline[]: \"%s\"", KERNAUX_MULTIBOOT2_DATA(tag));
 }
 
 void KernAux_Multiboot2_ITag_BasicMemoryInfo_print(
