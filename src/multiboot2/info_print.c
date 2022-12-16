@@ -15,20 +15,24 @@
     do { KernAux_Display_printlnf(display, format, __VA_ARGS__); } while (0)
 
 #define HEADER(Type) do { \
-    KERNAUX_ASSERT(tag);                                         \
-    KERNAUX_ASSERT(display);                                     \
-                                                                 \
-    if (!KernAux_Multiboot2_ITag_##Type##_is_valid(tag)) return; \
-                                                                 \
-    KERNAUX_CAST_CONST(unsigned long, size, tag->base.size);     \
-                                                                 \
-    PRINTLN("Multiboot 2 info tag");                             \
-    PRINTLNF("  u32 type: %u (%s)",                              \
-        tag->base.type,                                          \
-        KernAux_Multiboot2_ITag_to_str(tag->base.type)           \
-    );                                                           \
-    PRINTLNF("  u32 size: %lu", size);                           \
+    KERNAUX_ASSERT(tag);                                     \
+    KERNAUX_ASSERT(display);                                 \
+                                                             \
+    if (!KernAux_Multiboot2_ITag_##Type##_is_valid(tag)) {   \
+        PRINTLN("Multiboot 2 info tag // invalid!");         \
+    }                                                        \
+                                                             \
+    KERNAUX_CAST_CONST(unsigned long, size, tag->base.size); \
+                                                             \
+    PRINTLN("Multiboot 2 info tag {");                       \
+    PRINTLNF("  u32 type: %u (%s)",                          \
+        tag->base.type,                                      \
+        KernAux_Multiboot2_ITag_to_str(tag->base.type)       \
+    );                                                       \
+    PRINTLNF("  u32 size: %lu", size);                       \
 } while (0)
+
+#define FOOTER do { PRINTLN("}"); } while (0)
 
 void KernAux_Multiboot2_Info_print(
     const struct KernAux_Multiboot2_Info *const multiboot2_info,
@@ -40,9 +44,10 @@ void KernAux_Multiboot2_Info_print(
     KERNAUX_CAST_CONST(unsigned long, total_size, multiboot2_info->total_size);
     KERNAUX_CAST_CONST(unsigned long, reserved1,  multiboot2_info->reserved1);
 
-    PRINTLN("Multiboot 2 info");
+    PRINTLN("Multiboot 2 info {");
     PRINTLNF("  u32 size: %lu", total_size);
     PRINTLNF("  u32 reserved1: %lu", reserved1);
+    PRINTLN("}");
 
     const struct KernAux_Multiboot2_ITagBase *tag_base =
         (struct KernAux_Multiboot2_ITagBase*)
@@ -207,6 +212,7 @@ void KernAux_Multiboot2_ITag_None_print(
     const KernAux_Display display
 ) {
     HEADER(None);
+    FOOTER;
 }
 
 void KernAux_Multiboot2_ITag_BootCmdLine_print(
@@ -217,6 +223,8 @@ void KernAux_Multiboot2_ITag_BootCmdLine_print(
 
     // Print data:
     PRINTLNF("  char cmdline[]: \"%s\"", KERNAUX_MULTIBOOT2_DATA(tag));
+
+    FOOTER;
 }
 
 void KernAux_Multiboot2_ITag_BootLoaderName_print(
@@ -227,6 +235,8 @@ void KernAux_Multiboot2_ITag_BootLoaderName_print(
 
     // Print data:
     PRINTLNF("  char name[]: \"%s\"", KERNAUX_MULTIBOOT2_DATA(tag));
+
+    FOOTER;
 }
 
 void KernAux_Multiboot2_ITag_Module_print(
@@ -243,6 +253,8 @@ void KernAux_Multiboot2_ITag_Module_print(
 
     // Print data:
     PRINTLNF("  char cmdline[]: \"%s\"", KERNAUX_MULTIBOOT2_DATA(tag));
+
+    FOOTER;
 }
 
 void KernAux_Multiboot2_ITag_BasicMemoryInfo_print(
@@ -256,6 +268,8 @@ void KernAux_Multiboot2_ITag_BasicMemoryInfo_print(
 
     PRINTLNF("  u32 mem_lower: %lu", mem_lower);
     PRINTLNF("  u32 mem_upper: %lu", mem_upper);
+
+    FOOTER;
 }
 
 void KernAux_Multiboot2_ITag_BIOSBootDevice_print(
@@ -271,6 +285,8 @@ void KernAux_Multiboot2_ITag_BIOSBootDevice_print(
     PRINTLNF("  u32 bios_dev: %lu", bios_dev);
     PRINTLNF("  u32 partition: %lu", partition);
     PRINTLNF("  u32 sub_partition: %lu", sub_partition);
+
+    FOOTER;
 }
 
 void KernAux_Multiboot2_ITag_MemoryMap_print(
@@ -308,6 +324,8 @@ void KernAux_Multiboot2_ITag_MemoryMap_print(
         PRINTLNF("      u32 type: %lu",       type);
         PRINTLNF("      u32 reserved1: %lu",  reserved1);
     }
+
+    FOOTER;
 }
 
 void KernAux_Multiboot2_ITag_VBEInfo_print(
@@ -325,6 +343,8 @@ void KernAux_Multiboot2_ITag_VBEInfo_print(
     PRINTLNF("  u16 vbe_interface_seg: %lu", interface_seg);
     PRINTLNF("  u16 vbe_interface_off: %lu", interface_off);
     PRINTLNF("  u16 vbe_interface_len: %lu", interface_len);
+
+    FOOTER;
 }
 
 void KernAux_Multiboot2_ITag_FramebufferInfo_print(
@@ -350,6 +370,8 @@ void KernAux_Multiboot2_ITag_FramebufferInfo_print(
     PRINTLNF("  u8 reserved1: %lu",          reserved1);
 
     // TODO: Print data?
+
+    FOOTER;
 }
 
 void KernAux_Multiboot2_ITag_ELFSymbols_print(
@@ -369,6 +391,8 @@ void KernAux_Multiboot2_ITag_ELFSymbols_print(
     PRINTLNF("  u16 reserved1: %lu", reserved1);
 
     // TODO: Print data?
+
+    FOOTER;
 }
 
 void KernAux_Multiboot2_ITag_APMTable_print(
@@ -396,6 +420,8 @@ void KernAux_Multiboot2_ITag_APMTable_print(
     PRINTLNF("  u16 cseg_len: %lu",    cseg_len);
     PRINTLNF("  u16 cseg_16_len: %lu", cseg_16_len);
     PRINTLNF("  u16 dseg_len: %lu",    dseg_len);
+
+    FOOTER;
 }
 
 void KernAux_Multiboot2_ITag_EFI32bitSystemTablePtr_print(
@@ -407,6 +433,8 @@ void KernAux_Multiboot2_ITag_EFI32bitSystemTablePtr_print(
     KERNAUX_CAST_CONST(unsigned long, pointer, tag->pointer);
 
     PRINTLNF("  u32 pointer: %lu", pointer);
+
+    FOOTER;
 }
 
 void KernAux_Multiboot2_ITag_EFI64bitSystemTablePtr_print(
@@ -418,6 +446,8 @@ void KernAux_Multiboot2_ITag_EFI64bitSystemTablePtr_print(
     KERNAUX_CAST_CONST(unsigned long long, pointer, tag->pointer);
 
     PRINTLNF("  u64 pointer: %llu", pointer);
+
+    FOOTER;
 }
 
 void KernAux_Multiboot2_ITag_SMBIOSTables_print(
@@ -443,6 +473,8 @@ void KernAux_Multiboot2_ITag_SMBIOSTables_print(
     );
 
     // TODO: Print data?
+
+    FOOTER;
 }
 
 void KernAux_Multiboot2_ITag_ACPIOldRSDP_print(
@@ -452,6 +484,8 @@ void KernAux_Multiboot2_ITag_ACPIOldRSDP_print(
     HEADER(ACPIOldRSDP);
 
     // TODO: Print data?
+
+    FOOTER;
 }
 
 void KernAux_Multiboot2_ITag_ACPINewRSDP_print(
@@ -461,6 +495,8 @@ void KernAux_Multiboot2_ITag_ACPINewRSDP_print(
     HEADER(ACPINewRSDP);
 
     // TODO: Print data?
+
+    FOOTER;
 }
 
 void KernAux_Multiboot2_ITag_NetworkingInfo_print(
@@ -470,6 +506,8 @@ void KernAux_Multiboot2_ITag_NetworkingInfo_print(
     HEADER(NetworkingInfo);
 
     // TODO: Print data?
+
+    FOOTER;
 }
 
 void KernAux_Multiboot2_ITag_EFIMemoryMap_print(
@@ -485,6 +523,8 @@ void KernAux_Multiboot2_ITag_EFIMemoryMap_print(
     PRINTLNF("  u32 descriptor_version: %lu", descr_version);
 
     // TODO: Print data?
+
+    FOOTER;
 }
 
 void KernAux_Multiboot2_ITag_EFIBootServicesNotTerminated_print(
@@ -492,6 +532,8 @@ void KernAux_Multiboot2_ITag_EFIBootServicesNotTerminated_print(
     const KernAux_Display display
 ) {
     HEADER(EFIBootServicesNotTerminated);
+
+    FOOTER;
 }
 
 void KernAux_Multiboot2_ITag_EFI32bitImageHandlePtr_print(
@@ -503,6 +545,8 @@ void KernAux_Multiboot2_ITag_EFI32bitImageHandlePtr_print(
     KERNAUX_CAST_CONST(unsigned long, pointer, tag->pointer);
 
     PRINTLNF("  u32 pointer: %lu", pointer);
+
+    FOOTER;
 }
 
 void KernAux_Multiboot2_ITag_EFI64bitImageHandlePtr_print(
@@ -514,6 +558,8 @@ void KernAux_Multiboot2_ITag_EFI64bitImageHandlePtr_print(
     KERNAUX_CAST_CONST(unsigned long long, pointer, tag->pointer);
 
     PRINTLNF("  u64 pointer: %llu", pointer);
+
+    FOOTER;
 }
 
 void KernAux_Multiboot2_ITag_ImageLoadBasePhysAddr_print(
@@ -525,4 +571,6 @@ void KernAux_Multiboot2_ITag_ImageLoadBasePhysAddr_print(
     KERNAUX_CAST_CONST(unsigned long, load_base_addr, tag->load_base_addr);
 
     PRINTLNF("  u32 load_base_addr: %lu", load_base_addr);
+
+    FOOTER;
 }
