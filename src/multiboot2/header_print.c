@@ -33,7 +33,7 @@
         tag->base.type,                                        \
         KernAux_Multiboot2_HTag_to_str(tag->base.type)         \
     );                                                         \
-    PRINTLNF("  u16 flags: %lu", flags);                       \
+    PRINTLNF("  u16 flags: 0x%lx", flags);                     \
     PRINTLNF("  u32 size: %lu", size);                         \
 } while (0)
 
