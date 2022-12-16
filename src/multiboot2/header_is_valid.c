@@ -248,7 +248,6 @@ bool KernAux_Multiboot2_HTag_RelocatableHeader_is_valid(
         tag->base.type == KERNAUX_MULTIBOOT2_HTAG_RELOCATABLE_HEADER &&
         tag->base.size == 24 &&
         tag->min_addr <= tag->max_addr
-        // TODO: additional requirements?
     )) {
         return false;
     }
