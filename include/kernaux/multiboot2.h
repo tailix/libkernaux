@@ -96,7 +96,7 @@ KERNAUX_STATIC_TEST_STRUCT_SIZE(KernAux_Multiboot2_HTagBase, 8);
 
 struct KernAux_Multiboot2_Info {
     uint32_t total_size;
-    uint32_t reserved1;
+    uint32_t reserved;
 }
 KERNAUX_PACKED;
 
@@ -153,7 +153,7 @@ struct KernAux_Multiboot2_ITag_MemoryMap_EntryBase {
     uint64_t base_addr;
     uint64_t length;
     uint32_t type;
-    uint32_t reserved1;
+    uint32_t reserved;
 }
 KERNAUX_PACKED;
 
@@ -176,6 +176,8 @@ struct KernAux_Multiboot2_HTag_InfoReq {
     // type = 1
     // size > 8
     struct KernAux_Multiboot2_HTagBase base;
+
+    // DATA: uint32_t mbi_tag_types[]
 }
 KERNAUX_PACKED;
 
@@ -301,6 +303,8 @@ struct KernAux_Multiboot2_ITag_BootCmdLine {
     // type = 1
     // size > 8
     struct KernAux_Multiboot2_ITagBase base;
+
+    // DATA: char cmdline[]
 }
 KERNAUX_PACKED;
 
@@ -310,6 +314,8 @@ struct KernAux_Multiboot2_ITag_BootLoaderName {
     // type = 2
     // size > 8
     struct KernAux_Multiboot2_ITagBase base;
+
+    // DATA: char name[]
 }
 KERNAUX_PACKED;
 
@@ -322,6 +328,8 @@ struct KernAux_Multiboot2_ITag_Module {
 
     uint32_t mod_start;
     uint32_t mod_end;
+
+    // DATA: char cmdline[]
 }
 KERNAUX_PACKED;
 
@@ -344,7 +352,7 @@ struct KernAux_Multiboot2_ITag_BIOSBootDevice {
     // size = 20
     struct KernAux_Multiboot2_ITagBase base;
 
-    uint32_t bios_dev;
+    uint32_t biosdev;
     uint32_t partition;
     uint32_t sub_partition;
 }
@@ -359,6 +367,8 @@ struct KernAux_Multiboot2_ITag_MemoryMap {
 
     uint32_t entry_size;
     uint32_t entry_version;
+
+    // DATA: varies(entry_size) KernAux_Multiboot2_ITag_MemoryMap_EntryBase entries[]
 }
 KERNAUX_PACKED;
 
@@ -391,7 +401,9 @@ struct KernAux_Multiboot2_ITag_FramebufferInfo {
     uint32_t framebuffer_height;
     uint8_t framebuffer_bpp;
     uint8_t framebuffer_type;
-    uint8_t reserved1;
+    uint8_t reserved;
+
+    // DATA: varies color_info[]
 }
 KERNAUX_PACKED;
 
@@ -405,7 +417,9 @@ struct KernAux_Multiboot2_ITag_ELFSymbols {
     uint16_t num;
     uint16_t ent_size;
     uint16_t shndx;
-    uint16_t reserved1;
+    uint16_t reserved;
+
+    // DATA: varies section_headers[]
 }
 KERNAUX_PACKED;
 
@@ -459,7 +473,9 @@ struct KernAux_Multiboot2_ITag_SMBIOSTables {
 
     uint8_t major;
     uint8_t minor;
-    uint8_t reserved1[6];
+    uint8_t reserved[6];
+
+    // TODO: DATA?
 }
 KERNAUX_PACKED;
 
@@ -469,6 +485,8 @@ struct KernAux_Multiboot2_ITag_ACPIOldRSDP {
     // type = 14
     // size > 8
     struct KernAux_Multiboot2_ITagBase base;
+
+    // TODO: DATA?
 }
 KERNAUX_PACKED;
 
@@ -478,6 +496,8 @@ struct KernAux_Multiboot2_ITag_ACPINewRSDP {
     // type = 15
     // size > 8
     struct KernAux_Multiboot2_ITagBase base;
+
+    // TODO: DATA?
 }
 KERNAUX_PACKED;
 
@@ -487,6 +507,8 @@ struct KernAux_Multiboot2_ITag_NetworkingInfo {
     // type = 16
     // size > 8
     struct KernAux_Multiboot2_ITagBase base;
+
+    // TODO: DATA?
 }
 KERNAUX_PACKED;
 
@@ -499,6 +521,8 @@ struct KernAux_Multiboot2_ITag_EFIMemoryMap {
 
     uint32_t descriptor_size;
     uint32_t descriptor_version;
+
+    // TODO: DATA?
 }
 KERNAUX_PACKED;
 

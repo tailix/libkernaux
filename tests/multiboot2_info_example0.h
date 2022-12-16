@@ -11,7 +11,7 @@ KERNAUX_PACKED
 multiboot2_info_example0 = {
     .multiboot2_info = {
         .total_size = sizeof(multiboot2_info_example0),
-        .reserved1 = 0,
+        .reserved = 0,
     },
     .tag_none = {
         .base = {

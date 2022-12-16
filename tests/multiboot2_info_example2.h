@@ -110,7 +110,7 @@ KERNAUX_PACKED
 multiboot2_info_example2 = {
     .multiboot2_info = {
         .total_size = sizeof(multiboot2_info_example2),
-        .reserved1 = 0,
+        .reserved = 0,
     },
     .tag_boot_cmd_line = {
         .tag = {
@@ -165,7 +165,7 @@ multiboot2_info_example2 = {
             .type = KERNAUX_MULTIBOOT2_ITAG_BIOS_BOOT_DEVICE,
             .size = sizeof(multiboot2_info_example2.tag_bios_boot_device),
         },
-        .bios_dev = 0,
+        .biosdev = 0,
         .partition = 1,
         .sub_partition = 2,
     },
@@ -225,7 +225,7 @@ multiboot2_info_example2 = {
             .num = 10,
             .ent_size = 0,
             .shndx = 40,
-            .reserved1 = 0,
+            .reserved = 0,
         },
         .data = {
             9, 0, 0, 0, 0, 0, 0, 0,
@@ -293,7 +293,7 @@ multiboot2_info_example2 = {
             },
             .major = 1,
             .minor = 2,
-            .reserved1 = {0, 0, 0, 0, 0, 0},
+            .reserved = {0, 0, 0, 0, 0, 0},
         },
         .data = {0, 0, 0, 0, 0, 0, 0, 0},
     },

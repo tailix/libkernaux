@@ -328,7 +328,7 @@ tag_bios_boot_device_valid = {
         .type = KERNAUX_MULTIBOOT2_ITAG_BIOS_BOOT_DEVICE,
         .size = 20,
     },
-    .bios_dev = 123,
+    .biosdev = 123,
     .partition = 456,
     .sub_partition = 789,
 };
@@ -339,7 +339,7 @@ tag_bios_boot_device_invalid_type = {
         .type = KERNAUX_MULTIBOOT2_ITAG_NONE,
         .size = 20,
     },
-    .bios_dev = 123,
+    .biosdev = 123,
     .partition = 456,
     .sub_partition = 789,
 };
@@ -350,7 +350,7 @@ tag_bios_boot_device_invalid_size = {
         .type = KERNAUX_MULTIBOOT2_ITAG_BIOS_BOOT_DEVICE,
         .size = 21,
     },
-    .bios_dev = 123,
+    .biosdev = 123,
     .partition = 456,
     .sub_partition = 789,
 };
@@ -538,7 +538,7 @@ tag_elf_symbols_with_zero_ent_size_valid = {
     .num = 0,
     .ent_size = 0,
     .shndx = 0,
-    .reserved1 = 0,
+    .reserved = 0,
 };
 
 /**************
@@ -551,7 +551,7 @@ static const struct {
 } KERNAUX_PACKED multiboot2_empty_valid = {
     .multiboot2_info = {
         .total_size = 8 + 8,
-        .reserved1 = 0,
+        .reserved = 0,
     },
     .tag_none = {
         .base = {
@@ -568,7 +568,7 @@ static const struct {
 } KERNAUX_PACKED multiboot2_with_some_additional_tag_valid = {
     .multiboot2_info = {
         .total_size = 8 + 16 + 8,
-        .reserved1 = 0,
+        .reserved = 0,
     },
     .tag_basic_memory_info = {
         .base = {
@@ -595,7 +595,7 @@ static const struct {
 } KERNAUX_PACKED multiboot2_with_more_additional_tags_valid = {
     .multiboot2_info = {
         .total_size = 8 + 16 + (20 + 4) + 8,
-        .reserved1 = 0,
+        .reserved = 0,
     },
     .tag_basic_memory_info = {
         .base = {
@@ -610,7 +610,7 @@ static const struct {
             .type = KERNAUX_MULTIBOOT2_ITAG_BIOS_BOOT_DEVICE,
             .size = 20,
         },
-        .bios_dev = 123,
+        .biosdev = 123,
         .partition = 456,
         .sub_partition = 789,
     },
@@ -628,7 +628,7 @@ static const struct {
 } KERNAUX_PACKED multiboot2_empty_invalid_size = {
     .multiboot2_info = {
         .total_size = 8,
-        .reserved1 = 0,
+        .reserved = 0,
     },
     .tag_none = {
         .base = {
@@ -641,7 +641,7 @@ static const struct {
 static const struct KernAux_Multiboot2_Info
 multiboot2_without_none_tag_invalid = {
     .total_size = 8,
-    .reserved1 = 0,
+    .reserved = 0,
 };
 
 static const struct {
@@ -650,7 +650,7 @@ static const struct {
 } KERNAUX_PACKED multiboot2_with_invalid_last_tag_invalid = {
     .multiboot2_info = {
         .total_size = 8 + 16,
-        .reserved1 = 0,
+        .reserved = 0,
     },
     .tag_basic_memory_info = {
         .base = {
@@ -672,7 +672,7 @@ static const struct {
 } KERNAUX_PACKED multiboot2_with_early_none_tag_invalid = {
     .multiboot2_info = {
         .total_size = 8 + 16 + 8 + (20 + 4) + 8,
-        .reserved1 = 0,
+        .reserved = 0,
     },
     .tag_basic_memory_info = {
         .base = {
@@ -693,7 +693,7 @@ static const struct {
             .type = KERNAUX_MULTIBOOT2_ITAG_BIOS_BOOT_DEVICE,
             .size = 20,
         },
-        .bios_dev = 123,
+        .biosdev = 123,
         .partition = 456,
         .sub_partition = 789,
     },
@@ -714,7 +714,7 @@ static const struct {
 } KERNAUX_PACKED multiboot2_with_more_additional_tags_invalid_size_too_big = {
     .multiboot2_info = {
         .total_size = 8 + 16 + (20 + 4) + 8 + 1,
-        .reserved1 = 0,
+        .reserved = 0,
     },
     .tag_basic_memory_info = {
         .base = {
@@ -729,7 +729,7 @@ static const struct {
             .type = KERNAUX_MULTIBOOT2_ITAG_BIOS_BOOT_DEVICE,
             .size = 20,
         },
-        .bios_dev = 123,
+        .biosdev = 123,
         .partition = 456,
         .sub_partition = 789,
     },
@@ -750,7 +750,7 @@ static const struct {
 } KERNAUX_PACKED multiboot2_with_more_additional_tags_invalid_size_too_small = {
     .multiboot2_info = {
         .total_size = 8 + 16 + (20 + 4) + 8 - 1,
-        .reserved1 = 0,
+        .reserved = 0,
     },
     .tag_basic_memory_info = {
         .base = {
@@ -765,7 +765,7 @@ static const struct {
             .type = KERNAUX_MULTIBOOT2_ITAG_BIOS_BOOT_DEVICE,
             .size = 20,
         },
-        .bios_dev = 123,
+        .biosdev = 123,
         .partition = 456,
         .sub_partition = 789,
     },

@@ -42,11 +42,11 @@ void KernAux_Multiboot2_Info_print(
     KERNAUX_ASSERT(display);
 
     KERNAUX_CAST_CONST(unsigned long, total_size, multiboot2_info->total_size);
-    KERNAUX_CAST_CONST(unsigned long, reserved1,  multiboot2_info->reserved1);
+    KERNAUX_CAST_CONST(unsigned long, reserved,   multiboot2_info->reserved);
 
     PRINTLN("Multiboot 2 info {");
-    PRINTLNF("  u32 size: %lu", total_size);
-    PRINTLNF("  u32 reserved1: %lu", reserved1);
+    PRINTLNF("  u32 size: %lu",     total_size);
+    PRINTLNF("  u32 reserved: %lu", reserved);
     PRINTLN("}");
 
     const struct KernAux_Multiboot2_ITagBase *tag_base =
@@ -278,12 +278,12 @@ void KernAux_Multiboot2_ITag_BIOSBootDevice_print(
 ) {
     HEADER(BIOSBootDevice);
 
-    KERNAUX_CAST_CONST(unsigned long, bios_dev,      tag->bios_dev);
+    KERNAUX_CAST_CONST(unsigned long, biosdev,       tag->biosdev);
     KERNAUX_CAST_CONST(unsigned long, partition,     tag->partition);
     KERNAUX_CAST_CONST(unsigned long, sub_partition, tag->sub_partition);
 
-    PRINTLNF("  u32 bios_dev: %lu", bios_dev);
-    PRINTLNF("  u32 partition: %lu", partition);
+    PRINTLNF("  u32 biosdev: %lu",       biosdev);
+    PRINTLNF("  u32 partition: %lu",     partition);
     PRINTLNF("  u32 sub_partition: %lu", sub_partition);
 
     FOOTER;
@@ -300,7 +300,7 @@ void KernAux_Multiboot2_ITag_MemoryMap_print(
 
     PRINTLNF("  u32 entry_size: %lu",    entry_size);
     PRINTLNF("  u32 entry_version: %lu", entry_version);
-    PRINTLN ("  struct entries[]: [");
+    PRINTLN ("  varies(entry_size) entries[]: [");
 
     // Print data:
 
@@ -316,13 +316,13 @@ void KernAux_Multiboot2_ITag_MemoryMap_print(
         KERNAUX_CAST_CONST(unsigned long long, base_addr, entries[index].base_addr);
         KERNAUX_CAST_CONST(unsigned long long, length,    entries[index].length);
         KERNAUX_CAST_CONST(unsigned long,      type,      entries[index].type);
-        KERNAUX_CAST_CONST(unsigned long,      reserved1, entries[index].reserved1);
+        KERNAUX_CAST_CONST(unsigned long,      reserved,  entries[index].reserved);
 
         PRINTLNF("    [%zu] entry: {", index);
         PRINTLNF("      u64 base_addr: %llu", base_addr);
         PRINTLNF("      u64 length: %llu",    length);
         PRINTLNF("      u32 type: %lu",       type);
-        PRINTLNF("      u32 reserved1: %lu",  reserved1);
+        PRINTLNF("      u32 reserved: %lu",   reserved);
         PRINTLN ("    }");
     }
 
@@ -355,13 +355,13 @@ void KernAux_Multiboot2_ITag_FramebufferInfo_print(
 ) {
     HEADER(FramebufferInfo);
 
-    KERNAUX_CAST_CONST(unsigned long long, addr,      tag->framebuffer_addr);
-    KERNAUX_CAST_CONST(unsigned long,      pitch,     tag->framebuffer_pitch);
-    KERNAUX_CAST_CONST(unsigned long,      width,     tag->framebuffer_width);
-    KERNAUX_CAST_CONST(unsigned long,      height,    tag->framebuffer_height);
-    KERNAUX_CAST_CONST(unsigned long,      bpp,       tag->framebuffer_bpp);
-    KERNAUX_CAST_CONST(unsigned long,      type,      tag->framebuffer_type);
-    KERNAUX_CAST_CONST(unsigned long,      reserved1, tag->reserved1);
+    KERNAUX_CAST_CONST(unsigned long long, addr,     tag->framebuffer_addr);
+    KERNAUX_CAST_CONST(unsigned long,      pitch,    tag->framebuffer_pitch);
+    KERNAUX_CAST_CONST(unsigned long,      width,    tag->framebuffer_width);
+    KERNAUX_CAST_CONST(unsigned long,      height,   tag->framebuffer_height);
+    KERNAUX_CAST_CONST(unsigned long,      bpp,      tag->framebuffer_bpp);
+    KERNAUX_CAST_CONST(unsigned long,      type,     tag->framebuffer_type);
+    KERNAUX_CAST_CONST(unsigned long,      reserved, tag->reserved);
 
     PRINTLNF("  u64 framebuffer_addr: %llu",  addr);
     PRINTLNF("  u32 framebuffer_pitch: %lu",  pitch);
@@ -369,7 +369,7 @@ void KernAux_Multiboot2_ITag_FramebufferInfo_print(
     PRINTLNF("  u32 framebuffer_height: %lu", height);
     PRINTLNF("  u8 framebuffer_bpp: %lu",    bpp);
     PRINTLNF("  u8 framebuffer_type: %lu",   type);
-    PRINTLNF("  u8 reserved1: %lu",          reserved1);
+    PRINTLNF("  u8 reserved: %lu",           reserved);
 
     // TODO: Print data?
 
@@ -382,15 +382,15 @@ void KernAux_Multiboot2_ITag_ELFSymbols_print(
 ) {
     HEADER(ELFSymbols);
 
-    KERNAUX_CAST_CONST(unsigned long, num,       tag->num);
-    KERNAUX_CAST_CONST(unsigned long, ent_size,  tag->ent_size);
-    KERNAUX_CAST_CONST(unsigned long, shndx,     tag->shndx);
-    KERNAUX_CAST_CONST(unsigned long, reserved1, tag->reserved1);
+    KERNAUX_CAST_CONST(unsigned long, num,      tag->num);
+    KERNAUX_CAST_CONST(unsigned long, ent_size, tag->ent_size);
+    KERNAUX_CAST_CONST(unsigned long, shndx,    tag->shndx);
+    KERNAUX_CAST_CONST(unsigned long, reserved, tag->reserved);
 
-    PRINTLNF("  u16 num: %lu",       num);
-    PRINTLNF("  u16 entsize: %lu",   ent_size);
-    PRINTLNF("  u16 shndx: %lu",     shndx);
-    PRINTLNF("  u16 reserved1: %lu", reserved1);
+    PRINTLNF("  u16 num: %lu",      num);
+    PRINTLNF("  u16 entsize: %lu",  ent_size);
+    PRINTLNF("  u16 shndx: %lu",    shndx);
+    PRINTLNF("  u16 reserved: %lu", reserved);
 
     // TODO: Print data?
 
@@ -460,16 +460,16 @@ void KernAux_Multiboot2_ITag_SMBIOSTables_print(
 
     KERNAUX_CAST_CONST(unsigned long, major,     tag->major);
     KERNAUX_CAST_CONST(unsigned long, minor,     tag->minor);
-    KERNAUX_CAST_CONST(unsigned long, reserved0, tag->reserved1[0]);
-    KERNAUX_CAST_CONST(unsigned long, reserved1, tag->reserved1[1]);
-    KERNAUX_CAST_CONST(unsigned long, reserved2, tag->reserved1[2]);
-    KERNAUX_CAST_CONST(unsigned long, reserved3, tag->reserved1[3]);
-    KERNAUX_CAST_CONST(unsigned long, reserved4, tag->reserved1[4]);
-    KERNAUX_CAST_CONST(unsigned long, reserved5, tag->reserved1[5]);
+    KERNAUX_CAST_CONST(unsigned long, reserved0, tag->reserved[0]);
+    KERNAUX_CAST_CONST(unsigned long, reserved1, tag->reserved[1]);
+    KERNAUX_CAST_CONST(unsigned long, reserved2, tag->reserved[2]);
+    KERNAUX_CAST_CONST(unsigned long, reserved3, tag->reserved[3]);
+    KERNAUX_CAST_CONST(unsigned long, reserved4, tag->reserved[4]);
+    KERNAUX_CAST_CONST(unsigned long, reserved5, tag->reserved[5]);
 
     PRINTLNF("  u8 major: %lu", major);
     PRINTLNF("  u8 minor: %lu", minor);
-    PRINTLNF("  u8 reserved1[6]: [%lu, %lu, %lu, %lu, %lu, %lu]",
+    PRINTLNF("  u8 reserved[6]: [%lu, %lu, %lu, %lu, %lu, %lu]",
         reserved0, reserved1, reserved2,
         reserved3, reserved4, reserved5
     );
