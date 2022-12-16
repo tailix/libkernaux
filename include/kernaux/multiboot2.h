@@ -392,7 +392,7 @@ KERNAUX_STATIC_TEST_STRUCT_SIZE(KernAux_Multiboot2_ITag_VBEInfo, 784);
 
 struct KernAux_Multiboot2_ITag_FramebufferInfo {
     // type = 8
-    // size > 31
+    // size > 32
     struct KernAux_Multiboot2_ITagBase base;
 
     uint64_t framebuffer_addr;
@@ -402,37 +402,36 @@ struct KernAux_Multiboot2_ITag_FramebufferInfo {
     uint8_t framebuffer_bpp;
     uint8_t framebuffer_type;
 
-    // FIXME: GRUB 2 and Limine don't follow the spec!
+    // WARNING: GRUB 2 and Limine don't follow the spec, so we do not too!
     // Multiboot 2: https://www.gnu.org/software/grub/manual/multiboot2/multiboot.html#Framebuffer-info
     // GRUB 2:      https://github.com/rhboot/grub2/blob/7259d55ffcf124e32eafb61aa381f9856e98a708/include/multiboot2.h#L288
-    // Limine 4:    https://github.com/limine-bootloader/limine/blob/1aba6b3aeb72ac55b177132ca75ea8adfbcb78aa/common/protos/multiboot2.h#L292
-    uint8_t reserved;
+    // Limine:      https://github.com/limine-bootloader/limine/blob/1aba6b3aeb72ac55b177132ca75ea8adfbcb78aa/common/protos/multiboot2.h#L292
+    uint16_t reserved;
 
     // DATA: varies color_info[]
 }
 KERNAUX_PACKED;
 
-KERNAUX_STATIC_TEST_STRUCT_SIZE(KernAux_Multiboot2_ITag_FramebufferInfo, 31);
+KERNAUX_STATIC_TEST_STRUCT_SIZE(KernAux_Multiboot2_ITag_FramebufferInfo, 32);
 
-// FIXME: GRUB 2 and Limine don't follow the spec!
+// WARNING: GRUB 2 and Limine don't follow the spec, so we do not too!
 // Multiboot 2: https://www.gnu.org/software/grub/manual/multiboot2/multiboot.html#ELF_002dSymbols
 // GRUB 2:      https://github.com/rhboot/grub2/blob/7259d55ffcf124e32eafb61aa381f9856e98a708/include/multiboot2.h#L314-L322
-// Limine 4:    https://github.com/limine-bootloader/limine/blob/1aba6b3aeb72ac55b177132ca75ea8adfbcb78aa/common/protos/multiboot2.h#L318-L326
+// Limine:      https://github.com/limine-bootloader/limine/blob/1aba6b3aeb72ac55b177132ca75ea8adfbcb78aa/common/protos/multiboot2.h#L318-L326
 struct KernAux_Multiboot2_ITag_ELFSymbols {
     // type = 9
-    // size > 16
+    // size > 20
     struct KernAux_Multiboot2_ITagBase base;
 
-    uint16_t num;
-    uint16_t ent_size;
-    uint16_t shndx;
-    uint16_t reserved;
+    uint32_t num;
+    uint32_t entsize;
+    uint32_t shndx;
 
     // DATA: varies section_headers[]
 }
 KERNAUX_PACKED;
 
-KERNAUX_STATIC_TEST_STRUCT_SIZE(KernAux_Multiboot2_ITag_ELFSymbols, 16);
+KERNAUX_STATIC_TEST_STRUCT_SIZE(KernAux_Multiboot2_ITag_ELFSymbols, 20);
 
 struct KernAux_Multiboot2_ITag_APMTable {
     // type = 10

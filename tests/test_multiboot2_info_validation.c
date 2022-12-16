@@ -530,15 +530,14 @@ tag_vbe_info_invalid_size = {
  ******************/
 
 static const struct KernAux_Multiboot2_ITag_ELFSymbols
-tag_elf_symbols_with_zero_ent_size_valid = {
+tag_elf_symbols_with_zero_entsize_valid = {
     .base = {
         .type = KERNAUX_MULTIBOOT2_ITAG_ELF_SYMBOLS,
-        .size = 16,
+        .size = 20,
     },
     .num = 0,
-    .ent_size = 0,
+    .entsize = 0,
     .shndx = 0,
-    .reserved = 0,
 };
 
 /**************
@@ -955,7 +954,7 @@ void test_main()
     ));
 
     assert(KernAux_Multiboot2_ITagBase_is_valid(
-        &tag_elf_symbols_with_zero_ent_size_valid.base
+        &tag_elf_symbols_with_zero_entsize_valid.base
     ));
 
     // Tag_None
@@ -1124,6 +1123,6 @@ void test_main()
 
 
     assert(KernAux_Multiboot2_ITag_ELFSymbols_is_valid(
-        &tag_elf_symbols_with_zero_ent_size_valid
+        &tag_elf_symbols_with_zero_entsize_valid
     ));
 }

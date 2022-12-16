@@ -402,9 +402,9 @@ void KernAux_Multiboot2_ITag_FramebufferInfo_print(
     PRINTLNF("  u32 framebuffer_pitch: %lu",  pitch);
     PRINTLNF("  u32 framebuffer_width: %lu",  width);
     PRINTLNF("  u32 framebuffer_height: %lu", height);
-    PRINTLNF("  u8 framebuffer_bpp: %lu",    bpp);
-    PRINTLNF("  u8 framebuffer_type: %lu",   type);
-    PRINTLNF("  u8 reserved: %lu",           reserved);
+    PRINTLNF("  u8 framebuffer_bpp: %lu",     bpp);
+    PRINTLNF("  u8 framebuffer_type: %lu",    type);
+    PRINTLNF("  u16 reserved: %lu",           reserved);
 
     // TODO: Print data?
 
@@ -417,15 +417,13 @@ void KernAux_Multiboot2_ITag_ELFSymbols_print(
 ) {
     HEADER(ELFSymbols);
 
-    KERNAUX_CAST_CONST(unsigned long, num,      tag->num);
-    KERNAUX_CAST_CONST(unsigned long, ent_size, tag->ent_size);
-    KERNAUX_CAST_CONST(unsigned long, shndx,    tag->shndx);
-    KERNAUX_CAST_CONST(unsigned long, reserved, tag->reserved);
+    KERNAUX_CAST_CONST(unsigned long, num,     tag->num);
+    KERNAUX_CAST_CONST(unsigned long, entsize, tag->entsize);
+    KERNAUX_CAST_CONST(unsigned long, shndx,   tag->shndx);
 
-    PRINTLNF("  u16 num: %lu",      num);
-    PRINTLNF("  u16 entsize: %lu",  ent_size);
-    PRINTLNF("  u16 shndx: %lu",    shndx);
-    PRINTLNF("  u16 reserved: %lu", reserved);
+    PRINTLNF("  u32 num: %lu",      num);
+    PRINTLNF("  u32 entsize: %lu",  entsize);
+    PRINTLNF("  u32 shndx: %lu",    shndx);
 
     // TODO: Print data?
 

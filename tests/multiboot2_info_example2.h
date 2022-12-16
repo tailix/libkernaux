@@ -46,7 +46,6 @@ static const struct {
         struct KernAux_Multiboot2_ITag_FramebufferInfo tag;
         uint8_t data[8];
     } tag_framebuffer_info;
-    uint8_t _align6[1];
 
     struct {
         struct KernAux_Multiboot2_ITag_ELFSymbols tag;
@@ -241,12 +240,11 @@ multiboot2_info_example2 = {
                 .size = sizeof(multiboot2_info_example2.tag_elf_symbols),
             },
             .num = 10,
-            .ent_size = 0,
-            .shndx = 40,
-            .reserved = 0,
+            .entsize = 40,
+            .shndx = 9,
         },
         .data = {
-            9, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0,
             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
             0, 0, 0, 0, 27, 0, 0, 0, 1, 0, 0, 0, 6, 0, 0, 0,
