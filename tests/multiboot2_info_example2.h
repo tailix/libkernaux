@@ -1,4 +1,5 @@
 #include <kernaux/macro.h>
+#include <kernaux/multiboot2.h>
 
 #include <kernaux/macro/packing_start.run>
 

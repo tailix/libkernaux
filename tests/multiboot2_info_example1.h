@@ -1,4 +1,5 @@
 #include <kernaux/macro.h>
+#include <kernaux/multiboot2.h>
 
 KERNAUX_ALIGNED(KERNAUX_MULTIBOOT2_INFO_ALIGN)
 static const uint8_t multiboot2_info_example1[864] = {
