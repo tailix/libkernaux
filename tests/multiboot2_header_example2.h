@@ -85,10 +85,10 @@ multiboot2_header_example2 = {
             .flags = 0,
             .size = sizeof(multiboot2_header_example2.tag_addr),
         },
-        .header_addr = 0,
-        .load_addr = 0,
-        .load_end_addr = 0,
-        .bss_end_addr = 0,
+        .header_addr = 0xcafebabe,
+        .load_addr = 0xdeadbeaf,
+        .load_end_addr = 0xdeadbabe,
+        .bss_end_addr = 0xcafebeaf,
     },
     .tag_entry_addr = {
         .base = {

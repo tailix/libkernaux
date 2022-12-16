@@ -183,7 +183,15 @@ void KernAux_Multiboot2_HTag_Addr_print(
 ) {
     HEADER(Addr);
 
-    // TODO: print
+    KERNAUX_CAST_CONST(unsigned long, header_addr,   tag->header_addr);
+    KERNAUX_CAST_CONST(unsigned long, load_addr,     tag->load_addr);
+    KERNAUX_CAST_CONST(unsigned long, load_end_addr, tag->load_end_addr);
+    KERNAUX_CAST_CONST(unsigned long, bss_end_addr,  tag->bss_end_addr);
+
+    PRINTLNF("  header addr: %lu",   header_addr);
+    PRINTLNF("  load addr: %lu",     load_addr);
+    PRINTLNF("  load end addr: %lu", load_end_addr);
+    PRINTLNF("  bss end addr: %lu",  bss_end_addr);
 }
 
 void KernAux_Multiboot2_HTag_EntryAddr_print(
