@@ -10,7 +10,11 @@
 #include <stddef.h>
 #include <stdint.h>
 
+#define PRINT(s)   do { KernAux_Display_print  (display, s); } while (0)
 #define PRINTLN(s) do { KernAux_Display_println(display, s); } while (0)
+
+#define PRINTF(format, ...) \
+    do { KernAux_Display_printf  (display, format, __VA_ARGS__); } while (0)
 #define PRINTLNF(format, ...) \
     do { KernAux_Display_printlnf(display, format, __VA_ARGS__); } while (0)
 
@@ -300,9 +304,10 @@ void KernAux_Multiboot2_ITag_MemoryMap_print(
 
     PRINTLNF("  u32 entry_size: %lu",    entry_size);
     PRINTLNF("  u32 entry_version: %lu", entry_version);
-    PRINTLN ("  varies(entry_size) entries[]: [");
 
     // Print data:
+
+    PRINTLN ("  varies(entry_size) entries[]: [");
 
     const struct KernAux_Multiboot2_ITag_MemoryMap_EntryBase *const entries =
         (struct KernAux_Multiboot2_ITag_MemoryMap_EntryBase*)
@@ -345,6 +350,36 @@ void KernAux_Multiboot2_ITag_VBEInfo_print(
     PRINTLNF("  u16 vbe_interface_seg: %lu", interface_seg);
     PRINTLNF("  u16 vbe_interface_off: %lu", interface_off);
     PRINTLNF("  u16 vbe_interface_len: %lu", interface_len);
+
+    const size_t cols = 16;
+
+    PRINTLN ("  u8 vbe_control_info[]: [");
+    for (
+        size_t index = 0;
+        index < sizeof(tag->vbe_control_info) / sizeof(tag->vbe_control_info[0]);
+        index += cols
+    ) {
+        PRINTF("    %-3u", tag->vbe_control_info[index]);
+        for (size_t col = 1; col < cols; ++col) {
+            PRINTF(" %-3u", tag->vbe_control_info[index + col]);
+        }
+        PRINTLN("");
+    }
+    PRINTLN ("  ]");
+
+    PRINTLN ("  u8 vbe_mode_info[]: [");
+    for (
+        size_t index = 0;
+        index < sizeof(tag->vbe_mode_info) / sizeof(tag->vbe_mode_info[0]);
+        index += cols
+    ) {
+        PRINTF("    %-3u", tag->vbe_mode_info[index]);
+        for (size_t col = 1; col < cols; ++col) {
+            PRINTF(" %-3u", tag->vbe_mode_info[index + col]);
+        }
+        PRINTLN("");
+    }
+    PRINTLN ("  ]");
 
     FOOTER;
 }

@@ -200,6 +200,24 @@ multiboot2_info_example2 = {
         .vbe_interface_seg = 123,
         .vbe_interface_off = 456,
         .vbe_interface_len = 789,
+        .vbe_control_info = {
+            [0]   = 0,
+            [16]  = 1,
+            [32]  = 12,
+            [48]  = 123,
+            [79]  = 1,
+            [95]  = 12,
+            [111] = 123,
+        },
+        .vbe_mode_info = {
+            [0]   = 0,
+            [16]  = 3,
+            [32]  = 32,
+            [48]  = 255,
+            [79]  = 3,
+            [95]  = 32,
+            [111] = 255,
+        },
     },
     .tag_framebuffer_info = {
         .tag = {

@@ -3,6 +3,8 @@
 #endif
 
 #include <assert.h>
+#include <stdlib.h>
+#include <string.h>
 
 #ifndef __USE_POSIX2
 #define __USE_POSIX2
@@ -151,7 +153,7 @@ static const char output1[] =
     "  u32 size: 8\n"
     "}\n";
 
-static const char output2[] =
+static const char output2_part1[] =
     "Multiboot 2 info {\n"
     "  u32 size: 1816\n"
     "  u32 reserved: 0\n"
@@ -236,7 +238,9 @@ static const char output2[] =
     "      u32 reserved: 0\n"
     "    }\n"
     "  ]\n"
-    "}\n"
+    "}\n";
+
+static const char output2_part2[] =
     "Multiboot 2 info tag {\n"
     "  u32 type: 7 (VBE info)\n"
     "  u32 size: 784\n"
@@ -244,7 +248,61 @@ static const char output2[] =
     "  u16 vbe_interface_seg: 123\n"
     "  u16 vbe_interface_off: 456\n"
     "  u16 vbe_interface_len: 789\n"
-    "}\n"
+    "  u8 vbe_control_info[]: [\n"
+    "    0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  \n"
+    "    1   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  \n"
+    "    12  0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  \n"
+    "    123 0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  \n"
+    "    0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   1  \n"
+    "    0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   12 \n"
+    "    0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   123\n"
+    "    0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  \n"
+    "    0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  \n"
+    "    0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  \n"
+    "    0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  \n"
+    "    0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  \n"
+    "    0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  \n"
+    "    0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  \n"
+    "    0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  \n"
+    "    0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  \n"
+    "    0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  \n"
+    "    0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  \n"
+    "    0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  \n"
+    "    0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  \n"
+    "    0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  \n"
+    "    0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  \n"
+    "    0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  \n"
+    "    0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  \n"
+    "    0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  \n"
+    "    0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  \n"
+    "    0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  \n"
+    "    0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  \n"
+    "    0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  \n"
+    "    0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  \n"
+    "    0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  \n"
+    "    0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  \n"
+    "  ]\n"
+    "  u8 vbe_mode_info[]: [\n"
+    "    0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  \n"
+    "    3   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  \n"
+    "    32  0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  \n"
+    "    255 0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  \n"
+    "    0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   3  \n"
+    "    0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   32 \n"
+    "    0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   255\n"
+    "    0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  \n"
+    "    0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  \n"
+    "    0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  \n"
+    "    0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  \n"
+    "    0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  \n"
+    "    0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  \n"
+    "    0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  \n"
+    "    0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  \n"
+    "    0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  \n"
+    "  ]\n"
+    "}\n";
+
+static const char output2_part3[] =
     "Multiboot 2 info tag {\n"
     "  u32 type: 8 (framebuffer info)\n"
     "  u32 size: 39\n"
@@ -363,6 +421,15 @@ void test_main()
     }
 
     {
+        const size_t part1_len = strlen(output2_part1);
+        const size_t part2_len = strlen(output2_part2);
+        const size_t part3_len = strlen(output2_part3);
+        char *const output2 = malloc(1 + part1_len + part2_len + part3_len);
+        assert(output2);
+        strcpy(output2, output2_part1);
+        strcat(output2, output2_part2);
+        strcat(output2, output2_part3);
+
         FILE *const fd = popen("./multiboot2_info_print2", "r");
         assert(fd != NULL);
 
