@@ -3,6 +3,7 @@
 #include <kernaux/macro/packing_start.run>
 
 // Minimal example
+KERNAUX_ALIGNED(KERNAUX_MULTIBOOT2_INFO_ALIGN)
 static const struct {
     struct KernAux_Multiboot2_Info multiboot2_info;
     struct KernAux_Multiboot2_ITag_None tag_none;

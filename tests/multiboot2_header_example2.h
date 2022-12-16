@@ -2,6 +2,7 @@
 
 #include <kernaux/macro/packing_start.run>
 
+KERNAUX_ALIGNED(KERNAUX_MULTIBOOT2_HEADER_ALIGN)
 static const struct {
     struct KernAux_Multiboot2_Header multiboot2_header;
 
