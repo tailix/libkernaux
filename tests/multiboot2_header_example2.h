@@ -136,7 +136,7 @@ multiboot2_header_example2 = {
             .flags = 0,
             .size = sizeof(multiboot2_header_example2.tag_efi_i386_entry_addr),
         },
-        .entry_addr = 0,
+        .entry_addr = 0xcafebabe,
     },
     .tag_efi_amd64_entry_addr = {
         .base = {
@@ -144,7 +144,7 @@ multiboot2_header_example2 = {
             .flags = 0,
             .size = sizeof(multiboot2_header_example2.tag_efi_amd64_entry_addr),
         },
-        .entry_addr = 0,
+        .entry_addr = 0xdeadbeef,
     },
     .tag_relocatable_header = {
         .base = {

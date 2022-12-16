@@ -287,7 +287,9 @@ void KernAux_Multiboot2_HTag_EFII386EntryAddr_print(
 ) {
     HEADER(EFII386EntryAddr);
 
-    // TODO: print
+    KERNAUX_CAST_CONST(unsigned long, entry_addr, tag->entry_addr);
+
+    PRINTLNF("  entry addr: %lu", entry_addr);
 }
 
 void KernAux_Multiboot2_HTag_EFIAmd64EntryAddr_print(
@@ -296,7 +298,9 @@ void KernAux_Multiboot2_HTag_EFIAmd64EntryAddr_print(
 ) {
     HEADER(EFIAmd64EntryAddr);
 
-    // TODO: print
+    KERNAUX_CAST_CONST(unsigned long, entry_addr, tag->entry_addr);
+
+    PRINTLNF("  entry addr: %lu", entry_addr);
 }
 
 void KernAux_Multiboot2_HTag_RelocatableHeader_print(
