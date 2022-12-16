@@ -15,6 +15,12 @@ static const struct {
     struct KernAux_Multiboot2_HTag_Flags tag_flags4;
     uint8_t _align4[4];
 
+    struct {
+        struct KernAux_Multiboot2_HTag_InfoReq tag;
+        uint32_t mbi_tag_types[1];
+    } tag_info_req;
+    uint8_t _align5[4];
+
     struct KernAux_Multiboot2_HTag_None tag_none;
 }
 KERNAUX_PACKED
@@ -61,6 +67,18 @@ multiboot2_header_example1 = {
         .console_flags =
             KERNAUX_MULTIBOOT2_HTAG_FLAGS_REQUIRE_CONSOLE |
             KERNAUX_MULTIBOOT2_HTAG_FLAGS_EGA_SUPPORT,
+    },
+    .tag_info_req = {
+        .tag = {
+            .base = {
+                .type = KERNAUX_MULTIBOOT2_HTAG_INFO_REQ,
+                .flags = 0,
+                .size = sizeof(multiboot2_header_example1.tag_info_req),
+            },
+        },
+        .mbi_tag_types = {
+            KERNAUX_MULTIBOOT2_ITAG_NONE,
+        },
     },
     .tag_none = {
         .base = {

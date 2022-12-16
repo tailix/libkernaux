@@ -167,7 +167,7 @@ void KernAux_Multiboot2_HTag_InfoReq_print(
 
     // Print data:
 
-    PRINTLN("  u32 mbi_tag_types[]:");
+    PRINTLN("  u32 mbi_tag_types[]: [");
 
     const uint32_t *const mbi_tag_types =
         (const uint32_t*)KERNAUX_MULTIBOOT2_DATA(tag);
@@ -184,6 +184,8 @@ void KernAux_Multiboot2_HTag_InfoReq_print(
             KernAux_Multiboot2_ITag_to_str(type)
         );
     }
+
+    PRINTLN("  ]");
 
     FOOTER;
 }
