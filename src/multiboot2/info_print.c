@@ -53,9 +53,7 @@ void KernAux_Multiboot2_Info_print(
            ((uint8_t*)multiboot2_info + multiboot2_info->total_size))
     {
         if (!KernAux_Multiboot2_ITagBase_is_valid(tag_base)) return;
-
         KernAux_Multiboot2_ITagBase_print(tag_base, display);
-
         tag_base = KERNAUX_MULTIBOOT2_ITAG_NEXT(tag_base);
     }
 }
@@ -65,6 +63,7 @@ void KernAux_Multiboot2_ITagBase_print(
     const KernAux_Display display
 ) {
     KERNAUX_ASSERT(tag_base);
+    KERNAUX_ASSERT(display);
 
     switch (tag_base->type) {
     case KERNAUX_MULTIBOOT2_ITAG_NONE:

@@ -14,6 +14,24 @@
 #define PRINTLNF(format, ...) \
     do { KernAux_Display_printlnf(display, format, __VA_ARGS__); } while (0)
 
+#define HEADER(Type) do { \
+    KERNAUX_ASSERT(tag);                                                       \
+    KERNAUX_ASSERT(display);                                                   \
+                                                                               \
+    if (!KernAux_Multiboot2_HTag_##Type##_is_valid(tag)) return;               \
+                                                                               \
+    KERNAUX_CAST_CONST(unsigned long, flags, tag->base.flags);                 \
+    KERNAUX_CAST_CONST(unsigned long, size,  tag->base.size);                  \
+                                                                               \
+    PRINTLN("Multiboot 2 header tag");                                         \
+    PRINTLNF("  type: %u (%s)",                                                \
+        tag->base.type,                                                        \
+        KernAux_Multiboot2_HTag_to_str(tag->base.type)                         \
+    );                                                                         \
+    PRINTLNF("  flags: %lu", flags);                                           \
+    PRINTLNF("  size: %lu", size);                                             \
+} while (0)
+
 void KernAux_Multiboot2_Header_print(
     const struct KernAux_Multiboot2_Header *const multiboot2_header,
     const KernAux_Display display
@@ -43,9 +61,7 @@ void KernAux_Multiboot2_Header_print(
            ((uint8_t*)multiboot2_header + multiboot2_header->total_size))
     {
         if (!KernAux_Multiboot2_HTagBase_is_valid(tag_base)) return;
-
         KernAux_Multiboot2_HTagBase_print(tag_base, display);
-
         tag_base = KERNAUX_MULTIBOOT2_HTAG_NEXT(tag_base);
     }
 }
@@ -57,71 +73,173 @@ void KernAux_Multiboot2_HTagBase_print(
     KERNAUX_ASSERT(tag_base);
     KERNAUX_ASSERT(display);
 
-    if (!KernAux_Multiboot2_HTagBase_is_valid(tag_base)) return;
-
-    KERNAUX_CAST_CONST(unsigned long, flags, tag_base->flags);
-    KERNAUX_CAST_CONST(unsigned long, size,  tag_base->size);
-
-    PRINTLN("Multiboot 2 header tag");
-    PRINTLNF("  type: %u (%s)",
-        tag_base->type,
-        KernAux_Multiboot2_HTag_to_str(tag_base->type)
-    );
-    PRINTLNF("  flags: %lu", flags);
-    PRINTLNF("  size: %lu", size);
-
     switch (tag_base->type) {
     case KERNAUX_MULTIBOOT2_HTAG_NONE:
+        KernAux_Multiboot2_HTag_None_print(
+            (struct KernAux_Multiboot2_HTag_None*)tag_base,
+            display
+        );
         break;
     case KERNAUX_MULTIBOOT2_HTAG_INFO_REQ:
-        {
-            // TODO: print
-        }
+        KernAux_Multiboot2_HTag_InfoReq_print(
+            (struct KernAux_Multiboot2_HTag_InfoReq*)tag_base,
+            display
+        );
         break;
     case KERNAUX_MULTIBOOT2_HTAG_ADDR:
-        {
-            // TODO: print
-        }
+        KernAux_Multiboot2_HTag_Addr_print(
+            (struct KernAux_Multiboot2_HTag_Addr*)tag_base,
+            display
+        );
         break;
     case KERNAUX_MULTIBOOT2_HTAG_ENTRY_ADDR:
-        {
-            // TODO: print
-        }
+        KernAux_Multiboot2_HTag_EntryAddr_print(
+            (struct KernAux_Multiboot2_HTag_EntryAddr*)tag_base,
+            display
+        );
         break;
     case KERNAUX_MULTIBOOT2_HTAG_FLAGS:
-        {
-            // TODO: print
-        }
+        KernAux_Multiboot2_HTag_Flags_print(
+            (struct KernAux_Multiboot2_HTag_Flags*)tag_base,
+            display
+        );
         break;
     case KERNAUX_MULTIBOOT2_HTAG_FRAMEBUFFER:
-        {
-            // TODO: print
-        }
+        KernAux_Multiboot2_HTag_Framebuffer_print(
+            (struct KernAux_Multiboot2_HTag_Framebuffer*)tag_base,
+            display
+        );
         break;
     case KERNAUX_MULTIBOOT2_HTAG_MODULE_ALIGN:
-        {
-            // TODO: print
-        }
+        KernAux_Multiboot2_HTag_ModuleAlign_print(
+            (struct KernAux_Multiboot2_HTag_ModuleAlign*)tag_base,
+            display
+        );
         break;
     case KERNAUX_MULTIBOOT2_HTAG_EFI_BOOT_SERVICES:
-        {
-            // TODO: print
-        }
+        KernAux_Multiboot2_HTag_EFIBootServices_print(
+            (struct KernAux_Multiboot2_HTag_EFIBootServices*)tag_base,
+            display
+        );
         break;
     case KERNAUX_MULTIBOOT2_HTAG_EFI_I386_ENTRY_ADDR:
-        {
-            // TODO: print
-        }
+        KernAux_Multiboot2_HTag_EFII386EntryAddr_print(
+            (struct KernAux_Multiboot2_HTag_EFII386EntryAddr*)tag_base,
+            display
+        );
         break;
     case KERNAUX_MULTIBOOT2_HTAG_EFI_AMD64_ENTRY_ADDR:
-        {
-            // TODO: print
-        }
+        KernAux_Multiboot2_HTag_EFIAmd64EntryAddr_print(
+            (struct KernAux_Multiboot2_HTag_EFIAmd64EntryAddr*)tag_base,
+            display
+        );
         break;
     case KERNAUX_MULTIBOOT2_HTAG_RELOCATABLE_HEADER:
-        {
-            // TODO: print
-        }
+        KernAux_Multiboot2_HTag_RelocatableHeader_print(
+            (struct KernAux_Multiboot2_HTag_RelocatableHeader*)tag_base,
+            display
+        );
         break;
     }
+}
+
+void KernAux_Multiboot2_HTag_None_print(
+    const struct KernAux_Multiboot2_HTag_None *const tag,
+    const KernAux_Display display
+) {
+    HEADER(None);
+
+    // TODO: print
+}
+
+void KernAux_Multiboot2_HTag_InfoReq_print(
+    const struct KernAux_Multiboot2_HTag_InfoReq *const tag,
+    const KernAux_Display display
+) {
+    HEADER(InfoReq);
+
+    // TODO: print
+
+    // TODO: Print data?
+}
+
+void KernAux_Multiboot2_HTag_Addr_print(
+    const struct KernAux_Multiboot2_HTag_Addr *const tag,
+    const KernAux_Display display
+) {
+    HEADER(Addr);
+
+    // TODO: print
+}
+
+void KernAux_Multiboot2_HTag_EntryAddr_print(
+    const struct KernAux_Multiboot2_HTag_EntryAddr *const tag,
+    const KernAux_Display display
+) {
+    HEADER(EntryAddr);
+
+    // TODO: print
+}
+
+void KernAux_Multiboot2_HTag_Flags_print(
+    const struct KernAux_Multiboot2_HTag_Flags *const tag,
+    const KernAux_Display display
+) {
+    HEADER(Flags);
+
+    // TODO: print
+}
+
+void KernAux_Multiboot2_HTag_Framebuffer_print(
+    const struct KernAux_Multiboot2_HTag_Framebuffer *const tag,
+    const KernAux_Display display
+) {
+    HEADER(Framebuffer);
+
+    // TODO: print
+}
+
+void KernAux_Multiboot2_HTag_ModuleAlign_print(
+    const struct KernAux_Multiboot2_HTag_ModuleAlign *const tag,
+    const KernAux_Display display
+) {
+    HEADER(ModuleAlign);
+
+    // TODO: print
+}
+
+void KernAux_Multiboot2_HTag_EFIBootServices_print(
+    const struct KernAux_Multiboot2_HTag_EFIBootServices *const tag,
+    const KernAux_Display display
+) {
+    HEADER(EFIBootServices);
+
+    // TODO: print
+}
+
+void KernAux_Multiboot2_HTag_EFII386EntryAddr_print(
+    const struct KernAux_Multiboot2_HTag_EFII386EntryAddr *const tag,
+    const KernAux_Display display
+) {
+    HEADER(EFII386EntryAddr);
+
+    // TODO: print
+}
+
+void KernAux_Multiboot2_HTag_EFIAmd64EntryAddr_print(
+    const struct KernAux_Multiboot2_HTag_EFIAmd64EntryAddr *const tag,
+    const KernAux_Display display
+) {
+    HEADER(EFIAmd64EntryAddr);
+
+    // TODO: print
+}
+
+void KernAux_Multiboot2_HTag_RelocatableHeader_print(
+    const struct KernAux_Multiboot2_HTag_RelocatableHeader *const tag,
+    const KernAux_Display display
+) {
+    HEADER(RelocatableHeader);
+
+    // TODO: print
 }
