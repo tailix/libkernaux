@@ -467,7 +467,7 @@ void KernAux_Multiboot2_ITag_SMBIOSTables_print(
 
     PRINTLNF("  u8 major: %lu", major);
     PRINTLNF("  u8 minor: %lu", minor);
-    PRINTLNF("  u8 reserved1[6]: {%lu, %lu, %lu, %lu, %lu, %lu}",
+    PRINTLNF("  u8 reserved1[6]: [%lu, %lu, %lu, %lu, %lu, %lu]",
         reserved0, reserved1, reserved2,
         reserved3, reserved4, reserved5
     );

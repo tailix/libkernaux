@@ -268,7 +268,7 @@ static const char output2[] =
     "  u32 size: 24\n"
     "  u8 major: 1\n"
     "  u8 minor: 2\n"
-    "  u8 reserved1[6]: {0, 0, 0, 0, 0, 0}\n"
+    "  u8 reserved1[6]: [0, 0, 0, 0, 0, 0]\n"
     "}\n"
     "Multiboot 2 info tag {\n"
     "  u32 type: 14 (ACPI old RSDP)\n"
