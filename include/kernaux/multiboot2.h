@@ -23,13 +23,6 @@ extern "C" {
 // @see https://www.gnu.org/software/grub/manual/multiboot2/multiboot.html#Basic-tags-structure
 #define KERNAUX_MULTIBOOT2_TAG_ALIGN    8
 
-#define KERNAUX_MULTIBOOT2_HEADER_CHECKSUM(arch, total_size) \
-    ((uint32_t)(-(                                           \
-        ((uint32_t)KERNAUX_MULTIBOOT2_HEADER_MAGIC) +        \
-        ((uint32_t)(arch)) +                                 \
-        ((uint32_t)(total_size))                             \
-    )))
-
 #define KERNAUX_MULTIBOOT2_DATA(ptr) (((uint8_t*)(ptr)) + sizeof(*(ptr)))
 
 #define KERNAUX_MULTIBOOT2_HTAG_NEXT(tag_base) \
