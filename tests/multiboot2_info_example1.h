@@ -1,3 +1,5 @@
+#include <kernaux/macro.h>
+
 KERNAUX_ALIGNED(KERNAUX_MULTIBOOT2_INFO_ALIGN)
 static const uint8_t multiboot2_info_example1[864] = {
     96, 3, 0, 0, 0, 0, 0, 0, 21, 0, 0, 0, 12, 0, 0, 0,

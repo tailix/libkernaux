@@ -1,3 +1,5 @@
+#include <kernaux/macro.h>
+
 #include <kernaux/macro/packing_start.run>
 
 KERNAUX_ALIGNED(KERNAUX_MULTIBOOT2_HEADER_ALIGN)
