@@ -618,9 +618,18 @@ const char *KernAux_Multiboot2_Info_boot_cmd_line(
     const struct KernAux_Multiboot2_Info *multiboot2_info
 );
 
+/************************
+ * Validation functions *
+ ************************/
+
 #include <kernaux/multiboot2/header_is_valid.h>
-#include <kernaux/multiboot2/header_print.h>
 #include <kernaux/multiboot2/info_is_valid.h>
+
+/*******************
+ * Print functions *
+ *******************/
+
+#include <kernaux/multiboot2/header_print.h>
 #include <kernaux/multiboot2/info_print.h>
 
 #ifdef __cplusplus
