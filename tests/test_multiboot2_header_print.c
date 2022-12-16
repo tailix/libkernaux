@@ -11,10 +11,10 @@
 
 static const char output0[] =
     "Multiboot 2 header {\n"
-    "  u32 magic: 3897708758\n"
+    "  u32 magic: 0xe85250d6\n"
     "  u32 arch: 0 (i386)\n"
     "  u32 size: 24\n"
-    "  u32 checksum: 397258514\n"
+    "  u32 checksum: 0x17adaf12\n"
     "}\n"
     "Multiboot 2 header tag {\n"
     "  u16 type: 0 (none)\n"
@@ -24,10 +24,10 @@ static const char output0[] =
 
 static const char output1[] =
     "Multiboot 2 header {\n"
-    "  u32 magic: 3897708758\n"
+    "  u32 magic: 0xe85250d6\n"
     "  u32 arch: 4 (MIPS32)\n"
     "  u32 size: 104\n"
-    "  u32 checksum: 397258430\n"
+    "  u32 checksum: 0x17adaebe\n"
     "}\n"
     "Multiboot 2 header tag {\n"
     "  u16 type: 4 (flags)\n"
@@ -76,10 +76,10 @@ static const char output1[] =
 
 static const char output2[] =
     "Multiboot 2 header {\n"
-    "  u32 magic: 3897708758\n"
+    "  u32 magic: 0xe85250d6\n"
     "  u32 arch: 0 (i386)\n"
     "  u32 size: 272\n"
-    "  u32 checksum: 397258266\n"
+    "  u32 checksum: 0x17adae1a\n"
     "}\n"
     "Multiboot 2 header tag {\n"
     "  u16 type: 1 (information request)\n"

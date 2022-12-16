@@ -51,13 +51,13 @@ void KernAux_Multiboot2_Header_print(
     KERNAUX_CAST_CONST(unsigned long, checksum,   multiboot2_header->checksum);
 
     PRINTLN("Multiboot 2 header {");
-    PRINTLNF("  u32 magic: %lu", magic);
+    PRINTLNF("  u32 magic: 0x%lx", magic);
     PRINTLNF("  u32 arch: %u (%s)",
         multiboot2_header->arch,
         KernAux_Multiboot2_Header_Arch_to_str(multiboot2_header->arch)
     );
     PRINTLNF("  u32 size: %lu", total_size);
-    PRINTLNF("  u32 checksum: %lu", checksum);
+    PRINTLNF("  u32 checksum: 0x%lx", checksum);
     PRINTLN("}");
 
     const struct KernAux_Multiboot2_HTagBase *tag_base =
