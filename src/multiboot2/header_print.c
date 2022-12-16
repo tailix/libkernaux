@@ -7,6 +7,7 @@
 #include <kernaux/macro.h>
 #include <kernaux/multiboot2.h>
 
+#include <stdbool.h>
 #include <stddef.h>
 #include <stdint.h>
 
@@ -28,16 +29,66 @@
     KERNAUX_CAST_CONST(unsigned long, flags, tag->base.flags); \
     KERNAUX_CAST_CONST(unsigned long, size,  tag->base.size);  \
                                                                \
-    PRINTLN("Multiboot 2 header tag {");                       \
+    PRINTLN ("Multiboot 2 header tag {");                      \
     PRINTLNF("  u16 type: %u (%s)",                            \
         tag->base.type,                                        \
         KernAux_Multiboot2_HTag_to_str(tag->base.type)         \
     );                                                         \
-    PRINTLNF("  u16 flags: 0x%lx", flags);                     \
+    {                                                          \
+        PRINTF("  u16 flags: 0x%lx (", flags);                 \
+                                                               \
+        bool is_first = true;                                  \
+        for (                                                  \
+            size_t index = 0;                                  \
+            index < sizeof(base_flag_names) /                  \
+                    sizeof(base_flag_names[0]);                \
+            ++index                                            \
+        ) {                                                    \
+            if (flags & base_flag_names[index].number) {       \
+                if (is_first) {                                \
+                    PRINTLN("");                               \
+                } else {                                       \
+                    PRINTLN(" |");                             \
+                }                                              \
+                PRINTF("    %s", base_flag_names[index].name); \
+                is_first = false;                              \
+            }                                                  \
+        }                                                      \
+        if (is_first) {                                        \
+            PRINTLN(")");                                      \
+        } else {                                               \
+            PRINTLN("");                                       \
+            PRINTLN("  )");                                    \
+        }                                                      \
+    }                                                          \
     PRINTLNF("  u32 size: %lu", size);                         \
 } while (0)
 
 #define FOOTER do { PRINTLN("}"); } while (0)
+
+static const struct {
+    uint32_t number;
+    const char *name;
+} base_flag_names[] = {
+    {
+        .number = KERNAUX_MULTIBOOT2_HTAG_BASE_FLAG_OPTIONAL,
+        .name = "OPTIONAL",
+    },
+};
+
+static const struct {
+    uint32_t number;
+    const char *name;
+} console_flag_names[] = {
+    {
+        .number = KERNAUX_MULTIBOOT2_HTAG_FLAGS_REQUIRE_CONSOLE,
+        .name = "REQUIRE_CONSOLE",
+    },
+    {
+        .number = KERNAUX_MULTIBOOT2_HTAG_FLAGS_EGA_SUPPORT,
+        .name = "EGA_SUPPORT",
+    }
+};
 
 void KernAux_Multiboot2_Header_print(
     const struct KernAux_Multiboot2_Header *const multiboot2_header,
@@ -230,39 +281,31 @@ void KernAux_Multiboot2_HTag_Flags_print(
 
     KERNAUX_CAST_CONST(unsigned long, console_flags, tag->console_flags);
 
-    PRINTF("  u32 console_flags: %lu (", console_flags);
+    {
+        PRINTF("  u32 console_flags: %lu (", console_flags);
 
-    static const struct {
-        uint32_t number;
-        const char *name;
-    } flags[] = {
-        {
-            .number = KERNAUX_MULTIBOOT2_HTAG_FLAGS_REQUIRE_CONSOLE,
-            .name = "REQUIRE_CONSOLE",
-        },
-        {
-            .number = KERNAUX_MULTIBOOT2_HTAG_FLAGS_EGA_SUPPORT,
-            .name = "EGA_SUPPORT",
-        }
-    };
-
-    bool is_first = true;
-    for (size_t index = 0; index < sizeof(flags) / sizeof(flags[0]); ++index) {
-        if (tag->console_flags & flags[index].number) {
-            if (is_first) {
-                PRINTLN("");
-            } else {
-                PRINTLN(" |");
+        bool is_first = true;
+        for (
+            size_t index = 0;
+            index < sizeof(console_flag_names) / sizeof(console_flag_names[0]);
+            ++index
+        ) {
+            if (tag->console_flags & console_flag_names[index].number) {
+                if (is_first) {
+                    PRINTLN("");
+                } else {
+                    PRINTLN(" |");
+                }
+                PRINTF("    %s", console_flag_names[index].name);
+                is_first = false;
             }
-            PRINTF("    %s", flags[index].name);
-            is_first = false;
         }
-    }
-    if (is_first) {
-        PRINTLN(")");
-    } else {
-        PRINTLN("");
-        PRINTLN("  )");
+        if (is_first) {
+            PRINTLN(")");
+        } else {
+            PRINTLN("");
+            PRINTLN("  )");
+        }
     }
 
     FOOTER;

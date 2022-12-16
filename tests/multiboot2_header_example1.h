@@ -76,7 +76,7 @@ multiboot2_header_example1 = {
         .tag = {
             .base = {
                 .type = KERNAUX_MULTIBOOT2_HTAG_INFO_REQ,
-                .flags = 0,
+                .flags = KERNAUX_MULTIBOOT2_HTAG_BASE_FLAG_OPTIONAL,
                 .size = sizeof(multiboot2_header_example1.tag_info_req),
             },
         },
