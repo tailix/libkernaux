@@ -252,8 +252,8 @@ void KernAux_Multiboot2_ITag_Module_print(
     KERNAUX_CAST_CONST(unsigned long, mod_start, tag->mod_start);
     KERNAUX_CAST_CONST(unsigned long, mod_end,   tag->mod_end);
 
-    PRINTLNF("  u32 start: %lu", mod_start);
-    PRINTLNF("  u32 end: %lu", mod_end);
+    PRINTLNF("  u32 mod_start: %lu", mod_start);
+    PRINTLNF("  u32 mod_end: %lu", mod_end);
 
     // Print data:
     PRINTLNF("  char cmdline[]: \"%s\"", KERNAUX_MULTIBOOT2_DATA(tag));
