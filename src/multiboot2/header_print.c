@@ -191,10 +191,10 @@ void KernAux_Multiboot2_HTag_Addr_print(
     KERNAUX_CAST_CONST(unsigned long, load_end_addr, tag->load_end_addr);
     KERNAUX_CAST_CONST(unsigned long, bss_end_addr,  tag->bss_end_addr);
 
-    PRINTLNF("  u32 header addr: %lu",   header_addr);
-    PRINTLNF("  u32 load addr: %lu",     load_addr);
-    PRINTLNF("  u32 load end addr: %lu", load_end_addr);
-    PRINTLNF("  u32 bss end addr: %lu",  bss_end_addr);
+    PRINTLNF("  u32 header_addr: %lu",   header_addr);
+    PRINTLNF("  u32 load_addr: %lu",     load_addr);
+    PRINTLNF("  u32 load_end_addr: %lu", load_end_addr);
+    PRINTLNF("  u32 bss_end_addr: %lu",  bss_end_addr);
 }
 
 void KernAux_Multiboot2_HTag_EntryAddr_print(
@@ -205,7 +205,7 @@ void KernAux_Multiboot2_HTag_EntryAddr_print(
 
     KERNAUX_CAST_CONST(unsigned long, entry_addr, tag->entry_addr);
 
-    PRINTLNF("  u32 entry addr: %lu", entry_addr);
+    PRINTLNF("  u32 entry_addr: %lu", entry_addr);
 }
 
 void KernAux_Multiboot2_HTag_Flags_print(
@@ -216,7 +216,7 @@ void KernAux_Multiboot2_HTag_Flags_print(
 
     KERNAUX_CAST_CONST(unsigned long, console_flags, tag->console_flags);
 
-    PRINTF("  u32 console flags: %lu (", console_flags);
+    PRINTF("  u32 console_flags: %lu (", console_flags);
 
     static const struct {
         uint32_t number;
@@ -289,7 +289,7 @@ void KernAux_Multiboot2_HTag_EFII386EntryAddr_print(
 
     KERNAUX_CAST_CONST(unsigned long, entry_addr, tag->entry_addr);
 
-    PRINTLNF("  u32 entry addr: %lu", entry_addr);
+    PRINTLNF("  u32 entry_addr: %lu", entry_addr);
 }
 
 void KernAux_Multiboot2_HTag_EFIAmd64EntryAddr_print(
@@ -300,7 +300,7 @@ void KernAux_Multiboot2_HTag_EFIAmd64EntryAddr_print(
 
     KERNAUX_CAST_CONST(unsigned long, entry_addr, tag->entry_addr);
 
-    PRINTLNF("  u32 entry addr: %lu", entry_addr);
+    PRINTLNF("  u32 entry_addr: %lu", entry_addr);
 }
 
 void KernAux_Multiboot2_HTag_RelocatableHeader_print(
@@ -313,7 +313,7 @@ void KernAux_Multiboot2_HTag_RelocatableHeader_print(
     KERNAUX_CAST_CONST(unsigned long, max_addr, tag->max_addr);
     KERNAUX_CAST_CONST(unsigned long, align,    tag->align);
 
-    PRINTLNF("  u32 min addr: %lu", min_addr);
-    PRINTLNF("  u32 max addr: %lu", max_addr);
+    PRINTLNF("  u32 min_addr: %lu", min_addr);
+    PRINTLNF("  u32 max_addr: %lu", max_addr);
     PRINTLNF("  u32 align: %lu",    align);
 }
