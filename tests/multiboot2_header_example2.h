@@ -112,9 +112,9 @@ multiboot2_header_example2 = {
             .flags = 0,
             .size = sizeof(multiboot2_header_example2.tag_framebuffer),
         },
-        .width = 0,
-        .height = 0,
-        .depth = 0,
+        .width = 80,
+        .height = 25,
+        .depth = 8,
     },
     .tag_module_align = {
         .base = {

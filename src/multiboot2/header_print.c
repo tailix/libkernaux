@@ -258,7 +258,13 @@ void KernAux_Multiboot2_HTag_Framebuffer_print(
 ) {
     HEADER(Framebuffer);
 
-    // TODO: print
+    KERNAUX_CAST_CONST(unsigned long, width,  tag->width);
+    KERNAUX_CAST_CONST(unsigned long, height, tag->height);
+    KERNAUX_CAST_CONST(unsigned long, depth,  tag->depth);
+
+    PRINTLNF("  width: %lu",  width);
+    PRINTLNF("  height: %lu", height);
+    PRINTLNF("  depth: %lu",  depth);
 }
 
 void KernAux_Multiboot2_HTag_ModuleAlign_print(
