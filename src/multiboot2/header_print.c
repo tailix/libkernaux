@@ -18,22 +18,26 @@
     do { KernAux_Display_printlnf(display, format, __VA_ARGS__); } while (0)
 
 #define HEADER(Type) do { \
-    KERNAUX_ASSERT(tag);                                         \
-    KERNAUX_ASSERT(display);                                     \
-                                                                 \
-    if (!KernAux_Multiboot2_HTag_##Type##_is_valid(tag)) return; \
-                                                                 \
-    KERNAUX_CAST_CONST(unsigned long, flags, tag->base.flags);   \
-    KERNAUX_CAST_CONST(unsigned long, size,  tag->base.size);    \
-                                                                 \
-    PRINTLN("Multiboot 2 header tag");                           \
-    PRINTLNF("  u16 type: %u (%s)",                              \
-        tag->base.type,                                          \
-        KernAux_Multiboot2_HTag_to_str(tag->base.type)           \
-    );                                                           \
-    PRINTLNF("  u16 flags: %lu", flags);                         \
-    PRINTLNF("  u32 size: %lu", size);                           \
+    KERNAUX_ASSERT(tag);                                       \
+    KERNAUX_ASSERT(display);                                   \
+                                                               \
+    if (!KernAux_Multiboot2_HTag_##Type##_is_valid(tag)) {     \
+        PRINTLN("Multiboot 2 header tag // invalid!");         \
+    }                                                          \
+                                                               \
+    KERNAUX_CAST_CONST(unsigned long, flags, tag->base.flags); \
+    KERNAUX_CAST_CONST(unsigned long, size,  tag->base.size);  \
+                                                               \
+    PRINTLN("Multiboot 2 header tag {");                       \
+    PRINTLNF("  u16 type: %u (%s)",                            \
+        tag->base.type,                                        \
+        KernAux_Multiboot2_HTag_to_str(tag->base.type)         \
+    );                                                         \
+    PRINTLNF("  u16 flags: %lu", flags);                       \
+    PRINTLNF("  u32 size: %lu", size);                         \
 } while (0)
+
+#define FOOTER do { PRINTLN("}"); } while (0)
 
 void KernAux_Multiboot2_Header_print(
     const struct KernAux_Multiboot2_Header *const multiboot2_header,
@@ -46,7 +50,7 @@ void KernAux_Multiboot2_Header_print(
     KERNAUX_CAST_CONST(unsigned long, total_size, multiboot2_header->total_size);
     KERNAUX_CAST_CONST(unsigned long, checksum,   multiboot2_header->checksum);
 
-    PRINTLN("Multiboot 2 header");
+    PRINTLN("Multiboot 2 header {");
     PRINTLNF("  u32 magic: %lu", magic);
     PRINTLNF("  u32 arch: %u (%s)",
         multiboot2_header->arch,
@@ -54,6 +58,7 @@ void KernAux_Multiboot2_Header_print(
     );
     PRINTLNF("  u32 size: %lu", total_size);
     PRINTLNF("  u32 checksum: %lu", checksum);
+    PRINTLN("}");
 
     const struct KernAux_Multiboot2_HTagBase *tag_base =
         (struct KernAux_Multiboot2_HTagBase*)
@@ -151,6 +156,7 @@ void KernAux_Multiboot2_HTag_None_print(
     const KernAux_Display display
 ) {
     HEADER(None);
+    FOOTER;
 }
 
 void KernAux_Multiboot2_HTag_InfoReq_print(
@@ -178,6 +184,8 @@ void KernAux_Multiboot2_HTag_InfoReq_print(
             KernAux_Multiboot2_ITag_to_str(type)
         );
     }
+
+    FOOTER;
 }
 
 void KernAux_Multiboot2_HTag_Addr_print(
@@ -195,6 +203,8 @@ void KernAux_Multiboot2_HTag_Addr_print(
     PRINTLNF("  u32 load_addr: %lu",     load_addr);
     PRINTLNF("  u32 load_end_addr: %lu", load_end_addr);
     PRINTLNF("  u32 bss_end_addr: %lu",  bss_end_addr);
+
+    FOOTER;
 }
 
 void KernAux_Multiboot2_HTag_EntryAddr_print(
@@ -206,6 +216,8 @@ void KernAux_Multiboot2_HTag_EntryAddr_print(
     KERNAUX_CAST_CONST(unsigned long, entry_addr, tag->entry_addr);
 
     PRINTLNF("  u32 entry_addr: %lu", entry_addr);
+
+    FOOTER;
 }
 
 void KernAux_Multiboot2_HTag_Flags_print(
@@ -250,6 +262,8 @@ void KernAux_Multiboot2_HTag_Flags_print(
         PRINTLN("");
         PRINTLN("  )");
     }
+
+    FOOTER;
 }
 
 void KernAux_Multiboot2_HTag_Framebuffer_print(
@@ -265,6 +279,8 @@ void KernAux_Multiboot2_HTag_Framebuffer_print(
     PRINTLNF("  u32 width: %lu",  width);
     PRINTLNF("  u32 height: %lu", height);
     PRINTLNF("  u32 depth: %lu",  depth);
+
+    FOOTER;
 }
 
 void KernAux_Multiboot2_HTag_ModuleAlign_print(
@@ -272,6 +288,8 @@ void KernAux_Multiboot2_HTag_ModuleAlign_print(
     const KernAux_Display display
 ) {
     HEADER(ModuleAlign);
+
+    FOOTER;
 }
 
 void KernAux_Multiboot2_HTag_EFIBootServices_print(
@@ -279,6 +297,8 @@ void KernAux_Multiboot2_HTag_EFIBootServices_print(
     const KernAux_Display display
 ) {
     HEADER(EFIBootServices);
+
+    FOOTER;
 }
 
 void KernAux_Multiboot2_HTag_EFII386EntryAddr_print(
@@ -290,6 +310,8 @@ void KernAux_Multiboot2_HTag_EFII386EntryAddr_print(
     KERNAUX_CAST_CONST(unsigned long, entry_addr, tag->entry_addr);
 
     PRINTLNF("  u32 entry_addr: %lu", entry_addr);
+
+    FOOTER;
 }
 
 void KernAux_Multiboot2_HTag_EFIAmd64EntryAddr_print(
@@ -301,6 +323,8 @@ void KernAux_Multiboot2_HTag_EFIAmd64EntryAddr_print(
     KERNAUX_CAST_CONST(unsigned long, entry_addr, tag->entry_addr);
 
     PRINTLNF("  u32 entry_addr: %lu", entry_addr);
+
+    FOOTER;
 }
 
 void KernAux_Multiboot2_HTag_RelocatableHeader_print(
@@ -316,4 +340,6 @@ void KernAux_Multiboot2_HTag_RelocatableHeader_print(
     PRINTLNF("  u32 min_addr: %lu", min_addr);
     PRINTLNF("  u32 max_addr: %lu", max_addr);
     PRINTLNF("  u32 align: %lu",    align);
+
+    FOOTER;
 }
