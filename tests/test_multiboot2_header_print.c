@@ -9,6 +9,19 @@
 #endif
 #include <stdio.h>
 
+static const char output0[] =
+    "Multiboot 2 header {\n"
+    "  u32 magic: 3897708758\n"
+    "  u32 arch: 0 (i386)\n"
+    "  u32 size: 24\n"
+    "  u32 checksum: 397258514\n"
+    "}\n"
+    "Multiboot 2 header tag {\n"
+    "  u16 type: 0 (none)\n"
+    "  u16 flags: 0\n"
+    "  u32 size: 8\n"
+    "}\n";
+
 static const char output1[] =
     "Multiboot 2 header {\n"
     "  u32 magic: 3897708758\n"
@@ -164,6 +177,18 @@ static const char output2[] =
 
 void test_main()
 {
+    {
+        FILE *const fd = popen("./multiboot2_header_print0", "r");
+        assert(fd != NULL);
+
+        for (const char *ch = output0; *ch; ++ch) {
+            assert(fgetc(fd) == *ch);
+        }
+
+        const int status = pclose(fd);
+        assert(status == 0);
+    }
+
     {
         FILE *const fd = popen("./multiboot2_header_print1", "r");
         assert(fd != NULL);

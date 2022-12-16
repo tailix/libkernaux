@@ -9,6 +9,16 @@
 #endif
 #include <stdio.h>
 
+static const char output0[] =
+    "Multiboot 2 info {\n"
+    "  u32 size: 16\n"
+    "  u32 reserved1: 0\n"
+    "}\n"
+    "Multiboot 2 info tag {\n"
+    "  u32 type: 0 (none)\n"
+    "  u32 size: 8\n"
+    "}\n";
+
 static const char output1[] =
     "Multiboot 2 info {\n"
     "  u32 size: 864\n"
@@ -328,6 +338,18 @@ static const char output2[] =
 
 void test_main()
 {
+    {
+        FILE *const fd = popen("./multiboot2_info_print0", "r");
+        assert(fd != NULL);
+
+        for (const char *ch = output0; *ch; ++ch) {
+            assert(fgetc(fd) == *ch);
+        }
+
+        const int status = pclose(fd);
+        assert(status == 0);
+    }
+
     {
         FILE *const fd = popen("./multiboot2_info_print1", "r");
         assert(fd != NULL);
