@@ -309,5 +309,11 @@ void KernAux_Multiboot2_HTag_RelocatableHeader_print(
 ) {
     HEADER(RelocatableHeader);
 
-    // TODO: print
+    KERNAUX_CAST_CONST(unsigned long, min_addr, tag->min_addr);
+    KERNAUX_CAST_CONST(unsigned long, max_addr, tag->max_addr);
+    KERNAUX_CAST_CONST(unsigned long, align,    tag->align);
+
+    PRINTLNF("  min addr: %lu", min_addr);
+    PRINTLNF("  max addr: %lu", max_addr);
+    PRINTLNF("  align: %lu",    align);
 }

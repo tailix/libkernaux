@@ -144,7 +144,7 @@ multiboot2_header_example2 = {
             .flags = 0,
             .size = sizeof(multiboot2_header_example2.tag_efi_amd64_entry_addr),
         },
-        .entry_addr = 0xdeadbeef,
+        .entry_addr = 0xdeadbeaf,
     },
     .tag_relocatable_header = {
         .base = {
@@ -152,9 +152,9 @@ multiboot2_header_example2 = {
             .flags = 0,
             .size = sizeof(multiboot2_header_example2.tag_relocatable_header),
         },
-        .min_addr = 0,
-        .max_addr = 0,
-        .align = 0,
+        .min_addr = 0xcafebabe,
+        .max_addr = 0xdeadbeaf,
+        .align = 8,
         .preferences =
             KERNAUX_MULTIBOOT2_HTAG_RELOCATABLE_HEADER_PREFERENCE_LOWEST,
     },
