@@ -11,6 +11,9 @@
 #include <stdint.h>
 
 #define PRINTLN(s) do { KernAux_Display_println(display, s); } while (0)
+
+#define PRINTF(format, ...) \
+    do { KernAux_Display_printf(display, format, __VA_ARGS__); } while (0)
 #define PRINTLNF(format, ...) \
     do { KernAux_Display_printlnf(display, format, __VA_ARGS__); } while (0)
 
@@ -211,7 +214,42 @@ void KernAux_Multiboot2_HTag_Flags_print(
 ) {
     HEADER(Flags);
 
-    // TODO: print
+    KERNAUX_CAST_CONST(unsigned long, console_flags, tag->console_flags);
+
+    PRINTF("  console flags: %lu (", console_flags);
+
+    static const struct {
+        uint32_t number;
+        const char *name;
+    } flags[] = {
+        {
+            .number = KERNAUX_MULTIBOOT2_HTAG_FLAGS_REQUIRE_CONSOLE,
+            .name = "REQUIRE_CONSOLE",
+        },
+        {
+            .number = KERNAUX_MULTIBOOT2_HTAG_FLAGS_EGA_SUPPORT,
+            .name = "EGA_SUPPORT",
+        }
+    };
+
+    bool is_first = true;
+    for (size_t index = 0; index < sizeof(flags) / sizeof(flags[0]); ++index) {
+        if (tag->console_flags & flags[index].number) {
+            if (is_first) {
+                PRINTLN("");
+            } else {
+                PRINTLN(" |");
+            }
+            PRINTF("    %s", flags[index].name);
+            is_first = false;
+        }
+    }
+    if (is_first) {
+        PRINTLN(")");
+    } else {
+        PRINTLN("");
+        PRINTLN("  )");
+    }
 }
 
 void KernAux_Multiboot2_HTag_Framebuffer_print(

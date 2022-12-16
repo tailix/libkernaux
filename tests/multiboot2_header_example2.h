@@ -104,10 +104,7 @@ multiboot2_header_example2 = {
             .flags = 0,
             .size = sizeof(multiboot2_header_example2.tag_flags),
         },
-        .console_flags = (
-            KERNAUX_MULTIBOOT2_HTAG_FLAGS_REQUIRE_CONSOLE |
-            KERNAUX_MULTIBOOT2_HTAG_FLAGS_EGA_SUPPORT
-        ),
+        .console_flags = 0,
     },
     .tag_framebuffer = {
         .base = {
