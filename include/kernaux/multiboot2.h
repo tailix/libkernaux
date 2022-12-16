@@ -580,43 +580,12 @@ const char *KernAux_Multiboot2_HTag_RelocatableHeader_Preference_to_str(
     enum KernAux_Multiboot2_HTag_RelocatableHeader_Preference pref
 );
 
-/***************************
- * Header helper functions *
- ***************************/
+/********************
+ * Helper functions *
+ ********************/
 
-const struct KernAux_Multiboot2_HTagBase
-*KernAux_Multiboot2_Header_first_tag_with_type(
-    const struct KernAux_Multiboot2_Header *multiboot2_header,
-    enum KernAux_Multiboot2_HTag tag_type
-);
-
-const struct KernAux_Multiboot2_HTagBase
-*KernAux_Multiboot2_Header_tag_with_type_after(
-    const struct KernAux_Multiboot2_Header *multiboot2_header,
-    enum KernAux_Multiboot2_HTag tag_type,
-    const struct KernAux_Multiboot2_HTagBase *after_tag
-);
-
-/********************************
- * Information helper functions *
- ********************************/
-
-const struct KernAux_Multiboot2_ITagBase
-*KernAux_Multiboot2_Info_first_tag_with_type(
-    const struct KernAux_Multiboot2_Info *multiboot2_info,
-    enum KernAux_Multiboot2_ITag tag_type
-);
-
-const struct KernAux_Multiboot2_ITagBase
-*KernAux_Multiboot2_Info_tag_with_type_after(
-    const struct KernAux_Multiboot2_Info *multiboot2_info,
-    enum KernAux_Multiboot2_ITag tag_type,
-    const struct KernAux_Multiboot2_ITagBase *after_tag
-);
-
-const char *KernAux_Multiboot2_Info_boot_cmd_line(
-    const struct KernAux_Multiboot2_Info *multiboot2_info
-);
+#include <kernaux/multiboot2/header_helpers.h>
+#include <kernaux/multiboot2/info_helpers.h>
 
 /************************
  * Validation functions *
