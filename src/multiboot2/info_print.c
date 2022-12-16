@@ -300,7 +300,7 @@ void KernAux_Multiboot2_ITag_MemoryMap_print(
 
     PRINTLNF("  u32 entry_size: %lu",    entry_size);
     PRINTLNF("  u32 entry_version: %lu", entry_version);
-    PRINTLN("  entries:");
+    PRINTLN ("  struct entries[]: [");
 
     // Print data:
 
@@ -318,13 +318,15 @@ void KernAux_Multiboot2_ITag_MemoryMap_print(
         KERNAUX_CAST_CONST(unsigned long,      type,      entries[index].type);
         KERNAUX_CAST_CONST(unsigned long,      reserved1, entries[index].reserved1);
 
-        PRINTLNF("    entry %zu", index);
+        PRINTLNF("    [%zu] entry: {", index);
         PRINTLNF("      u64 base_addr: %llu", base_addr);
         PRINTLNF("      u64 length: %llu",    length);
         PRINTLNF("      u32 type: %lu",       type);
         PRINTLNF("      u32 reserved1: %lu",  reserved1);
+        PRINTLN ("    }");
     }
 
+    PRINTLN("  ]");
     FOOTER;
 }
 
