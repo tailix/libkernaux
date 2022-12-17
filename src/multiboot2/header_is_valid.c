@@ -252,7 +252,7 @@ bool KernAux_Multiboot2_HTag_RelocatableHeader_is_valid(
         return false;
     }
 
-    switch (tag->preferences) {
+    switch (tag->preference) {
     case KERNAUX_MULTIBOOT2_HTAG_RELOCATABLE_HEADER_PREFERENCE_NONE:    break;
     case KERNAUX_MULTIBOOT2_HTAG_RELOCATABLE_HEADER_PREFERENCE_LOWEST:  break;
     case KERNAUX_MULTIBOOT2_HTAG_RELOCATABLE_HEADER_PREFERENCE_HIGHEST: break;
