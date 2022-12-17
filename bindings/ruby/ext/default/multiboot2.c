@@ -43,6 +43,13 @@ static VALUE rb_KernAux_Multiboot2_Header_magic(VALUE self);
  */
 static VALUE rb_KernAux_Multiboot2_Header_arch(VALUE self);
 
+/**
+ * Return the total size (length) field of the Multiboot 2 header.
+ *
+ * @return [nil, Integer]
+ */
+static VALUE rb_KernAux_Multiboot2_Header_total_size(VALUE self);
+
 void init_multiboot2()
 {
     // KernAux::Multiboot2
@@ -72,6 +79,8 @@ void init_multiboot2()
                      rb_KernAux_Multiboot2_Header_magic, 0);
     rb_define_method(rb_KernAux_Multiboot2_Header, "arch",
                      rb_KernAux_Multiboot2_Header_arch, 0);
+    rb_define_method(rb_KernAux_Multiboot2_Header, "total_size",
+                     rb_KernAux_Multiboot2_Header_total_size, 0);
 }
 
 // KernAux::Multiboot2::Header#magic
@@ -90,6 +99,16 @@ VALUE rb_KernAux_Multiboot2_Header_arch(VALUE self)
     EXTRACT_BASE_PTR(Header, multiboot2_header, data);
     KERNAUX_CAST_CONST(unsigned long, arch, multiboot2_header->arch);
     return ULONG2NUM(arch);
+}
+
+// KernAux::Multiboot2::Header#total_size
+VALUE rb_KernAux_Multiboot2_Header_total_size(VALUE self)
+{
+    VALUE data = rb_ivar_get(self, rb_intern("@data"));
+    EXTRACT_BASE_PTR(Header, multiboot2_header, data);
+    KERNAUX_CAST_CONST(unsigned long, total_size,
+                       multiboot2_header->total_size);
+    return ULONG2NUM(total_size);
 }
 
 #endif

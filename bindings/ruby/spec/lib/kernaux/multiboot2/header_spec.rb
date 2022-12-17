@@ -10,12 +10,14 @@ if KernAux::Version.with_multiboot2?
       [
         [Integer(magic_data)].pack('I'),
         [Integer(arch_data)].pack('I'),
-        "\x00" * 8,
+        [Integer(total_size_data)].pack('I'),
+        "\x00" * 4,
       ].join.freeze
     end
 
     let(:magic_data) { described_class::MAGIC }
-    let(:arch_data)  { 0 }
+    let(:arch_data) { 0 }
+    let(:total_size_data) { 20 }
 
     describe '#magic' do
       subject(:magic) { multiboot2_header.magic }
@@ -83,6 +85,27 @@ if KernAux::Version.with_multiboot2?
         let(:arch_data) { 0x1234abcd }
 
         it { is_expected.to equal nil }
+      end
+    end
+
+    describe '#total_size' do
+      subject(:total_size) { multiboot2_header.total_size }
+
+      it { is_expected.to be_instance_of Integer }
+      it { is_expected.to equal total_size_data }
+
+      context 'when total size data is zero' do
+        let(:total_size_data) { 0 }
+
+        it { is_expected.to be_instance_of Integer }
+        it { is_expected.to equal total_size_data }
+      end
+
+      context 'when total size data is some other value' do
+        let(:total_size_data) { 0x1234abcd }
+
+        it { is_expected.to be_instance_of Integer }
+        it { is_expected.to equal total_size_data }
       end
     end
   end
