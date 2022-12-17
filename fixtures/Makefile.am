@@ -18,22 +18,22 @@ nodist_noinst_DATA += \
 endif
 
 multiboot2_header_example0.bin: multiboot2_bin_examples_gen
-	./multiboot2_bin_examples_gen
+	./multiboot2_bin_examples_gen header 0
 
 multiboot2_header_example1.bin_examples_gen: multiboot2_bin
-	./multiboot2_bin_examples_gen
+	./multiboot2_bin_examples_gen header 1
 
 multiboot2_header_example2.bin: multiboot2_bin_examples_gen
-	./multiboot2_bin_examples_gen
+	./multiboot2_bin_examples_gen header 2
 
 multiboot2_info_example0.bin: multiboot2_bin_examples_gen
-	./multiboot2_bin_examples_gen
+	./multiboot2_bin_examples_gen info 0
 
 multiboot2_info_example1.bin: multiboot2_bin_examples_gen
-	./multiboot2_bin_examples_gen
+	./multiboot2_bin_examples_gen info 1
 
 multiboot2_info_example2.bin: multiboot2_bin_examples_gen
-	./multiboot2_bin_examples_gen
+	./multiboot2_bin_examples_gen info 2
 
 ###############################
 # multiboot2_bin_examples_gen #
