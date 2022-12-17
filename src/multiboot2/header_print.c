@@ -27,11 +27,12 @@
         PRINTLN("Multiboot 2 header tag // invalid!");         \
     }                                                          \
                                                                \
-    KERNAUX_CAST_CONST(unsigned long, size,  tag->base.size);  \
+    KERNAUX_CAST_CONST(unsigned long, type, tag->base.type);   \
+    KERNAUX_CAST_CONST(unsigned long, size, tag->base.size);   \
                                                                \
     PRINTLN ("Multiboot 2 header tag {");                      \
-    PRINTLNF("  u16 type: %u (%s)",                            \
-        tag->base.type,                                        \
+    PRINTLNF("  u16 type: %lu (%s)",                           \
+        type,                                                  \
         KernAux_Multiboot2_HTag_to_str(tag->base.type)         \
     );                                                         \
     PRINT   ("  u16 flags: ");                                 \
@@ -103,13 +104,14 @@ void KernAux_Multiboot2_Header_print(
     KERNAUX_NOTNULL(display);
 
     KERNAUX_CAST_CONST(unsigned long, magic,      multiboot2_header->magic);
+    KERNAUX_CAST_CONST(unsigned long, arch,       multiboot2_header->arch);
     KERNAUX_CAST_CONST(unsigned long, total_size, multiboot2_header->total_size);
     KERNAUX_CAST_CONST(unsigned long, checksum,   multiboot2_header->checksum);
 
     PRINTLN("Multiboot 2 header {");
     PRINTLNF("  u32 magic: 0x%lx", magic);
-    PRINTLNF("  u32 arch: %u (%s)",
-        multiboot2_header->arch,
+    PRINTLNF("  u32 arch: %lu (%s)",
+        arch,
         KernAux_Multiboot2_Header_Arch_to_str(multiboot2_header->arch)
     );
     PRINTLNF("  u32 size: %lu", total_size);
@@ -363,13 +365,20 @@ void KernAux_Multiboot2_HTag_RelocatableHeader_print(
 ) {
     HEADER(RelocatableHeader);
 
-    KERNAUX_CAST_CONST(unsigned long, min_addr, tag->min_addr);
-    KERNAUX_CAST_CONST(unsigned long, max_addr, tag->max_addr);
-    KERNAUX_CAST_CONST(unsigned long, align,    tag->align);
+    KERNAUX_CAST_CONST(unsigned long, min_addr,   tag->min_addr);
+    KERNAUX_CAST_CONST(unsigned long, max_addr,   tag->max_addr);
+    KERNAUX_CAST_CONST(unsigned long, align,      tag->align);
+    KERNAUX_CAST_CONST(unsigned long, preference, tag->preference);
 
     PRINTLNF("  u32 min_addr: 0x%lx", min_addr);
     PRINTLNF("  u32 max_addr: 0x%lx", max_addr);
     PRINTLNF("  u32 align: %lu",      align);
+    PRINTLNF("  u32 preference: %lu (%s)",
+        preference,
+        KernAux_Multiboot2_HTag_RelocatableHeader_Preference_to_str(
+            tag->preference
+        )
+    );
 
     FOOTER;
 }

@@ -26,11 +26,12 @@
         PRINTLN("Multiboot 2 info tag // invalid!");         \
     }                                                        \
                                                              \
+    KERNAUX_CAST_CONST(unsigned long, type, tag->base.type); \
     KERNAUX_CAST_CONST(unsigned long, size, tag->base.size); \
                                                              \
     PRINTLN("Multiboot 2 info tag {");                       \
-    PRINTLNF("  u32 type: %u (%s)",                          \
-        tag->base.type,                                      \
+    PRINTLNF("  u32 type: %lu (%s)",                         \
+        type,                                                \
         KernAux_Multiboot2_ITag_to_str(tag->base.type)       \
     );                                                       \
     PRINTLNF("  u32 size: %lu", size);                       \
