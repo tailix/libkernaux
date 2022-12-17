@@ -1,7 +1,9 @@
 #include <kernaux/macro.h>
+#include <kernaux/multiboot2.h>
 
 #include <kernaux/macro/packing_start.run>
 
+KERNAUX_ALIGNED(KERNAUX_MULTIBOOT2_HEADER_ALIGN)
 static const struct {
     struct KernAux_Multiboot2_Header multiboot2_header;
 
@@ -85,10 +87,10 @@ multiboot2_header_example2 = {
             .flags = 0,
             .size = sizeof(multiboot2_header_example2.tag_addr),
         },
-        .header_addr = 0,
-        .load_addr = 0,
-        .load_end_addr = 0,
-        .bss_end_addr = 0,
+        .header_addr = 0xcafebabe,
+        .load_addr = 0xdeadbeaf,
+        .load_end_addr = 0xdeadbabe,
+        .bss_end_addr = 0xcafebeaf,
     },
     .tag_entry_addr = {
         .base = {
@@ -96,7 +98,7 @@ multiboot2_header_example2 = {
             .flags = 0,
             .size = sizeof(multiboot2_header_example2.tag_entry_addr),
         },
-        .entry_addr = 0,
+        .entry_addr = 0xcafebabe,
     },
     .tag_flags = {
         .base = {
@@ -104,10 +106,7 @@ multiboot2_header_example2 = {
             .flags = 0,
             .size = sizeof(multiboot2_header_example2.tag_flags),
         },
-        .console_flags = (
-            KERNAUX_MULTIBOOT2_HTAG_FLAGS_REQUIRE_CONSOLE |
-            KERNAUX_MULTIBOOT2_HTAG_FLAGS_EGA_SUPPORT
-        ),
+        .console_flags = 0,
     },
     .tag_framebuffer = {
         .base = {
@@ -115,9 +114,9 @@ multiboot2_header_example2 = {
             .flags = 0,
             .size = sizeof(multiboot2_header_example2.tag_framebuffer),
         },
-        .width = 0,
-        .height = 0,
-        .depth = 0,
+        .width = 80,
+        .height = 25,
+        .depth = 8,
     },
     .tag_module_align = {
         .base = {
@@ -139,7 +138,7 @@ multiboot2_header_example2 = {
             .flags = 0,
             .size = sizeof(multiboot2_header_example2.tag_efi_i386_entry_addr),
         },
-        .entry_addr = 0,
+        .entry_addr = 0xcafebabe,
     },
     .tag_efi_amd64_entry_addr = {
         .base = {
@@ -147,7 +146,7 @@ multiboot2_header_example2 = {
             .flags = 0,
             .size = sizeof(multiboot2_header_example2.tag_efi_amd64_entry_addr),
         },
-        .entry_addr = 0,
+        .entry_addr = 0xdeadbeaf,
     },
     .tag_relocatable_header = {
         .base = {
@@ -155,9 +154,9 @@ multiboot2_header_example2 = {
             .flags = 0,
             .size = sizeof(multiboot2_header_example2.tag_relocatable_header),
         },
-        .min_addr = 0,
-        .max_addr = 0,
-        .align = 0,
+        .min_addr = 0xcafebabe,
+        .max_addr = 0xdeadbeaf,
+        .align = 8,
         .preferences =
             KERNAUX_MULTIBOOT2_HTAG_RELOCATABLE_HEADER_PREFERENCE_LOWEST,
     },

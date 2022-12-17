@@ -54,6 +54,7 @@ multiboot2_header = {
         .magic = KERNAUX_MULTIBOOT2_HEADER_MAGIC,
         .arch = KERNAUX_MULTIBOOT2_HEADER_ARCH_I386,
         .total_size = sizeof(multiboot2_header),
+        // This macro helps to calculate the checksum.
         .checksum = KERNAUX_MULTIBOOT2_HEADER_CHECKSUM(
             KERNAUX_MULTIBOOT2_HEADER_ARCH_I386,
             sizeof(multiboot2_header)
