@@ -10,13 +10,13 @@ extern "C" {
 const struct KernAux_Multiboot2_ITagBase
 *KernAux_Multiboot2_Info_first_tag_with_type(
     const struct KernAux_Multiboot2_Info *multiboot2_info,
-    enum KernAux_Multiboot2_ITag tag_type
+    uint32_t tag_type
 );
 
 const struct KernAux_Multiboot2_ITagBase
 *KernAux_Multiboot2_Info_tag_with_type_after(
     const struct KernAux_Multiboot2_Info *multiboot2_info,
-    enum KernAux_Multiboot2_ITag tag_type,
+    uint32_t tag_type,
     const struct KernAux_Multiboot2_ITagBase *after_tag
 );
 
