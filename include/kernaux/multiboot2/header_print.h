@@ -72,6 +72,18 @@ void KernAux_Multiboot2_HTag_RelocatableHeader_print(
     KernAux_Display display
 );
 
+void KernAux_Multiboot2_HTagBase_Flags_print(
+    uint16_t flags,
+    KernAux_Display display,
+    unsigned indentation
+);
+
+void KernAux_Multiboot2_HTag_Flags_ConsoleFlags_print(
+    uint32_t console_flags,
+    KernAux_Display display,
+    unsigned indentation
+);
+
 #ifdef __cplusplus
 }
 #endif

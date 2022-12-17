@@ -11,10 +11,11 @@
 #include <stddef.h>
 #include <stdint.h>
 
+#define PRINT(s)   do { KernAux_Display_print  (display, s); } while (0)
 #define PRINTLN(s) do { KernAux_Display_println(display, s); } while (0)
 
 #define PRINTF(format, ...) \
-    do { KernAux_Display_printf(display, format, __VA_ARGS__); } while (0)
+    do { KernAux_Display_printf  (display, format, __VA_ARGS__); } while (0)
 #define PRINTLNF(format, ...) \
     do { KernAux_Display_printlnf(display, format, __VA_ARGS__); } while (0)
 
@@ -26,7 +27,6 @@
         PRINTLN("Multiboot 2 header tag // invalid!");         \
     }                                                          \
                                                                \
-    KERNAUX_CAST_CONST(unsigned long, flags, tag->base.flags); \
     KERNAUX_CAST_CONST(unsigned long, size,  tag->base.size);  \
                                                                \
     PRINTLN ("Multiboot 2 header tag {");                      \
@@ -34,37 +34,20 @@
         tag->base.type,                                        \
         KernAux_Multiboot2_HTag_to_str(tag->base.type)         \
     );                                                         \
-    {                                                          \
-        PRINTF("  u16 flags: 0x%lx (", flags);                 \
-                                                               \
-        bool is_first = true;                                  \
-        for (                                                  \
-            size_t index = 0;                                  \
-            index < sizeof(base_flag_names) /                  \
-                    sizeof(base_flag_names[0]);                \
-            ++index                                            \
-        ) {                                                    \
-            if (flags & base_flag_names[index].number) {       \
-                if (is_first) {                                \
-                    PRINTLN("");                               \
-                } else {                                       \
-                    PRINTLN(" |");                             \
-                }                                              \
-                PRINTF("    %s", base_flag_names[index].name); \
-                is_first = false;                              \
-            }                                                  \
-        }                                                      \
-        if (is_first) {                                        \
-            PRINTLN(")");                                      \
-        } else {                                               \
-            PRINTLN("");                                       \
-            PRINTLN("  )");                                    \
-        }                                                      \
-    }                                                          \
+    PRINT   ("  u16 flags: ");                                 \
+    KernAux_Multiboot2_HTagBase_Flags_print(                   \
+        tag->base.flags,                                       \
+        display,                                               \
+        2                                                      \
+    );                                                         \
     PRINTLNF("  u32 size: %lu", size);                         \
 } while (0)
 
 #define FOOTER do { PRINTLN("}"); } while (0)
+
+#define INDENT do { \
+    for (unsigned index = 0; index < indentation; ++index) PRINT(" "); \
+} while (0)
 
 static const struct {
     uint32_t number;
@@ -279,34 +262,12 @@ void KernAux_Multiboot2_HTag_Flags_print(
 ) {
     HEADER(Flags);
 
-    KERNAUX_CAST_CONST(unsigned long, console_flags, tag->console_flags);
-
-    {
-        PRINTF("  u32 console_flags: %lu (", console_flags);
-
-        bool is_first = true;
-        for (
-            size_t index = 0;
-            index < sizeof(console_flag_names) / sizeof(console_flag_names[0]);
-            ++index
-        ) {
-            if (tag->console_flags & console_flag_names[index].number) {
-                if (is_first) {
-                    PRINTLN("");
-                } else {
-                    PRINTLN(" |");
-                }
-                PRINTF("    %s", console_flag_names[index].name);
-                is_first = false;
-            }
-        }
-        if (is_first) {
-            PRINTLN(")");
-        } else {
-            PRINTLN("");
-            PRINTLN("  )");
-        }
-    }
+    PRINT("  u32 console_flags: ");
+    KernAux_Multiboot2_HTag_Flags_ConsoleFlags_print(
+        tag->console_flags,
+        display,
+        2
+    );
 
     FOOTER;
 }
@@ -387,4 +348,82 @@ void KernAux_Multiboot2_HTag_RelocatableHeader_print(
     PRINTLNF("  u32 align: %lu",    align);
 
     FOOTER;
+}
+
+void KernAux_Multiboot2_HTagBase_Flags_print(
+    const uint16_t flags,
+    const KernAux_Display display,
+    const unsigned indentation
+) {
+    KERNAUX_CAST_CONST(unsigned long, flags_ul, flags);
+
+    PRINTF("0x%lx (", flags_ul);
+
+    bool is_first = true;
+
+    for (
+        size_t index = 0;
+        index < sizeof(base_flag_names) / sizeof(base_flag_names[0]);
+        ++index
+    ) {
+        if (flags & base_flag_names[index].number) {
+            if (is_first) {
+                PRINTLN("");
+            } else {
+                PRINTLN(" |");
+            }
+
+            INDENT;
+            INDENT;
+            PRINTF("%s", base_flag_names[index].name);
+            is_first = false;
+        }
+    }
+
+    if (is_first) {
+        PRINTLN(")");
+    } else {
+        PRINTLN("");
+        INDENT;
+        PRINTLN(")");
+    }
+}
+
+void KernAux_Multiboot2_HTag_Flags_ConsoleFlags_print(
+    const uint32_t console_flags KERNAUX_UNUSED,
+    const KernAux_Display display KERNAUX_UNUSED,
+    const unsigned indentation KERNAUX_UNUSED
+) {
+    KERNAUX_CAST_CONST(unsigned long, console_flags_ul, console_flags);
+
+    PRINTF("0x%lx (", console_flags_ul);
+
+    bool is_first = true;
+
+    for (
+        size_t index = 0;
+        index < sizeof(console_flag_names) / sizeof(console_flag_names[0]);
+        ++index
+    ) {
+        if (console_flags & console_flag_names[index].number) {
+            if (is_first) {
+                PRINTLN("");
+            } else {
+                PRINTLN(" |");
+            }
+
+            INDENT;
+            INDENT;
+            PRINTF("%s", console_flag_names[index].name);
+            is_first = false;
+        }
+    }
+
+    if (is_first) {
+        PRINTLN(")");
+    } else {
+        PRINTLN("");
+        INDENT;
+        PRINTLN(")");
+    }
 }
