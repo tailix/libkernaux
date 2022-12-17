@@ -79,6 +79,22 @@ static const struct {
     }
 };
 
+static void KernAux_Multiboot2_HTagBase_Flags_print(
+    uint16_t flags,
+    KernAux_Display display,
+    unsigned basic_indentation,
+    unsigned indentation_delta,
+    bool indent_first
+);
+
+static void KernAux_Multiboot2_HTag_Flags_ConsoleFlags_print(
+    uint32_t console_flags,
+    KernAux_Display display,
+    unsigned basic_indentation,
+    unsigned indentation_delta,
+    bool indent_first
+);
+
 void KernAux_Multiboot2_Header_print(
     const struct KernAux_Multiboot2_Header *const multiboot2_header,
     const KernAux_Display display
