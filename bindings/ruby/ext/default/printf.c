@@ -6,7 +6,7 @@
 #ifdef KERNAUX_VERSION_WITH_PRINTF
 
 /**
- * Typical **printf**.
+ * Typical `printf`.
  *
  * @param format [String] format string
  * @return [String] formatted output

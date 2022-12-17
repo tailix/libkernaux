@@ -18,9 +18,6 @@ void init_assert();
 #ifdef KERNAUX_VERSION_WITH_CMDLINE
 void init_cmdline();
 #endif // KERNAUX_VERSION_WITH_CMDLINE
-#ifdef KERNAUX_VERSION_WITH_MULTIBOOT2
-void init_multiboot2();
-#endif
 #ifdef KERNAUX_VERSION_WITH_NTOA
 void init_ntoa();
 #endif // KERNAUX_VERSION_WITH_NTOA
