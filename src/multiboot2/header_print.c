@@ -38,7 +38,9 @@
     KernAux_Multiboot2_HTagBase_Flags_print(                   \
         tag->base.flags,                                       \
         display,                                               \
-        2                                                      \
+        2,                                                     \
+        2,                                                     \
+        false                                                  \
     );                                                         \
     PRINTLNF("  u32 size: %lu", size);                         \
 } while (0)
@@ -46,7 +48,11 @@
 #define FOOTER do { PRINTLN("}"); } while (0)
 
 #define INDENT do { \
-    for (unsigned index = 0; index < indentation; ++index) PRINT(" "); \
+    for (unsigned index = 0; index < basic_indentation; ++index) PRINT(" "); \
+} while (0)
+
+#define INDENT_MORE do { \
+    for (unsigned index = 0; index < indentation_delta; ++index) PRINT(" "); \
 } while (0)
 
 static const struct {
@@ -266,7 +272,9 @@ void KernAux_Multiboot2_HTag_Flags_print(
     KernAux_Multiboot2_HTag_Flags_ConsoleFlags_print(
         tag->console_flags,
         display,
-        2
+        2,
+        2,
+        false
     );
 
     FOOTER;
@@ -353,10 +361,13 @@ void KernAux_Multiboot2_HTag_RelocatableHeader_print(
 void KernAux_Multiboot2_HTagBase_Flags_print(
     const uint16_t flags,
     const KernAux_Display display,
-    const unsigned indentation
+    const unsigned basic_indentation,
+    const unsigned indentation_delta,
+    const bool indent_first
 ) {
     KERNAUX_CAST_CONST(unsigned long, flags_ul, flags);
 
+    if (indent_first) INDENT;
     PRINTF("0x%lx (", flags_ul);
 
     bool is_first = true;
@@ -374,7 +385,7 @@ void KernAux_Multiboot2_HTagBase_Flags_print(
             }
 
             INDENT;
-            INDENT;
+            INDENT_MORE;
             PRINTF("%s", base_flag_names[index].name);
             is_first = false;
         }
@@ -390,12 +401,15 @@ void KernAux_Multiboot2_HTagBase_Flags_print(
 }
 
 void KernAux_Multiboot2_HTag_Flags_ConsoleFlags_print(
-    const uint32_t console_flags KERNAUX_UNUSED,
-    const KernAux_Display display KERNAUX_UNUSED,
-    const unsigned indentation KERNAUX_UNUSED
+    const uint32_t console_flags,
+    const KernAux_Display display,
+    const unsigned basic_indentation,
+    const unsigned indentation_delta,
+    const bool indent_first
 ) {
     KERNAUX_CAST_CONST(unsigned long, console_flags_ul, console_flags);
 
+    if (indent_first) INDENT;
     PRINTF("0x%lx (", console_flags_ul);
 
     bool is_first = true;
@@ -413,7 +427,7 @@ void KernAux_Multiboot2_HTag_Flags_ConsoleFlags_print(
             }
 
             INDENT;
-            INDENT;
+            INDENT_MORE;
             PRINTF("%s", console_flag_names[index].name);
             is_first = false;
         }

@@ -7,6 +7,8 @@ extern "C" {
 
 #include <kernaux/multiboot2.h>
 
+#include <stdbool.h>
+
 void KernAux_Multiboot2_Header_print(
     const struct KernAux_Multiboot2_Header *multiboot2_header,
     KernAux_Display display
@@ -75,13 +77,17 @@ void KernAux_Multiboot2_HTag_RelocatableHeader_print(
 void KernAux_Multiboot2_HTagBase_Flags_print(
     uint16_t flags,
     KernAux_Display display,
-    unsigned indentation
+    unsigned basic_indentation,
+    unsigned indentation_delta,
+    bool indent_first
 );
 
 void KernAux_Multiboot2_HTag_Flags_ConsoleFlags_print(
     uint32_t console_flags,
     KernAux_Display display,
-    unsigned indentation
+    unsigned basic_indentation,
+    unsigned indentation_delta,
+    bool indent_first
 );
 
 #ifdef __cplusplus
