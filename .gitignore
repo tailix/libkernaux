@@ -86,8 +86,8 @@
 
 /include/kernaux/version.h
 
-/fixtures/multiboot2_bin
-/fixtures/multiboot2_bin.c
+/fixtures/multiboot2_bin_examples_gen
+/fixtures/multiboot2_bin_examples_gen.c
 /fixtures/multiboot2_header_example0.bin
 /fixtures/multiboot2_header_example1.bin
 /fixtures/multiboot2_header_example2.bin

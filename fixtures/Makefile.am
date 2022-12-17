@@ -17,33 +17,33 @@ nodist_noinst_DATA += \
 	multiboot2_info_example2.bin
 endif
 
-multiboot2_header_example0.bin: multiboot2_bin
-	./multiboot2_bin
+multiboot2_header_example0.bin: multiboot2_bin_examples_gen
+	./multiboot2_bin_examples_gen
 
-multiboot2_header_example1.bin: multiboot2_bin
-	./multiboot2_bin
+multiboot2_header_example1.bin_examples_gen: multiboot2_bin
+	./multiboot2_bin_examples_gen
 
-multiboot2_header_example2.bin: multiboot2_bin
-	./multiboot2_bin
+multiboot2_header_example2.bin: multiboot2_bin_examples_gen
+	./multiboot2_bin_examples_gen
 
-multiboot2_info_example0.bin: multiboot2_bin
-	./multiboot2_bin
+multiboot2_info_example0.bin: multiboot2_bin_examples_gen
+	./multiboot2_bin_examples_gen
 
-multiboot2_info_example1.bin: multiboot2_bin
-	./multiboot2_bin
+multiboot2_info_example1.bin: multiboot2_bin_examples_gen
+	./multiboot2_bin_examples_gen
 
-multiboot2_info_example2.bin: multiboot2_bin
-	./multiboot2_bin
+multiboot2_info_example2.bin: multiboot2_bin_examples_gen
+	./multiboot2_bin_examples_gen
 
-##################
-# multiboot2_bin #
-##################
+###############################
+# multiboot2_bin_examples_gen #
+###############################
 
 if WITH_MULTIBOOT2
-noinst_PROGRAMS += multiboot2_bin
-multiboot2_bin_LDADD = $(top_builddir)/libkernaux.la
-nodist_multiboot2_bin_SOURCES = multiboot2_bin.c
-multiboot2_bin_SOURCES = \
+noinst_PROGRAMS += multiboot2_bin_examples_gen
+multiboot2_bin_examples_gen_LDADD = $(top_builddir)/libkernaux.la
+nodist_multiboot2_bin_examples_gen_SOURCES = multiboot2_bin_examples_gen.c
+multiboot2_bin_examples_gen_SOURCES = \
 	multiboot2_header_example0.h \
 	multiboot2_header_example1.h \
 	multiboot2_header_example2.h \
