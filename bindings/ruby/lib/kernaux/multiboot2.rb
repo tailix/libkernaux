@@ -26,8 +26,9 @@ module KernAux
     # The base class for any Multiboot 2 structure.
     #
     class Struct
-      def initialize(data)
+      def initialize(data = '')
         @data = String data
+        freeze if @data.frozen?
       end
 
       ##
