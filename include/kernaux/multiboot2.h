@@ -41,18 +41,13 @@ extern "C" {
 
 #include <kernaux/macro/packing_start.run>
 
-/***********************
- * Header common types *
- ***********************/
-
-enum KernAux_Multiboot2_Header_Arch {
-    KERNAUX_MULTIBOOT2_HEADER_ARCH_I386   = 0,
-    KERNAUX_MULTIBOOT2_HEADER_ARCH_MIPS32 = 4,
-};
+/**********************
+ * Header basic types *
+ **********************/
 
 struct KernAux_Multiboot2_Header {
     uint32_t magic;
-    enum KernAux_Multiboot2_Header_Arch arch : 32;
+    uint32_t arch;
     uint32_t total_size;
     uint32_t checksum;
 }
@@ -60,22 +55,8 @@ KERNAUX_PACKED;
 
 KERNAUX_STATIC_TEST_STRUCT_SIZE(KernAux_Multiboot2_Header, 16);
 
-enum KernAux_Multiboot2_HTag {
-    KERNAUX_MULTIBOOT2_HTAG_NONE = 0,
-    KERNAUX_MULTIBOOT2_HTAG_INFO_REQ = 1,
-    KERNAUX_MULTIBOOT2_HTAG_ADDR = 2,
-    KERNAUX_MULTIBOOT2_HTAG_ENTRY_ADDR = 3,
-    KERNAUX_MULTIBOOT2_HTAG_FLAGS = 4,
-    KERNAUX_MULTIBOOT2_HTAG_FRAMEBUFFER = 5,
-    KERNAUX_MULTIBOOT2_HTAG_MODULE_ALIGN = 6,
-    KERNAUX_MULTIBOOT2_HTAG_EFI_BOOT_SERVICES = 7,
-    KERNAUX_MULTIBOOT2_HTAG_EFI_I386_ENTRY_ADDR = 8,
-    KERNAUX_MULTIBOOT2_HTAG_EFI_AMD64_ENTRY_ADDR = 9,
-    KERNAUX_MULTIBOOT2_HTAG_RELOCATABLE_HEADER = 10,
-};
-
 struct KernAux_Multiboot2_HTagBase {
-    enum KernAux_Multiboot2_HTag type : 16;
+    uint16_t type;
     uint16_t flags;
     uint32_t size;
 }
@@ -83,9 +64,9 @@ KERNAUX_PACKED;
 
 KERNAUX_STATIC_TEST_STRUCT_SIZE(KernAux_Multiboot2_HTagBase, 8);
 
-/****************************
- * Information common types *
- ****************************/
+/***************************
+ * Information basic types *
+ ***************************/
 
 struct KernAux_Multiboot2_Info {
     uint32_t total_size;
@@ -95,48 +76,13 @@ KERNAUX_PACKED;
 
 KERNAUX_STATIC_TEST_STRUCT_SIZE(KernAux_Multiboot2_Info, 8);
 
-enum KernAux_Multiboot2_ITag {
-    KERNAUX_MULTIBOOT2_ITAG_NONE = 0,
-    KERNAUX_MULTIBOOT2_ITAG_BOOT_CMD_LINE = 1,
-    KERNAUX_MULTIBOOT2_ITAG_BOOT_LOADER_NAME = 2,
-    KERNAUX_MULTIBOOT2_ITAG_MODULE = 3,
-    KERNAUX_MULTIBOOT2_ITAG_BASIC_MEMORY_INFO = 4,
-    KERNAUX_MULTIBOOT2_ITAG_BIOS_BOOT_DEVICE = 5,
-    KERNAUX_MULTIBOOT2_ITAG_MEMORY_MAP = 6,
-    KERNAUX_MULTIBOOT2_ITAG_VBE_INFO = 7,
-    KERNAUX_MULTIBOOT2_ITAG_FRAMEBUFFER_INFO = 8,
-    KERNAUX_MULTIBOOT2_ITAG_ELF_SYMBOLS = 9,
-    KERNAUX_MULTIBOOT2_ITAG_APM_TABLE = 10,
-    KERNAUX_MULTIBOOT2_ITAG_EFI_32BIT_SYSTEM_TABLE_PTR = 11,
-    KERNAUX_MULTIBOOT2_ITAG_EFI_64BIT_SYSTEM_TABLE_PTR = 12,
-    KERNAUX_MULTIBOOT2_ITAG_SMBIOS_TABLES = 13,
-    KERNAUX_MULTIBOOT2_ITAG_ACPI_OLD_RSDP = 14,
-    KERNAUX_MULTIBOOT2_ITAG_ACPI_NEW_RSDP = 15,
-    KERNAUX_MULTIBOOT2_ITAG_NETWORKING_INFO = 16,
-    KERNAUX_MULTIBOOT2_ITAG_EFI_MEMORY_MAP = 17,
-    KERNAUX_MULTIBOOT2_ITAG_EFI_BOOT_SERVICES_NOT_TERMINATED = 18,
-    KERNAUX_MULTIBOOT2_ITAG_EFI_32BIT_IMAGE_HANDLE_PTR = 19,
-    KERNAUX_MULTIBOOT2_ITAG_EFI_64BIT_IMAGE_HANDLE_PTR = 20,
-    KERNAUX_MULTIBOOT2_ITAG_IMAGE_LOAD_BASE_PHYS_ADDR = 21,
-};
-
 struct KernAux_Multiboot2_ITagBase {
-    enum KernAux_Multiboot2_ITag type : 32;
+    uint32_t type;
     uint32_t size;
 }
 KERNAUX_PACKED;
 
 KERNAUX_STATIC_TEST_STRUCT_SIZE(KernAux_Multiboot2_ITagBase, 8);
-
-/***************************
- * Header additional types *
- ***************************/
-
-enum KernAux_Multiboot2_HTag_RelocatableHeader_Preference {
-    KERNAUX_MULTIBOOT2_HTAG_RELOCATABLE_HEADER_PREFERENCE_NONE    = 0,
-    KERNAUX_MULTIBOOT2_HTAG_RELOCATABLE_HEADER_PREFERENCE_LOWEST  = 1,
-    KERNAUX_MULTIBOOT2_HTAG_RELOCATABLE_HEADER_PREFERENCE_HIGHEST = 2,
-};
 
 /********************************
  * Information additional types *
@@ -273,7 +219,7 @@ struct KernAux_Multiboot2_HTag_RelocatableHeader {
     uint32_t min_addr;
     uint32_t max_addr;
     uint32_t align;
-    enum KernAux_Multiboot2_HTag_RelocatableHeader_Preference preferences : 32;
+    uint32_t preference;
 }
 KERNAUX_PACKED;
 
@@ -585,25 +531,12 @@ KERNAUX_STATIC_TEST_STRUCT_SIZE(
 
 #include <kernaux/macro/packing_end.run>
 
-/********************
- * String functions *
- ********************/
+/*********
+ * Enums *
+ *********/
 
-const char *KernAux_Multiboot2_Header_Arch_to_str(
-    enum KernAux_Multiboot2_Header_Arch arch
-);
-
-const char *KernAux_Multiboot2_HTag_to_str(
-    enum KernAux_Multiboot2_HTag tag_type
-);
-
-const char *KernAux_Multiboot2_ITag_to_str(
-    enum KernAux_Multiboot2_ITag tag_type
-);
-
-const char *KernAux_Multiboot2_HTag_RelocatableHeader_Preference_to_str(
-    enum KernAux_Multiboot2_HTag_RelocatableHeader_Preference pref
-);
+#include <kernaux/multiboot2/header_enums.h>
+#include <kernaux/multiboot2/info_enums.h>
 
 /********************
  * Helper functions *

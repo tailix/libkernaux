@@ -170,6 +170,7 @@ static const char output2[] =
     "  u32 min_addr: 0xcafebabe\n"
     "  u32 max_addr: 0xdeadbeaf\n"
     "  u32 align: 8\n"
+    "  u32 preference: 1 (lowest)\n"
     "}\n"
     "Multiboot 2 header tag {\n"
     "  u16 type: 0 (none)\n"

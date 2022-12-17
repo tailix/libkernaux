@@ -1,0 +1,40 @@
+#ifndef KERNAUX_INCLUDED_MULTIBOOT2_HEADER_ENUMS
+#define KERNAUX_INCLUDED_MULTIBOOT2_HEADER_ENUMS
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+#include <kernaux/multiboot2.h>
+
+#include <stdint.h>
+
+#define KERNAUX_MULTIBOOT2_HEADER_ARCH_I386   0
+#define KERNAUX_MULTIBOOT2_HEADER_ARCH_MIPS32 4
+
+#define KERNAUX_MULTIBOOT2_HTAG_NONE                 0
+#define KERNAUX_MULTIBOOT2_HTAG_INFO_REQ             1
+#define KERNAUX_MULTIBOOT2_HTAG_ADDR                 2
+#define KERNAUX_MULTIBOOT2_HTAG_ENTRY_ADDR           3
+#define KERNAUX_MULTIBOOT2_HTAG_FLAGS                4
+#define KERNAUX_MULTIBOOT2_HTAG_FRAMEBUFFER          5
+#define KERNAUX_MULTIBOOT2_HTAG_MODULE_ALIGN         6
+#define KERNAUX_MULTIBOOT2_HTAG_EFI_BOOT_SERVICES    7
+#define KERNAUX_MULTIBOOT2_HTAG_EFI_I386_ENTRY_ADDR  8
+#define KERNAUX_MULTIBOOT2_HTAG_EFI_AMD64_ENTRY_ADDR 9
+#define KERNAUX_MULTIBOOT2_HTAG_RELOCATABLE_HEADER   10
+
+#define KERNAUX_MULTIBOOT2_HTAG_RELOCATABLE_HEADER_PREFERENCE_NONE    0
+#define KERNAUX_MULTIBOOT2_HTAG_RELOCATABLE_HEADER_PREFERENCE_LOWEST  1
+#define KERNAUX_MULTIBOOT2_HTAG_RELOCATABLE_HEADER_PREFERENCE_HIGHEST 2
+
+const char *KernAux_Multiboot2_Header_Arch_to_str(uint32_t arch);
+const char *KernAux_Multiboot2_HTag_to_str(uint16_t tag_type);
+const char*
+KernAux_Multiboot2_HTag_RelocatableHeader_Preference_to_str(uint32_t pref);
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif
