@@ -17,23 +17,23 @@ nodist_noinst_DATA += \
 	multiboot2_info_example2.bin
 endif
 
-multiboot2_header_example0.bin: $(top_builddir)/fixtures/multiboot2_bin
-	$(top_builddir)/fixtures/multiboot2_bin
+multiboot2_header_example0.bin: multiboot2_bin
+	./multiboot2_bin
 
-multiboot2_header_example1.bin: $(top_builddir)/fixtures/multiboot2_bin
-	$(top_builddir)/fixtures/multiboot2_bin
+multiboot2_header_example1.bin: multiboot2_bin
+	./multiboot2_bin
 
-multiboot2_header_example2.bin: $(top_builddir)/fixtures/multiboot2_bin
-	$(top_builddir)/fixtures/multiboot2_bin
+multiboot2_header_example2.bin: multiboot2_bin
+	./multiboot2_bin
 
-multiboot2_info_example0.bin: $(top_builddir)/fixtures/multiboot2_bin
-	$(top_builddir)/fixtures/multiboot2_bin
+multiboot2_info_example0.bin: multiboot2_bin
+	./multiboot2_bin
 
-multiboot2_info_example1.bin: $(top_builddir)/fixtures/multiboot2_bin
-	$(top_builddir)/fixtures/multiboot2_bin
+multiboot2_info_example1.bin: multiboot2_bin
+	./multiboot2_bin
 
-multiboot2_info_example2.bin: $(top_builddir)/fixtures/multiboot2_bin
-	$(top_builddir)/fixtures/multiboot2_bin
+multiboot2_info_example2.bin: multiboot2_bin
+	./multiboot2_bin
 
 ##################
 # multiboot2_bin #
