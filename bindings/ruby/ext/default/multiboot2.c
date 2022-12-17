@@ -32,8 +32,16 @@ VALUE RBNS(Header)        = Qnil; // KernAux::Multiboot2::Header
  *
  * @see https://www.gnu.org/software/grub/manual/multiboot2/multiboot.html#Header-magic-fields
  */
-// KernAux::Multiboot2::Header#magic
 static VALUE rb_KernAux_Multiboot2_Header_magic(VALUE self);
+
+/**
+ * Return the architecture field of the Multiboot 2 header.
+ *
+ * @return [nil, Integer]
+ *
+ * @see https://www.gnu.org/software/grub/manual/multiboot2/multiboot.html#Header-magic-fields
+ */
+static VALUE rb_KernAux_Multiboot2_Header_arch(VALUE self);
 
 void init_multiboot2()
 {
@@ -62,6 +70,8 @@ void init_multiboot2()
             rb_KernAux_Multiboot2, "Header", rb_KernAux_Multiboot2_Struct));
     rb_define_method(rb_KernAux_Multiboot2_Header, "magic",
                      rb_KernAux_Multiboot2_Header_magic, 0);
+    rb_define_method(rb_KernAux_Multiboot2_Header, "arch",
+                     rb_KernAux_Multiboot2_Header_arch, 0);
 }
 
 // KernAux::Multiboot2::Header#magic
@@ -71,6 +81,15 @@ VALUE rb_KernAux_Multiboot2_Header_magic(VALUE self)
     EXTRACT_BASE_PTR(Header, multiboot2_header, data);
     KERNAUX_CAST_CONST(unsigned long, magic, multiboot2_header->magic);
     return ULONG2NUM(magic);
+}
+
+// KernAux::Multiboot2::Header#arch
+VALUE rb_KernAux_Multiboot2_Header_arch(VALUE self)
+{
+    VALUE data = rb_ivar_get(self, rb_intern("@data"));
+    EXTRACT_BASE_PTR(Header, multiboot2_header, data);
+    KERNAUX_CAST_CONST(unsigned long, arch, multiboot2_header->arch);
+    return ULONG2NUM(arch);
 }
 
 #endif
