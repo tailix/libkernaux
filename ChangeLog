@@ -1,3 +1,12 @@
+2022-12-17  Alex Kotov  <kotovalexarian@gmail.com>
+
+	* src/multiboot2/*_print.c: Print some values in hex
+
+2022-12-16  Alex Kotov  <kotovalexarian@gmail.com>
+
+	* configure.ac: Feature "--with[out]-multiboot2" has been added
+	* include/kernaux/multiboot2.h: Has been made stable
+
 2022-12-14  Alex Kotov  <kotovalexarian@gmail.com>
 
 	* configure.ac: Enable shared library

@@ -7,7 +7,6 @@ extern "C" {
 
 #include <kernaux/macro.h>
 #include <kernaux/generic/display.h>
-#include <kernaux/memmap.h>
 #include <kernaux/multiboot2/header_macro.h>
 
 #include <stdint.h>
@@ -23,13 +22,6 @@ extern "C" {
 // @see https://www.gnu.org/software/grub/manual/multiboot2/multiboot.html#Header-tags
 // @see https://www.gnu.org/software/grub/manual/multiboot2/multiboot.html#Basic-tags-structure
 #define KERNAUX_MULTIBOOT2_TAG_ALIGN    8
-
-#define KERNAUX_MULTIBOOT2_HEADER_CHECKSUM(arch, total_size) \
-    ((uint32_t)(-(                                           \
-        ((uint32_t)KERNAUX_MULTIBOOT2_HEADER_MAGIC) +        \
-        ((uint32_t)(arch)) +                                 \
-        ((uint32_t)(total_size))                             \
-    )))
 
 #define KERNAUX_MULTIBOOT2_DATA(ptr) (((uint8_t*)(ptr)) + sizeof(*(ptr)))
 
@@ -97,7 +89,7 @@ KERNAUX_STATIC_TEST_STRUCT_SIZE(KernAux_Multiboot2_HTagBase, 8);
 
 struct KernAux_Multiboot2_Info {
     uint32_t total_size;
-    uint32_t reserved1;
+    uint32_t reserved;
 }
 KERNAUX_PACKED;
 
@@ -154,7 +146,7 @@ struct KernAux_Multiboot2_ITag_MemoryMap_EntryBase {
     uint64_t base_addr;
     uint64_t length;
     uint32_t type;
-    uint32_t reserved1;
+    uint32_t reserved;
 }
 KERNAUX_PACKED;
 
@@ -177,6 +169,8 @@ struct KernAux_Multiboot2_HTag_InfoReq {
     // type = 1
     // size > 8
     struct KernAux_Multiboot2_HTagBase base;
+
+    // DATA: uint32_t mbi_tag_types[]
 }
 KERNAUX_PACKED;
 
@@ -302,6 +296,8 @@ struct KernAux_Multiboot2_ITag_BootCmdLine {
     // type = 1
     // size > 8
     struct KernAux_Multiboot2_ITagBase base;
+
+    // DATA: char cmdline[]
 }
 KERNAUX_PACKED;
 
@@ -311,6 +307,8 @@ struct KernAux_Multiboot2_ITag_BootLoaderName {
     // type = 2
     // size > 8
     struct KernAux_Multiboot2_ITagBase base;
+
+    // DATA: char name[]
 }
 KERNAUX_PACKED;
 
@@ -323,6 +321,8 @@ struct KernAux_Multiboot2_ITag_Module {
 
     uint32_t mod_start;
     uint32_t mod_end;
+
+    // DATA: char cmdline[]
 }
 KERNAUX_PACKED;
 
@@ -345,7 +345,7 @@ struct KernAux_Multiboot2_ITag_BIOSBootDevice {
     // size = 20
     struct KernAux_Multiboot2_ITagBase base;
 
-    uint32_t bios_dev;
+    uint32_t biosdev;
     uint32_t partition;
     uint32_t sub_partition;
 }
@@ -360,6 +360,8 @@ struct KernAux_Multiboot2_ITag_MemoryMap {
 
     uint32_t entry_size;
     uint32_t entry_version;
+
+    // DATA: varies(entry_size) KernAux_Multiboot2_ITag_MemoryMap_EntryBase entries[]
 }
 KERNAUX_PACKED;
 
@@ -383,7 +385,7 @@ KERNAUX_STATIC_TEST_STRUCT_SIZE(KernAux_Multiboot2_ITag_VBEInfo, 784);
 
 struct KernAux_Multiboot2_ITag_FramebufferInfo {
     // type = 8
-    // size > 31
+    // size > 32
     struct KernAux_Multiboot2_ITagBase base;
 
     uint64_t framebuffer_addr;
@@ -392,25 +394,37 @@ struct KernAux_Multiboot2_ITag_FramebufferInfo {
     uint32_t framebuffer_height;
     uint8_t framebuffer_bpp;
     uint8_t framebuffer_type;
-    uint8_t reserved1;
+
+    // WARNING: GRUB 2 and Limine don't follow the spec, so we do not too!
+    // Multiboot 2: https://www.gnu.org/software/grub/manual/multiboot2/multiboot.html#Framebuffer-info
+    // GRUB 2:      https://github.com/rhboot/grub2/blob/7259d55ffcf124e32eafb61aa381f9856e98a708/include/multiboot2.h#L288
+    // Limine:      https://github.com/limine-bootloader/limine/blob/1aba6b3aeb72ac55b177132ca75ea8adfbcb78aa/common/protos/multiboot2.h#L292
+    uint16_t reserved;
+
+    // DATA: varies color_info[]
 }
 KERNAUX_PACKED;
 
-KERNAUX_STATIC_TEST_STRUCT_SIZE(KernAux_Multiboot2_ITag_FramebufferInfo, 31);
+KERNAUX_STATIC_TEST_STRUCT_SIZE(KernAux_Multiboot2_ITag_FramebufferInfo, 32);
 
+// WARNING: GRUB 2 and Limine don't follow the spec, so we do not too!
+// Multiboot 2: https://www.gnu.org/software/grub/manual/multiboot2/multiboot.html#ELF_002dSymbols
+// GRUB 2:      https://github.com/rhboot/grub2/blob/7259d55ffcf124e32eafb61aa381f9856e98a708/include/multiboot2.h#L314-L322
+// Limine:      https://github.com/limine-bootloader/limine/blob/1aba6b3aeb72ac55b177132ca75ea8adfbcb78aa/common/protos/multiboot2.h#L318-L326
 struct KernAux_Multiboot2_ITag_ELFSymbols {
     // type = 9
-    // size > 16
+    // size > 20
     struct KernAux_Multiboot2_ITagBase base;
 
-    uint16_t num;
-    uint16_t ent_size;
-    uint16_t shndx;
-    uint16_t reserved1;
+    uint32_t num;
+    uint32_t entsize;
+    uint32_t shndx;
+
+    // DATA: varies section_headers[]
 }
 KERNAUX_PACKED;
 
-KERNAUX_STATIC_TEST_STRUCT_SIZE(KernAux_Multiboot2_ITag_ELFSymbols, 16);
+KERNAUX_STATIC_TEST_STRUCT_SIZE(KernAux_Multiboot2_ITag_ELFSymbols, 20);
 
 struct KernAux_Multiboot2_ITag_APMTable {
     // type = 10
@@ -460,7 +474,9 @@ struct KernAux_Multiboot2_ITag_SMBIOSTables {
 
     uint8_t major;
     uint8_t minor;
-    uint8_t reserved1[6];
+    uint8_t reserved[6];
+
+    // TODO: DATA?
 }
 KERNAUX_PACKED;
 
@@ -470,6 +486,8 @@ struct KernAux_Multiboot2_ITag_ACPIOldRSDP {
     // type = 14
     // size > 8
     struct KernAux_Multiboot2_ITagBase base;
+
+    // TODO: DATA?
 }
 KERNAUX_PACKED;
 
@@ -479,6 +497,8 @@ struct KernAux_Multiboot2_ITag_ACPINewRSDP {
     // type = 15
     // size > 8
     struct KernAux_Multiboot2_ITagBase base;
+
+    // TODO: DATA?
 }
 KERNAUX_PACKED;
 
@@ -488,6 +508,8 @@ struct KernAux_Multiboot2_ITag_NetworkingInfo {
     // type = 16
     // size > 8
     struct KernAux_Multiboot2_ITagBase base;
+
+    // TODO: DATA?
 }
 KERNAUX_PACKED;
 
@@ -500,6 +522,8 @@ struct KernAux_Multiboot2_ITag_EFIMemoryMap {
 
     uint32_t descriptor_size;
     uint32_t descriptor_version;
+
+    // TODO: DATA?
 }
 KERNAUX_PACKED;
 
@@ -581,256 +605,26 @@ const char *KernAux_Multiboot2_HTag_RelocatableHeader_Preference_to_str(
     enum KernAux_Multiboot2_HTag_RelocatableHeader_Preference pref
 );
 
-/************************************
- * Information conversion functions *
- ************************************/
+/********************
+ * Helper functions *
+ ********************/
 
-bool KernAux_Multiboot2_Info_to_memmap(
-    const struct KernAux_Multiboot2_Info *multiboot2_info,
-    KernAux_MemMap memmap
-);
+#include <kernaux/multiboot2/header_helpers.h>
+#include <kernaux/multiboot2/info_helpers.h>
 
-/***************************
- * Header helper functions *
- ***************************/
+/************************
+ * Validation functions *
+ ************************/
 
-const struct KernAux_Multiboot2_HTagBase
-*KernAux_Multiboot2_Header_first_tag_with_type(
-    const struct KernAux_Multiboot2_Header *multiboot2_header,
-    enum KernAux_Multiboot2_HTag tag_type
-);
+#include <kernaux/multiboot2/header_is_valid.h>
+#include <kernaux/multiboot2/info_is_valid.h>
 
-const struct KernAux_Multiboot2_HTagBase
-*KernAux_Multiboot2_Header_tag_with_type_after(
-    const struct KernAux_Multiboot2_Header *multiboot2_header,
-    enum KernAux_Multiboot2_HTag tag_type,
-    const struct KernAux_Multiboot2_HTagBase *after_tag
-);
+/*******************
+ * Print functions *
+ *******************/
 
-/********************************
- * Information helper functions *
- ********************************/
-
-const struct KernAux_Multiboot2_ITagBase
-*KernAux_Multiboot2_Info_first_tag_with_type(
-    const struct KernAux_Multiboot2_Info *multiboot2_info,
-    enum KernAux_Multiboot2_ITag tag_type
-);
-
-const struct KernAux_Multiboot2_ITagBase
-*KernAux_Multiboot2_Info_tag_with_type_after(
-    const struct KernAux_Multiboot2_Info *multiboot2_info,
-    enum KernAux_Multiboot2_ITag tag_type,
-    const struct KernAux_Multiboot2_ITagBase *after_tag
-);
-
-const char *KernAux_Multiboot2_Info_boot_cmd_line(
-    const struct KernAux_Multiboot2_Info *multiboot2_info
-);
-
-/*******************************
- * Header validation functions *
- *******************************/
-
-bool KernAux_Multiboot2_Header_is_valid(
-    const struct KernAux_Multiboot2_Header *multiboot2_header
-);
-
-bool KernAux_Multiboot2_HTagBase_is_valid(
-    const struct KernAux_Multiboot2_HTagBase *tag_base
-);
-
-bool KernAux_Multiboot2_HTag_None_is_valid(
-    const struct KernAux_Multiboot2_HTag_None *tag
-);
-
-bool KernAux_Multiboot2_HTag_InfoReq_is_valid(
-    const struct KernAux_Multiboot2_HTag_InfoReq *tag
-);
-
-bool KernAux_Multiboot2_HTag_Addr_is_valid(
-    const struct KernAux_Multiboot2_HTag_Addr *tag
-);
-
-bool KernAux_Multiboot2_HTag_EntryAddr_is_valid(
-    const struct KernAux_Multiboot2_HTag_EntryAddr *tag
-);
-
-bool KernAux_Multiboot2_HTag_Flags_is_valid(
-    const struct KernAux_Multiboot2_HTag_Flags *tag
-);
-
-bool KernAux_Multiboot2_HTag_Framebuffer_is_valid(
-    const struct KernAux_Multiboot2_HTag_Framebuffer *tag
-);
-
-bool KernAux_Multiboot2_HTag_ModuleAlign_is_valid(
-    const struct KernAux_Multiboot2_HTag_ModuleAlign *tag
-);
-
-bool KernAux_Multiboot2_HTag_EFIBootServices_is_valid(
-    const struct KernAux_Multiboot2_HTag_EFIBootServices *tag
-);
-
-bool KernAux_Multiboot2_HTag_EFII386EntryAddr_is_valid(
-    const struct KernAux_Multiboot2_HTag_EFII386EntryAddr *tag
-);
-
-bool KernAux_Multiboot2_HTag_EFIAmd64EntryAddr_is_valid(
-    const struct KernAux_Multiboot2_HTag_EFIAmd64EntryAddr *tag
-);
-
-bool KernAux_Multiboot2_HTag_RelocatableHeader_is_valid(
-    const struct KernAux_Multiboot2_HTag_RelocatableHeader *tag
-);
-
-/************************************
- * Information validation functions *
- ************************************/
-
-bool KernAux_Multiboot2_Info_is_valid(
-    const struct KernAux_Multiboot2_Info *multiboot2_info
-);
-
-bool KernAux_Multiboot2_ITagBase_is_valid(
-    const struct KernAux_Multiboot2_ITagBase *tag_base
-);
-
-bool KernAux_Multiboot2_ITag_None_is_valid(
-    const struct KernAux_Multiboot2_ITag_None *tag
-);
-
-bool KernAux_Multiboot2_ITag_BootCmdLine_is_valid(
-    const struct KernAux_Multiboot2_ITag_BootCmdLine *tag
-);
-
-bool KernAux_Multiboot2_ITag_BootLoaderName_is_valid(
-    const struct KernAux_Multiboot2_ITag_BootLoaderName *tag
-);
-
-bool KernAux_Multiboot2_ITag_Module_is_valid(
-    const struct KernAux_Multiboot2_ITag_Module *tag
-);
-
-bool KernAux_Multiboot2_ITag_BasicMemoryInfo_is_valid(
-    const struct KernAux_Multiboot2_ITag_BasicMemoryInfo *tag
-);
-
-bool KernAux_Multiboot2_ITag_BIOSBootDevice_is_valid(
-    const struct KernAux_Multiboot2_ITag_BIOSBootDevice *tag
-);
-
-bool KernAux_Multiboot2_ITag_MemoryMap_is_valid(
-    const struct KernAux_Multiboot2_ITag_MemoryMap *tag
-);
-
-bool KernAux_Multiboot2_ITag_VBEInfo_is_valid(
-    const struct KernAux_Multiboot2_ITag_VBEInfo *tag
-);
-
-bool KernAux_Multiboot2_ITag_FramebufferInfo_is_valid(
-    const struct KernAux_Multiboot2_ITag_FramebufferInfo *tag
-);
-
-bool KernAux_Multiboot2_ITag_ELFSymbols_is_valid(
-    const struct KernAux_Multiboot2_ITag_ELFSymbols *tag
-);
-
-bool KernAux_Multiboot2_ITag_APMTable_is_valid(
-    const struct KernAux_Multiboot2_ITag_APMTable *tag
-);
-
-bool KernAux_Multiboot2_ITag_EFI32bitSystemTablePtr_is_valid(
-    const struct KernAux_Multiboot2_ITag_EFI32bitSystemTablePtr *tag
-);
-
-bool KernAux_Multiboot2_ITag_EFI64bitSystemTablePtr_is_valid(
-    const struct KernAux_Multiboot2_ITag_EFI64bitSystemTablePtr *tag
-);
-
-bool KernAux_Multiboot2_ITag_SMBIOSTables_is_valid(
-    const struct KernAux_Multiboot2_ITag_SMBIOSTables *tag
-);
-
-bool KernAux_Multiboot2_ITag_ACPIOldRSDP_is_valid(
-    const struct KernAux_Multiboot2_ITag_ACPIOldRSDP *tag
-);
-
-bool KernAux_Multiboot2_ITag_ACPINewRSDP_is_valid(
-    const struct KernAux_Multiboot2_ITag_ACPINewRSDP *tag
-);
-
-bool KernAux_Multiboot2_ITag_NetworkingInfo_is_valid(
-    const struct KernAux_Multiboot2_ITag_NetworkingInfo *tag
-);
-
-bool KernAux_Multiboot2_ITag_EFIMemoryMap_is_valid(
-    const struct KernAux_Multiboot2_ITag_EFIMemoryMap *tag
-);
-
-bool KernAux_Multiboot2_ITag_EFIBootServicesNotTerminated_is_valid(
-    const struct KernAux_Multiboot2_ITag_EFIBootServicesNotTerminated *tag
-);
-
-bool KernAux_Multiboot2_ITag_EFI32bitImageHandlePtr_is_valid(
-    const struct KernAux_Multiboot2_ITag_EFI32bitImageHandlePtr *tag
-);
-
-bool KernAux_Multiboot2_ITag_EFI64bitImageHandlePtr_is_valid(
-    const struct KernAux_Multiboot2_ITag_EFI64bitImageHandlePtr *tag
-);
-
-bool KernAux_Multiboot2_ITag_ImageLoadBasePhysAddr_is_valid(
-    const struct KernAux_Multiboot2_ITag_ImageLoadBasePhysAddr *tag
-);
-
-/**************************
- * Header print functions *
- **************************/
-
-void KernAux_Multiboot2_Header_print(
-    const struct KernAux_Multiboot2_Header *multiboot2_header,
-    KernAux_Display display
-);
-
-void KernAux_Multiboot2_HTagBase_print(
-    const struct KernAux_Multiboot2_HTagBase *tag_base,
-    KernAux_Display display
-);
-
-/*******************************
- * Information print functions *
- *******************************/
-
-void KernAux_Multiboot2_Info_print(
-    const struct KernAux_Multiboot2_Info *multiboot2_info,
-    KernAux_Display display
-);
-
-void KernAux_Multiboot2_ITagBase_print(
-    const struct KernAux_Multiboot2_ITagBase *tag_base,
-    KernAux_Display display
-);
-
-void KernAux_Multiboot2_ITag_BootCmdLine_print(
-    const struct KernAux_Multiboot2_ITag_BootCmdLine *tag,
-    KernAux_Display display
-);
-
-void KernAux_Multiboot2_ITag_BootLoaderName_print(
-    const struct KernAux_Multiboot2_ITag_BootLoaderName *tag,
-    KernAux_Display display
-);
-
-void KernAux_Multiboot2_ITag_MemoryMap_print(
-    const struct KernAux_Multiboot2_ITag_MemoryMap *tag,
-    KernAux_Display display
-);
-
-void KernAux_Multiboot2_ITag_ELFSymbols_print(
-    const struct KernAux_Multiboot2_ITag_ELFSymbols *tag,
-    KernAux_Display display
-);
+#include <kernaux/multiboot2/header_print.h>
+#include <kernaux/multiboot2/info_print.h>
 
 #ifdef __cplusplus
 }

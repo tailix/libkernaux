@@ -10,6 +10,13 @@ extern "C" {
 
 #include <stdint.h>
 
+#define KERNAUX_MULTIBOOT2_HEADER_CHECKSUM(arch, total_size) \
+    ((uint32_t)(-(                                           \
+        ((uint32_t)KERNAUX_MULTIBOOT2_HEADER_MAGIC) +        \
+        ((uint32_t)(arch)) +                                 \
+        ((uint32_t)(total_size))                             \
+    )))
+
 #define KERNAUX_MULTIBOOT2_HFIELDS_COMMON(name, type) \
     struct {                                          \
         struct KernAux_Multiboot2_HTag_##type tag;    \

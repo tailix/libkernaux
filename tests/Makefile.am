@@ -5,6 +5,19 @@ TESTS =
 noinst_PROGRAMS = $(TESTS)
 
 ############################
+# multiboot2_header_print0 #
+############################
+
+if WITH_MULTIBOOT2
+noinst_PROGRAMS += multiboot2_header_print0
+multiboot2_header_print0_LDADD = $(top_builddir)/libkernaux.la
+multiboot2_header_print0_SOURCES = \
+	main.c \
+	multiboot2_header_print0.c \
+	multiboot2_header_example0.h
+endif
+
+############################
 # multiboot2_header_print1 #
 ############################
 
@@ -28,6 +41,19 @@ multiboot2_header_print2_SOURCES = \
 	main.c \
 	multiboot2_header_print2.c \
 	multiboot2_header_example2.h
+endif
+
+##########################
+# multiboot2_info_print0 #
+##########################
+
+if WITH_MULTIBOOT2
+noinst_PROGRAMS += multiboot2_info_print0
+multiboot2_info_print0_LDADD = $(top_builddir)/libkernaux.la
+multiboot2_info_print0_SOURCES = \
+	main.c \
+	multiboot2_info_print0.c \
+	multiboot2_info_example0.h
 endif
 
 ##########################
@@ -189,6 +215,7 @@ endif
 if WITH_MULTIBOOT2
 TESTS += test_multiboot2_header_print
 test_multiboot2_header_print_DEPENDENCIES = \
+	multiboot2_header_print0 \
 	multiboot2_header_print1 \
 	multiboot2_header_print2
 test_multiboot2_header_print_LDADD = $(top_builddir)/libkernaux.la
@@ -232,6 +259,7 @@ endif
 if WITH_MULTIBOOT2
 TESTS += test_multiboot2_info_print
 test_multiboot2_info_print_DEPENDENCIES = \
+	multiboot2_info_print0 \
 	multiboot2_info_print1 \
 	multiboot2_info_print2
 test_multiboot2_info_print_LDADD = $(top_builddir)/libkernaux.la

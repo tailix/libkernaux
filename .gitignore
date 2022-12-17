@@ -57,6 +57,15 @@
 /libtool
 /stamp-h1
 
+# Temporary
+/confcache
+/confdefs.h
+/confinc.mk
+/confmf.BSD
+/confmf.GNU
+/conftest.c
+/conftest.err
+
 /examples/test-suite.log
 /examples/*.log
 /examples/*.trs
@@ -98,8 +107,10 @@
 /examples/spinlock
 /examples/units_human
 
+/tests/multiboot2_header_print0
 /tests/multiboot2_header_print1
 /tests/multiboot2_header_print2
+/tests/multiboot2_info_print0
 /tests/multiboot2_info_print1
 /tests/multiboot2_info_print2
 /tests/test_arch_i386
