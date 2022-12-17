@@ -7,8 +7,6 @@ extern "C" {
 
 #include <kernaux/multiboot2.h>
 
-#include <stdbool.h>
-
 void KernAux_Multiboot2_Header_print(
     const struct KernAux_Multiboot2_Header *multiboot2_header,
     KernAux_Display display
