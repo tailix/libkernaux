@@ -20,7 +20,7 @@ endif
 multiboot2_header_example0.bin: multiboot2_bin_examples_gen
 	./multiboot2_bin_examples_gen header 0
 
-multiboot2_header_example1.bin_examples_gen: multiboot2_bin
+multiboot2_header_example1.bin: multiboot2_bin_examples_gen
 	./multiboot2_bin_examples_gen header 1
 
 multiboot2_header_example2.bin: multiboot2_bin_examples_gen

@@ -12,7 +12,7 @@ main_freebsd_task:
     - pip install --user Jinja2 PyYAML
   main_build_script:
     - ./autogen.sh
-    - ./configure --enable-debug --enable-checks-all CFLAGS='-O3'
+    - ./configure --enable-debug --enable-fixtures --enable-checks-all CFLAGS='-O3'
     - make
     - sudo make install
   main_test_script:
