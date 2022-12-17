@@ -66,7 +66,7 @@ zero). Work-in-progress APIs can change at any time.
 * Data formats
   * [ELF](/include/kernaux/elf.h) (*work in progress*)
   * [MBR](/include/kernaux/mbr.h) (*work in progress*)
-  * [Multiboot 2 (GRUB 2)](/include/kernaux/multiboot2.h.in) (*work in progress*)
+  * [Multiboot 2 (GRUB 2)](/include/kernaux/multiboot2.h.in) (*non-breaking since* **?.?.?**)
     * [Example: header macros](/examples/multiboot2_header_macro.c)
 * Utilities
   * [Measurement units utils](/include/kernaux/units.h) (*work in progress*)
@@ -169,6 +169,7 @@ explicitly included, use `--without-all`.
 * `--with[out]-cmdline` - command line parser
 * `--with[out]-free-list` - free list memory allocator
 * `--with[out]-memmap` - memory map
+* `--with[out]-multiboot2` - Multiboot 2 utils
 * `--with[out]-ntoa` - itoa/ftoa
 * `--with[out]-printf` - printf
 * `--with[out]-stack-trace` - stack trace
