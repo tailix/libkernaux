@@ -77,6 +77,12 @@ module KernAux
       #
       MAGIC = 0xe85250d6
 
+      ##
+      # Header architecture field values.
+      #
+      # @see https://www.gnu.org/software/grub/manual/multiboot2/multiboot.html#Header-magic-fields
+      # @see #arch_name
+      #
       ARCH = { 0 => :i386, 4 => :mips32 }.freeze
 
       def initialize(data)
@@ -91,6 +97,7 @@ module KernAux
       # @return [Symbol]
       #
       # @see https://www.gnu.org/software/grub/manual/multiboot2/multiboot.html#Header-magic-fields
+      # @see ARCH
       #
       def arch_name = ARCH[arch]
     end
