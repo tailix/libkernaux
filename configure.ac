@@ -27,6 +27,7 @@ AC_CONFIG_FILES([
   Makefile
   examples/Makefile
   fixtures/Makefile
+  fixtures/multiboot2_bin.c
   include/Makefile
   libc/Makefile
   libc/include/Makefile
