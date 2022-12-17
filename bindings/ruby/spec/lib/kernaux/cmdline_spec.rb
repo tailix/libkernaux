@@ -92,7 +92,8 @@ KernAux::Version.with_cmdline? and RSpec.describe KernAux, '.cmdline' do
   end
 
   context 'using fixtures' do
-    cmdline_yml = File.expand_path('../../../../../fixtures/cmdline.yml', __dir__)
+    cmdline_yml =
+      File.expand_path('../../../../../fixtures/cmdline.yml', __dir__)
 
     YAML.safe_load_file(cmdline_yml).each do |test|
       escape_str = lambda do |str|
