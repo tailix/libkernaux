@@ -257,10 +257,10 @@ void KernAux_Multiboot2_HTag_Addr_print(
     KERNAUX_CAST_CONST(unsigned long, load_end_addr, tag->load_end_addr);
     KERNAUX_CAST_CONST(unsigned long, bss_end_addr,  tag->bss_end_addr);
 
-    PRINTLNF("  u32 header_addr: %lu",   header_addr);
-    PRINTLNF("  u32 load_addr: %lu",     load_addr);
-    PRINTLNF("  u32 load_end_addr: %lu", load_end_addr);
-    PRINTLNF("  u32 bss_end_addr: %lu",  bss_end_addr);
+    PRINTLNF("  u32 header_addr: 0x%lx",   header_addr);
+    PRINTLNF("  u32 load_addr: 0x%lx",     load_addr);
+    PRINTLNF("  u32 load_end_addr: 0x%lx", load_end_addr);
+    PRINTLNF("  u32 bss_end_addr: 0x%lx",  bss_end_addr);
 
     FOOTER;
 }
@@ -273,7 +273,7 @@ void KernAux_Multiboot2_HTag_EntryAddr_print(
 
     KERNAUX_CAST_CONST(unsigned long, entry_addr, tag->entry_addr);
 
-    PRINTLNF("  u32 entry_addr: %lu", entry_addr);
+    PRINTLNF("  u32 entry_addr: 0x%lx", entry_addr);
 
     FOOTER;
 }
@@ -339,7 +339,7 @@ void KernAux_Multiboot2_HTag_EFII386EntryAddr_print(
 
     KERNAUX_CAST_CONST(unsigned long, entry_addr, tag->entry_addr);
 
-    PRINTLNF("  u32 entry_addr: %lu", entry_addr);
+    PRINTLNF("  u32 entry_addr: 0x%lx", entry_addr);
 
     FOOTER;
 }
@@ -352,7 +352,7 @@ void KernAux_Multiboot2_HTag_EFIAmd64EntryAddr_print(
 
     KERNAUX_CAST_CONST(unsigned long, entry_addr, tag->entry_addr);
 
-    PRINTLNF("  u32 entry_addr: %lu", entry_addr);
+    PRINTLNF("  u32 entry_addr: 0x%lx", entry_addr);
 
     FOOTER;
 }
@@ -367,9 +367,9 @@ void KernAux_Multiboot2_HTag_RelocatableHeader_print(
     KERNAUX_CAST_CONST(unsigned long, max_addr, tag->max_addr);
     KERNAUX_CAST_CONST(unsigned long, align,    tag->align);
 
-    PRINTLNF("  u32 min_addr: %lu", min_addr);
-    PRINTLNF("  u32 max_addr: %lu", max_addr);
-    PRINTLNF("  u32 align: %lu",    align);
+    PRINTLNF("  u32 min_addr: 0x%lx", min_addr);
+    PRINTLNF("  u32 max_addr: 0x%lx", max_addr);
+    PRINTLNF("  u32 align: %lu",      align);
 
     FOOTER;
 }
