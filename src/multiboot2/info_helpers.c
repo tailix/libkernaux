@@ -11,7 +11,7 @@
 const struct KernAux_Multiboot2_ITagBase
 *KernAux_Multiboot2_Info_first_tag_with_type(
     const struct KernAux_Multiboot2_Info *const multiboot2_info,
-    const enum KernAux_Multiboot2_ITag tag_type
+    const uint32_t tag_type
 ) {
     KERNAUX_ASSERT(multiboot2_info);
 
@@ -35,7 +35,7 @@ const struct KernAux_Multiboot2_ITagBase
 const struct KernAux_Multiboot2_ITagBase
 *KernAux_Multiboot2_Info_tag_with_type_after(
     const struct KernAux_Multiboot2_Info *const multiboot2_info,
-    const enum KernAux_Multiboot2_ITag tag_type,
+    const uint32_t tag_type,
     const struct KernAux_Multiboot2_ITagBase *const after_tag
 ) {
     KERNAUX_ASSERT(multiboot2_info);

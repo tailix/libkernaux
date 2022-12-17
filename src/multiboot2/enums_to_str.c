@@ -6,9 +6,8 @@
 
 #include <stddef.h>
 
-const char *KernAux_Multiboot2_Header_Arch_to_str(
-    const enum KernAux_Multiboot2_Header_Arch arch
-) {
+const char *KernAux_Multiboot2_Header_Arch_to_str(const uint32_t arch)
+{
     switch (arch) {
     case KERNAUX_MULTIBOOT2_HEADER_ARCH_I386:
         return "i386";
@@ -19,9 +18,8 @@ const char *KernAux_Multiboot2_Header_Arch_to_str(
     }
 }
 
-const char *KernAux_Multiboot2_HTag_to_str(
-    const enum KernAux_Multiboot2_HTag tag_type
-) {
+const char *KernAux_Multiboot2_HTag_to_str(const uint16_t tag_type)
+{
     switch (tag_type) {
     case KERNAUX_MULTIBOOT2_HTAG_NONE:
         return "none";
@@ -50,9 +48,8 @@ const char *KernAux_Multiboot2_HTag_to_str(
     }
 }
 
-const char *KernAux_Multiboot2_ITag_to_str(
-    const enum KernAux_Multiboot2_ITag tag_type
-) {
+const char *KernAux_Multiboot2_ITag_to_str(const uint32_t tag_type)
+{
     switch (tag_type) {
     case KERNAUX_MULTIBOOT2_ITAG_NONE:
         return "none";
@@ -103,9 +100,9 @@ const char *KernAux_Multiboot2_ITag_to_str(
     }
 }
 
-const char *KernAux_Multiboot2_HTag_RelocatableHeader_Preference_to_str(
-    const enum KernAux_Multiboot2_HTag_RelocatableHeader_Preference pref
-) {
+const char*
+KernAux_Multiboot2_HTag_RelocatableHeader_Preference_to_str(uint32_t pref)
+{
     switch (pref) {
     case KERNAUX_MULTIBOOT2_HTAG_RELOCATABLE_HEADER_PREFERENCE_NONE:
         return "none";
