@@ -39,12 +39,12 @@ KernAux::Version.with_printf? and RSpec.describe KernAux, '.sprintf' do
   end
 
   [
-    ['',      'using regular tests'],
-    ['_orig', 'using original tests'],
+    ['',      'using regular fixtures'],
+    ['_orig', 'using original fixtures'],
   ].each do |(suffix, description)|
     context description do
       printf_yml = File.expand_path(
-        "../../../../../common/printf#{suffix}.yml",
+        "../../../../../fixtures/printf#{suffix}.yml",
         __dir__,
       )
 

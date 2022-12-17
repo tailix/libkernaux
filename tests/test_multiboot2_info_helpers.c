@@ -7,8 +7,8 @@
 
 #include <assert.h>
 
-#include "multiboot2_info_example1.h"
-#include "multiboot2_info_example2.h"
+#include "../fixtures/multiboot2_info_example1.h"
+#include "../fixtures/multiboot2_info_example2.h"
 
 #include <kernaux/macro/packing_start.run>
 
