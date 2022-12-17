@@ -89,7 +89,7 @@ module KernAux
       ##
       # Return the architecture field of the Multiboot 2 header.
       #
-      # @return [Symbol]
+      # @return [nil, Symbol]
       #
       # @see https://www.gnu.org/software/grub/manual/multiboot2/multiboot.html#Header-magic-fields
       # @see ARCH
