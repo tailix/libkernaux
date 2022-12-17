@@ -77,11 +77,22 @@ module KernAux
       #
       MAGIC = 0xe85250d6
 
+      ARCH = { 0 => :i386, 4 => :mips32 }.freeze
+
       def initialize(data)
         super
         # TODO: use some const
         raise BaseSizeError, 'Too short base' if @data.bytesize < 16
       end
+
+      ##
+      # Return the architecture field of the Multiboot 2 header.
+      #
+      # @return [Symbol]
+      #
+      # @see https://www.gnu.org/software/grub/manual/multiboot2/multiboot.html#Header-magic-fields
+      #
+      def arch_name = ARCH[arch]
     end
   end
 end

@@ -23,5 +23,12 @@ if KernAux::Version.with_multiboot2?
       it { is_expected.to be_instance_of Integer }
       it { is_expected.to equal 4 }
     end
+
+    describe '#arch_name' do
+      subject(:arch_name) { multiboot2_header.arch_name }
+
+      it { is_expected.to be_instance_of Symbol }
+      it { is_expected.to equal :mips32 }
+    end
   end
 end
