@@ -157,7 +157,7 @@ multiboot2_header_example2 = {
         .min_addr = 0xcafebabe,
         .max_addr = 0xdeadbeaf,
         .align = 8,
-        .preferences =
+        .preference =
             KERNAUX_MULTIBOOT2_HTAG_RELOCATABLE_HEADER_PREFERENCE_LOWEST,
     },
     .tag_none = {
