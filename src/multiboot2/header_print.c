@@ -365,13 +365,20 @@ void KernAux_Multiboot2_HTag_RelocatableHeader_print(
 ) {
     HEADER(RelocatableHeader);
 
-    KERNAUX_CAST_CONST(unsigned long, min_addr, tag->min_addr);
-    KERNAUX_CAST_CONST(unsigned long, max_addr, tag->max_addr);
-    KERNAUX_CAST_CONST(unsigned long, align,    tag->align);
+    KERNAUX_CAST_CONST(unsigned long, min_addr,   tag->min_addr);
+    KERNAUX_CAST_CONST(unsigned long, max_addr,   tag->max_addr);
+    KERNAUX_CAST_CONST(unsigned long, align,      tag->align);
+    KERNAUX_CAST_CONST(unsigned long, preference, tag->preference);
 
     PRINTLNF("  u32 min_addr: 0x%lx", min_addr);
     PRINTLNF("  u32 max_addr: 0x%lx", max_addr);
     PRINTLNF("  u32 align: %lu",      align);
+    PRINTLNF("  u32 preference: %lu (%s)",
+        preference,
+        KernAux_Multiboot2_HTag_RelocatableHeader_Preference_to_str(
+            tag->preference
+        )
+    );
 
     FOOTER;
 }

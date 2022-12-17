@@ -269,7 +269,7 @@ struct KernAux_Multiboot2_HTag_RelocatableHeader {
     uint32_t min_addr;
     uint32_t max_addr;
     uint32_t align;
-    uint32_t preferences;
+    uint32_t preference;
 }
 KERNAUX_PACKED;
 
