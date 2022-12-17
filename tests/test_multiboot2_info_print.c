@@ -14,7 +14,7 @@
 static const char output0[] =
     "Multiboot 2 info {\n"
     "  u32 size: 16\n"
-    "  u32 reserved: 0\n"
+    "  u32 reserved: 0x0\n"
     "}\n"
     "Multiboot 2 info tag {\n"
     "  u32 type: 0 (none)\n"
@@ -24,7 +24,7 @@ static const char output0[] =
 static const char output1[] =
     "Multiboot 2 info {\n"
     "  u32 size: 864\n"
-    "  u32 reserved: 0\n"
+    "  u32 reserved: 0x0\n"
     "}\n"
     "Multiboot 2 info tag {\n"
     "  u32 type: 21 (image load base phys addr)\n"
@@ -155,7 +155,7 @@ static const char output1[] =
 static const char output2_part1[] =
     "Multiboot 2 info {\n"
     "  u32 size: 1816\n"
-    "  u32 reserved: 0\n"
+    "  u32 reserved: 0x0\n"
     "}\n"
     "Multiboot 2 info tag {\n"
     "  u32 type: 1 (boot cmd line)\n"

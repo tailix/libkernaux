@@ -49,8 +49,8 @@ void KernAux_Multiboot2_Info_print(
     KERNAUX_CAST_CONST(unsigned long, reserved,   multiboot2_info->reserved);
 
     PRINTLN("Multiboot 2 info {");
-    PRINTLNF("  u32 size: %lu",     total_size);
-    PRINTLNF("  u32 reserved: %lu", reserved);
+    PRINTLNF("  u32 size: %lu",       total_size);
+    PRINTLNF("  u32 reserved: 0x%lx", reserved);
     PRINTLN("}");
 
     const struct KernAux_Multiboot2_ITagBase *tag_base =
