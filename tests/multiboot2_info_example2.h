@@ -1,7 +1,9 @@
 #include <kernaux/macro.h>
+#include <kernaux/multiboot2.h>
 
 #include <kernaux/macro/packing_start.run>
 
+KERNAUX_ALIGNED(KERNAUX_MULTIBOOT2_INFO_ALIGN)
 static const struct {
     struct KernAux_Multiboot2_Info multiboot2_info;
 
@@ -46,7 +48,6 @@ static const struct {
         struct KernAux_Multiboot2_ITag_FramebufferInfo tag;
         uint8_t data[8];
     } tag_framebuffer_info;
-    uint8_t _align6[1];
 
     struct {
         struct KernAux_Multiboot2_ITag_ELFSymbols tag;
@@ -110,7 +111,7 @@ KERNAUX_PACKED
 multiboot2_info_example2 = {
     .multiboot2_info = {
         .total_size = sizeof(multiboot2_info_example2),
-        .reserved1 = 0,
+        .reserved = 0,
     },
     .tag_boot_cmd_line = {
         .tag = {
@@ -165,7 +166,7 @@ multiboot2_info_example2 = {
             .type = KERNAUX_MULTIBOOT2_ITAG_BIOS_BOOT_DEVICE,
             .size = sizeof(multiboot2_info_example2.tag_bios_boot_device),
         },
-        .bios_dev = 0,
+        .biosdev = 0,
         .partition = 1,
         .sub_partition = 2,
     },
@@ -200,6 +201,24 @@ multiboot2_info_example2 = {
         .vbe_interface_seg = 123,
         .vbe_interface_off = 456,
         .vbe_interface_len = 789,
+        .vbe_control_info = {
+            [0]   = 0,
+            [16]  = 1,
+            [32]  = 12,
+            [48]  = 123,
+            [79]  = 1,
+            [95]  = 12,
+            [111] = 123,
+        },
+        .vbe_mode_info = {
+            [0]   = 0,
+            [16]  = 3,
+            [32]  = 32,
+            [48]  = 255,
+            [79]  = 3,
+            [95]  = 32,
+            [111] = 255,
+        },
     },
     .tag_framebuffer_info = {
         .tag = {
@@ -223,12 +242,11 @@ multiboot2_info_example2 = {
                 .size = sizeof(multiboot2_info_example2.tag_elf_symbols),
             },
             .num = 10,
-            .ent_size = 0,
-            .shndx = 40,
-            .reserved1 = 0,
+            .entsize = 40,
+            .shndx = 9,
         },
         .data = {
-            9, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0,
             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
             0, 0, 0, 0, 27, 0, 0, 0, 1, 0, 0, 0, 6, 0, 0, 0,
@@ -293,7 +311,7 @@ multiboot2_info_example2 = {
             },
             .major = 1,
             .minor = 2,
-            .reserved1 = {0, 0, 0, 0, 0, 0},
+            .reserved = {0, 0, 0, 0, 0, 0},
         },
         .data = {0, 0, 0, 0, 0, 0, 0, 0},
     },

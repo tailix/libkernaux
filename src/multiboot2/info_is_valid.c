@@ -287,7 +287,7 @@ bool KernAux_Multiboot2_ITag_FramebufferInfo_is_valid(
     KERNAUX_NOTNULL(tag);
     return (
         tag->base.type == KERNAUX_MULTIBOOT2_ITAG_FRAMEBUFFER_INFO &&
-        tag->base.size >= 31
+        tag->base.size >= 32
     );
 }
 
@@ -297,10 +297,10 @@ bool KernAux_Multiboot2_ITag_ELFSymbols_is_valid(
     KERNAUX_NOTNULL(tag);
     return (
         tag->base.type == KERNAUX_MULTIBOOT2_ITAG_ELF_SYMBOLS &&
-        tag->base.size >= 16 &&
+        tag->base.size >= 20 &&
         (
-            tag->ent_size == 0 ||
-            (tag->base.size - 16) % tag->ent_size == 0
+            tag->entsize == 0 ||
+            (tag->base.size - 20) % tag->entsize == 0
         )
     );
 }

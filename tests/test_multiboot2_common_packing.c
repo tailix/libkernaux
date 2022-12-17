@@ -106,8 +106,8 @@ void test_main()
     INFO_SIZEOF1(BIOSBootDevice,               bios_boot_device,                 20          );
     INFO_SIZEOF2(MemoryMap,                    memory_map,                       16, 160 - 16);
     INFO_SIZEOF1(VBEInfo,                      vbe_info,                         784         );
-    INFO_SIZEOF2(FramebufferInfo,              framebuffer_info,                 31, 8       );
-    INFO_SIZEOF2(ELFSymbols,                   elf_symbols,                      16, 420 - 16);
+    INFO_SIZEOF2(FramebufferInfo,              framebuffer_info,                 32, 8       );
+    INFO_SIZEOF2(ELFSymbols,                   elf_symbols,                      20, 420 - 20);
     INFO_SIZEOF1(APMTable,                     apm_table,                        28          );
     INFO_SIZEOF1(EFI32bitSystemTablePtr,       efi_32bit_system_table_ptr,       12          );
     INFO_SIZEOF1(EFI64bitSystemTablePtr,       efi_64bit_system_table_ptr,       16          );

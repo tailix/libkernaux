@@ -18,7 +18,7 @@ static const struct {
 } KERNAUX_PACKED multiboot2_without_boot_cmd_line = {
     .multiboot2_info = {
         .total_size = sizeof(multiboot2_without_boot_cmd_line),
-        .reserved1 = 0,
+        .reserved = 0,
     },
     .tag_none = {
         .base = {
@@ -42,7 +42,7 @@ static const struct {
 } KERNAUX_PACKED multiboot2_with_some_boot_cmd_line = {
     .multiboot2_info = {
         .total_size = sizeof(multiboot2_with_some_boot_cmd_line),
-        .reserved1 = 0,
+        .reserved = 0,
     },
     .tag_boot_cmd_line = {
         .tag = {
@@ -84,7 +84,7 @@ static const struct {
 } KERNAUX_PACKED multiboot2_with_two_boot_cmd_lines = {
     .multiboot2_info = {
         .total_size = sizeof(multiboot2_with_two_boot_cmd_lines),
-        .reserved1 = 0,
+        .reserved = 0,
     },
     .tag_boot_cmd_line1 = {
         .tag = {
