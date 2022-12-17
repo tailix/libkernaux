@@ -7,12 +7,17 @@
 #define RBNSMDL rb_KernAux_Multiboot2
 #define RBNS(s) rb_KernAux_Multiboot2_##s
 
-#define ENSURE_BASE_SIZE(data, Type) do { \
-    const long len = RSTRING_LEN(data);                                       \
-    if (len < 0 || (size_t)len <= sizeof(struct KernAux_Multiboot2_##Type)) { \
-        return Qnil;                                                          \
-    }                                                                         \
-} while (0)
+#define EXTRACT_BASE_PTR(Type, name, data) \
+    const struct KernAux_Multiboot2_##Type *const name =              \
+        (const struct KernAux_Multiboot2_##Type*)                     \
+        StringValuePtr(data);                                         \
+    do {                                                              \
+        const long len = RSTRING_LEN(data);                           \
+        if (len < 0) return Qnil;                                     \
+        if ((size_t)len < sizeof(struct KernAux_Multiboot2_##Type)) { \
+            return Qnil;                                              \
+        }                                                             \
+    } while (0)
 
 VALUE RBNSMDL             = Qnil; // KernAux::Multiboot2
 VALUE RBNS(BaseSizeError) = Qnil; // KernAux::Multiboot2::BaseSizeError
@@ -63,10 +68,7 @@ void init_multiboot2()
 VALUE rb_KernAux_Multiboot2_Header_magic(VALUE self)
 {
     VALUE data = rb_ivar_get(self, rb_intern("@data"));
-    const struct KernAux_Multiboot2_Header *const multiboot2_header =
-        (const struct KernAux_Multiboot2_Header*)
-        StringValuePtr(data);
-    ENSURE_BASE_SIZE(data, Header);
+    EXTRACT_BASE_PTR(Header, multiboot2_header, data);
     KERNAUX_CAST_CONST(unsigned long, magic, multiboot2_header->magic);
     return ULONG2NUM(magic);
 }

@@ -80,7 +80,7 @@ module KernAux
       def initialize(data)
         super
         # TODO: use some const
-        raise BaseSizeError, 'Too short base' unless @data.bytesize < 16
+        raise BaseSizeError, 'Too short base' if @data.bytesize < 16
       end
     end
   end
