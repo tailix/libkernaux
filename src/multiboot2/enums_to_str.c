@@ -13,7 +13,7 @@ const char *KernAux_Multiboot2_Header_Arch_to_str(
     case KERNAUX_MULTIBOOT2_HEADER_ARCH_I386:
         return "i386";
     case KERNAUX_MULTIBOOT2_HEADER_ARCH_MIPS32:
-        return "MIPS32"; // TODO: specify this architecture in README
+        return "MIPS32";
     default:
         return NULL;
     }
