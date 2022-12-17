@@ -12,7 +12,7 @@
 #include <stdarg.h>
 #include <stdio.h>
 
-#include "multiboot2_header_example0.h"
+#include "../fixtures/multiboot2_header_example0.h"
 
 static void my_putc(void *display KERNAUX_UNUSED, char c)
 {

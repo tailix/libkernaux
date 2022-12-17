@@ -14,7 +14,7 @@ multiboot2_header_print0_LDADD = $(top_builddir)/libkernaux.la
 multiboot2_header_print0_SOURCES = \
 	main.c \
 	multiboot2_header_print0.c \
-	multiboot2_header_example0.h
+	../fixtures/multiboot2_header_example0.h
 endif
 
 ############################
@@ -27,7 +27,7 @@ multiboot2_header_print1_LDADD = $(top_builddir)/libkernaux.la
 multiboot2_header_print1_SOURCES = \
 	main.c \
 	multiboot2_header_print1.c \
-	multiboot2_header_example1.h
+	../fixtures/multiboot2_header_example1.h
 endif
 
 ############################
@@ -40,7 +40,7 @@ multiboot2_header_print2_LDADD = $(top_builddir)/libkernaux.la
 multiboot2_header_print2_SOURCES = \
 	main.c \
 	multiboot2_header_print2.c \
-	multiboot2_header_example2.h
+	../fixtures/multiboot2_header_example2.h
 endif
 
 ##########################
@@ -53,7 +53,7 @@ multiboot2_info_print0_LDADD = $(top_builddir)/libkernaux.la
 multiboot2_info_print0_SOURCES = \
 	main.c \
 	multiboot2_info_print0.c \
-	multiboot2_info_example0.h
+	../fixtures/multiboot2_info_example0.h
 endif
 
 ##########################
@@ -66,7 +66,7 @@ multiboot2_info_print1_LDADD = $(top_builddir)/libkernaux.la
 multiboot2_info_print1_SOURCES = \
 	main.c \
 	multiboot2_info_print1.c \
-	multiboot2_info_example1.h
+	../fixtures/multiboot2_info_example1.h
 endif
 
 ##########################
@@ -79,7 +79,7 @@ multiboot2_info_print2_LDADD = $(top_builddir)/libkernaux.la
 multiboot2_info_print2_SOURCES = \
 	main.c \
 	multiboot2_info_print2.c \
-	multiboot2_info_example2.h
+	../fixtures/multiboot2_info_example2.h
 endif
 
 ##################
@@ -190,8 +190,8 @@ test_multiboot2_common_packing_LDADD = $(top_builddir)/libkernaux.la
 test_multiboot2_common_packing_SOURCES = \
 	main.c \
 	test_multiboot2_common_packing.c \
-	multiboot2_header_example2.h \
-	multiboot2_info_example2.h
+	../fixtures/multiboot2_header_example2.h \
+	../fixtures/multiboot2_info_example2.h
 endif
 
 ##################################
@@ -204,8 +204,8 @@ test_multiboot2_header_helpers_LDADD = $(top_builddir)/libkernaux.la
 test_multiboot2_header_helpers_SOURCES = \
 	main.c \
 	test_multiboot2_header_helpers.c \
-	multiboot2_header_example1.h \
-	multiboot2_header_example2.h
+	../fixtures/multiboot2_header_example1.h \
+	../fixtures/multiboot2_header_example2.h
 endif
 
 ################################
@@ -234,8 +234,8 @@ test_multiboot2_header_validation_LDADD = $(top_builddir)/libkernaux.la
 test_multiboot2_header_validation_SOURCES = \
 	main.c \
 	test_multiboot2_header_validation.c \
-	multiboot2_header_example1.h \
-	multiboot2_header_example2.h
+	../fixtures/multiboot2_header_example1.h \
+	../fixtures/multiboot2_header_example2.h
 endif
 
 ################################
@@ -248,8 +248,8 @@ test_multiboot2_info_helpers_LDADD = $(top_builddir)/libkernaux.la
 test_multiboot2_info_helpers_SOURCES = \
 	main.c \
 	test_multiboot2_info_helpers.c \
-	multiboot2_info_example1.h \
-	multiboot2_info_example2.h
+	../fixtures/multiboot2_info_example1.h \
+	../fixtures/multiboot2_info_example2.h
 endif
 
 ##############################
@@ -278,8 +278,8 @@ test_multiboot2_info_validation_LDADD = $(top_builddir)/libkernaux.la
 test_multiboot2_info_validation_SOURCES = \
 	main.c \
 	test_multiboot2_info_validation.c \
-	multiboot2_info_example1.h \
-	multiboot2_info_example2.h
+	../fixtures/multiboot2_info_example1.h \
+	../fixtures/multiboot2_info_example2.h
 endif
 
 #############
