@@ -7,8 +7,11 @@ if KernAux::Version.with_multiboot2?
     subject(:multiboot2_header) { described_class.new data }
 
     let :data do
-      "\xd6\x50\x52\xe8\x04\x00\x00\x00" + "\x00" * 8
+      [magic_data, arch_data, "\x00" * 8].join.freeze
     end
+
+    let(:magic_data) { "\xd6\x50\x52\xe8" }
+    let(:arch_data)  { "\x04\x00\x00\x00" }
 
     describe '#magic' do
       subject(:magic) { multiboot2_header.magic }
