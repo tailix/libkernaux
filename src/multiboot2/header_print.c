@@ -7,13 +7,15 @@
 #include <kernaux/macro.h>
 #include <kernaux/multiboot2.h>
 
+#include <stdbool.h>
 #include <stddef.h>
 #include <stdint.h>
 
+#define PRINT(s)   do { KernAux_Display_print  (display, s); } while (0)
 #define PRINTLN(s) do { KernAux_Display_println(display, s); } while (0)
 
 #define PRINTF(format, ...) \
-    do { KernAux_Display_printf(display, format, __VA_ARGS__); } while (0)
+    do { KernAux_Display_printf  (display, format, __VA_ARGS__); } while (0)
 #define PRINTLNF(format, ...) \
     do { KernAux_Display_printlnf(display, format, __VA_ARGS__); } while (0)
 
@@ -25,19 +27,73 @@
         PRINTLN("Multiboot 2 header tag // invalid!");         \
     }                                                          \
                                                                \
-    KERNAUX_CAST_CONST(unsigned long, flags, tag->base.flags); \
     KERNAUX_CAST_CONST(unsigned long, size,  tag->base.size);  \
                                                                \
-    PRINTLN("Multiboot 2 header tag {");                       \
+    PRINTLN ("Multiboot 2 header tag {");                      \
     PRINTLNF("  u16 type: %u (%s)",                            \
         tag->base.type,                                        \
         KernAux_Multiboot2_HTag_to_str(tag->base.type)         \
     );                                                         \
-    PRINTLNF("  u16 flags: %lu", flags);                       \
+    PRINT   ("  u16 flags: ");                                 \
+    KernAux_Multiboot2_HTagBase_Flags_print(                   \
+        tag->base.flags,                                       \
+        display,                                               \
+        2,                                                     \
+        2,                                                     \
+        false                                                  \
+    );                                                         \
     PRINTLNF("  u32 size: %lu", size);                         \
 } while (0)
 
 #define FOOTER do { PRINTLN("}"); } while (0)
+
+#define INDENT do { \
+    for (unsigned index = 0; index < basic_indentation; ++index) PRINT(" "); \
+} while (0)
+
+#define INDENT_MORE do { \
+    for (unsigned index = 0; index < indentation_delta; ++index) PRINT(" "); \
+} while (0)
+
+static const struct {
+    uint32_t number;
+    const char *name;
+} base_flag_names[] = {
+    {
+        .number = KERNAUX_MULTIBOOT2_HTAG_BASE_FLAG_OPTIONAL,
+        .name = "OPTIONAL",
+    },
+};
+
+static const struct {
+    uint32_t number;
+    const char *name;
+} console_flag_names[] = {
+    {
+        .number = KERNAUX_MULTIBOOT2_HTAG_FLAGS_REQUIRE_CONSOLE,
+        .name = "REQUIRE_CONSOLE",
+    },
+    {
+        .number = KERNAUX_MULTIBOOT2_HTAG_FLAGS_EGA_SUPPORT,
+        .name = "EGA_SUPPORT",
+    }
+};
+
+static void KernAux_Multiboot2_HTagBase_Flags_print(
+    uint16_t flags,
+    KernAux_Display display,
+    unsigned basic_indentation,
+    unsigned indentation_delta,
+    bool indent_first
+);
+
+static void KernAux_Multiboot2_HTag_Flags_ConsoleFlags_print(
+    uint32_t console_flags,
+    KernAux_Display display,
+    unsigned basic_indentation,
+    unsigned indentation_delta,
+    bool indent_first
+);
 
 void KernAux_Multiboot2_Header_print(
     const struct KernAux_Multiboot2_Header *const multiboot2_header,
@@ -51,13 +107,13 @@ void KernAux_Multiboot2_Header_print(
     KERNAUX_CAST_CONST(unsigned long, checksum,   multiboot2_header->checksum);
 
     PRINTLN("Multiboot 2 header {");
-    PRINTLNF("  u32 magic: %lu", magic);
+    PRINTLNF("  u32 magic: 0x%lx", magic);
     PRINTLNF("  u32 arch: %u (%s)",
         multiboot2_header->arch,
         KernAux_Multiboot2_Header_Arch_to_str(multiboot2_header->arch)
     );
     PRINTLNF("  u32 size: %lu", total_size);
-    PRINTLNF("  u32 checksum: %lu", checksum);
+    PRINTLNF("  u32 checksum: 0x%lx", checksum);
     PRINTLN("}");
 
     const struct KernAux_Multiboot2_HTagBase *tag_base =
@@ -201,10 +257,10 @@ void KernAux_Multiboot2_HTag_Addr_print(
     KERNAUX_CAST_CONST(unsigned long, load_end_addr, tag->load_end_addr);
     KERNAUX_CAST_CONST(unsigned long, bss_end_addr,  tag->bss_end_addr);
 
-    PRINTLNF("  u32 header_addr: %lu",   header_addr);
-    PRINTLNF("  u32 load_addr: %lu",     load_addr);
-    PRINTLNF("  u32 load_end_addr: %lu", load_end_addr);
-    PRINTLNF("  u32 bss_end_addr: %lu",  bss_end_addr);
+    PRINTLNF("  u32 header_addr: 0x%lx",   header_addr);
+    PRINTLNF("  u32 load_addr: 0x%lx",     load_addr);
+    PRINTLNF("  u32 load_end_addr: 0x%lx", load_end_addr);
+    PRINTLNF("  u32 bss_end_addr: 0x%lx",  bss_end_addr);
 
     FOOTER;
 }
@@ -217,7 +273,7 @@ void KernAux_Multiboot2_HTag_EntryAddr_print(
 
     KERNAUX_CAST_CONST(unsigned long, entry_addr, tag->entry_addr);
 
-    PRINTLNF("  u32 entry_addr: %lu", entry_addr);
+    PRINTLNF("  u32 entry_addr: 0x%lx", entry_addr);
 
     FOOTER;
 }
@@ -228,42 +284,14 @@ void KernAux_Multiboot2_HTag_Flags_print(
 ) {
     HEADER(Flags);
 
-    KERNAUX_CAST_CONST(unsigned long, console_flags, tag->console_flags);
-
-    PRINTF("  u32 console_flags: %lu (", console_flags);
-
-    static const struct {
-        uint32_t number;
-        const char *name;
-    } flags[] = {
-        {
-            .number = KERNAUX_MULTIBOOT2_HTAG_FLAGS_REQUIRE_CONSOLE,
-            .name = "REQUIRE_CONSOLE",
-        },
-        {
-            .number = KERNAUX_MULTIBOOT2_HTAG_FLAGS_EGA_SUPPORT,
-            .name = "EGA_SUPPORT",
-        }
-    };
-
-    bool is_first = true;
-    for (size_t index = 0; index < sizeof(flags) / sizeof(flags[0]); ++index) {
-        if (tag->console_flags & flags[index].number) {
-            if (is_first) {
-                PRINTLN("");
-            } else {
-                PRINTLN(" |");
-            }
-            PRINTF("    %s", flags[index].name);
-            is_first = false;
-        }
-    }
-    if (is_first) {
-        PRINTLN(")");
-    } else {
-        PRINTLN("");
-        PRINTLN("  )");
-    }
+    PRINT("  u32 console_flags: ");
+    KernAux_Multiboot2_HTag_Flags_ConsoleFlags_print(
+        tag->console_flags,
+        display,
+        2,
+        2,
+        false
+    );
 
     FOOTER;
 }
@@ -311,7 +339,7 @@ void KernAux_Multiboot2_HTag_EFII386EntryAddr_print(
 
     KERNAUX_CAST_CONST(unsigned long, entry_addr, tag->entry_addr);
 
-    PRINTLNF("  u32 entry_addr: %lu", entry_addr);
+    PRINTLNF("  u32 entry_addr: 0x%lx", entry_addr);
 
     FOOTER;
 }
@@ -324,7 +352,7 @@ void KernAux_Multiboot2_HTag_EFIAmd64EntryAddr_print(
 
     KERNAUX_CAST_CONST(unsigned long, entry_addr, tag->entry_addr);
 
-    PRINTLNF("  u32 entry_addr: %lu", entry_addr);
+    PRINTLNF("  u32 entry_addr: 0x%lx", entry_addr);
 
     FOOTER;
 }
@@ -339,9 +367,93 @@ void KernAux_Multiboot2_HTag_RelocatableHeader_print(
     KERNAUX_CAST_CONST(unsigned long, max_addr, tag->max_addr);
     KERNAUX_CAST_CONST(unsigned long, align,    tag->align);
 
-    PRINTLNF("  u32 min_addr: %lu", min_addr);
-    PRINTLNF("  u32 max_addr: %lu", max_addr);
-    PRINTLNF("  u32 align: %lu",    align);
+    PRINTLNF("  u32 min_addr: 0x%lx", min_addr);
+    PRINTLNF("  u32 max_addr: 0x%lx", max_addr);
+    PRINTLNF("  u32 align: %lu",      align);
 
     FOOTER;
+}
+
+void KernAux_Multiboot2_HTagBase_Flags_print(
+    const uint16_t flags,
+    const KernAux_Display display,
+    const unsigned basic_indentation,
+    const unsigned indentation_delta,
+    const bool indent_first
+) {
+    KERNAUX_CAST_CONST(unsigned long, flags_ul, flags);
+
+    if (indent_first) INDENT;
+    PRINTF("0x%lx (", flags_ul);
+
+    bool is_first = true;
+
+    for (
+        size_t index = 0;
+        index < sizeof(base_flag_names) / sizeof(base_flag_names[0]);
+        ++index
+    ) {
+        if (flags & base_flag_names[index].number) {
+            if (is_first) {
+                PRINTLN("");
+            } else {
+                PRINTLN(" |");
+            }
+
+            INDENT;
+            INDENT_MORE;
+            PRINTF("%s", base_flag_names[index].name);
+            is_first = false;
+        }
+    }
+
+    if (is_first) {
+        PRINTLN(")");
+    } else {
+        PRINTLN("");
+        INDENT;
+        PRINTLN(")");
+    }
+}
+
+void KernAux_Multiboot2_HTag_Flags_ConsoleFlags_print(
+    const uint32_t console_flags,
+    const KernAux_Display display,
+    const unsigned basic_indentation,
+    const unsigned indentation_delta,
+    const bool indent_first
+) {
+    KERNAUX_CAST_CONST(unsigned long, console_flags_ul, console_flags);
+
+    if (indent_first) INDENT;
+    PRINTF("0x%lx (", console_flags_ul);
+
+    bool is_first = true;
+
+    for (
+        size_t index = 0;
+        index < sizeof(console_flag_names) / sizeof(console_flag_names[0]);
+        ++index
+    ) {
+        if (console_flags & console_flag_names[index].number) {
+            if (is_first) {
+                PRINTLN("");
+            } else {
+                PRINTLN(" |");
+            }
+
+            INDENT;
+            INDENT_MORE;
+            PRINTF("%s", console_flag_names[index].name);
+            is_first = false;
+        }
+    }
+
+    if (is_first) {
+        PRINTLN(")");
+    } else {
+        PRINTLN("");
+        INDENT;
+        PRINTLN(")");
+    }
 }

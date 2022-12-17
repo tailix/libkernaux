@@ -49,8 +49,8 @@ void KernAux_Multiboot2_Info_print(
     KERNAUX_CAST_CONST(unsigned long, reserved,   multiboot2_info->reserved);
 
     PRINTLN("Multiboot 2 info {");
-    PRINTLNF("  u32 size: %lu",     total_size);
-    PRINTLNF("  u32 reserved: %lu", reserved);
+    PRINTLNF("  u32 size: %lu",       total_size);
+    PRINTLNF("  u32 reserved: 0x%lx", reserved);
     PRINTLN("}");
 
     const struct KernAux_Multiboot2_ITagBase *tag_base =
@@ -252,8 +252,8 @@ void KernAux_Multiboot2_ITag_Module_print(
     KERNAUX_CAST_CONST(unsigned long, mod_start, tag->mod_start);
     KERNAUX_CAST_CONST(unsigned long, mod_end,   tag->mod_end);
 
-    PRINTLNF("  u32 mod_start: %lu", mod_start);
-    PRINTLNF("  u32 mod_end: %lu", mod_end);
+    PRINTLNF("  u32 mod_start: 0x%lx", mod_start);
+    PRINTLNF("  u32 mod_end: 0x%lx",   mod_end);
 
     // Print data:
     PRINTLNF("  char cmdline[]: \"%s\"", KERNAUX_MULTIBOOT2_DATA(tag));
@@ -324,10 +324,10 @@ void KernAux_Multiboot2_ITag_MemoryMap_print(
         KERNAUX_CAST_CONST(unsigned long,      reserved,  entries[index].reserved);
 
         PRINTLNF("    [%zu] entry: {", index);
-        PRINTLNF("      u64 base_addr: %llu", base_addr);
-        PRINTLNF("      u64 length: %llu",    length);
-        PRINTLNF("      u32 type: %lu",       type);
-        PRINTLNF("      u32 reserved: %lu",   reserved);
+        PRINTLNF("      u64 base_addr: 0x%llx", base_addr);
+        PRINTLNF("      u64 length: %llu",      length);
+        PRINTLNF("      u32 type: %lu",         type);
+        PRINTLNF("      u32 reserved: 0x%lx",   reserved);
         PRINTLN ("    }");
     }
 
@@ -398,13 +398,13 @@ void KernAux_Multiboot2_ITag_FramebufferInfo_print(
     KERNAUX_CAST_CONST(unsigned long,      type,     tag->framebuffer_type);
     KERNAUX_CAST_CONST(unsigned long,      reserved, tag->reserved);
 
-    PRINTLNF("  u64 framebuffer_addr: %llu",  addr);
-    PRINTLNF("  u32 framebuffer_pitch: %lu",  pitch);
-    PRINTLNF("  u32 framebuffer_width: %lu",  width);
-    PRINTLNF("  u32 framebuffer_height: %lu", height);
-    PRINTLNF("  u8 framebuffer_bpp: %lu",     bpp);
-    PRINTLNF("  u8 framebuffer_type: %lu",    type);
-    PRINTLNF("  u16 reserved: %lu",           reserved);
+    PRINTLNF("  u64 framebuffer_addr: 0x%llx",  addr);
+    PRINTLNF("  u32 framebuffer_pitch: %lu",    pitch);
+    PRINTLNF("  u32 framebuffer_width: %lu",    width);
+    PRINTLNF("  u32 framebuffer_height: %lu",   height);
+    PRINTLNF("  u8 framebuffer_bpp: %lu",       bpp);
+    PRINTLNF("  u8 framebuffer_type: %lu",      type);
+    PRINTLNF("  u16 reserved: 0x%lx",           reserved);
 
     // TODO: Print data?
 
@@ -502,7 +502,7 @@ void KernAux_Multiboot2_ITag_SMBIOSTables_print(
 
     PRINTLNF("  u8 major: %lu", major);
     PRINTLNF("  u8 minor: %lu", minor);
-    PRINTLNF("  u8 reserved[6]: [%lu, %lu, %lu, %lu, %lu, %lu]",
+    PRINTLNF("  u8 reserved[6]: [0x%lx, 0x%lx, 0x%lx, 0x%lx, 0x%lx, 0x%lx]",
         reserved0, reserved1, reserved2,
         reserved3, reserved4, reserved5
     );
@@ -605,7 +605,7 @@ void KernAux_Multiboot2_ITag_ImageLoadBasePhysAddr_print(
 
     KERNAUX_CAST_CONST(unsigned long, load_base_addr, tag->load_base_addr);
 
-    PRINTLNF("  u32 load_base_addr: %lu", load_base_addr);
+    PRINTLNF("  u32 load_base_addr: 0x%lx", load_base_addr);
 
     FOOTER;
 }
