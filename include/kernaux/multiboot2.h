@@ -84,13 +84,6 @@ KERNAUX_PACKED;
 
 KERNAUX_STATIC_TEST_STRUCT_SIZE(KernAux_Multiboot2_ITagBase, 8);
 
-/*********
- * Enums *
- *********/
-
-#include <kernaux/multiboot2/header_enums.h>
-#include <kernaux/multiboot2/info_enums.h>
-
 /********************************
  * Information additional types *
  ********************************/
@@ -537,6 +530,13 @@ KERNAUX_STATIC_TEST_STRUCT_SIZE(
 );
 
 #include <kernaux/macro/packing_end.run>
+
+/*********
+ * Enums *
+ *********/
+
+#include <kernaux/multiboot2/header_enums.h>
+#include <kernaux/multiboot2/info_enums.h>
 
 /********************
  * Helper functions *
