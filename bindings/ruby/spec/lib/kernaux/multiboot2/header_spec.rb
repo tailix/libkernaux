@@ -38,12 +38,36 @@ if KernAux::Version.with_multiboot2?
       subject(:enough?) { multiboot2_header.enough? }
 
       it { is_expected.to equal true }
+
+      context 'for the fixture 1' do
+        let(:fixture) { 1 }
+
+        it { is_expected.to equal true }
+      end
+
+      context 'for the fixture 2' do
+        let(:fixture) { 2 }
+
+        it { is_expected.to equal true }
+      end
     end
 
     describe '#valid?' do
       subject(:valid?) { multiboot2_header.valid? }
 
       it { is_expected.to equal true }
+
+      context 'for the fixture 1' do
+        let(:fixture) { 1 }
+
+        it { is_expected.to equal true }
+      end
+
+      context 'for the fixture 2' do
+        let(:fixture) { 2 }
+
+        it { is_expected.to equal true }
+      end
     end
 
     describe '#enough!' do
@@ -51,6 +75,20 @@ if KernAux::Version.with_multiboot2?
 
       specify { expect { enough! }.not_to raise_error }
       it { is_expected.to equal multiboot2_header }
+
+      context 'for the fixture 1' do
+        let(:fixture) { 1 }
+
+        specify { expect { enough! }.not_to raise_error }
+        it { is_expected.to equal multiboot2_header }
+      end
+
+      context 'for the fixture 2' do
+        let(:fixture) { 2 }
+
+        specify { expect { enough! }.not_to raise_error }
+        it { is_expected.to equal multiboot2_header }
+      end
     end
 
     describe '#valid!' do
@@ -58,6 +96,20 @@ if KernAux::Version.with_multiboot2?
 
       specify { expect { valid! }.not_to raise_error }
       it { is_expected.to equal multiboot2_header }
+
+      context 'for the fixture 1' do
+        let(:fixture) { 1 }
+
+        specify { expect { valid! }.not_to raise_error }
+        it { is_expected.to equal multiboot2_header }
+      end
+
+      context 'for the fixture 2' do
+        let(:fixture) { 2 }
+
+        specify { expect { valid! }.not_to raise_error }
+        it { is_expected.to equal multiboot2_header }
+      end
     end
 
     describe '#magic' do
@@ -65,6 +117,20 @@ if KernAux::Version.with_multiboot2?
 
       it { is_expected.to be_instance_of Integer }
       it { is_expected.to equal described_class::MAGIC }
+
+      context 'for the fixture 1' do
+        let(:fixture) { 1 }
+
+        it { is_expected.to be_instance_of Integer }
+        it { is_expected.to equal described_class::MAGIC }
+      end
+
+      context 'for the fixture 2' do
+        let(:fixture) { 2 }
+
+        it { is_expected.to be_instance_of Integer }
+        it { is_expected.to equal described_class::MAGIC }
+      end
     end
 
     describe '#arch' do
@@ -72,6 +138,20 @@ if KernAux::Version.with_multiboot2?
 
       it { is_expected.to be_instance_of Integer }
       it { is_expected.to equal 0 }
+
+      context 'for the fixture 1' do
+        let(:fixture) { 1 }
+
+        it { is_expected.to be_instance_of Integer }
+        it { is_expected.to equal 4 }
+      end
+
+      context 'for the fixture 2' do
+        let(:fixture) { 2 }
+
+        it { is_expected.to be_instance_of Integer }
+        it { is_expected.to equal 0 }
+      end
     end
 
     describe '#arch_name' do
@@ -79,6 +159,20 @@ if KernAux::Version.with_multiboot2?
 
       it { is_expected.to be_instance_of Symbol }
       it { is_expected.to equal :i386 }
+
+      context 'for the fixture 1' do
+        let(:fixture) { 1 }
+
+        it { is_expected.to be_instance_of Symbol }
+        it { is_expected.to equal :mips32 }
+      end
+
+      context 'for the fixture 2' do
+        let(:fixture) { 2 }
+
+        it { is_expected.to be_instance_of Symbol }
+        it { is_expected.to equal :i386 }
+      end
     end
 
     describe '#total_size' do
@@ -86,6 +180,20 @@ if KernAux::Version.with_multiboot2?
 
       it { is_expected.to be_instance_of Integer }
       it { is_expected.to equal 24 }
+
+      context 'for the fixture 1' do
+        let(:fixture) { 1 }
+
+        it { is_expected.to be_instance_of Integer }
+        it { is_expected.to equal 104 }
+      end
+
+      context 'for the fixture 2' do
+        let(:fixture) { 2 }
+
+        it { is_expected.to be_instance_of Integer }
+        it { is_expected.to equal 272 }
+      end
     end
 
     describe '#checksum' do
@@ -93,6 +201,20 @@ if KernAux::Version.with_multiboot2?
 
       it { is_expected.to be_instance_of Integer }
       it { is_expected.to equal 0x17adaf12 }
+
+      context 'for the fixture 1' do
+        let(:fixture) { 1 }
+
+        it { is_expected.to be_instance_of Integer }
+        it { is_expected.to equal 0x17adaebe }
+      end
+
+      context 'for the fixture 2' do
+        let(:fixture) { 2 }
+
+        it { is_expected.to be_instance_of Integer }
+        it { is_expected.to equal 0x17adae1a }
+      end
     end
   end
 end
