@@ -91,6 +91,24 @@ if KernAux::Version.with_multiboot2?
 
         it { is_expected.to equal false }
       end
+
+      context 'when given size is greater than the expected size' do
+        let(:data) { "#{[header(0, 24), tag_none].join}\x00" }
+
+        it { is_expected.to equal true }
+      end
+
+      context 'when given size is equal to the expected size' do
+        let(:data) { [header(0, 24), tag_none].join }
+
+        it { is_expected.to equal true }
+      end
+
+      context 'when given size is lesser than the expected size' do
+        let(:data) { [header(0, 24), tag_none].join[0...-1] }
+
+        it { is_expected.to equal false }
+      end
     end
 
     describe '#enough!' do
@@ -168,6 +186,29 @@ if KernAux::Version.with_multiboot2?
           expect { valid! }.to raise_error(
             KernAux::Multiboot2::BaseSizeError,
             'The structure size is too small',
+          )
+        end
+      end
+
+      context 'when given size is greater than the expected size' do
+        let(:data) { "#{[header(0, 24), tag_none].join}\x00" }
+
+        it { is_expected.to equal multiboot2_header }
+      end
+
+      context 'when given size is equal to the expected size' do
+        let(:data) { [header(0, 24), tag_none].join }
+
+        it { is_expected.to equal multiboot2_header }
+      end
+
+      context 'when given size is lesser than the expected size' do
+        let(:data) { [header(0, 24), tag_none].join[0...-1] }
+
+        specify do
+          expect { valid! }.to raise_error(
+            KernAux::Multiboot2::InvalidError,
+            'The structure is invalid',
           )
         end
       end
@@ -321,6 +362,33 @@ if KernAux::Version.with_multiboot2?
 
         it { is_expected.to equal nil }
       end
+    end
+
+    def header(arch, total_size)
+      arch = Integer arch
+      total_size = Integer total_size
+
+      [
+        # uint32_t magic
+        [described_class::MAGIC].pack('I'),
+        # uint32_t arch: i386
+        [arch].pack('I'),
+        # uint32_t total_size
+        [total_size].pack('I'),
+        # uint32_t checksum
+        [-(described_class::MAGIC + arch + total_size)].pack('I'),
+      ].join
+    end
+
+    def tag_none
+      [
+        # uint16_t tags[0].type: none
+        [0].pack('S'),
+        # uint16_t tags[0].flags
+        [0].pack('S'),
+        # uint32_t tags[0].size
+        [8].pack('I'),
+      ].join
     end
   end
 end

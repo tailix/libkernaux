@@ -8,15 +8,15 @@
 #define RBNS(s) rb_KernAux_Multiboot2_##s
 
 #define EXTRACT_BASE_PTR(Type, name, data, Qnegresult) \
-    const struct KernAux_Multiboot2_##Type *const name =              \
-        (const struct KernAux_Multiboot2_##Type*)                     \
-        StringValuePtr(data);                                         \
-    do {                                                              \
-        const long len = RSTRING_LEN(data);                           \
-        if (len < 0) return (Qnegresult);                             \
-        if ((size_t)len < sizeof(struct KernAux_Multiboot2_##Type)) { \
-            return (Qnegresult);                                      \
-        }                                                             \
+    const struct KernAux_Multiboot2_##Type *const name =                    \
+        (const struct KernAux_Multiboot2_##Type*)                           \
+        StringValuePtr(data);                                               \
+    const long data_size = RSTRING_LEN(data);                               \
+    do {                                                                    \
+        if (data_size < 0) return (Qnegresult);                             \
+        if ((size_t)data_size < sizeof(struct KernAux_Multiboot2_##Type)) { \
+            return (Qnegresult);                                            \
+        }                                                                   \
     } while (0)
 
 VALUE RBNSMDL             = Qnil; // KernAux::Multiboot2
@@ -113,6 +113,7 @@ VALUE rb_KernAux_Multiboot2_Header_validQN(VALUE self)
 {
     VALUE data = rb_ivar_get(self, rb_intern("@data"));
     EXTRACT_BASE_PTR(Header, multiboot2_header, data, Qfalse);
+    if ((size_t)data_size < multiboot2_header->total_size) return Qfalse;
     if (KernAux_Multiboot2_Header_is_valid(multiboot2_header)) {
         return Qtrue;
     } else {
