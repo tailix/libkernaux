@@ -29,8 +29,7 @@ void init_printf(mrb_state *const mrb)
 
 mrb_value rb_KernAux_sprintf(mrb_state *const mrb, mrb_value self)
 {
-    // FIXME: const
-    char *format;
+    const char *format;
     mrb_value *args;
     mrb_int argc;
     mrb_get_args(mrb, "z*", &format, &args, &argc);
@@ -45,12 +44,9 @@ mrb_value rb_KernAux_sprintf(mrb_state *const mrb, mrb_value self)
             continue;
         }
 
-        // FIXME: unnecessary
-        const char *const old_format = format;
         ++format;
         struct KernAux_PrintfFmt_Spec spec =
-            // FIXME: no type cast
-            KernAux_PrintfFmt_Spec_create_out((const char**)&format);
+            KernAux_PrintfFmt_Spec_create_out(&format);
 
         if (spec.set_width) {
             TAKE_ARG;
@@ -87,13 +83,15 @@ mrb_value rb_KernAux_sprintf(mrb_state *const mrb, mrb_value self)
             DynArg_use_str(&dynarg, RSTRING_CSTR(mrb, arg_rb));
         }
 
+        // 1 additional byte for the '%' character.
+        // 1 additional byte for the terminating '\0' character.
+        char old_format[2 + spec.format_limit - spec.format_start];
+        memset(old_format, '\0', sizeof(old_format));
+        old_format[0] = '%';
+        strncpy(&old_format[1], spec.format_start, sizeof(old_format) - 2);
+
         char buffer[BUFFER_SIZE];
         int slen;
-
-        // FIXME: it's a hack
-        // TODO: convert printf format spec to string
-        const char tmp = *format;
-        *format = '\0';
 
         if (spec.set_width) {
             if (spec.set_precision) {
@@ -133,7 +131,6 @@ mrb_value rb_KernAux_sprintf(mrb_state *const mrb, mrb_value self)
             }
         }
 
-        *format = tmp;
         mrb_str_cat(mrb, result, buffer, slen);
     }
 
