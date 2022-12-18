@@ -202,6 +202,12 @@ make
 
 You can test with `make check`.
 
+#### See also
+
+* [GitHub Actions](/.github/) for **GNU/Linux** build environment
+* [Cirrus CI](/.cirrus.yml) for **FreeBSD** build environment
+* [sourcehut CI](/.openbsd.yml) for **OpenBSD** build environment
+
 ### Cross
 
 Create configuration script with `./autogen.sh` (if present).

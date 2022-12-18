@@ -4,6 +4,12 @@
 #include <kernaux.h>
 #include <ruby.h>
 
+#include <stdbool.h>
+#include <stddef.h>
+#include <stdint.h>
+#include <stdlib.h>
+#include <string.h>
+
 extern ID rb_intern_call;
 extern ID rb_intern_freeze;
 extern ID rb_intern_LESS;
