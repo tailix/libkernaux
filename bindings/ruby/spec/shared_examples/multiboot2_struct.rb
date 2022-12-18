@@ -16,6 +16,44 @@ RSpec.shared_examples 'Multiboot 2 struct' do |struct_name, min_size|
     )
   end
 
+  describe '#inspect' do
+    subject(:inspect) { multiboot2_struct.inspect }
+
+    context 'when data is empty' do
+      let(:data) { '' }
+
+      it { is_expected.to be_instance_of String }
+      it { is_expected.to be_frozen }
+      it { is_expected.to eq "#<#{described_class}:\"\">" }
+    end
+
+    context 'when data is not too long' do
+      let(:data) { "\x00" * 16 }
+
+      it { is_expected.to be_instance_of String }
+      it { is_expected.to be_frozen }
+
+      specify do
+        expect(inspect).to eq \
+          "#<#{described_class}:" \
+          "#{data.force_encoding(Encoding::ASCII).inspect}>"
+      end
+    end
+
+    context 'when data is too long' do
+      let(:data) { "\x00" * 17 }
+
+      it { is_expected.to be_instance_of String }
+      it { is_expected.to be_frozen }
+
+      specify do
+        expect(inspect).to eq \
+          "#<#{described_class}:" \
+          "#{data[...16].force_encoding(Encoding::ASCII).inspect}...>"
+      end
+    end
+  end
+
   describe '#freeze' do
     subject(:freeze) { multiboot2_struct.freeze }
 

@@ -32,6 +32,18 @@ module KernAux
       end
 
       ##
+      # @return [String]
+      #
+      def inspect
+        '#<' \
+        "#{self.class}" \
+        ':' \
+        "#{@data[...16].force_encoding(Encoding::ASCII).inspect}" \
+        "#{'...' if @data.size > 16}" \
+        '>'.freeze
+      end
+
+      ##
       # Freeze the structure and it's underlying data.
       #
       def freeze
