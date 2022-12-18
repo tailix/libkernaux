@@ -19,6 +19,10 @@
         }                                                                   \
     } while (0)
 
+#define ENSURE_WHOLE_SIZE(name, Qnegresult) do { \
+    if ((size_t)data_size < (name)->total_size) return (Qnegresult); \
+} while (0)
+
 VALUE RBNSMDL             = Qnil; // KernAux::Multiboot2
 VALUE RBNS(BaseSizeError) = Qnil; // KernAux::Multiboot2::BaseSizeError
 VALUE RBNS(InvalidError)  = Qnil; // KernAux::Multiboot2::InvalidError
@@ -113,7 +117,8 @@ VALUE rb_KernAux_Multiboot2_Header_validQN(VALUE self)
 {
     VALUE data = rb_ivar_get(self, rb_intern("@data"));
     EXTRACT_BASE_PTR(Header, multiboot2_header, data, Qfalse);
-    if ((size_t)data_size < multiboot2_header->total_size) return Qfalse;
+    ENSURE_WHOLE_SIZE(multiboot2_header, Qfalse);
+
     if (KernAux_Multiboot2_Header_is_valid(multiboot2_header)) {
         return Qtrue;
     } else {
