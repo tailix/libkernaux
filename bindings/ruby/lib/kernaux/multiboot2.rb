@@ -100,5 +100,13 @@ module KernAux
       #
       def arch_name = ARCH[arch]
     end
+
+    ##
+    # Multiboot 2 information.
+    #
+    # @see https://www.gnu.org/software/grub/manual/multiboot2/multiboot.html#Basic-tags-structure
+    #
+    class Info < Struct
+    end
   end
 end

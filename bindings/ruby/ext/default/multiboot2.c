@@ -28,6 +28,13 @@ VALUE RBNS(BaseSizeError) = Qnil; // KernAux::Multiboot2::BaseSizeError
 VALUE RBNS(InvalidError)  = Qnil; // KernAux::Multiboot2::InvalidError
 VALUE RBNS(Struct)        = Qnil; // KernAux::Multiboot2::Struct
 VALUE RBNS(Header)        = Qnil; // KernAux::Multiboot2::Header
+VALUE RBNS(Info)          = Qnil; // KernAux::Multiboot2::Info
+
+
+
+/*******************************
+ * KernAux::Multiboot2::Header *
+ *******************************/
 
 static VALUE rb_KernAux_Multiboot2_Header_enoughQN(VALUE self);
 static VALUE rb_KernAux_Multiboot2_Header_validQN(VALUE self);
@@ -53,6 +60,8 @@ static VALUE rb_KernAux_Multiboot2_Header_arch(VALUE self);
 /**
  * Return the total size (length) field of the Multiboot 2 header.
  *
+ * @see https://www.gnu.org/software/grub/manual/multiboot2/multiboot.html#Header-magic-fields
+ *
  * @return [nil, Integer]
  */
 static VALUE rb_KernAux_Multiboot2_Header_total_size(VALUE self);
@@ -60,9 +69,42 @@ static VALUE rb_KernAux_Multiboot2_Header_total_size(VALUE self);
 /**
  * Return the checksum field of the Multiboot 2 header.
  *
+ * @see https://www.gnu.org/software/grub/manual/multiboot2/multiboot.html#Header-magic-fields
+ *
  * @return [nil, Integer]
  */
 static VALUE rb_KernAux_Multiboot2_Header_checksum(VALUE self);
+
+/*****************************
+ * KernAux::Multiboot2::Info *
+ *****************************/
+
+static VALUE rb_KernAux_Multiboot2_Info_enoughQN(VALUE self);
+static VALUE rb_KernAux_Multiboot2_Info_validQN(VALUE self);
+
+/**
+ * Return the total size field of the Multiboot 2 information.
+ *
+ * @return [nil, Integer]
+ *
+ * @see https://www.gnu.org/software/grub/manual/multiboot2/multiboot.html#Basic-tags-structure
+ */
+static VALUE rb_KernAux_Multiboot2_Info_total_size(VALUE self);
+
+/**
+ * Return the reserved field of the Multiboot 2 information.
+ *
+ * @return [nil, Integer]
+ *
+ * @see https://www.gnu.org/software/grub/manual/multiboot2/multiboot.html#Basic-tags-structure
+ */
+static VALUE rb_KernAux_Multiboot2_Info_reserved(VALUE self);
+
+
+
+/*************************
+ * Extension initializer *
+ *************************/
 
 void init_multiboot2()
 {
@@ -101,7 +143,26 @@ void init_multiboot2()
                      rb_KernAux_Multiboot2_Header_total_size, 0);
     rb_define_method(rb_KernAux_Multiboot2_Header, "checksum",
                      rb_KernAux_Multiboot2_Header_checksum, 0);
+
+    // KernAux::Multiboot2::Info
+    rb_gc_register_mark_object(rb_KernAux_Multiboot2_Info =
+        rb_define_class_under(
+            rb_KernAux_Multiboot2, "Info", rb_KernAux_Multiboot2_Struct));
+    rb_define_method(rb_KernAux_Multiboot2_Info, "enough?",
+                     rb_KernAux_Multiboot2_Info_enoughQN, 0);
+    rb_define_method(rb_KernAux_Multiboot2_Info, "valid?",
+                     rb_KernAux_Multiboot2_Info_validQN, 0);
+    rb_define_method(rb_KernAux_Multiboot2_Info, "total_size",
+                     rb_KernAux_Multiboot2_Info_total_size, 0);
+    rb_define_method(rb_KernAux_Multiboot2_Info, "reserved",
+                     rb_KernAux_Multiboot2_Info_reserved, 0);
 }
+
+
+
+/*******************************
+ * KernAux::Multiboot2::Header *
+ *******************************/
 
 // KernAux::Multiboot2::Header#enough?
 VALUE rb_KernAux_Multiboot2_Header_enoughQN(VALUE self)
@@ -161,6 +222,51 @@ VALUE rb_KernAux_Multiboot2_Header_checksum(VALUE self)
     EXTRACT_BASE_PTR(Header, multiboot2_header, data, Qnil);
     KERNAUX_CAST_CONST(unsigned long, checksum, multiboot2_header->checksum);
     return ULONG2NUM(checksum);
+}
+
+/*****************************
+ * KernAux::Multiboot2::Info *
+ *****************************/
+
+// KernAux::Multiboot2::Info#enough?
+VALUE rb_KernAux_Multiboot2_Info_enoughQN(VALUE self)
+{
+    VALUE data = rb_ivar_get(self, rb_intern("@data"));
+    EXTRACT_BASE_PTR(Info, multiboot2_info, data, Qfalse);
+    (void)multiboot2_info; // unused
+    return Qtrue;
+}
+
+// KernAux::Multiboot2::Info#valid?
+VALUE rb_KernAux_Multiboot2_Info_validQN(VALUE self)
+{
+    VALUE data = rb_ivar_get(self, rb_intern("@data"));
+    EXTRACT_BASE_PTR(Info, multiboot2_info, data, Qfalse);
+    ENSURE_WHOLE_SIZE(multiboot2_info, Qfalse);
+
+    if (KernAux_Multiboot2_Info_is_valid(multiboot2_info)) {
+        return Qtrue;
+    } else {
+        return Qfalse;
+    }
+}
+
+// KernAux::Multiboot2::Info#total_size
+VALUE rb_KernAux_Multiboot2_Info_total_size(VALUE self)
+{
+    VALUE data = rb_ivar_get(self, rb_intern("@data"));
+    EXTRACT_BASE_PTR(Info, multiboot2_info, data, Qnil);
+    KERNAUX_CAST_CONST(unsigned long, total_size, multiboot2_info->total_size);
+    return ULONG2NUM(total_size);
+}
+
+// KernAux::Multiboot2::Info#reserved
+VALUE rb_KernAux_Multiboot2_Info_reserved(VALUE self)
+{
+    VALUE data = rb_ivar_get(self, rb_intern("@data"));
+    EXTRACT_BASE_PTR(Info, multiboot2_info, data, Qnil);
+    KERNAUX_CAST_CONST(unsigned long, reserved, multiboot2_info->reserved);
+    return ULONG2NUM(reserved);
 }
 
 #endif
