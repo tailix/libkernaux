@@ -6,8 +6,6 @@
 #include <mruby/presym.h>
 #include <mruby/string.h>
 
-#include <string.h>
-
 #define BUFFER_SIZE 4096
 
 #ifdef KERNAUX_VERSION_WITH_PRINTF

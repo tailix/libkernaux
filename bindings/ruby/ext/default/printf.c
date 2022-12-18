@@ -1,8 +1,6 @@
 #include "main.h"
 #include "dynarg.h"
 
-#include <string.h>
-
 #define BUFFER_SIZE 4096
 
 #ifdef KERNAUX_VERSION_WITH_PRINTF
