@@ -37,7 +37,7 @@ module KernAux
       def freeze
         @data.freeze
         super
-        nil
+        self
       end
 
       def enough?

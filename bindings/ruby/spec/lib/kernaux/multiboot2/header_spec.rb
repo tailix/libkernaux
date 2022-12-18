@@ -17,6 +17,26 @@ if KernAux::Version.with_multiboot2?
       )
     end
 
+    describe '#freeze' do
+      subject(:freeze) { multiboot2_header.freeze }
+
+      it { is_expected.to equal multiboot2_header }
+
+      specify do
+        expect { freeze }.to \
+          change { multiboot2_header.frozen? }
+          .from(false)
+          .to(true)
+      end
+
+      specify do
+        expect { freeze }.to \
+          change { fixture_data.frozen? }
+          .from(false)
+          .to(true)
+      end
+    end
+
     describe '#enough?' do
       subject(:enough?) { multiboot2_header.enough? }
 
