@@ -1,6 +1,8 @@
 #include "main.h"
 #include "dynarg.h"
 
+#include <string.h>
+
 #define BUFFER_SIZE 4096
 
 #ifdef KERNAUX_VERSION_WITH_PRINTF
@@ -31,8 +33,7 @@ VALUE rb_KernAux_sprintf(const int argc, VALUE *const argv, VALUE self)
 {
     if (argc == 0) rb_raise(rb_eArgError, "too few arguments");
 
-    // FIXME: const
-    char *format = StringValueCStr(argv[0]);
+    const char *format = StringValueCStr(argv[0]);
     int arg_index = 1;
     VALUE result = rb_str_new_literal("");
 
@@ -43,12 +44,9 @@ VALUE rb_KernAux_sprintf(const int argc, VALUE *const argv, VALUE self)
             continue;
         }
 
-        // FIXME: unnecessary
-        const char *const old_format = format;
         ++format;
         struct KernAux_PrintfFmt_Spec spec =
-            // FIXME: no type cast
-            KernAux_PrintfFmt_Spec_create_out((const char**)&format);
+            KernAux_PrintfFmt_Spec_create_out(&format);
 
         if (spec.set_width) {
             TAKE_ARG;
@@ -82,13 +80,15 @@ VALUE rb_KernAux_sprintf(const int argc, VALUE *const argv, VALUE self)
             DynArg_use_str(&dynarg, StringValueCStr(arg_rb));
         }
 
+        // 1 additional byte for the '%' character.
+        // 1 additional byte for the terminating '\0' character.
+        char old_format[2 + spec.format_limit - spec.format_start];
+        memset(old_format, '\0', sizeof(old_format));
+        old_format[0] = '%';
+        strncpy(&old_format[1], spec.format_start, sizeof(old_format) - 2);
+
         char buffer[BUFFER_SIZE];
         int slen;
-
-        // FIXME: it's a hack
-        // TODO: convert printf format spec to string
-        const char tmp = *format;
-        *format = '\0';
 
         if (spec.set_width) {
             if (spec.set_precision) {
@@ -128,7 +128,6 @@ VALUE rb_KernAux_sprintf(const int argc, VALUE *const argv, VALUE self)
             }
         }
 
-        *format = tmp;
         rb_str_cat(result, buffer, slen);
     }
 
