@@ -26,6 +26,7 @@ VALUE RBNS(Struct)        = Qnil; // KernAux::Multiboot2::Struct
 VALUE RBNS(Header)        = Qnil; // KernAux::Multiboot2::Header
 
 static VALUE rb_KernAux_Multiboot2_Header_enoughQN(VALUE self);
+static VALUE rb_KernAux_Multiboot2_Header_validQN(VALUE self);
 
 /**
  * Return the magic field of the Multiboot 2 header.
@@ -79,6 +80,8 @@ void init_multiboot2()
             rb_KernAux_Multiboot2, "Header", rb_KernAux_Multiboot2_Struct));
     rb_define_method(rb_KernAux_Multiboot2_Header, "enough?",
                      rb_KernAux_Multiboot2_Header_enoughQN, 0);
+    rb_define_method(rb_KernAux_Multiboot2_Header, "valid?",
+                     rb_KernAux_Multiboot2_Header_validQN, 0);
     rb_define_method(rb_KernAux_Multiboot2_Header, "magic",
                      rb_KernAux_Multiboot2_Header_magic, 0);
     rb_define_method(rb_KernAux_Multiboot2_Header, "arch",
@@ -94,6 +97,18 @@ VALUE rb_KernAux_Multiboot2_Header_enoughQN(VALUE self)
     EXTRACT_BASE_PTR(Header, multiboot2_header, data, Qfalse);
     (void)multiboot2_header; // unused
     return Qtrue;
+}
+
+// KernAux::Multiboot2::Header#valid?
+VALUE rb_KernAux_Multiboot2_Header_validQN(VALUE self)
+{
+    VALUE data = rb_ivar_get(self, rb_intern("@data"));
+    EXTRACT_BASE_PTR(Header, multiboot2_header, data, Qfalse);
+    if (KernAux_Multiboot2_Header_is_valid(multiboot2_header)) {
+        return Qtrue;
+    } else {
+        return Qfalse;
+    }
 }
 
 // KernAux::Multiboot2::Header#magic

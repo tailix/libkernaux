@@ -40,10 +40,23 @@ if KernAux::Version.with_multiboot2?
       it { is_expected.to equal true }
     end
 
+    describe '#valid?' do
+      subject(:valid?) { multiboot2_header.valid? }
+
+      it { is_expected.to equal true }
+    end
+
     describe '#enough!' do
       subject(:enough!) { multiboot2_header.enough! }
 
       specify { expect { enough! }.not_to raise_error }
+      it { is_expected.to equal multiboot2_header }
+    end
+
+    describe '#valid!' do
+      subject(:valid!) { multiboot2_header.valid! }
+
+      specify { expect { valid! }.not_to raise_error }
       it { is_expected.to equal multiboot2_header }
     end
 
