@@ -8,8 +8,8 @@ module KernAux
   #
   module Multiboot2
     ##
-    # Raised when a Multiboot 2 structure which is shorter than even it's base
-    # requested to be enough sized.
+    # Raised when a Multiboot 2 structure data which is shorter
+    # than even it's base requested to be enough sized.
     #
     # @see Struct#enough!
     #
@@ -40,15 +40,31 @@ module KernAux
         self
       end
 
+      # :nocov:
+
+      ##
+      # Test whether a Multiboot 2 structure data is not shorter than it's base.
+      #
+      # @return [Boolean]
+      #
       def enough?
         raise NotImplementedError, "#{self.class}#enough?"
       end
 
+      ##
+      # Test whether a Multiboot 2 structure is valid.
+      #
+      # @return [Boolean]
+      #
       def valid?
         raise NotImplementedError, "#{self.class}#valid?"
       end
 
+      # :nocov:
+
       ##
+      # @return [Struct] self
+      #
       # @raise [BaseSizeError] the structure size is too small
       #
       def enough!
@@ -58,6 +74,8 @@ module KernAux
       end
 
       ##
+      # @return [Struct] self
+      #
       # @raise [BaseSizeError] the structure size is too small
       # @raise [InvalidError] the structure is invalid
       #

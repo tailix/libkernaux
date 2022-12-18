@@ -36,7 +36,18 @@ VALUE RBNS(Info)          = Qnil; // KernAux::Multiboot2::Info
  * KernAux::Multiboot2::Header *
  *******************************/
 
+/**
+ * Test whether a Multiboot 2 header data is not shorter than it's base.
+ *
+ * @return [Boolean]
+ */
 static VALUE rb_KernAux_Multiboot2_Header_enoughQN(VALUE self);
+
+/**
+ * Test whether a Multiboot 2 header is valid.
+ *
+ * @return [Boolean]
+ */
 static VALUE rb_KernAux_Multiboot2_Header_validQN(VALUE self);
 
 /**
@@ -79,7 +90,18 @@ static VALUE rb_KernAux_Multiboot2_Header_checksum(VALUE self);
  * KernAux::Multiboot2::Info *
  *****************************/
 
+/**
+ * Test whether a Multiboot 2 information data is not shorter than it's base.
+ *
+ * @return [Boolean]
+ */
 static VALUE rb_KernAux_Multiboot2_Info_enoughQN(VALUE self);
+
+/**
+ * Test whether a Multiboot 2 information is valid.
+ *
+ * @return [Boolean]
+ */
 static VALUE rb_KernAux_Multiboot2_Info_validQN(VALUE self);
 
 /**
