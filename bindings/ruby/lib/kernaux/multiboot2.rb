@@ -53,6 +53,7 @@ module KernAux
       #
       def enough!
         raise BaseSizeError, 'The structure size is too small' unless enough?
+
         self
       end
 
@@ -63,6 +64,7 @@ module KernAux
       def valid!
         enough!
         raise InvalidError, 'The structure is invalid' unless valid?
+
         self
       end
     end

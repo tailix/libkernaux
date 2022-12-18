@@ -13,7 +13,7 @@ if KernAux::Version.with_multiboot2?
     let :fixture_path do
       File.expand_path(
         "../../../../../../fixtures/multiboot2_header_example#{fixture}.bin",
-        __dir__
+        __dir__,
       )
     end
 
@@ -24,16 +24,13 @@ if KernAux::Version.with_multiboot2?
 
       specify do
         expect { freeze }.to \
-          change { multiboot2_header.frozen? }
+          change(multiboot2_header, :frozen?)
           .from(false)
           .to(true)
       end
 
       specify do
-        expect { freeze }.to \
-          change { fixture_data.frozen? }
-          .from(false)
-          .to(true)
+        expect { freeze }.to change(fixture_data, :frozen?).from(false).to(true)
       end
     end
 
