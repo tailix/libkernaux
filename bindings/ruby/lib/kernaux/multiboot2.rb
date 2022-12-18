@@ -23,7 +23,9 @@ module KernAux
     class InvalidError < Error; end
 
     ##
-    # The base class for any Multiboot 2 structure.
+    # The base class for Multiboot 2 {Header} and {Info}.
+    #
+    # @abstract It requires an implementation in C to use **libkernaux**.
     #
     class Struct
       def initialize(data = '')
@@ -57,6 +59,7 @@ module KernAux
       ##
       # Test whether a Multiboot 2 structure data is not shorter than it's base.
       #
+      # @abstract
       # @return [Boolean]
       #
       def enough?
@@ -66,6 +69,7 @@ module KernAux
       ##
       # Test whether a Multiboot 2 structure is valid.
       #
+      # @abstract
       # @return [Boolean]
       #
       def valid?
