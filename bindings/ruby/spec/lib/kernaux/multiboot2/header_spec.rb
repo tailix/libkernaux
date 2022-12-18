@@ -16,81 +16,10 @@ if KernAux::Version.with_multiboot2?
       )
     end
 
-    describe '#freeze' do
-      subject(:freeze) { multiboot2_header.freeze }
-
-      it { is_expected.to equal multiboot2_header }
-
-      specify do
-        expect { freeze }.to \
-          change(multiboot2_header, :frozen?)
-          .from(false)
-          .to(true)
-      end
-
-      specify do
-        expect { freeze }.to change(data, :frozen?).from(false).to(true)
-      end
-    end
-
-    describe '#enough?' do
-      subject(:enough?) { multiboot2_header.enough? }
-
-      it { is_expected.to equal true }
-
-      context 'for the fixture 1' do
-        let(:fixture) { 1 }
-
-        it { is_expected.to equal true }
-      end
-
-      context 'for the fixture 2' do
-        let(:fixture) { 2 }
-
-        it { is_expected.to equal true }
-      end
-
-      context 'for empty data' do
-        let(:data) { '' }
-
-        it { is_expected.to equal false }
-      end
-
-      context 'for too small data' do
-        let(:data) { "\x00" * 15 }
-
-        it { is_expected.to equal false }
-      end
-    end
+    it_behaves_like 'Multiboot 2 struct', :header, 16
 
     describe '#valid?' do
       subject(:valid?) { multiboot2_header.valid? }
-
-      it { is_expected.to equal true }
-
-      context 'for the fixture 1' do
-        let(:fixture) { 1 }
-
-        it { is_expected.to equal true }
-      end
-
-      context 'for the fixture 2' do
-        let(:fixture) { 2 }
-
-        it { is_expected.to equal true }
-      end
-
-      context 'for empty data' do
-        let(:data) { '' }
-
-        it { is_expected.to equal false }
-      end
-
-      context 'for too small data' do
-        let(:data) { "\x00" * 15 }
-
-        it { is_expected.to equal false }
-      end
 
       context 'when given size is greater than the expected size' do
         let(:data) { "#{[header(0, 24), tag_none].join}\x00" }
@@ -111,84 +40,8 @@ if KernAux::Version.with_multiboot2?
       end
     end
 
-    describe '#enough!' do
-      subject(:enough!) { multiboot2_header.enough! }
-
-      it { is_expected.to equal multiboot2_header }
-
-      context 'for the fixture 1' do
-        let(:fixture) { 1 }
-
-        it { is_expected.to equal multiboot2_header }
-      end
-
-      context 'for the fixture 2' do
-        let(:fixture) { 2 }
-
-        it { is_expected.to equal multiboot2_header }
-      end
-
-      context 'for empty data' do
-        let(:data) { '' }
-
-        specify do
-          expect { enough! }.to raise_error(
-            KernAux::Multiboot2::BaseSizeError,
-            'The structure size is too small',
-          )
-        end
-      end
-
-      context 'for too small data' do
-        let(:data) { "\x00" * 15 }
-
-        specify do
-          expect { enough! }.to raise_error(
-            KernAux::Multiboot2::BaseSizeError,
-            'The structure size is too small',
-          )
-        end
-      end
-    end
-
     describe '#valid!' do
       subject(:valid!) { multiboot2_header.valid! }
-
-      it { is_expected.to equal multiboot2_header }
-
-      context 'for the fixture 1' do
-        let(:fixture) { 1 }
-
-        it { is_expected.to equal multiboot2_header }
-      end
-
-      context 'for the fixture 2' do
-        let(:fixture) { 2 }
-
-        it { is_expected.to equal multiboot2_header }
-      end
-
-      context 'for empty data' do
-        let(:data) { '' }
-
-        specify do
-          expect { valid! }.to raise_error(
-            KernAux::Multiboot2::BaseSizeError,
-            'The structure size is too small',
-          )
-        end
-      end
-
-      context 'for too small data' do
-        let(:data) { "\x00" * 15 }
-
-        specify do
-          expect { valid! }.to raise_error(
-            KernAux::Multiboot2::BaseSizeError,
-            'The structure size is too small',
-          )
-        end
-      end
 
       context 'when given size is greater than the expected size' do
         let(:data) { "#{[header(0, 24), tag_none].join}\x00" }
