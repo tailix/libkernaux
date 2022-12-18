@@ -45,7 +45,7 @@ Gem::Specification.new do |spec|
 
   spec.extensions << 'ext/default/extconf.rb'
 
-  spec.add_development_dependency 'bundler',             '~> 2.3'
+  spec.add_development_dependency 'bundler',             '~> 2.2'
   spec.add_development_dependency 'pry',                 '~> 0.14'
   spec.add_development_dependency 'rake',                '~> 13.0'
   spec.add_development_dependency 'rake-compiler',       '~> 1.2'
