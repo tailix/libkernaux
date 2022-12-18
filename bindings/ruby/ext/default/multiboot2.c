@@ -7,15 +7,15 @@
 #define RBNSMDL rb_KernAux_Multiboot2
 #define RBNS(s) rb_KernAux_Multiboot2_##s
 
-#define EXTRACT_BASE_PTR(Type, name, data) \
+#define EXTRACT_BASE_PTR(Type, name, data, Qnegresult) \
     const struct KernAux_Multiboot2_##Type *const name =              \
         (const struct KernAux_Multiboot2_##Type*)                     \
         StringValuePtr(data);                                         \
     do {                                                              \
         const long len = RSTRING_LEN(data);                           \
-        if (len < 0) return Qnil;                                     \
+        if (len < 0) return (Qnegresult);                             \
         if ((size_t)len < sizeof(struct KernAux_Multiboot2_##Type)) { \
-            return Qnil;                                              \
+            return (Qnegresult);                                      \
         }                                                             \
     } while (0)
 
@@ -24,6 +24,8 @@ VALUE RBNS(BaseSizeError) = Qnil; // KernAux::Multiboot2::BaseSizeError
 VALUE RBNS(InvalidError)  = Qnil; // KernAux::Multiboot2::InvalidError
 VALUE RBNS(Struct)        = Qnil; // KernAux::Multiboot2::Struct
 VALUE RBNS(Header)        = Qnil; // KernAux::Multiboot2::Header
+
+static VALUE rb_KernAux_Multiboot2_Header_enoughQN(VALUE self);
 
 /**
  * Return the magic field of the Multiboot 2 header.
@@ -75,6 +77,8 @@ void init_multiboot2()
     rb_gc_register_mark_object(rb_KernAux_Multiboot2_Header =
         rb_define_class_under(
             rb_KernAux_Multiboot2, "Header", rb_KernAux_Multiboot2_Struct));
+    rb_define_method(rb_KernAux_Multiboot2_Header, "enough?",
+                     rb_KernAux_Multiboot2_Header_enoughQN, 0);
     rb_define_method(rb_KernAux_Multiboot2_Header, "magic",
                      rb_KernAux_Multiboot2_Header_magic, 0);
     rb_define_method(rb_KernAux_Multiboot2_Header, "arch",
@@ -83,11 +87,20 @@ void init_multiboot2()
                      rb_KernAux_Multiboot2_Header_total_size, 0);
 }
 
+// KernAux::Multiboot2::Header#enough?
+VALUE rb_KernAux_Multiboot2_Header_enoughQN(VALUE self)
+{
+    VALUE data = rb_ivar_get(self, rb_intern("@data"));
+    EXTRACT_BASE_PTR(Header, multiboot2_header, data, Qfalse);
+    (void)multiboot2_header; // unused
+    return Qtrue;
+}
+
 // KernAux::Multiboot2::Header#magic
 VALUE rb_KernAux_Multiboot2_Header_magic(VALUE self)
 {
     VALUE data = rb_ivar_get(self, rb_intern("@data"));
-    EXTRACT_BASE_PTR(Header, multiboot2_header, data);
+    EXTRACT_BASE_PTR(Header, multiboot2_header, data, Qnil);
     KERNAUX_CAST_CONST(unsigned long, magic, multiboot2_header->magic);
     return ULONG2NUM(magic);
 }
@@ -96,7 +109,7 @@ VALUE rb_KernAux_Multiboot2_Header_magic(VALUE self)
 VALUE rb_KernAux_Multiboot2_Header_arch(VALUE self)
 {
     VALUE data = rb_ivar_get(self, rb_intern("@data"));
-    EXTRACT_BASE_PTR(Header, multiboot2_header, data);
+    EXTRACT_BASE_PTR(Header, multiboot2_header, data, Qnil);
     KERNAUX_CAST_CONST(unsigned long, arch, multiboot2_header->arch);
     return ULONG2NUM(arch);
 }
@@ -105,7 +118,7 @@ VALUE rb_KernAux_Multiboot2_Header_arch(VALUE self)
 VALUE rb_KernAux_Multiboot2_Header_total_size(VALUE self)
 {
     VALUE data = rb_ivar_get(self, rb_intern("@data"));
-    EXTRACT_BASE_PTR(Header, multiboot2_header, data);
+    EXTRACT_BASE_PTR(Header, multiboot2_header, data, Qnil);
     KERNAUX_CAST_CONST(unsigned long, total_size,
                        multiboot2_header->total_size);
     return ULONG2NUM(total_size);

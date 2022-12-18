@@ -8,8 +8,8 @@ module KernAux
   #
   module Multiboot2
     ##
-    # Raised when trying to create a Multiboot 2 structure
-    # which is shorter than even it's base.
+    # Raised when a Multiboot 2 structure which is shorter than even it's base
+    # requested to be enough sized.
     #
     # @see Struct#enough!
     #
@@ -53,6 +53,7 @@ module KernAux
       #
       def enough!
         raise BaseSizeError, 'The structure size is too small' unless enough?
+        self
       end
 
       ##
@@ -62,6 +63,7 @@ module KernAux
       def valid!
         enough!
         raise InvalidError, 'The structure is invalid' unless valid?
+        self
       end
     end
 
