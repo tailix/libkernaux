@@ -53,6 +53,13 @@ static VALUE rb_KernAux_Multiboot2_Header_arch(VALUE self);
  */
 static VALUE rb_KernAux_Multiboot2_Header_total_size(VALUE self);
 
+/**
+ * Return the checksum field of the Multiboot 2 header.
+ *
+ * @return [nil, Integer]
+ */
+static VALUE rb_KernAux_Multiboot2_Header_checksum(VALUE self);
+
 void init_multiboot2()
 {
     // KernAux::Multiboot2
@@ -88,6 +95,8 @@ void init_multiboot2()
                      rb_KernAux_Multiboot2_Header_arch, 0);
     rb_define_method(rb_KernAux_Multiboot2_Header, "total_size",
                      rb_KernAux_Multiboot2_Header_total_size, 0);
+    rb_define_method(rb_KernAux_Multiboot2_Header, "checksum",
+                     rb_KernAux_Multiboot2_Header_checksum, 0);
 }
 
 // KernAux::Multiboot2::Header#enough?
@@ -137,6 +146,15 @@ VALUE rb_KernAux_Multiboot2_Header_total_size(VALUE self)
     KERNAUX_CAST_CONST(unsigned long, total_size,
                        multiboot2_header->total_size);
     return ULONG2NUM(total_size);
+}
+
+// KernAux::Multiboot2::Header#checksum
+VALUE rb_KernAux_Multiboot2_Header_checksum(VALUE self)
+{
+    VALUE data = rb_ivar_get(self, rb_intern("@data"));
+    EXTRACT_BASE_PTR(Header, multiboot2_header, data, Qnil);
+    KERNAUX_CAST_CONST(unsigned long, checksum, multiboot2_header->checksum);
+    return ULONG2NUM(checksum);
 }
 
 #endif

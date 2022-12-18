@@ -87,5 +87,12 @@ if KernAux::Version.with_multiboot2?
       it { is_expected.to be_instance_of Integer }
       it { is_expected.to equal 24 }
     end
+
+    describe '#checksum' do
+      subject(:checksum) { multiboot2_header.checksum }
+
+      it { is_expected.to be_instance_of Integer }
+      it { is_expected.to equal 0x17adaf12 }
+    end
   end
 end
