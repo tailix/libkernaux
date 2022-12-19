@@ -58,7 +58,6 @@ module KernAux
       def freeze
         @data.freeze
         super
-        self
       end
 
       # :nocov:
