@@ -16,6 +16,18 @@ RSpec.shared_examples 'Multiboot 2 struct' do |struct_name, min_size|
     )
   end
 
+  describe '#data' do
+    subject { multiboot2_struct.data }
+
+    it { is_expected.to equal data }
+  end
+
+  describe '#to_s' do
+    subject { multiboot2_struct.to_s }
+
+    it { is_expected.to equal data }
+  end
+
   describe '#inspect' do
     subject(:inspect) { multiboot2_struct.inspect }
 
@@ -72,7 +84,7 @@ RSpec.shared_examples 'Multiboot 2 struct' do |struct_name, min_size|
   end
 
   describe '#enough?' do
-    subject(:enough?) { multiboot2_struct.enough? }
+    subject { multiboot2_struct.enough? }
 
     context 'for the fixture 0' do
       let(:fixture) { 0 }
@@ -106,7 +118,7 @@ RSpec.shared_examples 'Multiboot 2 struct' do |struct_name, min_size|
   end
 
   describe '#valid?' do
-    subject(:valid?) { multiboot2_struct.valid? }
+    subject { multiboot2_struct.valid? }
 
     context 'for the fixture 0' do
       let(:fixture) { 0 }

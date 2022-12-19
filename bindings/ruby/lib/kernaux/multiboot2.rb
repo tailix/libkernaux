@@ -28,10 +28,17 @@ module KernAux
     # @abstract It requires an implementation in C to use **libkernaux**.
     #
     class Struct
+      ##
+      # @return [String]
+      #
+      attr_reader :data
+
       def initialize(data = '')
         @data = String data
         freeze if @data.frozen?
       end
+
+      alias to_s data
 
       ##
       # @return [String]
