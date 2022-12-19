@@ -3,439 +3,56 @@
 #endif
 
 #include <assert.h>
-#include <stdlib.h>
-#include <string.h>
 
 #ifndef __USE_POSIX2
 #define __USE_POSIX2
 #endif
 #include <stdio.h>
 
-static const char output0[] =
-    "Multiboot 2 info {\n"
-    "  u32 size: 16\n"
-    "  u32 reserved: 0x0\n"
-    "}\n"
-    "Multiboot 2 info tag {\n"
-    "  u32 type: 0 (none)\n"
-    "  u32 size: 8\n"
-    "}\n";
-
-static const char output1[] =
-    "Multiboot 2 info {\n"
-    "  u32 size: 864\n"
-    "  u32 reserved: 0x0\n"
-    "}\n"
-    "Multiboot 2 info tag {\n"
-    "  u32 type: 21 (image load base phys addr)\n"
-    "  u32 size: 12\n"
-    "  u32 load_base_addr: 0x400000\n"
-    "}\n"
-    "Multiboot 2 info tag {\n"
-    "  u32 type: 1 (boot cmd line)\n"
-    "  u32 size: 21\n"
-    "  char cmdline[]: \"hello kernel\"\n"
-    "}\n"
-    "Multiboot 2 info tag {\n"
-    "  u32 type: 2 (boot loader name)\n"
-    "  u32 size: 30\n"
-    "  char name[]: \"GRUB 2.02-2ubuntu8.20\"\n"
-    "}\n"
-    "Multiboot 2 info tag {\n"
-    "  u32 type: 10 (APM table)\n"
-    "  u32 size: 28\n"
-    "  u16 version: 258\n"
-    "  u16 cseg: 61440\n"
-    "  u32 offset: 54479\n"
-    "  u16 cseg_16: 61440\n"
-    "  u16 dseg: 61440\n"
-    "  u16 flags: 3\n"
-    "  u16 cseg_len: 65520\n"
-    "  u16 cseg_16_len: 65520\n"
-    "  u16 dseg_len: 65520\n"
-    "}\n"
-    "Multiboot 2 info tag {\n"
-    "  u32 type: 3 (module)\n"
-    "  u32 size: 29\n"
-    "  u32 mod_start: 0x102000\n"
-    "  u32 mod_end: 0x10329c\n"
-    "  char cmdline[]: \"hello module\"\n"
-    "}\n"
-    "Multiboot 2 info tag {\n"
-    "  u32 type: 3 (module)\n"
-    "  u32 size: 17\n"
-    "  u32 mod_start: 0x104000\n"
-    "  u32 mod_end: 0x105254\n"
-    "  char cmdline[]: \"\"\n"
-    "}\n"
-    "Multiboot 2 info tag {\n"
-    "  u32 type: 6 (memory map)\n"
-    "  u32 size: 160\n"
-    "  u32 entry_size: 24\n"
-    "  u32 entry_version: 0\n"
-    "  varies(entry_size) entries[]: [\n"
-    "    [0] entry: {\n"
-    "      u64 base_addr: 0x0\n"
-    "      u64 length: 654336\n"
-    "      u32 type: 1\n"
-    "      u32 reserved: 0x0\n"
-    "    }\n"
-    "    [1] entry: {\n"
-    "      u64 base_addr: 0x9fc00\n"
-    "      u64 length: 1024\n"
-    "      u32 type: 2\n"
-    "      u32 reserved: 0x0\n"
-    "    }\n"
-    "    [2] entry: {\n"
-    "      u64 base_addr: 0xf0000\n"
-    "      u64 length: 65536\n"
-    "      u32 type: 2\n"
-    "      u32 reserved: 0x0\n"
-    "    }\n"
-    "    [3] entry: {\n"
-    "      u64 base_addr: 0x100000\n"
-    "      u64 length: 133038080\n"
-    "      u32 type: 1\n"
-    "      u32 reserved: 0x0\n"
-    "    }\n"
-    "    [4] entry: {\n"
-    "      u64 base_addr: 0x7fe0000\n"
-    "      u64 length: 131072\n"
-    "      u32 type: 2\n"
-    "      u32 reserved: 0x0\n"
-    "    }\n"
-    "    [5] entry: {\n"
-    "      u64 base_addr: 0xfffc0000\n"
-    "      u64 length: 262144\n"
-    "      u32 type: 2\n"
-    "      u32 reserved: 0x0\n"
-    "    }\n"
-    "  ]\n"
-    "}\n"
-    "Multiboot 2 info tag {\n"
-    "  u32 type: 9 (ELF symbols)\n"
-    "  u32 size: 420\n"
-    "  u32 num: 10\n"
-    "  u32 entsize: 40\n"
-    "  u32 shndx: 9\n"
-    "}\n"
-    "Multiboot 2 info tag {\n"
-    "  u32 type: 4 (basic memory info)\n"
-    "  u32 size: 16\n"
-    "  u32 mem_lower: 639\n"
-    "  u32 mem_upper: 129920\n"
-    "}\n"
-    "Multiboot 2 info tag {\n"
-    "  u32 type: 5 (BIOS boot device)\n"
-    "  u32 size: 20\n"
-    "  u32 biosdev: 224\n"
-    "  u32 partition: 4294967295\n"
-    "  u32 sub_partition: 4294967295\n"
-    "}\n"
-    "Multiboot 2 info tag {\n"
-    "  u32 type: 8 (framebuffer info)\n"
-    "  u32 size: 32\n"
-    "  u64 framebuffer_addr: 0xb8000\n"
-    "  u32 framebuffer_pitch: 160\n"
-    "  u32 framebuffer_width: 80\n"
-    "  u32 framebuffer_height: 25\n"
-    "  u8 framebuffer_bpp: 16\n"
-    "  u8 framebuffer_type: 2\n"
-    "  u16 reserved: 0x0\n"
-    "}\n"
-    "Multiboot 2 info tag {\n"
-    "  u32 type: 14 (ACPI old RSDP)\n"
-    "  u32 size: 28\n"
-    "}\n"
-    "Multiboot 2 info tag {\n"
-    "  u32 type: 0 (none)\n"
-    "  u32 size: 8\n"
-    "}\n";
-
-static const char output2_part1[] =
-    "Multiboot 2 info {\n"
-    "  u32 size: 1816\n"
-    "  u32 reserved: 0x0\n"
-    "}\n"
-    "Multiboot 2 info tag {\n"
-    "  u32 type: 1 (boot cmd line)\n"
-    "  u32 size: 23\n"
-    "  char cmdline[]: \"Hello, Kernel!\"\n"
-    "}\n"
-    "Multiboot 2 info tag {\n"
-    "  u32 type: 2 (boot loader name)\n"
-    "  u32 size: 30\n"
-    "  char name[]: \"GRUB 2.02-2ubuntu8.20\"\n"
-    "}\n"
-    "Multiboot 2 info tag {\n"
-    "  u32 type: 3 (module)\n"
-    "  u32 size: 33\n"
-    "  u32 mod_start: 0x7b\n"
-    "  u32 mod_end: 0x1c8\n"
-    "  char cmdline[]: \"Hello, Module 1!\"\n"
-    "}\n"
-    "Multiboot 2 info tag {\n"
-    "  u32 type: 3 (module)\n"
-    "  u32 size: 33\n"
-    "  u32 mod_start: 0x7b\n"
-    "  u32 mod_end: 0x1c8\n"
-    "  char cmdline[]: \"Hello, Module 2!\"\n"
-    "}\n"
-    "Multiboot 2 info tag {\n"
-    "  u32 type: 4 (basic memory info)\n"
-    "  u32 size: 16\n"
-    "  u32 mem_lower: 123\n"
-    "  u32 mem_upper: 456\n"
-    "}\n"
-    "Multiboot 2 info tag {\n"
-    "  u32 type: 5 (BIOS boot device)\n"
-    "  u32 size: 20\n"
-    "  u32 biosdev: 0\n"
-    "  u32 partition: 1\n"
-    "  u32 sub_partition: 2\n"
-    "}\n"
-    "Multiboot 2 info tag {\n"
-    "  u32 type: 6 (memory map)\n"
-    "  u32 size: 160\n"
-    "  u32 entry_size: 24\n"
-    "  u32 entry_version: 0\n"
-    "  varies(entry_size) entries[]: [\n"
-    "    [0] entry: {\n"
-    "      u64 base_addr: 0x0\n"
-    "      u64 length: 654336\n"
-    "      u32 type: 1\n"
-    "      u32 reserved: 0x0\n"
-    "    }\n"
-    "    [1] entry: {\n"
-    "      u64 base_addr: 0x9fc00\n"
-    "      u64 length: 1024\n"
-    "      u32 type: 2\n"
-    "      u32 reserved: 0x0\n"
-    "    }\n"
-    "    [2] entry: {\n"
-    "      u64 base_addr: 0xf0000\n"
-    "      u64 length: 65536\n"
-    "      u32 type: 2\n"
-    "      u32 reserved: 0x0\n"
-    "    }\n"
-    "    [3] entry: {\n"
-    "      u64 base_addr: 0x100000\n"
-    "      u64 length: 133038080\n"
-    "      u32 type: 1\n"
-    "      u32 reserved: 0x0\n"
-    "    }\n"
-    "    [4] entry: {\n"
-    "      u64 base_addr: 0x7fe0000\n"
-    "      u64 length: 131072\n"
-    "      u32 type: 2\n"
-    "      u32 reserved: 0x0\n"
-    "    }\n"
-    "    [5] entry: {\n"
-    "      u64 base_addr: 0xfffc0000\n"
-    "      u64 length: 262144\n"
-    "      u32 type: 2\n"
-    "      u32 reserved: 0x0\n"
-    "    }\n"
-    "  ]\n"
-    "}\n";
-
-static const char output2_part2[] =
-    "Multiboot 2 info tag {\n"
-    "  u32 type: 7 (VBE info)\n"
-    "  u32 size: 784\n"
-    "  u16 vbe_mode: 0\n"
-    "  u16 vbe_interface_seg: 123\n"
-    "  u16 vbe_interface_off: 456\n"
-    "  u16 vbe_interface_len: 789\n"
-    "  u8 vbe_control_info[]: [\n"
-    "    0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  \n"
-    "    1   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  \n"
-    "    12  0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  \n"
-    "    123 0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  \n"
-    "    0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   1  \n"
-    "    0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   12 \n"
-    "    0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   123\n"
-    "    0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  \n"
-    "    0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  \n"
-    "    0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  \n"
-    "    0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  \n"
-    "    0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  \n"
-    "    0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  \n"
-    "    0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  \n"
-    "    0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  \n"
-    "    0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  \n"
-    "    0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  \n"
-    "    0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  \n"
-    "    0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  \n"
-    "    0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  \n"
-    "    0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  \n"
-    "    0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  \n"
-    "    0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  \n"
-    "    0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  \n"
-    "    0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  \n"
-    "    0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  \n"
-    "    0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  \n"
-    "    0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  \n"
-    "    0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  \n"
-    "    0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  \n"
-    "    0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  \n"
-    "    0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  \n"
-    "  ]\n"
-    "  u8 vbe_mode_info[]: [\n"
-    "    0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  \n"
-    "    3   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  \n"
-    "    32  0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  \n"
-    "    255 0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  \n"
-    "    0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   3  \n"
-    "    0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   32 \n"
-    "    0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   255\n"
-    "    0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  \n"
-    "    0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  \n"
-    "    0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  \n"
-    "    0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  \n"
-    "    0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  \n"
-    "    0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  \n"
-    "    0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  \n"
-    "    0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  \n"
-    "    0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  \n"
-    "  ]\n"
-    "}\n";
-
-static const char output2_part3[] =
-    "Multiboot 2 info tag {\n"
-    "  u32 type: 8 (framebuffer info)\n"
-    "  u32 size: 40\n"
-    "  u64 framebuffer_addr: 0x7b\n"
-    "  u32 framebuffer_pitch: 456\n"
-    "  u32 framebuffer_width: 123\n"
-    "  u32 framebuffer_height: 456\n"
-    "  u8 framebuffer_bpp: 8\n"
-    "  u8 framebuffer_type: 1\n"
-    "  u16 reserved: 0x0\n"
-    "}\n"
-    "Multiboot 2 info tag {\n"
-    "  u32 type: 9 (ELF symbols)\n"
-    "  u32 size: 420\n"
-    "  u32 num: 10\n"
-    "  u32 entsize: 40\n"
-    "  u32 shndx: 9\n"
-    "}\n"
-    "Multiboot 2 info tag {\n"
-    "  u32 type: 10 (APM table)\n"
-    "  u32 size: 28\n"
-    "  u16 version: 0\n"
-    "  u16 cseg: 123\n"
-    "  u32 offset: 456\n"
-    "  u16 cseg_16: 789\n"
-    "  u16 dseg: 123\n"
-    "  u16 flags: 1\n"
-    "  u16 cseg_len: 456\n"
-    "  u16 cseg_16_len: 789\n"
-    "  u16 dseg_len: 123\n"
-    "}\n"
-    "Multiboot 2 info tag {\n"
-    "  u32 type: 11 (EFI 32bit system table ptr)\n"
-    "  u32 size: 12\n"
-    "  u32 pointer: 0\n"
-    "}\n"
-    "Multiboot 2 info tag {\n"
-    "  u32 type: 12 (EFI 64bit system table ptr)\n"
-    "  u32 size: 16\n"
-    "  u64 pointer: 0\n"
-    "}\n"
-    "Multiboot 2 info tag {\n"
-    "  u32 type: 13 (SMBIOS tables)\n"
-    "  u32 size: 24\n"
-    "  u8 major: 1\n"
-    "  u8 minor: 2\n"
-    "  u8 reserved[6]: [0x0, 0x0, 0x0, 0x0, 0x0, 0x0]\n"
-    "}\n"
-    "Multiboot 2 info tag {\n"
-    "  u32 type: 14 (ACPI old RSDP)\n"
-    "  u32 size: 16\n"
-    "}\n"
-    "Multiboot 2 info tag {\n"
-    "  u32 type: 15 (ACPI new RSDP)\n"
-    "  u32 size: 16\n"
-    "}\n"
-    "Multiboot 2 info tag {\n"
-    "  u32 type: 16 (networking info)\n"
-    "  u32 size: 16\n"
-    "}\n"
-    "Multiboot 2 info tag {\n"
-    "  u32 type: 17 (EFI memory map)\n"
-    "  u32 size: 24\n"
-    "  u32 descriptor_size: 123\n"
-    "  u32 descriptor_version: 1\n"
-    "}\n"
-    "Multiboot 2 info tag {\n"
-    "  u32 type: 18 (EFI boot services not terminated)\n"
-    "  u32 size: 8\n"
-    "}\n"
-    "Multiboot 2 info tag {\n"
-    "  u32 type: 19 (EFI 32bit image handle ptr)\n"
-    "  u32 size: 12\n"
-    "  u32 pointer: 0\n"
-    "}\n"
-    "Multiboot 2 info tag {\n"
-    "  u32 type: 20 (EFI 64bit image handle ptr)\n"
-    "  u32 size: 16\n"
-    "  u64 pointer: 0\n"
-    "}\n"
-    "Multiboot 2 info tag {\n"
-    "  u32 type: 21 (image load base phys addr)\n"
-    "  u32 size: 12\n"
-    "  u32 load_base_addr: 0x7b\n"
-    "}\n"
-    "Multiboot 2 info tag {\n"
-    "  u32 type: 0 (none)\n"
-    "  u32 size: 8\n"
-    "}\n";
-
 void test_main()
 {
     {
-        FILE *const fd = popen("./multiboot2_info_print0", "r");
-        assert(fd != NULL);
+        FILE *const print_file = popen("./multiboot2_info_print0", "r");
+        FILE *const text_file =
+            fopen("../fixtures/multiboot2_info_example0.txt", "r");
+        assert(print_file != NULL);
+        assert(text_file != NULL);
 
-        for (const char *ch = output0; *ch; ++ch) {
-            assert(fgetc(fd) == *ch);
+        while (!feof(text_file)) {
+            assert(fgetc(print_file) == fgetc(text_file));
         }
 
-        const int status = pclose(fd);
-        assert(status == 0);
+        assert(pclose(print_file) == 0);
+        assert(fclose(text_file) == 0);
     }
 
     {
-        FILE *const fd = popen("./multiboot2_info_print1", "r");
-        assert(fd != NULL);
+        FILE *const print_file = popen("./multiboot2_info_print1", "r");
+        FILE *const text_file =
+            fopen("../fixtures/multiboot2_info_example1.txt", "r");
+        assert(print_file != NULL);
+        assert(text_file != NULL);
 
-        for (const char *ch = output1; *ch; ++ch) {
-            assert(fgetc(fd) == *ch);
+        while (!feof(text_file)) {
+            assert(fgetc(print_file) == fgetc(text_file));
         }
 
-        const int status = pclose(fd);
-        assert(status == 0);
+        assert(pclose(print_file) == 0);
+        assert(fclose(text_file) == 0);
     }
 
     {
-        const size_t part1_len = strlen(output2_part1);
-        const size_t part2_len = strlen(output2_part2);
-        const size_t part3_len = strlen(output2_part3);
-        char *const output2 = malloc(1 + part1_len + part2_len + part3_len);
-        assert(output2);
-        strcpy(output2, output2_part1);
-        strcat(output2, output2_part2);
-        strcat(output2, output2_part3);
+        FILE *const print_file = popen("./multiboot2_info_print2", "r");
+        FILE *const text_file =
+            fopen("../fixtures/multiboot2_info_example2.txt", "r");
+        assert(print_file != NULL);
+        assert(text_file != NULL);
 
-        FILE *const fd = popen("./multiboot2_info_print2", "r");
-        assert(fd != NULL);
-
-        for (const char *ch = output2; *ch; ++ch) {
-            assert(fgetc(fd) == *ch);
+        while (!feof(text_file)) {
+            assert(fgetc(print_file) == fgetc(text_file));
         }
 
-        const int status = pclose(fd);
-        assert(status == 0);
+        assert(pclose(print_file) == 0);
+        assert(fclose(text_file) == 0);
     }
 }
