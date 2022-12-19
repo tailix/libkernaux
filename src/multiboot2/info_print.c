@@ -462,9 +462,16 @@ void KernAux_Multiboot2_ITag_ELFSymbols_print(
             KERNAUX_CAST_CONST(unsigned long, addralign, section->addralign);
             KERNAUX_CAST_CONST(unsigned long, entsize,   section->entsize);
 
+            const char *const type_name =
+#ifdef WITH_ELF
+                KernAux_ELF_Section_Type_to_str(section->type);
+#else
+                "?";
+#endif
+
             PRINTLNF("    [%zu]: {", index);
             PRINTLNF("      name: %lu",      name);
-            PRINTLNF("      type: %lu",      type);
+            PRINTLNF("      type: %lu (%s)", type, type_name);
             PRINTLNF("      flags: 0x%lx",   flags);
             PRINTLNF("      addr: 0x%lx",    addr);
             PRINTLNF("      offset: 0x%lx",  offset);

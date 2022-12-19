@@ -163,7 +163,7 @@ Multiboot 2 info tag {
   varies(entsize) section_headers[]: [
     [0]: {
       name: 0
-      type: 0
+      type: 0 (NULL)
       flags: 0x0
       addr: 0x0
       offset: 0x0
@@ -175,7 +175,7 @@ Multiboot 2 info tag {
     }
     [1]: {
       name: 27
-      type: 1
+      type: 1 (PROGBITS)
       flags: 0x6
       addr: 0x400000
       offset: 0x1000
@@ -187,7 +187,7 @@ Multiboot 2 info tag {
     }
     [2]: {
       name: 33
-      type: 1
+      type: 1 (PROGBITS)
       flags: 0x2
       addr: 0x404000
       offset: 0x5000
@@ -199,7 +199,7 @@ Multiboot 2 info tag {
     }
     [3]: {
       name: 41
-      type: 1
+      type: 1 (PROGBITS)
       flags: 0x2
       addr: 0x404b08
       offset: 0x5b08
@@ -211,7 +211,7 @@ Multiboot 2 info tag {
     }
     [4]: {
       name: 51
-      type: 1
+      type: 1 (PROGBITS)
       flags: 0x3
       addr: 0x406000
       offset: 0x7000
@@ -223,7 +223,7 @@ Multiboot 2 info tag {
     }
     [5]: {
       name: 57
-      type: 8
+      type: 8 (NOBITS)
       flags: 0x3
       addr: 0x407000
       offset: 0x7001
@@ -235,7 +235,7 @@ Multiboot 2 info tag {
     }
     [6]: {
       name: 62
-      type: 1
+      type: 1 (PROGBITS)
       flags: 0x30
       addr: 0x100000
       offset: 0x7001
@@ -247,7 +247,7 @@ Multiboot 2 info tag {
     }
     [7]: {
       name: 1
-      type: 2
+      type: 2 (SYMTAB)
       flags: 0x0
       addr: 0x100014
       offset: 0x7014
@@ -259,7 +259,7 @@ Multiboot 2 info tag {
     }
     [8]: {
       name: 9
-      type: 3
+      type: 3 (STRTAB)
       flags: 0x0
       addr: 0x100cc4
       offset: 0x7cc4
@@ -271,7 +271,7 @@ Multiboot 2 info tag {
     }
     [9]: {
       name: 17
-      type: 3
+      type: 3 (STRTAB)
       flags: 0x0
       addr: 0x101a94
       offset: 0x8a94
