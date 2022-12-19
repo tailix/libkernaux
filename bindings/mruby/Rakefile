@@ -4,7 +4,7 @@ desc 'Run default checks'
 task default: :lint
 
 desc 'Run code analysis tools'
-task lint: :rubocop
+task lint: %i[rubocop cppcheck]
 
 desc 'Fix code style (rubocop --auto-correct)'
 task fix: 'rubocop:auto_correct'
@@ -14,4 +14,16 @@ begin
   RuboCop::RakeTask.new
 rescue LoadError
   nil
+end
+
+desc 'Run cppcheck'
+task :cppcheck do
+  sh(
+    'cppcheck',
+    '--quiet',
+    '--error-exitcode=1',
+    '--std=c99',
+    '--enable=warning,style,performance,portability',
+    __dir__,
+  )
 end

@@ -7,8 +7,8 @@
 #include <assert.h>
 #include <stdint.h>
 
-#include "multiboot2_header_example2.h"
-#include "multiboot2_info_example2.h"
+#include "../fixtures/multiboot2_header_example2.h"
+#include "../fixtures/multiboot2_info_example2.h"
 
 #define HEAD_SIZEOF1(type, inst, size)                                       \
     do {                                                                     \

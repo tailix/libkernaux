@@ -34,7 +34,7 @@ jobs:
       - name: autogen
         run: ./autogen.sh
       - name: configure
-        run: ./configure ${{matrix.debug}} --enable-checks --enable-checks-pthreads --enable-checks-python CC='${{matrix.cc}}' CFLAGS='${{matrix.opt}}'
+        run: ./configure ${{matrix.debug}} --enable-fixtures --enable-checks --enable-checks-pthreads --enable-checks-python CC='${{matrix.cc}}' CFLAGS='${{matrix.opt}}'
       - name: make
         run: make
       - name: check

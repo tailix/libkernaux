@@ -1,0 +1,11 @@
+Multiboot 2 header {
+  u32 magic: 0xe85250d6
+  u32 arch: 0 (i386)
+  u32 size: 24
+  u32 checksum: 0x17adaf12
+}
+Multiboot 2 header tag {
+  u16 type: 0 (none)
+  u16 flags: 0x0 ()
+  u32 size: 8
+}

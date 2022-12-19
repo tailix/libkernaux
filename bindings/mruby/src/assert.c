@@ -1,8 +1,5 @@
 #include "main.h"
 
-#include <stddef.h>
-#include <string.h>
-
 #include <mruby/presym.h>
 #include <mruby/string.h>
 #include <mruby/variable.h>

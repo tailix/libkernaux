@@ -1,0 +1,234 @@
+Multiboot 2 info {
+  u32 size: 1816
+  u32 reserved: 0x0
+}
+Multiboot 2 info tag {
+  u32 type: 1 (boot cmd line)
+  u32 size: 23
+  char cmdline[]: "Hello, Kernel!"
+}
+Multiboot 2 info tag {
+  u32 type: 2 (boot loader name)
+  u32 size: 30
+  char name[]: "GRUB 2.02-2ubuntu8.20"
+}
+Multiboot 2 info tag {
+  u32 type: 3 (module)
+  u32 size: 33
+  u32 mod_start: 0x7b
+  u32 mod_end: 0x1c8
+  char cmdline[]: "Hello, Module 1!"
+}
+Multiboot 2 info tag {
+  u32 type: 3 (module)
+  u32 size: 33
+  u32 mod_start: 0x7b
+  u32 mod_end: 0x1c8
+  char cmdline[]: "Hello, Module 2!"
+}
+Multiboot 2 info tag {
+  u32 type: 4 (basic memory info)
+  u32 size: 16
+  u32 mem_lower: 123
+  u32 mem_upper: 456
+}
+Multiboot 2 info tag {
+  u32 type: 5 (BIOS boot device)
+  u32 size: 20
+  u32 biosdev: 0
+  u32 partition: 1
+  u32 sub_partition: 2
+}
+Multiboot 2 info tag {
+  u32 type: 6 (memory map)
+  u32 size: 160
+  u32 entry_size: 24
+  u32 entry_version: 0
+  varies(entry_size) entries[]: [
+    [0] entry: {
+      u64 base_addr: 0x0
+      u64 length: 654336
+      u32 type: 1
+      u32 reserved: 0x0
+    }
+    [1] entry: {
+      u64 base_addr: 0x9fc00
+      u64 length: 1024
+      u32 type: 2
+      u32 reserved: 0x0
+    }
+    [2] entry: {
+      u64 base_addr: 0xf0000
+      u64 length: 65536
+      u32 type: 2
+      u32 reserved: 0x0
+    }
+    [3] entry: {
+      u64 base_addr: 0x100000
+      u64 length: 133038080
+      u32 type: 1
+      u32 reserved: 0x0
+    }
+    [4] entry: {
+      u64 base_addr: 0x7fe0000
+      u64 length: 131072
+      u32 type: 2
+      u32 reserved: 0x0
+    }
+    [5] entry: {
+      u64 base_addr: 0xfffc0000
+      u64 length: 262144
+      u32 type: 2
+      u32 reserved: 0x0
+    }
+  ]
+}
+Multiboot 2 info tag {
+  u32 type: 7 (VBE info)
+  u32 size: 784
+  u16 vbe_mode: 0
+  u16 vbe_interface_seg: 123
+  u16 vbe_interface_off: 456
+  u16 vbe_interface_len: 789
+  u8 vbe_control_info[]: [
+    0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  
+    1   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  
+    12  0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  
+    123 0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  
+    0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   1  
+    0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   12 
+    0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   123
+    0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  
+    0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  
+    0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  
+    0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  
+    0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  
+    0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  
+    0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  
+    0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  
+    0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  
+    0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  
+    0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  
+    0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  
+    0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  
+    0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  
+    0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  
+    0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  
+    0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  
+    0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  
+    0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  
+    0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  
+    0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  
+    0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  
+    0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  
+    0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  
+    0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  
+  ]
+  u8 vbe_mode_info[]: [
+    0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  
+    3   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  
+    32  0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  
+    255 0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  
+    0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   3  
+    0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   32 
+    0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   255
+    0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  
+    0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  
+    0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  
+    0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  
+    0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  
+    0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  
+    0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  
+    0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  
+    0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  
+  ]
+}
+Multiboot 2 info tag {
+  u32 type: 8 (framebuffer info)
+  u32 size: 40
+  u64 framebuffer_addr: 0x7b
+  u32 framebuffer_pitch: 456
+  u32 framebuffer_width: 123
+  u32 framebuffer_height: 456
+  u8 framebuffer_bpp: 8
+  u8 framebuffer_type: 1
+  u16 reserved: 0x0
+}
+Multiboot 2 info tag {
+  u32 type: 9 (ELF symbols)
+  u32 size: 420
+  u32 num: 10
+  u32 entsize: 40
+  u32 shndx: 9
+}
+Multiboot 2 info tag {
+  u32 type: 10 (APM table)
+  u32 size: 28
+  u16 version: 0
+  u16 cseg: 123
+  u32 offset: 456
+  u16 cseg_16: 789
+  u16 dseg: 123
+  u16 flags: 1
+  u16 cseg_len: 456
+  u16 cseg_16_len: 789
+  u16 dseg_len: 123
+}
+Multiboot 2 info tag {
+  u32 type: 11 (EFI 32bit system table ptr)
+  u32 size: 12
+  u32 pointer: 0
+}
+Multiboot 2 info tag {
+  u32 type: 12 (EFI 64bit system table ptr)
+  u32 size: 16
+  u64 pointer: 0
+}
+Multiboot 2 info tag {
+  u32 type: 13 (SMBIOS tables)
+  u32 size: 24
+  u8 major: 1
+  u8 minor: 2
+  u8 reserved[6]: [0x0, 0x0, 0x0, 0x0, 0x0, 0x0]
+}
+Multiboot 2 info tag {
+  u32 type: 14 (ACPI old RSDP)
+  u32 size: 16
+}
+Multiboot 2 info tag {
+  u32 type: 15 (ACPI new RSDP)
+  u32 size: 16
+}
+Multiboot 2 info tag {
+  u32 type: 16 (networking info)
+  u32 size: 16
+}
+Multiboot 2 info tag {
+  u32 type: 17 (EFI memory map)
+  u32 size: 24
+  u32 descriptor_size: 123
+  u32 descriptor_version: 1
+}
+Multiboot 2 info tag {
+  u32 type: 18 (EFI boot services not terminated)
+  u32 size: 8
+}
+Multiboot 2 info tag {
+  u32 type: 19 (EFI 32bit image handle ptr)
+  u32 size: 12
+  u32 pointer: 0
+}
+Multiboot 2 info tag {
+  u32 type: 20 (EFI 64bit image handle ptr)
+  u32 size: 16
+  u64 pointer: 0
+}
+Multiboot 2 info tag {
+  u32 type: 21 (image load base phys addr)
+  u32 size: 12
+  u32 load_base_addr: 0x7b
+}
+Multiboot 2 info tag {
+  u32 type: 0 (none)
+  u32 size: 8
+}
