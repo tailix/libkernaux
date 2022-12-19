@@ -3,6 +3,14 @@ include $(top_srcdir)/make/shared.am
 noinst_PROGRAMS =
 nodist_noinst_DATA =
 
+EXTRA_DIST = \
+	multiboot2_header_example0.txt \
+	multiboot2_header_example1.txt \
+	multiboot2_header_example2.txt \
+	multiboot2_info_example0.txt \
+	multiboot2_info_example1.txt \
+	multiboot2_info_example2.txt
+
 #########################################
 # multiboot2_(header|info)_example*.bin #
 #########################################

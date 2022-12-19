@@ -217,7 +217,10 @@ TESTS += test_multiboot2_header_print
 test_multiboot2_header_print_DEPENDENCIES = \
 	multiboot2_header_print0 \
 	multiboot2_header_print1 \
-	multiboot2_header_print2
+	multiboot2_header_print2 \
+	../fixtures/multiboot2_header_example0.txt \
+	../fixtures/multiboot2_header_example1.txt \
+	../fixtures/multiboot2_header_example2.txt
 test_multiboot2_header_print_LDADD = $(top_builddir)/libkernaux.la
 test_multiboot2_header_print_SOURCES = \
 	main.c \
@@ -261,7 +264,10 @@ TESTS += test_multiboot2_info_print
 test_multiboot2_info_print_DEPENDENCIES = \
 	multiboot2_info_print0 \
 	multiboot2_info_print1 \
-	multiboot2_info_print2
+	multiboot2_info_print2 \
+	../fixtures/multiboot2_info_example0.txt \
+	../fixtures/multiboot2_info_example1.txt \
+	../fixtures/multiboot2_info_example2.txt
 test_multiboot2_info_print_LDADD = $(top_builddir)/libkernaux.la
 test_multiboot2_info_print_SOURCES = \
 	main.c \

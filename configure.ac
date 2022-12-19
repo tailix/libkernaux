@@ -33,6 +33,8 @@ AC_CONFIG_FILES([
   libc/include/Makefile
   include/kernaux/version.h
   tests/Makefile
+  tests/test_multiboot2_header_print.c
+  tests/test_multiboot2_info_print.c
 ])
 
 AM_INIT_AUTOMAKE([1.16 subdir-objects])
