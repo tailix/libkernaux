@@ -12,9 +12,10 @@
 void test_main()
 {
     {
-        FILE *const print_file = popen("./multiboot2_header_print0", "r");
+        FILE *const print_file =
+            popen("@abs_top_builddir@/tests/multiboot2_header_print0", "r");
         FILE *const text_file =
-            fopen("../fixtures/multiboot2_header_example0.txt", "r");
+            fopen("@abs_top_srcdir@/fixtures/multiboot2_header_example0.txt", "r");
         assert(print_file != NULL);
         assert(text_file != NULL);
 
@@ -27,9 +28,10 @@ void test_main()
     }
 
     {
-        FILE *const print_file = popen("./multiboot2_header_print1", "r");
+        FILE *const print_file =
+            popen("@abs_top_builddir@/tests/multiboot2_header_print1", "r");
         FILE *const text_file =
-            fopen("../fixtures/multiboot2_header_example1.txt", "r");
+            fopen("@abs_top_srcdir@/fixtures/multiboot2_header_example1.txt", "r");
         assert(print_file != NULL);
         assert(text_file != NULL);
 
@@ -42,9 +44,10 @@ void test_main()
     }
 
     {
-        FILE *const print_file = popen("./multiboot2_header_print2", "r");
+        FILE *const print_file =
+            popen("@abs_top_builddir@/tests/multiboot2_header_print2", "r");
         FILE *const text_file =
-            fopen("../fixtures/multiboot2_header_example2.txt", "r");
+            fopen("@abs_top_srcdir@/fixtures/multiboot2_header_example2.txt", "r");
         assert(print_file != NULL);
         assert(text_file != NULL);
 
