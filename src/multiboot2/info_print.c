@@ -325,7 +325,7 @@ void KernAux_Multiboot2_ITag_MemoryMap_print(
         KERNAUX_CAST_CONST(unsigned long,      type,      entries[index].type);
         KERNAUX_CAST_CONST(unsigned long,      reserved,  entries[index].reserved);
 
-        PRINTLNF("    [%zu] entry: {", index);
+        PRINTLNF("    [%zu]: {", index);
         PRINTLNF("      u64 base_addr: 0x%llx", base_addr);
         PRINTLNF("      u64 length: %llu",      length);
         PRINTLNF("      u32 type: %lu",         type);
