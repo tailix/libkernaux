@@ -309,31 +309,43 @@ void KernAux_Multiboot2_ITag_MemoryMap_print(
 
     // Print data:
 
-    PRINTLN ("  varies(entry_size) entries[]: [");
+    if (tag->entry_size == 0 ||
+        (tag->base.size - sizeof(*tag)) / tag->entry_size == 0)
+    {
+        PRINTLN ("  varies(entry_size) entries[]: []");
+    } else {
+        PRINTLN ("  varies(entry_size) entries[]: [");
 
-    const struct KernAux_Multiboot2_ITag_MemoryMap_EntryBase *const entries =
-        (struct KernAux_Multiboot2_ITag_MemoryMap_EntryBase*)
-        KERNAUX_MULTIBOOT2_DATA(tag);
+        const struct KernAux_Multiboot2_ITag_MemoryMap_EntryBase*
+            const entries =
+            (struct KernAux_Multiboot2_ITag_MemoryMap_EntryBase*)
+            KERNAUX_MULTIBOOT2_DATA(tag);
 
-    for (
-        size_t index = 0;
-        index < (tag->base.size - sizeof(*tag)) / tag->entry_size;
-        ++index
-    ) {
-        KERNAUX_CAST_CONST(unsigned long long, base_addr, entries[index].base_addr);
-        KERNAUX_CAST_CONST(unsigned long long, length,    entries[index].length);
-        KERNAUX_CAST_CONST(unsigned long,      type,      entries[index].type);
-        KERNAUX_CAST_CONST(unsigned long,      reserved,  entries[index].reserved);
+        for (
+            size_t index = 0;
+            index < (tag->base.size - sizeof(*tag)) / tag->entry_size;
+            ++index
+        ) {
+            KERNAUX_CAST_CONST(unsigned long long, base_addr,
+                               entries[index].base_addr);
+            KERNAUX_CAST_CONST(unsigned long long, length,
+                               entries[index].length);
+            KERNAUX_CAST_CONST(unsigned long, type,
+                               entries[index].type);
+            KERNAUX_CAST_CONST(unsigned long, reserved,
+                               entries[index].reserved);
 
-        PRINTLNF("    [%zu]: {", index);
-        PRINTLNF("      u64 base_addr: 0x%llx", base_addr);
-        PRINTLNF("      u64 length: %llu",      length);
-        PRINTLNF("      u32 type: %lu",         type);
-        PRINTLNF("      u32 reserved: 0x%lx",   reserved);
-        PRINTLN ("    }");
+            PRINTLNF("    [%zu]: {", index);
+            PRINTLNF("      u64 base_addr: 0x%llx", base_addr);
+            PRINTLNF("      u64 length: %llu",      length);
+            PRINTLNF("      u32 type: %lu",         type);
+            PRINTLNF("      u32 reserved: 0x%lx",   reserved);
+            PRINTLN ("    }");
+        }
+
+        PRINTLN("  ]");
     }
 
-    PRINTLN("  ]");
     FOOTER;
 }
 
@@ -429,43 +441,48 @@ void KernAux_Multiboot2_ITag_ELFSymbols_print(
 
     // Print data:
 
-    PRINTLN("  varies(entsize) section_headers: [");
+    if (tag->num == 0) {
+        PRINTLN("  varies(entsize) section_headers[]: []");
+    } else {
+        PRINTLN("  varies(entsize) section_headers[]: [");
 
-    const struct KernAux_ELF_Section *section =
-        (const struct KernAux_ELF_Section*)
-        KERNAUX_MULTIBOOT2_DATA(tag);
-
-    for (size_t index = 0; index < tag->num; ++index) {
-        KERNAUX_CAST_CONST(unsigned long, name,      section->name);
-        KERNAUX_CAST_CONST(unsigned long, type,      section->type);
-        KERNAUX_CAST_CONST(unsigned long, flags,     section->flags);
-        KERNAUX_CAST_CONST(unsigned long, addr,      section->addr);
-        KERNAUX_CAST_CONST(unsigned long, offset,    section->offset);
-        KERNAUX_CAST_CONST(unsigned long, size,      section->size);
-        KERNAUX_CAST_CONST(unsigned long, link,      section->link);
-        KERNAUX_CAST_CONST(unsigned long, info,      section->info);
-        KERNAUX_CAST_CONST(unsigned long, addralign, section->addralign);
-        KERNAUX_CAST_CONST(unsigned long, entsize,   section->entsize);
-
-        PRINTLNF("    [%zu]: {", index);
-        PRINTLNF("      name: %lu",      name);
-        PRINTLNF("      type: %lu",      type);
-        PRINTLNF("      flags: 0x%lx",   flags);
-        PRINTLNF("      addr: 0x%lx",    addr);
-        PRINTLNF("      offset: 0x%lx",  offset);
-        PRINTLNF("      size: %lu",      size);
-        PRINTLNF("      link: %lu",      link);
-        PRINTLNF("      info: %lu",      info);
-        PRINTLNF("      addralign: %lu", addralign);
-        PRINTLNF("      entsize: %lu",   entsize);
-        PRINTLN ("    }");
-
-        section =
+        const struct KernAux_ELF_Section *section =
             (const struct KernAux_ELF_Section*)
-            (((const uint8_t*)section) + tag->entsize);
+            KERNAUX_MULTIBOOT2_DATA(tag);
+
+        for (size_t index = 0; index < tag->num; ++index) {
+            KERNAUX_CAST_CONST(unsigned long, name,      section->name);
+            KERNAUX_CAST_CONST(unsigned long, type,      section->type);
+            KERNAUX_CAST_CONST(unsigned long, flags,     section->flags);
+            KERNAUX_CAST_CONST(unsigned long, addr,      section->addr);
+            KERNAUX_CAST_CONST(unsigned long, offset,    section->offset);
+            KERNAUX_CAST_CONST(unsigned long, size,      section->size);
+            KERNAUX_CAST_CONST(unsigned long, link,      section->link);
+            KERNAUX_CAST_CONST(unsigned long, info,      section->info);
+            KERNAUX_CAST_CONST(unsigned long, addralign, section->addralign);
+            KERNAUX_CAST_CONST(unsigned long, entsize,   section->entsize);
+
+            PRINTLNF("    [%zu]: {", index);
+            PRINTLNF("      name: %lu",      name);
+            PRINTLNF("      type: %lu",      type);
+            PRINTLNF("      flags: 0x%lx",   flags);
+            PRINTLNF("      addr: 0x%lx",    addr);
+            PRINTLNF("      offset: 0x%lx",  offset);
+            PRINTLNF("      size: %lu",      size);
+            PRINTLNF("      link: %lu",      link);
+            PRINTLNF("      info: %lu",      info);
+            PRINTLNF("      addralign: %lu", addralign);
+            PRINTLNF("      entsize: %lu",   entsize);
+            PRINTLN ("    }");
+
+            section =
+                (const struct KernAux_ELF_Section*)
+                (((const uint8_t*)section) + tag->entsize);
+        }
+
+        PRINTLN("  ]");
     }
 
-    PRINTLN("  ]");
     FOOTER;
 }
 

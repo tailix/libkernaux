@@ -94,7 +94,7 @@ Multiboot 2 info tag {
   u32 num: 10
   u32 entsize: 40
   u32 shndx: 9
-  varies(entsize) section_headers: [
+  varies(entsize) section_headers[]: [
     [0]: {
       name: 0
       type: 0
