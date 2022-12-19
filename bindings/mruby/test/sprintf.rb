@@ -65,12 +65,12 @@ if KernAux::Version.with_printf?
     end
 
     [
-      ['',      'using regular tests'],
-      ['_orig', 'using original tests'],
+      ['',      'using regular fixtures'],
+      ['_orig', 'using original fixtures'],
     ].each do |(suffix, description)|
       assert description do
         printf_yml =
-          File.expand_path("../../../../common/printf#{suffix}.yml", __FILE__)
+          File.expand_path("../../../../fixtures/printf#{suffix}.yml", __FILE__)
 
         YAML.load(File.read(printf_yml)).each do |test|
           expected = test['result']

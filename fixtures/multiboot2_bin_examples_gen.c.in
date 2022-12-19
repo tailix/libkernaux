@@ -1,0 +1,84 @@
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
+
+#include <kernaux/assert.h>
+
+#include <assert.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#include "multiboot2_header_example0.h"
+#include "multiboot2_header_example1.h"
+#include "multiboot2_header_example2.h"
+#include "multiboot2_info_example0.h"
+#include "multiboot2_info_example1.h"
+#include "multiboot2_info_example2.h"
+
+static void assert_cb(
+    const char *const file,
+    const int line,
+    const char *const msg
+) {
+    fprintf(stderr, "%s:%d:%s\n", file, line, msg);
+    abort();
+}
+
+#define EXAMPLE(type, number) do { \
+    static const char *const filename =                                      \
+      "@abs_top_builddir@/fixtures/multiboot2_"#type"_example"#number".bin"; \
+    FILE *const file = fopen(filename, "w");                                 \
+    assert(file);                                                            \
+    assert(                                                                  \
+        fwrite(                                                              \
+            &multiboot2_##type##_example##number,                            \
+            1,                                                               \
+            sizeof(multiboot2_##type##_example##number),                     \
+            file                                                             \
+        ) == sizeof(multiboot2_##type##_example##number)                     \
+    );                                                                       \
+    assert(fclose(file) == 0);                                               \
+} while (0)
+
+int main(const int argc, const char *const *const argv)
+{
+    kernaux_assert_cb = assert_cb;
+
+    assert(argc == 3);
+
+    const char *const type   = argv[1];
+    const char *const number = argv[2];
+
+    if (strcmp(type, "header") == 0) {
+        if (strcmp(number, "0") == 0) {
+            EXAMPLE(header, 0);
+        }
+        else if (strcmp(number, "1") == 0) {
+            EXAMPLE(header, 1);
+        }
+        else if (strcmp(number, "2") == 0) {
+            EXAMPLE(header, 2);
+        }
+        else {
+            abort();
+        }
+    } else if (strcmp(type, "info") == 0) {
+        if (strcmp(number, "0") == 0) {
+            EXAMPLE(info, 0);
+        }
+        else if (strcmp(number, "1") == 0) {
+            EXAMPLE(info, 1);
+        }
+        else if (strcmp(number, "2") == 0) {
+            EXAMPLE(info, 2);
+        }
+        else {
+            abort();
+        }
+    } else {
+      abort();
+    }
+
+    exit(EXIT_SUCCESS);
+}

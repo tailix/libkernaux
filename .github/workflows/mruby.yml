@@ -46,6 +46,3 @@ jobs:
       - working-directory: bindings/mruby
         name: lint
         run: rake
-      - working-directory: bindings/mruby
-        name: cppcheck
-        run: cppcheck --quiet --error-exitcode=1 --std=c99 --enable=warning,style,performance,portability .

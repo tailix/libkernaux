@@ -12,7 +12,7 @@ main_freebsd_task:
     - pip install --user Jinja2 PyYAML
   main_build_script:
     - ./autogen.sh
-    - ./configure --enable-debug --enable-checks-all CFLAGS='-O3'
+    - ./configure --enable-debug --enable-fixtures --enable-checks-all CFLAGS='-O3'
     - make
     - sudo make install
   main_test_script:
@@ -46,7 +46,7 @@ ruby_freebsd_task:
     CPATH: '/usr/local/include'
     LIBRARY_PATH: '/usr/local/lib'
   dependencies_script:
-    - pkg install --yes autoconf automake git libtool wget
+    - pkg install --yes autoconf automake cppcheck git libtool wget
   dependencies_ruby_script:
     - wget https://cache.ruby-lang.org/pub/ruby/3.0/ruby-3.0.3.tar.gz
     - tar -xzf ruby-3.0.3.tar.gz
