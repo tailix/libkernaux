@@ -116,6 +116,8 @@ KERNAUX_STATIC_TEST_STRUCT_SIZE(KernAux_ELF_Section, 40);
 #define KERNAUX_ELF_SECT_FLAGS_EXECINSTR 0x4
 #define KERNAUX_ELF_SECT_FLAGS_MASKPROC  0xf0000000
 
+const char *KernAux_ELF_Section_Type_to_str(uint32_t type);
+
 struct KernAux_ELF_Symbol {
     uint32_t name;
     uint32_t value;
