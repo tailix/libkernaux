@@ -1,0 +1,129 @@
+Multiboot 2 info {
+  u32 size: 864
+  u32 reserved: 0x0
+}
+Multiboot 2 info tag {
+  u32 type: 21 (image load base phys addr)
+  u32 size: 12
+  u32 load_base_addr: 0x400000
+}
+Multiboot 2 info tag {
+  u32 type: 1 (boot cmd line)
+  u32 size: 21
+  char cmdline[]: "hello kernel"
+}
+Multiboot 2 info tag {
+  u32 type: 2 (boot loader name)
+  u32 size: 30
+  char name[]: "GRUB 2.02-2ubuntu8.20"
+}
+Multiboot 2 info tag {
+  u32 type: 10 (APM table)
+  u32 size: 28
+  u16 version: 258
+  u16 cseg: 61440
+  u32 offset: 54479
+  u16 cseg_16: 61440
+  u16 dseg: 61440
+  u16 flags: 3
+  u16 cseg_len: 65520
+  u16 cseg_16_len: 65520
+  u16 dseg_len: 65520
+}
+Multiboot 2 info tag {
+  u32 type: 3 (module)
+  u32 size: 29
+  u32 mod_start: 0x102000
+  u32 mod_end: 0x10329c
+  char cmdline[]: "hello module"
+}
+Multiboot 2 info tag {
+  u32 type: 3 (module)
+  u32 size: 17
+  u32 mod_start: 0x104000
+  u32 mod_end: 0x105254
+  char cmdline[]: ""
+}
+Multiboot 2 info tag {
+  u32 type: 6 (memory map)
+  u32 size: 160
+  u32 entry_size: 24
+  u32 entry_version: 0
+  varies(entry_size) entries[]: [
+    [0] entry: {
+      u64 base_addr: 0x0
+      u64 length: 654336
+      u32 type: 1
+      u32 reserved: 0x0
+    }
+    [1] entry: {
+      u64 base_addr: 0x9fc00
+      u64 length: 1024
+      u32 type: 2
+      u32 reserved: 0x0
+    }
+    [2] entry: {
+      u64 base_addr: 0xf0000
+      u64 length: 65536
+      u32 type: 2
+      u32 reserved: 0x0
+    }
+    [3] entry: {
+      u64 base_addr: 0x100000
+      u64 length: 133038080
+      u32 type: 1
+      u32 reserved: 0x0
+    }
+    [4] entry: {
+      u64 base_addr: 0x7fe0000
+      u64 length: 131072
+      u32 type: 2
+      u32 reserved: 0x0
+    }
+    [5] entry: {
+      u64 base_addr: 0xfffc0000
+      u64 length: 262144
+      u32 type: 2
+      u32 reserved: 0x0
+    }
+  ]
+}
+Multiboot 2 info tag {
+  u32 type: 9 (ELF symbols)
+  u32 size: 420
+  u32 num: 10
+  u32 entsize: 40
+  u32 shndx: 9
+}
+Multiboot 2 info tag {
+  u32 type: 4 (basic memory info)
+  u32 size: 16
+  u32 mem_lower: 639
+  u32 mem_upper: 129920
+}
+Multiboot 2 info tag {
+  u32 type: 5 (BIOS boot device)
+  u32 size: 20
+  u32 biosdev: 224
+  u32 partition: 4294967295
+  u32 sub_partition: 4294967295
+}
+Multiboot 2 info tag {
+  u32 type: 8 (framebuffer info)
+  u32 size: 32
+  u64 framebuffer_addr: 0xb8000
+  u32 framebuffer_pitch: 160
+  u32 framebuffer_width: 80
+  u32 framebuffer_height: 25
+  u8 framebuffer_bpp: 16
+  u8 framebuffer_type: 2
+  u16 reserved: 0x0
+}
+Multiboot 2 info tag {
+  u32 type: 14 (ACPI old RSDP)
+  u32 size: 28
+}
+Multiboot 2 info tag {
+  u32 type: 0 (none)
+  u32 size: 8
+}

@@ -1,0 +1,52 @@
+Multiboot 2 header {
+  u32 magic: 0xe85250d6
+  u32 arch: 4 (MIPS32)
+  u32 size: 104
+  u32 checksum: 0x17adaebe
+}
+Multiboot 2 header tag {
+  u16 type: 4 (flags)
+  u16 flags: 0x0 ()
+  u32 size: 12
+  u32 console_flags: 0x0 ()
+}
+Multiboot 2 header tag {
+  u16 type: 4 (flags)
+  u16 flags: 0x0 ()
+  u32 size: 12
+  u32 console_flags: 0x1 (
+    REQUIRE_CONSOLE
+  )
+}
+Multiboot 2 header tag {
+  u16 type: 4 (flags)
+  u16 flags: 0x0 ()
+  u32 size: 12
+  u32 console_flags: 0x2 (
+    EGA_SUPPORT
+  )
+}
+Multiboot 2 header tag {
+  u16 type: 4 (flags)
+  u16 flags: 0x0 ()
+  u32 size: 12
+  u32 console_flags: 0x3 (
+    REQUIRE_CONSOLE |
+    EGA_SUPPORT
+  )
+}
+Multiboot 2 header tag {
+  u16 type: 1 (information request)
+  u16 flags: 0x1 (
+    OPTIONAL
+  )
+  u32 size: 12
+  u32 mbi_tag_types[]: [
+    0 (none)
+  ]
+}
+Multiboot 2 header tag {
+  u16 type: 0 (none)
+  u16 flags: 0x0 ()
+  u32 size: 8
+}
