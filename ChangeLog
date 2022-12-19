@@ -1,3 +1,7 @@
+2022-12-19  Alex Kotov  <kotovalexarian@gmail.com>
+
+	* src/multiboot2/*_print.c: Print Multiboot 2 ELF section headers
+
 2022-12-17  Alex Kotov  <kotovalexarian@gmail.com>
 
 	* configure.ac: Feature "--(enable|disable)-fixtures" has been added
