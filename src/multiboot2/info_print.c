@@ -3,6 +3,7 @@
 #endif
 
 #include <kernaux/assert.h>
+#include <kernaux/elf.h>
 #include <kernaux/generic/display.h>
 #include <kernaux/macro.h>
 #include <kernaux/multiboot2.h>
@@ -312,7 +313,7 @@ void KernAux_Multiboot2_ITag_MemoryMap_print(
 
     const struct KernAux_Multiboot2_ITag_MemoryMap_EntryBase *const entries =
         (struct KernAux_Multiboot2_ITag_MemoryMap_EntryBase*)
-        KERNAUX_MULTIBOOT2_DATA((struct KernAux_Multiboot2_ITag_MemoryMap*)tag);
+        KERNAUX_MULTIBOOT2_DATA(tag);
 
     for (
         size_t index = 0;
@@ -426,8 +427,41 @@ void KernAux_Multiboot2_ITag_ELFSymbols_print(
     PRINTLNF("  u32 entsize: %lu",  entsize);
     PRINTLNF("  u32 shndx: %lu",    shndx);
 
-    // TODO: Print data?
+    // Print data:
 
+    PRINTLN("  varies(entsize) section_headers: [");
+
+    const struct KernAux_ELF_Section *section =
+        (const struct KernAux_ELF_Section*)
+        KERNAUX_MULTIBOOT2_DATA(tag);
+
+    for (size_t index = 0; index < tag->num; ++index) {
+        KERNAUX_CAST_CONST(unsigned long, name,      section->name);
+        KERNAUX_CAST_CONST(unsigned long, type,      section->type);
+        KERNAUX_CAST_CONST(unsigned long, flags,     section->flags);
+        KERNAUX_CAST_CONST(unsigned long, addr,      section->addr);
+        KERNAUX_CAST_CONST(unsigned long, offset,    section->offset);
+        KERNAUX_CAST_CONST(unsigned long, size,      section->size);
+        KERNAUX_CAST_CONST(unsigned long, link,      section->link);
+        KERNAUX_CAST_CONST(unsigned long, info,      section->info);
+        KERNAUX_CAST_CONST(unsigned long, addralign, section->addralign);
+        KERNAUX_CAST_CONST(unsigned long, entsize,   section->entsize);
+
+        PRINTLNF("    [%zu]: {", index);
+        PRINTLNF("      name: %lu",      name);
+        PRINTLNF("      type: %lu",      type);
+        PRINTLNF("      flags: 0x%lx",   flags);
+        PRINTLNF("      addr: 0x%lx",    addr);
+        PRINTLNF("      offset: 0x%lx",  offset);
+        PRINTLNF("      size: %lu",      size);
+        PRINTLNF("      link: %lu",      link);
+        PRINTLNF("      info: %lu",      info);
+        PRINTLNF("      addralign: %lu", addralign);
+        PRINTLNF("      entsize: %lu",   entsize);
+        PRINTLN ("    }");
+    }
+
+    PRINTLN("  ]");
     FOOTER;
 }
 
