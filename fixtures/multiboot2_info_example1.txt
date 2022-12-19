@@ -98,7 +98,7 @@ Multiboot 2 info tag {
     [0]: {
       name: 0
       type: 0 (NULL)
-      flags: 0x0
+      flags: 0x0 ()
       addr: 0x0
       offset: 0x0
       size: 0
@@ -110,7 +110,10 @@ Multiboot 2 info tag {
     [1]: {
       name: 27
       type: 1 (PROGBITS)
-      flags: 0x6
+      flags: 0x6 (
+        ALLOC |
+        EXECINSTR
+      )
       addr: 0x400000
       offset: 0x1000
       size: 13718
@@ -122,7 +125,9 @@ Multiboot 2 info tag {
     [2]: {
       name: 33
       type: 1 (PROGBITS)
-      flags: 0x2
+      flags: 0x2 (
+        ALLOC
+      )
       addr: 0x404000
       offset: 0x5000
       size: 2824
@@ -134,7 +139,9 @@ Multiboot 2 info tag {
     [3]: {
       name: 41
       type: 1 (PROGBITS)
-      flags: 0x2
+      flags: 0x2 (
+        ALLOC
+      )
       addr: 0x404b08
       offset: 0x5b08
       size: 2692
@@ -146,7 +153,10 @@ Multiboot 2 info tag {
     [4]: {
       name: 51
       type: 1 (PROGBITS)
-      flags: 0x3
+      flags: 0x3 (
+        WRITE |
+        ALLOC
+      )
       addr: 0x406000
       offset: 0x7000
       size: 1
@@ -158,7 +168,10 @@ Multiboot 2 info tag {
     [5]: {
       name: 57
       type: 8 (NOBITS)
-      flags: 0x3
+      flags: 0x3 (
+        WRITE |
+        ALLOC
+      )
       addr: 0x407000
       offset: 0x7001
       size: 43328
@@ -170,7 +183,7 @@ Multiboot 2 info tag {
     [6]: {
       name: 62
       type: 1 (PROGBITS)
-      flags: 0x30
+      flags: 0x30 ()
       addr: 0x100000
       offset: 0x7001
       size: 17
@@ -182,7 +195,7 @@ Multiboot 2 info tag {
     [7]: {
       name: 1
       type: 2 (SYMTAB)
-      flags: 0x0
+      flags: 0x0 ()
       addr: 0x100014
       offset: 0x7014
       size: 3248
@@ -194,7 +207,7 @@ Multiboot 2 info tag {
     [8]: {
       name: 9
       type: 3 (STRTAB)
-      flags: 0x0
+      flags: 0x0 ()
       addr: 0x100cc4
       offset: 0x7cc4
       size: 3536
@@ -206,7 +219,7 @@ Multiboot 2 info tag {
     [9]: {
       name: 17
       type: 3 (STRTAB)
-      flags: 0x0
+      flags: 0x0 ()
       addr: 0x101a94
       offset: 0x8a94
       size: 71
