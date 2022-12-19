@@ -1,3 +1,6 @@
+/build/*
+!/build/.keep
+
 ##########################
 # Common generated files #
 ##########################
@@ -38,10 +41,9 @@
 /m4/*
 !/m4/.keep
 
-# Custom
-
 /Makefile.in
 /examples/Makefile.in
+/fixtures/Makefile.in
 /include/Makefile.in
 /libc/Makefile.in
 /libc/include/Makefile.in
@@ -57,7 +59,6 @@
 /libtool
 /stamp-h1
 
-# Temporary
 /confcache
 /confdefs.h
 /confinc.mk
@@ -73,68 +74,10 @@
 /tests/test_*.log
 /tests/test_*.trs
 
-# Custom
-
 /Makefile
 /examples/Makefile
+/fixtures/Makefile
 /include/Makefile
 /libc/Makefile
 /libc/include/Makefile
 /tests/Makefile
-
-/include/kernaux/version.h
-
-/examples/assert
-/examples/cmdline
-/examples/generic_display
-/examples/generic_malloc
-/examples/generic_mutex
-/examples/macro_bits
-/examples/macro_cast
-/examples/macro_container_of
-/examples/macro_packing
-/examples/macro_static_test
-/examples/memmap
-/examples/multiboot2_header_macro
-/examples/ntoa
-/examples/panic
-/examples/pfa
-/examples/printf_file
-/examples/printf_file_va
-/examples/printf_fmt
-/examples/printf_str
-/examples/printf_str_va
-/examples/spinlock
-/examples/units_human
-
-/tests/multiboot2_header_print0
-/tests/multiboot2_header_print1
-/tests/multiboot2_header_print2
-/tests/multiboot2_info_print0
-/tests/multiboot2_info_print1
-/tests/multiboot2_info_print2
-/tests/test_arch_i386
-/tests/test_cmdline
-/tests/test_cmdline_gen
-/tests/test_cmdline_gen.c
-/tests/test_elf
-/tests/test_free_list
-/tests/test_mbr
-/tests/test_memmap
-/tests/test_multiboot2_common_packing
-/tests/test_multiboot2_header_helpers
-/tests/test_multiboot2_header_print
-/tests/test_multiboot2_header_validation
-/tests/test_multiboot2_info_helpers
-/tests/test_multiboot2_info_print
-/tests/test_multiboot2_info_validation
-/tests/test_ntoa
-/tests/test_ntoa_assert
-/tests/test_pfa
-/tests/test_pfa_assert
-/tests/test_printf
-/tests/test_printf_fmt_gen
-/tests/test_printf_fmt_gen.c
-/tests/test_printf_gen
-/tests/test_printf_gen.c
-/tests/test_units_human

@@ -1,9 +1,5 @@
 #include "main.h"
 
-#include <stdbool.h>
-#include <stddef.h>
-#include <stdlib.h>
-
 #include <mruby/array.h>
 #include <mruby/presym.h>
 #include <mruby/string.h>

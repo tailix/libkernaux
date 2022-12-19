@@ -20,13 +20,13 @@ CLEAN << 'doc'
 CLEAN << 'spec/examples.txt'
 
 desc 'Run default checks'
-task default: %i[test lint yard:cov]
+task default: %i[test lint]
 
 desc 'Run tests'
 task test: :spec
 
 desc 'Run code analysis tools'
-task lint: :rubocop
+task lint: %i[rubocop cppcheck yard:cov]
 
 desc 'Fix code style (rubocop --auto-correct)'
 task fix: 'rubocop:auto_correct'
@@ -64,6 +64,18 @@ end
 desc 'Open development console'
 task :console do
   sh 'bundle', 'exec', File.expand_path(File.join('bin', 'console'), __dir__)
+end
+
+desc 'Run cppcheck'
+task :cppcheck do
+  sh(
+    'cppcheck',
+    '--quiet',
+    '--error-exitcode=1',
+    '--std=c99',
+    '--enable=warning,style,performance,portability',
+    __dir__,
+  )
 end
 
 namespace :yard do

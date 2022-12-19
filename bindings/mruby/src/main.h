@@ -4,6 +4,12 @@
 #include <kernaux.h>
 #include <mruby.h>
 
+#include <stdbool.h>
+#include <stddef.h>
+#include <stdint.h>
+#include <stdlib.h>
+#include <string.h>
+
 void current_mrb_start(mrb_state *mrb);
 void current_mrb_finish(mrb_state *mrb);
 mrb_state *current_mrb_get();

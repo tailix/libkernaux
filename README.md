@@ -144,6 +144,7 @@ stable options.
 * `--enable-checks-pthreads` - enable tests that require pthreads
 * `--enable-checks-python` - enable tests that require Python 3 with YAML and
   Jinja2
+* `--enable-fixtures` - enable fixtures for tests and bindings
 
 #### Packages
 
@@ -198,11 +199,17 @@ environment.
 
 ```
 ./autogen.sh # if present
-./configure --enable-checks # or --enable-checks-all, but see prerequisites
+./configure --enable-fixtures --enable-checks # or --enable-checks-all, but see prerequisites
 make
 ```
 
 You can test with `make check`.
+
+#### See also
+
+* [GitHub Actions](/.github/) for **GNU/Linux** build environment
+* [Cirrus CI](/.cirrus.yml) for **FreeBSD** build environment
+* [sourcehut CI](/.openbsd.yml) for **OpenBSD** build environment
 
 ### Cross
 
