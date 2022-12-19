@@ -7,7 +7,6 @@ extern "C" {
 
 #include <kernaux/macro.h>
 
-#include <stdbool.h>
 #include <stdint.h>
 
 #include <kernaux/macro/packing_start.run>
@@ -80,14 +79,6 @@ KERNAUX_PACKED;
 KERNAUX_STATIC_TEST_STRUCT_SIZE(KernAux_ELF_RelocationEntry, 8);
 
 #include <kernaux/macro/packing_end.run>
-
-typedef struct KernAux_ELF_ProgramEntry KernAux_ELF_ProgramTable[];
-
-typedef struct KernAux_ELF_SectionEntry KernAux_ELF_SectionTable[];
-
-typedef struct KernAux_ELF_RelocationEntry KernAux_ELF_RelocationTable[];
-
-bool KernAux_ELF_Header_is_valid(const struct KernAux_ELF_Header *header);
 
 #ifdef __cplusplus
 }
