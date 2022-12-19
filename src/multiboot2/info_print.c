@@ -498,7 +498,7 @@ void KernAux_Multiboot2_ITag_ELFSymbols_print(
             KERNAUX_CAST_CONST(unsigned long, link,      section->link);
             KERNAUX_CAST_CONST(unsigned long, info,      section->info);
             KERNAUX_CAST_CONST(unsigned long, addralign, section->addralign);
-            KERNAUX_CAST_CONST(unsigned long, entsize,   section->entsize);
+            KERNAUX_CAST_CONST(unsigned long, s_entsize, section->entsize);
 
             const char *const type_name =
 #ifdef WITH_ELF
@@ -524,7 +524,7 @@ void KernAux_Multiboot2_ITag_ELFSymbols_print(
             PRINTLNF("      link: %lu",      link);
             PRINTLNF("      info: %lu",      info);
             PRINTLNF("      addralign: %lu", addralign);
-            PRINTLNF("      entsize: %lu",   entsize);
+            PRINTLNF("      entsize: %lu",   s_entsize);
             PRINTLN ("    }");
 
             section =
