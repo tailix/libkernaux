@@ -174,111 +174,111 @@ Multiboot 2 info tag {
       entsize: 0
     }
     [1]: {
-      name: 0
-      type: 0
-      flags: 0x0
-      addr: 0x0
-      offset: 0x0
-      size: 0
+      name: 27
+      type: 1
+      flags: 0x6
+      addr: 0x400000
+      offset: 0x1000
+      size: 13718
       link: 0
       info: 0
-      addralign: 0
+      addralign: 4096
       entsize: 0
     }
     [2]: {
-      name: 0
-      type: 0
-      flags: 0x0
-      addr: 0x0
-      offset: 0x0
-      size: 0
+      name: 33
+      type: 1
+      flags: 0x2
+      addr: 0x404000
+      offset: 0x5000
+      size: 2824
       link: 0
       info: 0
-      addralign: 0
+      addralign: 4096
       entsize: 0
     }
     [3]: {
-      name: 0
-      type: 0
-      flags: 0x0
-      addr: 0x0
-      offset: 0x0
-      size: 0
+      name: 41
+      type: 1
+      flags: 0x2
+      addr: 0x404b08
+      offset: 0x5b08
+      size: 2692
       link: 0
       info: 0
-      addralign: 0
+      addralign: 4
       entsize: 0
     }
     [4]: {
-      name: 0
-      type: 0
-      flags: 0x0
-      addr: 0x0
-      offset: 0x0
-      size: 0
+      name: 51
+      type: 1
+      flags: 0x3
+      addr: 0x406000
+      offset: 0x7000
+      size: 1
       link: 0
       info: 0
-      addralign: 0
+      addralign: 4096
       entsize: 0
     }
     [5]: {
-      name: 0
-      type: 0
-      flags: 0x0
-      addr: 0x0
-      offset: 0x0
-      size: 0
+      name: 57
+      type: 8
+      flags: 0x3
+      addr: 0x407000
+      offset: 0x7001
+      size: 43328
       link: 0
       info: 0
-      addralign: 0
+      addralign: 4096
       entsize: 0
     }
     [6]: {
-      name: 0
-      type: 0
-      flags: 0x0
-      addr: 0x0
-      offset: 0x0
-      size: 0
+      name: 62
+      type: 1
+      flags: 0x30
+      addr: 0x100000
+      offset: 0x7001
+      size: 17
       link: 0
       info: 0
-      addralign: 0
-      entsize: 0
+      addralign: 1
+      entsize: 1
     }
     [7]: {
-      name: 0
-      type: 0
+      name: 1
+      type: 2
       flags: 0x0
-      addr: 0x0
-      offset: 0x0
-      size: 0
-      link: 0
-      info: 0
-      addralign: 0
-      entsize: 0
+      addr: 0x100014
+      offset: 0x7014
+      size: 3248
+      link: 8
+      info: 72
+      addralign: 4
+      entsize: 16
     }
     [8]: {
-      name: 0
-      type: 0
+      name: 9
+      type: 3
       flags: 0x0
-      addr: 0x0
-      offset: 0x0
-      size: 0
+      addr: 0x100cc4
+      offset: 0x7cc4
+      size: 3536
       link: 0
       info: 0
-      addralign: 0
+      addralign: 1
       entsize: 0
     }
     [9]: {
-      name: 0
-      type: 0
+      name: 17
+      type: 3
       flags: 0x0
-      addr: 0x0
-      offset: 0x0
-      size: 0
+      addr: 0x101a94
+      offset: 0x8a94
+      size: 71
       link: 0
       info: 0
-      addralign: 0
+      addralign: 1
       entsize: 0
     }
   ]

@@ -459,6 +459,10 @@ void KernAux_Multiboot2_ITag_ELFSymbols_print(
         PRINTLNF("      addralign: %lu", addralign);
         PRINTLNF("      entsize: %lu",   entsize);
         PRINTLN ("    }");
+
+        section =
+            (const struct KernAux_ELF_Section*)
+            (((const uint8_t*)section) + tag->entsize);
     }
 
     PRINTLN("  ]");
