@@ -11,7 +11,7 @@ main_freebsd_task:
     - pkg install --yes autoconf automake cppcheck libtool libyaml py39-pip py39-wheel python3
     - pip install --user Jinja2 PyYAML
   port_dependencies_script:
-    - pkg install --yes portfmt portlint
+    - pkg install --yes portfmt portlint porttools
   main_build_script:
     - ./autogen.sh
     - ./configure --enable-debug --enable-fixtures --enable-checks-all CFLAGS='-O3'
@@ -25,6 +25,7 @@ main_freebsd_task:
     - portfmt -D Makefile
     - portclippy --strict Makefile
     - portlint -A
+    - port test .
 
 mruby_freebsd_task:
   name: mruby (FreeBSD)
