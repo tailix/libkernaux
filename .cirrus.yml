@@ -10,8 +10,6 @@ main_freebsd_task:
   dependencies_script:
     - pkg install --yes autoconf automake cppcheck libtool libyaml py39-pip py39-wheel python3
     - pip install --user Jinja2 PyYAML
-  port_dependencies_script:
-    - pkg install --yes portfmt portlint porttools
   main_build_script:
     - ./autogen.sh
     - ./configure --enable-debug --enable-fixtures --enable-checks-all CFLAGS='-O3'
@@ -19,14 +17,6 @@ main_freebsd_task:
     - sudo make install
   main_test_script:
     - make check
-  port_test_script:
-    - echo 'DEVELOPER=yes' >> /etc/make.conf
-    - cp -r $CIRRUS_WORKING_DIR/pkgs/freebsd/devel/libkernaux /usr/ports/devel/
-    - cd /usr/ports/devel/libkernaux/
-    - portfmt -D Makefile
-    - portclippy --strict Makefile
-    - portlint -A
-    - port test .
 
 mruby_freebsd_task:
   name: mruby (FreeBSD)
@@ -96,3 +86,17 @@ rust_freebsd_task:
     - ~/.cargo/bin/cargo test
     - ~/.cargo/bin/cargo clippy
     - ~/.cargo/bin/cargo fmt --check
+
+main_freebsd_port_task:
+  name: Main (FreeBSD port)
+  only_if: "changesInclude('.cirrus.yml', 'pkgs/freebsd/**')"
+  dependencies_script:
+    - pkg install --yes portfmt portlint porttools
+  port_test_script:
+    - echo 'DEVELOPER=yes' >> /etc/make.conf
+    - cp -r $CIRRUS_WORKING_DIR/pkgs/freebsd/devel/libkernaux /usr/ports/devel/
+    - cd /usr/ports/devel/libkernaux/
+    - portfmt -D Makefile
+    - portclippy --strict Makefile
+    - portlint -A
+    - port test .
