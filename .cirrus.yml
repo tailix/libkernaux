@@ -20,6 +20,7 @@ main_freebsd_task:
   main_test_script:
     - make check
   port_test_script:
+    - echo 'DEVELOPER=yes' >> /etc/make.conf
     - cp -r $CIRRUS_WORKING_DIR/pkgs/freebsd/devel/libkernaux /usr/ports/devel/
     - cd /usr/ports/devel/libkernaux/
     - portfmt -D Makefile
