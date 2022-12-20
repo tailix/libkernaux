@@ -92,9 +92,11 @@ main_freebsd_port_task:
   only_if: "changesInclude('.cirrus.yml', 'pkgs/freebsd/**')"
   dependencies_script:
     - pkg install --yes portfmt portlint porttools
-  port_test_script:
+  port_prepare_script:
     - echo 'DEVELOPER=yes' >> /etc/make.conf
+    - rm -rf /usr/ports/devel/libkernaux/
     - cp -r $CIRRUS_WORKING_DIR/pkgs/freebsd/devel/libkernaux /usr/ports/devel/
+  port_test_script:
     - cd /usr/ports/devel/libkernaux/
     - portfmt -D Makefile
     - portclippy --strict Makefile
