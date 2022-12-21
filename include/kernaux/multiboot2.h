@@ -366,7 +366,7 @@ struct KernAux_Multiboot2_ITag_ELFSymbols {
     uint32_t entsize;
     uint32_t shndx;
 
-    // DATA: varies section_headers[]
+    // DATA: varies(entsize) section_headers[]
 }
 KERNAUX_PACKED;
 

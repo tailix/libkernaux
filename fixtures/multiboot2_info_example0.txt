@@ -1,0 +1,8 @@
+Multiboot 2 info {
+  u32 size: 16
+  u32 reserved: 0x0
+}
+Multiboot 2 info tag {
+  u32 type: 0 (none)
+  u32 size: 8
+}

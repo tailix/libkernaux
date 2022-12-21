@@ -26,11 +26,15 @@ AC_CONFIG_SRCDIR([src/assert.c])
 AC_CONFIG_FILES([
   Makefile
   examples/Makefile
+  fixtures/Makefile
+  fixtures/multiboot2_bin_examples_gen.c
   include/Makefile
   libc/Makefile
   libc/include/Makefile
   include/kernaux/version.h
   tests/Makefile
+  tests/test_multiboot2_header_print.c
+  tests/test_multiboot2_info_print.c
 ])
 
 AM_INIT_AUTOMAKE([1.16 subdir-objects])
@@ -49,6 +53,7 @@ AC_ARG_ENABLE([float],           AS_HELP_STRING([--disable-float],          [dis
 AC_ARG_ENABLE([werror],          AS_HELP_STRING([--disable-werror],         [disable -Werror]))
  
 dnl Features (disabled by default)
+AC_ARG_ENABLE([fixtures],        AS_HELP_STRING([--enable-fixtures],        [enable fixtures for tests and bindings]))
 AC_ARG_ENABLE([freestanding],    AS_HELP_STRING([--enable-freestanding],    [build for freestanding environment]))
 AC_ARG_ENABLE([split-libc],      AS_HELP_STRING([--enable-split-libc],      [split off libc]))
 AC_ARG_ENABLE([checks],          AS_HELP_STRING([--enable-checks],          [enable usual tests and examples]))
@@ -136,6 +141,7 @@ AS_IF([test "$enable_float"           = no ], [enable_float=no],            [ena
 AS_IF([test "$enable_werror"          = no ], [enable_werror=no],           [enable_werror=yes])
 
 dnl Features (disabled by default)
+AS_IF([test "$enable_fixtures"        = yes], [enable_fixtures=yes],        [enable_fixtures=no])
 AS_IF([test "$enable_freestanding"    = yes], [enable_freestanding=yes],    [enable_freestanding=no])
 AS_IF([test "$enable_split_libc"      = yes], [enable_split_libc=yes],      [enable_split_libc=no])
 AS_IF([test "$enable_checks"          = yes], [enable_checks=yes],          [enable_checks=no])
@@ -173,8 +179,10 @@ AS_IF([test "$with_libc"              = yes], [with_libc=yes],              [wit
 # Test args #
 #############
 
-AS_IF([test "$enable_checks" = yes -a "$enable_freestanding" = yes], AC_MSG_ERROR([can not build freestanding tests]))
-AS_IF([test "$enable_checks" = yes -a "$with_libc"           = yes], AC_MSG_ERROR([can not use package `libc' with tests]))
+AS_IF([test "$enable_checks"   = yes -a "$enable_freestanding" = yes], AC_MSG_ERROR([can not build freestanding tests]))
+AS_IF([test "$enable_fixtures" = yes -a "$enable_freestanding" = yes], AC_MSG_ERROR([can not build freestanding fixtures]))
+AS_IF([test "$enable_checks"   = yes -a "$with_libc"           = yes], AC_MSG_ERROR([can not use package `libc' with tests]))
+AS_IF([test "$enable_fixtures" = yes -a "$with_libc"           = yes], AC_MSG_ERROR([can not use package `libc' with fixtures]))
 
 AS_IF([test "$with_printf"      = yes -a "$with_ntoa"       = no], AC_MSG_ERROR([package `printf' requires package `ntoa']))
 AS_IF([test "$with_printf"      = yes -a "$with_printf_fmt" = no], AC_MSG_ERROR([package `printf' requires package `printf-fmt']))
@@ -200,6 +208,7 @@ AM_CONDITIONAL([ENABLE_FLOAT],           [test "$enable_float"           = yes])
 AM_CONDITIONAL([ENABLE_WERROR],          [test "$enable_werror"          = yes])
 
 dnl Features (disabled by default)
+AM_CONDITIONAL([ENABLE_FIXTURES],        [test "$enable_fixtures"        = yes])
 AM_CONDITIONAL([ENABLE_FREESTANDING],    [test "$enable_freestanding"    = yes])
 AM_CONDITIONAL([ENABLE_SPLIT_LIBC],      [test "$enable_split_libc"      = yes])
 AM_CONDITIONAL([ENABLE_CHECKS],          [test "$enable_checks"          = yes])
@@ -253,6 +262,7 @@ AS_IF([test "$enable_werror"          = yes], [AC_DEFINE([ENABLE_WERROR],       
 
 dnl Features (disabled by default)
 AS_IF([test "$enable_split_libc"      = yes], [AC_DEFINE([ENABLE_SPLIT_LIBC],      [1], [split off libc])])
+AS_IF([test "$enable_fixtures"        = yes], [AC_DEFINE([ENABLE_FIXTURES],        [1], [enabled fixtures for tests and bindings])])
 AS_IF([test "$enable_freestanding"    = yes], [AC_DEFINE([ENABLE_FREESTANDING],    [1], [build for freestanding environment])])
 AS_IF([test "$enable_checks"          = yes], [AC_DEFINE([ENABLE_CHECKS],          [1], [enabled usual tests and examples])])
 AS_IF([test "$enable_checks_cppcheck" = yes], [AC_DEFINE([ENABLE_CHECKS_CPPCHECK], [1], [enabled cppcheck])])

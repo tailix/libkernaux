@@ -44,6 +44,3 @@ jobs:
       - working-directory: bindings/ruby
         name: test & lint
         run: SKIP_COVERAGE='${{matrix.packages.skip_coverage}}' rake
-      - working-directory: bindings/ruby
-        name: cppcheck
-        run: cppcheck --quiet --error-exitcode=1 --std=c99 --enable=warning,style,performance,portability .
