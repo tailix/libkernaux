@@ -69,10 +69,6 @@ Avoid stupid errors with:
 * Default case in switch statements
 * Braces (curly brackets) around code blocks
 
-### Complicated topics
-
-* [Assertions & \_\_attribute\_\_((nonnull))](doc/assert_and_nonnull.md)
-
 
 
 C language
