@@ -70,8 +70,8 @@ if KernAux::Version.with_cmdline?
     end
   end
 
-  assert 'usign common tests' do
-    cmdline_yml = File.expand_path('../../../../common/cmdline.yml', __FILE__)
+  assert 'usign fixtures' do
+    cmdline_yml = File.expand_path('../../../../fixtures/cmdline.yml', __FILE__)
 
     YAML.load(File.read(cmdline_yml)).each do |test|
       escape_str = lambda do |str|

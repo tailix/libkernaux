@@ -225,25 +225,29 @@ void KernAux_Multiboot2_HTag_InfoReq_print(
 
     // Print data:
 
-    PRINTLN("  u32 mbi_tag_types[]: [");
+    if ((tag->base.size - sizeof(*tag)) / sizeof(uint32_t) == 0) {
+        PRINTLN("  u32 mbi_tag_types[]: []");
+    } else {
+        PRINTLN("  u32 mbi_tag_types[]: [");
 
-    const uint32_t *const mbi_tag_types =
-        (const uint32_t*)KERNAUX_MULTIBOOT2_DATA(tag);
+        const uint32_t *const mbi_tag_types =
+            (const uint32_t*)KERNAUX_MULTIBOOT2_DATA(tag);
 
-    for (
-        size_t index = 0;
-        index < (tag->base.size - sizeof(*tag)) / sizeof(uint32_t);
-        ++index
-    ) {
-        KERNAUX_CAST_CONST(unsigned long, type, mbi_tag_types[index]);
+        for (
+            size_t index = 0;
+            index < (tag->base.size - sizeof(*tag)) / sizeof(uint32_t);
+            ++index
+        ) {
+            KERNAUX_CAST_CONST(unsigned long, type, mbi_tag_types[index]);
 
-        PRINTLNF("    %lu (%s)",
-            type,
-            KernAux_Multiboot2_ITag_to_str(type)
-        );
+            PRINTLNF("    %lu (%s)",
+                type,
+                KernAux_Multiboot2_ITag_to_str(type)
+            );
+        }
+
+        PRINTLN("  ]");
     }
-
-    PRINTLN("  ]");
 
     FOOTER;
 }
