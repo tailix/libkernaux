@@ -6,6 +6,7 @@ extern "C" {
 #endif
 
 #include <kernaux/macro.h>
+#include <kernaux/runtime.h>
 
 #ifdef KERNAUX_DISABLE_ASSERT
 #define KERNAUX_PANIC(msg) ((void)0)
@@ -16,10 +17,6 @@ extern "C" {
 #endif
 
 #define KERNAUX_NOTNULL(cond) KERNAUX_ASSERT(cond)
-
-typedef void (*KernAux_Assert_Cb)(const char *file, int line, const char *msg);
-
-extern KernAux_Assert_Cb kernaux_assert_cb;
 
 KERNAUX_NORETURN
 void kernaux_assert_do(const char *file, int line, const char *msg);

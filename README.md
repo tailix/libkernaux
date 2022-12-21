@@ -109,7 +109,7 @@ zero). Work-in-progress APIs can change at any time.
 ### Global variables
 
 ```c
-// in <kernaux/assert.h>
+// in <kernaux/runtime.h>
 void (*kernaux_assert_cb)(const char *file, int line, const char *msg)
 ```
 
