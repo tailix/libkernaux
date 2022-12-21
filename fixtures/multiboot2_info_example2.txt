@@ -45,37 +45,37 @@ Multiboot 2 info tag {
   u32 entry_size: 24
   u32 entry_version: 0
   varies(entry_size) entries[]: [
-    [0] entry: {
+    [0]: {
       u64 base_addr: 0x0
       u64 length: 654336
       u32 type: 1
       u32 reserved: 0x0
     }
-    [1] entry: {
+    [1]: {
       u64 base_addr: 0x9fc00
       u64 length: 1024
       u32 type: 2
       u32 reserved: 0x0
     }
-    [2] entry: {
+    [2]: {
       u64 base_addr: 0xf0000
       u64 length: 65536
       u32 type: 2
       u32 reserved: 0x0
     }
-    [3] entry: {
+    [3]: {
       u64 base_addr: 0x100000
       u64 length: 133038080
       u32 type: 1
       u32 reserved: 0x0
     }
-    [4] entry: {
+    [4]: {
       u64 base_addr: 0x7fe0000
       u64 length: 131072
       u32 type: 2
       u32 reserved: 0x0
     }
-    [5] entry: {
+    [5]: {
       u64 base_addr: 0xfffc0000
       u64 length: 262144
       u32 type: 2
@@ -160,6 +160,141 @@ Multiboot 2 info tag {
   u32 num: 10
   u32 entsize: 40
   u32 shndx: 9
+  varies(entsize) section_headers[]: [
+    [0]: {
+      name: 0
+      type: 0 (NULL)
+      flags: 0x0 ()
+      addr: 0x0
+      offset: 0x0
+      size: 0
+      link: 0
+      info: 0
+      addralign: 0
+      entsize: 0
+    }
+    [1]: {
+      name: 27
+      type: 1 (PROGBITS)
+      flags: 0x6 (
+        ALLOC |
+        EXECINSTR
+      )
+      addr: 0x400000
+      offset: 0x1000
+      size: 13718
+      link: 0
+      info: 0
+      addralign: 4096
+      entsize: 0
+    }
+    [2]: {
+      name: 33
+      type: 1 (PROGBITS)
+      flags: 0x2 (
+        ALLOC
+      )
+      addr: 0x404000
+      offset: 0x5000
+      size: 2824
+      link: 0
+      info: 0
+      addralign: 4096
+      entsize: 0
+    }
+    [3]: {
+      name: 41
+      type: 1 (PROGBITS)
+      flags: 0x2 (
+        ALLOC
+      )
+      addr: 0x404b08
+      offset: 0x5b08
+      size: 2692
+      link: 0
+      info: 0
+      addralign: 4
+      entsize: 0
+    }
+    [4]: {
+      name: 51
+      type: 1 (PROGBITS)
+      flags: 0x3 (
+        WRITE |
+        ALLOC
+      )
+      addr: 0x406000
+      offset: 0x7000
+      size: 1
+      link: 0
+      info: 0
+      addralign: 4096
+      entsize: 0
+    }
+    [5]: {
+      name: 57
+      type: 8 (NOBITS)
+      flags: 0x3 (
+        WRITE |
+        ALLOC
+      )
+      addr: 0x407000
+      offset: 0x7001
+      size: 43328
+      link: 0
+      info: 0
+      addralign: 4096
+      entsize: 0
+    }
+    [6]: {
+      name: 62
+      type: 1 (PROGBITS)
+      flags: 0x30 ()
+      addr: 0x100000
+      offset: 0x7001
+      size: 17
+      link: 0
+      info: 0
+      addralign: 1
+      entsize: 1
+    }
+    [7]: {
+      name: 1
+      type: 2 (SYMTAB)
+      flags: 0x0 ()
+      addr: 0x100014
+      offset: 0x7014
+      size: 3248
+      link: 8
+      info: 72
+      addralign: 4
+      entsize: 16
+    }
+    [8]: {
+      name: 9
+      type: 3 (STRTAB)
+      flags: 0x0 ()
+      addr: 0x100cc4
+      offset: 0x7cc4
+      size: 3536
+      link: 0
+      info: 0
+      addralign: 1
+      entsize: 0
+    }
+    [9]: {
+      name: 17
+      type: 3 (STRTAB)
+      flags: 0x0 ()
+      addr: 0x101a94
+      offset: 0x8a94
+      size: 71
+      link: 0
+      info: 0
+      addralign: 1
+      entsize: 0
+    }
+  ]
 }
 Multiboot 2 info tag {
   u32 type: 10 (APM table)

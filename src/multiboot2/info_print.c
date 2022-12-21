@@ -3,10 +3,12 @@
 #endif
 
 #include <kernaux/assert.h>
+#include <kernaux/elf.h>
 #include <kernaux/generic/display.h>
 #include <kernaux/macro.h>
 #include <kernaux/multiboot2.h>
 
+#include <stdbool.h>
 #include <stddef.h>
 #include <stdint.h>
 
@@ -38,6 +40,44 @@
 } while (0)
 
 #define FOOTER do { PRINTLN("}"); } while (0)
+
+#define INDENT do { \
+    for (unsigned index = 0; index < basic_indentation; ++index) PRINT(" "); \
+} while (0)
+
+#define INDENT_MORE do { \
+    for (unsigned index = 0; index < indentation_delta; ++index) PRINT(" "); \
+} while (0)
+
+static const struct {
+    uint32_t number;
+    const char *name;
+} section_flag_names[] = {
+    {
+        .number = KERNAUX_ELF_SECT_FLAGS_WRITE,
+        .name = "WRITE",
+    },
+    {
+        .number = KERNAUX_ELF_SECT_FLAGS_ALLOC,
+        .name = "ALLOC",
+    },
+    {
+        .number = KERNAUX_ELF_SECT_FLAGS_EXECINSTR,
+        .name = "EXECINSTR",
+    },
+    {
+        .number = KERNAUX_ELF_SECT_FLAGS_MASKPROC,
+        .name = "MASKPROC",
+    },
+};
+
+static void KernAux_ELF_Section_Flags_print(
+    uint16_t flags,
+    KernAux_Display display,
+    unsigned basic_indentation,
+    unsigned indentation_delta,
+    bool indent_first
+);
 
 void KernAux_Multiboot2_Info_print(
     const struct KernAux_Multiboot2_Info *const multiboot2_info,
@@ -308,31 +348,43 @@ void KernAux_Multiboot2_ITag_MemoryMap_print(
 
     // Print data:
 
-    PRINTLN ("  varies(entry_size) entries[]: [");
+    if (tag->entry_size == 0 ||
+        (tag->base.size - sizeof(*tag)) / tag->entry_size == 0)
+    {
+        PRINTLN ("  varies(entry_size) entries[]: []");
+    } else {
+        PRINTLN ("  varies(entry_size) entries[]: [");
 
-    const struct KernAux_Multiboot2_ITag_MemoryMap_EntryBase *const entries =
-        (struct KernAux_Multiboot2_ITag_MemoryMap_EntryBase*)
-        KERNAUX_MULTIBOOT2_DATA((struct KernAux_Multiboot2_ITag_MemoryMap*)tag);
+        const struct KernAux_Multiboot2_ITag_MemoryMap_EntryBase*
+            const entries =
+            (struct KernAux_Multiboot2_ITag_MemoryMap_EntryBase*)
+            KERNAUX_MULTIBOOT2_DATA(tag);
 
-    for (
-        size_t index = 0;
-        index < (tag->base.size - sizeof(*tag)) / tag->entry_size;
-        ++index
-    ) {
-        KERNAUX_CAST_CONST(unsigned long long, base_addr, entries[index].base_addr);
-        KERNAUX_CAST_CONST(unsigned long long, length,    entries[index].length);
-        KERNAUX_CAST_CONST(unsigned long,      type,      entries[index].type);
-        KERNAUX_CAST_CONST(unsigned long,      reserved,  entries[index].reserved);
+        for (
+            size_t index = 0;
+            index < (tag->base.size - sizeof(*tag)) / tag->entry_size;
+            ++index
+        ) {
+            KERNAUX_CAST_CONST(unsigned long long, base_addr,
+                               entries[index].base_addr);
+            KERNAUX_CAST_CONST(unsigned long long, length,
+                               entries[index].length);
+            KERNAUX_CAST_CONST(unsigned long, type,
+                               entries[index].type);
+            KERNAUX_CAST_CONST(unsigned long, reserved,
+                               entries[index].reserved);
 
-        PRINTLNF("    [%zu] entry: {", index);
-        PRINTLNF("      u64 base_addr: 0x%llx", base_addr);
-        PRINTLNF("      u64 length: %llu",      length);
-        PRINTLNF("      u32 type: %lu",         type);
-        PRINTLNF("      u32 reserved: 0x%lx",   reserved);
-        PRINTLN ("    }");
+            PRINTLNF("    [%zu]: {", index);
+            PRINTLNF("      u64 base_addr: 0x%llx", base_addr);
+            PRINTLNF("      u64 length: %llu",      length);
+            PRINTLNF("      u32 type: %lu",         type);
+            PRINTLNF("      u32 reserved: 0x%lx",   reserved);
+            PRINTLN ("    }");
+        }
+
+        PRINTLN("  ]");
     }
 
-    PRINTLN("  ]");
     FOOTER;
 }
 
@@ -426,7 +478,62 @@ void KernAux_Multiboot2_ITag_ELFSymbols_print(
     PRINTLNF("  u32 entsize: %lu",  entsize);
     PRINTLNF("  u32 shndx: %lu",    shndx);
 
-    // TODO: Print data?
+    // Print data:
+
+    if (tag->num == 0) {
+        PRINTLN("  varies(entsize) section_headers[]: []");
+    } else {
+        PRINTLN("  varies(entsize) section_headers[]: [");
+
+        const struct KernAux_ELF_Section *section =
+            (const struct KernAux_ELF_Section*)
+            KERNAUX_MULTIBOOT2_DATA(tag);
+
+        for (size_t index = 0; index < tag->num; ++index) {
+            KERNAUX_CAST_CONST(unsigned long, name,      section->name);
+            KERNAUX_CAST_CONST(unsigned long, type,      section->type);
+            KERNAUX_CAST_CONST(unsigned long, addr,      section->addr);
+            KERNAUX_CAST_CONST(unsigned long, offset,    section->offset);
+            KERNAUX_CAST_CONST(unsigned long, size,      section->size);
+            KERNAUX_CAST_CONST(unsigned long, link,      section->link);
+            KERNAUX_CAST_CONST(unsigned long, info,      section->info);
+            KERNAUX_CAST_CONST(unsigned long, addralign, section->addralign);
+            KERNAUX_CAST_CONST(unsigned long, s_entsize, section->entsize);
+
+            const char *const type_name =
+#ifdef WITH_ELF
+                KernAux_ELF_Section_Type_to_str(section->type);
+#else
+                "?";
+#endif
+
+            PRINTLNF("    [%zu]: {", index);
+            PRINTLNF("      name: %lu",      name);
+            PRINTLNF("      type: %lu (%s)", type, type_name);
+            PRINT   ("      flags: ");
+            KernAux_ELF_Section_Flags_print(
+                section->flags,
+                display,
+                6,
+                2,
+                false
+            );
+            PRINTLNF("      addr: 0x%lx",    addr);
+            PRINTLNF("      offset: 0x%lx",  offset);
+            PRINTLNF("      size: %lu",      size);
+            PRINTLNF("      link: %lu",      link);
+            PRINTLNF("      info: %lu",      info);
+            PRINTLNF("      addralign: %lu", addralign);
+            PRINTLNF("      entsize: %lu",   s_entsize);
+            PRINTLN ("    }");
+
+            section =
+                (const struct KernAux_ELF_Section*)
+                (((const uint8_t*)section) + tag->entsize);
+        }
+
+        PRINTLN("  ]");
+    }
 
     FOOTER;
 }
@@ -609,4 +716,46 @@ void KernAux_Multiboot2_ITag_ImageLoadBasePhysAddr_print(
     PRINTLNF("  u32 load_base_addr: 0x%lx", load_base_addr);
 
     FOOTER;
+}
+
+void KernAux_ELF_Section_Flags_print(
+    const uint16_t flags,
+    const KernAux_Display display,
+    const unsigned basic_indentation,
+    const unsigned indentation_delta,
+    const bool indent_first
+) {
+    KERNAUX_CAST_CONST(unsigned long, flags_ul, flags);
+
+    if (indent_first) INDENT;
+    PRINTF("0x%lx (", flags_ul);
+
+    bool is_first = true;
+
+    for (
+        size_t index = 0;
+        index < sizeof(section_flag_names) / sizeof(section_flag_names[0]);
+        ++index
+    ) {
+        if (flags & section_flag_names[index].number) {
+            if (is_first) {
+                PRINTLN("");
+            } else {
+                PRINTLN(" |");
+            }
+
+            INDENT;
+            INDENT_MORE;
+            PRINTF("%s", section_flag_names[index].name);
+            is_first = false;
+        }
+    }
+
+    if (is_first) {
+        PRINTLN(")");
+    } else {
+        PRINTLN("");
+        INDENT;
+        PRINTLN(")");
+    }
 }
