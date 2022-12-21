@@ -2,7 +2,7 @@ include $(top_srcdir)/make/shared.am
 include $(top_srcdir)/make/checks.am
 
 ACLOCAL_AMFLAGS = -I m4
-EXTRA_DIST = autogen.sh CONTRIBUTING.md sha256sums.txt
+EXTRA_DIST = autogen.sh CONTRIBUTING.md sha256sums.txt src/assert.h
 
 SUBDIRS = include
 
