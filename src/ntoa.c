@@ -2,14 +2,15 @@
 #include "config.h"
 #endif
 
-#include <kernaux/assert.h>
+#include "assert.h"
+
 #include <kernaux/ntoa.h>
 
 #include <stddef.h>
 
 char *kernaux_utoa(uint64_t value, char *buffer, int base, const char *prefix)
 {
-    KERNAUX_ASSERT(buffer);
+    KERNAUX_NOTNULL(buffer);
 
     // Protect caller from invalid state in case of future assertions
     // cppcheck-suppress ctunullpointer
