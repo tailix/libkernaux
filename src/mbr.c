@@ -2,7 +2,8 @@
 #include "config.h"
 #endif
 
-#include <kernaux/assert.h>
+#include "assert.h"
+
 #include <kernaux/mbr.h>
 
 #include <stdbool.h>

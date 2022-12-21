@@ -9,7 +9,8 @@
 #include "config.h"
 #endif
 
-#include <kernaux/assert.h>
+#include "assert.h"
+
 #include <kernaux/free_list.h>
 #include <kernaux/generic/malloc.h>
 #include <kernaux/generic/mutex.h>

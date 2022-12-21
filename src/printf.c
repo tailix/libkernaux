@@ -13,7 +13,8 @@
 #include "config.h"
 #endif
 
-#include <kernaux/assert.h>
+#include "assert.h"
+
 #include <kernaux/printf.h>
 #include <kernaux/printf_fmt.h>
 

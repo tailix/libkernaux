@@ -9,7 +9,6 @@ nobase_include_HEADERS = \
 	kernaux/asm/riscv64.h                \
 	kernaux/asm/x86_64.h                 \
 	kernaux/asm/x86.h                    \
-	kernaux/assert.h                     \
 	kernaux/cmdline.h                    \
 	kernaux/elf.h                        \
 	kernaux/free_list.h                  \

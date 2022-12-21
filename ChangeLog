@@ -1,6 +1,9 @@
 2022-12-21  Alex Kotov  <kotovalexarian@gmail.com>
 
+	* configure.ac: Rename feature "--(enable|disable)-debug" to
+	"--(enable|disable)-assert"
 	* include/kernaux/runtime.h: New header
+	* include/kernaux/assert.h: Removed header
 
 2022-12-19  Alex Kotov  <kotovalexarian@gmail.com>
 
@@ -23,11 +26,6 @@
 2022-12-13  Alex Kotov  <kotovalexarian@gmail.com>
 
 	* tests/Makefile.am: Fix FreeBSD builds
-	* configure.ac: Rename feature "--(enable|disable)-debug" to
-	"--(enable|disable)-assert"
-	* include/kernaux/assert.h: Rename definition "KERNAUX_DEBUG" to
-	"KERNAUX_DISABLE_ASSERT"
-	* include/kernaux/assert.h: Add macro "KERNAUX_NOTNULL"
 
 2022-12-12  Alex Kotov  <kotovalexarian@gmail.com>
 

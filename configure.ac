@@ -22,7 +22,7 @@ AC_CANONICAL_HOST
 
 AC_CONFIG_MACRO_DIRS([m4])
 AC_CONFIG_HEADERS([config.h])
-AC_CONFIG_SRCDIR([src/assert.c])
+AC_CONFIG_SRCDIR([src/runtime.c])
 AC_CONFIG_FILES([
   Makefile
   examples/Makefile

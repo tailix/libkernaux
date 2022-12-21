@@ -1,10 +1,6 @@
 #ifndef KERNAUX_INCLUDED_ASSERT
 #define KERNAUX_INCLUDED_ASSERT
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 #include <kernaux/runtime.h>
 
 #ifdef KERNAUX_DISABLE_ASSERT
@@ -16,9 +12,5 @@ extern "C" {
 #endif
 
 #define KERNAUX_NOTNULL(cond) KERNAUX_ASSERT(cond)
-
-#ifdef __cplusplus
-}
-#endif
 
 #endif

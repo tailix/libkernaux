@@ -2,9 +2,9 @@
 #include "config.h"
 #endif
 
-#include <kernaux/assert.h>
 #include <kernaux/macro.h>
 #include <kernaux/pfa.h>
+#include <kernaux/runtime.h>
 
 #include <assert.h>
 #include <setjmp.h>

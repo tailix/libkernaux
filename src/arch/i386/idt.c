@@ -2,8 +2,9 @@
 #include "config.h"
 #endif
 
+#include "assert.h"
+
 #include <kernaux/arch/i386.h>
-#include <kernaux/assert.h>
 
 #include <string.h>
 

@@ -9,7 +9,8 @@
 #include "config.h"
 #endif
 
-#include <kernaux/assert.h>
+#include "assert.h"
+
 #include <kernaux/printf_fmt.h>
 
 #include <ctype.h>

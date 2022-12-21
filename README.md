@@ -47,7 +47,6 @@ zero). Work-in-progress APIs can change at any time.
     * [Example: CONTAINER\_OF](/examples/macro_container_of.c)
     * [Example: BITS](/examples/macro_bits.c)
     * [Example: STATIC\_TEST\*](/examples/macro_static_test.c)
-  * [Assertions](/include/kernaux/assert.h) (*non-breaking since* **?.?.?**)
   * Stack trace *(planned)*
 * Generic types
   * [Display](/include/kernaux/generic/display.h) (*non-breaking since* **?.?.?**)
@@ -104,7 +103,6 @@ zero). Work-in-progress APIs can change at any time.
   in a file where you implement an inherited type.
 * `KERNAUX_BITFIELDS` - enable bitfields in packed structs. It doesn't follow
   the C standard and may be incompatible with some compilers.
-* `KERNAUX_DISABLE_ASSERT` - disable assertions.
 
 ### Global variables
 
