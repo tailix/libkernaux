@@ -5,6 +5,23 @@
 extern "C" {
 #endif
 
+#include <kernaux/generic/malloc.h>
+#include <kernaux/macro.h>
+
+#include <stdbool.h>
+#include <stddef.h>
+
+typedef struct KernAux_Memmap {
+    void          *KERNAUX_PRIVATE_FIELD(buffer);
+    size_t         KERNAUX_PRIVATE_FIELD(buffer_size);
+    KernAux_Malloc KERNAUX_PRIVATE_FIELD(malloc);
+} *KernAux_Memmap;
+
+typedef struct KernAux_Memmap_Builder {
+    bool is_finished;
+    struct KernAux_Memmap KERNAUX_PRIVATE_FIELD(memmap);
+} *KernAux_Memmap_Builder;
+
 #ifdef __cplusplus
 }
 #endif
