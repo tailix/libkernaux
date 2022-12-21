@@ -1,3 +1,7 @@
+2022-12-21  Alex Kotov  <kotovalexarian@gmail.com>
+
+	* include/kernaux/runtime.h: New header
+
 2022-12-19  Alex Kotov  <kotovalexarian@gmail.com>
 
 	* src/multiboot2/*_print.c: Print Multiboot 2 ELF section headers

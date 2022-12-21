@@ -21,5 +21,6 @@
 #include <kernaux/pfa.h>
 #include <kernaux/printf.h>
 #include <kernaux/printf_fmt.h>
+#include <kernaux/runtime.h>
 #include <kernaux/units.h>
 #include <kernaux/version.h>

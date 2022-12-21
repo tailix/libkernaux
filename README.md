@@ -40,6 +40,7 @@ zero). Work-in-progress APIs can change at any time.
 
 * Basic features
   * [Feature macros](/include/kernaux/version.h.in) (*work in progress*)
+  * [Runtime environment](/include/kernaux/runtime.h) (*non-breaking since* **?.?.?**)
   * [Macros](/include/kernaux/macro.h) (*non-breaking since* **0.6.0**)
     * [Example: packing](/examples/macro_packing.c)
     * [Example: CAST\_\*](/examples/macro_cast.c);
