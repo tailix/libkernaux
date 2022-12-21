@@ -21,5 +21,6 @@
 #include <kernaux/pfa.h>
 #include <kernaux/printf.h>
 #include <kernaux/printf_fmt.h>
+#include <kernaux/stack_trace.h>
 #include <kernaux/units.h>
 #include <kernaux/version.h>

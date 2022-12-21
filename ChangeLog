@@ -44,3 +44,7 @@
 2022-12-05  Alex Kotov  <kotovalexarian@gmail.com>
 
 	libkernaux 0.6.1 released
+
+2022-06-22  Alex Kotov  <kotovalexarian@gmail.com>
+
+	* include/kernaux/stack_trace.h: Added

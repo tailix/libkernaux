@@ -49,7 +49,7 @@ zero). Work-in-progress APIs can change at any time.
   * [Assertions](/include/kernaux/assert.h) (*non-breaking since* **0.4.0**)
     * [Example: Assert](/examples/assert.c)
     * [Example: Panic](/examples/panic.c)
-  * Stack trace *(planned)*
+  * [Stack trace](/include/kernaux/stack_trace.h) *(work in progress)*
 * Generic types
   * [Display](/include/kernaux/generic/display.h) (*non-breaking since* **?.?.?**)
     * [Example](/examples/generic_display.c)
@@ -173,6 +173,7 @@ explicitly included, use `--without-all`.
 * `--with[out]-multiboot2` - Multiboot 2 utils
 * `--with[out]-ntoa` - itoa/ftoa
 * `--with[out]-printf` - printf
+* `--with[out]-stack-trace` - stack trace
 
 
 

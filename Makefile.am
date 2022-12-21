@@ -114,6 +114,9 @@ endif
 if WITH_PRINTF_FMT
 libkernaux_la_SOURCES += src/printf_fmt.c
 endif
+if WITH_STACK_TRACE
+libkernaux_la_SOURCES += src/stack_trace.c
+endif
 if WITH_UNITS
 libkernaux_la_SOURCES += src/units.c
 endif

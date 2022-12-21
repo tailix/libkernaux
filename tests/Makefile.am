@@ -398,6 +398,18 @@ test_printf_gen.c: $(top_srcdir)/tests/printf_gen.py $(top_srcdir)/tests/printf_
 	$(PYTHON) $(top_srcdir)/tests/printf_gen.py $(top_srcdir)/tests/printf_gen.jinja $(top_srcdir)/fixtures/printf.yml $(top_srcdir)/fixtures/printf_orig.yml test_printf_gen.c
 
 ####################
+# test_stack_trace #
+####################
+
+if WITH_STACK_TRACE
+TESTS += test_stack_trace
+test_stack_trace_LDADD = $(top_builddir)/libkernaux.la
+test_stack_trace_SOURCES = \
+	main.c \
+	test_stack_trace.c
+endif
+
+####################
 # test_units_human #
 ####################
 

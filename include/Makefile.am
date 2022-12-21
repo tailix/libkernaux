@@ -35,5 +35,6 @@ nobase_include_HEADERS = \
 	kernaux/pfa.h                        \
 	kernaux/printf.h                     \
 	kernaux/printf_fmt.h                 \
+	kernaux/stack_trace.h                \
 	kernaux/units.h                      \
 	kernaux/version.h

@@ -30,4 +30,5 @@
 /test_printf_fmt_gen.c
 /test_printf_gen
 /test_printf_gen.c
+/test_stack_trace
 /test_units_human
