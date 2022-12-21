@@ -2,7 +2,7 @@
 #include "config.h"
 #endif
 
-#include "assert.h"
+#include "../assert.h"
 
 #include <kernaux/elf.h>
 #include <kernaux/generic/display.h>
