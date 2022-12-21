@@ -99,7 +99,7 @@ jobs:
       - name: autogen
         run: ./autogen.sh
       - name: configure
-        run: ./configure --enable-assert --enable-checks --enable-checks-pthreads --enable-checks-python --without-${{matrix.packages.without}} ${{matrix.packages.dependencies}}
+        run: ./configure --enable-checks --enable-checks-pthreads --enable-checks-python --without-${{matrix.packages.without}} ${{matrix.packages.dependencies}}
       - name: make
         run: make
       - name: check
@@ -138,7 +138,7 @@ jobs:
       - name: extract
         run: tar -xzf "libkernaux-$(cat VERSION).tar.gz"
       - name: configure
-        run: cd "libkernaux-$(cat VERSION)" && ./configure --enable-assert --enable-checks --enable-checks-pthreads --enable-checks-python
+        run: cd "libkernaux-$(cat VERSION)" && ./configure --enable-checks --enable-checks-pthreads --enable-checks-python
       - name: make
         run: cd "libkernaux-$(cat VERSION)" && make
       - name: check
