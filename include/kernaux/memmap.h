@@ -22,6 +22,11 @@ typedef struct KernAux_Memmap_Builder {
     struct KernAux_Memmap KERNAUX_PRIVATE_FIELD(memmap);
 } *KernAux_Memmap_Builder;
 
+struct KernAux_Memmap_Builder
+KernAux_Memmap_Builder_create_from_buffer(void *buffer, size_t buffer_size);
+struct KernAux_Memmap_Builder
+KernAux_Memmap_Builder_create_from_malloc(KernAux_Malloc malloc);
+
 struct KernAux_Memmap
 KernAux_Memmap_Builder_finish(KernAux_Memmap_Builder builder);
 
