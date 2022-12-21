@@ -9,7 +9,8 @@
 #include "config.h"
 #endif
 
-#include <kernaux/assert.h>
+#include "assert.h"
+
 #include <kernaux/printf_fmt.h>
 
 #include <ctype.h>
@@ -35,7 +36,7 @@ static unsigned int _atoi(const char** str);
 struct KernAux_PrintfFmt_Spec KernAux_PrintfFmt_Spec_create_out(
     const char **const format
 ) {
-    KERNAUX_ASSERT(format);
+    KERNAUX_NOTNULL(format);
 
     const struct KernAux_PrintfFmt_Spec spec =
         KernAux_PrintfFmt_Spec_create(*format);
@@ -47,8 +48,8 @@ struct KernAux_PrintfFmt_Spec KernAux_PrintfFmt_Spec_create_out_new(
     const char *const format,
     const char **const new_format
 ) {
-    KERNAUX_ASSERT(format);
-    KERNAUX_ASSERT(new_format);
+    KERNAUX_NOTNULL(format);
+    KERNAUX_NOTNULL(new_format);
 
     *new_format = NULL;
     const struct KernAux_PrintfFmt_Spec spec =
@@ -59,7 +60,7 @@ struct KernAux_PrintfFmt_Spec KernAux_PrintfFmt_Spec_create_out_new(
 
 struct KernAux_PrintfFmt_Spec KernAux_PrintfFmt_Spec_create(const char *format)
 {
-    KERNAUX_ASSERT(format);
+    KERNAUX_NOTNULL(format);
 
     struct KernAux_PrintfFmt_Spec spec;
 
@@ -87,7 +88,7 @@ struct KernAux_PrintfFmt_Spec KernAux_PrintfFmt_Spec_create(const char *format)
 
 void KernAux_PrintfFmt_Spec_set_width(const Spec spec, const int width)
 {
-    KERNAUX_ASSERT(spec);
+    KERNAUX_NOTNULL(spec);
 
     if (width < 0) {
         spec->flags |= KERNAUX_PRINTF_FMT_FLAGS_LEFT; // reverse padding
@@ -99,7 +100,7 @@ void KernAux_PrintfFmt_Spec_set_width(const Spec spec, const int width)
 
 void KernAux_PrintfFmt_Spec_set_precision(const Spec spec, const int precision)
 {
-    KERNAUX_ASSERT(spec);
+    KERNAUX_NOTNULL(spec);
 
     spec->precision = precision > 0 ? (unsigned int)precision : 0u;
 }
@@ -110,8 +111,8 @@ void KernAux_PrintfFmt_Spec_set_precision(const Spec spec, const int precision)
 
 void parse_flags(const Spec spec, const char **const format)
 {
-    KERNAUX_ASSERT(spec);
-    KERNAUX_ASSERT(format);
+    KERNAUX_NOTNULL(spec);
+    KERNAUX_NOTNULL(format);
     KERNAUX_ASSERT(*format);
 
     bool running = true;
@@ -144,8 +145,8 @@ void parse_flags(const Spec spec, const char **const format)
 
 void parse_width(const Spec spec, const char **const format)
 {
-    KERNAUX_ASSERT(spec);
-    KERNAUX_ASSERT(format);
+    KERNAUX_NOTNULL(spec);
+    KERNAUX_NOTNULL(format);
     KERNAUX_ASSERT(*format);
 
     if (isdigit(**format)) {
@@ -161,8 +162,8 @@ void parse_width(const Spec spec, const char **const format)
 
 void parse_precision(const Spec spec, const char **const format)
 {
-    KERNAUX_ASSERT(spec);
-    KERNAUX_ASSERT(format);
+    KERNAUX_NOTNULL(spec);
+    KERNAUX_NOTNULL(format);
     KERNAUX_ASSERT(*format);
 
     if (**format == '.') {
@@ -184,8 +185,8 @@ void parse_precision(const Spec spec, const char **const format)
 
 void parse_length(const Spec spec, const char **const format)
 {
-    KERNAUX_ASSERT(spec);
-    KERNAUX_ASSERT(format);
+    KERNAUX_NOTNULL(spec);
+    KERNAUX_NOTNULL(format);
     KERNAUX_ASSERT(*format);
 
     switch (**format) {
@@ -236,8 +237,8 @@ void parse_length(const Spec spec, const char **const format)
 
 void parse_type(const Spec spec, const char **const format)
 {
-    KERNAUX_ASSERT(spec);
-    KERNAUX_ASSERT(format);
+    KERNAUX_NOTNULL(spec);
+    KERNAUX_NOTNULL(format);
     KERNAUX_ASSERT(*format);
 
     switch (**format) {

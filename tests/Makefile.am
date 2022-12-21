@@ -304,7 +304,7 @@ endif
 # test_ntoa_assert #
 ####################
 
-if ENABLE_DEBUG
+if ENABLE_ASSERT
 if WITH_NTOA
 TESTS += test_ntoa_assert
 test_ntoa_assert_LDADD = $(top_builddir)/libkernaux.la
@@ -330,7 +330,7 @@ endif
 # test_pfa_assert #
 ###################
 
-if ENABLE_DEBUG
+if ENABLE_ASSERT
 if WITH_PFA
 TESTS += test_pfa_assert
 test_pfa_assert_LDADD = $(top_builddir)/libkernaux.la

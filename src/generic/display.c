@@ -2,7 +2,8 @@
 #include "config.h"
 #endif
 
-#include <kernaux/assert.h>
+#include "../assert.h"
+
 #include <kernaux/generic/display.h>
 
 #include <stdarg.h>
@@ -10,7 +11,7 @@
 
 void KernAux_Display_putc(const KernAux_Display display, const char c)
 {
-    KERNAUX_ASSERT(display);
+    KERNAUX_NOTNULL(display);
     KERNAUX_ASSERT(display->putc);
 
     // Inherited implementation
@@ -19,7 +20,7 @@ void KernAux_Display_putc(const KernAux_Display display, const char c)
 
 void KernAux_Display_print(const KernAux_Display display, const char *const s)
 {
-    KERNAUX_ASSERT(display);
+    KERNAUX_NOTNULL(display);
     KERNAUX_ASSERT(display->putc);
 
     // Default implementation
@@ -28,7 +29,7 @@ void KernAux_Display_print(const KernAux_Display display, const char *const s)
 
 void KernAux_Display_println(const KernAux_Display display, const char *const s)
 {
-    KERNAUX_ASSERT(display);
+    KERNAUX_NOTNULL(display);
     KERNAUX_ASSERT(display->putc);
 
     // Default implementation
@@ -41,7 +42,7 @@ void KernAux_Display_write(
     const char *const data,
     const size_t size
 ) {
-    KERNAUX_ASSERT(display);
+    KERNAUX_NOTNULL(display);
     KERNAUX_ASSERT(display->putc);
 
     // Default implementation
@@ -53,7 +54,7 @@ void KernAux_Display_writeln(
     const char *const data,
     const size_t size
 ) {
-    KERNAUX_ASSERT(display);
+    KERNAUX_NOTNULL(display);
     KERNAUX_ASSERT(display->putc);
 
     // Default implementation
@@ -66,7 +67,7 @@ void KernAux_Display_printf(
     const char *const format,
     ...
 ) {
-    KERNAUX_ASSERT(display);
+    KERNAUX_NOTNULL(display);
 
     // Default implementation
     va_list va;
@@ -80,7 +81,7 @@ void KernAux_Display_printlnf(
     const char *const format,
     ...
 ) {
-    KERNAUX_ASSERT(display);
+    KERNAUX_NOTNULL(display);
 
     // Default implementation
     va_list va;
@@ -94,7 +95,7 @@ void KernAux_Display_vprintf(
     const char *const format,
     va_list va
 ) {
-    KERNAUX_ASSERT(display);
+    KERNAUX_NOTNULL(display);
     KERNAUX_ASSERT(display->vprintf);
 
     // Inherited implementation
@@ -106,7 +107,7 @@ void KernAux_Display_vprintlnf(
     const char *const format,
     va_list va
 ) {
-    KERNAUX_ASSERT(display);
+    KERNAUX_NOTNULL(display);
     KERNAUX_ASSERT(display->putc);
 
     // Default implementation

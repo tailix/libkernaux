@@ -2,7 +2,8 @@
 #include "config.h"
 #endif
 
-#include <kernaux/assert.h>
+#include "../assert.h"
+
 #include <kernaux/elf.h>
 #include <kernaux/generic/display.h>
 #include <kernaux/macro.h>
@@ -21,8 +22,8 @@
     do { KernAux_Display_printlnf(display, format, __VA_ARGS__); } while (0)
 
 #define HEADER(Type) do { \
-    KERNAUX_ASSERT(tag);                                     \
-    KERNAUX_ASSERT(display);                                 \
+    KERNAUX_NOTNULL(tag);                                    \
+    KERNAUX_NOTNULL(display);                                \
                                                              \
     if (!KernAux_Multiboot2_ITag_##Type##_is_valid(tag)) {   \
         PRINTLN("Multiboot 2 info tag // invalid!");         \
@@ -83,8 +84,8 @@ void KernAux_Multiboot2_Info_print(
     const struct KernAux_Multiboot2_Info *const multiboot2_info,
     const KernAux_Display display
 ) {
-    KERNAUX_ASSERT(multiboot2_info);
-    KERNAUX_ASSERT(display);
+    KERNAUX_NOTNULL(multiboot2_info);
+    KERNAUX_NOTNULL(display);
 
     KERNAUX_CAST_CONST(unsigned long, total_size, multiboot2_info->total_size);
     KERNAUX_CAST_CONST(unsigned long, reserved,   multiboot2_info->reserved);
@@ -112,8 +113,8 @@ void KernAux_Multiboot2_ITagBase_print(
     const struct KernAux_Multiboot2_ITagBase *const tag_base,
     const KernAux_Display display
 ) {
-    KERNAUX_ASSERT(tag_base);
-    KERNAUX_ASSERT(display);
+    KERNAUX_NOTNULL(tag_base);
+    KERNAUX_NOTNULL(display);
 
     switch (tag_base->type) {
     case KERNAUX_MULTIBOOT2_ITAG_NONE:

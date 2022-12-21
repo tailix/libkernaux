@@ -2,6 +2,8 @@
 #include "config.h"
 #endif
 
+#include "assert.h"
+
 #include <kernaux/macro.h>
 #include <kernaux/memmap.h>
 

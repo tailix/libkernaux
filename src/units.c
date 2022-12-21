@@ -2,7 +2,8 @@
 #include "config.h"
 #endif
 
-#include <kernaux/assert.h>
+#include "assert.h"
+
 #include <kernaux/ntoa.h>
 #include <kernaux/units.h>
 
@@ -16,7 +17,7 @@ bool kernaux_units_human_raw(
     char *const buffer,
     const size_t buffer_size
 ) {
-    KERNAUX_ASSERT(buffer);
+    KERNAUX_NOTNULL(buffer);
     KERNAUX_ASSERT(buffer_size > 0);
 
     char tmp_buffer[TMP_BUFFER_SIZE];
@@ -56,7 +57,7 @@ bool kernaux_units_human_dec(
     char *const buffer,
     const size_t buffer_size
 ) {
-    KERNAUX_ASSERT(buffer);
+    KERNAUX_NOTNULL(buffer);
     KERNAUX_ASSERT(buffer_size > 0);
 
     char tmp_buffer[TMP_BUFFER_SIZE];

@@ -1,3 +1,12 @@
+2022-12-21  Alex Kotov  <kotovalexarian@gmail.com>
+
+	* configure.ac: Rename feature "--(enable|disable)-debug" to
+	"--(enable|disable)-assert"
+	* include/: Definition "KERNAUX_DEBUG" has been removed
+	* include/kernaux/runtime.h: New header
+	* include/kernaux/assert.h: Removed header
+	* include/kernaux/memmap.h: The old API has been removed
+
 2022-12-19  Alex Kotov  <kotovalexarian@gmail.com>
 
 	* src/multiboot2/*_print.c: Print Multiboot 2 ELF section headers
@@ -24,7 +33,6 @@
 
 	* examples/Makefile.am: Fix builds without pthreads
 	* include/: Non-conditional headers (except <kernaux/version.h>)
-	* include/kernaux/memmap.h: The old API has been removed
 
 2022-12-11  Alex Kotov  <kotovalexarian@gmail.com>
 

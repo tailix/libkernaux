@@ -25,6 +25,13 @@ The following statements are recommendations, but highly encouraged:
 * Write tests
 * Keep lines less than 80 characters long for better experience on split screen
 
+### Things to review periodically
+
+* `git grep -i fixme`
+* `git grep -i todo`
+* `git grep -i cppcheck-suppress`
+* `git grep -i rubocop:disable`
+
 ### Programming mistakes
 
 * Always check documentation, manuals and specifications
@@ -61,13 +68,6 @@ Avoid stupid errors with:
 * Operator precedence
 * Default case in switch statements
 * Braces (curly brackets) around code blocks
-
-### Things to review periodically
-
-* `git grep -i fixme`
-* `git grep -i todo`
-* `git grep -i cppcheck-suppress`
-* `git grep -i rubocop:disable`
 
 
 
