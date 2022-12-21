@@ -2,56 +2,47 @@
 #include "config.h"
 #endif
 
-#include <kernaux/assert.h>
 #include <kernaux/elf.h>
+#include <kernaux/macro.h>
 
-bool KernAux_ELF_Header_is_valid(
-    const struct KernAux_ELF_Header *const header
-) {
-    KERNAUX_ASSERT(header);
+#include <stddef.h>
 
-    if (!(
-        header->magic_0x7f     == 0x7f &&
-        header->magic_E        == 'E'  &&
-        header->magic_L        == 'L'  &&
-        header->magic_F        == 'F'  &&
-        header->header_version == 1    &&
-        header->elf_version    == 1
-    )) {
-        return false;
+const char *KernAux_ELF_Section_Type_to_str(const uint32_t type)
+{
+    switch (type) {
+    case KERNAUX_ELF_SECT_TYPE_NULL:
+        return "NULL";
+    case KERNAUX_ELF_SECT_TYPE_PROGBITS:
+        return "PROGBITS";
+    case KERNAUX_ELF_SECT_TYPE_SYMTAB:
+        return "SYMTAB";
+    case KERNAUX_ELF_SECT_TYPE_STRTAB:
+        return "STRTAB";
+    case KERNAUX_ELF_SECT_TYPE_RELA:
+        return "RELA";
+    case KERNAUX_ELF_SECT_TYPE_HASH:
+        return "HASH";
+    case KERNAUX_ELF_SECT_TYPE_DYNAMIC:
+        return "DYNAMIC";
+    case KERNAUX_ELF_SECT_TYPE_NOTE:
+        return "NOTE";
+    case KERNAUX_ELF_SECT_TYPE_NOBITS:
+        return "NOBITS";
+    case KERNAUX_ELF_SECT_TYPE_REL:
+        return "REL";
+    case KERNAUX_ELF_SECT_TYPE_SHLIB:
+        return "SHLIB";
+    case KERNAUX_ELF_SECT_TYPE_DYNSYM:
+        return "DYNSYM";
+    case KERNAUX_ELF_SECT_TYPE_LOPROC:
+        return "LOPROC";
+    case KERNAUX_ELF_SECT_TYPE_HIPROC:
+        return "HIPROC";
+    case KERNAUX_ELF_SECT_TYPE_LOUSER:
+        return "LOUSER";
+    case KERNAUX_ELF_SECT_TYPE_HIUSER:
+        return "HIUSER";
+    default:
+        return NULL;
     }
-
-    if (!(
-        header->bitness == 1 || // 32 bit
-        header->bitness == 2    // 64 bit
-    )) {
-        return false;
-    }
-
-    if (!(
-        header->endianness == 1 || // Little endian
-        header->endianness == 2    // Big endian
-    )) {
-        return false;
-    }
-
-    if (!(header->os_abi <= 0x12 && header->os_abi != 0x05)) {
-        return false;
-    }
-
-    if (!(
-        header->obj_type == 0x00   || // NONE
-        header->obj_type == 0x01   || // REL
-        header->obj_type == 0x02   || // EXEC
-        header->obj_type == 0x03   || // DYN
-        header->obj_type == 0x04   || // CORE
-        header->obj_type == 0xfe00 || // LOOS
-        header->obj_type == 0xfeff || // HIOS
-        header->obj_type == 0xff00 || // LOPROC
-        header->obj_type == 0xffff    // HIPROC
-    )) {
-        return false;
-    }
-
-    return true;
 }
