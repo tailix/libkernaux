@@ -5,7 +5,6 @@
 extern "C" {
 #endif
 
-#include <kernaux/macro.h>
 #include <kernaux/runtime.h>
 
 #ifdef KERNAUX_DISABLE_ASSERT
@@ -17,9 +16,6 @@ extern "C" {
 #endif
 
 #define KERNAUX_NOTNULL(cond) KERNAUX_ASSERT(cond)
-
-KERNAUX_NORETURN
-void kernaux_assert_do(const char *file, int line, const char *msg);
 
 #ifdef __cplusplus
 }
