@@ -2,6 +2,7 @@
 
 	* configure.ac: Rename feature "--(enable|disable)-debug" to
 	"--(enable|disable)-assert"
+	* include/: Definition "KERNAUX_DEBUG" has been removed
 	* include/kernaux/runtime.h: New header
 	* include/kernaux/assert.h: Removed header
 
