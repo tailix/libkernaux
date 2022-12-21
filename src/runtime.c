@@ -14,8 +14,4 @@ void kernaux_assert_do(
     const char *const msg
 ) {
     if (kernaux_assert_cb) kernaux_assert_cb(file, line, msg);
-
-    // Enforce noreturn.
-    volatile int x = 0;
-    for (;;) ++x;
 }
