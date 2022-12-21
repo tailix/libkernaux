@@ -3,14 +3,6 @@ include $(top_srcdir)/make/shared.am
 TESTS =
 noinst_PROGRAMS = $(TESTS)
 
-##########
-# assert #
-##########
-
-TESTS += assert
-assert_LDADD = $(top_builddir)/libkernaux.la
-assert_SOURCES = assert.c
-
 ###########
 # cmdline #
 ###########
@@ -116,14 +108,6 @@ TESTS += ntoa
 ntoa_LDADD = $(top_builddir)/libkernaux.la
 ntoa_SOURCES = main.c ntoa.c
 endif
-
-#########
-# panic #
-#########
-
-TESTS += panic
-panic_LDADD = $(top_builddir)/libkernaux.la
-panic_SOURCES = panic.c
 
 #######
 # pfa #

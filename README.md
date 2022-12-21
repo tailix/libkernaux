@@ -47,8 +47,6 @@ zero). Work-in-progress APIs can change at any time.
     * [Example: BITS](/examples/macro_bits.c)
     * [Example: STATIC\_TEST\*](/examples/macro_static_test.c)
   * [Assertions](/include/kernaux/assert.h) (*non-breaking since* **?.?.?**)
-    * [Example: Assert](/examples/assert.c)
-    * [Example: Panic](/examples/panic.c)
   * Stack trace *(planned)*
 * Generic types
   * [Display](/include/kernaux/generic/display.h) (*non-breaking since* **?.?.?**)
