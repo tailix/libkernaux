@@ -30,6 +30,8 @@ KernAux_Memmap_Builder_create_from_malloc(KernAux_Malloc malloc);
 struct KernAux_Memmap
 KernAux_Memmap_Builder_finish(KernAux_Memmap_Builder builder);
 
+void KernAux_Memmap_free(KernAux_Memmap memmap);
+
 #ifdef __cplusplus
 }
 #endif

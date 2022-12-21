@@ -4,6 +4,7 @@
 
 #include "assert.h"
 
+#include <kernaux/generic/malloc.h>
 #include <kernaux/memmap.h>
 
 #include <stdbool.h>
@@ -53,4 +54,18 @@ KernAux_Memmap_Builder_finish(const KernAux_Memmap_Builder builder)
     builder->memmap.buffer_size = 0;
     builder->memmap.malloc = NULL;
     return memmap;
+}
+
+void KernAux_Memmap_free(const KernAux_Memmap memmap)
+{
+    KERNAUX_NOTNULL(memmap);
+
+    if (!memmap->malloc || !memmap->buffer) return;
+
+    KERNAUX_ASSERT(memmap->buffer_size > 0);
+
+    KernAux_Malloc_free(memmap->malloc, memmap->buffer);
+    memmap->malloc = NULL;
+    memmap->buffer = NULL;
+    memmap->buffer_size = 0;
 }
