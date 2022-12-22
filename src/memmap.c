@@ -48,6 +48,10 @@ bool KernAux_Memmap_Builder_add(
             if (!curr_node->next ||
                 curr_node->next->mem_start > new_node->mem_start)
             {
+                if (new_node->next) {
+                    KERNAUX_ASSERT(new_node->mem_end <
+                                   new_node->next->mem_start);
+                }
                 new_node->next = curr_node->next;
                 curr_node->next = new_node;
                 break;
