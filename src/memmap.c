@@ -89,6 +89,12 @@ KernAux_Memmap_Node KernAux_Memmap_Builder_add(
         parent_node = (struct KernAux_Memmap_Node*)builder->memmap->root_node;
     }
 
+    if (new_node->mem_start < parent_node->mem_start ||
+        new_node->mem_end > parent_node->mem_end)
+    {
+        return NULL;
+    }
+
     if (parent_node->children) {
         for (
             struct KernAux_Memmap_Node *curr_node =
