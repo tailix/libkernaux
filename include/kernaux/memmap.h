@@ -30,6 +30,12 @@ typedef struct KernAux_Memmap_Builder {
 struct KernAux_Memmap_Builder
 KernAux_Memmap_Builder_create(KernAux_Malloc malloc);
 
+bool KernAux_Memmap_Builder_add(
+    KernAux_Memmap_Builder builder,
+    uint64_t mem_start,
+    uint64_t mem_size
+);
+
 struct KernAux_Memmap
 KernAux_Memmap_Builder_finish(KernAux_Memmap_Builder builder);
 

@@ -22,6 +22,32 @@ KernAux_Memmap_Builder_create(const KernAux_Malloc malloc)
     };
 }
 
+bool KernAux_Memmap_Builder_add(
+    const KernAux_Memmap_Builder builder,
+    const uint64_t mem_start,
+    const uint64_t mem_size
+) {
+    KERNAUX_NOTNULL(builder);
+    KERNAUX_ASSERT(builder->memmap.malloc);
+    KERNAUX_ASSERT(mem_size > 0);
+
+    struct KernAux_Memmap_Node *const node =
+        KernAux_Malloc_malloc(builder->memmap.malloc, sizeof(*node));
+    if (!node) return false;
+
+    node->mem_start = mem_start;
+    node->mem_size = mem_size;
+    node->mem_end = mem_start + mem_size - 1;
+
+    node->next = builder->memmap.node;
+    node->prev = NULL;
+
+    if (builder->memmap.node) builder->memmap.node->prev = node;
+    builder->memmap.node = node;
+
+    return true;
+}
+
 struct KernAux_Memmap
 KernAux_Memmap_Builder_finish(const KernAux_Memmap_Builder builder)
 {
