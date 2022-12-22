@@ -14,7 +14,7 @@ extern "C" {
 
 typedef const struct KernAux_Memmap_Node {
     uint64_t mem_start, mem_end, mem_size;
-    const struct KernAux_Memmap_Node *next, *prev;
+    const struct KernAux_Memmap_Node *next;
 } *KernAux_Memmap_Node;
 
 typedef struct KernAux_Memmap {

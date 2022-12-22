@@ -49,18 +49,12 @@ bool KernAux_Memmap_Builder_add(
                 curr_node->next->mem_start > new_node->mem_start)
             {
                 new_node->next = curr_node->next;
-                new_node->prev = curr_node;
-                if (curr_node->next) {
-                    ((struct KernAux_Memmap_Node*)curr_node->next)->prev =
-                        new_node;
-                }
                 curr_node->next = new_node;
                 break;
             }
         }
     } else {
         new_node->next = NULL;
-        new_node->prev = NULL;
         builder->memmap.node = new_node;
     }
 
