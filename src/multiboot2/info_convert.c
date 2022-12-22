@@ -48,12 +48,17 @@ KernAux_Memmap_Builder KernAux_Multiboot2_Info_to_memmap_builder(
             (const struct KernAux_Multiboot2_ITag_MemoryMap_EntryBase*)
             (((const char*)entry) + memory_map_tag->entry_size)
     ) {
-        KernAux_Memmap_Builder_add(
+        const void *const node = KernAux_Memmap_Builder_add(
             builder,
             NULL,
             entry->base_addr,
             entry->length
         );
+
+        if (!node) {
+            KernAux_Memmap_Builder_finish_and_free(builder);
+            return NULL;
+        }
     }
 
     return builder;

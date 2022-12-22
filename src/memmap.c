@@ -74,7 +74,8 @@ KernAux_Memmap_Node KernAux_Memmap_Builder_add(
     KERNAUX_ASSERT(builder->memmap);
     KERNAUX_ASSERT(builder->memmap->root_node);
     KERNAUX_ASSERT(builder->memmap->malloc);
-    KERNAUX_ASSERT(mem_size > 0);
+
+    if (mem_size == 0) return NULL;
 
     struct KernAux_Memmap_Node *const new_node =
         KernAux_Malloc_malloc(builder->memmap->malloc, sizeof(*new_node));
@@ -98,9 +99,10 @@ KernAux_Memmap_Node KernAux_Memmap_Builder_add(
             if (!curr_node->next ||
                 curr_node->next->mem_start > new_node->mem_start)
             {
-                if (new_node->next) {
-                    KERNAUX_ASSERT(new_node->mem_end <
-                                   new_node->next->mem_start);
+                if (new_node->next &&
+                    new_node->mem_end >= new_node->next->mem_start)
+                {
+                    goto fail_after_new_node;
                 }
                 new_node->next = curr_node->next;
                 curr_node->next = new_node;
@@ -113,6 +115,10 @@ KernAux_Memmap_Node KernAux_Memmap_Builder_add(
     }
 
     return new_node;
+
+fail_after_new_node:
+    KernAux_Malloc_free(builder->memmap->malloc, new_node);
+    return NULL;
 }
 
 KernAux_Memmap
