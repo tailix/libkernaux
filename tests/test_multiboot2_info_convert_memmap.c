@@ -8,6 +8,7 @@
 
 #include <assert.h>
 #include <stddef.h>
+#include <string.h>
 
 #include "../fixtures/multiboot2_info_example0.h"
 #include "../fixtures/multiboot2_info_example1.h"
@@ -71,6 +72,7 @@ void test_examples_1_and_2(KernAux_Memmap_Node node)
     assert(node->mem_start == 0x0);
     assert(node->mem_size  == 0xffffffffffffffff);
     assert(node->mem_end   == 0xffffffffffffffff);
+    assert(node->tag == NULL);
     assert(node->next == NULL);
 
     node = node->children;
@@ -78,6 +80,7 @@ void test_examples_1_and_2(KernAux_Memmap_Node node)
     assert(node->mem_start == 0x0);
     assert(node->mem_size  == 654336);
     assert(node->mem_end   == 0x9fbff);
+    assert(strcmp(node->tag, "available") == 0);
     assert(node->children  == NULL);
 
     node = node->next;
@@ -85,6 +88,7 @@ void test_examples_1_and_2(KernAux_Memmap_Node node)
     assert(node->mem_start == 0x9fc00);
     assert(node->mem_size  == 1024);
     assert(node->mem_end   == 0x9ffff);
+    assert(strcmp(node->tag, "reserved") == 0);
     assert(node->children  == NULL);
 
     node = node->next;
@@ -92,6 +96,7 @@ void test_examples_1_and_2(KernAux_Memmap_Node node)
     assert(node->mem_start == 0xf0000);
     assert(node->mem_size  == 65536);
     assert(node->mem_end   == 0xfffff);
+    assert(strcmp(node->tag, "reserved") == 0);
     assert(node->children  == NULL);
 
     node = node->next;
@@ -99,6 +104,7 @@ void test_examples_1_and_2(KernAux_Memmap_Node node)
     assert(node->mem_start == 0x100000);
     assert(node->mem_size  == 133038080);
     assert(node->mem_end   == 0x7fdffff);
+    assert(strcmp(node->tag, "available") == 0);
     assert(node->children  == NULL);
 
     node = node->next;
@@ -106,6 +112,7 @@ void test_examples_1_and_2(KernAux_Memmap_Node node)
     assert(node->mem_start == 0x7fe0000);
     assert(node->mem_size  == 131072);
     assert(node->mem_end   == 0x7ffffff);
+    assert(strcmp(node->tag, "reserved") == 0);
     assert(node->children  == NULL);
 
     node = node->next;
@@ -113,6 +120,7 @@ void test_examples_1_and_2(KernAux_Memmap_Node node)
     assert(node->mem_start == 0xfffc0000);
     assert(node->mem_size  == 262144);
     assert(node->mem_end   == 0xffffffff);
+    assert(strcmp(node->tag, "reserved") == 0);
     assert(node->children  == NULL);
 
     node = node->next;

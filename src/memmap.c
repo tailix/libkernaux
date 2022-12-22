@@ -12,6 +12,7 @@
 #include <stdbool.h>
 #include <stddef.h>
 #include <stdint.h>
+#include <string.h>
 
 static void free_node(KernAux_Malloc malloc, struct KernAux_Memmap_Node *node);
 static void print_nodes(
@@ -50,6 +51,7 @@ KernAux_Memmap_Builder_new(const KernAux_Malloc malloc)
         .mem_start = 0x0,
         .mem_end   = 0xffffffffffffffff, // 2**64 - 1
         .mem_size  = 0xffffffffffffffff, // 2**64 - 1
+        .tag = NULL,
         .next = NULL,
         .children = NULL,
     };
@@ -68,22 +70,32 @@ KernAux_Memmap_Node KernAux_Memmap_Builder_add(
     const KernAux_Memmap_Builder builder,
     KernAux_Memmap_Node parent_node,
     const uint64_t mem_start,
-    const uint64_t mem_size
+    const uint64_t mem_size,
+    const char *tag
 ) {
     KERNAUX_NOTNULL(builder);
     KERNAUX_ASSERT(builder->memmap);
     KERNAUX_ASSERT(builder->memmap->root_node);
     KERNAUX_ASSERT(builder->memmap->malloc);
 
-    if (mem_size == 0) return NULL;
+    if (mem_size == 0) goto fail;
+
+    char *tag_copy = NULL;
+    if (tag) {
+        tag_copy =
+            KernAux_Malloc_malloc(builder->memmap->malloc, strlen(tag) + 1);
+        if (!tag_copy) goto fail;
+        strcpy(tag_copy, tag);
+    }
 
     struct KernAux_Memmap_Node *const new_node =
         KernAux_Malloc_malloc(builder->memmap->malloc, sizeof(*new_node));
-    if (!new_node) return NULL;
+    if (!new_node) goto fail_after_tag;
 
     new_node->mem_start = mem_start;
     new_node->mem_size = mem_size;
     new_node->mem_end = mem_start + mem_size - 1;
+    new_node->tag = tag_copy;
 
     if (!parent_node) {
         parent_node = (struct KernAux_Memmap_Node*)builder->memmap->root_node;
@@ -92,7 +104,7 @@ KernAux_Memmap_Node KernAux_Memmap_Builder_add(
     if (new_node->mem_start < parent_node->mem_start ||
         new_node->mem_end > parent_node->mem_end)
     {
-        return NULL;
+        goto fail_after_new_node;
     }
 
     if (parent_node->children) {
@@ -124,6 +136,9 @@ KernAux_Memmap_Node KernAux_Memmap_Builder_add(
 
 fail_after_new_node:
     KernAux_Malloc_free(builder->memmap->malloc, new_node);
+fail_after_tag:
+    if (tag_copy) KernAux_Malloc_free(builder->memmap->malloc, tag_copy);
+fail:
     return NULL;
 }
 
@@ -186,6 +201,7 @@ void free_node(
         free_node(malloc, child_node);
     }
 
+    if (node->tag) KernAux_Malloc_free(malloc, (void*)node->tag);
     KernAux_Malloc_free(malloc, node);
 }
 
@@ -218,16 +234,22 @@ void print_nodes(
         PRINTLNF("  u64 mem_size:  %llu",   mem_size);
         INDENT;
         PRINTLNF("  u64 mem_end:   0x%llx", mem_end);
+        INDENT;
+        if (node->tag) {
+            PRINTLNF("  char* tag: \"%s\"", node->tag);
+        } else {
+            PRINTLN("  char* tag: NULL");
+        }
 
         if (node->children) {
             INDENT;
-            PRINTLN("  struct children[]: [");
+            PRINTLN("  struct* children: [");
             print_nodes(node->children, display, indentation + 2);
             INDENT;
             PRINTLN("  ]");
         } else {
             INDENT;
-            PRINTLN("  struct children[]: []");
+            PRINTLN("  struct* children: []");
         }
 
         INDENT;

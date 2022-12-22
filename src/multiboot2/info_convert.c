@@ -54,7 +54,10 @@ KernAux_Memmap_Builder KernAux_Multiboot2_Info_to_memmap_builder(
             builder,
             NULL,
             entry->base_addr,
-            entry->length
+            entry->length,
+            KernAux_Multiboot2_ITag_MemoryMap_EntryBase_Type_to_str(
+                entry->type
+            )
         );
 
         if (!node) {
