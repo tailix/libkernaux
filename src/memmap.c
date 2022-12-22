@@ -10,25 +10,8 @@
 #include <stdbool.h>
 #include <stddef.h>
 
-struct KernAux_Memmap_Builder KernAux_Memmap_Builder_create_from_buffer(
-    void *const buffer,
-    const size_t buffer_size
-) {
-    KERNAUX_NOTNULL(buffer);
-    KERNAUX_ASSERT(buffer_size > 0);
-
-    return (struct KernAux_Memmap_Builder){
-        .is_finished = false,
-        .memmap = {
-            .buffer = buffer,
-            .buffer_size = buffer_size,
-            .malloc = NULL,
-        },
-    };
-}
-
 struct KernAux_Memmap_Builder
-KernAux_Memmap_Builder_create_from_malloc(const KernAux_Malloc malloc)
+KernAux_Memmap_Builder_create(const KernAux_Malloc malloc)
 {
     KERNAUX_NOTNULL(malloc);
 
@@ -47,6 +30,7 @@ KernAux_Memmap_Builder_finish(const KernAux_Memmap_Builder builder)
 {
     KERNAUX_NOTNULL(builder);
     KERNAUX_ASSERT(!builder->is_finished);
+    KERNAUX_ASSERT(builder->memmap.malloc);
 
     builder->is_finished = true;
     struct KernAux_Memmap memmap = builder->memmap;
@@ -60,9 +44,10 @@ void KernAux_Memmap_free(const KernAux_Memmap memmap)
 {
     KERNAUX_NOTNULL(memmap);
 
-    if (!memmap->malloc || !memmap->buffer) return;
+    if (!memmap->buffer) return;
 
     KERNAUX_ASSERT(memmap->buffer_size > 0);
+    KERNAUX_ASSERT(memmap->malloc);
 
     KernAux_Malloc_free(memmap->malloc, memmap->buffer);
     memmap->malloc = NULL;
