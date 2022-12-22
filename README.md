@@ -40,15 +40,13 @@ zero). Work-in-progress APIs can change at any time.
 
 * Basic features
   * [Feature macros](/include/kernaux/version.h.in) (*work in progress*)
+  * [Runtime environment](/include/kernaux/runtime.h) (*non-breaking since* **?.?.?**)
   * [Macros](/include/kernaux/macro.h) (*non-breaking since* **0.6.0**)
     * [Example: packing](/examples/macro_packing.c)
     * [Example: BITS](/examples/macro_bits.c)
     * [Example: CAST\_\*](/examples/macro_cast.c);
     * [Example: CONTAINER\_OF](/examples/macro_container_of.c)
     * [Example: STATIC\_TEST\*](/examples/macro_static_test.c)
-  * [Assertions](/include/kernaux/assert.h) (*non-breaking since* **0.4.0**)
-    * [Example: Assert](/examples/assert.c)
-    * [Example: Panic](/examples/panic.c)
   * Stack trace *(planned)*
 * Generic types
   * [Display](/include/kernaux/generic/display.h) (*non-breaking since* **?.?.?**)
@@ -71,7 +69,7 @@ zero). Work-in-progress APIs can change at any time.
 * Utilities
   * [Measurement units utils](/include/kernaux/units.h) (*work in progress*)
     * [Example: To human](/examples/units_human.c)
-  * [Memory map](/include/kernaux/memmap.h) (*non-breaking since* **0.4.0**)
+  * [Memory map](/include/kernaux/memmap.h) (*non-breaking since* **?.?.?**)
     * [Example](/examples/memmap.c)
   * [printf format parser](/include/kernaux/printf_fmt.h) (*non-breaking since* **0.6.0**)
     * [Example](/examples/printf_fmt.c)
@@ -100,7 +98,6 @@ zero). Work-in-progress APIs can change at any time.
 `#define` the following C preprocessor macros before including `<kernaux.h>` and
 `<kernaux/*.h>` files. They have effect on your code, not the library code.
 
-* `KERNAUX_DEBUG` - enable assertions.
 * `KERNAUX_ACCESS_PRIVATE` - disable access modifier "private". Don't do this!
 * `KERNAUX_ACCESS_PROTECTED` - disable access modifier "protected". Only do this
   in a file where you implement an inherited type.
@@ -110,12 +107,12 @@ zero). Work-in-progress APIs can change at any time.
 ### Global variables
 
 ```c
-// in <kernaux/assert.h>
+// in <kernaux/runtime.h>
 void (*kernaux_assert_cb)(const char *file, int line, const char *msg)
 ```
 
 Assertion callback. It's better to always set it to some function which always
-interrupts the execution, even when debugging is disabled. It may for example
+interrupts the execution, even when assertions are disabled. It may for example
 call `abort()` in hosted environment, raise an exception in Ruby, panic in Rust
 or power off the machine in freestanding environment. It may also log the error
 location and message.
@@ -153,7 +150,7 @@ stable options.
 
 #### Features
 
-* `--(enable|disable)-debug` - debugging
+* `--(enable|disable)-assert` - assertions
 * `--(enable|disable)-float` - floating-point arithmetic
 * `--(enable|disable)-werror` - fail on warning (`CFLAGS+='-Werror'`)
 

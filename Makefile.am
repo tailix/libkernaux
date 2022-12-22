@@ -2,7 +2,7 @@ include $(top_srcdir)/make/shared.am
 include $(top_srcdir)/make/checks.am
 
 ACLOCAL_AMFLAGS = -I m4
-EXTRA_DIST = autogen.sh CONTRIBUTING.md sha256sums.txt
+EXTRA_DIST = autogen.sh CONTRIBUTING.md sha256sums.txt src/assert.h
 
 SUBDIRS = include
 
@@ -35,10 +35,10 @@ lib_LTLIBRARIES = libkernaux.la
 libkernaux_la_LDFLAGS = -version-info @PACKAGE_VERSION_SO@
 libkernaux_la_LIBADD =
 libkernaux_la_SOURCES = \
-	src/assert.c \
 	src/generic/display.c \
 	src/generic/malloc.c \
-	src/generic/mutex.c
+	src/generic/mutex.c \
+	src/runtime.c
 
 ########
 # libc #
@@ -97,6 +97,7 @@ libkernaux_la_SOURCES += \
 	src/multiboot2/header_helpers.c \
 	src/multiboot2/header_is_valid.c \
 	src/multiboot2/header_print.c \
+	src/multiboot2/info_convert.c \
 	src/multiboot2/info_enums.c \
 	src/multiboot2/info_helpers.c \
 	src/multiboot2/info_is_valid.c \

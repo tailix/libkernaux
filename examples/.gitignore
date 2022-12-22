@@ -1,4 +1,3 @@
-/assert
 /cmdline
 /generic_display
 /generic_malloc
@@ -11,7 +10,6 @@
 /memmap
 /multiboot2_header_macro
 /ntoa
-/panic
 /pfa
 /printf_file
 /printf_file_va

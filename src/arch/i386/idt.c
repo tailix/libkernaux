@@ -2,8 +2,9 @@
 #include "config.h"
 #endif
 
+#include "../../assert.h"
+
 #include <kernaux/arch/i386.h>
-#include <kernaux/assert.h>
 
 #include <string.h>
 
@@ -15,7 +16,7 @@ void KernAux_Arch_I386_IDTE_init_intr(
     const uint16_t cs_selector,
     const uint8_t dpl
 ) {
-    KERNAUX_ASSERT(idte);
+    KERNAUX_NOTNULL(idte);
 
     memset(idte, 0, sizeof(*idte));
     KernAux_Arch_I386_IDTE_set_offset(idte, offset);
@@ -28,7 +29,7 @@ void KernAux_Arch_I386_IDTE_init_task(
     const uint16_t tss_selector,
     const uint8_t dpl
 ) {
-    KERNAUX_ASSERT(idte);
+    KERNAUX_NOTNULL(idte);
 
     memset(idte, 0, sizeof(*idte));
     idte->selector = tss_selector;
@@ -41,7 +42,7 @@ void KernAux_Arch_I386_IDTE_init_trap(
     const uint16_t cs_selector,
     const uint8_t dpl
 ) {
-    KERNAUX_ASSERT(idte);
+    KERNAUX_NOTNULL(idte);
 
     memset(idte, 0, sizeof(*idte));
     KernAux_Arch_I386_IDTE_set_offset(idte, offset);
@@ -51,14 +52,14 @@ void KernAux_Arch_I386_IDTE_init_trap(
 
 uint32_t KernAux_Arch_I386_IDTE_offset(const KernAux_Arch_I386_IDTE idte)
 {
-    KERNAUX_ASSERT(idte);
+    KERNAUX_NOTNULL(idte);
 
     return (idte->offset_high << 16) | idte->offset_low;
 }
 
 uint8_t KernAux_Arch_I386_IDTE_dpl(const KernAux_Arch_I386_IDTE idte)
 {
-    KERNAUX_ASSERT(idte);
+    KERNAUX_NOTNULL(idte);
 
     return 3 & (idte->flags >> 5);
 }
@@ -67,7 +68,7 @@ void KernAux_Arch_I386_IDTE_set_offset(
     const KernAux_Arch_I386_IDTE idte,
     const uint32_t offset
 ) {
-    KERNAUX_ASSERT(idte);
+    KERNAUX_NOTNULL(idte);
 
     idte->offset_low  = 0xffffu & offset;
     idte->offset_high = 0xffffu & (offset >> 16);

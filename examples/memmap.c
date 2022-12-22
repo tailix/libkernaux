@@ -1,45 +1,60 @@
+#define KERNAUX_ACCESS_PROTECTED
+
+#include <kernaux/free_list.h>
+#include <kernaux/generic/display.h>
+#include <kernaux/macro.h>
 #include <kernaux/memmap.h>
 
 #include <assert.h>
-#include <stdbool.h>
 #include <stddef.h>
-#include <string.h>
+#include <stdio.h>
 
-#define SIZE_256MiB ( 256 * 1024 * 1024)
-#define SIZE_512MiB ( 512 * 1024 * 1024)
-#define SIZE_1GiB   (1024 * 1024 * 1024)
+static char malloc_memory[8192];
+
+static void my_putc(void *const display KERNAUX_UNUSED, const char c)
+{
+    putchar(c);
+}
+
+static void my_vprintf(
+    void *const display KERNAUX_UNUSED,
+    const char *const format,
+    va_list va
+) {
+    vprintf(format, va);
+}
+
+static const struct KernAux_Display display = {
+    .putc = my_putc,
+    .vprintf = my_vprintf,
+};
 
 void example_main()
 {
-    KernAux_MemMap memmap = { KernAux_MemMap_create(SIZE_1GiB) };
+    struct KernAux_FreeList malloc = KernAux_FreeList_create(NULL);
+    KernAux_FreeList_add_zone(&malloc, malloc_memory, sizeof(malloc_memory));
 
-    assert(KernAux_MemMap_add_entry(memmap, true,  NULL,  0,           SIZE_256MiB));
-    assert(KernAux_MemMap_add_entry(memmap, false, "foo", SIZE_256MiB, SIZE_256MiB));
-    assert(KernAux_MemMap_add_entry(memmap, true,  "bar", SIZE_512MiB, SIZE_512MiB));
+    KernAux_Memmap_Builder memmap_builder =
+        KernAux_Memmap_Builder_new(&malloc.malloc);
+    assert(memmap_builder);
 
-    assert(KernAux_MemMap_finish(memmap));
+    assert(KernAux_Memmap_Builder_add(memmap_builder, NULL,        0x0,        654336,    "available"));
+    assert(KernAux_Memmap_Builder_add(memmap_builder, NULL,        0x9fc00,    1024,      "reserved"));
+    assert(KernAux_Memmap_Builder_add(memmap_builder, NULL,        0xf0000,    65536,     "reserved"));
+    KernAux_Memmap_Node kernel_node =
+        KernAux_Memmap_Builder_add   (memmap_builder, NULL,        0x100000,   133038080, "available");
+    assert(kernel_node);
+    assert(KernAux_Memmap_Builder_add(memmap_builder, NULL,        0x7fe0000,  131072,    "reserved"));
+    assert(KernAux_Memmap_Builder_add(memmap_builder, NULL,        0xfffc0000, 262144,    "reserved"));
 
-    // You can get the entry by it's index:
-    assert(       KernAux_MemMap_entry_by_index(memmap, 0)->is_available == true);
-    assert(strcmp(KernAux_MemMap_entry_by_index(memmap, 0)->tag, "") == 0);
-    assert(       KernAux_MemMap_entry_by_index(memmap, 0)->start == 0);
-    assert(       KernAux_MemMap_entry_by_index(memmap, 0)->size  == SIZE_256MiB);
-    assert(       KernAux_MemMap_entry_by_index(memmap, 0)->end   == SIZE_256MiB - 1);
-    assert(       KernAux_MemMap_entry_by_index(memmap, 0)->limit == SIZE_256MiB);
+    assert(KernAux_Memmap_Builder_add(memmap_builder, kernel_node, 0x400000,   8192,      "kernel code"));
+    assert(KernAux_Memmap_Builder_add(memmap_builder, kernel_node, 0x402000,   4096,      "kernel data"));
 
-    // You can get the entry by it's start address:
-    assert(       KernAux_MemMap_entry_by_start(memmap, SIZE_256MiB)->is_available == false);
-    assert(strcmp(KernAux_MemMap_entry_by_start(memmap, SIZE_256MiB)->tag, "foo") == 0);
-    assert(       KernAux_MemMap_entry_by_start(memmap, SIZE_256MiB)->start == SIZE_256MiB);
-    assert(       KernAux_MemMap_entry_by_start(memmap, SIZE_256MiB)->size  == SIZE_256MiB);
-    assert(       KernAux_MemMap_entry_by_start(memmap, SIZE_256MiB)->end   == SIZE_512MiB - 1);
-    assert(       KernAux_MemMap_entry_by_start(memmap, SIZE_256MiB)->limit == SIZE_512MiB);
+    KernAux_Memmap memmap =
+        KernAux_Memmap_Builder_finish_and_free(memmap_builder);
+    assert(memmap);
 
-    // You can get the entry by any address inside it:
-    assert(       KernAux_MemMap_entry_by_addr(memmap, SIZE_512MiB              )->is_available == true);
-    assert(strcmp(KernAux_MemMap_entry_by_addr(memmap, SIZE_512MiB + 1          )->tag, "bar") == 0);
-    assert(       KernAux_MemMap_entry_by_addr(memmap, SIZE_512MiB + SIZE_256MiB)->start == SIZE_512MiB);
-    assert(       KernAux_MemMap_entry_by_addr(memmap, SIZE_1GiB - 3            )->size  == SIZE_512MiB);
-    assert(       KernAux_MemMap_entry_by_addr(memmap, SIZE_1GiB - 2            )->end   == SIZE_1GiB - 1);
-    assert(       KernAux_MemMap_entry_by_addr(memmap, SIZE_1GiB - 1            )->limit == SIZE_1GiB);
+    KernAux_Memmap_print(memmap, &display);
+
+    KERNAUX_MEMMAP_FREE(memmap);
 }

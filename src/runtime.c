@@ -2,11 +2,11 @@
 #include "config.h"
 #endif
 
-#include <kernaux/assert.h>
+#include <kernaux/runtime.h>
 
 #include <stddef.h>
 
-void (*kernaux_assert_cb)(const char *file, int line, const char *msg) = NULL;
+KernAux_Assert_Cb kernaux_assert_cb = NULL;
 
 void kernaux_assert_do(
     const char *const file,

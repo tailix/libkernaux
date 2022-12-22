@@ -32,7 +32,15 @@ extern "C" {
 #define KERNAUX_MULTIBOOT2_ITAG_EFI_64BIT_IMAGE_HANDLE_PTR       20
 #define KERNAUX_MULTIBOOT2_ITAG_IMAGE_LOAD_BASE_PHYS_ADDR        21
 
+#define KERNAUX_MULTIBOOT2_MEMMAP_AVAILABLE        1
+#define KERNAUX_MULTIBOOT2_MEMMAP_RESERVED         2
+#define KERNAUX_MULTIBOOT2_MEMMAP_ACPI_RECLAIMABLE 3
+#define KERNAUX_MULTIBOOT2_MEMMAP_NVS              4
+#define KERNAUX_MULTIBOOT2_MEMMAP_BADRAM           5
+
 const char *KernAux_Multiboot2_ITag_to_str(uint32_t tag_type);
+const char*
+KernAux_Multiboot2_ITag_MemoryMap_EntryBase_Type_to_str(uint32_t type);
 
 #ifdef __cplusplus
 }

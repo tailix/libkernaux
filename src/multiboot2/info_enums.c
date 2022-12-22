@@ -58,3 +58,22 @@ const char *KernAux_Multiboot2_ITag_to_str(const uint32_t tag_type)
         return NULL;
     }
 }
+
+const char*
+KernAux_Multiboot2_ITag_MemoryMap_EntryBase_Type_to_str(const uint32_t type)
+{
+    switch (type) {
+    case KERNAUX_MULTIBOOT2_MEMMAP_AVAILABLE:
+        return "available";
+    case KERNAUX_MULTIBOOT2_MEMMAP_RESERVED:
+        return "reserved";
+    case KERNAUX_MULTIBOOT2_MEMMAP_ACPI_RECLAIMABLE:
+        return "ACPI reclaimable";
+    case KERNAUX_MULTIBOOT2_MEMMAP_NVS:
+        return "ACPI Non-Volatile Storage";
+    case KERNAUX_MULTIBOOT2_MEMMAP_BADRAM:
+        return "bad RAM";
+    default:
+        return NULL;
+    }
+}

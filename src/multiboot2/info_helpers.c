@@ -2,7 +2,8 @@
 #include "config.h"
 #endif
 
-#include <kernaux/assert.h>
+#include "../assert.h"
+
 #include <kernaux/multiboot2.h>
 
 #include <stddef.h>
@@ -13,7 +14,7 @@ const struct KernAux_Multiboot2_ITagBase
     const struct KernAux_Multiboot2_Info *const multiboot2_info,
     const uint32_t tag_type
 ) {
-    KERNAUX_ASSERT(multiboot2_info);
+    KERNAUX_NOTNULL(multiboot2_info);
 
     const struct KernAux_Multiboot2_ITagBase *tag_base =
         (struct KernAux_Multiboot2_ITagBase*)
@@ -38,8 +39,8 @@ const struct KernAux_Multiboot2_ITagBase
     const uint32_t tag_type,
     const struct KernAux_Multiboot2_ITagBase *const after_tag
 ) {
-    KERNAUX_ASSERT(multiboot2_info);
-    KERNAUX_ASSERT(after_tag);
+    KERNAUX_NOTNULL(multiboot2_info);
+    KERNAUX_NOTNULL(after_tag);
 
     const struct KernAux_Multiboot2_ITagBase *tag_base =
         (struct KernAux_Multiboot2_ITagBase*)
@@ -63,7 +64,7 @@ const struct KernAux_Multiboot2_ITagBase
 const char *KernAux_Multiboot2_Info_boot_cmd_line(
     const struct KernAux_Multiboot2_Info *const multiboot2_info
 ) {
-    KERNAUX_ASSERT(multiboot2_info);
+    KERNAUX_NOTNULL(multiboot2_info);
 
     const struct KernAux_Multiboot2_ITag_BootCmdLine *const tag =
         (struct KernAux_Multiboot2_ITag_BootCmdLine*)

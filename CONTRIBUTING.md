@@ -25,6 +25,13 @@ The following statements are recommendations, but highly encouraged:
 * Write tests
 * Keep lines less than 80 characters long for better experience on split screen
 
+### Things to review periodically
+
+* `git grep -i fixme`
+* `git grep -i todo`
+* `git grep -i cppcheck-suppress`
+* `git grep -i rubocop:disable`
+
 ### Programming mistakes
 
 * Always check documentation, manuals and specifications
@@ -62,13 +69,6 @@ Avoid stupid errors with:
 * Default case in switch statements
 * Braces (curly brackets) around code blocks
 
-### Things to review periodically
-
-* `git grep -i fixme`
-* `git grep -i todo`
-* `git grep -i cppcheck-suppress`
-* `git grep -i rubocop:disable`
-
 
 
 C language
@@ -100,6 +100,11 @@ Use **cppcheck**.
   `KernAux_FooBar_CarCdr`).
 * Name public (*defined in the headers*) methods with the prefix `KernAux_` and
   with the prefix of the type name (example: `KernAux_FooBar_car_cdr`).
+
+* Use postfix `size` for a byte size.
+* Use postfix `slen` for C string length without terminating `\0` character
+  (size - 1).
+* Use postfix `count` for a number of elements in an array.
 
 * Create `typedef`s with the names of related `struct`s. Use this name with a
   prefix `struct` to declare the data itself, withoth the prefix to declare

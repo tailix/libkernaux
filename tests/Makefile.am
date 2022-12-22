@@ -168,18 +168,6 @@ test_mbr_SOURCES = \
 	test_mbr.c
 endif
 
-###############
-# test_memmap #
-###############
-
-if WITH_MEMMAP
-TESTS += test_memmap
-test_memmap_LDADD = $(top_builddir)/libkernaux.la
-test_memmap_SOURCES = \
-	main.c \
-	test_memmap.c
-endif
-
 ##################################
 # test_multiboot2_common_packing #
 ##################################
@@ -239,6 +227,22 @@ test_multiboot2_header_validation_SOURCES = \
 	test_multiboot2_header_validation.c \
 	../fixtures/multiboot2_header_example1.h \
 	../fixtures/multiboot2_header_example2.h
+endif
+
+#######################################
+# test_multiboot2_info_convert_memmap #
+#######################################
+
+if WITH_MULTIBOOT2
+if WITH_MEMMAP
+TESTS += test_multiboot2_info_convert_memmap
+test_multiboot2_info_convert_memmap_LDADD = $(top_builddir)/libkernaux.la
+test_multiboot2_info_convert_memmap_SOURCES = \
+	main.c \
+	test_multiboot2_info_convert_memmap.c \
+	../fixtures/multiboot2_header_example2.h \
+	../fixtures/multiboot2_info_example2.h
+endif
 endif
 
 ################################
@@ -304,7 +308,7 @@ endif
 # test_ntoa_assert #
 ####################
 
-if ENABLE_DEBUG
+if ENABLE_ASSERT
 if WITH_NTOA
 TESTS += test_ntoa_assert
 test_ntoa_assert_LDADD = $(top_builddir)/libkernaux.la
@@ -330,7 +334,7 @@ endif
 # test_pfa_assert #
 ###################
 
-if ENABLE_DEBUG
+if ENABLE_ASSERT
 if WITH_PFA
 TESTS += test_pfa_assert
 test_pfa_assert_LDADD = $(top_builddir)/libkernaux.la

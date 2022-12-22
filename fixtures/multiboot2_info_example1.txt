@@ -53,37 +53,37 @@ Multiboot 2 info tag {
     [0]: {
       u64 base_addr: 0x0
       u64 length: 654336
-      u32 type: 1
+      u32 type: 1 (available)
       u32 reserved: 0x0
     }
     [1]: {
       u64 base_addr: 0x9fc00
       u64 length: 1024
-      u32 type: 2
+      u32 type: 2 (reserved)
       u32 reserved: 0x0
     }
     [2]: {
       u64 base_addr: 0xf0000
       u64 length: 65536
-      u32 type: 2
+      u32 type: 2 (reserved)
       u32 reserved: 0x0
     }
     [3]: {
       u64 base_addr: 0x100000
       u64 length: 133038080
-      u32 type: 1
+      u32 type: 1 (available)
       u32 reserved: 0x0
     }
     [4]: {
       u64 base_addr: 0x7fe0000
       u64 length: 131072
-      u32 type: 2
+      u32 type: 2 (reserved)
       u32 reserved: 0x0
     }
     [5]: {
       u64 base_addr: 0xfffc0000
       u64 length: 262144
-      u32 type: 2
+      u32 type: 2 (reserved)
       u32 reserved: 0x0
     }
   ]

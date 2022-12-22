@@ -2,7 +2,8 @@
 #include "config.h"
 #endif
 
-#include <kernaux/assert.h>
+#include "assert.h"
+
 #include <kernaux/mbr.h>
 
 #include <stdbool.h>
@@ -10,14 +11,14 @@
 
 bool KernAux_Mbr_is_valid(const struct KernAux_Mbr *const mbr)
 {
-    KERNAUX_ASSERT(mbr);
+    KERNAUX_NOTNULL(mbr);
 
     return KernAux_Mbr_Info_is_valid(&mbr->info);
 }
 
 bool KernAux_Mbr_Info_is_valid(const struct KernAux_Mbr_Info *const mbr_info)
 {
-    KERNAUX_ASSERT(mbr_info);
+    KERNAUX_NOTNULL(mbr_info);
 
     if (mbr_info->magic != KERNAUX_MBR_MAGIC) return false;
 
@@ -32,7 +33,7 @@ bool KernAux_Mbr_Info_is_valid(const struct KernAux_Mbr_Info *const mbr_info)
 
 bool KernAux_Mbr_Entry_is_valid(const struct KernAux_Mbr_Entry *const mbr_entry)
 {
-    KERNAUX_ASSERT(mbr_entry);
+    KERNAUX_NOTNULL(mbr_entry);
 
     // TODO: implement this
     (void)mbr_entry;
