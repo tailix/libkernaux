@@ -31,19 +31,38 @@ bool KernAux_Memmap_Builder_add(
     KERNAUX_ASSERT(builder->memmap.malloc);
     KERNAUX_ASSERT(mem_size > 0);
 
-    struct KernAux_Memmap_Node *const node =
-        KernAux_Malloc_malloc(builder->memmap.malloc, sizeof(*node));
-    if (!node) return false;
+    struct KernAux_Memmap_Node *const new_node =
+        KernAux_Malloc_malloc(builder->memmap.malloc, sizeof(*new_node));
+    if (!new_node) return false;
 
-    node->mem_start = mem_start;
-    node->mem_size = mem_size;
-    node->mem_end = mem_start + mem_size - 1;
+    new_node->mem_start = mem_start;
+    new_node->mem_size = mem_size;
+    new_node->mem_end = mem_start + mem_size - 1;
 
-    node->next = builder->memmap.node;
-    node->prev = NULL;
-
-    if (builder->memmap.node) builder->memmap.node->prev = node;
-    builder->memmap.node = node;
+    if (builder->memmap.node) {
+        for (
+            struct KernAux_Memmap_Node *curr_node = builder->memmap.node;
+            curr_node;
+            curr_node = (struct KernAux_Memmap_Node*)curr_node->next
+        ) {
+            if (!curr_node->next ||
+                curr_node->next->mem_start > new_node->mem_start)
+            {
+                new_node->next = curr_node->next;
+                new_node->prev = curr_node;
+                if (curr_node->next) {
+                    ((struct KernAux_Memmap_Node*)curr_node->next)->prev =
+                        new_node;
+                }
+                curr_node->next = new_node;
+                break;
+            }
+        }
+    } else {
+        new_node->next = NULL;
+        new_node->prev = NULL;
+        builder->memmap.node = new_node;
+    }
 
     return true;
 }
