@@ -4,7 +4,9 @@
 
 #include "assert.h"
 
+#include <kernaux/generic/display.h>
 #include <kernaux/generic/malloc.h>
+#include <kernaux/macro.h>
 #include <kernaux/memmap.h>
 
 #include <stdbool.h>
@@ -12,6 +14,11 @@
 #include <stdint.h>
 
 static void free_node(KernAux_Malloc malloc, struct KernAux_Memmap_Node *node);
+static void print_nodes(
+    KernAux_Memmap_Node node,
+    KernAux_Display display,
+    unsigned indentation
+);
 
 KernAux_Memmap_Builder
 KernAux_Memmap_Builder_new(const KernAux_Malloc malloc)
@@ -139,11 +146,22 @@ void KernAux_Memmap_free(const KernAux_Memmap memmap)
     KernAux_Malloc_free(malloc, (void*)memmap);
 }
 
+void KernAux_Memmap_print(
+    const KernAux_Memmap memmap,
+    const KernAux_Display display
+) {
+    KERNAUX_NOTNULL(memmap);
+    KERNAUX_ASSERT(memmap->root_node);
+    KERNAUX_ASSERT(memmap->malloc);
+    KERNAUX_ASSERT(memmap->root_node->next == NULL);
+
+    print_nodes(memmap->root_node, display, 0);
+}
+
 void free_node(
     const KernAux_Malloc malloc,
     struct KernAux_Memmap_Node *const node
-)
-{
+) {
     KERNAUX_NOTNULL(malloc);
     KERNAUX_NOTNULL(node);
 
@@ -157,4 +175,50 @@ void free_node(
     }
 
     KernAux_Malloc_free(malloc, node);
+}
+
+#define PRINT(s)   do { KernAux_Display_print  (display, s); } while (0)
+#define PRINTLN(s) do { KernAux_Display_println(display, s); } while (0)
+
+#define PRINTLNF(format, ...) \
+    do { KernAux_Display_printlnf(display, format, __VA_ARGS__); } while (0)
+
+#define INDENT do { \
+    for (unsigned index = 0; index < indentation; ++index) PRINT("  "); \
+} while (0)
+
+void print_nodes(
+    KernAux_Memmap_Node node,
+    const KernAux_Display display,
+    const unsigned indentation
+) {
+    for (; node; node = node->next) {
+        INDENT;
+        PRINTLN("{");
+
+        KERNAUX_CAST_CONST(unsigned long long, mem_start, node->mem_start);
+        KERNAUX_CAST_CONST(unsigned long long, mem_size,  node->mem_size);
+        KERNAUX_CAST_CONST(unsigned long long, mem_end,   node->mem_end);
+
+        INDENT;
+        PRINTLNF("  mem_start: 0x%llx", mem_start);
+        INDENT;
+        PRINTLNF("  mem_size:  %llu",   mem_size);
+        INDENT;
+        PRINTLNF("  mem_end:   0x%llx", mem_end);
+
+        if (node->children) {
+            INDENT;
+            PRINTLN("  children: [");
+            print_nodes(node->children, display, indentation + 2);
+            INDENT;
+            PRINTLN("  ]");
+        } else {
+            INDENT;
+            PRINTLN("  children: []");
+        }
+
+        INDENT;
+        PRINTLN("}");
+    }
 }

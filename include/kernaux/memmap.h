@@ -5,6 +5,7 @@
 extern "C" {
 #endif
 
+#include <kernaux/generic/display.h>
 #include <kernaux/generic/malloc.h>
 #include <kernaux/macro.h>
 
@@ -16,6 +17,10 @@ extern "C" {
     KernAux_Memmap_free(memmap); \
     memmap = NULL; \
 } while (0)
+
+/*********
+ * Types *
+ *********/
 
 typedef const struct KernAux_Memmap_Node {
     uint64_t mem_start, mem_end, mem_size;
@@ -32,6 +37,10 @@ typedef struct KernAux_Memmap_Builder {
     KernAux_Memmap KERNAUX_PRIVATE_FIELD(memmap);
 } *KernAux_Memmap_Builder;
 
+/*************
+ * Functions *
+ *************/
+
 KernAux_Memmap_Builder
 KernAux_Memmap_Builder_new(KernAux_Malloc malloc);
 
@@ -47,6 +56,7 @@ KernAux_Memmap
 KernAux_Memmap_Builder_finish_and_free(KernAux_Memmap_Builder builder);
 
 void KernAux_Memmap_free(KernAux_Memmap memmap);
+void KernAux_Memmap_print(KernAux_Memmap memmap, KernAux_Display display);
 
 #ifdef __cplusplus
 }
