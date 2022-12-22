@@ -11,12 +11,12 @@
 /test_elf
 /test_free_list
 /test_mbr
-/test_memmap
 /test_multiboot2_common_packing
 /test_multiboot2_header_helpers
 /test_multiboot2_header_print
 /test_multiboot2_header_print.c
 /test_multiboot2_header_validation
+/test_multiboot2_info_convert_memmap
 /test_multiboot2_info_helpers
 /test_multiboot2_info_print
 /test_multiboot2_info_print.c

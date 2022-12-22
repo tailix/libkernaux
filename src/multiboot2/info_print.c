@@ -378,7 +378,12 @@ void KernAux_Multiboot2_ITag_MemoryMap_print(
             PRINTLNF("    [%zu]: {", index);
             PRINTLNF("      u64 base_addr: 0x%llx", base_addr);
             PRINTLNF("      u64 length: %llu",      length);
-            PRINTLNF("      u32 type: %lu",         type);
+            PRINTLNF("      u32 type: %lu (%s)",
+                type,
+                KernAux_Multiboot2_ITag_MemoryMap_EntryBase_Type_to_str(
+                    entries[index].type
+                )
+            );
             PRINTLNF("      u32 reserved: 0x%lx",   reserved);
             PRINTLN ("    }");
         }

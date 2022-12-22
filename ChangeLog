@@ -1,3 +1,7 @@
+2022-12-22  Alex Kotov  <kotovalexarian@gmail.com>
+
+	* include/kernaux/memmap.h: Complete rewrite
+
 2022-12-21  Alex Kotov  <kotovalexarian@gmail.com>
 
 	* configure.ac: Rename feature "--(enable|disable)-debug" to
