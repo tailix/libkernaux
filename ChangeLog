@@ -1,3 +1,7 @@
+2022-12-22  Alex Kotov  <kotovalexarian@gmail.com>
+
+	* include/kernaux/memmap.h: Complete rewrite
+
 2022-12-21  Alex Kotov  <kotovalexarian@gmail.com>
 
 	* configure.ac: Rename feature "--(enable|disable)-debug" to
@@ -5,7 +9,6 @@
 	* include/: Definition "KERNAUX_DEBUG" has been removed
 	* include/kernaux/runtime.h: New header
 	* include/kernaux/assert.h: Removed header
-	* include/kernaux/memmap.h: The old API has been removed
 
 2022-12-19  Alex Kotov  <kotovalexarian@gmail.com>
 
