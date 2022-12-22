@@ -18,7 +18,7 @@ typedef struct KernAux_Memmap {
 } *KernAux_Memmap;
 
 typedef struct KernAux_Memmap_Builder {
-    bool is_finished;
+    bool                  KERNAUX_PRIVATE_FIELD(is_finished);
     struct KernAux_Memmap KERNAUX_PRIVATE_FIELD(memmap);
 } *KernAux_Memmap_Builder;
 
