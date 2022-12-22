@@ -201,21 +201,21 @@ void print_nodes(
         KERNAUX_CAST_CONST(unsigned long long, mem_end,   node->mem_end);
 
         INDENT;
-        PRINTLNF("  mem_start: 0x%llx", mem_start);
+        PRINTLNF("  u64 mem_start: 0x%llx", mem_start);
         INDENT;
-        PRINTLNF("  mem_size:  %llu",   mem_size);
+        PRINTLNF("  u64 mem_size:  %llu",   mem_size);
         INDENT;
-        PRINTLNF("  mem_end:   0x%llx", mem_end);
+        PRINTLNF("  u64 mem_end:   0x%llx", mem_end);
 
         if (node->children) {
             INDENT;
-            PRINTLN("  children: [");
+            PRINTLN("  struct children[]: [");
             print_nodes(node->children, display, indentation + 2);
             INDENT;
             PRINTLN("  ]");
         } else {
             INDENT;
-            PRINTLN("  children: []");
+            PRINTLN("  struct children[]: []");
         }
 
         INDENT;
