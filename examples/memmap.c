@@ -1,6 +1,7 @@
 #include <kernaux/free_list.h>
 #include <kernaux/memmap.h>
 
+#include <assert.h>
 #include <stddef.h>
 #include <stdio.h>
 
@@ -14,12 +15,12 @@ void example_main()
     struct KernAux_Memmap_Builder memmap_builder =
         KernAux_Memmap_Builder_create(&malloc.malloc);
 
-    KernAux_Memmap_Builder_add(&memmap_builder, 0x0, 654336);
-    KernAux_Memmap_Builder_add(&memmap_builder, 0x9fc00, 1024);
-    KernAux_Memmap_Builder_add(&memmap_builder, 0xf0000, 65536);
-    KernAux_Memmap_Builder_add(&memmap_builder, 0x100000, 133038080);
-    KernAux_Memmap_Builder_add(&memmap_builder, 0x7fe0000, 131072);
-    KernAux_Memmap_Builder_add(&memmap_builder, 0xfffc0000, 262144);
+    assert(KernAux_Memmap_Builder_add(&memmap_builder, 0x0, 654336));
+    assert(KernAux_Memmap_Builder_add(&memmap_builder, 0x9fc00, 1024));
+    assert(KernAux_Memmap_Builder_add(&memmap_builder, 0xf0000, 65536));
+    assert(KernAux_Memmap_Builder_add(&memmap_builder, 0x100000, 133038080));
+    assert(KernAux_Memmap_Builder_add(&memmap_builder, 0x7fe0000, 131072));
+    assert(KernAux_Memmap_Builder_add(&memmap_builder, 0xfffc0000, 262144));
 
     struct KernAux_Memmap memmap =
         KernAux_Memmap_Builder_finish(&memmap_builder);
