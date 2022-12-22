@@ -6,10 +6,12 @@
 
 #include <kernaux/generic/malloc.h>
 #include <kernaux/macro.h>
+#include <kernaux/memmap.h>
 #include <kernaux/multiboot2.h>
 
 #include <stddef.h>
 
+#ifdef WITH_MEMMAP
 KernAux_Memmap_Builder KernAux_Multiboot2_Info_to_memmap_builder(
     const struct KernAux_Multiboot2_Info *const multiboot2_info,
     const KernAux_Malloc malloc
@@ -63,3 +65,4 @@ KernAux_Memmap_Builder KernAux_Multiboot2_Info_to_memmap_builder(
 
     return builder;
 }
+#endif

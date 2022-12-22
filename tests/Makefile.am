@@ -241,6 +241,22 @@ test_multiboot2_header_validation_SOURCES = \
 	../fixtures/multiboot2_header_example2.h
 endif
 
+#######################################
+# test_multiboot2_info_convert_memmap #
+#######################################
+
+if WITH_MULTIBOOT2
+if WITH_MEMMAP
+TESTS += test_multiboot2_info_convert_memmap
+test_multiboot2_info_convert_memmap_LDADD = $(top_builddir)/libkernaux.la
+test_multiboot2_info_convert_memmap_SOURCES = \
+	main.c \
+	test_multiboot2_info_convert_memmap.c \
+	../fixtures/multiboot2_header_example2.h \
+	../fixtures/multiboot2_info_example2.h
+endif
+endif
+
 ################################
 # test_multiboot2_info_helpers #
 ################################
