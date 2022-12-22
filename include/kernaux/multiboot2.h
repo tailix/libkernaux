@@ -5,8 +5,10 @@
 extern "C" {
 #endif
 
-#include <kernaux/macro.h>
 #include <kernaux/generic/display.h>
+#include <kernaux/generic/malloc.h>
+#include <kernaux/macro.h>
+#include <kernaux/memmap.h>
 #include <kernaux/multiboot2/header_macro.h>
 
 #include <stdint.h>
@@ -558,6 +560,15 @@ KERNAUX_STATIC_TEST_STRUCT_SIZE(
 
 #include <kernaux/multiboot2/header_print.h>
 #include <kernaux/multiboot2/info_print.h>
+
+/*******************
+ * Other functions *
+ *******************/
+
+KernAux_Memmap_Builder KernAux_Multiboot2_Info_to_memmap_builder(
+    const struct KernAux_Multiboot2_Info *multiboot2_info,
+    KernAux_Malloc malloc
+);
 
 #ifdef __cplusplus
 }
