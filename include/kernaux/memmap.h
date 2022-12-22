@@ -10,11 +10,16 @@ extern "C" {
 
 #include <stdbool.h>
 #include <stddef.h>
+#include <stdint.h>
+
+typedef const struct KernAux_Memmap_Node {
+    uint64_t mem_start, mem_end, mem_size;
+    const struct KernAux_Memmap_Node *next, *prev;
+} *KernAux_Memmap_Node;
 
 typedef struct KernAux_Memmap {
-    void          *KERNAUX_PRIVATE_FIELD(buffer);
-    size_t         KERNAUX_PRIVATE_FIELD(buffer_size);
-    KernAux_Malloc KERNAUX_PRIVATE_FIELD(malloc);
+    struct KernAux_Memmap_Node *KERNAUX_PRIVATE_FIELD(node);
+    KernAux_Malloc              KERNAUX_PRIVATE_FIELD(malloc);
 } *KernAux_Memmap;
 
 typedef struct KernAux_Memmap_Builder {

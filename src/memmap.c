@@ -9,6 +9,7 @@
 
 #include <stdbool.h>
 #include <stddef.h>
+#include <stdint.h>
 
 struct KernAux_Memmap_Builder
 KernAux_Memmap_Builder_create(const KernAux_Malloc malloc)
@@ -17,11 +18,7 @@ KernAux_Memmap_Builder_create(const KernAux_Malloc malloc)
 
     return (struct KernAux_Memmap_Builder){
         .is_finished = false,
-        .memmap = {
-            .buffer = NULL,
-            .buffer_size = 0,
-            .malloc = malloc,
-        },
+        .memmap = { .node = NULL, .malloc = malloc },
     };
 }
 
@@ -34,8 +31,7 @@ KernAux_Memmap_Builder_finish(const KernAux_Memmap_Builder builder)
 
     builder->is_finished = true;
     struct KernAux_Memmap memmap = builder->memmap;
-    builder->memmap.buffer = NULL;
-    builder->memmap.buffer_size = 0;
+    builder->memmap.node = NULL;
     builder->memmap.malloc = NULL;
     return memmap;
 }
@@ -43,14 +39,15 @@ KernAux_Memmap_Builder_finish(const KernAux_Memmap_Builder builder)
 void KernAux_Memmap_free(const KernAux_Memmap memmap)
 {
     KERNAUX_NOTNULL(memmap);
-
-    if (!memmap->buffer) return;
-
-    KERNAUX_ASSERT(memmap->buffer_size > 0);
+    if (!memmap->node) return;
     KERNAUX_ASSERT(memmap->malloc);
 
-    KernAux_Malloc_free(memmap->malloc, memmap->buffer);
+    for (KernAux_Memmap_Node node = memmap->node; node;) {
+        const KernAux_Memmap_Node next = node->next;
+        KernAux_Malloc_free(memmap->malloc, (void*)node);
+        node = next;
+    }
+
+    memmap->node = NULL;
     memmap->malloc = NULL;
-    memmap->buffer = NULL;
-    memmap->buffer_size = 0;
 }
