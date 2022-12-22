@@ -12,35 +12,39 @@ extern "C" {
 #include <stddef.h>
 #include <stdint.h>
 
+#define KERNAUX_MEMMAP_FREE(memmap) do { \
+    KernAux_Memmap_free(memmap); \
+    memmap = NULL; \
+} while (0)
+
 typedef const struct KernAux_Memmap_Node {
     uint64_t mem_start, mem_end, mem_size;
     const struct KernAux_Memmap_Node *next, *children;
 } *KernAux_Memmap_Node;
 
-typedef struct KernAux_Memmap {
-    KernAux_Malloc             KERNAUX_PRIVATE_FIELD(malloc);
-    struct KernAux_Memmap_Node KERNAUX_PRIVATE_FIELD(root_node);
+typedef const struct KernAux_Memmap {
+    KernAux_Memmap_Node root_node;
+
+    KernAux_Malloc KERNAUX_PRIVATE_FIELD(malloc);
 } *KernAux_Memmap;
 
 typedef struct KernAux_Memmap_Builder {
-    bool                  KERNAUX_PRIVATE_FIELD(is_finished);
-    struct KernAux_Memmap KERNAUX_PRIVATE_FIELD(memmap);
+    KernAux_Memmap KERNAUX_PRIVATE_FIELD(memmap);
 } *KernAux_Memmap_Builder;
 
-struct KernAux_Memmap_Builder
-KernAux_Memmap_Builder_create(KernAux_Malloc malloc);
+KernAux_Memmap_Builder
+KernAux_Memmap_Builder_new(KernAux_Malloc malloc);
 
-bool KernAux_Memmap_Builder_add(
+KernAux_Memmap_Node
+KernAux_Memmap_Builder_add(
     KernAux_Memmap_Builder builder,
     KernAux_Memmap_Node parent_node,
     uint64_t mem_start,
     uint64_t mem_size
 );
 
-struct KernAux_Memmap
-KernAux_Memmap_Builder_finish(KernAux_Memmap_Builder builder);
-
-KernAux_Memmap_Node KernAux_Memmap_root_node(KernAux_Memmap memmap);
+KernAux_Memmap
+KernAux_Memmap_Builder_finish_and_free(KernAux_Memmap_Builder builder);
 
 void KernAux_Memmap_free(KernAux_Memmap memmap);
 
