@@ -14,12 +14,12 @@ extern "C" {
 
 typedef const struct KernAux_Memmap_Node {
     uint64_t mem_start, mem_end, mem_size;
-    const struct KernAux_Memmap_Node *next;
+    const struct KernAux_Memmap_Node *next, *children;
 } *KernAux_Memmap_Node;
 
 typedef struct KernAux_Memmap {
-    struct KernAux_Memmap_Node *KERNAUX_PRIVATE_FIELD(node);
-    KernAux_Malloc              KERNAUX_PRIVATE_FIELD(malloc);
+    KernAux_Malloc             KERNAUX_PRIVATE_FIELD(malloc);
+    struct KernAux_Memmap_Node KERNAUX_PRIVATE_FIELD(root_node);
 } *KernAux_Memmap;
 
 typedef struct KernAux_Memmap_Builder {
@@ -32,12 +32,15 @@ KernAux_Memmap_Builder_create(KernAux_Malloc malloc);
 
 bool KernAux_Memmap_Builder_add(
     KernAux_Memmap_Builder builder,
+    KernAux_Memmap_Node parent_node,
     uint64_t mem_start,
     uint64_t mem_size
 );
 
 struct KernAux_Memmap
 KernAux_Memmap_Builder_finish(KernAux_Memmap_Builder builder);
+
+KernAux_Memmap_Node KernAux_Memmap_root_node(KernAux_Memmap memmap);
 
 void KernAux_Memmap_free(KernAux_Memmap memmap);
 
