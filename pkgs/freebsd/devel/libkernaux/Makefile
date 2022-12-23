@@ -10,9 +10,11 @@ WWW=		https://github.com/tailix/libkernaux
 LICENSE=	MIT
 LICENSE_FILE=	${WRKSRC}/COPYING
 
-USES=			libtool
-USE_LDCONFIG=		yes
-GNU_CONFIGURE=		yes
-CONFIGURE_ARGS+=	--enable-shared
+USES=		libtool
+USE_LDCONFIG=	yes
+GNU_CONFIGURE=	yes
+
+CONFIGURE_ARGS+=	--enable-shared \
+			--with-pkgconfigdir=${PREFIX}/libdata/pkgconfig
 
 .include <bsd.port.mk>
