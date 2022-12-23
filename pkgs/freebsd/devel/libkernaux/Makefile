@@ -14,7 +14,6 @@ USES=		libtool
 USE_LDCONFIG=	yes
 GNU_CONFIGURE=	yes
 
-CONFIGURE_ARGS+=	--enable-pkg-config=${PREFIX}/libdata/pkgconfig \
-			--enable-shared
+CONFIGURE_ARGS+=	--enable-shared
 
 .include <bsd.port.mk>
