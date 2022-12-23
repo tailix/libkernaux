@@ -43,6 +43,8 @@ AM_INIT_AUTOMAKE([1.16 subdir-objects])
 AC_SUBST([PACKAGE_DESCR], ['Auxiliary library for kernel development'])
 AC_SUBST([PACKAGE_VERSION_SO], m4_normalize(m4_include([VERSION_SO])))
 
+PKG_INSTALLDIR
+
 
 
 ###############
