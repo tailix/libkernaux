@@ -15,6 +15,6 @@ USE_LDCONFIG=	yes
 GNU_CONFIGURE=	yes
 
 CONFIGURE_ARGS+=	--enable-shared \
-			--with-pkgconfigdir=${PREFIX}/libdata/pkgconfig
+			--enable-pkg-config=${PREFIX}/libdata/pkgconfig
 
 .include <bsd.port.mk>
