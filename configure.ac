@@ -25,6 +25,7 @@ AC_CONFIG_HEADERS([config.h])
 AC_CONFIG_SRCDIR([src/runtime.c])
 AC_CONFIG_FILES([
   Makefile
+  libkernaux.pc
   examples/Makefile
   fixtures/Makefile
   fixtures/multiboot2_bin_examples_gen.c
@@ -39,6 +40,7 @@ AC_CONFIG_FILES([
 
 AM_INIT_AUTOMAKE([1.16 subdir-objects])
 
+AC_SUBST([PACKAGE_DESCR], ['Auxiliary library for kernel development'])
 AC_SUBST([PACKAGE_VERSION_SO], m4_normalize(m4_include([VERSION_SO])))
 
 
@@ -55,12 +57,15 @@ AC_ARG_ENABLE([werror],          AS_HELP_STRING([--disable-werror],         [dis
 dnl Features (disabled by default)
 AC_ARG_ENABLE([fixtures],        AS_HELP_STRING([--enable-fixtures],        [enable fixtures for tests and bindings]))
 AC_ARG_ENABLE([freestanding],    AS_HELP_STRING([--enable-freestanding],    [build for freestanding environment]))
-AC_ARG_ENABLE([split-libc],      AS_HELP_STRING([--enable-split-libc],      [split off libc]))
 AC_ARG_ENABLE([checks],          AS_HELP_STRING([--enable-checks],          [enable usual tests and examples]))
 AC_ARG_ENABLE([checks-all],      AS_HELP_STRING([--enable-checks-all],      [enable all checks]))
 AC_ARG_ENABLE([checks-cppcheck], AS_HELP_STRING([--enable-checks-cppcheck], [enable cppcheck]))
 AC_ARG_ENABLE([checks-pthreads], AS_HELP_STRING([--enable-checks-pthreads], [enable tests that require pthreads]))
 AC_ARG_ENABLE([checks-python],   AS_HELP_STRING([--enable-checks-python],   [enable tests that require Python 3 with YAML and Jinja2]))
+AC_ARG_ENABLE([split-libc],      AS_HELP_STRING([--enable-split-libc],      [split off libc]))
+
+dnl Features (with parameter)
+AC_ARG_ENABLE([pkg-config],      AS_HELP_STRING([--enable-pkg-config@<:@=PATH@:>@], [install pkg-config files @<:@PATH='${libdir}/pkgconfig'@:>@]))
 
 dnl Packages (enabled by default)
 AC_ARG_WITH(  [all],             AS_HELP_STRING([--without-all],            [without all default packages]))
@@ -141,12 +146,16 @@ AS_IF([test "$enable_werror"          = no ], [enable_werror=no],           [ena
 dnl Features (disabled by default)
 AS_IF([test "$enable_fixtures"        = yes], [enable_fixtures=yes],        [enable_fixtures=no])
 AS_IF([test "$enable_freestanding"    = yes], [enable_freestanding=yes],    [enable_freestanding=no])
-AS_IF([test "$enable_split_libc"      = yes], [enable_split_libc=yes],      [enable_split_libc=no])
 AS_IF([test "$enable_checks"          = yes], [enable_checks=yes],          [enable_checks=no])
 AS_IF([test "$enable_checks_all"      = yes], [enable_checks_all=yes],      [enable_checks_all=no])
 AS_IF([test "$enable_checks_cppcheck" = yes], [enable_checks_cppcheck=yes], [enable_checks_cppcheck=no])
 AS_IF([test "$enable_checks_pthreads" = yes], [enable_checks_pthreads=yes], [enable_checks_pthreads=no])
 AS_IF([test "$enable_checks_python"   = yes], [enable_checks_python=yes],   [enable_checks_python=no])
+AS_IF([test "$enable_split_libc"      = yes], [enable_split_libc=yes],      [enable_split_libc=no])
+
+dnl Features (with parameter)
+AS_IF([test "$enable_pkg_config"      = yes], [enable_pkg_config='${libdir}/pkgconfig'])
+AS_IF([test "$enable_pkg_config"      = no ], [enable_pkg_config=''])
 
 dnl Packages (enabled by default)
 AS_IF([test "$with_all"               = no ], [with_all=no],                [with_all=yes])
@@ -207,11 +216,14 @@ AM_CONDITIONAL([ENABLE_WERROR],          [test "$enable_werror"          = yes])
 dnl Features (disabled by default)
 AM_CONDITIONAL([ENABLE_FIXTURES],        [test "$enable_fixtures"        = yes])
 AM_CONDITIONAL([ENABLE_FREESTANDING],    [test "$enable_freestanding"    = yes])
-AM_CONDITIONAL([ENABLE_SPLIT_LIBC],      [test "$enable_split_libc"      = yes])
 AM_CONDITIONAL([ENABLE_CHECKS],          [test "$enable_checks"          = yes])
 AM_CONDITIONAL([ENABLE_CHECKS_CPPCHECK], [test "$enable_checks_cppcheck" = yes])
 AM_CONDITIONAL([ENABLE_CHECKS_PTHREADS], [test "$enable_checks_pthreads" = yes])
 AM_CONDITIONAL([ENABLE_CHECKS_PYTHON],   [test "$enable_checks_python"   = yes])
+AM_CONDITIONAL([ENABLE_SPLIT_LIBC],      [test "$enable_split_libc"      = yes])
+
+dnl Features (with parameter)
+AM_CONDITIONAL([ENABLE_PKG_CONFIG],      [test ! -z "$enable_pkg_config"])
 
 dnl Packages (enabled by default)
 AM_CONDITIONAL([WITH_ARCH_I386],         [test "$with_arch_i386"         = yes])
@@ -257,13 +269,13 @@ AS_IF([test "$enable_float"           = yes], [AC_DEFINE([ENABLE_FLOAT],        
 AS_IF([test "$enable_werror"          = yes], [AC_DEFINE([ENABLE_WERROR],          [1], [enabled -Werror])])
 
 dnl Features (disabled by default)
-AS_IF([test "$enable_split_libc"      = yes], [AC_DEFINE([ENABLE_SPLIT_LIBC],      [1], [split off libc])])
 AS_IF([test "$enable_fixtures"        = yes], [AC_DEFINE([ENABLE_FIXTURES],        [1], [enabled fixtures for tests and bindings])])
 AS_IF([test "$enable_freestanding"    = yes], [AC_DEFINE([ENABLE_FREESTANDING],    [1], [build for freestanding environment])])
 AS_IF([test "$enable_checks"          = yes], [AC_DEFINE([ENABLE_CHECKS],          [1], [enabled usual tests and examples])])
 AS_IF([test "$enable_checks_cppcheck" = yes], [AC_DEFINE([ENABLE_CHECKS_CPPCHECK], [1], [enabled cppcheck])])
 AS_IF([test "$enable_checks_pthreads" = yes], [AC_DEFINE([ENABLE_CHECKS_PTHREADS], [1], [enabled tests that require pthreads])])
 AS_IF([test "$enable_checks_python"   = yes], [AC_DEFINE([ENABLE_CHECKS_PYTHON],   [1], [enabled tests that require Python 3 with YAML and Jinja2])])
+AS_IF([test "$enable_split_libc"      = yes], [AC_DEFINE([ENABLE_SPLIT_LIBC],      [1], [split off libc])])
 
 dnl Packages (enabled by default)
 AS_IF([test "$with_arch_i386"         = yes], [AC_DEFINE([WITH_ARCH_I386],         [1], [with architecture i386])])
@@ -294,6 +306,9 @@ AS_IF([test "$with_arch_x86_64"       = yes], [AC_DEFINE([WITH_ARCH_X86],       
 ##########################
 # Autoconf substitutions #
 ##########################
+
+dnl Features (with parameter)
+AC_SUBST([pkgconfdir], [$enable_pkg_config])
 
 dnl Packages (enabled by default)
 AS_IF([test "$with_arch_i386"    = no], [AC_SUBST([comment_line_arch_i386],    [//])])

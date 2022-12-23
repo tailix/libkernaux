@@ -1,5 +1,5 @@
 MRuby::Gem::Specification.new 'mruby-kernaux' do |spec|
-  spec.version = '0.6.1'
+  spec.version = '0.7.0'
   spec.license = 'MIT'
   spec.homepage =
     'https://github.com/tailix/libkernaux/tree/master/bindings/ruby'

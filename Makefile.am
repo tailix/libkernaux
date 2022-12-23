@@ -28,6 +28,11 @@ AM_CFLAGS += -DKERNAUX_ACCESS_PRIVATE
 
 lib_LTLIBRARIES = libkernaux.la
 
+if ENABLE_PKG_CONFIG
+pkgconfigdir = @pkgconfdir@
+pkgconfig_DATA = libkernaux.pc
+endif
+
 ##################
 # Required files #
 ##################

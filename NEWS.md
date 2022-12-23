@@ -3,6 +3,44 @@ Releases
 
 
 
+0.7.0 (2022-12-23)
+------------------
+
+169 files changed, 6332 insertions(+), 3858 deletions(-)
+
+### Breaking changes
+
+* `./configure` - feature `--(enable|disable)-debug` has been removed.
+* `<kernaux/*>` - definition `KERNAUX_DEBUG` has been removed.
+* `<kernaux/assert.h>` - it has been removed.
+* `<kernaux/memmap.h>` - it has been completely rewritten.
+
+### New features
+
+* `./configure` - feature `--(enable|disable)-fixtures` has been added.
+* `./configure` - feature `--(enable|disable)-pkg-config[=PATH` has been added.
+  It allows you to specify where to install **pkg-config** files.
+* `./configure` - package `--with[out]-multiboot2` has been added.
+* `<kernaux/*>` - definition `KERNAUX_BITFIELDS` has been added.
+* `<kernaux/generic/display.h>` - new header.
+* `<kernaux/macro.h>` - macro `KERNAUX_STATIC_TEST` has been added.
+* `<kernaux/macro.h>` - macros `KERNAUX_CAST_(VAR|CONST)` have been added.
+* `<kernaux/multiboot2.h>` - new header.
+* `<kernaux/runtime.h>` - new header. Now it contains the variable
+  `kernaux_assert_cb`.
+
+### Other changes
+
+* `./configure` - a shared library is built by default.
+* `<kernaux/*>` - the headers are the same regardless of the selection
+  of features and packages (except `<kernaux/version.h>`).
+* `examples/Makefile` - the test suite can be built now without **pthreads**.
+* `tests/Makefile` - the ability to run tests from with any working directory
+  has been added.
+* `tests/Makefile` - the test suite has been fixed to run on FreeBSD.
+
+
+
 0.6.1 (2022-12-05)
 ------------------
 

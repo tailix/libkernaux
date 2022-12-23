@@ -19,8 +19,8 @@ MRuby::Build.new do |conf|
   # ...
   conf.gem github: 'tailix/libkernaux',
            path: 'bindings/mruby',
-           branch: 'v0.6.1',
-           checksum_hash: 'dfaf233b1a03de29a04560902010c6a31e37140a'
+           branch: 'v0.7.0',
+           checksum_hash: '1cfff3fca3fc3f8990f43f0d6d5c91929c8f359c'
   # ...
 end
 ```

@@ -40,7 +40,7 @@ zero). Work-in-progress APIs can change at any time.
 
 * Basic features
   * [Feature macros](/include/kernaux/version.h.in) (*work in progress*)
-  * [Runtime environment](/include/kernaux/runtime.h) (*non-breaking since* **?.?.?**)
+  * [Runtime environment](/include/kernaux/runtime.h) (*non-breaking since* **0.7.0**)
   * [Macros](/include/kernaux/macro.h) (*non-breaking since* **0.6.0**)
     * [Example: packing](/examples/macro_packing.c)
     * [Example: BITS](/examples/macro_bits.c)
@@ -49,7 +49,7 @@ zero). Work-in-progress APIs can change at any time.
     * [Example: STATIC\_TEST\*](/examples/macro_static_test.c)
   * Stack trace *(planned)*
 * Generic types
-  * [Display](/include/kernaux/generic/display.h) (*non-breaking since* **?.?.?**)
+  * [Display](/include/kernaux/generic/display.h) (*non-breaking since* **0.7.0**)
     * [Example](/examples/generic_display.c)
   * [Memory allocator](/include/kernaux/generic/malloc.h) (*non-breaking since* **0.5.0**)
     * [Example](/examples/generic_malloc.c)
@@ -64,12 +64,12 @@ zero). Work-in-progress APIs can change at any time.
 * Data formats
   * [ELF](/include/kernaux/elf.h) (*work in progress*)
   * [MBR](/include/kernaux/mbr.h) (*work in progress*)
-  * [Multiboot 2 (GRUB 2)](/include/kernaux/multiboot2.h.in) (*non-breaking since* **?.?.?**)
+  * [Multiboot 2 (GRUB 2)](/include/kernaux/multiboot2.h.in) (*non-breaking since* **0.7.0**)
     * [Example: header macros](/examples/multiboot2_header_macro.c)
 * Utilities
   * [Measurement units utils](/include/kernaux/units.h) (*work in progress*)
     * [Example: To human](/examples/units_human.c)
-  * [Memory map](/include/kernaux/memmap.h) (*non-breaking since* **?.?.?**)
+  * [Memory map](/include/kernaux/memmap.h) (*non-breaking since* **0.7.0**)
     * [Example](/examples/memmap.c)
   * [printf format parser](/include/kernaux/printf_fmt.h) (*non-breaking since* **0.6.0**)
     * [Example](/examples/printf_fmt.c)
@@ -140,6 +140,8 @@ stable options.
 * `--enable-checks-python` - enable tests that require Python 3 with YAML and
   Jinja2
 * `--enable-fixtures` - enable fixtures for tests and bindings
+* `--enable-pkg-config[=PATH]` - install pkg-config files
+  [PATH='${libdir}/pkgconfig']
 
 #### Packages
 
