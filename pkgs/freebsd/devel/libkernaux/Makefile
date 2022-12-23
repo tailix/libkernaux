@@ -1,5 +1,5 @@
 PORTNAME=	libkernaux
-DISTVERSION=	0.6.1
+DISTVERSION=	0.7.0
 CATEGORIES=	devel
 MASTER_SITES=	https://github.com/tailix/libkernaux/releases/download/v${DISTVERSION}/
 
@@ -14,6 +14,6 @@ USES=		libtool
 USE_LDCONFIG=	yes
 GNU_CONFIGURE=	yes
 
-CONFIGURE_ARGS+=	--enable-shared
+CONFIGURE_ARGS+=	--enable-pkg-config=${PREFIX}/libdata/pkgconfig
 
 .include <bsd.port.mk>
