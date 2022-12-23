@@ -25,6 +25,7 @@ AC_CONFIG_HEADERS([config.h])
 AC_CONFIG_SRCDIR([src/runtime.c])
 AC_CONFIG_FILES([
   Makefile
+  libkernaux.pc
   examples/Makefile
   fixtures/Makefile
   fixtures/multiboot2_bin_examples_gen.c
@@ -39,6 +40,7 @@ AC_CONFIG_FILES([
 
 AM_INIT_AUTOMAKE([1.16 subdir-objects])
 
+AC_SUBST([PACKAGE_DESCR], ['Auxiliary library for kernel development'])
 AC_SUBST([PACKAGE_VERSION_SO], m4_normalize(m4_include([VERSION_SO])))
 
 

@@ -81,3 +81,5 @@
 /libc/Makefile
 /libc/include/Makefile
 /tests/Makefile
+
+/libkernaux.pc
