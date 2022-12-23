@@ -1,3 +1,7 @@
+2022-12-23  Alex Kotov  <kotovalexarian@gmail.com>
+
+	* configure.ac: Feature "--(enable|disable)-pkg-config" has been added
+
 2022-12-22  Alex Kotov  <kotovalexarian@gmail.com>
 
 	* include/kernaux/memmap.h: Complete rewrite
