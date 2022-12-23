@@ -43,9 +43,9 @@ zero). Work-in-progress APIs can change at any time.
   * [Runtime environment](/include/kernaux/runtime.h) (*non-breaking since* **?.?.?**)
   * [Macros](/include/kernaux/macro.h) (*non-breaking since* **0.6.0**)
     * [Example: packing](/examples/macro_packing.c)
+    * [Example: BITS](/examples/macro_bits.c)
     * [Example: CAST\_\*](/examples/macro_cast.c);
     * [Example: CONTAINER\_OF](/examples/macro_container_of.c)
-    * [Example: BITS](/examples/macro_bits.c)
     * [Example: STATIC\_TEST\*](/examples/macro_static_test.c)
   * Stack trace *(planned)*
 * Generic types
