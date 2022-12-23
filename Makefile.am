@@ -27,7 +27,6 @@ libc/libc.la:
 AM_CFLAGS += -DKERNAUX_ACCESS_PRIVATE
 
 lib_LTLIBRARIES = libkernaux.la
-pkgconfig_DATA = libkernaux.pc
 
 ##################
 # Required files #
