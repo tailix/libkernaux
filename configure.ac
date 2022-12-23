@@ -64,6 +64,9 @@ AC_ARG_ENABLE([checks-pthreads], AS_HELP_STRING([--enable-checks-pthreads], [ena
 AC_ARG_ENABLE([checks-python],   AS_HELP_STRING([--enable-checks-python],   [enable tests that require Python 3 with YAML and Jinja2]))
 AC_ARG_ENABLE([split-libc],      AS_HELP_STRING([--enable-split-libc],      [split off libc]))
 
+dnl Features (with parameter)
+AC_ARG_ENABLE([pkg-config],      AS_HELP_STRING([--enable-pkg-config@<:@=PATH@:>@], [install pkg-config files @<:@PATH='${libdir}/pkgconfig'@:>@]))
+
 dnl Packages (enabled by default)
 AC_ARG_WITH(  [all],             AS_HELP_STRING([--without-all],            [without all default packages]))
 AC_ARG_WITH(  [arch-all],        AS_HELP_STRING([--without-arch-all],       [without all architectures]))
@@ -150,6 +153,10 @@ AS_IF([test "$enable_checks_pthreads" = yes], [enable_checks_pthreads=yes], [ena
 AS_IF([test "$enable_checks_python"   = yes], [enable_checks_python=yes],   [enable_checks_python=no])
 AS_IF([test "$enable_split_libc"      = yes], [enable_split_libc=yes],      [enable_split_libc=no])
 
+dnl Features (with parameter)
+AS_IF([test "$enable_pkg_config"      = yes], [enable_pkg_config='${libdir}/pkgconfig'])
+AS_IF([test "$enable_pkg_config"      = no ], [enable_pkg_config=''])
+
 dnl Packages (enabled by default)
 AS_IF([test "$with_all"               = no ], [with_all=no],                [with_all=yes])
 AS_IF([test "$with_arch_all"          = no ], [with_arch_all=no],           [with_arch_all=yes])
@@ -214,6 +221,9 @@ AM_CONDITIONAL([ENABLE_CHECKS_CPPCHECK], [test "$enable_checks_cppcheck" = yes])
 AM_CONDITIONAL([ENABLE_CHECKS_PTHREADS], [test "$enable_checks_pthreads" = yes])
 AM_CONDITIONAL([ENABLE_CHECKS_PYTHON],   [test "$enable_checks_python"   = yes])
 AM_CONDITIONAL([ENABLE_SPLIT_LIBC],      [test "$enable_split_libc"      = yes])
+
+dnl Features (with parameter)
+AM_CONDITIONAL([ENABLE_PKG_CONFIG],      [test ! -z "$enable_pkg_config"])
 
 dnl Packages (enabled by default)
 AM_CONDITIONAL([WITH_ARCH_I386],         [test "$with_arch_i386"         = yes])
@@ -296,6 +306,9 @@ AS_IF([test "$with_arch_x86_64"       = yes], [AC_DEFINE([WITH_ARCH_X86],       
 ##########################
 # Autoconf substitutions #
 ##########################
+
+dnl Features (with parameter)
+AC_SUBST([pkgconfdir], [$enable_pkg_config])
 
 dnl Packages (enabled by default)
 AS_IF([test "$with_arch_i386"    = no], [AC_SUBST([comment_line_arch_i386],    [//])])
