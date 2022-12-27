@@ -81,14 +81,6 @@ zero). Work-in-progress APIs can change at any time.
     * [Example: vfprintf](/examples/printf_file_va.c)
     * [Example: snprintf](/examples/printf_str.c)
     * [Example: vsnprintf](/examples/printf_str_va.c)
-* libc replacement (*work in progress*)
-  * [ctype.h](/libc/include/ctype.h)
-  * [errno.h](/libc/include/errno.h)
-  * [inttypes.h](/libc/include/inttypes.h)
-  * [setjmp.h](/libc/include/setjmp.h)
-  * [stdlib.h](/libc/include/stdlib.h)
-  * [string.h](/libc/include/string.h)
-  * [sys/types.h](/libc/include/sys/types.h)
 * Architecture-specific code (*work in progress*)
   * [Declarations](/include/kernaux/arch/)
   * [Functions](/include/kernaux/asm/)
@@ -142,11 +134,6 @@ stable options.
 * `--enable-fixtures` - enable fixtures for tests and bindings
 * `--enable-pkg-config[=PATH]` - install pkg-config files
   [PATH='${libdir}/pkgconfig']
-
-#### Packages
-
-* `--with-libc` - provides the replacement for some standard C functions.
-  Useful in freestanding environment, where no libc is present.
 
 ### Default options
 
@@ -211,6 +198,9 @@ You can test with `make check`.
 
 Create configuration script with `./autogen.sh` (if present).
 
+The library requires some functions from the standard C library.
+Use [libclayer](https://github.com/tailix/libclayer).
+
 Let's assume that your target triplet is `i386-elf`. Configure with
 [cross-compiler](https://wiki.osdev.org/GCC_Cross-Compiler) in `$PATH` to make
 without it in `$PATH`:
@@ -220,7 +210,6 @@ without it in `$PATH`:
   --host='i386-elf' \
   --disable-shared \
   --enable-freestanding \
-  --with-libc \
   CC="$(which i386-elf-gcc)"
 ```
 

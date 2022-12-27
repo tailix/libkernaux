@@ -9,12 +9,6 @@ AM_CFLAGS = \
 	-I$(top_srcdir)/include \
 	-D_POSIX_C_SOURCE=200809L
 
-if WITH_LIBC
-AM_CFLAGS += \
-	-I$(top_builddir)/libc/include \
-	-I$(top_srcdir)/libc/include
-endif
-
 if ENABLE_WERROR
 AM_CFLAGS += -Werror
 endif

@@ -31,8 +31,6 @@ CPPCHECK_PATHS = \
     $(top_srcdir)/examples \
   $(top_builddir)/include  \
     $(top_srcdir)/include  \
-  $(top_builddir)/libc     \
-    $(top_srcdir)/libc     \
   $(top_builddir)/src      \
     $(top_srcdir)/src      \
   $(top_builddir)/tests    \

@@ -30,8 +30,6 @@ AC_CONFIG_FILES([
   fixtures/Makefile
   fixtures/multiboot2_bin_examples_gen.c
   include/Makefile
-  libc/Makefile
-  libc/include/Makefile
   include/kernaux/version.h
   tests/Makefile
   tests/test_multiboot2_header_print.c
@@ -62,7 +60,6 @@ AC_ARG_ENABLE([checks-all],      AS_HELP_STRING([--enable-checks-all],      [ena
 AC_ARG_ENABLE([checks-cppcheck], AS_HELP_STRING([--enable-checks-cppcheck], [enable cppcheck]))
 AC_ARG_ENABLE([checks-pthreads], AS_HELP_STRING([--enable-checks-pthreads], [enable tests that require pthreads]))
 AC_ARG_ENABLE([checks-python],   AS_HELP_STRING([--enable-checks-python],   [enable tests that require Python 3 with YAML and Jinja2]))
-AC_ARG_ENABLE([split-libc],      AS_HELP_STRING([--enable-split-libc],      [split off libc]))
 
 dnl Features (with parameter)
 AC_ARG_ENABLE([pkg-config],      AS_HELP_STRING([--enable-pkg-config@<:@=PATH@:>@], [install pkg-config files @<:@PATH='${libdir}/pkgconfig'@:>@]))
@@ -85,9 +82,6 @@ AC_ARG_WITH(  [pfa],             AS_HELP_STRING([--without-pfa],            [wit
 AC_ARG_WITH(  [printf],          AS_HELP_STRING([--without-printf],         [without printf]))
 AC_ARG_WITH(  [printf-fmt],      AS_HELP_STRING([--without-printf-fmt],     [without printf format parser]))
 AC_ARG_WITH(  [units],           AS_HELP_STRING([--without-units],          [without measurement units utils]))
-
-dnl Packages (disabled by default)
-AC_ARG_WITH(  [libc],            AS_HELP_STRING([--with-libc],              [with libc replacement]))
 
 
 
@@ -151,7 +145,6 @@ AS_IF([test "$enable_checks_all"      = yes], [enable_checks_all=yes],      [ena
 AS_IF([test "$enable_checks_cppcheck" = yes], [enable_checks_cppcheck=yes], [enable_checks_cppcheck=no])
 AS_IF([test "$enable_checks_pthreads" = yes], [enable_checks_pthreads=yes], [enable_checks_pthreads=no])
 AS_IF([test "$enable_checks_python"   = yes], [enable_checks_python=yes],   [enable_checks_python=no])
-AS_IF([test "$enable_split_libc"      = yes], [enable_split_libc=yes],      [enable_split_libc=no])
 
 dnl Features (with parameter)
 AS_IF([test "$enable_pkg_config"      = yes], [enable_pkg_config='${libdir}/pkgconfig'])
@@ -176,9 +169,6 @@ AS_IF([test "$with_printf"            = no ], [with_printf=no],             [wit
 AS_IF([test "$with_printf_fmt"        = no ], [with_printf_fmt=no],         [with_printf_fmt=yes])
 AS_IF([test "$with_units"             = no ], [with_units=no],              [with_units=yes])
 
-dnl Packages (disabled by default)
-AS_IF([test "$with_libc"              = yes], [with_libc=yes],              [with_libc=no])
-
 
 
 #############
@@ -187,8 +177,6 @@ AS_IF([test "$with_libc"              = yes], [with_libc=yes],              [wit
 
 AS_IF([test "$enable_checks"   = yes -a "$enable_freestanding" = yes], AC_MSG_ERROR([can not build freestanding tests]))
 AS_IF([test "$enable_fixtures" = yes -a "$enable_freestanding" = yes], AC_MSG_ERROR([can not build freestanding fixtures]))
-AS_IF([test "$enable_checks"   = yes -a "$with_libc"           = yes], AC_MSG_ERROR([can not use package `libc' with tests]))
-AS_IF([test "$enable_fixtures" = yes -a "$with_libc"           = yes], AC_MSG_ERROR([can not use package `libc' with fixtures]))
 
 AS_IF([test "$with_printf" = yes -a "$with_ntoa"       = no], AC_MSG_ERROR([package `printf' requires package `ntoa']))
 AS_IF([test "$with_printf" = yes -a "$with_printf_fmt" = no], AC_MSG_ERROR([package `printf' requires package `printf-fmt']))
@@ -220,7 +208,6 @@ AM_CONDITIONAL([ENABLE_CHECKS],          [test "$enable_checks"          = yes])
 AM_CONDITIONAL([ENABLE_CHECKS_CPPCHECK], [test "$enable_checks_cppcheck" = yes])
 AM_CONDITIONAL([ENABLE_CHECKS_PTHREADS], [test "$enable_checks_pthreads" = yes])
 AM_CONDITIONAL([ENABLE_CHECKS_PYTHON],   [test "$enable_checks_python"   = yes])
-AM_CONDITIONAL([ENABLE_SPLIT_LIBC],      [test "$enable_split_libc"      = yes])
 
 dnl Features (with parameter)
 AM_CONDITIONAL([ENABLE_PKG_CONFIG],      [test ! -z "$enable_pkg_config"])
@@ -241,9 +228,6 @@ AM_CONDITIONAL([WITH_PFA],               [test "$with_pfa"               = yes])
 AM_CONDITIONAL([WITH_PRINTF],            [test "$with_printf"            = yes])
 AM_CONDITIONAL([WITH_PRINTF_FMT],        [test "$with_printf_fmt"        = yes])
 AM_CONDITIONAL([WITH_UNITS],             [test "$with_units"             = yes])
-
-dnl Packages (disabled by default)
-AM_CONDITIONAL([WITH_LIBC],              [test "$with_libc"              = yes])
 
 dnl Packages (virtual)
 AM_CONDITIONAL([WITH_ARCH_X86],          [test "$with_arch_i386" = yes -o "$with_arch_x86_64" = yes])
@@ -275,7 +259,6 @@ AS_IF([test "$enable_checks"          = yes], [AC_DEFINE([ENABLE_CHECKS],       
 AS_IF([test "$enable_checks_cppcheck" = yes], [AC_DEFINE([ENABLE_CHECKS_CPPCHECK], [1], [enabled cppcheck])])
 AS_IF([test "$enable_checks_pthreads" = yes], [AC_DEFINE([ENABLE_CHECKS_PTHREADS], [1], [enabled tests that require pthreads])])
 AS_IF([test "$enable_checks_python"   = yes], [AC_DEFINE([ENABLE_CHECKS_PYTHON],   [1], [enabled tests that require Python 3 with YAML and Jinja2])])
-AS_IF([test "$enable_split_libc"      = yes], [AC_DEFINE([ENABLE_SPLIT_LIBC],      [1], [split off libc])])
 
 dnl Packages (enabled by default)
 AS_IF([test "$with_arch_i386"         = yes], [AC_DEFINE([WITH_ARCH_I386],         [1], [with architecture i386])])
@@ -293,9 +276,6 @@ AS_IF([test "$with_pfa"               = yes], [AC_DEFINE([WITH_PFA],            
 AS_IF([test "$with_printf"            = yes], [AC_DEFINE([WITH_PRINTF],            [1], [with printf])])
 AS_IF([test "$with_printf_fmt"        = yes], [AC_DEFINE([WITH_PRINTF_FMT],        [1], [with printf format parser])])
 AS_IF([test "$with_units",            = yes], [AC_DEFINE([WITH_UNITS],             [1], [with measurement units utils])])
-
-dnl Packages (disabled by default)
-AS_IF([test "$with_libc"              = yes], [AC_DEFINE([WITH_LIBC],              [1], [with libc replacement])])
 
 dnl Packages (virtual)
 AS_IF([test "$with_arch_i386"         = yes], [AC_DEFINE([WITH_ARCH_X86],          [1], [with architecture x86])])
