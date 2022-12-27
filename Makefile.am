@@ -6,11 +6,6 @@ EXTRA_DIST = autogen.sh CONTRIBUTING.md sha256sums.txt src/assert.h
 
 SUBDIRS = include
 
-if WITH_LIBC
-# FIXME: after "make clean" libc is not rebuiling
-SUBDIRS += libc
-endif
-
 SUBDIRS += .
 
 if ENABLE_FIXTURES
@@ -20,9 +15,6 @@ endif
 if ENABLE_CHECKS
 SUBDIRS += examples tests
 endif
-
-libc/libc.la:
-	$(MAKE) $(AM_MAKEFLAGS) -C $(top_builddir)/libc libc.la
 
 AM_CFLAGS += -DKERNAUX_ACCESS_PRIVATE
 
@@ -44,14 +36,6 @@ libkernaux_la_SOURCES = \
 	src/generic/malloc.c \
 	src/generic/mutex.c \
 	src/runtime.c
-
-########
-# libc #
-########
-
-if WITH_LIBC
-libkernaux_la_LIBADD += libc/libc.la
-endif
 
 #######
 # ARCH #
