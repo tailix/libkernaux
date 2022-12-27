@@ -210,7 +210,8 @@ without it in `$PATH`:
   --host='i386-elf' \
   --disable-shared \
   --enable-freestanding \
-  CC="$(which i386-elf-gcc)"
+  CC="$(which i386-elf-gcc)" \
+  CFLAGS='-I<path/to/libc/headers>'
 ```
 
 The variables include `AR`, `AS`, `CC`, `CCAS`, `LD`, `NM`, `OBJDUMP`, `RANLIB`,
