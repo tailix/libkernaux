@@ -7,6 +7,7 @@
 #include <kernaux/multiboot2.h>
 
 #include <assert.h>
+#include <stdbool.h>
 #include <stddef.h>
 #include <string.h>
 
@@ -25,21 +26,30 @@ void test_main()
 
     {
         const KernAux_Memmap_Builder builder =
-            KernAux_Multiboot2_Info_to_memmap_builder(
-                &multiboot2_info_example0.multiboot2_info,
-                &malloc.malloc
-            );
-        assert(builder == NULL);
+            KernAux_Memmap_Builder_new(&malloc.malloc);
+        assert(builder != NULL);
+
+        const bool result = KernAux_Multiboot2_Info_to_memmap(
+            &multiboot2_info_example0.multiboot2_info,
+            builder,
+            NULL
+        );
+        assert(!result);
     }
 
     {
         const KernAux_Memmap_Builder builder =
-            KernAux_Multiboot2_Info_to_memmap_builder(
-                (const struct KernAux_Multiboot2_Info*)
-                    &multiboot2_info_example1,
-                &malloc.malloc
-            );
-        assert(builder);
+            KernAux_Memmap_Builder_new(&malloc.malloc);
+        assert(builder != NULL);
+
+        const bool result = KernAux_Multiboot2_Info_to_memmap(
+            (const struct KernAux_Multiboot2_Info*)
+                &multiboot2_info_example1,
+            builder,
+            NULL
+        );
+        assert(result);
+
         const KernAux_Memmap memmap =
             KernAux_Memmap_Builder_finish_and_free(builder);
         assert(memmap);
@@ -51,11 +61,16 @@ void test_main()
 
     {
         const KernAux_Memmap_Builder builder =
-            KernAux_Multiboot2_Info_to_memmap_builder(
-                &multiboot2_info_example2.multiboot2_info,
-                &malloc.malloc
-            );
-        assert(builder);
+            KernAux_Memmap_Builder_new(&malloc.malloc);
+        assert(builder != NULL);
+
+        const bool result = KernAux_Multiboot2_Info_to_memmap(
+            &multiboot2_info_example2.multiboot2_info,
+            builder,
+            NULL
+        );
+        assert(result);
+
         const KernAux_Memmap memmap =
             KernAux_Memmap_Builder_finish_and_free(builder);
         assert(memmap);

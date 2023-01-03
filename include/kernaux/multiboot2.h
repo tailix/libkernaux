@@ -565,9 +565,10 @@ KERNAUX_STATIC_TEST_STRUCT_SIZE(
  * Other functions *
  *******************/
 
-KernAux_Memmap_Builder KernAux_Multiboot2_Info_to_memmap_builder(
+bool KernAux_Multiboot2_Info_to_memmap(
     const struct KernAux_Multiboot2_Info *multiboot2_info,
-    KernAux_Malloc malloc
+    KernAux_Memmap_Builder builder,
+    KernAux_Memmap_Node parent_node
 );
 
 #ifdef __cplusplus

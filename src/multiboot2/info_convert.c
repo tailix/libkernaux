@@ -12,14 +12,15 @@
 #include <stddef.h>
 
 #ifdef WITH_MEMMAP
-KernAux_Memmap_Builder KernAux_Multiboot2_Info_to_memmap_builder(
+bool KernAux_Multiboot2_Info_to_memmap(
     const struct KernAux_Multiboot2_Info *const multiboot2_info,
-    const KernAux_Malloc malloc
+    const KernAux_Memmap_Builder builder,
+    const KernAux_Memmap_Node parent_node
 ) {
     KERNAUX_NOTNULL(multiboot2_info);
-    KERNAUX_NOTNULL(malloc);
+    KERNAUX_NOTNULL(builder);
 
-    if (!KernAux_Multiboot2_Info_is_valid(multiboot2_info)) return NULL;
+    if (!KernAux_Multiboot2_Info_is_valid(multiboot2_info)) return false;
 
     const struct KernAux_Multiboot2_ITag_MemoryMap *const memory_map_tag =
         (const struct KernAux_Multiboot2_ITag_MemoryMap*)
@@ -27,7 +28,7 @@ KernAux_Memmap_Builder KernAux_Multiboot2_Info_to_memmap_builder(
             multiboot2_info,
             KERNAUX_MULTIBOOT2_ITAG_MEMORY_MAP
         );
-    if (!memory_map_tag) return NULL;
+    if (!memory_map_tag) return false;
 
     const void *const data = KERNAUX_MULTIBOOT2_DATA(memory_map_tag);
     size_t data_size = memory_map_tag->base.size - sizeof(*memory_map_tag);
@@ -36,12 +37,8 @@ KernAux_Memmap_Builder KernAux_Multiboot2_Info_to_memmap_builder(
     if (memory_map_tag->entry_size <
         sizeof(struct KernAux_Multiboot2_ITag_MemoryMap_EntryBase))
     {
-        return NULL;
+        return false;
     }
-
-    KernAux_Memmap_Builder builder =
-        KernAux_Memmap_Builder_new(malloc);
-    if (!builder) return NULL;
 
     for (
         const struct KernAux_Multiboot2_ITag_MemoryMap_EntryBase *entry = data;
@@ -52,7 +49,7 @@ KernAux_Memmap_Builder KernAux_Multiboot2_Info_to_memmap_builder(
     ) {
         const void *const node = KernAux_Memmap_Builder_add(
             builder,
-            NULL,
+            parent_node,
             entry->base_addr,
             entry->length,
             entry->type == KERNAUX_MULTIBOOT2_MEMMAP_AVAILABLE,
@@ -63,10 +60,10 @@ KernAux_Memmap_Builder KernAux_Multiboot2_Info_to_memmap_builder(
 
         if (!node) {
             KernAux_Memmap_Builder_finish_and_free(builder);
-            return NULL;
+            return false;
         }
     }
 
-    return builder;
+    return true;
 }
 #endif
