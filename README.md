@@ -64,12 +64,12 @@ zero). Work-in-progress APIs can change at any time.
 * Data formats
   * [ELF](/include/kernaux/elf.h) (*work in progress*)
   * [MBR](/include/kernaux/mbr.h) (*work in progress*)
-  * [Multiboot 2 (GRUB 2)](/include/kernaux/multiboot2.h.in) (*non-breaking since* **0.7.0**)
+  * [Multiboot 2 (GRUB 2)](/include/kernaux/multiboot2.h.in) (*non-breaking since* **?.?.?**)
     * [Example: header macros](/examples/multiboot2_header_macro.c)
 * Utilities
   * [Measurement units utils](/include/kernaux/units.h) (*work in progress*)
     * [Example: To human](/examples/units_human.c)
-  * [Memory map](/include/kernaux/memmap.h) (*non-breaking since* **0.7.0**)
+  * [Memory map](/include/kernaux/memmap.h) (*non-breaking since* **?.?.?**)
     * [Example](/examples/memmap.c)
   * [printf format parser](/include/kernaux/printf_fmt.h) (*non-breaking since* **0.6.0**)
     * [Example](/examples/printf_fmt.c)
