@@ -51,6 +51,7 @@ KernAux_Memmap_Builder_new(const KernAux_Malloc malloc)
         .mem_start = 0x0,
         .mem_end   = 0xffffffffffffffff, // 2**64 - 1
         .mem_size  = 0xffffffffffffffff, // 2**64 - 1
+        .is_available = false,
         .tag = NULL,
         .next = NULL,
         .children = NULL,
@@ -71,6 +72,7 @@ KernAux_Memmap_Node KernAux_Memmap_Builder_add(
     KernAux_Memmap_Node parent_node,
     const uint64_t mem_start,
     const uint64_t mem_size,
+    const bool is_available,
     const char *tag
 ) {
     KERNAUX_NOTNULL(builder);
@@ -95,6 +97,7 @@ KernAux_Memmap_Node KernAux_Memmap_Builder_add(
     new_node->mem_start = mem_start;
     new_node->mem_size = mem_size;
     new_node->mem_end = mem_start + mem_size - 1;
+    new_node->is_available = is_available;
     new_node->tag = tag_copy;
 
     if (!parent_node) {
@@ -227,6 +230,7 @@ void print_nodes(
         KERNAUX_CAST_CONST(unsigned long long, mem_start, node->mem_start);
         KERNAUX_CAST_CONST(unsigned long long, mem_size,  node->mem_size);
         KERNAUX_CAST_CONST(unsigned long long, mem_end,   node->mem_end);
+        const bool is_available = node->is_available;
 
         INDENT;
         PRINTLNF("  u64 mem_start: 0x%llx", mem_start);
@@ -234,6 +238,8 @@ void print_nodes(
         PRINTLNF("  u64 mem_size:  %llu",   mem_size);
         INDENT;
         PRINTLNF("  u64 mem_end:   0x%llx", mem_end);
+        INDENT;
+        PRINTLNF("  bool is_available: %s", is_available ? "TRUE" : "FALSE");
         INDENT;
         if (node->tag) {
             PRINTLNF("  char* tag: \"%s\"", node->tag);

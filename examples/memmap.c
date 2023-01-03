@@ -6,6 +6,7 @@
 #include <kernaux/memmap.h>
 
 #include <assert.h>
+#include <stdbool.h>
 #include <stddef.h>
 #include <stdio.h>
 
@@ -38,17 +39,17 @@ void example_main()
         KernAux_Memmap_Builder_new(&malloc.malloc);
     assert(memmap_builder);
 
-    assert(KernAux_Memmap_Builder_add(memmap_builder, NULL,        0x0,        654336,    "available"));
-    assert(KernAux_Memmap_Builder_add(memmap_builder, NULL,        0x9fc00,    1024,      "reserved"));
-    assert(KernAux_Memmap_Builder_add(memmap_builder, NULL,        0xf0000,    65536,     "reserved"));
+    assert(KernAux_Memmap_Builder_add(memmap_builder, NULL,        0x0,        654336,    true,  "available"));
+    assert(KernAux_Memmap_Builder_add(memmap_builder, NULL,        0x9fc00,    1024,      false, "reserved"));
+    assert(KernAux_Memmap_Builder_add(memmap_builder, NULL,        0xf0000,    65536,     false, "reserved"));
     KernAux_Memmap_Node kernel_node =
-        KernAux_Memmap_Builder_add   (memmap_builder, NULL,        0x100000,   133038080, "available");
+        KernAux_Memmap_Builder_add   (memmap_builder, NULL,        0x100000,   133038080, true,  "available");
     assert(kernel_node);
-    assert(KernAux_Memmap_Builder_add(memmap_builder, NULL,        0x7fe0000,  131072,    "reserved"));
-    assert(KernAux_Memmap_Builder_add(memmap_builder, NULL,        0xfffc0000, 262144,    "reserved"));
+    assert(KernAux_Memmap_Builder_add(memmap_builder, NULL,        0x7fe0000,  131072,    false, "reserved"));
+    assert(KernAux_Memmap_Builder_add(memmap_builder, NULL,        0xfffc0000, 262144,    false, "reserved"));
 
-    assert(KernAux_Memmap_Builder_add(memmap_builder, kernel_node, 0x400000,   8192,      "kernel code"));
-    assert(KernAux_Memmap_Builder_add(memmap_builder, kernel_node, 0x402000,   4096,      "kernel data"));
+    assert(KernAux_Memmap_Builder_add(memmap_builder, kernel_node, 0x400000,   8192,      false, "kernel code"));
+    assert(KernAux_Memmap_Builder_add(memmap_builder, kernel_node, 0x402000,   4096,      false, "kernel data"));
 
     KernAux_Memmap memmap =
         KernAux_Memmap_Builder_finish_and_free(memmap_builder);

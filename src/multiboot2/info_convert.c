@@ -55,6 +55,7 @@ KernAux_Memmap_Builder KernAux_Multiboot2_Info_to_memmap_builder(
             NULL,
             entry->base_addr,
             entry->length,
+            entry->type == KERNAUX_MULTIBOOT2_MEMMAP_AVAILABLE,
             KernAux_Multiboot2_ITag_MemoryMap_EntryBase_Type_to_str(
                 entry->type
             )
