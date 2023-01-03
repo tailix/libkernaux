@@ -21,6 +21,10 @@ static void print_nodes(
     unsigned indentation
 );
 
+#ifdef ENABLE_ASSERT
+static bool has_node(KernAux_Memmap_Node root_node, KernAux_Memmap_Node node);
+#endif
+
 KernAux_Memmap_Builder
 KernAux_Memmap_Builder_new(const KernAux_Malloc malloc)
 {
@@ -100,7 +104,9 @@ KernAux_Memmap_Node KernAux_Memmap_Builder_add(
     new_node->is_available = is_available;
     new_node->tag = tag_copy;
 
-    if (!parent_node) {
+    if (parent_node) {
+        KERNAUX_ASSERT(has_node(builder->memmap->root_node, parent_node));
+    } else {
         parent_node = (struct KernAux_Memmap_Node*)builder->memmap->root_node;
     }
 
@@ -262,3 +268,25 @@ void print_nodes(
         PRINTLN("}");
     }
 }
+
+#ifdef ENABLE_ASSERT
+bool has_node(
+    const KernAux_Memmap_Node root_node,
+    const KernAux_Memmap_Node node
+) {
+    KERNAUX_NOTNULL(root_node);
+    KERNAUX_NOTNULL(node);
+
+    if (root_node == node) return true;
+
+    for (
+        KernAux_Memmap_Node child_node = root_node->children;
+        child_node;
+        child_node = child_node->next
+    ) {
+        if (has_node(child_node, node)) return true;
+    }
+
+    return false;
+}
+#endif
