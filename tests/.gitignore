@@ -11,6 +11,7 @@
 /test_elf
 /test_free_list
 /test_mbr
+/test_memmap
 /test_multiboot2_common_packing
 /test_multiboot2_header_helpers
 /test_multiboot2_header_print
