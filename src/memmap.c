@@ -228,7 +228,11 @@ KernAux_Memmap_Node node_by_addr(
     const KernAux_Memmap_Node parent_node,
     const uint64_t addr
 ) {
-    if (parent_node == (KernAux_Memmap_Node)addr) return parent_node;
+    KERNAUX_NOTNULL(parent_node);
+
+    if (parent_node->mem_start > addr || parent_node->mem_end < addr) {
+        return NULL;
+    }
 
     for (
         KernAux_Memmap_Node child_node = parent_node->children;
@@ -239,7 +243,7 @@ KernAux_Memmap_Node node_by_addr(
         if (node) return node;
     }
 
-    return NULL;
+    return parent_node;
 }
 
 #define PRINT(s)   do { KernAux_Display_print  (display, s); } while (0)
