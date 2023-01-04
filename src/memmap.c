@@ -15,6 +15,10 @@
 #include <string.h>
 
 static void free_node(KernAux_Malloc malloc, struct KernAux_Memmap_Node *node);
+static KernAux_Memmap_Node node_by_addr(
+    KernAux_Memmap_Node parent_node,
+    uint64_t addr
+);
 static void print_nodes(
     KernAux_Memmap_Node node,
     KernAux_Display display,
@@ -194,6 +198,12 @@ void KernAux_Memmap_print(
     print_nodes(memmap->root_node, display, 0);
 }
 
+KernAux_Memmap_Node
+KernAux_Memmap_node_by_addr(const KernAux_Memmap memmap, const uint64_t addr)
+{
+    return node_by_addr(memmap->root_node, addr);
+}
+
 void free_node(
     const KernAux_Malloc malloc,
     struct KernAux_Memmap_Node *const node
@@ -212,6 +222,24 @@ void free_node(
 
     if (node->tag) KernAux_Malloc_free(malloc, (void*)node->tag);
     KernAux_Malloc_free(malloc, node);
+}
+
+KernAux_Memmap_Node node_by_addr(
+    const KernAux_Memmap_Node parent_node,
+    const uint64_t addr
+) {
+    if (parent_node == (KernAux_Memmap_Node)addr) return parent_node;
+
+    for (
+        KernAux_Memmap_Node child_node = parent_node->children;
+        child_node;
+        child_node = child_node->next
+    ) {
+        const KernAux_Memmap_Node node = node_by_addr(child_node, addr);
+        if (node) return node;
+    }
+
+    return NULL;
 }
 
 #define PRINT(s)   do { KernAux_Display_print  (display, s); } while (0)

@@ -62,6 +62,9 @@ KernAux_Memmap_Builder_finish_and_free(KernAux_Memmap_Builder builder);
 void KernAux_Memmap_free(KernAux_Memmap memmap);
 void KernAux_Memmap_print(KernAux_Memmap memmap, KernAux_Display display);
 
+KernAux_Memmap_Node
+KernAux_Memmap_node_by_addr(KernAux_Memmap memmap, uint64_t addr);
+
 #ifdef __cplusplus
 }
 #endif
