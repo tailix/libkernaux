@@ -25,10 +25,6 @@ static void print_nodes(
     unsigned indentation
 );
 
-#ifdef ENABLE_ASSERT
-static bool has_node(KernAux_Memmap_Node root_node, KernAux_Memmap_Node node);
-#endif
-
 KernAux_Memmap_Builder
 KernAux_Memmap_Builder_new(const KernAux_Malloc malloc)
 {
@@ -77,7 +73,7 @@ KernAux_Memmap_Builder_new(const KernAux_Malloc malloc)
 
 KernAux_Memmap_Node KernAux_Memmap_Builder_add(
     const KernAux_Memmap_Builder builder,
-    KernAux_Memmap_Node parent_node,
+    KernAux_Memmap_Node _parent_node __attribute__((unused)),
     const uint64_t mem_start,
     const uint64_t mem_size,
     const bool is_available,
@@ -108,11 +104,9 @@ KernAux_Memmap_Node KernAux_Memmap_Builder_add(
     new_node->is_available = is_available;
     new_node->tag = tag_copy;
 
-    if (parent_node) {
-        KERNAUX_ASSERT(has_node(builder->memmap->root_node, parent_node));
-    } else {
-        parent_node = (struct KernAux_Memmap_Node*)builder->memmap->root_node;
-    }
+    const KernAux_Memmap_Node parent_node =
+        KernAux_Memmap_node_by_addr(builder->memmap, new_node->mem_start);
+    KERNAUX_ASSERT(parent_node);
 
     if (new_node->mem_start < parent_node->mem_start ||
         new_node->mem_end > parent_node->mem_end)
@@ -300,25 +294,3 @@ void print_nodes(
         PRINTLN("}");
     }
 }
-
-#ifdef ENABLE_ASSERT
-bool has_node(
-    const KernAux_Memmap_Node root_node,
-    const KernAux_Memmap_Node node
-) {
-    KERNAUX_NOTNULL(root_node);
-    KERNAUX_NOTNULL(node);
-
-    if (root_node == node) return true;
-
-    for (
-        KernAux_Memmap_Node child_node = root_node->children;
-        child_node;
-        child_node = child_node->next
-    ) {
-        if (has_node(child_node, node)) return true;
-    }
-
-    return false;
-}
-#endif
