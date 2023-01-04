@@ -73,7 +73,6 @@ KernAux_Memmap_Builder_new(const KernAux_Malloc malloc)
 
 KernAux_Memmap_Node KernAux_Memmap_Builder_add(
     const KernAux_Memmap_Builder builder,
-    KernAux_Memmap_Node _parent_node __attribute__((unused)),
     const uint64_t mem_start,
     const uint64_t mem_size,
     const bool is_available,

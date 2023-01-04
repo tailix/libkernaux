@@ -49,7 +49,6 @@ KernAux_Memmap_Builder_new(KernAux_Malloc malloc);
 KernAux_Memmap_Node
 KernAux_Memmap_Builder_add(
     KernAux_Memmap_Builder builder,
-    KernAux_Memmap_Node parent_node,
     uint64_t mem_start,
     uint64_t mem_size,
     bool is_available,

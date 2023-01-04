@@ -14,8 +14,7 @@
 #ifdef WITH_MEMMAP
 bool KernAux_Multiboot2_Info_to_memmap(
     const struct KernAux_Multiboot2_Info *const multiboot2_info,
-    const KernAux_Memmap_Builder builder,
-    const KernAux_Memmap_Node parent_node
+    const KernAux_Memmap_Builder builder
 ) {
     KERNAUX_NOTNULL(multiboot2_info);
     KERNAUX_NOTNULL(builder);
@@ -49,7 +48,6 @@ bool KernAux_Multiboot2_Info_to_memmap(
     ) {
         const void *const node = KernAux_Memmap_Builder_add(
             builder,
-            parent_node,
             entry->base_addr,
             entry->length,
             entry->type == KERNAUX_MULTIBOOT2_MEMMAP_AVAILABLE,

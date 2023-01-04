@@ -31,8 +31,7 @@ void test_main()
 
         const bool result = KernAux_Multiboot2_Info_to_memmap(
             &multiboot2_info_example0.multiboot2_info,
-            builder,
-            NULL
+            builder
         );
         assert(!result);
     }
@@ -45,8 +44,7 @@ void test_main()
         const bool result = KernAux_Multiboot2_Info_to_memmap(
             (const struct KernAux_Multiboot2_Info*)
                 &multiboot2_info_example1,
-            builder,
-            NULL
+            builder
         );
         assert(result);
 
@@ -66,8 +64,7 @@ void test_main()
 
         const bool result = KernAux_Multiboot2_Info_to_memmap(
             &multiboot2_info_example2.multiboot2_info,
-            builder,
-            NULL
+            builder
         );
         assert(result);
 
