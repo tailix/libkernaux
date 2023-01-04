@@ -17,7 +17,7 @@
 
 static char buffer[4096];
 
-static void test_examples_1_and_2(KernAux_Memmap_Node node);
+static void test_examples_1_and_2(KernAux_Memmap memmap);
 
 void test_main()
 {
@@ -54,7 +54,7 @@ void test_main()
             KernAux_Memmap_Builder_finish_and_free(builder);
         assert(memmap);
 
-        test_examples_1_and_2(memmap->root_node);
+        test_examples_1_and_2(memmap);
 
         KernAux_Memmap_free(memmap);
     }
@@ -75,14 +75,16 @@ void test_main()
             KernAux_Memmap_Builder_finish_and_free(builder);
         assert(memmap);
 
-        test_examples_1_and_2(memmap->root_node);
+        test_examples_1_and_2(memmap);
 
         KernAux_Memmap_free(memmap);
     }
 }
 
-void test_examples_1_and_2(KernAux_Memmap_Node node)
+void test_examples_1_and_2(const KernAux_Memmap memmap)
 {
+    KernAux_Memmap_Node node = memmap->root_node;
+
     assert(node);
     assert(node->mem_start == 0x0);
     assert(node->mem_size  == 0xffffffffffffffff);
@@ -97,6 +99,8 @@ void test_examples_1_and_2(KernAux_Memmap_Node node)
     assert(node->mem_end   == 0x9fbff);
     assert(strcmp(node->tag, "available") == 0);
     assert(node->children  == NULL);
+    assert(node == KernAux_Memmap_node_by_addr(memmap, 0x0));
+    assert(node == KernAux_Memmap_node_by_addr(memmap, 0x9fbff));
 
     node = node->next;
     assert(node);
@@ -105,6 +109,8 @@ void test_examples_1_and_2(KernAux_Memmap_Node node)
     assert(node->mem_end   == 0x9ffff);
     assert(strcmp(node->tag, "reserved") == 0);
     assert(node->children  == NULL);
+    assert(node == KernAux_Memmap_node_by_addr(memmap, 0x9fc00));
+    assert(node == KernAux_Memmap_node_by_addr(memmap, 0x9ffff));
 
     node = node->next;
     assert(node);
@@ -113,6 +119,8 @@ void test_examples_1_and_2(KernAux_Memmap_Node node)
     assert(node->mem_end   == 0xfffff);
     assert(strcmp(node->tag, "reserved") == 0);
     assert(node->children  == NULL);
+    assert(node == KernAux_Memmap_node_by_addr(memmap, 0xf0000));
+    assert(node == KernAux_Memmap_node_by_addr(memmap, 0xfffff));
 
     node = node->next;
     assert(node);
@@ -121,6 +129,8 @@ void test_examples_1_and_2(KernAux_Memmap_Node node)
     assert(node->mem_end   == 0x7fdffff);
     assert(strcmp(node->tag, "available") == 0);
     assert(node->children  == NULL);
+    assert(node == KernAux_Memmap_node_by_addr(memmap, 0x100000));
+    assert(node == KernAux_Memmap_node_by_addr(memmap, 0x7fdffff));
 
     node = node->next;
     assert(node);
@@ -129,6 +139,8 @@ void test_examples_1_and_2(KernAux_Memmap_Node node)
     assert(node->mem_end   == 0x7ffffff);
     assert(strcmp(node->tag, "reserved") == 0);
     assert(node->children  == NULL);
+    assert(node == KernAux_Memmap_node_by_addr(memmap, 0x7fe0000));
+    assert(node == KernAux_Memmap_node_by_addr(memmap, 0x7ffffff));
 
     node = node->next;
     assert(node);
@@ -137,6 +149,8 @@ void test_examples_1_and_2(KernAux_Memmap_Node node)
     assert(node->mem_end   == 0xffffffff);
     assert(strcmp(node->tag, "reserved") == 0);
     assert(node->children  == NULL);
+    assert(node == KernAux_Memmap_node_by_addr(memmap, 0xfffc0000));
+    assert(node == KernAux_Memmap_node_by_addr(memmap, 0xffffffff));
 
     node = node->next;
     assert(node == NULL);
