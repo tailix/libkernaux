@@ -52,6 +52,7 @@ KernAux_Memmap_Builder_new(const KernAux_Malloc malloc)
     }
 
     *root_node = (struct KernAux_Memmap_Node){
+        .level = 0,
         .mem_start = 0x0,
         .mem_end   = 0xffffffffffffffff, // 2**64 - 1
         .mem_size  = 0xffffffffffffffff, // 2**64 - 1
@@ -112,6 +113,9 @@ KernAux_Memmap_Node KernAux_Memmap_Builder_add(
     {
         goto fail_after_new_node;
     }
+
+    new_node->level = parent_node->level + 1;
+    KERNAUX_ASSERT(new_node->level > 0);
 
     if (parent_node->children) {
         for (
@@ -263,6 +267,8 @@ void print_nodes(
         KERNAUX_CAST_CONST(unsigned long long, mem_end,   node->mem_end);
         const bool is_available = node->is_available;
 
+        INDENT;
+        PRINTLNF("  unsigned char level: %hhu", node->level);
         INDENT;
         PRINTLNF("  u64 mem_start: 0x%llx", mem_start);
         INDENT;

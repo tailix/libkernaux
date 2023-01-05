@@ -23,6 +23,7 @@ extern "C" {
  *********/
 
 typedef const struct KernAux_Memmap_Node {
+    unsigned char level;
     uint64_t mem_start, mem_end, mem_size;
     bool is_available;
     const char *tag;
