@@ -29,7 +29,7 @@ void test_main()
             KernAux_Memmap_Builder_new(&malloc.malloc);
         assert(builder != NULL);
 
-        const bool result = KernAux_Multiboot2_Info_to_memmap(
+        const bool result = KernAux_Multiboot2_Info_build_memmap_from_memmap(
             &multiboot2_info_example0.multiboot2_info,
             builder
         );
@@ -41,7 +41,7 @@ void test_main()
             KernAux_Memmap_Builder_new(&malloc.malloc);
         assert(builder != NULL);
 
-        const bool result = KernAux_Multiboot2_Info_to_memmap(
+        const bool result = KernAux_Multiboot2_Info_build_memmap_from_memmap(
             (const struct KernAux_Multiboot2_Info*)
                 &multiboot2_info_example1,
             builder
@@ -62,7 +62,7 @@ void test_main()
             KernAux_Memmap_Builder_new(&malloc.malloc);
         assert(builder != NULL);
 
-        const bool result = KernAux_Multiboot2_Info_to_memmap(
+        const bool result = KernAux_Multiboot2_Info_build_memmap_from_memmap(
             &multiboot2_info_example2.multiboot2_info,
             builder
         );

@@ -12,7 +12,7 @@
 #include <stddef.h>
 
 #ifdef WITH_MEMMAP
-bool KernAux_Multiboot2_Info_to_memmap(
+bool KernAux_Multiboot2_Info_build_memmap_from_memmap(
     const struct KernAux_Multiboot2_Info *const multiboot2_info,
     const KernAux_Memmap_Builder builder
 ) {
