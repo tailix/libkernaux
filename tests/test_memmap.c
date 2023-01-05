@@ -88,10 +88,12 @@ void test_main()
 
     // Level 0
 
+    assert(memmap->root_node->parent_node == NULL);
     assert(memmap->root_node->level == 0);
 
     // Level 1
 
+    assert(foo_node->parent_node == memmap->root_node);
     assert(foo_node->level == 1);
     assert(foo_node->mem_start == 0x0);
     assert(foo_node->mem_size  == 0x8000000000000000ULL);
@@ -99,6 +101,7 @@ void test_main()
     assert(foo_node->is_available == true);
     assert(strcmp(foo_node->tag, "foo") == 0);
 
+    assert(bar_node->parent_node == memmap->root_node);
     assert(bar_node->level == 1);
     assert(bar_node->mem_start == 0x8000000000000000ULL);
     assert(bar_node->mem_size  == 0x8000000000000000ULL);
@@ -108,6 +111,7 @@ void test_main()
 
     // Level 2
 
+    assert(foo1_node->parent_node == foo_node);
     assert(foo1_node->level == 2);
     assert(foo1_node->mem_start == 0x0);
     assert(foo1_node->mem_size  == 0x4000000000000000ULL);
@@ -115,6 +119,7 @@ void test_main()
     assert(foo1_node->is_available == true);
     assert(strcmp(foo1_node->tag, "foo1") == 0);
 
+    assert(foo2_node->parent_node == foo_node);
     assert(foo2_node->level == 2);
     assert(foo2_node->mem_start == 0x4000000000000000ULL);
     assert(foo2_node->mem_size  == 0x4000000000000000ULL);
@@ -122,6 +127,7 @@ void test_main()
     assert(foo2_node->is_available == false);
     assert(strcmp(foo2_node->tag, "foo2") == 0);
 
+    assert(bar1_node->parent_node == bar_node);
     assert(bar1_node->level == 2);
     assert(bar1_node->mem_start == 0x8000000000000000ULL);
     assert(bar1_node->mem_size  == 0x4000000000000000ULL);
@@ -129,6 +135,7 @@ void test_main()
     assert(bar1_node->is_available == true);
     assert(strcmp(bar1_node->tag, "bar1") == 0);
 
+    assert(bar2_node->parent_node == bar_node);
     assert(bar2_node->level == 2);
     assert(bar2_node->mem_start == 0xc000000000000000ULL);
     assert(bar2_node->mem_size  == 0x4000000000000000ULL);
