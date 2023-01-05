@@ -52,6 +52,7 @@ KernAux_Memmap_Builder_new(const KernAux_Malloc malloc)
     }
 
     *root_node = (struct KernAux_Memmap_Node){
+        .parent_node = NULL,
         .level = 0,
         .mem_start = 0x0,
         .mem_end   = 0xffffffffffffffff, // 2**64 - 1
@@ -104,23 +105,23 @@ KernAux_Memmap_Node KernAux_Memmap_Builder_add(
     new_node->is_available = is_available;
     new_node->tag = tag_copy;
 
-    const KernAux_Memmap_Node parent_node =
+    new_node->parent_node =
         KernAux_Memmap_node_by_addr(builder->memmap, new_node->mem_start);
-    KERNAUX_ASSERT(parent_node);
+    KERNAUX_ASSERT(new_node->parent_node);
 
-    if (new_node->mem_start < parent_node->mem_start ||
-        new_node->mem_end > parent_node->mem_end)
+    if (new_node->mem_start < new_node->parent_node->mem_start ||
+        new_node->mem_end > new_node->parent_node->mem_end)
     {
         goto fail_after_new_node;
     }
 
-    new_node->level = parent_node->level + 1;
+    new_node->level = new_node->parent_node->level + 1;
     KERNAUX_ASSERT(new_node->level > 0);
 
-    if (parent_node->children) {
+    if (new_node->parent_node->children) {
         for (
             struct KernAux_Memmap_Node *curr_node =
-                (struct KernAux_Memmap_Node*)parent_node->children;
+                (struct KernAux_Memmap_Node*)new_node->parent_node->children;
             curr_node;
             curr_node = (struct KernAux_Memmap_Node*)curr_node->next
         ) {
@@ -139,7 +140,8 @@ KernAux_Memmap_Node KernAux_Memmap_Builder_add(
         }
     } else {
         new_node->next = NULL;
-        ((struct KernAux_Memmap_Node*)parent_node)->children = new_node;
+        ((struct KernAux_Memmap_Node*)new_node->parent_node)->children =
+            new_node;
     }
 
     return new_node;
