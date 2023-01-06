@@ -5,6 +5,7 @@
 @comment_line_elf@#define KERNAUX_VERSION_WITH_ELF
 @comment_line_free_list@#define KERNAUX_VERSION_WITH_FREE_LIST
 @comment_line_mbr@#define KERNAUX_VERSION_WITH_MBR
+@comment_line_memmap@#define KERNAUX_VERSION_WITH_MEMMAP
 @comment_line_multiboot2@#define KERNAUX_VERSION_WITH_MULTIBOOT2
 @comment_line_ntoa@#define KERNAUX_VERSION_WITH_NTOA
 @comment_line_pfa@#define KERNAUX_VERSION_WITH_PFA

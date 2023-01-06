@@ -69,6 +69,8 @@ zero). Work-in-progress APIs can change at any time.
 * Utilities
   * [Measurement units utils](/include/kernaux/units.h) (*work in progress*)
     * [Example: To human](/examples/units_human.c)
+  * [Memory map](/include/kernaux/memmap.h) (*non-breaking since* **?.?.?**)
+    * [Example](/examples/memmap.c)
   * [printf format parser](/include/kernaux/printf_fmt.h) (*non-breaking since* **0.6.0**)
     * [Example](/examples/printf_fmt.c)
 * Usual functions
@@ -153,6 +155,7 @@ explicitly included, use `--without-all`.
 * `--with[out]-asm` - kernel assembler helpers
 * `--with[out]-cmdline` - command line parser
 * `--with[out]-free-list` - free list memory allocator
+* `--with[out]-memmap` - memory map
 * `--with[out]-multiboot2` - Multiboot 2 utils
 * `--with[out]-ntoa` - itoa/ftoa
 * `--with[out]-printf` - printf

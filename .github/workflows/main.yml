@@ -94,6 +94,7 @@ jobs:
           - without: 'ntoa'
             dependencies: '--without-printf --without-units'
           - without: 'printf'
+          - without: 'memmap'
     steps:
       - uses: actions/checkout@v2
       - name: autogen

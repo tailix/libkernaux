@@ -19,6 +19,7 @@ nobase_include_HEADERS = \
 	kernaux/macro/packing_end.run        \
 	kernaux/macro/packing_start.run      \
 	kernaux/mbr.h                        \
+	kernaux/memmap.h                     \
 	kernaux/multiboot2.h                 \
 	kernaux/multiboot2/header_enums.h    \
 	kernaux/multiboot2/header_helpers.h  \
