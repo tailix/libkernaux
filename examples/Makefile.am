@@ -79,16 +79,6 @@ TESTS += macro_static_test
 macro_static_test_LDADD = $(top_builddir)/libkernaux.la
 macro_static_test_SOURCES = main.c macro_static_test.c
 
-##########
-# memmap #
-##########
-
-if WITH_MEMMAP
-TESTS += memmap
-memmap_LDADD = $(top_builddir)/libkernaux.la
-memmap_SOURCES = main.c memmap.c
-endif
-
 ###########################
 # multiboot2_header_macro #
 ###########################

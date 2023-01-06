@@ -1,11 +1,7 @@
-2023-01-04  Alex Kotov  <kotovalexarian@gmail.com>
+2023-01-06  Alex Kotov  <kotovalexarian@gmail.com>
 
-	* include/kernaux/memmap.h: The function "KernAux_Memmap_Builder_add" has been
-	changed.
-	* include/kernaux/multiboot2.h: The function
-	"KernAux_Multiboot2_Info_to_memmap_builder" has been renamed to
-	"KernAux_Multiboot2_Info_build_memmap_from_memmap", it's signature has been
-	changed.
+	* configure.ac: Package "--with[out]-memmap" has been removed
+	* include/kernaux/memmap.h: The header has been removed
 
 2022-12-27  Alex Kotov  <kotovalexarian@gmail.com>
 

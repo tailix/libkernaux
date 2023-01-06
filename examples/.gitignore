@@ -7,7 +7,6 @@
 /macro_container_of
 /macro_packing
 /macro_static_test
-/memmap
 /multiboot2_header_macro
 /ntoa
 /pfa

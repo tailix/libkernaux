@@ -77,16 +77,12 @@ endif
 if WITH_MBR
 libkernaux_la_SOURCES += src/mbr.c
 endif
-if WITH_MEMMAP
-libkernaux_la_SOURCES += src/memmap.c
-endif
 if WITH_MULTIBOOT2
 libkernaux_la_SOURCES += \
 	src/multiboot2/header_enums.c \
 	src/multiboot2/header_helpers.c \
 	src/multiboot2/header_is_valid.c \
 	src/multiboot2/header_print.c \
-	src/multiboot2/info_convert.c \
 	src/multiboot2/info_enums.c \
 	src/multiboot2/info_helpers.c \
 	src/multiboot2/info_is_valid.c \
