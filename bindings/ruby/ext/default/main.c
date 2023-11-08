@@ -24,11 +24,14 @@ void Init_default()
 
 #ifdef KERNAUX_VERSION_WITH_CMDLINE
     init_cmdline();
-#endif // KERNAUX_VERSION_WITH_CMDLINE
+#endif
+#ifdef KERNAUX_VERSION_WITH_MULTIBOOT2
+    init_multiboot2();
+#endif
 #ifdef KERNAUX_VERSION_WITH_NTOA
     init_ntoa();
-#endif // KERNAUX_VERSION_WITH_NTOA
+#endif
 #ifdef KERNAUX_VERSION_WITH_PRINTF
     init_printf();
-#endif // KERNAUX_VERSION_WITH_PRINTF
+#endif
 }

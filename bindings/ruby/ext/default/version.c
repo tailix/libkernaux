@@ -1,6 +1,7 @@
 #include "main.h"
 
 static VALUE rb_KernAux_Version_with_cmdlineQN(VALUE self);
+static VALUE rb_KernAux_Version_with_multiboot2QN(VALUE self);
 static VALUE rb_KernAux_Version_with_ntoaQN(VALUE self);
 static VALUE rb_KernAux_Version_with_printfQN(VALUE self);
 
@@ -13,6 +14,8 @@ void init_version()
 
     rb_define_singleton_method(rb_KernAux_Version, "with_cmdline?",
                                rb_KernAux_Version_with_cmdlineQN, 0);
+    rb_define_singleton_method(rb_KernAux_Version, "with_multiboot2?",
+                               rb_KernAux_Version_with_multiboot2QN, 0);
     rb_define_singleton_method(rb_KernAux_Version, "with_ntoa?",
                                rb_KernAux_Version_with_ntoaQN, 0);
     rb_define_singleton_method(rb_KernAux_Version, "with_printf?",
@@ -22,6 +25,15 @@ void init_version()
 VALUE rb_KernAux_Version_with_cmdlineQN(VALUE self)
 {
 #ifdef KERNAUX_VERSION_WITH_CMDLINE
+    return Qtrue;
+#else
+    return Qfalse;
+#endif
+}
+
+VALUE rb_KernAux_Version_with_multiboot2QN(VALUE self)
+{
+#ifdef KERNAUX_VERSION_WITH_MULTIBOOT2
     return Qtrue;
 #else
     return Qfalse;

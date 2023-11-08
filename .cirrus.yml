@@ -56,7 +56,7 @@ ruby_freebsd_task:
     - sudo make install
   main_build_script:
     - ./autogen.sh
-    - ./configure CFLAGS='-O3'
+    - ./configure --enable-fixtures CFLAGS='-O3'
     - make
     - sudo make install
   ruby_build_script:
